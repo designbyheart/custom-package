@@ -34,7 +34,8 @@
   rootViewController.view = rootView;
 
   self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions
-                                                         appId:@"1622be18-505b-4597-bc9b-8abf2f1936ef"];
+                    appId:@"1622be18-505b-4597-bc9b-8abf2f1936ef"
+                    settings:@{kOSSettingsKeyInFocusDisplayOption : @(OSNotificationDisplayTypeNone)}];
   
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
