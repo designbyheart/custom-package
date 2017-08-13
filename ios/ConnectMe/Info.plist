@@ -125,5 +125,7 @@
 		<key>test</key>
 		<string>key_test_fnzEMTMuTnr6HZWEBbJVOmfhsymtrs8S</string>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow us access to Camera so that we can scan QR code</string>
 </dict>
 </plist>
