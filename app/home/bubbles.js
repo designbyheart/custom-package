@@ -1,112 +1,305 @@
-import React, { Component } from 'react'
+// @flow
+import React, { PureComponent, Component } from 'react'
 import {
-  View,
   Animated,
   InteractionManager,
   Platform,
   Dimensions,
   StyleSheet,
+  View,
 } from 'react-native'
 import { View as AnimationView } from 'react-native-animatable'
-import { StyledImage } from '../styled-components/common-styled'
+import { Avatar, CustomView } from '../components'
+import { connectionHistoryRoute } from '../common/route-constants'
+import showDID from '../components/show-pairwise-info'
+import type {
+  BubbleState,
+  BubbleProps,
+  BubblesProps,
+  ConnectionBubblesState,
+} from './type-home'
+import { Dot as BadgeDot } from '../components/badges-dot'
 
-const size = {
-  XS: 40,
-  S: 60,
-  M: 80,
-  L: 100,
-  XL: 120,
-  XXL: 140,
+export class Bubble extends PureComponent<BubbleProps, BubbleState> {
+  state = {
+    failed: false,
+  }
+
+  _onLoad = () => {
+    this.setState({ failed: false })
+  }
+
+  _onError = () => {
+    this.setState({ failed: true })
+  }
+
+  goHistoryView = (
+    senderName: string,
+    image: ?string,
+    senderDID: string,
+    identifier: string
+  ) => {
+    this.props.disableTopView()
+    if (!this.props.disableTaps) {
+      this.props.navigation.navigate(connectionHistoryRoute, {
+        senderName,
+        image,
+        senderDID,
+        identifier,
+      })
+    }
+  }
+  showHistory = () => {
+    const {
+      image,
+
+      senderName,
+      senderDID,
+      identifier,
+      allowInteractions,
+    } = this.props
+    if (allowInteractions) {
+      this.goHistoryView(senderName, image, senderDID, identifier)
+    }
+  }
+  render() {
+    const {
+      image,
+      testID,
+      senderName,
+      senderDID,
+      identifier,
+      allowInteractions,
+    } = this.props
+    let source
+
+    if (this.state.failed || Number.isInteger(image) || !image) {
+      source = require('../images/cb_evernym.png')
+    }
+
+    if (typeof this.props.image === 'string') {
+      source = { uri: image }
+    }
+
+    return (
+      <CustomView row>
+        <View style={[badgeDotStyles.avatarBack]}>
+          <Avatar
+            radius={this.props.radius}
+            shadow
+            src={source}
+            onLoad={this._onLoad}
+            onError={this._onError}
+            testID={testID}
+            onLongPress={() => showDID(senderDID, identifier)}
+            onPress={this.showHistory}
+          />
+        </View>
+        {/* TODO: the badge has to be put on a condition when there is any unread cred is pending inside this connection */}
+        {this.props.showBadge ? (
+          <CustomView style={[badgeDotStyles.badge]}>
+            <BadgeDot size="medium" />
+          </CustomView>
+        ) : null}
+      </CustomView>
+    )
+  }
 }
 
-const bubbles = [
-  { name: 'bh', image: require('../images/cbEDCU@3x.png'), size: size.L },
-  { name: 'dell', image: require('../images/cbDell@1x.png'), size: size.S },
-  { name: 'ebay', image: require('../images/cbEbay@1x.png'), size: size.M },
-  { name: 'target', image: require('../images/cbTarget.png'), size: size.M },
-  {
-    name: 'centuryLink',
-    image: require('../images/cbCenturyLink.png'),
-    size: size.S,
+const badgeDotStyles = StyleSheet.create({
+  badge: {
+    marginLeft: -20,
+    zIndex: 1,
   },
-  {
-    name: 'starbucks',
-    image: require('../images/cbStarbucks.png'),
-    size: size.XL,
+  avatarBack: {
+    zIndex: 0,
   },
-  {
-    name: 'suncoast',
-    image: require('../images/cbSuncoast.png'),
-    size: size.XL,
-  },
-  { name: 'amazon', image: require('../images/Amazon.png'), size: size.XL },
-  { name: 'dillard', image: require('../images/cbDillards.png'), size: size.M },
-  { name: 'verizon', image: require('../images/Verizon.png'), size: size.M },
-]
+})
 
-export default class ConnectionBubbles extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      showBubble: false,
+export default class ConnectionBubbles extends PureComponent<
+  BubblesProps,
+  ConnectionBubblesState
+> {
+  state = {
+    disableTaps: false,
+    interactionsDone: false,
+  }
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ interactionsDone: true })
+    })
+  }
+  getBubblePosition = (
+    bubbleIndex: number,
+    deviceWidth: number,
+    deviceHeight: number
+  ) => {
+    //returns top and left position of the connection bubble
+    //based on the bubbleIndex the position is calculated
+
+    //top position for 0th bubble
+    let verticalOffset = deviceHeight * 0.58
+    //left position for 0th bubble should be somewhere around the mid of the device
+    //we are subtracting bubble radius to adjust the bubble width in the offset
+    //so that center of bubble comes in mid
+    let horizontalOffset = deviceWidth / 2 - deviceHeight / 16
+
+    // we adjust the width and height of bubble just to calculate position
+    // we need to adjust width because there will be only 3 bubbles in a row
+    // but that row will also contain space between bubbles
+    // and will also have margin on both side of screen horizontally
+    // so, we assume that each bubble adjusted (margin+spacing+gutter space)
+    // will be calculated by dividing device width in 3 columns
+    // along with .5 as adjustment for (margin+spacing+gutter space)
+    // so, suppose a bubble width is 80, and whole screen width would be 320 (iphone5)
+    // then, considering space, margin, bubble width, adjustments would be
+    // ~92
+    const bubbleAdjustedWidth = deviceWidth / 3.5
+
+    //we need to adjust bubbles in a column with some space in between
+    //such that atleast 4 bubbles get adjusted
+    //so if deviceHeight is 568 and
+    //bubble container is having height 511(90%of deviceHeight)
+    //bubbleAdjustedHeight will be 94
+    const bubbleAdjustedHeight = deviceHeight / 6
+
+    //add some more vertical offset to the columns on the left and right
+    //since their top value is more than the middle column
+    const edgeVerticalOffset = 50
+
+    //calculate position of the bubble in its column
+    let verticalRowIndex = Math.floor(bubbleIndex / 3)
+
+    if (bubbleIndex % 3 === 2) {
+      //calculating offsets for right hand side column
+      horizontalOffset = horizontalOffset + bubbleAdjustedWidth
+      verticalOffset = verticalOffset + edgeVerticalOffset
+    } else if (bubbleIndex % 3 === 1) {
+      //calculating offsets for left hand side column
+      horizontalOffset = horizontalOffset - bubbleAdjustedWidth
+      verticalOffset = verticalOffset + edgeVerticalOffset
+    }
+
+    return {
+      //note that based on the verticalRowIndex we need to
+      //adjust the top of the bubble
+      top: Math.floor(verticalOffset - verticalRowIndex * bubbleAdjustedHeight),
+      left: Math.floor(horizontalOffset),
     }
   }
 
-  componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({ showBubble: true })
+  getBubbleContainerHeight = (deviceHeight: number) => {
+    return {
+      height: 90 * deviceHeight / 100,
+    }
+  }
+
+  disableViewTaps = () => {
+    this.setState({
+      disableTaps: true,
     })
+    setTimeout(() => {
+      this.setState({
+        disableTaps: false,
+      })
+    }, 500)
   }
 
   render() {
-    const { width } = Dimensions.get('window')
+    let { width, height } = Dimensions.get('window')
+    //Adjusting height in android due to navigational bar
+    height = Platform.OS === 'ios' ? height : height - 44
     let deviceClass = ''
 
     if (Platform.OS === 'ios') {
-      deviceClass = width === 320
-        ? 'Iphone5'
-        : width === 414 ? 'IphonePlus' : 'ios'
+      deviceClass =
+        width === 320 ? 'Iphone5' : width === 414 ? 'IphonePlus' : 'ios'
     }
+
+    const enterprises = [
+      'evernym',
+      'ebay',
+      'verizon',
+      'suncoast',
+      'dell',
+      'bh',
+      'dillard',
+      'edcu',
+      'agency',
+    ]
+    const connections = this.props.connections.map((connection, index) => {
+      let showBadge =
+        this.props.unSeenMessages[connection.senderDID] &&
+        this.props.unSeenMessages[connection.senderDID].length > 0
+          ? true
+          : false
+      return {
+        ...connection,
+        name: enterprises[index] || 'verizon',
+        index,
+        showBadge,
+      }
+    })
 
     return (
       <Animated.View
         style={[
           styles.bubbleContainer,
+          this.getBubbleContainerHeight(height),
           { transform: [{ translateY: this.props.height }] },
         ]}
       >
-        {bubbles.map(({ name, image, size }) => (
-          <AnimationView
-            animation="zoomIn"
-            duration={600}
-            delay={200}
-            style={[
-              styles.avatar,
-              styles[name],
-              styles[`${name}${deviceClass}`],
-            ]}
-            key={name}
-          >
-            <StyledImage
-              size={[size, size]}
-              source={image}
-              resizeMode={'contain'}
-            />
-          </AnimationView>
-        ))}
+        {connections.map(
+          ({
+            identifier,
+            name,
+            logoUrl,
+            size,
+            senderName,
+            senderDID,
+            index,
+            showBadge,
+          }) => (
+            <AnimationView
+              animation="zoomIn"
+              duration={600}
+              delay={200}
+              style={[
+                styles.avatar,
+                this.getBubblePosition(index, width, height),
+              ]}
+              key={identifier}
+            >
+              <Bubble
+                radius={Math.floor(height / 16)}
+                size={size}
+                image={logoUrl}
+                testID={`bubble-${identifier}`}
+                senderName={senderName}
+                senderDID={senderDID}
+                identifier={identifier}
+                navigation={this.props.navigation}
+                disableTopView={this.disableViewTaps}
+                disableTaps={this.state.disableTaps}
+                allowInteractions={this.state.interactionsDone}
+                showBadge={showBadge}
+              />
+            </AnimationView>
+          )
+        )}
       </Animated.View>
     )
   }
 }
 
-const styles = (styles = StyleSheet.create({
+const styles = StyleSheet.create({
   bubbleContainer: {
     position: 'absolute',
-    top: 0,
+    top: -70,
     left: 0,
     right: 0,
     overflow: 'hidden',
-    height: 420,
+    zIndex: -1,
   },
   avatar: {
     position: 'absolute',
@@ -114,72 +307,4 @@ const styles = (styles = StyleSheet.create({
   avatarImage: {
     resizeMode: 'contain',
   },
-  bh: {
-    top: 100,
-    left: 2,
-  },
-  dell: {
-    top: 50,
-    left: 125,
-  },
-  ebay: {
-    top: 60,
-    left: 210,
-  },
-  target: {
-    top: 120,
-    right: 2,
-  },
-  centuryLink: {
-    top: 210,
-    left: 5,
-  },
-  starbucks: {
-    top: 140,
-    left: 120,
-  },
-  suncoast: {
-    top: 210,
-    right: 0,
-  },
-  amazon: {
-    top: 290,
-    left: 5,
-  },
-  dillard: {
-    top: 290,
-    left: 150,
-  },
-  verizon: {
-    top: 340,
-    right: 30,
-  },
-  dellIphone5: {
-    top: 50,
-    left: 115,
-  },
-  targetIphone5: {
-    top: 130,
-    right: 2,
-  },
-  starbucksIphone5: {
-    top: 140,
-    left: 100,
-  },
-  suncoastIphone5: {
-    top: 210,
-    right: 2,
-  },
-  dillardIphone5: {
-    top: 290,
-    left: 120,
-  },
-  starbucksIphonePlus: {
-    top: 140,
-    left: 150,
-  },
-  dillardIphonePlus: {
-    top: 290,
-    left: 160,
-  },
-}))
+})

@@ -1,189 +1,222 @@
-import { put, takeLatest, call, all } from 'redux-saga/effects'
+// @flow
+import { Platform } from 'react-native'
+import { put, takeLatest, call, all, select } from 'redux-saga/effects'
 import {
-  invitationDetailsRequest,
-  sendAuthenticationRequest,
-  sendInvitationConnectionRequest,
-} from '../services/api'
+  INVITATION_RECEIVED,
+  INVITATION_RESPONSE_SEND,
+  INVITATION_RESPONSE_SUCCESS,
+  INVITATION_RESPONSE_FAIL,
+  INVITATION_REJECTED,
+  ERROR_INVITATION_VCX_INIT,
+  ERROR_INVITATION_CONNECT,
+} from './type-invitation'
+import { ResponseType } from '../components/request/type-request'
+import {
+  ERROR_ALREADY_EXIST,
+  ERROR_INVITATION_RESPONSE_PARSE_CODE,
+  ERROR_INVITATION_RESPONSE_PARSE,
+  SERVER_ERROR_CODE,
+} from '../api/api-constants'
+import {
+  getAgencyUrl,
+  getAgencyDID,
+  getAgencyVerificationKey,
+  getPushToken,
+  getInvitationPayload,
+  isDuplicateConnection,
+  getUserOneTimeInfo,
+  getPoolConfig,
+} from '../store/store-selector'
+import { saveNewConnection } from '../store/connections-store'
+import {
+  createConnectionWithInvite,
+  acceptInvitationVcx,
+  serializeConnection,
+} from '../bridge/react-native-cxs/RNCxs'
+import type {
+  InvitationResponseSendData,
+  InvitationResponseSendAction,
+  InvitationPayload,
+  InvitationStore,
+  InvitationAction,
+  InvitationReceivedActionData,
+} from './type-invitation'
+import type { CustomError } from '../common/type-common'
+import { captureError } from '../services/error/error-handler'
+import type {
+  ConnectAgencyResponse,
+  RegisterAgencyResponse,
+  CreateOneTimeAgentResponse,
+  CreatePairwiseAgentResponse,
+  AcceptInvitationResponse,
+} from '../bridge/react-native-cxs/type-cxs'
+import type { UserOneTimeInfo } from '../store/user/type-user-store'
+import { connectRegisterCreateAgentDone } from '../store/user/user-store'
+import { RESET } from '../common/type-common'
+import { ensureVcxInitSuccess } from '../store/config-store'
+import { VCX_INIT_SUCCESS } from '../store/type-config-store'
+import type { MyPairwiseInfo } from '../store/type-connection-store'
+import { safeSet, safeGet } from '../services/storage'
 
-export const INVITATION_STATUS = {
-  ACCEPTED: 'accepted',
-  REJECTED: 'rejected',
-  NONE: 'NONE',
-}
+export const invitationInitialState = {}
 
-export const INVITATION_TYPE = {
-  NONE: 'NONE',
-  PENDING_CONNECTION_REQUEST: 'PENDING_CONNECTION_REQUEST',
-  AUTHENTICATION_REQUEST: 'AUTHENTICATION_REQUEST',
-}
-
-// TODO: Add isLoading and isPrestine to check for user action call
-const initialState = {
-  inviter: {
-    image: '',
-  },
-  invitee: {
-    image: './images/inviter.jpeg',
-  },
-  data: null,
-  error: null,
-  type: INVITATION_TYPE.NONE,
-  status: INVITATION_STATUS.NONE,
-}
-
-// const AUTHENTICATION_REQUEST = 'AUTHENTICATION_REQUEST'
-const AUTHENTICATION_REQUEST_RECEIVED = 'AUTHENTICATION_REQUEST_RECEIVED'
-const PENDING_CONNECTION_REQUEST = 'PENDING_CONNECTION_REQUEST'
-const PENDING_CONNECTION_SUCCESS = 'PENDING_CONNECTION_SUCCESS'
-const PENDING_CONNECTION_FAILURE = 'PENDING_CONNECTION_FAILURE'
-const SEND_USER_INVITATION_RESPONSE = 'SEND_USER_INVITATION_RESPONSE'
-const SEND_USER_INVITATION_RESPONSE_SUCCESS =
-  'SEND_USER_INVITATION_RESPONSE_SUCCESS'
-const SEND_USER_INVITATION_RESPONSE_FAILURE =
-  'SEND_USER_INVITATION_RESPONSE_FAILURE'
-const RESET_INVITATION_STATUS = 'RESET_INVITATION_STATUS'
-
-export const getInvitationDetailsRequest = (token, config) => ({
-  type: PENDING_CONNECTION_REQUEST,
-  token,
-  config,
-})
-
-export const pendingConnectionSuccess = data => ({
-  type: PENDING_CONNECTION_SUCCESS,
+export const invitationReceived = (data: InvitationReceivedActionData) => ({
+  type: INVITATION_RECEIVED,
   data,
 })
 
-export const pendingConnectionFailure = error => ({
-  type: PENDING_CONNECTION_FAILURE,
+export const sendInvitationResponse = (data: InvitationResponseSendData) => ({
+  type: INVITATION_RESPONSE_SEND,
+  data,
+})
+
+export const invitationSuccess = (senderDID: string) => ({
+  type: INVITATION_RESPONSE_SUCCESS,
+  senderDID,
+})
+
+export const invitationFail = (error: CustomError, senderDID: string) => ({
+  type: INVITATION_RESPONSE_FAIL,
   error,
+  senderDID,
 })
 
-export const sendUserInvitationResponse = (
-  data,
-  config,
-  invitationType,
-  token
-) => ({
-  type: SEND_USER_INVITATION_RESPONSE,
-  data,
-  config,
-  invitationType,
-  token,
+export const invitationRejected = (senderDID: string) => ({
+  type: INVITATION_REJECTED,
+  senderDID,
 })
 
-export const sendUserInvitationResponseSuccess = data => ({
-  type: SEND_USER_INVITATION_RESPONSE_SUCCESS,
-  data,
-})
+export function* sendResponse(
+  action: InvitationResponseSendAction
+): Generator<*, *, *> {
+  yield* ensureVcxInitSuccess()
 
-export const sendUserInvitationResponseFailure = error => ({
-  type: SEND_USER_INVITATION_RESPONSE_FAILURE,
-  error,
-})
+  const { senderDID } = action.data
+  const alreadyExist: boolean = yield select(isDuplicateConnection, senderDID)
+  if (alreadyExist) {
+    yield put(invitationFail(ERROR_ALREADY_EXIST, senderDID))
 
-export const authenticationRequestReceived = data => ({
-  type: AUTHENTICATION_REQUEST_RECEIVED,
-  data,
-})
+    return
+  }
 
-export const resetInvitationStatus = () => ({
-  type: RESET_INVITATION_STATUS,
-})
-
-export function* callPendingConnectionRequest(action) {
   try {
-    const pendingConnectionResponse = yield call(
-      invitationDetailsRequest,
-      action.token,
-      action.config
+    const payload: InvitationPayload = yield select(
+      getInvitationPayload,
+      senderDID
     )
-    yield put(pendingConnectionSuccess(pendingConnectionResponse))
-  } catch (e) {
-    yield put(pendingConnectionFailure(e.message))
-  }
-}
+    const connectionHandle: number = yield call(
+      createConnectionWithInvite,
+      payload
+    )
+    const pairwiseInfo: MyPairwiseInfo = yield call(
+      acceptInvitationVcx,
+      connectionHandle
+    )
 
-export function* watchPendingConnectionRequest() {
-  yield takeLatest(PENDING_CONNECTION_REQUEST, callPendingConnectionRequest)
-}
+    yield put(invitationSuccess(senderDID))
 
-export function* watchLoadInvitationDetailsRequest() {
-  yield takeLatest(SEND_USER_INVITATION_RESPONSE, handleUserInvitationResponse)
-}
+    // once the connection is successful, we need to save serialized connection
+    // in secure storage as well, because libIndy does not handle persistence
+    // once we have persisted serialized state, we can hydrate vcx
+    // if we need anything from that connection
+    const vcxSerializedConnection: string = yield call(
+      serializeConnection,
+      connectionHandle
+    )
+    // TODO:KS Above call will probably interfere with showing bubbles as soon as user
+    // is on home screen after accepting connection
+    // there are few more things that we can do, but we are not doing those here for now
 
-function* handleUserInvitationResponse(action) {
-  try {
-    let invitationActionResponse = null
-    if (action.invitationType == INVITATION_TYPE.AUTHENTICATION_REQUEST) {
-      invitationActionResponse = yield call(sendAuthenticationRequest, action)
-    } else {
-      invitationActionResponse = yield call(
-        sendInvitationConnectionRequest,
-        action
-      )
+    const connection = {
+      newConnection: {
+        identifier: pairwiseInfo.myPairwiseDid,
+        logoUrl: payload.senderLogoUrl,
+        myPairwiseDid: pairwiseInfo.myPairwiseDid,
+        myPairwiseVerKey: pairwiseInfo.myPairwiseVerKey,
+        myPairwiseAgentDid: pairwiseInfo.myPairwiseAgentDid,
+        myPairwiseAgentVerKey: pairwiseInfo.myPairwiseAgentVerKey,
+        myPairwisePeerVerKey: pairwiseInfo.myPairwisePeerVerKey,
+        vcxSerializedConnection,
+        ...payload,
+      },
     }
-    yield put(sendUserInvitationResponseSuccess(invitationActionResponse))
+    yield put(saveNewConnection(connection))
   } catch (e) {
-    yield put(sendUserInvitationResponseFailure(e.message))
+    captureError(e)
+    yield put(invitationFail(ERROR_INVITATION_CONNECT(e.message), senderDID))
   }
 }
 
-export function* watchInvitation() {
-  yield all([
-    watchPendingConnectionRequest(),
-    watchLoadInvitationDetailsRequest(),
-  ])
+function* watchSendInvitationResponse(): any {
+  yield takeLatest(INVITATION_RESPONSE_SEND, sendResponse)
 }
 
-export default function invitation(state = initialState, action) {
+export function* watchInvitation(): any {
+  yield all([watchSendInvitationResponse()])
+}
+
+export default function invitationReducer(
+  state: InvitationStore = invitationInitialState,
+  action: InvitationAction
+) {
   switch (action.type) {
-    case PENDING_CONNECTION_REQUEST:
+    case INVITATION_RECEIVED:
       return {
         ...state,
-        status: INVITATION_STATUS.NONE,
-        type: INVITATION_TYPE.PENDING_CONNECTION_REQUEST,
+        [action.data.payload.senderDID]: {
+          ...action.data,
+          status: ResponseType.none,
+          isFetching: false,
+          error: null,
+        },
       }
-    case PENDING_CONNECTION_SUCCESS:
+
+    case INVITATION_RESPONSE_SEND:
       return {
         ...state,
-        data: action.data,
-        type: INVITATION_TYPE.PENDING_CONNECTION_REQUEST,
+        [action.data.senderDID]: {
+          ...state[action.data.senderDID],
+          isFetching: true,
+          status: action.data.response,
+          error: null,
+        },
       }
-    case PENDING_CONNECTION_FAILURE:
+
+    case INVITATION_RESPONSE_SUCCESS:
       return {
         ...state,
-        error: action.error,
+        [action.senderDID]: {
+          ...state[action.senderDID],
+          isFetching: false,
+          error: null,
+        },
       }
-    case SEND_USER_INVITATION_RESPONSE:
+
+    case INVITATION_RESPONSE_FAIL:
       return {
         ...state,
-        status: action.data.newStatus,
+        [action.senderDID]: {
+          ...state[action.senderDID],
+          isFetching: false,
+          error: action.error,
+          status: ResponseType.none,
+        },
       }
-    case SEND_USER_INVITATION_RESPONSE_SUCCESS:
-      const { authStatus } = action.data
+
+    case INVITATION_REJECTED:
       return {
         ...state,
+        [action.senderDID]: {
+          ...state[action.senderDID],
+          isFetching: false,
+          error: null,
+          status: ResponseType.rejected,
+        },
       }
-    case SEND_USER_INVITATION_RESPONSE_FAILURE:
-      return {
-        ...state,
-        error: action.error,
-      }
-    case RESET_INVITATION_STATUS:
-      return {
-        ...state,
-        type: INVITATION_TYPE.NONE,
-        status: INVITATION_STATUS.NONE,
-      }
-    case AUTHENTICATION_REQUEST_RECEIVED:
-      return {
-        ...state,
-        type: INVITATION_TYPE.AUTHENTICATION_REQUEST,
-        status: INVITATION_STATUS.NONE,
-        data: action.data,
-        error: null,
-      }
+
+    case RESET:
+      return invitationInitialState
+
     default:
       return state
   }

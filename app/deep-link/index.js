@@ -1,38 +1,28 @@
+// @flow
 import React, { PureComponent } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import branch from 'react-native-branch'
-import once from 'lodash/once'
-import { deepLinkData, deepLinkEmpty, deepLinkError } from '../store'
+import { deepLinkData, deepLinkEmpty, deepLinkError } from './deep-link-store'
+import type { DeepLinkProps, DeepLinkBundle } from './type-deep-link'
 
-class DeepLink extends PureComponent {
-  // TODO: Fix this
-  // Problem with below function is that it will not work if
-  // app is moved in background and then a universal link is clicked
-  // from phone, then this function will not get the deep link data
-  // and we will not be able to load connections
-  // However, it will work if we kill the app and then open universal link
-  // it will also work in case of fresh app installation, then also
-  // we should be able to get the deep link data
-  onDeepLinkData = once(bundle => {
-    if (bundle) {
-      if (bundle.error) {
-        this.props.deepLinkError(bundle.error)
-      } else if (bundle.params) {
-        if (bundle.params['+clicked_branch_link'] === true) {
-          // update store with deep link params
-          this.props.deepLinkData(bundle.params.t)
-        } else {
-          // update store that deep link was not clicked
-          this.props.deepLinkEmpty()
-        }
+export class DeepLink extends PureComponent<DeepLinkProps, void> {
+  onDeepLinkData = (bundle: DeepLinkBundle) => {
+    if (bundle.error) {
+      this.props.deepLinkError(bundle.error)
+    } else if (bundle.params) {
+      if (bundle.params['+clicked_branch_link'] === true) {
+        // update store with deep link params
+        this.props.deepLinkData(bundle.params.t)
       } else {
-        this.props.deepLinkEmpty()
+        // update store that deep link was not clicked
+        Object.keys(this.props.tokens).length === 0 &&
+          this.props.deepLinkEmpty()
       }
     } else {
-      this.props.deepLinkEmpty()
+      Object.keys(this.props.tokens).length === 0 && this.props.deepLinkEmpty()
     }
-  })
+  }
 
   componentDidMount() {
     branch.subscribe(this.onDeepLinkData)
@@ -42,6 +32,10 @@ class DeepLink extends PureComponent {
     return null
   }
 }
+
+const mapStateToProps = state => ({
+  tokens: state.deepLink.tokens,
+})
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -53,6 +47,6 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-const DeepLinkConnected = connect(null, mapDispatchToProps)(DeepLink)
+const DeepLinkConnected = connect(mapStateToProps, mapDispatchToProps)(DeepLink)
 
 export default DeepLinkConnected

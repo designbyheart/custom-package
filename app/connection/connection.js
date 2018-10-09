@@ -1,84 +1,76 @@
+// @flow
 import React, { PureComponent } from 'react'
 import {
   View,
-  Text,
-  Button,
   ScrollView,
   Image,
-  AsyncStorage,
   TouchableHighlight,
   StyleSheet,
 } from 'react-native'
-import { StackNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 import { Icon } from 'react-native-elements'
-
-import {
-  Badge,
-  Divider,
-  UserInfoAvatarSection,
-  InfoSectionList,
-  UserInfoEmailSection,
-  UserInfoAddressSection,
-  UserInfoPhoneSection,
-  IdentifyingInfoSection,
-} from '../components'
+import { Badge, InfoSectionList, CustomView } from '../components'
 import ConnectionStatus from './connection-status'
 import ConnectionInfo from './connection-info'
-import user from '../store/data/user'
-import { homeRoute } from '../common/route-constants'
+import { homeRoute, connectionRoute } from '../common/route-constants'
+import { veniceBlue } from '../common/styles/constant'
 
 const styles = StyleSheet.create({
   left: {
+    width: 24,
+    height: 24,
     marginLeft: 15,
-    marginTop: 0,
   },
   right: {
-    marginRight: 16.5,
-    marginTop: 0,
+    width: 22,
+    height: 22,
+    marginRight: 15,
   },
   title: {
-    marginLeft: 34,
-    marginRight: 24,
+    width: 160,
   },
 })
 
 const headerLeft = (
-  <Image style={[styles.left]} source={require('../images/icon_Chat.png')} />
+  <Image
+    style={[styles.left]}
+    source={require('../images/icon_Chat.png')}
+    resizeMode="contain"
+  />
 )
 
 const headerTitle = (
   <Image
     style={[styles.title]}
-    source={require('../images/sovrinsecuredconnection.png')}
+    source={require('../images/SovrinSecuredConnection.png')}
+    resizeMode="contain"
   />
 )
-
-export class ConnectionHome extends PureComponent {
+//Note: This page is not in use. [ND 23/08/2018]
+export class ConnectionHome extends PureComponent<void, void> {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: headerLeft,
     headerTitle: headerTitle,
     headerRight: (
-      <TouchableHighlight
-        onPress={() => {
-          saveRoute = async value => {
-            try {
-              await AsyncStorage.setItem('newCurrentRoute', value)
-            } catch (error) {
-              console.log('Error saving newCurrentRoute' + error)
-            }
-          }
-          this.saveRoute(homeRoute)
-          navigation.navigate(homeRoute)
-        }}
-      >
-        <Image
-          style={[styles.right]}
-          source={require('../images/icon_Close.png')}
-        />
-      </TouchableHighlight>
+      <CustomView>
+        <TouchableHighlight
+          onPress={() => navigation.navigate(homeRoute)}
+          testID={'connection-header-close'}
+          underlayColor={veniceBlue}
+        >
+          <Image
+            testID="connection-header-close-image"
+            accessible={true}
+            accessibilityLabel={'connection-header-close-image'}
+            style={[styles.right]}
+            source={require('../images/icon_close.png')}
+            onPress={() => navigation.navigate(homeRoute)}
+          />
+        </TouchableHighlight>
+      </CustomView>
     ),
     headerStyle: {
-      backgroundColor: '#2A5270',
+      backgroundColor: veniceBlue,
       height: 50,
     },
   })
@@ -89,19 +81,14 @@ export class ConnectionHome extends PureComponent {
         <ConnectionStatus />
         <InfoSectionList>
           <ConnectionInfo />
-          <UserInfoAvatarSection />
-          <IdentifyingInfoSection infos={user.identifyingInfo} />
-          <UserInfoEmailSection emails={user.emails} />
-          <UserInfoAddressSection addresses={user.addresses} />
-          <UserInfoPhoneSection phones={user.phones} />
         </InfoSectionList>
       </ScrollView>
     )
   }
 }
 
-export default StackNavigator({
-  Connections: {
+export default createStackNavigator({
+  [connectionRoute]: {
     screen: ConnectionHome,
   },
 })

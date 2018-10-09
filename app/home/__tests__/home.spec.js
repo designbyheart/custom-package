@@ -1,66 +1,71 @@
-import 'react-native'
+// @flow
 import React from 'react'
+import 'react-native'
 import renderer from 'react-test-renderer'
-import { mock as mockAsyncStorage } from 'mock-async-storage'
+import { Provider } from 'react-redux'
+import { CLAIM_OFFER_STATUS } from '../../claim-offer/type-claim-offer'
+import {
+  claimOfferRoute,
+  homeTabRoute,
+  authenticationRoute,
+} from '../../common'
+import {
+  MESSAGE_TYPE,
+  PUSH_NOTIFICATION_SENT_CODE,
+} from '../../api/api-constants'
+import { DashboardScreen } from '../home'
+import {
+  getNavigation,
+  getStore,
+  myPairWiseConnectionDetails,
+  vcxSerializedConnection,
+} from '../../../__mocks__/static-data'
 
-mockAsyncStorage()
-
-import { HomeScreenDrawer } from '../home'
-
-function props() {
-  const commonInitiaProps = {
-    isFetching: false,
-    isPristine: true,
-    data: null,
-    error: null,
-  }
-
+function props(claimOfferStatus) {
   return {
-    user: {
-      isFetching: false,
-      isPrestine: true,
-      error: {},
-      data: {},
+    connections: {
+      data: {
+        '3nj819kkjywdppuje79': {
+          identifier: '3nj819kkjywdppuje79',
+          name: 'Test Connection',
+          senderDID: '70075yyojywdppuje79',
+          senderEndpoint: '34.216.340.155:3000',
+          size: 100,
+          logoUrl: 'https://logourl.com/logo.png',
+          vcxSerializedConnection,
+          ...myPairWiseConnectionDetails,
+        },
+      },
     },
-    connections: {},
-    loadUserInfo: jest.fn(),
-    loadConnections: jest.fn(),
-    // invitationReceived: jest.fn(),
-    pushNotificationPermissionAction: jest.fn(),
-    pushNotification: { isPNAllowed: true },
-    home: {
-      avatarTapCount: 0,
-      enrollResponse: commonInitiaProps,
-      userInfoResponse: commonInitiaProps,
+    navigation: getNavigation(),
+    claimOfferStatus: claimOfferStatus || CLAIM_OFFER_STATUS.RECEIVED,
+    route: {
+      currentScreen: homeTabRoute,
     },
+    pushNotification: {
+      notification: null,
+    },
+    getUserInfo: jest.fn(),
+    pushNotificationReceived: jest.fn(),
+    authenticationRequestReceived: jest.fn(),
+    unSeenMessages: {},
   }
 }
 
-describe('home page should', () => {
-  xit('redirect user to invitation page once invitation is receieved', () => {
-    const homeProps = props()
-    const okInit = { status: 200 }
+describe('<DashboardScreen />', () => {
+  const store = getStore()
 
-    // mock response for API calls
-    fetch.mockResponseOnce(
-      JSON.stringify({ status: 'NO_RESPONSE_YET' }),
-      okInit
-    )
-    fetch.mockResponseOnce(
-      JSON.stringify({ status: 'NO_RESPONSE_YET' }),
-      okInit
-    )
+  jest.useFakeTimers()
 
-    const component = renderer.create(<HomeScreenDrawer {...homeProps} />)
-    component.pushNotificationPermissionAction = true
-
-    let tree = component.toJSON()
-
-    setTimeout(() => {
-      expect(tree).toMatchSnapshot()
-      // expect that fetch is called twice, once for enrollUser and once for poll
-      expect(fetch.mock.calls.length).toBeGreaterThan(1)
-      // TODO:KS Add more expect statements to check for other functionalities
-    }, 5000)
+  it('should render Home and redirect user to claim offer modal', () => {
+    const dashboardProps = props()
+    const wrapper = renderer
+      .create(
+        <Provider store={store}>
+          <DashboardScreen {...dashboardProps} />
+        </Provider>
+      )
+      .toJSON()
+    expect(wrapper).toMatchSnapshot()
   })
 })

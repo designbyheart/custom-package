@@ -9,6 +9,7 @@ build/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata
+xcshareddata
 *.xccheckout
 *.moved-aside
 DerivedData
@@ -30,7 +31,10 @@ yarn-error.log
 build/
 .idea
 .gradle
+.project
+.settings/
 local.properties
+gradle.deps
 *.iml
 
 # fastlane
@@ -38,11 +42,11 @@ local.properties
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
 # screenshots whenever they are needed.
 # For more information about the recommended setup visit:
-# https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Gitignore.md
+# https://docs.fastlane.tools/best-practices/source-control/
 
-fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots
+*/fastlane/report.xml
+*/fastlane/Preview.html
+*/fastlane/screenshots
 
 # BUCK
 buck-out/
@@ -52,11 +56,28 @@ buck-out/
 # ios specific files
 .DS_Store
 app/.DS_Store
+ios/Pods
 
 # vscode files
-.vscode
+jsconfig.json
 
 # ui automation test folder
 connectMeUITest/test-output
 connectMeUITest/*.log
 connectMeUITest/target
+
+ios/ConnectMe.app.dSYM.zip
+
+# ignore code coverage report
+coverage/
+# ignore files
+.podinstall
+.yarninstall
+
+# npm lock file, we are not using npm command to install packages
+package-lock.json
+android/app/src/main/assets/index.android.bundle
+android/app/src/main/assets/index.android.bundle.meta
+
+# Bitrise secret ignore
+.bitrise.secrets.yml

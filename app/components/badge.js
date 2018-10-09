@@ -1,13 +1,17 @@
+// @flow
 import React from 'react'
 import { Image, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native'
-import { CustomView } from './layout'
+import { CustomView } from './layout/custom-view'
 import { color, font } from '../common/styles/constant'
+import empty from '../common/empty'
 
 // We need both type of ribbon and it is better to load them once
 const whiteRibbon = require('../images/ribbon_white.png')
-const grayRibbbon = require('../images/ribbon.png')
+const grayRibbon = require('../images/ribbon.png')
 
-export const BadgeLabel = props => {
+// TODO:KS Add props, this component is not being used right now
+// so it is not that important to add types here
+export const BadgeLabel = (props: *) => {
   const textColor = props.secondary ? styles.secondary : styles.primary
   const center = props.center ? styles.center : null
 
@@ -18,11 +22,11 @@ export const BadgeLabel = props => {
   )
 }
 
-const Badge = ({ count, secondary, badgeStyle, shadow, onPress }) => {
+const Badge = ({ count, secondary, badgeStyle, shadow, onPress }: *) => {
   const badgeColor = secondary
     ? color.bg.primary.font.primary
     : color.bg.secondary.font.primary
-  const ribbon = secondary ? whiteRibbon : grayRibbbon
+  const ribbon = secondary ? whiteRibbon : grayRibbon
   const style = shadow ? styles.shadow : null
 
   return (
@@ -35,7 +39,7 @@ const Badge = ({ count, secondary, badgeStyle, shadow, onPress }) => {
           onPress={onPress}
         />
       </TouchableWithoutFeedback>
-      <BadgeLabel center secondary={secondary} text={count} />
+      <BadgeLabel center secondary={secondary} text={count} style={empty} />
     </CustomView>
   )
 }
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
   },
   label: {
-    fontSize: font.XS,
+    fontSize: font.size.XS,
     fontWeight: 'bold',
   },
   primary: {

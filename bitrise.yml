@@ -1,49 +1,60 @@
+---
+format_version: 1.3.1
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 app:
   envs:
   - GRADLE_BUILD_FILE_PATH: android/build.gradle
-  - GRADLE_TASK: assemble
   - GRADLEW_PATH: android/gradlew
-- opts:
-      is_expand: true
-    GITHUB_USER_NAME: evernym-gocd
+  - FASTLANE_ANDROID_WORK_DIR: android
+  - FASTLANE_ANDROID_LANE: alpha
   - opts:
       is_expand: true
-    GITHUB_USER_EMAIL: evernym-gocd@evernym.com
+    GITHUB_USER_NAME: iosdev-evernym
+  - opts:
+      is_expand: true
+    GITHUB_USER_EMAIL: iosdev@evernym.com
   - opts:
       is_expand: false
-    FASTLANE_WORK_DIR: android
+    FASTLANE_WORK_DIR: ios
   - opts:
       is_expand: false
     FASTLANE_LANE: beta
+  - MAVEN: connectMeUITest
+    opts:
+      is_expand: false
 trigger_map:
-- push_branch: 'master'
+- push_branch: master
   workflow: primary
-- pull_request_source_branch: '*'
+- push_branch: stage
+  workflow: primary
+- push_branch: stable
+  workflow: primary
+- pull_request_source_branch: master
   workflow: primary
 workflows:
   primary:
     steps:
+    - git-clone@3.5.2: {}
+    - yarn@0.0.4:
+        inputs:
+        - command: ''
+        - args: ''
+    - fastlane@2.3.9:
+        inputs:
+        - lane: "$FASTLANE_LANE"
+        - work_dir: "$FASTLANE_WORK_DIR"
+    envs:
+    - BITRISE_PROJECT_PATH: ios/ConnectMe.xcworkspace
+  android:
+    steps:
     - activate-ssh-key@3.1.1:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
-    - git-clone@3.4.1: {}
-    - script@1.1.3:
-        title: Update Android Extra packages
+    - git-clone@4.0.10: {}
+    - npm@0.9.1:
         inputs:
-        - content: |
-            #!/bin/bash
-            set -ex
-
-            echo y | android update sdk --no-ui --all --filter platform-tools | grep 'package installed'
-
-            echo y | android update sdk --no-ui --all --filter extra-android-support | grep 'package installed'
-            echo y | android update sdk --no-ui --all --filter extra-android-m2repository | grep 'package installed'
-
-            echo y | android update sdk --no-ui --all --filter extra-google-google_play_services | grep 'package installed'
-            echo y | android update sdk --no-ui --all --filter extra-google-m2repository | grep 'package installed'
-    - gradle-runner@1.5.2:
+        - command: install
+    - install-missing-android-tools@2.1.1: {}
+    - fastlane@2.3.12:
         inputs:
-        - gradle_file: $GRADLE_BUILD_FILE_PATH
-        - gradle_task: $GRADLE_TASK
-        - gradlew_path: $GRADLEW_PATH
-    - deploy-to-bitrise-io@1.2.5: {}
+        - lane: "$FASTLANE_ANDROID_LANE"
+        - work_dir: "$FASTLANE_ANDROID_WORK_DIR"

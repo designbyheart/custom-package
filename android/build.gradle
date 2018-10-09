@@ -3,12 +3,13 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
-
+        classpath 'com.android.tools.build:gradle:3.0.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        classpath 'com.google.gms:google-services:3.1.1'
     }
 }
 
@@ -19,6 +20,29 @@ allprojects {
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
+        }
+        maven {
+             url 'https://evernym.mycloudrepo.io/public/repositories/libvcx-android'
+         }
+        maven {
+            url "https://maven.google.com"
+        }
+        flatDir {
+            dirs 'libs'
+        }
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+}
+
+subprojects {
+    afterEvaluate {project ->
+        if (project.hasProperty("android")) {
+            android {
+                compileSdkVersion 26
+                buildToolsVersion '26.0.3'
+            }
         }
     }
 }

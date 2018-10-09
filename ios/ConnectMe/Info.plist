@@ -20,8 +20,21 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>connectme</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>90</string>
+	<string>677</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<true/>
+	<key>ITSEncryptionExportComplianceCode</key>
+	<string>3ca4b2eb-b35a-47f4-a4f6-95cc41a2bfd7</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -30,15 +43,16 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>34.210.167.140</key>
+			<key>culedger.com</key>
 			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<key>NSIncludesSubdomains</key>
 				<true/>
-			</dict>
-			<key>35.166.201.131</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<key>NSRequiresCertificateTransparency</key>
+				<false/>
+				<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<false/>
 			</dict>
 			<key>evernym.com</key>
 			<dict>
@@ -51,15 +65,23 @@
 				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
 				<false/>
 			</dict>
+			<key>https://agency-ea-sandbox.evernym.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>https://agency-sandbox.evernym.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
 			<key>localhost</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
-			<key>culedger.com</key>
+			<key>sentry.io</key>
 			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
 				<key>NSRequiresCertificateTransparency</key>
 				<false/>
 				<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
@@ -69,24 +91,12 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>branch_key</key>
-	<dict>
-		<key>live</key>
-		<string>key_live_gcrCKTHBKlx7N31qxgq33bpmzupAwr1q</string>
-		<key>test</key>
-		<string>key_test_fnzEMTMuTnr6HZWEBbJVOmfhsymtrs8S</string>
-	</dict>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>connectme</string>
-			</array>
-		</dict>
-	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow us access to Camera so that we can scan QR code</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please allow us access to Photo library so that you can change your profile photo</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
@@ -99,6 +109,25 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Feather.ttf</string>
+		<string>Lato-Black.ttf</string>
+		<string>Lato-BlackItalic.ttf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-BoldItalic.ttf</string>
+		<string>Lato-Hairline.ttf</string>
+		<string>Lato-HairlineItalic.ttf</string>
+		<string>Lato-Heavy.ttf</string>
+		<string>Lato-HeavyItalic.ttf</string>
+		<string>Lato-Italic.ttf</string>
+		<string>Lato-Light.ttf</string>
+		<string>Lato-LightItalic.ttf</string>
+		<string>Lato-Medium.ttf</string>
+		<string>Lato-MediumItalic.ttf</string>
+		<string>Lato-Regular.ttf</string>
+		<string>Lato-Semibold.ttf</string>
+		<string>Lato-SemiboldItalic.ttf</string>
+		<string>Lato-Thin.ttf</string>
+		<string>Lato-ThinItalic.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -108,13 +137,24 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict/>
+	</array>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_gcrCKTHBKlx7N31qxgq33bpmzupAwr1q</string>
+		<key>test</key>
+		<string>key_test_fnzEMTMuTnr6HZWEBbJVOmfhsymtrs8S</string>
+	</dict>
 </dict>
 </plist>

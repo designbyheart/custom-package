@@ -15,56 +15,74 @@ public class Setup {
 
 	public static AppiumDriver driver = null;
 
-	public static AppiumDriver openApp(String Device) throws Exception {
+	public static AppiumDriver ConfigureDriver(String DeviceType) throws Exception {
 
-		String sBrowserName;
 
 		try {
 
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 
-			if (Device == "Real Device") {
+			if (DeviceType == "App") {
 				capabilities.setCapability("automationName", "XCUITest");
-				capabilities.setCapability("platformVersion", "10.0");
+				capabilities.setCapability("platformVersion", "10.3");
 				capabilities.setCapability("platformName", "iOS");
+				capabilities.setCapability("useNewWDA", "true");
 				capabilities.setCapability("bundleId", "com.evernym.connectme.callcenter");
 				capabilities.setCapability("deviceName", "Ankur's iPhone");//device name
 				capabilities.setCapability("udid", "42d9657d87b56203d1c4c5eb22fde827ca2c0090");//udid of device
-				capabilities.setCapability("app","Users/ankurmishra/Downloads/ConnectMe-4.ipa");//ipa path
-				// capabilities.setCapability("udid",
-				// "b78a49129d22c79c81e303b812d14abaa6fc817d");
 				capabilities.setCapability("xcodeOrgId", "ES8QU3D2A4");
 				capabilities.setCapability("xcodeSigningId", "iPhone Developer");
-				capabilities.setCapability("autoAcceptAlerts", true);
-				driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-				// capabilities.setCapability("fullReset","true");
-				// capabilities.setCapability("noReset","false");
-			} else {
-				capabilities.setCapability("testobject_device", "iPhone_5_16GB_real");
-				capabilities.setCapability("testobject_api_key", "C4B377A5412C477DA2E5649E12B82397");
-				driver = new IOSDriver(new URL("https://eu1.appium.testobject.com/wd/hub"), capabilities);
-			}
-
-			/*
+				driver = new IOSDriver(new URL("http://183.82.106.249:4723/wd/hub"), capabilities);
+				/*driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"),//if some one wants to run locally
+			                capabilities);	/*
+			                			
 			 * We initialize the Appium driver that will connect us to the ios
 			 * device with the capabilities that we have just set. The URL we
 			 * are providing is telling Appium we
-			 * https://eu1.appium.testobject.com/wd/hub
+			 * http://183.82.106.249:4723/wd/hub
 			 * 
 			 * are going to run the test on Real ios Device lets say iphone 6s.
 			 */
 
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 			// Setting DefauLt time out to 60 seconds
-			Log.info("Mobile application launched successfully");
+			System.out.println("Mobile application launched successfully");
+
 
 		}
+			else
+			{
+				capabilities.setCapability("platformVersion", "10.3");
+				capabilities.setCapability("platformName", "iOS");
+				capabilities.setCapability("useNewWDA", "true");
+				capabilities.setCapability("deviceName", "Ankur's iPhone");//device name
+				capabilities.setCapability("udid", "42d9657d87b56203d1c4c5eb22fde827ca2c0090");//udid of device
+				capabilities.setCapability("browserName", "Safari");
+				driver = new IOSDriver(new URL("http://183.82.106.249:4723/wd/hub"), capabilities);
+             	/*driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"),
+			                capabilities);	/*for local test
+			 * We initialize the Appium driver that will connect us to the ios
+			 * device with the capabilities that we have just set. The URL we
+			 * are providing is telling Appium we
+			 * http://183.82.106.249:4723/wd/hub
+			 * 
+			 * are going to run the test on Real ios Device lets say iphone 6s.
+			 */
+
+			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+			// Setting DefauLt time out to 60 seconds
+			System.out.println("Safari browser launched successfully");
+
+				
+				
+			}
+		}	
 
 		catch (Exception e)
 
 		{
 
-			Log.error("Class Setup | Method OpenBrowser | Exception desc : " + e.getMessage());
+			System.out.println("Class Setup | Method OpenBrowser | Exception desc : " + e.getMessage());
 
 		}
 

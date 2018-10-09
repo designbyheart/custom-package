@@ -1,42 +1,93 @@
-import React from 'react'
+// @flow
+import React, { PureComponent } from 'react'
 import { StyleSheet } from 'react-native'
 import { Button } from 'react-native-elements'
-import { color } from '../common/styles/constant'
-import empty from '../common/empty'
+import { color, font } from '../common/styles/constant'
+import debounce from 'lodash.debounce'
 
-const type = {
-  primary: {
-    backgroundColor: color.actions.primary,
-  },
-  secondary: {
-    backgroundColor: color.actions.secondary,
-  },
-  tertiary: {
-    backgroundColor: color.actions.tertiary,
-  },
-  dangerous: {
-    backgroundColor: color.actions.dangerous,
-  },
+const empty = []
+
+const getButtonProps = type => ({
+  backgroundColor: color.actions[type],
+  color: color.actions.font[type],
+  textAlign: 'center',
+})
+
+// TODO:KS Add specific prop that are needed and used by Button
+export default class CustomButton extends PureComponent<*, void> {
+  debounceButtonPress = debounce(
+    event => {
+      if (this.props.onPress) {
+        this.props.onPress(event)
+      }
+    },
+    600,
+    { leading: true, trailing: false }
+  )
+
+  render() {
+    const {
+      primary,
+      secondary,
+      tertiary,
+      quaternary,
+      fifth,
+      dangerous,
+      medium,
+      customColor = {},
+      disabled,
+    } = this.props
+    const buttonStyles = this.props.style || empty
+    const style = [
+      medium ? styles.mediumVerticalPadding : null,
+      ...buttonStyles,
+    ]
+
+    const buttonType = primary
+      ? 'sixth'
+      : secondary
+        ? 'secondary'
+        : tertiary
+          ? 'tertiary'
+          : quaternary
+            ? 'quaternary'
+            : dangerous ? 'dangerous' : fifth ? 'eighth' : 'fifth'
+    const buttonProps = { ...getButtonProps(buttonType), ...customColor }
+    // when button is disabled, we want to apply same color that is
+    // generated while picking up the color from image
+    const disabledStyles = [
+      { backgroundColor: customColor.backgroundColor || color.actions.none },
+      styles.disabled,
+    ]
+
+    return (
+      <Button
+        {...this.props}
+        onPress={this.debounceButtonPress}
+        {...buttonProps}
+        accessible={true}
+        accessibilityLabel={this.props.testID}
+        buttonStyle={style}
+        containerViewStyle={styles.buttonContainer}
+        disabledStyle={disabledStyles}
+      />
+    )
+  }
 }
-
-const CustomButton = props => {
-  const { primary, secondary, tertiary, dangerous } = props
-  const buttonStyles = props.style || empty
-  const style = [styles.button, ...buttonStyles]
-
-  const buttonType = primary
-    ? 'primary'
-    : secondary ? 'secondary' : tertiary ? 'tertiary' : 'dangerous'
-  const buttonProps = type[buttonType]
-
-  return <Button {...props} {...buttonProps} buttonStyle={style} />
-}
-
-export default CustomButton
 
 const styles = StyleSheet.create({
-  button: {
+  buttonContainer: {
     marginRight: 0,
     marginLeft: 0,
+  },
+  mediumVerticalPadding: {
+    paddingVertical: 17,
+  },
+  disabled: {
+    opacity: 0.4,
+  },
+  text: {
+    fontWeight: '600',
+    fontSize: font.size.M,
   },
 })

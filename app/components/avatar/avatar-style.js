@@ -1,6 +1,6 @@
+// @flow
 import React from 'react'
 import { StyleSheet } from 'react-native'
-
 const size = {
   small: 50,
   medium: 76,
@@ -28,5 +28,8 @@ export default StyleSheet.create({
   },
   largeRound: {
     borderRadius: size.large / 2,
+  },
+  clearBg: {
+    backgroundColor: 'transparent',
   },
 })
