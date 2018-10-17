@@ -6,7 +6,7 @@ App to connect Sovrin with 3rd party authentication
 - Mac machine
 - XCode 9
 - Node 8+. Preferred way to install node is via [nvm](https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/)
-- [React native setup](http://facebook.github.io/react-native/docs/getting-started.html). Use tab `Building Projects with Native Code`. 
+- [React native setup](http://facebook.github.io/react-native/docs/getting-started.html). Use tab `Building Projects with Native Code`.
 - Ruby
 - Make sure `pod` (1.5.3) is installed or run `sudo gem install cocoapods -v 1.5.3`
 - Android Studio 3+
@@ -64,7 +64,7 @@ Failed to capture snapshot of input files for task ':app:bundleReleaseJsAndAsset
 > Could not list contents of '/Users/norm/forge/work/code/evernym/ConnectMe/node_modules/jest-runtime/node_modules/babel-core/node_modules/.bin/babylon'. Couldn't follow symbolic link.
 - run ` brew install maven `
 - download the vcx.aar file
-- later run ` mvn install:install-file -Dfile=com.evernym-vcx_1.0.0-12-06-2018T16-17_x86-armv7-release.aar -DgroupId=com.connectme -DartifactId=vcx -Dversion=1.0.0-12-06-2018T16-17 -Dpackaging=aar `
+- later run ` mvn install:install-file -Dfile=com.evernym-vcx_1.0.0-12-06-2018T16-17_x86-armv7-release.aar -DgroupId=com.evernym -DartifactId=vcx -Dversion=1.0.0-12-06-2018T16-17 -Dpackaging=aar `
 - remember to change file names as required in the above mvn install command
 
 # To Read
