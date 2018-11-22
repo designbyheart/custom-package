@@ -16,17 +16,18 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
-        jcenter()
+        google()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
         }
         maven {
-             url 'https://evernym.mycloudrepo.io/public/repositories/libvcx-android'
-         }
+            url 'https://evernym.mycloudrepo.io/public/repositories/libvcx-android'
+        }
         maven {
             url "https://maven.google.com"
         }
+        jcenter()
         flatDir {
             dirs 'libs'
         }
