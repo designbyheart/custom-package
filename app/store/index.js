@@ -115,6 +115,7 @@ sagaMiddleware.run(function*() {
     watchProofRequestReceived(),
     watchLedgerStore(),
     watchOffline(),
+    watchOnfido(),
   ])
 })
 

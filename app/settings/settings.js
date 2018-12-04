@@ -368,7 +368,6 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     return (
       <Container style={[style.mainContainer]}>
         <CustomView tertiary>
-          <Banner navigation={this.props.navigation} />
           <ScrollView>
             {userAvatar}
             <List containerStyle={[style.mainContainer, style.listContainer]}>
