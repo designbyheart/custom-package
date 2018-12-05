@@ -21,6 +21,7 @@ export const lightDarkBlue = '#4A8FE3'
 export const darkGray = '#505050'
 export const maroonRed = '#d1021b'
 export const lightDarkGray = '#F4F4F4'
+export const gainsBoro = '#E3E3E3'
 
 const sirocco = '#636564'
 const corduroy = '#3f4140'
@@ -206,6 +207,7 @@ export const color = {
 
 export const font = {
   size: {
+    XXS: 11,
     XS: 12,
     S: 15,
     M: 17,

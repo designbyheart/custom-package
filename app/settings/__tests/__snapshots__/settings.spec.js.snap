@@ -228,9 +228,7 @@ exports[`user settings screen should render properly and snapshot should match f
                     "backgroundColor": "#333333",
                     "color": "#ffffff",
                   },
-                  Object {
-                    "fontWeight": "bold",
-                  },
+                  null,
                   null,
                   Object {
                     "backgroundColor": "transparent",
@@ -246,7 +244,7 @@ exports[`user settings screen should render properly and snapshot should match f
                     "color": "#4A4A4A",
                   },
                   Object {
-                    "fontSize": 12,
+                    "fontSize": 11,
                     "paddingBottom": 5,
                     "paddingTop": 5,
                   },
@@ -274,6 +272,7 @@ exports[`user settings screen should render properly and snapshot should match f
                   "backgroundColor": "#F4F4F4",
                   "borderBottomWidth": 0,
                   "borderTopWidth": 0,
+                  "padding": 0,
                 },
               ],
             ]
@@ -311,10 +310,14 @@ exports[`user settings screen should render properly and snapshot should match f
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -451,8 +454,10 @@ exports[`user settings screen should render properly and snapshot should match f
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -499,7 +504,8 @@ exports[`user settings screen should render properly and snapshot should match f
                           null,
                           null,
                           Object {
-                            "color": "#505050",
+                            "color": "#777777",
+                            "fontFamily": "Lato",
                             "marginLeft": 10,
                           },
                         ]
@@ -539,7 +545,8 @@ exports[`user settings screen should render properly and snapshot should match f
                             null,
                             null,
                             Object {
-                              "color": "#505050",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
                             },
                           ]
                         }
@@ -584,10 +591,14 @@ exports[`user settings screen should render properly and snapshot should match f
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -724,8 +735,10 @@ exports[`user settings screen should render properly and snapshot should match f
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -768,9 +781,9 @@ exports[`user settings screen should render properly and snapshot should match f
                           },
                           Array [
                             Object {
-                              "color": "#505050",
-                              "fontSize": 12,
-                              "fontWeight": "bold",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 11,
                             },
                           ],
                           undefined,
@@ -876,10 +889,14 @@ exports[`user settings screen should render properly and snapshot should match f
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -1016,8 +1033,10 @@ exports[`user settings screen should render properly and snapshot should match f
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -1060,9 +1079,9 @@ exports[`user settings screen should render properly and snapshot should match f
                           },
                           Array [
                             Object {
-                              "color": "#505050",
-                              "fontSize": 12,
-                              "fontWeight": "bold",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 11,
                             },
                           ],
                           undefined,
@@ -1108,10 +1127,14 @@ exports[`user settings screen should render properly and snapshot should match f
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -1248,8 +1271,10 @@ exports[`user settings screen should render properly and snapshot should match f
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -1292,9 +1317,9 @@ exports[`user settings screen should render properly and snapshot should match f
                           },
                           Array [
                             Object {
-                              "color": "#505050",
-                              "fontSize": 12,
-                              "fontWeight": "bold",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 11,
                             },
                           ],
                           undefined,
@@ -1340,10 +1365,14 @@ exports[`user settings screen should render properly and snapshot should match f
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -1480,8 +1509,10 @@ exports[`user settings screen should render properly and snapshot should match f
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -1524,9 +1555,9 @@ exports[`user settings screen should render properly and snapshot should match f
                           },
                           Array [
                             Object {
-                              "color": "#505050",
-                              "fontSize": 12,
-                              "fontWeight": "bold",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 11,
                             },
                           ],
                           undefined,
@@ -1572,10 +1603,14 @@ exports[`user settings screen should render properly and snapshot should match f
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -1663,8 +1698,10 @@ exports[`user settings screen should render properly and snapshot should match f
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -1707,9 +1744,9 @@ exports[`user settings screen should render properly and snapshot should match f
                           },
                           Array [
                             Object {
-                              "color": "#505050",
-                              "fontSize": 12,
-                              "fontWeight": "bold",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 11,
                             },
                           ],
                           undefined,
@@ -1944,9 +1981,7 @@ exports[`user settings screen should render properly and snapshot should match i
                     "backgroundColor": "#333333",
                     "color": "#ffffff",
                   },
-                  Object {
-                    "fontWeight": "bold",
-                  },
+                  null,
                   null,
                   Object {
                     "backgroundColor": "transparent",
@@ -1962,7 +1997,7 @@ exports[`user settings screen should render properly and snapshot should match i
                     "color": "#4A4A4A",
                   },
                   Object {
-                    "fontSize": 12,
+                    "fontSize": 11,
                     "paddingBottom": 5,
                     "paddingTop": 5,
                   },
@@ -1990,6 +2025,7 @@ exports[`user settings screen should render properly and snapshot should match i
                   "backgroundColor": "#F4F4F4",
                   "borderBottomWidth": 0,
                   "borderTopWidth": 0,
+                  "padding": 0,
                 },
               ],
             ]
@@ -2027,10 +2063,14 @@ exports[`user settings screen should render properly and snapshot should match i
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -2167,8 +2207,10 @@ exports[`user settings screen should render properly and snapshot should match i
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -2215,7 +2257,8 @@ exports[`user settings screen should render properly and snapshot should match i
                           null,
                           null,
                           Object {
-                            "color": "#505050",
+                            "color": "#777777",
+                            "fontFamily": "Lato",
                             "marginLeft": 10,
                           },
                         ]
@@ -2255,7 +2298,8 @@ exports[`user settings screen should render properly and snapshot should match i
                             null,
                             null,
                             Object {
-                              "color": "#505050",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
                             },
                           ]
                         }
@@ -2300,10 +2344,14 @@ exports[`user settings screen should render properly and snapshot should match i
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -2440,8 +2488,10 @@ exports[`user settings screen should render properly and snapshot should match i
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -2484,9 +2534,9 @@ exports[`user settings screen should render properly and snapshot should match i
                           },
                           Array [
                             Object {
-                              "color": "#505050",
-                              "fontSize": 12,
-                              "fontWeight": "bold",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 11,
                             },
                           ],
                           undefined,
@@ -2550,10 +2600,14 @@ exports[`user settings screen should render properly and snapshot should match i
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -2690,8 +2744,10 @@ exports[`user settings screen should render properly and snapshot should match i
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -2734,9 +2790,9 @@ exports[`user settings screen should render properly and snapshot should match i
                           },
                           Array [
                             Object {
-                              "color": "#505050",
-                              "fontSize": 12,
-                              "fontWeight": "bold",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 11,
                             },
                           ],
                           undefined,
@@ -2782,10 +2838,14 @@ exports[`user settings screen should render properly and snapshot should match i
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -2922,8 +2982,10 @@ exports[`user settings screen should render properly and snapshot should match i
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -2966,9 +3028,9 @@ exports[`user settings screen should render properly and snapshot should match i
                           },
                           Array [
                             Object {
-                              "color": "#505050",
-                              "fontSize": 12,
-                              "fontWeight": "bold",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 11,
                             },
                           ],
                           undefined,
@@ -3014,10 +3076,14 @@ exports[`user settings screen should render properly and snapshot should match i
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -3154,8 +3220,10 @@ exports[`user settings screen should render properly and snapshot should match i
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -3198,9 +3266,9 @@ exports[`user settings screen should render properly and snapshot should match i
                           },
                           Array [
                             Object {
-                              "color": "#505050",
-                              "fontSize": 12,
-                              "fontWeight": "bold",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 11,
                             },
                           ],
                           undefined,
@@ -3246,10 +3314,14 @@ exports[`user settings screen should render properly and snapshot should match i
                   },
                   Array [
                     Object {
-                      "borderBottomWidth": 0.2,
+                      "borderBottomColor": "#E3E3E3",
+                      "borderBottomWidth": 1,
                       "borderTopWidth": 0,
-                      "paddingBottom": 11,
-                      "paddingTop": 11,
+                      "justifyContent": "center",
+                      "minHeight": 64,
+                      "paddingBottom": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
                     },
                   ],
                   false,
@@ -3337,8 +3409,10 @@ exports[`user settings screen should render properly and snapshot should match i
                           },
                           Array [
                             Object {
-                              "fontSize": 17,
-                              "fontWeight": "500",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
                             },
                           ],
                           undefined,
@@ -3381,9 +3455,9 @@ exports[`user settings screen should render properly and snapshot should match i
                           },
                           Array [
                             Object {
-                              "color": "#505050",
-                              "fontSize": 12,
-                              "fontWeight": "bold",
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 11,
                             },
                           ],
                           undefined,

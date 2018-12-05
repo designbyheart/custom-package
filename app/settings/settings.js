@@ -43,6 +43,7 @@ import {
   font,
   lightDarkGray,
   lightWhite,
+  gainsBoro,
 } from '../common/styles/constant'
 import {
   EDIT_ICON_DIMENSIONS,
@@ -100,21 +101,28 @@ const style = StyleSheet.create({
     borderBottomWidth: 0,
     borderTopWidth: 0,
     backgroundColor: lightDarkGray,
+    padding: 0,
   },
   listItemContainer: {
-    borderBottomWidth: HAIRLINE_WIDTH,
+    borderBottomWidth: 1,
     borderTopWidth: 0,
-    paddingTop: 11,
-    paddingBottom: 11,
+    borderBottomColor: gainsBoro,
+    minHeight: 64,
+    justifyContent: 'center',
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingRight: 0,
   },
   titleStyle: {
-    fontSize: font.size.M,
-    fontWeight: '500',
+    fontFamily: font.family,
+    fontSize: font.size.M1,
+    fontWeight: 'bold',
+    color: grey,
   },
   subtitleStyle: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: matterhornSecondary,
+    fontFamily: font.family,
+    fontSize: font.size.XXS,
+    color: grey,
   },
   avatarStyle: { backgroundColor: lightDarkGray, padding: 5 },
   username: {
@@ -122,7 +130,7 @@ const style = StyleSheet.create({
     padding: '3%',
   },
   tokenText: {
-    fontSize: font.size.XS,
+    fontSize: font.size.XXS,
     paddingTop: 5,
     paddingBottom: 5,
   },
@@ -139,10 +147,12 @@ const style = StyleSheet.create({
   },
   backupTimeSubtitleStyle: {
     marginLeft: 10,
-    color: matterhornSecondary,
+    color: grey,
+    fontFamily: font.family,
   },
   subtitleColor: {
-    color: matterhornSecondary,
+    color: grey,
+    fontFamily: font.family,
   },
 })
 
@@ -244,7 +254,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         </CustomDate>
       </CustomText>
     ) : (
-      ''
+      'Please create backup now!'
     )
   }
 
@@ -283,7 +293,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
           </CustomText>
         </CustomView>
         <CustomView>
-          <CustomText transparentBg bold darkgray style={[style.tokenText]}>
+          <CustomText transparentBg darkgray style={[style.tokenText]}>
             TOKENS
           </CustomText>
         </CustomView>
