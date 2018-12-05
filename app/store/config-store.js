@@ -257,10 +257,12 @@ export const changeEnvironmentUrl = (url: string) => ({
   url,
 })
 
+export const reset = () => ({
+  type: RESET,
+})
+
 export function* resetStore(): Generator<*, *, *> {
-  yield put({
-    type: RESET,
-  })
+  yield put(reset())
 }
 
 export function* onChangeEnvironmentUrl(
@@ -627,7 +629,6 @@ export function* getMessagesSaga(): Generator<*, *, *> {
       } catch (e) {
         captureError(e)
         // throw error
-        console.log('acknowledgeServer error:', e)
       }
     }
     yield put(getMessagesSuccess())
@@ -642,11 +643,18 @@ const traverseAndGetAllMessages = (
   data: DownloadedConnectionsWithMessages
 ): Array<DownloadedMessage> => {
   let messages: Array<DownloadedMessage> = []
-  data.map(connection =>
-    connection.msgs.map(message => {
-      messages.push(message)
-    })
-  )
+  if (Array.isArray(data)) {
+    data.map(
+      connection =>
+        connection &&
+        connection.msgs &&
+        connection.msgs.map(message => {
+          messages.push(message)
+        })
+    )
+  } else {
+    return []
+  }
   return messages
 }
 
@@ -834,60 +842,6 @@ const convertDecryptedPayloadToSerializedProofRequest = (
   return JSON.stringify(stringifiableProofRequest)
 }
 
-export function* acceptClaimOffersIfInPending(
-  forDID: string,
-  senderDID: string
-): any {
-  const claimOffers = yield select(getClaimOffers)
-  const uids = Object.keys(claimOffers)
-
-  for (let i = 0; i < uids.length; i++) {
-    if (uids[i] !== 'vcxSerializedClaimOffers') {
-      let claimRequestStatus = null
-      const uid = uids[i]
-      const claimOffer = yield select(getClaimOffer, uid)
-      if (claimOffer) claimRequestStatus = claimOffer.claimRequestStatus
-      const vcxSerializedClaimOffer: SerializedClaimOffer | null = yield select(
-        getSerializedClaimOffer,
-        forDID,
-        uid
-      )
-      if (
-        vcxSerializedClaimOffer &&
-        vcxSerializedClaimOffer.state === VCX_CLAIM_OFFER_STATE.RECEIVED &&
-        claimRequestStatus === CLAIM_REQUEST_STATUS.CLAIM_REQUEST_FAIL
-      ) {
-        let vcxClaimOffer = JSON.parse(vcxSerializedClaimOffer.serialized)
-        vcxClaimOffer.data.state = VCX_CLAIM_OFFER_STATE.SENT
-        yield put(
-          addSerializedClaimOffer(
-            JSON.stringify(vcxClaimOffer),
-            forDID,
-            uid,
-            VCX_CLAIM_OFFER_STATE.SENT
-          )
-        )
-        yield call(
-          getClaimHandleBySerializedClaimOffer,
-          JSON.stringify(vcxClaimOffer)
-        )
-        continue
-      }
-      if (
-        vcxSerializedClaimOffer &&
-        vcxSerializedClaimOffer.state === VCX_CLAIM_OFFER_STATE.RECEIVED &&
-        claimRequestStatus === CLAIM_REQUEST_STATUS.SENDING_CLAIM_REQUEST
-      ) {
-        yield call(
-          getClaimHandleBySerializedClaimOffer,
-          vcxSerializedClaimOffer.serialized
-        )
-        yield* claimOfferAccepted(acceptClaimOffer(uid))
-      }
-    }
-  }
-}
-
 export function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
   const { senderDID, uid, type } = message
   const remotePairwiseDID = senderDID
@@ -943,11 +897,6 @@ export function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
     }
 
     if (type === MESSAGE_TYPE.CLAIM) {
-      // as per vcx apis we are not downloading claim
-      // we will update state of existing claim offer instance
-      // and vcx will internally download claim and store inside wallet
-      // TODO:KS Check to see where to use it, and if we even we need it
-      // yield* acceptClaimOffersIfInPending(forDID, senderDID)
       const { decryptedPayload } = message
       additionalData = {
         connectionHandle,
@@ -1005,7 +954,7 @@ export function* acknowledgeServer(
   const msgTypes = [MESSAGE_TYPE.PROOF_REQUEST]
   let acknowledgeServerData: AcknowledgeServerData = []
   let tempData = data
-  if (Array.isArray(tempData)) {
+  if (Array.isArray(tempData) && tempData.length > 0) {
     tempData.map(msgData => {
       let pairwiseDID = msgData.pairwiseDID
       let uids = []

@@ -43,6 +43,7 @@ jest.mock('react-native-firebase', () => ({
     onNotification: jest.fn(() => Promise.resolve()),
     onNotificationOpened: jest.fn(() => Promise.resolve()),
     getInitialNotification: jest.fn(() => Promise.resolve()),
+    removeAllDeliveredNotifications: jest.fn(),
   })),
   messaging: jest.fn(() => ({
     requestPermission: jest.fn(() => Promise.resolve()),
@@ -227,6 +228,7 @@ NativeModules.RNIndy = {
   updateWalletItem: jest.fn(_ => Promise.resolve(1)),
   createWalletKey: jest.fn(_ => Promise.resolve('walletKey')),
   exitAppAndroid: jest.fn(),
+  updateMessages: jest.fn(),
 }
 
 jest.mock('react-native-version-number', () => ({
