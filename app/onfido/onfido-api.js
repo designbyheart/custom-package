@@ -15,18 +15,18 @@ const applicantParams = {
   // would be extracted from documents that user uploads
   // this paramter is needed because onFido API needs this param
   first_name: 'Evernym',
-  last_name: 'connect.me',
+  last_name: 'connectme',
 }
 const applicantParamsQueryString = encodeStringify(applicantParams)
 const onFidoBaseUrl = 'https://api.onfido.com/v2/applicants/'
-const onFidoChecks = {
-  type: 'express',
-  async: 'true',
-  'reports[][name]': 'document',
-  'reports[][name]': 'facial_similarity',
-  'reports[][variant]': 'standard',
-}
-const checkParamsQueryString = encodeStringify(onFidoChecks)
+const onFidoChecks = [
+  ['type', 'express'],
+  ['async', 'true'],
+  ['reports[][name]', 'document'],
+  ['reports[][name]', 'facial_similarity'],
+  ['reports[][variant]', 'standard'],
+]
+const checkParamsQueryString = encodeStringifyArray(onFidoChecks)
 const onfidoInvitationUrl = 'https://credentials-gateway.onfido.com/invite'
 
 function encodeStringify(params: GenericObject) {
@@ -34,6 +34,14 @@ function encodeStringify(params: GenericObject) {
     .map(key => {
       return `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
     })
+    .join('&')
+}
+
+function encodeStringifyArray(params: Array<[string, string]>) {
+  return params
+    .map(
+      param => `${encodeURIComponent(param[0])}=${encodeURIComponent(param[1])}`
+    )
     .join('&')
 }
 

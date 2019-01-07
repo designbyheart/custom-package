@@ -21,6 +21,8 @@ export const lightDarkBlue = '#4A8FE3'
 export const darkGray = '#505050'
 export const maroonRed = '#d1021b'
 export const lightDarkGray = '#F4F4F4'
+export const dodgerBlue = '#0d8ffc'
+export const toryBlue = '#303F9F'
 export const gainsBoro = '#E3E3E3'
 
 const sirocco = '#636564'
@@ -37,7 +39,7 @@ export const venetianRed = '#d0021b'
 export const veniceBlue = '#2A5270'
 export const hitSlop = { top: 15, bottom: 15, left: 15, right: 15 }
 export const iPhoneXHeight = 812
-const dodgerBlue = '#0d8ffc'
+
 const black = '#000000'
 const yellowSea = '#EB9B2D'
 export const cornFlowerBlue = '#4A90E2'
@@ -70,6 +72,7 @@ export const color = {
     fifth: white,
     sixth: grey,
     eighth: white,
+    ninth: toryBlue,
     dangerous: venetianRed,
     none: white,
     button: {
@@ -92,6 +95,7 @@ export const color = {
       sixth: white,
       seventh: yellowSea,
       eighth: lightDarkBlue,
+      ninth: white,
     },
   },
   bg: {

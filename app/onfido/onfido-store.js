@@ -1,5 +1,14 @@
 // @flow
-import { put, takeLatest, call, all, select, take } from 'redux-saga/effects'
+import {
+  put,
+  takeLatest,
+  call,
+  all,
+  select,
+  take,
+  fork,
+  race,
+} from 'redux-saga/effects'
 import { NativeModules } from 'react-native'
 
 import type {
@@ -7,6 +16,7 @@ import type {
   OnfidoStoreAction,
   LaunchOnfidoSDKAction,
   OnfidoProcessStatus,
+  OnfidoConnectionStatus,
 } from './type-onfido'
 import type { CustomError, GenericObject } from '../common/type-common'
 import type { Store } from '../store/type-store'
@@ -26,6 +36,9 @@ import {
   HYDRATE_ONFIDO_DID_SUCCESS,
   REMOVE_ONFIDO_DID,
   GET_APPLICANT_ID,
+  onfidoConnectionStatus,
+  UPDATE_ONFIDO_CONNECTION_STATUS,
+  RESET_ONFIDO_STATUES,
 } from './type-onfido'
 import {
   getApplicantId as getApplicantIdApi,
@@ -45,12 +58,14 @@ import { QR_CODE_SENDER_DETAIL, QR_CODE_SENDER_DID } from '../api/api-constants'
 import { NEW_CONNECTION_SUCCESS } from '../store/connections-store'
 import { ensureAppHydrated } from '../store/config-store'
 import { getUserPairwiseDid } from '../store/store-selector'
+import { INVITATION_RESPONSE_FAIL } from '../invitation/type-invitation'
 
 const initialState = {
   status: onfidoProcessStatus.IDLE,
   applicantId: null,
   error: null,
   onfidoDid: null,
+  onfidoConnectionStatus: onfidoConnectionStatus.IDLE,
 }
 
 export const updateOnfidoStatus = (
@@ -58,6 +73,15 @@ export const updateOnfidoStatus = (
   error: ?CustomError
 ) => ({
   type: UPDATE_ONFIDO_PROCESS_STATUS,
+  status,
+  error,
+})
+
+export const updateOnfidoConnectionStatus = (
+  status: OnfidoConnectionStatus,
+  error: ?CustomError
+) => ({
+  type: UPDATE_ONFIDO_CONNECTION_STATUS,
   status,
   error,
 })
@@ -96,6 +120,7 @@ export function* hydrateOnfidoApplicantIdSaga(): any {
       yield put(hydrateApplicantId(applicantId))
       return applicantId
     }
+    yield put({ type: 'HYDRATE_ONFIDO_APPLICANT_ID_NOT_FOUND' })
   } catch (e) {
     captureError(e)
     yield put({
@@ -172,6 +197,9 @@ export function* launchOnfidoSDKSaga(
 ): Generator<*, *, *> {
   try {
     const applicantId: string = yield* getApplicantIdSaga()
+    // make connection with onfido in background
+    yield fork(makeConnectionWithOnfidoSaga, applicantId)
+
     try {
       yield put(updateOnfidoStatus(onfidoProcessStatus.START_NO_CONNECTION))
       yield call(promisifyOnfidoStartSDK, applicantId)
@@ -185,16 +213,6 @@ export function* launchOnfidoSDKSaga(
           throw new Error(checkUuid.error.message)
         }
         yield put(updateOnfidoStatus(onfidoProcessStatus.CHECK_UUID_SUCCESS))
-
-        const onfidoDid = yield* getOnfidoDidSaga()
-        if (onfidoDid) {
-          yield put(
-            updateOnfidoStatus(onfidoProcessStatus.CHECK_UUID_CONNECTION_DONE)
-          )
-          return
-        }
-
-        yield* makeConnectionWithOnfidoSaga(applicantId)
       } catch (e) {
         yield put(updateOnfidoStatus(onfidoProcessStatus.CHECK_UUID_ERROR))
       }
@@ -220,8 +238,21 @@ export function* makeConnectionWithOnfidoSaga(
   applicantId: string
 ): Generator<*, *, *> {
   try {
+    // if connection is already established, then don't make connection again
+    let onfidoDid: ?string = yield* getOnfidoDidSaga()
+    if (onfidoDid) {
+      yield put(
+        updateOnfidoConnectionStatus(onfidoConnectionStatus.CONNECTION_SUCCESS)
+      )
+      return
+    }
+
+    // create connection because no connection is established or
+    // user deleted connection that was established
     yield put(
-      updateOnfidoStatus(onfidoProcessStatus.CONNECTION_DETAIL_FETCHING)
+      updateOnfidoConnectionStatus(
+        onfidoConnectionStatus.CONNECTION_DETAIL_FETCHING
+      )
     )
     const invitationDetails: {
       invite: GenericObject,
@@ -230,8 +261,8 @@ export function* makeConnectionWithOnfidoSaga(
 
     if (!invitationDetails.invite) {
       yield put(
-        updateOnfidoStatus(
-          onfidoProcessStatus.CONNECTION_DETAIL_INVALID_ERROR,
+        updateOnfidoConnectionStatus(
+          onfidoConnectionStatus.CONNECTION_DETAIL_INVALID_ERROR,
           ERROR_CONNECTION_DETAIL_INVALID('No invite found')
         )
       )
@@ -242,38 +273,55 @@ export function* makeConnectionWithOnfidoSaga(
     )
     if (!invitationData || typeof invitationData !== 'object') {
       yield put(
-        updateOnfidoStatus(
-          onfidoProcessStatus.CONNECTION_DETAIL_INVALID_ERROR,
+        updateOnfidoConnectionStatus(
+          onfidoConnectionStatus.CONNECTION_DETAIL_INVALID_ERROR,
           ERROR_CONNECTION_DETAIL_INVALID('Invalid invite json')
         )
       )
       return
     }
     yield put(
-      updateOnfidoStatus(onfidoProcessStatus.CONNECTION_DETAIL_FETCH_SUCCESS)
+      updateOnfidoConnectionStatus(
+        onfidoConnectionStatus.CONNECTION_DETAIL_FETCH_SUCCESS
+      )
     )
     yield put(
       invitationReceived({
         payload: convertQrCodeToInvitation(invitationData),
       })
     )
-    const onfidoDid = invitationData[QR_CODE_SENDER_DETAIL][QR_CODE_SENDER_DID]
+    onfidoDid = invitationData[QR_CODE_SENDER_DETAIL][QR_CODE_SENDER_DID]
     yield put(
       sendInvitationResponse({
         response: ResponseType.accepted,
         senderDID: onfidoDid,
       })
     )
-    // TODO:KS Handle case where connection establishment fails
-    yield take(NEW_CONNECTION_SUCCESS)
+    yield put(
+      updateOnfidoConnectionStatus(
+        onfidoConnectionStatus.CONNECTION_IN_PROGRESS
+      )
+    )
+    const { success, fail } = yield race({
+      success: take(NEW_CONNECTION_SUCCESS),
+      fail: take(INVITATION_RESPONSE_FAIL),
+    })
+    if (fail) {
+      yield put(
+        updateOnfidoConnectionStatus(onfidoConnectionStatus.CONNECTION_FAIL)
+      )
+      return
+    }
     yield put(onfidoConnectionEstablished(onfidoDid))
     yield put(
-      updateOnfidoStatus(onfidoProcessStatus.CHECK_UUID_CONNECTION_DONE)
+      updateOnfidoConnectionStatus(onfidoConnectionStatus.CONNECTION_SUCCESS)
     )
     yield* persistOnfidoDidSaga(onfidoDid)
   } catch (e) {
     yield put(
-      updateOnfidoStatus(onfidoProcessStatus.CONNECTION_DETAIL_FETCH_ERROR)
+      updateOnfidoConnectionStatus(
+        onfidoConnectionStatus.CONNECTION_DETAIL_FETCH_ERROR
+      )
     )
   }
 }
@@ -364,6 +412,10 @@ export const getApplicantId = () => ({
   type: GET_APPLICANT_ID,
 })
 
+export const resetOnfidoStatues = () => ({
+  type: RESET_ONFIDO_STATUES,
+})
+
 function* watchOnfidoStart(): any {
   yield takeLatest(LAUNCH_ONFIDO_SDK, launchOnfidoSDKSaga)
 }
@@ -382,6 +434,11 @@ export default function onfidoReducer(
         ...state,
         status: action.status,
         error: action.error ? action.error : null,
+      }
+    case UPDATE_ONFIDO_CONNECTION_STATUS:
+      return {
+        ...state,
+        onfidoConnectionStatus: action.status,
       }
     case UPDATE_ONFIDO_APPLICANT_ID:
       return {
@@ -409,6 +466,13 @@ export default function onfidoReducer(
       return {
         ...state,
         onfidoDid: null,
+      }
+    case RESET_ONFIDO_STATUES:
+      return {
+        ...state,
+        status: initialState.status,
+        error: initialState.error,
+        onfidoConnectionStatus: initialState.onfidoConnectionStatus,
       }
     default:
       return state
