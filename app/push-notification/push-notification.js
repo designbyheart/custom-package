@@ -14,6 +14,7 @@ import PushNotificationNavigator from './push-notification-navigator'
 import type { PushNotificationProps } from './type-push-notification'
 import type { Store } from '../store/type-store'
 import type { NotificationPayload } from '../common/type-common'
+import { customLogger } from '../store/custom-logger'
 
 export class PushNotification extends PureComponent<
   PushNotificationProps,
@@ -90,7 +91,7 @@ export class PushNotification extends PureComponent<
       }
     } catch (e) {
       // TODO: handle error better
-      console.log(e)
+      customLogger.log(e)
     }
   }
 

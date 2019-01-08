@@ -4,6 +4,8 @@ import android.app.Application;
 import com.apptentive.android.sdk.reactlibrary.RNApptentivePackage;
 import com.surajit.rnrg.RNRadialGradientPackage;
 import com.facebook.react.ReactApplication;
+import com.chirag.RNMail.RNMail;
+import com.clipsub.RNShake.RNShakeEventPackage;
 import rnpbkdf2.PBKDF2Package;
 import io.sentry.RNSentryPackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -50,6 +52,8 @@ public class MainApplication extends Application implements ShareApplication, Re
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new RNMail(),
+            new RNShakeEventPackage(),
             new PBKDF2Package(),
         new RNSentryPackage(),
         new RNFirebasePackage(),

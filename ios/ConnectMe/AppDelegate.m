@@ -23,6 +23,7 @@
 #import "RNFirebaseNotifications.h"
 #import "RNFirebaseMessaging.h"
 
+#import "RNIndy.h"
 
 @implementation AppDelegate
 

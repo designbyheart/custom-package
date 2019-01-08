@@ -15,6 +15,11 @@ public class RNIndyStaticData {
     private int pairwiseAgentCalls = 0;
     private int getMessageCalls = 0;
 
+    public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 501;
+    public static String LOG_FILE_PATH = "";
+    public static int MAX_ALLOWED_FILE_BYTES = 10000000;
+    public static LogFileObserver logFileObserver = null;
+
     public Map<String, String> oneTimeAddConnection = new HashMap<String, String>(){{
         put("userDID", "3akhf906816kahfadhfas85");
         put("verificationKey", "3akhf906816kahfadhfas853akhf906816kahfadhfas85");

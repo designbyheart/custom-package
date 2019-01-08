@@ -141,6 +141,26 @@ class SwitchEnvironment extends PureComponent<
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.QARC)}
             />
           </CustomView>
+          <CustomView row style={[style.buttonGroup]}>
+            <CustomButton
+              primary
+              title="DevTeam1"
+              testID={`${testID}-DevTeam1`}
+              onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.DEVTEAM1)}
+            />
+            <CustomButton
+              primary
+              title="DevTeam2"
+              testID={`${testID}-DevTeam2`}
+              onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.DEVTEAM2)}
+            />
+            <CustomButton
+              primary
+              title="DevTeam3"
+              testID={`${testID}-DevTeam3`}
+              onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.DEVTEAM3)}
+            />
+          </CustomView>
           <CustomText
             h7
             uppercase

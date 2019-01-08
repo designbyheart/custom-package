@@ -202,6 +202,17 @@ export async function createConnectionWithInvite(
   return connectionHandle
 }
 
+export async function setVcxLogger(
+  uniqueId: string,
+  MAX_ALLOWED_FILE_BYTES: number
+): Promise<string> {
+  const logFilePath: string = await RNIndy.setVcxLogger(
+    uniqueId,
+    MAX_ALLOWED_FILE_BYTES
+  )
+  return logFilePath
+}
+
 export async function serializeConnection(
   connectionHandle: number
 ): Promise<string> {

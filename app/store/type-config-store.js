@@ -17,6 +17,9 @@ export const SERVER_ENVIRONMENT = {
   QATEST2: 'QATEST2',
   DEVRC: 'DEVRC',
   QARC: 'QARC',
+  DEVTEAM1: 'DEVTEAM1',
+  DEVTEAM2: 'DEVTEAM2',
+  DEVTEAM3: 'DEVTEAM3',
 }
 
 export const __uniqueId = '__uniqueId'

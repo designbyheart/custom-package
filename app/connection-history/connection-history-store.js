@@ -80,6 +80,7 @@ import type { UserOneTimeInfo } from '../store/user/type-user-store'
 import { RESET } from '../common/type-common'
 import { CLAIM_OFFER_RECEIVED } from '../claim-offer/type-claim-offer'
 import { captureError } from '../services/error/error-handler'
+import { customLogger } from '../store/custom-logger'
 
 const initialState = {
   error: null,
@@ -432,7 +433,7 @@ export function* persistHistory(action): any {
     } catch (e) {
       // Need to figure out what happens if storage fails
       captureError(e)
-      console.error(`persistHistory: ${e}`)
+      customLogger.error(`persistHistory: ${e}`)
     }
   }
 }

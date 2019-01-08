@@ -13,6 +13,7 @@ import type {
   HydrateEulaAcceptAction,
 } from './type-eula'
 import { captureError } from '../services/error/error-handler'
+import { customLogger } from '../store/custom-logger'
 
 const initialState: EulaStore = {
   isEulaAccept: false,
@@ -54,7 +55,7 @@ export function* eulaAcceptanceSaga(action: EulaAccept): Generator<*, *, *> {
     )
   } catch (e) {
     captureError(e)
-    console.error(`eulaAcceptanceSaga: ${e}`)
+    customLogger.error(`eulaAcceptanceSaga: ${e}`)
   }
 }
 

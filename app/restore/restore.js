@@ -26,6 +26,7 @@ import { saveFileToAppDirectory } from './restore-store'
 import { NavigationActions } from 'react-navigation'
 import type { Store } from '../store/type-store'
 import { RestoreStatus } from './type-restore'
+import { customLogger } from '../store/custom-logger'
 
 export class RestoreStartScreen extends PureComponent<RestoreProps, void> {
   restoreBackup = () => {
@@ -40,7 +41,7 @@ export class RestoreStartScreen extends PureComponent<RestoreProps, void> {
           this.props.saveFileToAppDirectory(res)
         } else {
           //TODO handle else
-          console.log('err', error)
+          customLogger.log('err', error)
         }
       }
     )

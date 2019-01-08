@@ -37,6 +37,8 @@ PODS:
     - React/Core (= 0.51.0)
   - react-native-image-resizer (1.0.0):
     - React
+  - react-native-mail (3.0.7):
+    - React
   - React/Core (0.51.0):
     - yoga (= 0.51.0.React)
   - React/fishhook (0.51.0)
@@ -93,6 +95,7 @@ DEPENDENCIES:
   - apptentive-ios (from `https://github.com/nagad814/apptentive-ios.git`)
   - Firebase/Messaging (= 4.8.0)
   - react-native-image-resizer (from `../node_modules/react-native-image-resizer`)
+  - react-native-mail (from `../node_modules/react-native-mail`)
   - React/Core (from `../node_modules/react-native`)
   - React/RCTActionSheet (from `../node_modules/react-native`)
   - React/RCTAnimation (from `../node_modules/react-native`)
@@ -134,6 +137,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native"
   react-native-image-resizer:
     :path: "../node_modules/react-native-image-resizer"
+  react-native-mail:
+    :path: "../node_modules/react-native-mail"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
   RNShare:
@@ -163,6 +168,7 @@ SPEC CHECKSUMS:
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 541ba768b9855e10cdc76f55427a5cd0653ca806
   react-native-image-resizer: 04a3409e7d4ad646c4468671c69dec490def139c
+  react-native-mail: ff4aba592530d80ac96eea6c1ca03114b84d630a
   RNImageCropPicker: 32ca4b9fef4e1b7b85ba69494242122948117e06
   RNShare: 80d4472ab25e77d9f824cb8d49d7e85af91c66e0
   RNZipArchive: 4f72d162e01ba473a6c2365b4e949183fd208f35
@@ -172,6 +178,6 @@ SPEC CHECKSUMS:
   vcx: cbfff0a233ba553dfbb1840f33b2ebc9e8b70379
   yoga: 17521bbb0dd54a47c0b3ac43253e78cdac7488e0
 
-PODFILE CHECKSUM: b10ab0869af6d43ed5525d660e3c6eaaf9c44230
+PODFILE CHECKSUM: 5cfb4c8e5cb3e13267d9a00095ba9dd7f77608b5
 
 COCOAPODS: 1.5.3

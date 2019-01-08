@@ -69,6 +69,7 @@ import { PROOF_FAIL } from '../proof/type-proof'
 import { getProofRequests } from './../store/store-selector'
 import { secureSet, secureGet } from '../services/storage'
 import { captureError } from '../services/error/error-handler'
+import { customLogger } from '../store/custom-logger'
 
 const proofRequestInitialState = {}
 
@@ -146,7 +147,7 @@ export function* persistProofRequestsSaga(): Generator<*, *, *> {
   } catch (e) {
     // capture error for safe set
     captureError(e)
-    console.log(`persistProofRequestsSaga: ${e}`)
+    customLogger.log(`persistProofRequestsSaga: ${e}`)
   }
 }
 
@@ -159,7 +160,7 @@ export function* hydrateProofRequestsSaga(): Generator<*, *, *> {
   } catch (e) {
     // capture error for safe get
     captureError(e)
-    console.log(`hydrateProofRequestSaga: ${e}`)
+    customLogger.log(`hydrateProofRequestSaga: ${e}`)
   }
 }
 
@@ -263,7 +264,7 @@ export function* serializeProofRequestSaga(
     captureError(e)
     // TODO:KS Add action for serialization failure
     // need to figure out what happens if serialization fails
-    console.log('failed to serialize proof')
+    customLogger.log('failed to serialize proof')
   }
 }
 

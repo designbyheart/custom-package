@@ -2,6 +2,7 @@
 
 import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native'
 import { apptentiveCredentials } from './message-constants'
+import { customLogger } from '../store/custom-logger'
 
 const configuration = new ApptentiveConfiguration(
   apptentiveCredentials.apptentiveKey,
@@ -16,13 +17,16 @@ function ApptentiveMessage() {
     .then(() => {
       Apptentive.onAuthenticationFailed = reason => {
         if (__DEV__) {
-          console.log('Error', `Authentication failed:\n${reason}`)
+          customLogger.log('Error', `Authentication failed:\n${reason}`)
         }
       }
     })
     .catch(error => {
       if (__DEV__) {
-        console.log('Error', `Can't register Apptentive:\n${error.message}`)
+        customLogger.log(
+          'Error',
+          `Can't register Apptentive:\n${error.message}`
+        )
       }
     })
 }

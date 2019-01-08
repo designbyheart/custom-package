@@ -9,6 +9,7 @@ import {
   vcxShutdown,
 } from '../bridge/react-native-cxs/RNCxs'
 import { captureError } from './error/error-handler'
+import { customLogger } from '../store/custom-logger'
 
 const storageName = {
   sharedPreferencesName: 'ConnectMeSharedPref',
@@ -32,7 +33,7 @@ export const secureSet = async (key: string, data: string) => {
     } catch (e) {
       captureError(e)
       // need to think about what happens if storage fails
-      console.log(`Storage fails: key: ${key}, Error: ${e}`)
+      customLogger.log(`Storage fails: key: ${key}, Error: ${e}`)
     }
   }
 }
@@ -43,7 +44,7 @@ export const secureGet = async (key: string) => {
     return data
   } catch (e) {
     captureError(e)
-    console.log(`secureGet: key: ${key}, Error: ${e}`)
+    customLogger.log(`secureGet: key: ${key}, Error: ${e}`)
     return null
   }
 }
@@ -62,7 +63,7 @@ export async function secureUpdate(key: string, data: string) {
     await updateWalletItem(key, data)
   } catch (err) {
     captureError(err)
-    console.log(
+    customLogger.log(
       'secureUpdate error :: key: ' + key + ' :: data: ' + data + ' :: err: ',
       err
     )

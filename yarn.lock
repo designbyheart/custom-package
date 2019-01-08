@@ -4209,6 +4209,13 @@ invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.2:
   dependencies:
     loose-envify "^1.0.0"
 
+invariant@^2.2.x:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
+  integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
+  dependencies:
+    loose-envify "^1.0.0"
+
 invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
@@ -6921,6 +6928,13 @@ react-native-sentry@0.39.0:
   dependencies:
     "@sentry/wizard" "^0.11.0"
     raven-js "^3.24.2"
+
+react-native-shake@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-shake/-/react-native-shake-3.2.2.tgz#45a3d6503f0aee9dada8bb6cb537786ec3a498b6"
+  integrity sha512-UezdZFTcxlIAIPJVEhzxXcyRzCopcCJdJYXKOc2pGdeoZuBMDuD3l1hfApw4WbROwoIZwBhnBsGhLl88F7xp1Q==
+  dependencies:
+    invariant "^2.2.x"
 
 react-native-share@^1.0.27:
   version "1.0.27"

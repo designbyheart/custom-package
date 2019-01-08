@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`send logs screen should render properly and snapshot should match 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#ffffff",
+      "flex": 1,
+    }
+  }
+  tertiary={true}
+>
+  <View
+    center={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "fontSize": 17,
+          },
+          Object {
+            "fontFamily": "Lato",
+          },
+          undefined,
+          Object {
+            "fontWeight": "600",
+          },
+          null,
+          Object {
+            "backgroundColor": "transparent",
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+        ]
+      }
+    >
+      Send error logs to cmsupport@evernym.com ?
+    </Text>
+  </View>
+</View>
+`;

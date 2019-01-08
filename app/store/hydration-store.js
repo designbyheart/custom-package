@@ -68,6 +68,7 @@ import { deleteItem, getItem } from '../services/secure-storage'
 import { WALLET_KEY } from '../bridge/react-native-cxs/vcx-transformers'
 import RNFetchBlob from 'react-native-fetch-blob'
 import { Platform } from 'react-native'
+import { customLogger } from '../store/custom-logger'
 
 export function* deleteDeviceSpecificData(): Generator<*, *, *> {
   try {
@@ -80,7 +81,7 @@ export function* deleteDeviceSpecificData(): Generator<*, *, *> {
     yield call(safeMultiRemove, keysToDelete)
     yield call(deleteSecureStorageData)
   } catch (e) {
-    console.log(e)
+    customLogger.log(e)
     // deletion fails, now what to do
     captureError(e)
   }
@@ -101,7 +102,7 @@ function* deleteSecureStorageData(): Generator<*, *, *> {
     // wait till all delete operations are done in parallel
     yield all(deleteOperations)
   } catch (e) {
-    console.log(e)
+    customLogger.log(e)
     // not sure what to do when deletion fails
     captureError(e)
   }
@@ -239,7 +240,7 @@ export function* hydrate(): any {
       yield* ensureVcxInitSuccess()
     } catch (e) {
       captureError(e)
-      console.error(`hydrateSaga: ${e}`)
+      customLogger.error(`hydrateSaga: ${e}`)
       // somehow the secure storage failed, so we need to find someway to store
       // maybe we fallback to file based storage
     }
@@ -247,7 +248,7 @@ export function* hydrate(): any {
     // if we did not find any value in user default storage
     // it means that user uninstalled the app and is now trying again
     // or this is a new installation
-    console.error(`hydrateSaga: ${e}`)
+    customLogger.error(`hydrateSaga: ${e}`)
     yield* alreadyInstalledNotFound()
   }
 }

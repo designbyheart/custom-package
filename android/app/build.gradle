@@ -115,7 +115,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 26
         multiDexEnabled true
-        versionCode 747
+        versionCode 752
         versionName "1.0"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
@@ -176,6 +176,8 @@ configurations.all {
 }
 
 dependencies {
+    compile project(':react-native-mail')
+    compile project(':react-native-shake')
     compile project(':react-native-pbkdf2')
     compile project(':react-native-sentry')
     compile(project(":react-native-firebase")){
@@ -227,12 +229,12 @@ dependencies {
     //TODO JNA only needed when vcx.aar is resolved from flat file
     implementation 'net.java.dev.jna:jna:4.5.0@aar'
     // un-comment below lines to enable logging in vcx and indy
-    // compile group: 'com.mobidevelop.robovm', name: 'robovm-rt', version: '2.3.4'
+    //compile group: 'com.mobidevelop.robovm', name: 'robovm-rt', version: '2.3.4'
 
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 }
 configurations.all {
-    resolutionStrategy.force "com.android.support:appcompat-v7:27.1.0"
+    resolutionStrategy.force "com.android.support:appcompat-v7:26.1.0"
 }
 
 // Run this once to be able to run the application with BUCK
