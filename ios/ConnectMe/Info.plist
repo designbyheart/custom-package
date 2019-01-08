@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>753</string>
+	<string>754</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
 	<key>ITSEncryptionExportComplianceCode</key>
@@ -156,5 +156,7 @@
 		<key>test</key>
 		<string>key_test_fnzEMTMuTnr6HZWEBbJVOmfhsymtrs8S</string>
 	</dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>ConnectMe uses your Face ID biometric to secure your wallet.</string>
 </dict>
 </plist>
