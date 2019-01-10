@@ -166,7 +166,11 @@ export function* getApplicantIdSaga(): Generator<*, *, *> {
     applicantId = yield* hydrateOnfidoApplicantIdSaga()
   }
 
-  if (applicantId) {
+  // check if connection is established with onfido
+  let onfidoDid: ?string = yield* getOnfidoDidSaga()
+  // if connection is not established with onfido or maybe connection was deleted
+  // then we won't use previous applicant id, we create a new applicant id
+  if (applicantId && onfidoDid) {
     yield put(updateOnfidoStatus(onfidoProcessStatus.APPLICANT_ID_SUCCESS))
     return applicantId
   }
