@@ -87,6 +87,10 @@ import { hydrateProofRequestsSaga } from './../proof-request/proof-request-store
 import { WALLET_KEY } from '../bridge/react-native-cxs/vcx-transformers'
 import RNFetchBlob from 'react-native-fetch-blob'
 import { Platform } from 'react-native'
+import {
+  removePersistedOnfidoApplicantIdSaga,
+  removePersistedOnfidoDidSaga,
+} from '../onfido/onfido-store'
 
 export function* deleteDeviceSpecificData(): Generator<*, *, *> {
   try {
@@ -132,6 +136,8 @@ function* deleteSecureStorageData(): Generator<*, *, *> {
       // not waiting for one delete operation to finish
       deleteOperations.push(call(secureDelete, secureKey))
     }
+    deleteOperations.push(call(removePersistedOnfidoApplicantIdSaga))
+    deleteOperations.push(call(removePersistedOnfidoDidSaga))
     // wait till all delete operations are done in parallel
     yield all(deleteOperations)
   } catch (e) {
