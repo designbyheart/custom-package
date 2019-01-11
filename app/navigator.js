@@ -15,6 +15,7 @@ import Settings from './settings/settings'
 import ExpiredTokenScreen from './expired-token/expired-token'
 import QRCodeScanner from './qr-code/qr-code'
 import LockSelectionScreen from './lock/lock-selection'
+import SendLogsScreen from './send-logs/send-logs'
 import LockEnterPinScreen from './lock/lock-enter-pin-code'
 import LockTouchIdSetupScreen from './lock/lock-fingerprint-setup'
 import LockPinCodeSetupScreen from './lock/lock-pin-code-setup'
@@ -69,6 +70,7 @@ import {
   restoreWaitRoute,
   restorePassphraseRoute,
   backupErrorRoute,
+  sendLogsRoute,
   connectionsTabRoute,
   credentialsTabRoute,
   discoverTabRoute,
@@ -340,6 +342,9 @@ const CardStack = createStackNavigator(
     },
     [lockSelectionRoute]: {
       screen: LockSelectionScreen,
+    },
+    [sendLogsRoute]: {
+      screen: SendLogsScreen,
     },
     [lockEnterPinRoute]: {
       screen: LockEnterPinScreen,

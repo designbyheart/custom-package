@@ -26,6 +26,11 @@
 #import "vcx/vcx.h"
 
 @implementation RNIndy
+
+static const unsigned long mask = DISPATCH_VNODE_DELETE | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_EXTEND | DISPATCH_VNODE_ATTRIB | DISPATCH_VNODE_LINK | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE;
+static dispatch_source_t logSource;
+static void (^eventHandler)(void), (^cancelHandler)(void);
+
 @synthesize bridge = _bridge;
 
 // Export a native module
@@ -48,6 +53,7 @@ RCT_EXPORT_MODULE();
 }
 
 #pragma mark - React Native exposed methods
+
 
 // delete connection
 RCT_EXPORT_METHOD(deleteConnection:(NSInteger) connectionHandle
@@ -109,6 +115,79 @@ RCT_EXPORT_METHOD(getSerializedConnection: (NSInteger)connectionHandle
     }
   }];
 }
+
+RCT_EXPORT_METHOD(setVcxLogger: (NSString *) uniqueIdentifier
+                  withMaxSize: (NSInteger) MAX_ALLOWED_FILE_BYTES
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+
+  // NOTE: placeholder for calling the vcx logger api when it is stable
+  //[[[ConnectMeVcx alloc] init] setVcxLogger: callbacks...];
+
+  NSString *logFilePath = @"";
+
+  //get the documents directory:
+  NSArray *paths = NSSearchPathForDirectoriesInDomains
+  (NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString *documentsDirectory = [paths objectAtIndex:0];
+
+  //make a file name to write the data to using the documents directory:
+  logFilePath = [NSString stringWithFormat:@"%@/connectme.rotating.%@.log",
+                        documentsDirectory, uniqueIdentifier];
+  NSLog(@"Setting vcx logger to: %@", logFilePath);
+
+  if(! [[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
+    [[NSFileManager defaultManager] createFileAtPath:logFilePath contents:nil attributes:nil];
+  }
+
+  const char *cLogFilePath = [logFilePath cStringUsingEncoding:NSASCIIStringEncoding];
+  int fdes = open(cLogFilePath, O_RDONLY);
+  dispatch_queue_t queue = dispatch_get_global_queue(0, 0);
+
+  eventHandler = ^{
+    unsigned long l = dispatch_source_get_data(logSource);
+    if (l & DISPATCH_VNODE_DELETE) {
+      NSLog(@"log file deleted! -- %@  cancelling source\n", logFilePath);
+      dispatch_source_cancel(logSource);
+    } else if (l & DISPATCH_VNODE_EXTEND) {
+
+      // !!! IMPORTANT NOTE: DO NOT, REPEAT, DO NOT use an NSLog call inside this if statement!!!!!
+      // Doing so will cause an infinite loop behavior where the log file will fill up continually, this is bad.
+
+      int fdes = dispatch_source_get_handle(logSource);
+      off_t fsize = lseek(fdes, 0, SEEK_END);
+
+      // fsize is the size of the file in bytes
+      if(fsize > MAX_ALLOWED_FILE_BYTES) {
+        [[NSFileManager defaultManager] createFileAtPath:logFilePath contents:nil attributes:nil];
+      }
+    }
+  };
+  cancelHandler = ^{
+    if(logSource) {
+      int fdes = dispatch_source_get_handle(logSource);
+      close(fdes);
+      [[NSFileManager defaultManager] createFileAtPath:logFilePath contents:nil attributes:nil];
+      // Wait for new file to exist.
+      while ((fdes = open(cLogFilePath, O_RDONLY)) == -1)
+        sleep(1);
+      NSLog(@"re-opened target file -- %@ -- in cancel handler\n", logFilePath);
+      logSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE, fdes, mask, queue);
+      dispatch_source_set_event_handler(logSource, eventHandler);
+      dispatch_source_set_cancel_handler(logSource, cancelHandler);
+      dispatch_resume(logSource);
+    }
+  };
+
+  logSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE, fdes, mask, queue);
+  dispatch_source_set_event_handler(logSource, eventHandler);
+  dispatch_source_set_cancel_handler(logSource, cancelHandler);
+  dispatch_resume(logSource);
+
+  resolve(logFilePath);
+}
+
 
 RCT_EXPORT_METHOD(deserializeConnection: (NSString *)serializedConnection
                   resolver: (RCTPromiseResolveBlock) resolve

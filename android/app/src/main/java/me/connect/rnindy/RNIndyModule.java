@@ -2,10 +2,16 @@
 
 package me.connect.rnindy;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.graphics.Palette;
 import android.util.Base64;
 import android.util.Log;
@@ -13,6 +19,8 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.net.Uri;
+import android.os.Environment;
 
 import me.connect.BridgeUtils;
 import com.evernym.sdk.vcx.VcxException;
@@ -35,9 +43,6 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -45,14 +50,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.io.PrintStream;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import android.net.Uri;
 import java.io.InputStream;
 import java.lang.Long;
 import java.util.HashMap;
@@ -393,6 +397,71 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
             promise.reject("VCXException", e.getMessage());
             e.printStackTrace();
         }
+    }
+
+
+    private static void requestPermission(final Context context) {
+        if(ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            // Provide an additional rationale to the user if the permission was not granted
+            // and the user would benefit from additional context for the use of the permission.
+            // For example if the user has previously denied the permission.
+
+            new AlertDialog.Builder(context)
+                    .setMessage("permission storage")
+                    .setPositiveButton("positive button", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    ActivityCompat.requestPermissions((Activity) context,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            RNIndyStaticData.REQUEST_WRITE_EXTERNAL_STORAGE);
+                }
+            }).show();
+
+        } else {
+            // permission has not been granted yet. Request it directly.
+            ActivityCompat.requestPermissions((Activity)context,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    RNIndyStaticData.REQUEST_WRITE_EXTERNAL_STORAGE);
+        }
+    }
+
+
+    @ReactMethod
+    public void setVcxLogger(String uniqueIdentifier, int MAX_ALLOWED_FILE_BYTES, Promise promise) {
+
+        // NOTE: placeholder for calling the vcx logger api when it is stable
+        //LoggerApi.setVcxLogger(callbacks...);
+
+        RNIndyStaticData.MAX_ALLOWED_FILE_BYTES = MAX_ALLOWED_FILE_BYTES;
+        RNIndyStaticData.LOG_FILE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() +
+                "/connectme.rotating." + uniqueIdentifier + ".log";
+        //get the documents directory:
+        Log.d(TAG, "Setting vcx logger to: " + RNIndyStaticData.LOG_FILE_PATH);
+
+        ContextWrapper cw = new ContextWrapper(reactContext);
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            //RUNTIME PERMISSION Android M
+            if(PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(cw, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                requestPermission(reactContext.getCurrentActivity());
+            } else {
+                // create the log file if it does not exist
+                try {
+                    if(! new File(RNIndyStaticData.LOG_FILE_PATH).exists()) {
+                        new FileWriter(RNIndyStaticData.LOG_FILE_PATH).close();
+                    }
+                } catch(IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Now monitor the logFile and empty it out when it's size is
+                // larger than MAX_ALLOWED_FILE_BYTES
+                RNIndyStaticData.logFileObserver = new LogFileObserver(RNIndyStaticData.LOG_FILE_PATH, RNIndyStaticData.MAX_ALLOWED_FILE_BYTES);
+                RNIndyStaticData.logFileObserver.startWatching();
+            }
+        }
+
+        promise.resolve(RNIndyStaticData.LOG_FILE_PATH);
+
     }
 
     @ReactMethod

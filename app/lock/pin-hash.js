@@ -2,6 +2,7 @@
 import PBKDF2 from 'react-native-pbkdf2'
 import { NativeModules, Platform } from 'react-native'
 import { captureError } from '../services/error/error-handler'
+import { customLogger } from '../store/custom-logger'
 
 const { RNRandomBytes } = NativeModules
 
@@ -29,13 +30,13 @@ export async function pinHash(pin: string, salt: string) {
   try {
     const key = await generateKey(pin, salt)
     if (__DEV__) {
-      console.log('pinHash: salt: ', salt)
-      console.log('pinHash: key: ', key)
+      customLogger.log('pinHash: salt: ', salt)
+      customLogger.log('pinHash: key: ', key)
     }
     //TODO: This is hack due to android
     return key.substring(0, 16)
   } catch (e) {
-    console.error(`pinHash: ${e}`)
+    customLogger.error(`pinHash: ${e}`)
     captureError(new Error(`pinHash: ${e}`))
     return null
   }

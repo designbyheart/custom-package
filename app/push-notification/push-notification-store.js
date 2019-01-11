@@ -109,6 +109,7 @@ import type { Claim } from '../claim/type-claim'
 import { claimReceivedVcx } from '../claim/claim-store'
 import { NavigationActions } from 'react-navigation'
 import type { SerializedClaimOffer } from './../claim-offer/type-claim-offer'
+import { customLogger } from '../store/custom-logger'
 
 async function delay(ms): Promise<number> {
   return new Promise(res => setTimeout(res, ms))
@@ -589,7 +590,7 @@ export function* hydratePushTokenSaga(): Generator<*, *, *> {
   } catch (e) {
     // capture error for safe get
     captureError(e)
-    console.error(`hydratePushTokenSaga: ${e}`)
+    customLogger.error(`hydratePushTokenSaga: ${e}`)
   }
 }
 
@@ -598,7 +599,7 @@ export function* savePushTokenSaga(pushToken: string): Generator<*, *, *> {
     yield call(safeSet, PUSH_COM_METHOD, pushToken)
   } catch (e) {
     // Need to figure out what should be done if storage fails
-    console.error(`savePushTokenSaga: ${e}`)
+    customLogger.error(`savePushTokenSaga: ${e}`)
   }
 }
 

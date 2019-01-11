@@ -111,7 +111,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 26
         multiDexEnabled true
-        versionCode 753
+        versionCode 756
         versionName "1.0"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
@@ -181,8 +181,10 @@ configurations.all {
 }
 
 dependencies {
+    compile project(':react-native-mail')
+    compile project(':react-native-shake')
     compile project(':react-native-image-crop-picker')
-    compile project(':react-native-firebase')
+    // Already in this file -- compile project(':react-native-firebase')
     compile project(':apptentive-react-native')
     compile project(':react-native-keep-screen-on')
     compile project(':react-native-svg')
@@ -222,7 +224,7 @@ dependencies {
     compile project(':react-native-vector-icons')
     compile 'net.hockeyapp.android:HockeySDK:4.1.4'
     compile 'com.android.support:palette-v7:26.1.0'
-    compile 'com.evernym:vcx:1.0.0-31-10-2018T17-30@aar'
+    compile 'com.evernym:vcx:1.0.0-29-11-2018T23-07@aar'
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.6.2'
     implementation 'net.sourceforge.streamsupport:android-retrostreams:1.6.2'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.59'
@@ -237,8 +239,10 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
 }
 configurations.all {
-    resolutionStrategy.force "com.android.support:appcompat-v7:27.1.0"
+    resolutionStrategy.force "com.android.support:appcompat-v7:26.1.0"
 }
+
+
 // Run this once to be able to run the application with BUCK
 // puts all compile dependencies into folder libs for BUCK to use
 task copyDownloadableDepsToLibs(type: Copy) {

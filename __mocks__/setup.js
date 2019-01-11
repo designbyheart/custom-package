@@ -165,6 +165,10 @@ jest.mock('moment', () =>
 
 jest.mock('react-native-share', () => {})
 
+//jest.mock('react-native-shake', () => {})
+
+jest.mock('react-native-mail', () => {})
+
 jest.mock('react-native-branch', () => {
   return {
     ADD_TO_CART_EVENT: 'Add to Cart',
@@ -227,6 +231,9 @@ NativeModules.RNIndy = {
   deleteWalletItem: jest.fn(_ => Promise.resolve(1)),
   updateWalletItem: jest.fn(_ => Promise.resolve(1)),
   createWalletKey: jest.fn(_ => Promise.resolve('walletKey')),
+  setVcxLogger: jest.fn(_ =>
+    Promise.resolve('./connectme.rotating.93939939.log')
+  ),
   exitAppAndroid: jest.fn(),
   updateMessages: jest.fn(),
 }

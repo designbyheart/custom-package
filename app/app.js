@@ -35,6 +35,7 @@ import {
   restoreRoute,
   restoreWaitRoute,
   expiredTokenRoute,
+  sendLogsRoute,
 } from './common'
 import { NavigationActions } from 'react-navigation'
 import type { AppProps } from './type-app'
@@ -42,6 +43,7 @@ import type { NavigationState, NavigationParams } from './common/type-common'
 import { exitAppAndroid } from './bridge/react-native-cxs/RNCxs'
 import AppStatus from './app-status/app-status'
 import { setupFeedback } from './feedback'
+import RNShake from 'react-native-shake'
 import Offline from './offline/offline'
 
 const backButtonDisableRoutes = [
@@ -84,6 +86,12 @@ export class ConnectMeApp extends PureComponent<AppProps, void> {
   currentRouteParams = null
   exitTimeout: number = 0
 
+  componentWillMount() {
+    RNShake.addEventListener('ShakeEvent', () => {
+      this.navigateToRoute(sendLogsRoute)
+    })
+  }
+
   componentDidMount() {
     if (Platform.OS === 'android') {
       BackHandler.addEventListener(
@@ -101,6 +109,8 @@ export class ConnectMeApp extends PureComponent<AppProps, void> {
   }
 
   componentWillUnmount() {
+    RNShake.removeEventListener('ShakeEvent', () => {})
+
     if (Platform.OS === 'android') {
       BackHandler.removeEventListener(
         'hardwareBackPress',

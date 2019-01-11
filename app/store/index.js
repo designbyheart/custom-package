@@ -2,7 +2,8 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
-import logger from 'redux-logger'
+import { createLogger } from 'redux-logger'
+import { customLogger } from './custom-logger'
 import user, { watchUserStore } from './user/user-store'
 import pushNotification, {
   watchPushNotification,
@@ -77,10 +78,11 @@ const appReducer = combineReducers({
 
 let middlewares = [historyRecorder]
 
-if (process.env.NODE_ENV !== 'test' && __DEV__) {
-  // skip logger middleware if we are running tests
-  middlewares.push(logger)
-}
+customLogger.init()
+let reduxLogger = createLogger({
+  logger: customLogger,
+})
+middlewares.push(reduxLogger)
 
 middlewares.push(sagaMiddleware)
 

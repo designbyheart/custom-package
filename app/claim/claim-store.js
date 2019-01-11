@@ -62,6 +62,7 @@ import { saveSerializedClaimOffer } from '../claim-offer/claim-offer-store'
 import type { Connection } from '../store/type-connection-store'
 import { promptBackupBanner } from '../backup/backup-store'
 import { captureError } from '../services/error/error-handler'
+import { customLogger } from '../store/custom-logger'
 
 export const claimReceived = (claim: Claim): ClaimReceivedAction => ({
   type: CLAIM_RECEIVED,
@@ -241,7 +242,7 @@ export function* saveClaimUuidMap(): Generator<*, *, *> {
   } catch (e) {
     // TODO:KS what should we do if storage fails
     captureError(e)
-    console.error(`Failed to store claim uuid map:${e}`)
+    customLogger.error(`Failed to store claim uuid map:${e}`)
   }
 }
 
