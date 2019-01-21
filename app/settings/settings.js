@@ -267,7 +267,8 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
             {this.renderAvatarWithSource}
           </UserAvatar>
         </CustomView>
-        <CustomView row center testID={SOVRINTOKEN_AMOUNT_TEST_ID}>
+        {/* DO not remove commented code, this is just to temporarily hide token related stuff */}
+        {/* <CustomView row center testID={SOVRINTOKEN_AMOUNT_TEST_ID}>
           <Icon
             small
             testID={SOVRINTOKEN_TEST_ID}
@@ -296,7 +297,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
           <CustomText transparentBg darkgray style={[style.tokenText]}>
             TOKENS
           </CustomText>
-        </CustomView>
+        </CustomView> */}
       </CustomView>
     )
 

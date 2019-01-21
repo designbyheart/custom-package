@@ -115,9 +115,9 @@ describe('server environment should change', () => {
     initialConfig = getConfigStoreInitialState()
   })
 
-  it('initial app should always point to demo', () => {
+  it('initial app should always point to PROD', () => {
     if (initialConfig) {
-      expect(initialConfig.agencyUrl).toBe(baseUrls.DEMO.agencyUrl)
+      expect(initialConfig.agencyUrl).toBe(baseUrls.PROD.agencyUrl)
     }
   })
 

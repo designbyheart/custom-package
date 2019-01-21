@@ -1,6 +1,12 @@
 //@flow
 import React, { PureComponent } from 'react'
-import { TouchableHighlight, Image, StyleSheet, TextInput } from 'react-native'
+import {
+  TouchableHighlight,
+  Image,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+} from 'react-native'
 import { Container, CustomView, CustomText, CustomButton } from '../components'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -161,72 +167,82 @@ class SwitchEnvironment extends PureComponent<
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.DEVTEAM3)}
             />
           </CustomView>
-          <CustomText
-            h7
-            uppercase
-            bold
-            bg="tertiary"
-            transparentBg
-            style={styles.label}
-          >
-            {'Agency URL'}
-          </CustomText>
-          <TextInput
-            style={styles.TextInput}
-            onChangeText={agencyUrl => this.setState({ agencyUrl })}
-            value={this.state.agencyUrl}
-            testID="text-input-agencyUrl"
-          />
-          <CustomText
-            h7
-            uppercase
-            bold
-            bg="tertiary"
-            transparentBg
-            style={styles.label}
-          >
-            {'Agency DID'}
-          </CustomText>
-          <TextInput
-            style={styles.TextInput}
-            onChangeText={agencyDID => this.setState({ agencyDID })}
-            value={this.state.agencyDID}
-            testID="text-input-agencyDID"
-          />
-          <CustomText
-            h7
-            uppercase
-            bold
-            bg="tertiary"
-            transparentBg
-            style={styles.label}
-          >
-            {'Agency VerKey'}
-          </CustomText>
-          <TextInput
-            style={styles.TextInput}
-            onChangeText={agencyVerificationKey =>
-              this.setState({ agencyVerificationKey })
-            }
-            value={this.state.agencyVerificationKey}
-            testID="text-input-agencyVerificationKey"
-          />
-          <CustomText
-            h7
-            uppercase
-            bold
-            bg="tertiary"
-            transparentBg
-            style={styles.label}
-          >
-            {'Pool Config'}
-          </CustomText>
-          <TextInput
-            style={styles.TextInput}
-            onChangeText={poolConfig => this.setState({ poolConfig })}
-            value={this.state.poolConfig}
-            testID="text-input-poolConfig"
-          />
+          <CustomView row style={[style.buttonGroup]}>
+            <CustomButton
+              primary
+              title="Prod"
+              testID={`${testID}-PROD`}
+              onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.PROD)}
+            />
+          </CustomView>
+          <ScrollView>
+            <CustomText
+              h7
+              uppercase
+              bold
+              bg="tertiary"
+              transparentBg
+              style={styles.label}
+            >
+              {'Agency URL'}
+            </CustomText>
+            <TextInput
+              style={styles.TextInput}
+              onChangeText={agencyUrl => this.setState({ agencyUrl })}
+              value={this.state.agencyUrl}
+              testID="text-input-agencyUrl"
+            />
+            <CustomText
+              h7
+              uppercase
+              bold
+              bg="tertiary"
+              transparentBg
+              style={styles.label}
+            >
+              {'Agency DID'}
+            </CustomText>
+            <TextInput
+              style={styles.TextInput}
+              onChangeText={agencyDID => this.setState({ agencyDID })}
+              value={this.state.agencyDID}
+              testID="text-input-agencyDID"
+            />
+            <CustomText
+              h7
+              uppercase
+              bold
+              bg="tertiary"
+              transparentBg
+              style={styles.label}
+            >
+              {'Agency VerKey'}
+            </CustomText>
+            <TextInput
+              style={styles.TextInput}
+              onChangeText={agencyVerificationKey =>
+                this.setState({ agencyVerificationKey })
+              }
+              value={this.state.agencyVerificationKey}
+              testID="text-input-agencyVerificationKey"
+            />
+            <CustomText
+              h7
+              uppercase
+              bold
+              bg="tertiary"
+              transparentBg
+              style={styles.label}
+            >
+              {'Pool Config'}
+            </CustomText>
+            <TextInput
+              style={styles.TextInput}
+              onChangeText={poolConfig => this.setState({ poolConfig })}
+              value={this.state.poolConfig}
+              testID="text-input-poolConfig"
+            />
+          </ScrollView>
         </Container>
         <FooterActions
           onAccept={this.onSave}

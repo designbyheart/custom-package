@@ -70,7 +70,9 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
         outerContainerStyles={styles.headerOuterContainer}
         largeHeader
       >
-        <WalletBalance
+        {/* DO NOT REMOVE THIS COMMENTED CODE */}
+        {/* Below code is commented just because we don't want to release this as of now */}
+        {/* <WalletBalance
           render={balance => (
             <CustomView
               row
@@ -107,7 +109,10 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
               </CustomText>
             </CustomView>
           )}
-        />
+        /> */}
+        {/* Added blank view because we removed above view
+          so this view keeps feedback icon to left */}
+        <CustomView />
 
         <CustomView horizontalSpace>
           <Icon
@@ -247,7 +252,7 @@ export const tokenAmountSize = (tokenAmountLength: number): number => {
 const styles = StyleSheet.create({
   userAvatarContainer: {
     backgroundColor: 'transparent',
-    width: size.extraLarge, // width of user avathar icon extraLarge
+    width: size.extraLarge, // width of user avatar icon extraLarge
     position: 'absolute',
     left: (width - size.extraLarge) / 2,
     top: getHeight(height),
