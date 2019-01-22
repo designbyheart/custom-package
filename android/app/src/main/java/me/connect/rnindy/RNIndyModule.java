@@ -137,6 +137,7 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
         BridgeUtils.writeCACert(this.getReactApplicationContext());
 
         try {
+            int retCode = VcxApi.initNullPay();
             VcxApi.vcxInitWithConfig(config).exceptionally((t) -> {
                 Log.e(TAG, "init: ", t);
                 promise.reject("FutureException", t.getMessage());
@@ -263,9 +264,9 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void generateProof(String proofRequestId, String requestedAttrs, String requestedPredicates,
-            String proofName, Promise promise) {
+            String revocationInterval, String proofName, Promise promise) {
         try {
-            ProofApi.proofCreate(proofRequestId, requestedAttrs, requestedPredicates, proofName).exceptionally((t) -> {
+            ProofApi.proofCreate(proofRequestId, requestedAttrs, requestedPredicates, revocationInterval, proofName).exceptionally((t) -> {
                 Log.e(TAG, "generateProof: ", t);
                 promise.reject("FutureException", t.getMessage());
                 return -1;

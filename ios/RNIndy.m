@@ -77,15 +77,23 @@ RCT_EXPORT_METHOD(init: (NSString *)config
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] initWithConfig:config completion:^(NSError *error) {
-    if (error != nil && error.code != 0 && error.code != 1044)
-    {
-      NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
-      reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while initializing vcx: %@ :: %ld",error.domain, (long)error.code], error);
-    }else{
-      resolve(@true);
-    }
-  }];
+  ConnectMeVcx *conn = [[ConnectMeVcx alloc] init];
+  int retCode = [conn initNullPay];
+
+  if(retCode != 0) {
+    NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)retCode];
+    reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while initializing sovtoken: %ld", (long)retCode], NULL);
+  } else {
+    [conn initWithConfig:config completion:^(NSError *error) {
+      if (error != nil && error.code != 0 && error.code != 1044)
+      {
+        NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+        reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while initializing vcx: %@ :: %ld",error.domain, (long)error.code], error);
+      }else{
+        resolve(@true);
+      }
+    }];
+  }
 }
 
 RCT_EXPORT_METHOD(reset:

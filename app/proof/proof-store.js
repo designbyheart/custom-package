@@ -248,7 +248,10 @@ export function convertUserSelectedCredentialToVcxSelectedCredentials(
   const attrs = Object.keys(userSelectedCredentials).reduce(
     (acc, attributeKey) => ({
       ...acc,
-      [attributeKey]: userSelectedCredentials[attributeKey][2],
+      [attributeKey]: {
+        credential: userSelectedCredentials[attributeKey][2],
+        tails_file: null,
+      },
     }),
     {}
   )
