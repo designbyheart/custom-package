@@ -162,7 +162,8 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
             />
           ) : (
             <Container center>
-              <View style={styles.messageBox}>
+              {/*Do not remove below commented code, it is commented only till we get a website up for faber*/}
+              {/* <View style={styles.messageBox}>
                 <CustomText demiBold primary h4 transparentBg>
                   {HOW_IT_WORKS}
                 </CustomText>
@@ -192,7 +193,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
                 >
                   {USE_TUTORIAL}
                 </CustomText>
-              </View>
+              </View> */}
             </Container>
           )}
           {!hydrated ? (
