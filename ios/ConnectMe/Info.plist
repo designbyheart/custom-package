@@ -158,5 +158,7 @@
 		<key>test</key>
 		<string>key_test_fnzEMTMuTnr6HZWEBbJVOmfhsymtrs8S</string>
 	</dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>ConnectMe uses your microphone to support audio messages.</string>
 </dict>
 </plist>
