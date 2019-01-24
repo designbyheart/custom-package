@@ -52,10 +52,8 @@ import {
 import { secureSet, getHydrationItem } from '../services/storage'
 import { CLAIM_MAP } from '../common/secure-storage-constants'
 import { RESET } from '../common/type-common'
-import {
-  ensureVcxInitSuccess,
-  updateMessageStatus,
-} from '../store/config-store'
+import { updateMessageStatus } from '../store/config-store'
+import { ensureVcxInitSuccess } from '../store/route-store'
 import type { SerializedClaimOffer } from '../claim-offer/type-claim-offer'
 import { VCX_CLAIM_OFFER_STATE } from '../claim-offer/type-claim-offer'
 import { saveSerializedClaimOffer } from '../claim-offer/claim-offer-store'

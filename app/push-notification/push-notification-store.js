@@ -73,7 +73,7 @@ import { HYDRATED, VCX_INIT_SUCCESS } from '../store/type-config-store'
 import { CONNECT_REGISTER_CREATE_AGENT_DONE } from '../store/user/type-user-store'
 import uniqueId from 'react-native-unique-id'
 import { RESET } from '../common/type-common'
-import { ensureVcxInitSuccess } from '../store/config-store'
+import { ensureVcxInitSuccess } from '../store/route-store'
 import type { Connection } from '../store/type-connection-store'
 import type { CxsCredentialOfferResult } from '../bridge/react-native-cxs/type-cxs'
 import type {

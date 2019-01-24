@@ -53,7 +53,7 @@ import type {
 import type { UserOneTimeInfo } from '../store/user/type-user-store'
 import { connectRegisterCreateAgentDone } from '../store/user/user-store'
 import { RESET } from '../common/type-common'
-import { ensureVcxInitSuccess } from '../store/config-store'
+import { ensureVcxInitSuccess } from '../store/route-store'
 import { VCX_INIT_SUCCESS } from '../store/type-config-store'
 import type { MyPairwiseInfo } from '../store/type-connection-store'
 import { safeSet, safeGet } from '../services/storage'

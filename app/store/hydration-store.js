@@ -65,10 +65,10 @@ import { IS_ALREADY_INSTALLED } from '../common'
 import {
   alreadyInstalledAction,
   hydrated,
-  ensureVcxInitSuccess,
   hydrateSwitchedEnvironmentDetails,
   initialized,
 } from './config-store'
+import { ensureVcxInitSuccess } from './route-store'
 import {
   lockEnable,
   enableTouchIdAction,

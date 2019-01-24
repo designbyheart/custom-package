@@ -62,7 +62,7 @@ import {
 import { pinHash, generateSalt } from './pin-hash'
 import { Platform } from 'react-native'
 import { getVcxInitializationState } from '../store/store-selector'
-import { ensureVcxInitSuccess } from '../store/config-store'
+import { ensureVcxInitSuccess } from '../store/route-store'
 import { captureError } from '../services/error/error-handler'
 
 const initialState: LockStore = {

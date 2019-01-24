@@ -7,7 +7,7 @@ import type {
   OfflineActions,
 } from './type-offline'
 import { captureError } from '../services/error/error-handler'
-import { ensureVcxInitSuccess } from '../store/config-store'
+import { ensureVcxInitSuccess } from '../store/route-store'
 import { VCX_INIT_FAIL } from '../store/type-config-store'
 import { getOfflineStatus } from '../store/store-selector'
 

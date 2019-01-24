@@ -146,7 +146,7 @@ import { getPendingFetchAdditionalDataKey } from './store-selector'
 import firebase from 'react-native-firebase'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
-import { race } from 'redux-saga/effects'
+import { ensureVcxInitSuccess } from './route-store'
 
 /**
  * this file contains configuration which is changed only from user action
@@ -493,10 +493,6 @@ export function* watchSwitchErrorAlerts(): any {
   }
 }
 
-export const vcxInitStart = () => ({
-  type: VCX_INIT_START,
-})
-
 export const vcxInitSuccess = () => ({
   type: VCX_INIT_SUCCESS,
 })
@@ -604,31 +600,6 @@ export const getGenesisFileName = (agencyUrl: string) => {
 
 export function* watchVcxInitStart(): any {
   yield takeLatest(VCX_INIT_START, initVcx)
-}
-
-export function* ensureVcxInitSuccess(): Generator<*, *, *> {
-  // vcx init ensures that
-  // -- app is hydrated
-  // -- user one time info is available
-  // -- vcx initialization was success
-
-  const vcxInitializationState = yield select(getVcxInitializationState)
-  if (vcxInitializationState === VCX_INIT_SUCCESS) {
-    // if already initialized, no need to process further
-    return
-  }
-
-  if ([VCX_INIT_NOT_STARTED, VCX_INIT_FAIL].includes(vcxInitializationState)) {
-    // if vcx init not started or vcx init failed and we want to init again
-    yield put(vcxInitStart())
-  }
-
-  // if we are here, that means we either started vcx init
-  // or vcx init was already in progress and now we need to wait for success
-  return yield race({
-    success: take(VCX_INIT_SUCCESS),
-    fail: take(VCX_INIT_FAIL),
-  })
 }
 
 export function* getMessagesSaga(): Generator<*, *, *> {

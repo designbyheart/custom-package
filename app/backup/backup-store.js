@@ -84,6 +84,7 @@ import {
 } from '../store/store-selector'
 import { STORAGE_KEY_SHOW_BANNER } from '../components/banner/banner-constants'
 import { getWords } from './secure-passphrase'
+import { ensureVcxInitSuccess } from '../store/route-store'
 import { VCX_INIT_SUCCESS, __uniqueId } from '../store/type-config-store'
 import { pinHash as generateKey, generateSalt } from '../lock/pin-hash'
 import moment from 'moment'
@@ -294,8 +295,8 @@ export function* hydratePassphraseFromWallet(): Generator<*, *, *> {
 export function* generateRecoveryPhraseSaga(
   action: GenerateRecoveryPhraseLoadingAction
 ): Generator<*, *, *> {
-  const vcxInitializedState = yield select(getVcxInitializationState)
-  if (vcxInitializedState !== VCX_INIT_SUCCESS) {
+  const vcxResult = yield* ensureVcxInitSuccess()
+  if (vcxResult && vcxResult.fail) {
     yield take(VCX_INIT_SUCCESS)
   }
 

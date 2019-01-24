@@ -1,0 +1,42 @@
+cd /Users/norm/forge/work/code/evernym/ConnectMe.master
+npm install madge
+madge --circular --extensions js app/
+When you have the circular dependency output then clean up the node_modules folder with...
+rm -rf node_modules; yarn install
+
+
+This is the last output from the circular dependency check done by madge
+-------------------------------------------------------------------------------------------------------------------------------
+1) claim/type-claim.js > push-notification/type-push-notification.js
+2) proof-request/type-proof-request.js > claim/type-claim.js > push-notification/type-push-notification.js
+3) proof-request/type-proof-request.js > claim/type-claim.js > push-notification/type-push-notification.js > proof/type-proof.js
+4) bridge/react-native-cxs/RNCxs.js > bridge/react-native-cxs/vcx-transformers.js > services/storage.js
+5) bridge/react-native-cxs/RNCxs.js > bridge/react-native-cxs/vcx-transformers.js > services/storage.js > store/custom-logger.js
+6) store/store-selector.js > connection-history/type-connection-history.js > store/connections-store.js > backup/backup-store.js > store/route-store.js
+7) connection-history/type-connection-history.js > store/connections-store.js > backup/backup-store.js > store/route-store.js > store/type-store.js
+8) store/type-store.js > restore/type-restore.js
+9) store/store-selector.js > connection-history/type-connection-history.js > store/connections-store.js > backup/backup-store.js
+10) store/store-selector.js > connection-history/type-connection-history.js > store/connections-store.js
+11) claim/claim-store.js > store/config-store.js
+12) claim/claim-store.js > store/config-store.js > push-notification/push-notification-store.js
+13) proof-request/proof-request-store.js > proof/proof-store.js
+14) store/config-store.js > push-notification/push-notification-store.js
+15) components/index.js > components/AvatarsPair.js
+16) components/index.js > components/CustomModal.js
+17) components/index.js > components/claim-proof-header/claim-proof-header.js
+18) components/index.js > components/custom-date/custom-date.js
+19) components/index.js > components/custom-list/custom-list.js
+20) components/index.js > components/footer-actions/footer-actions.js
+21) components/index.js > components/keyboard/keyboard.js
+22) components/index.js > components/loader/loader.js
+23) components/index.js > components/pin-code/pin-code-box.js
+24) components/index.js > components/pin-code/pin-code-box.js > components/pin-code/pin-code-digit.js
+25) components/index.js > components/qr-scanner/qr-scanner.js
+26) components/index.js > components/request/request.js
+27) components/index.js > components/request/request.js > components/request/request-detail.js
+28) components/index.js > components/request/request.js > components/request/request-detail.js > components/request/request-detail-avatars.js
+29) components/index.js > components/request/request.js > components/request/request-detail.js > components/request/request-detail-text.js
+30) components/index.js > components/separator.js
+31) components/index.js > components/user-avatar/user-avatar.js
+
+

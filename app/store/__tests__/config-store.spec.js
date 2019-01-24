@@ -19,11 +19,9 @@ import configReducer, {
   onChangeEnvironmentUrl,
   changeEnvironmentUrl,
   vcxInitReset,
-  vcxInitStart,
   vcxInitSuccess,
   vcxInitFail,
   initVcx,
-  ensureVcxInitSuccess,
   getEnvironmentName,
   resetStore,
   reset,
@@ -40,6 +38,7 @@ import configReducer, {
   acknowledgeMessagesFail,
   updateMessageStatus,
 } from '../config-store'
+import { vcxInitStart, ensureVcxInitSuccess } from '../route-store'
 import {
   SERVER_ENVIRONMENT_CHANGED,
   SERVER_ENVIRONMENT,
