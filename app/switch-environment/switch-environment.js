@@ -1,12 +1,6 @@
 //@flow
 import React, { PureComponent } from 'react'
-import {
-  TouchableHighlight,
-  Image,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-} from 'react-native'
+import { TouchableHighlight, Image, StyleSheet, TextInput } from 'react-native'
 import { Container, CustomView, CustomText, CustomButton } from '../components'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -28,6 +22,7 @@ import type {
 } from './type-switch-environment'
 import { baseUrls } from '../store/config-store'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const styles = StyleSheet.create({
   TextInput: {
@@ -175,7 +170,7 @@ class SwitchEnvironment extends PureComponent<
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.PROD)}
             />
           </CustomView>
-          <ScrollView>
+          <KeyboardAwareScrollView>
             <CustomText
               h7
               uppercase
@@ -191,6 +186,8 @@ class SwitchEnvironment extends PureComponent<
               onChangeText={agencyUrl => this.setState({ agencyUrl })}
               value={this.state.agencyUrl}
               testID="text-input-agencyUrl"
+              autoCorrect={false}
+              underlineColorAndroid="transparent"
             />
             <CustomText
               h7
@@ -207,6 +204,8 @@ class SwitchEnvironment extends PureComponent<
               onChangeText={agencyDID => this.setState({ agencyDID })}
               value={this.state.agencyDID}
               testID="text-input-agencyDID"
+              autoCorrect={false}
+              underlineColorAndroid="transparent"
             />
             <CustomText
               h7
@@ -225,6 +224,8 @@ class SwitchEnvironment extends PureComponent<
               }
               value={this.state.agencyVerificationKey}
               testID="text-input-agencyVerificationKey"
+              autoCorrect={false}
+              underlineColorAndroid="transparent"
             />
             <CustomText
               h7
@@ -241,8 +242,10 @@ class SwitchEnvironment extends PureComponent<
               onChangeText={poolConfig => this.setState({ poolConfig })}
               value={this.state.poolConfig}
               testID="text-input-poolConfig"
+              autoCorrect={false}
+              underlineColorAndroid="transparent"
             />
-          </ScrollView>
+          </KeyboardAwareScrollView>
         </Container>
         <FooterActions
           onAccept={this.onSave}
