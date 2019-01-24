@@ -90,6 +90,7 @@ RCT_EXPORT_METHOD(init: (NSString *)config
         NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
         reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while initializing vcx: %@ :: %ld",error.domain, (long)error.code], error);
       }else{
+        //[conn setDefaultLogger:@"trace"];
         resolve(@true);
       }
     }];

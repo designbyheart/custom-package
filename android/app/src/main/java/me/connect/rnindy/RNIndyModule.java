@@ -157,6 +157,7 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
                 // async
                 // block and above try catch would not catch this exception
                 if (result != -1) {
+                    //VcxApi.vcxSetDefaultLogger("trace");
                     promise.resolve(true);
                 }
             });
