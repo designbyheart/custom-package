@@ -2,17 +2,17 @@
 
 platform :ios, '10.2'
 source 'https://github.com/CocoaPods/Specs.git'
-source 'git@github.com:evernym/indy-sdk.git'
+source 'git@github.com:evernym/sdk.git'
 
 def vcx_version_for_debug_or_release
     if ENV['CONNECTME_DEBUG'] == "true"
         # stable cocoapod
-        #'0.0.64'
-        '0.0.74'
+        '0.0.64'
+        #'0.0.74'
     else
         # stable cocoapod
-        #'0.0.63'
-        '0.0.73'
+        '0.0.63'
+        #'0.0.73'
     end
 end
 

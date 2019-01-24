@@ -144,12 +144,6 @@ export type MatchingCredential = {
     attrs: { [claimAttributeName: string]: string },
     schema_id: string,
     cred_def_id: string,
-    rev_reg_id?: string,
-    cred_rev_id?: string,
-  },
-  interval?: {
-    to?: number,
-    from?: number,
   },
 }
 
@@ -167,10 +161,7 @@ export type IndyRequestedAttributes = {
 
 export type VcxSelectedCredentials = {
   attrs?: {
-    [attributeKey: string]: {
-      credential: MatchingCredential,
-      tails_file?: string,
-    },
+    [attributeKey: string]: MatchingCredential,
   },
 }
 
