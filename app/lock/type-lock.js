@@ -136,6 +136,12 @@ export type LockSelectionProps = {
   pressedOnOrInLockSelectionScreen: () => void,
   switchErrorAlerts: () => void,
   safeToDownloadSmsInvitation: () => void,
+  changeEnvironment: (
+    agencyUrl: string,
+    agencyDID: string,
+    agencyVerificationKey: string,
+    poolConfig: string
+  ) => void,
 } & ReactNavigation
 
 export type LockActions =

@@ -7,10 +7,13 @@ import {
   TouchableHighlight,
   Alert,
   Keyboard,
+  Platform,
+  Switch,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { select } from 'redux-saga/effects'
 import { bindActionCreators } from 'redux'
+import ToggleSwitch from 'react-native-flip-toggle-button'
 import type { Store } from '../store/type-store'
 import { Container, CustomText, CustomView } from '../components'
 import {
@@ -29,19 +32,31 @@ import {
   color,
   isiPhone5,
   PIN_CODE_BORDER_BOTTOM,
+  mantis,
+  lightWhite,
+  white,
 } from '../common/styles/constant'
-import { switchErrorAlerts } from '../store/config-store'
+import {
+  switchErrorAlerts,
+  changeEnvironment,
+  baseUrls,
+  defaultEnvironment,
+} from '../store/config-store'
 import {
   disableDevMode,
   longPressedInLockSelectionScreen,
   pressedOnOrInLockSelectionScreen,
 } from './lock-store'
 import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
+import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 
-export class LockSelection extends PureComponent<LockSelectionProps, void> {
+export class LockSelection extends PureComponent<LockSelectionProps, *> {
   constructor(props: LockSelectionProps) {
     super(props)
     Keyboard.dismiss()
+    this.state = {
+      devMode: false,
+    }
   }
 
   goTouchIdSetup = () => {
@@ -62,6 +77,22 @@ export class LockSelection extends PureComponent<LockSelectionProps, void> {
 
   _onTextPressButton = () => {
     this.props.pressedOnOrInLockSelectionScreen()
+  }
+
+  onDevModeChange = (switchState: boolean) => {
+    if (this.state.devMode !== switchState) {
+      this.setState({ devMode: switchState }, () => {
+        const env = this.state.devMode
+          ? baseUrls[SERVER_ENVIRONMENT.DEMO]
+          : baseUrls[defaultEnvironment]
+        this.props.changeEnvironment(
+          env.agencyUrl,
+          env.agencyDID,
+          env.agencyVerificationKey,
+          env.poolConfig
+        )
+      })
+    }
   }
 
   componentWillReceiveProps(nextProps: LockSelectionProps) {
@@ -106,7 +137,7 @@ export class LockSelection extends PureComponent<LockSelectionProps, void> {
           <CustomView
             center
             fifth
-            shadow
+            shadowNoOffset
             testID="touch-id-selection"
             style={[style.touchIdPinContainer]}
             onPress={this.goTouchIdSetup}
@@ -141,7 +172,7 @@ export class LockSelection extends PureComponent<LockSelectionProps, void> {
           </CustomView>
           <CustomView
             fifth
-            shadow
+            shadowNoOffset
             testID="pin-code-selection"
             style={[style.touchIdPinContainer]}
             onPress={this.goPinCodeSetup}
@@ -194,6 +225,44 @@ export class LockSelection extends PureComponent<LockSelectionProps, void> {
             </CustomText>
           </CustomView>
         </Container>
+        <CustomView tertiary style={[style.devSwitchContainer]}>
+          <CustomView tertiary row spaceBetween>
+            <CustomView tertiary style={[style.devSwitchText]}>
+              <CustomText bg="tertiary" tertiary h5 bold>
+                Use App In Test Mode
+              </CustomText>
+            </CustomView>
+            <CustomView tertiary>
+              {Platform.OS === 'ios' ? (
+                <Switch
+                  onTintColor={mantis}
+                  onValueChange={this.onDevModeChange}
+                  value={this.state.devMode}
+                />
+              ) : (
+                <ToggleSwitch
+                  onToggle={this.onDevModeChange}
+                  value={this.state.devMode}
+                  buttonWidth={55}
+                  buttonHeight={30}
+                  buttonRadius={30}
+                  sliderWidth={28}
+                  sliderHeight={28}
+                  sliderRadius={58}
+                  buttonOnColor={mantis}
+                  buttonOffColor={lightWhite}
+                  sliderOnColor={white}
+                  sliderOffColor={white}
+                />
+              )}
+            </CustomView>
+          </CustomView>
+          <CustomView tertiary verticalSpace>
+            <CustomText bg="tertiary" tertiary h6>
+              (For developers only. Uses the Sovrin Test Network)
+            </CustomText>
+          </CustomView>
+        </CustomView>
       </Container>
     )
   }
@@ -213,6 +282,7 @@ const mapDispatchToProps = dispatch =>
       pressedOnOrInLockSelectionScreen,
       disableDevMode,
       safeToDownloadSmsInvitation,
+      changeEnvironment,
     },
     dispatch
   )
@@ -222,7 +292,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(LockSelection)
 const style = StyleSheet.create({
   pinSelectionContainer: {
     paddingTop: OFFSET_3X,
-    paddingBottom: isiPhone5 ? OFFSET_2X : OFFSET_6X,
+    paddingBottom: isiPhone5 ? OFFSET_1X / 2 : OFFSET_1X,
     paddingHorizontal: OFFSET_2X,
   },
   messageText: {
@@ -256,5 +326,12 @@ const style = StyleSheet.create({
   usePinText: {
     lineHeight: 22,
     paddingBottom: OFFSET_1X / 2,
+  },
+  devSwitchContainer: {
+    marginHorizontal: OFFSET_3X,
+    marginTop: OFFSET_2X,
+  },
+  devSwitchText: {
+    alignSelf: 'center',
   },
 })

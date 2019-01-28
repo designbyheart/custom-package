@@ -50,7 +50,6 @@ export function* ensureVcxInitSuccess(): Generator<*, *, *> {
   // -- user one time info is available
   // -- vcx initialization was success
 
-  console.log('calling ensureVcxInitSuccess... 7')
   const vcxInitializationState = yield select(getVcxInitializationState)
   if (vcxInitializationState === VCX_INIT_SUCCESS) {
     // if already initialized, no need to process further

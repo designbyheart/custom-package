@@ -87,9 +87,9 @@ export class ConnectMeApp extends PureComponent<AppProps, void> {
   exitTimeout: number = 0
 
   componentWillMount() {
-    RNShake.addEventListener('ShakeEvent', () => {
-      this.navigateToRoute(sendLogsRoute)
-    })
+    // RNShake.addEventListener('ShakeEvent', () => {
+    //   this.navigateToRoute(sendLogsRoute)
+    // })
   }
 
   componentDidMount() {
@@ -109,7 +109,7 @@ export class ConnectMeApp extends PureComponent<AppProps, void> {
   }
 
   componentWillUnmount() {
-    RNShake.removeEventListener('ShakeEvent', () => {})
+    //RNShake.removeEventListener('ShakeEvent', () => {})
 
     if (Platform.OS === 'android') {
       BackHandler.removeEventListener(

@@ -4,4 +4,5 @@
   "cSpell.words": [
     "Onfido"
   ],
+  "flow.useLSP": false
 }

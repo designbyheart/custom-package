@@ -111,7 +111,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 26
         multiDexEnabled true
-        versionCode 772
+        versionCode 775
         versionName "1.0"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
@@ -226,7 +226,7 @@ dependencies {
     compile 'com.android.support:palette-v7:26.1.0'
     // stable aar
     // compile 'com.evernym:vcx:1.0.0-29-11-2018T23-07@aar'
-    compile 'com.evernym:vcx:1.0.0-24-01-2019T18-09@aar'
+    compile 'com.evernym:vcx:1.0.0-25-01-2019T17-14@aar'
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.6.2'
     implementation 'net.sourceforge.streamsupport:android-retrostreams:1.6.2'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.59'

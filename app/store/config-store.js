@@ -25,6 +25,7 @@ import {
   getPendingHistory,
   getClaimOffer,
   getClaimOffers,
+  getAgencyUrl,
 } from '../store/store-selector'
 import {
   SERVER_ENVIRONMENT,
@@ -244,9 +245,9 @@ export const baseUrls = {
 // making defaults sane so that developers don't need to remember
 // what settings should be in dev environment
 const isDevEnvironment = __DEV__ && process.env.NODE_ENV !== 'test'
-const defaultEnvironment = isDevEnvironment
+export const defaultEnvironment = isDevEnvironment
   ? SERVER_ENVIRONMENT.DEVELOPMENT
-  : SERVER_ENVIRONMENT.DEMO
+  : SERVER_ENVIRONMENT.PROD
 
 const initialState: ConfigStore = {
   ...baseUrls[defaultEnvironment],
@@ -434,13 +435,23 @@ export function* hydrateSwitchedEnvironmentDetails(): any {
       getHydrationItem,
       STORAGE_KEY_SWITCHED_ENVIRONMENT_DETAIL
     )
-    if (switchedEnvironmentDetail) {
-      const {
-        agencyUrl,
-        agencyDID,
-        agencyVerificationKey,
-        poolConfig,
-      }: ChangeEnvironment = JSON.parse(switchedEnvironmentDetail)
+    // if we did not find any saved environment details
+    // then we are running an older version of the app where we did not save
+    // environment details with which app was running
+    // In all those previous instances our default environment was DEMO
+    // so now, we have to switch default environment to DEMO
+    const {
+      agencyUrl,
+      agencyDID,
+      agencyVerificationKey,
+      poolConfig,
+    }: ChangeEnvironment = switchedEnvironmentDetail
+      ? JSON.parse(switchedEnvironmentDetail)
+      : baseUrls[SERVER_ENVIRONMENT.DEMO]
+    // if environment that is saved is same as what we have as default
+    // then there is no need to raise change environment action
+    const currentAgencyUrl = yield select(getAgencyUrl)
+    if (currentAgencyUrl !== agencyUrl) {
       yield put(
         changeEnvironment(
           agencyUrl,
@@ -459,6 +470,31 @@ export function* hydrateSwitchedEnvironmentDetails(): any {
       })
     )
   }
+}
+
+export function* persistEnvironmentDetails(): any {
+  // we wait to persist environment details till we know that now user can't
+  // change environment in UX flow
+  const currentScreen: string = yield select(getCurrentScreen)
+  if (UNSAFE_SCREENS_TO_DOWNLOAD_SMS.indexOf(currentScreen) > -1) {
+    // user is on screens where he has chance to change environment details
+    // so we wait for event which tells that we are safe
+    yield take(SAFE_TO_DOWNLOAD_SMS_INVITATION)
+  }
+
+  const {
+    agencyUrl,
+    agencyDID,
+    agencyVerificationKey,
+    poolConfig,
+  }: ConfigStore = yield select(getConfig)
+  yield call(onEnvironmentSwitch, {
+    type: SWITCH_ENVIRONMENT,
+    agencyUrl,
+    agencyDID,
+    agencyVerificationKey,
+    poolConfig,
+  })
 }
 
 export const hydrateSwitchedEnvironmentDetailFail = (error: CustomError) => ({

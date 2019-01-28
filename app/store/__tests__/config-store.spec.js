@@ -81,7 +81,7 @@ import {
   updateMessages,
 } from '../../bridge/react-native-cxs/RNCxs'
 import { updatePushToken } from '../../push-notification/push-notification-store'
-import { getPushToken } from '../../store/store-selector'
+import { getPushToken, getAgencyUrl } from '../../store/store-selector'
 import { connectRegisterCreateAgentDone } from '../user/user-store'
 import { homeRoute, splashScreenRoute } from '../../common/route-constants'
 import {
@@ -114,9 +114,9 @@ describe('server environment should change', () => {
     initialConfig = getConfigStoreInitialState()
   })
 
-  it('initial app should always point to DEMO', () => {
+  it('initial app should always point to PROD', () => {
     if (initialConfig) {
-      expect(initialConfig.agencyUrl).toBe(baseUrls.DEMO.agencyUrl)
+      expect(initialConfig.agencyUrl).toBe(baseUrls.PROD.agencyUrl)
     }
   })
 
@@ -251,6 +251,10 @@ describe('server environment should change', () => {
       agencyUrl,
     }
     expect(gen.next(serializedEnvironmentDetail).value).toEqual(
+      select(getAgencyUrl)
+    )
+    const currentAgencyUrl = 'some-other-environment'
+    expect(gen.next(currentAgencyUrl).value).toEqual(
       put(
         changeEnvironment(
           agencyUrl,

@@ -15,13 +15,13 @@ export const customLogger = {
   initOnlyOnce: false,
   log: function(...allArgs: any[]) {
     //console.log(JSON.stringify(allArgs))
-    this.addRecord({ fname: 'log', args: allArgs })
+    //this.addRecord({ fname: 'log', args: allArgs })
     if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
       console.log.apply(null, allArgs)
     }
   },
   error: function(...allArgs: any[]) {
-    this.addRecord({ fname: 'error', args: allArgs })
+    //this.addRecord({ fname: 'error', args: allArgs })
     if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
       console.error.apply(null, allArgs)
     }
@@ -32,7 +32,7 @@ export const customLogger = {
     }
   },
   clear: function(...allArgs: any[]) {
-    this.addRecord({ fname: 'clear', args: allArgs })
+    //this.addRecord({ fname: 'clear', args: allArgs })
     if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
       console.clear.apply(null, allArgs)
     }
@@ -43,7 +43,7 @@ export const customLogger = {
     }
   },
   debug: function(...allArgs: any[]) {
-    this.addRecord({ fname: 'debug', args: allArgs })
+    //this.addRecord({ fname: 'debug', args: allArgs })
     if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
       console.debug.apply(null, allArgs)
     }
@@ -94,13 +94,13 @@ export const customLogger = {
     }
   },
   trace: function(...allArgs: any[]) {
-    this.addRecord({ fname: 'trace', args: allArgs })
+    //this.addRecord({ fname: 'trace', args: allArgs })
     if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
       console.trace.apply(null, allArgs)
     }
   },
   warn: function(...allArgs: any[]) {
-    this.addRecord({ fname: 'warn', args: allArgs })
+    //this.addRecord({ fname: 'warn', args: allArgs })
     if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
       console.warn.apply(null, allArgs)
     }
@@ -125,14 +125,14 @@ export const customLogger = {
       uniqueId()
         .then(uniqueIdent => {
           console.log('The app unique id is: ', uniqueIdent)
-          setVcxLogger(uniqueIdent, CUSTOM_LOG_UTILS.MAX_ALLOWED_FILE_BYTES)
-            .then(logFilePath => {
-              this.setVcxLogFile(logFilePath)
-              console.log('Setting vcx log file to: ', logFilePath)
-            })
-            .catch(error => {
-              console.error('Error setting vcx log file: ', error)
-            })
+          // setVcxLogger(uniqueIdent, CUSTOM_LOG_UTILS.MAX_ALLOWED_FILE_BYTES)
+          //   .then(logFilePath => {
+          //     this.setVcxLogFile(logFilePath)
+          //     console.log('Setting vcx log file to: ', logFilePath)
+          //   })
+          //   .catch(error => {
+          //     console.error('Error setting vcx log file: ', error)
+          //   })
         })
         .catch(error => {
           console.error('Error getting unique id in redux store: ', error)
@@ -178,22 +178,22 @@ export const customLogger = {
   writeToLog: function(rotatingLog: string, record: any) {
     const recordAsString = JSON.stringify(record)
 
-    if (recordAsString.indexOf('%c prev state') === -1) {
-      CUSTOM_LOG_UTILS.fs
-        .writeStream(
-          rotatingLog,
-          // encoding, should be one of `base64`, `utf8`, `ascii`
-          'utf8',
-          // should data append to existing content ?
-          true
-        )
-        .then(ofstream => {
-          ofstream.write('[' + new Date().toString() + '] :: ')
-          ofstream.write(recordAsString)
-          ofstream.write('\n')
-          ofstream.close()
-        })
-    }
+    // if (recordAsString.indexOf('%c prev state') === -1) {
+    //   CUSTOM_LOG_UTILS.fs
+    //     .writeStream(
+    //       rotatingLog,
+    //       // encoding, should be one of `base64`, `utf8`, `ascii`
+    //       'utf8',
+    //       // should data append to existing content ?
+    //       true
+    //     )
+    //     .then(ofstream => {
+    //       ofstream.write('[' + new Date().toString() + '] :: ')
+    //       ofstream.write(recordAsString)
+    //       ofstream.write('\n')
+    //       ofstream.close()
+    //     })
+    // }
   },
 
   clearRecords: function() {},

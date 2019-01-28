@@ -13,6 +13,7 @@ function getLockSelectionProps() {
     pressedOnOrInLockSelectionScreen: jest.fn(),
     disableDevMode: jest.fn(),
     safeToDownloadSmsInvitation: jest.fn(),
+    changeEnvironment: jest.fn(),
   }
 }
 
