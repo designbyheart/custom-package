@@ -182,10 +182,16 @@ export function convertClaimOfferPushPayloadToAppClaimOffer(
    * ]
    */
   const revealedAttributes = Object.keys(pushPayload.claim).map(
-    attributeName => ({
-      label: attributeName,
-      data: pushPayload.claim[attributeName][0],
-    })
+    attributeName => {
+      let attributeValue = pushPayload.claim[attributeName]
+      if (Array.isArray(attributeValue)) {
+        attributeValue = attributeValue[0]
+      }
+      return {
+        label: attributeName,
+        data: attributeValue,
+      }
+    }
   )
 
   return {
