@@ -6,7 +6,7 @@ import { setVcxLogger } from '../bridge/react-native-cxs/RNCxs'
 export const CUSTOM_LOG_UTILS = {
   fs: RNFetchBlob.fs,
   MAX_ALLOWED_FILE_BYTES: 10000000,
-  alsoLogToConsole: process.env.NODE_ENV !== 'test',
+  alsoLogToConsole: process.env.NODE_ENV !== 'test' && __DEV__,
 }
 
 export const customLogger = {
