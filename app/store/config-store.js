@@ -580,7 +580,6 @@ export function* initVcx(): Generator<*, *, *> {
     agencyVerificationKey,
     poolConfig,
   }
-  yield* persistEnvironmentDetails()
 
   if (!userOneTimeInfo) {
     // app is hydrated, but we haven't got user one time info
@@ -1074,6 +1073,7 @@ export function* watchConfig(): any {
     watchChangeEnvironmentUrl(),
     watchVcxInitStart(),
     watchOnHydrationDownloadMessages(),
+    persistEnvironmentDetails(),
   ])
 }
 
