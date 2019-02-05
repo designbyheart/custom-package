@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import RadialGradient from 'react-native-radial-gradient'
 import {
   Alert,
   ScrollView,
@@ -27,7 +26,7 @@ import {
   CustomDate,
   headerStyles,
 } from '../components'
-import { dimGray, OFFSET_9X } from '../../app/common/styles'
+import { dimGray, OFFSET_9X, white } from '../../app/common/styles'
 import {
   homeRoute,
   connectionHistoryRoute,
@@ -66,6 +65,7 @@ import debounce from 'lodash.debounce'
 import { getUnseenMessages } from '../store/store-selector'
 import { goToUIScreen } from '../push-notification/push-notification-store'
 import Color from 'color'
+import { getStatusBarStyle } from '../components/custom-header/custom-header'
 
 const statusMsg = {
   ['PENDING']: 'Pending',
@@ -251,14 +251,6 @@ export class ConnectionHistory extends Component<
         ? { uri: image }
         : require('../images/cb_evernym.png')
 
-      const barStyle = activeConnectionThemePrimary => {
-        if (Color(activeConnectionThemePrimary).isLight) {
-          return 'light-content'
-        } else {
-          return 'dark-content'
-        }
-      }
-
       const historySenderDIDs = Object.keys(connectionHistory)
       const historyList = historySenderDIDs.map((sdid, i) => {
         const historyItems = connectionHistory[sdid].map((h, i) => {
@@ -319,16 +311,14 @@ export class ConnectionHistory extends Component<
         <Container fifth>
           <StatusBar
             backgroundColor={this.props.activeConnectionThemePrimary}
-            barStyle={barStyle(this.props.activeConnectionThemePrimary)}
+            barStyle={getStatusBarStyle(
+              this.props.activeConnectionThemePrimary
+            )}
           />
-          <RadialGradient
-            colors={[
-              this.props.activeConnectionThemePrimary,
-              this.props.activeConnectionThemeSecondary,
+          <CustomView
+            style={[
+              { backgroundColor: this.props.activeConnectionThemePrimary },
             ]}
-            stops={[0.1, 0.4]}
-            center={[width / 2, OFFSET_9X / 2]}
-            radius={width * 3}
           >
             <ClaimProofHeader
               message={senderName}
@@ -372,6 +362,7 @@ export class ConnectionHistory extends Component<
                   iconStyle={[styles.issuerLogoIcon]}
                   testID={`${testID}-issuer-logo`}
                   onLongPress={() => showDID(senderDID, identifier)}
+                  backgroundRoundWhite
                 />
                 <Icon
                   absolute="TopLeft"
@@ -387,8 +378,7 @@ export class ConnectionHistory extends Component<
                 />
               </CustomView>
             </ClaimProofHeader>
-          </RadialGradient>
-
+          </CustomView>
           <ScrollView>
             <List containerStyle={styles.listContainer}>{historyList}</List>
           </ScrollView>
@@ -515,5 +505,8 @@ const styles = StyleSheet.create({
   avatarOverlayContainerStyle: { backgroundColor: 'transparent' },
   badgeDotStyle: {
     marginBottom: 5,
+  },
+  issuerLogoHaloStyle: {
+    backgroundColor: white,
   },
 })

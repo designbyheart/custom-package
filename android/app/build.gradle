@@ -80,10 +80,6 @@ apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 apply from: "../../node_modules/react-native/react.gradle"
 
-project.ext.sentryCli = [
-    logLevel: "debug"
-]
-apply from: "../../node_modules/react-native-sentry/sentry.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -115,16 +111,17 @@ android {
         minSdkVersion 23
         targetSdkVersion 26
         multiDexEnabled true
-        versionCode 758
+        versionCode 783
         versionName "1.0"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
             incremental = false; //If you see any build issues, try uncommenting this line development phases. Do not commit this line uncommented
         }
-         ndk {
-             abiFilters 'x86', 'armeabi-v7a'//, 'x86_64', 'armeabi',  'arm64-v8a' // <- only the supported ones
-         }
+        ndk {
+            abiFilters 'x86', 'armeabi-v7a'//, 'x86_64', 'armeabi',  'arm64-v8a' // <- only the supported ones
+        }
+        // vectorDrawables.useSupportLibrary = true
 
         testBuildType System.getProperty('testBuildType', 'debug')
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -142,13 +139,19 @@ android {
         javaMaxHeapSize "4g"
     }
 
-    signingConfigs{
+    signingConfigs {
         release {
             // we need this configuration for fastlane step workflow in bitrise.
             storeFile file(System.getenv("HOME") + "/keystores/my_keystore.jks")
             storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
             keyAlias System.getenv("ANDROID_KEYSTORE_ALIAS")
             keyPassword System.getenv("ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
+        }
+        debug {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
+            storeFile file('../keystores/debug.keystore')
         }
     }
     // TODO:KS We might want to generate different APKs for separate ABIs
@@ -167,19 +170,27 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
         }
+        debug {
+            signingConfig signingConfigs.debug
+        }
     }
 
 }
 
 configurations.all {
     resolutionStrategy.force 'com.android.support:support-v4:26.1.0'
+    resolutionStrategy.force "com.android.support:appcompat-v7:26.1.0"
 }
 
 dependencies {
     compile project(':react-native-mail')
     compile project(':react-native-shake')
+    compile project(':react-native-image-crop-picker')
+    // Already in this file -- compile project(':react-native-firebase')
+    compile project(':apptentive-react-native')
+    compile project(':react-native-keep-screen-on')
+    compile project(':react-native-svg')
     compile project(':react-native-pbkdf2')
-    compile project(':react-native-sentry')
     compile(project(":react-native-firebase")){
         exclude group: "com.google.android.gms" // very important
         exclude group: 'com.android.support', module: 'support-content'
@@ -191,47 +202,45 @@ dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     compile project(':react-native-share')
     compile project(':react-native-version-number')
-    compile project(':react-native-image-crop-picker')
     compile project(':react-native-image-resizer')
     compile 'com.google.firebase:firebase-messaging:11.8.0'
-    implementation 'me.leolin:ShortcutBadger:1.1.21@aar' // <-- Add this line if you wish to use badge on Android
-
+    implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
+    // <-- Add this line if you wish to use badge on Android
     // If you are receiving Google Play API availability issues, add the following dependency
-    compile "com.google.android.gms:play-services-base:11.8.0"
-
+    compile 'com.google.android.gms:play-services-base:11.8.0'
     compile project(':react-native-touch-id')
     compile project(':react-native-fetch-blob')
     compile project(':react-native-camera')
     compile project(':react-native-branch')
     compile project(':react-native-splash-screen')
-    compile project(':apptentive-react-native')
-    androidTestImplementation(project(path: ":detox"))
+    androidTestImplementation project(path: ':detox')
     androidTestImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support:support-annotations:26.1.0'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test:rules:1.0.1'
-
     implementation 'com.android.support:multidex:1.0.3'
-
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:26.1.0'
-    compile ('com.facebook.react:react-native:0.51.0') { force=true }
+    compile('com.facebook.react:react-native:0.51.0') { force = true }
     // From node_modules
     compile project(':react-native-vector-icons')
-    compile project(':react-native-radial-gradient')
     compile 'net.hockeyapp.android:HockeySDK:4.1.4'
     compile 'com.android.support:palette-v7:26.1.0'
-    compile 'com.evernym:vcx:1.0.0-29-11-2018T23-07@aar'
+    // stable aar
+    // compile 'com.evernym:vcx:1.0.0-29-11-2018T23-07@aar'
+    compile 'com.evernym:vcx:1.0.0-25-01-2019T17-14@aar'
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.6.2'
-    implementation group: 'net.sourceforge.streamsupport', name: 'android-retrostreams', version: '1.6.2'
-    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.59'
+    implementation 'net.sourceforge.streamsupport:android-retrostreams:1.6.2'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.59'
     //TODO remove JNA when vcx.aar is resolved from repo instead of flat file
     //TODO JNA only needed when vcx.aar is resolved from flat file
     implementation 'net.java.dev.jna:jna:4.5.0@aar'
-    // un-comment below lines to enable logging in vcx and indy
-    //compile group: 'com.mobidevelop.robovm', name: 'robovm-rt', version: '2.3.4'
-
-    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    implementation 'org.slf4j:slf4j-simple:1.7.25'
+    //https://onfido.bintray.com/maven/com/onfido/sdk/capture/onfido-capture-sdk/
+    compile 'com.onfido.sdk.capture:onfido-capture-sdk:4.4.0'
+    //necessary due to conflics of dependencies
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
 }
 configurations.all {
     resolutionStrategy.force "com.android.support:appcompat-v7:26.1.0"

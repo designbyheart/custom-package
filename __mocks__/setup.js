@@ -5,6 +5,13 @@ import mockCamera from './camera-mock'
 import mockModal from './modal-mock'
 import mockView from './view-mock'
 
+// mock Math.random for <Loader />
+const mockMath = Object.create(global.Math)
+mockMath.random = () => 0.1
+global.Math = mockMath
+
+jest.mock('NativeAnimatedHelper')
+
 // mock this module to allow react-navigation to mock Linking
 jest.mock('Linking', () => ({
   addEventListener: jest.fn(),
@@ -36,6 +43,7 @@ jest.mock('react-native-firebase', () => ({
     onNotification: jest.fn(() => Promise.resolve()),
     onNotificationOpened: jest.fn(() => Promise.resolve()),
     getInitialNotification: jest.fn(() => Promise.resolve()),
+    removeAllDeliveredNotifications: jest.fn(),
   })),
   messaging: jest.fn(() => ({
     requestPermission: jest.fn(() => Promise.resolve()),
@@ -92,18 +100,18 @@ jest.mock('react-native-touch-id', () => {
   }
 })
 
-jest.mock('react-native-sentry', () => ({
-  Sentry: {
-    install() {},
-    config() {
-      return { install() {} }
-    },
-    captureException(error) {},
-  },
-  SentryLog: {
-    Debug: 1,
-  },
-}))
+// jest.mock('react-native-sentry', () => ({
+//   Sentry: {
+//     install() {},
+//     config() {
+//       return { install() {} }
+//     },
+//     captureException(error) {},
+//   },
+//   SentryLog: {
+//     Debug: 1,
+//   },
+// }))
 
 jest.mock('AlertIOS', () => ({
   alert() {},
@@ -157,7 +165,7 @@ jest.mock('moment', () =>
 
 jest.mock('react-native-share', () => {})
 
-jest.mock('react-native-shake', () => {})
+//jest.mock('react-native-shake', () => {})
 
 jest.mock('react-native-mail', () => {})
 
@@ -210,6 +218,8 @@ jest.mock('react-native-image-crop-picker', () => ({
   ),
 }))
 
+jest.mock('react-native-share', () => {})
+
 // Add mock for RNIndy on NativeModules
 // we don't want to mock NativeModules the way we are doing for all above
 // because then we would have to mock everything else as well of NativeModules
@@ -224,9 +234,24 @@ NativeModules.RNIndy = {
   setVcxLogger: jest.fn(_ =>
     Promise.resolve('./connectme.rotating.93939939.log')
   ),
+  exitAppAndroid: jest.fn(),
+  updateMessages: jest.fn(),
 }
 
 jest.mock('react-native-version-number', () => ({
   appVersion: '1.0',
   buildVersion: '500',
+}))
+
+jest.mock('apptentive-react-native', () => ({
+  Apptentive: {
+    register: () => Promise.resolve(null),
+    presentMessageCenter: jest.fn(),
+    onAuthenticationFailed: reason => null,
+  },
+  ApptentiveConfiguration: () => null,
+}))
+jest.mock('BackHandler', () => ({
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn(),
 }))

@@ -7,7 +7,7 @@ import { Text, Animated } from 'react-native'
 import { scale } from 'react-native-size-matters'
 import { Container, CustomView, CustomText, CustomButton } from '../components'
 import { Keyboard } from '../components'
-import { color } from '../common/styles/constant'
+import { color, MEDIUM_DEVICE, deviceHeight } from '../common/styles/constant'
 import { SEND_TOKEN_BUTTON, FONT_SIZE_MAPPING } from './wallet-constants'
 import styles from './styles'
 import type {
@@ -86,41 +86,39 @@ class WalletSendAmount extends PureComponent<
     const isSendDisabled = text.length < 1 || text === '0'
 
     return (
-      <Container tertiary>
-        <Container style={[styles.verticalSpacing]}>
-          <CustomView>
-            <CustomView verticalSpace>
-              <CustomText
-                animated
-                formatNumber
-                transparentBg
-                center
-                style={[
-                  animatedStyle,
-                  {
-                    fontSize,
-                    color: color.bg.seventh.font.fifth,
-                    height: 70,
-                    lineHeight: 75,
-                  },
-                ]}
-                numberOfLines={1}
-              >
-                {text || 0}
-              </CustomText>
-            </CustomView>
-            <CustomText h6 center tertiary demibold uppercase transparentBg>
-              sovrin tokens
+      <Container tertiary style={[styles.verticalSpacing]}>
+        <CustomView>
+          <CustomView verticalSpace>
+            <CustomText
+              animated
+              formatNumber
+              transparentBg
+              center
+              style={[
+                animatedStyle,
+                {
+                  fontSize,
+                  color: color.bg.seventh.font.fifth,
+                  height: deviceHeight < MEDIUM_DEVICE ? 70 : 90,
+                  lineHeight: deviceHeight < MEDIUM_DEVICE ? 75 : 80,
+                },
+              ]}
+              numberOfLines={1}
+            >
+              {text || 0}
             </CustomText>
           </CustomView>
-          <Keyboard
-            color={color.bg.seventh.font.fifth}
-            onPress={this.changeText}
-            maxValue={this.props.walletBalance}
-            ref={this.saveTokenKeyboardRef}
-            afterDecimalSeparatorMaxLength={conversionFactorLength}
-          />
-        </Container>
+          <CustomText h6 center tertiary demibold uppercase transparentBg>
+            sovrin tokens
+          </CustomText>
+        </CustomView>
+        <Keyboard
+          color={color.bg.seventh.font.fifth}
+          onPress={this.changeText}
+          maxValue={this.props.walletBalance}
+          ref={this.saveTokenKeyboardRef}
+          afterDecimalSeparatorMaxLength={conversionFactorLength}
+        />
         <CustomView safeArea style={[styles.alignItemsCenter]}>
           <CustomButton
             disabled={isSendDisabled}

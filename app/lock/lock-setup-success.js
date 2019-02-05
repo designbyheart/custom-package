@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, InteractionManager } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -10,17 +10,20 @@ import {
   CustomButton,
   Icon,
 } from '../components'
-import { settingsTabRoute, homeTabRoute } from '../common'
+import { settingsTabRoute, homeTabRoute, menuTabRoute } from '../common'
 import { unlockApp, clearPendingRedirect } from './lock-store'
 import type { Store } from '../store/type-store'
 import { OFFSET_1X, OFFSET_2X, OFFSET_4X, color } from '../common/styles'
 import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
-import type { LockSetupSuccessProps } from './type-lock'
+import type { LockSetupSuccessProps, LockSetupSuccessState } from './type-lock'
 
 export class LockSetupSuccess extends PureComponent<
   LockSetupSuccessProps,
-  void
+  LockSetupSuccessState
 > {
+  state = {
+    interactionsDone: false,
+  }
   onClose = () => {
     this.props.unlockApp()
     if (
@@ -28,7 +31,7 @@ export class LockSetupSuccess extends PureComponent<
       this.props.navigation.state.params &&
       this.props.navigation.state.params.changePin === true
     ) {
-      this.props.navigation.navigate(settingsTabRoute)
+      this.props.navigation.navigate(menuTabRoute)
     } else if (this.props.pendingRedirection) {
       // if there is a redirection pending, then redirect and clear it
       this.props.pendingRedirection.map(pendingRedirection => {
@@ -41,6 +44,12 @@ export class LockSetupSuccess extends PureComponent<
     } else {
       this.props.navigation.navigate(homeTabRoute)
     }
+  }
+
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ interactionsDone: true })
+    })
   }
 
   render() {

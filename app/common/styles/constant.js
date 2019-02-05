@@ -20,6 +20,10 @@ export const whisper = '#EAEAEA'
 export const lightDarkBlue = '#4A8FE3'
 export const darkGray = '#505050'
 export const maroonRed = '#d1021b'
+export const lightDarkGray = '#F4F4F4'
+export const dodgerBlue = '#0d8ffc'
+export const toryBlue = '#303F9F'
+export const gainsBoro = '#E3E3E3'
 
 const sirocco = '#636564'
 const corduroy = '#3f4140'
@@ -35,7 +39,7 @@ export const venetianRed = '#d0021b'
 export const veniceBlue = '#2A5270'
 export const hitSlop = { top: 15, bottom: 15, left: 15, right: 15 }
 export const iPhoneXHeight = 812
-const dodgerBlue = '#0d8ffc'
+
 const black = '#000000'
 const yellowSea = '#EB9B2D'
 export const cornFlowerBlue = '#4A90E2'
@@ -51,6 +55,9 @@ const orangeDisabled = 'rgba(237, 156, 46, 0.5)'
 const darkOrange = 'rgba(207, 127, 20, 1)'
 const errorBg = 'rgba(255, 214, 219, 1)'
 const darkgray = '#4A4A4A'
+const jordyBlue = '#79ade7'
+const palePink = '#FFD5DB'
+export const lightWhite = '#E5E5EA'
 
 // color shades
 const primaryShade = '1.0'
@@ -65,6 +72,7 @@ export const color = {
     fifth: white,
     sixth: grey,
     eighth: white,
+    ninth: toryBlue,
     dangerous: venetianRed,
     none: white,
     button: {
@@ -87,6 +95,7 @@ export const color = {
       sixth: white,
       seventh: yellowSea,
       eighth: lightDarkBlue,
+      ninth: white,
     },
   },
   bg: {
@@ -178,6 +187,9 @@ export const color = {
     fourteenth: {
       color: blueViolet,
     },
+    fifteenth: {
+      color: jordyBlue,
+    },
     dark: {
       color: black,
       font: {
@@ -194,19 +206,23 @@ export const color = {
     grey: grey,
     darkgray: darkgray,
   },
+  palePink,
 }
 
 export const font = {
   size: {
+    XXS: 11,
     XS: 12,
     S: 15,
     M: 17,
     M1: 18,
     ML: 20,
+    ML1: 23,
     L1: 34,
     L: 40,
     PREFIX: 14,
   },
+  family: 'Lato',
 }
 
 export const PADDING_HORIZONTAL = 15
@@ -242,8 +258,9 @@ export const isSmallWidthDevice = isiPhone5
 export const responsiveHorizontalPadding = isSmallWidthDevice
   ? 5
   : PADDING_HORIZONTAL
+export const MEDIUM_DEVICE = 700
 export const SHORT_DEVICE = 600
-export const VERY_SHORT_DEVICE = 550
+export const VERY_SHORT_DEVICE = 570
 export const errorBoxVerifyPassphraseContainer = height > SHORT_DEVICE ? 60 : 90
 export const dangerBannerHeight = height > SHORT_DEVICE ? 64 : 90
 export const inputBoxVerifyPassphraseHeight =
@@ -251,3 +268,4 @@ export const inputBoxVerifyPassphraseHeight =
 export const isBiggerThanShortDevice = height > SHORT_DEVICE
 export const isBiggerThanVeryShortDevice = height > VERY_SHORT_DEVICE
 export const isIphoneX = Platform.OS === 'ios' && height === 812
+export const deviceHeight = height

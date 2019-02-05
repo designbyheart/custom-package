@@ -42,6 +42,7 @@ import {
 import { userOneTimeInfo } from './data/user-store-mock-data'
 import { STORE_STATUS } from '../app/wallet/type-wallet'
 import { ledgerStoreWithTransferFees } from './data/ledger-store-mock-data'
+import { PREPARE_BACKUP_SUCCESS } from '../app/backup/type-backup'
 
 // sadly, we can't export all variables in one line and use them in file as well
 // to use them in this file, we have to import them first
@@ -901,7 +902,8 @@ export function getNavigation(params?: NavigationParams) {
     dispatch: jest.fn(),
     // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
     setParams: jest.fn(),
-    isFocused: true,
+    // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
+    isFocused: jest.fn().mockReturnValue(true),
     // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
     push: jest.fn(),
   }
@@ -927,6 +929,7 @@ export function getStore(store?: Store) {
           },
           showBanner: true,
           status: 'BACKUP_COMPLETE',
+          prepareBackupStatus: PREPARE_BACKUP_SUCCESS,
         },
         config: configStoreNotHydratedInstalledVcxInit,
         deepLink: {
@@ -954,6 +957,7 @@ export function getStore(store?: Store) {
         },
         route: {
           currentScreen: qrCodeScannerTabRoute,
+          timeStamp: new Date().getTime(),
         },
         smsPendingInvitation: {},
         ...(store || {}),
@@ -988,6 +992,9 @@ export function getStore(store?: Store) {
           },
         },
         ledger: ledgerStoreWithTransferFees,
+        offline: {
+          offline: false,
+        },
       }
     },
     dispatch() {
@@ -1061,7 +1068,7 @@ export const backup = {
   fileStatus: STORE_STATUS.IDLE,
   error: null,
   latest: '2017-09-06T00:00:00+05:30',
-  backupPath: 'hibob',
+  backupPath: 'test_backup_path',
   encryptionKey: 'walletEncryptionKey',
 }
 
@@ -1097,6 +1104,8 @@ export const parsedClaimRequest = {
 
 export const validQrCodeEnvironmentSwitchUrl =
   'https://s3-us-west-2.amazonaws.com/vcx-env/dev'
+
+export const validInvitationUrlQrCode = 'https://dev-agency.com/vcx-env/dev'
 
 export const environmentSwitchQrCodeData = {
   name: 'dev',

@@ -67,9 +67,11 @@ import { MESSAGE_TYPE } from '../api/api-constants'
 import { RESET } from '../common/type-common'
 import { PROOF_FAIL } from '../proof/type-proof'
 import { getProofRequests } from './../store/store-selector'
-import { secureSet, secureGet } from '../services/storage'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
+import { resetTempProofData, errorSendProofFail } from '../proof/proof-store'
+import { secureSet, getHydrationItem } from '../services/storage'
+import KeepScreenOn from 'react-native-keep-screen-on'
 
 const proofRequestInitialState = {}
 
@@ -77,12 +79,14 @@ export const ignoreProofRequest = (uid: string): ProofRequestIgnoredAction => ({
   type: PROOF_REQUEST_IGNORED,
   uid,
 })
+
 export const rejectProofRequest = (
   uid: string
 ): ProofRequestRejectedAction => ({
   type: PROOF_REQUEST_REJECTED,
   uid,
 })
+
 export const acceptProofRequest = (
   uid: string
 ): ProofRequestAcceptedAction => ({
@@ -153,7 +157,7 @@ export function* persistProofRequestsSaga(): Generator<*, *, *> {
 
 export function* hydrateProofRequestsSaga(): Generator<*, *, *> {
   try {
-    const proofRequests: string = yield call(secureGet, PROOF_REQUESTS)
+    const proofRequests: string = yield call(getHydrationItem, PROOF_REQUESTS)
     if (proofRequests) {
       yield put(hydrateProofRequests(JSON.parse(proofRequests)))
     }
@@ -176,7 +180,7 @@ export function* proofAccepted(
   if (!userPairwiseDid) {
     captureError(new Error('OCS-002 No pairwise connection found'))
     yield put(
-      sendProofFail(uid, {
+      errorSendProofFail(uid, {
         code: 'OCS-002',
         message: 'No pairwise connection found',
       })
@@ -197,7 +201,7 @@ export function* proofAccepted(
   if (!connection.vcxSerializedConnection) {
     captureError(new Error('OCS-002 No pairwise connection found'))
     yield put(
-      sendProofFail(uid, {
+      errorSendProofFail(uid, {
         code: 'OCS-002',
         message: 'No pairwise connection found',
       })
@@ -212,9 +216,13 @@ export function* proofAccepted(
     )
     yield call(sendProofApi, proofHandle, connectionHandle)
     yield put(sendProofSuccess(uid))
+    yield put(resetTempProofData(uid))
+    // turn off screen awake that was activated by generate-proof
+    KeepScreenOn.setKeepScreenOn(false)
   } catch (e) {
+    KeepScreenOn.setKeepScreenOn(false)
     captureError(e)
-    yield put(sendProofFail(uid, ERROR_SEND_PROOF(e.message)))
+    yield put(errorSendProofFail(uid, ERROR_SEND_PROOF(e.message)))
   }
 }
 

@@ -8,7 +8,9 @@ import {
   select,
   fork,
   take,
+  race,
 } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
 import { zip } from 'react-native-zip-archive'
 import {
   GENERATE_RECOVERY_PHRASE_SUCCESS,
@@ -23,6 +25,9 @@ import {
   GENERATE_RECOVERY_PHRASE_FAILURE,
   GENERATE_RECOVERY_PHRASE_LOADING,
   GENERATE_BACKUP_FILE_LOADING,
+  PREPARE_BACKUP_LOADING,
+  PREPARE_BACKUP_SUCCESS,
+  PREPARE_BACKUP_FAILURE,
   EXPORT_BACKUP_LOADING,
   ERROR_EXPORT_BACKUP,
   ERROR_GENERATE_RECOVERY_PHRASE,
@@ -32,6 +37,7 @@ import {
   HYDRATE_BACKUP_FAILURE,
   EXPORT_BACKUP_NO_SHARE,
   WALLET_FILE_NAME,
+  PREPARE_BACK_IDLE,
 } from './type-backup'
 import type {
   PromptBackupBannerAction,
@@ -39,9 +45,11 @@ import type {
   BackupStoreStatus,
   BackupStoreAction,
   Passphrase,
+  PrepareBackupLoadingAction,
   ExportBackupLoadingAction,
   GenerateRecoveryPhraseLoadingAction,
   GenerateBackupFileLoadingAction,
+  PrepareBackupStatus,
 } from './type-backup'
 import RNFetchBlob from 'react-native-fetch-blob'
 import { Platform } from 'react-native'
@@ -50,9 +58,12 @@ import type { Saga } from 'redux-saga'
 import {
   secureSet,
   secureGet,
+  secureGetAll,
   secureDelete,
   safeSet,
   safeGet,
+  walletSet,
+  walletGet,
 } from '../services/storage'
 import type { AgencyPoolConfig } from '../store/type-config-store'
 import type { CustomError } from '../common/type-common'
@@ -61,6 +72,7 @@ import {
   PASSPHRASE_SALT_STORAGE_KEY,
   PASSPHRASE_STORAGE_KEY,
 } from '../common/secure-storage-constants'
+import { WALLET_KEY } from '../bridge/react-native-cxs/vcx-transformers'
 import { encryptWallet } from '../bridge/react-native-cxs/RNCxs'
 import {
   getSalt,
@@ -68,10 +80,12 @@ import {
   getBackupPassphrase,
   getBackupWalletPath,
   getVcxInitializationState,
+  getPrepareBackupStatus,
 } from '../store/store-selector'
 import { STORAGE_KEY_SHOW_BANNER } from '../components/banner/banner-constants'
 import { getWords } from './secure-passphrase'
-import { VCX_INIT_SUCCESS } from '../store/type-config-store'
+import { ensureVcxInitSuccess } from '../store/route-store'
+import { VCX_INIT_SUCCESS, __uniqueId } from '../store/type-config-store'
 import { pinHash as generateKey, generateSalt } from '../lock/pin-hash'
 import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
@@ -83,6 +97,7 @@ const initialState = {
   showBanner: false,
   lastSuccessfulBackup: '',
   backupWalletPath: '',
+  prepareBackupStatus: PREPARE_BACK_IDLE,
 }
 
 export function* generateBackupSaga(
@@ -92,6 +107,8 @@ export function* generateBackupSaga(
   const recoveryPassphrase: Passphrase = yield select(getBackupPassphrase)
   const { fs } = RNFetchBlob
   try {
+    yield put(prepareBackup())
+
     const documentDirectory: string = fs.dirs.DocumentDir
     const backupTimeStamp = moment().format('YYYY-MM-DD-HH-mm-ss')
     const zipupDirectory: string = `${documentDirectory}/Backup-${backupTimeStamp}`
@@ -120,6 +137,32 @@ export function* generateBackupSaga(
       'utf8'
     )
 
+    // check status for prepare backup, with status of prepare backup
+    // we would know whether we have moved all of data inside wallet or not
+    // only when we are sure that we have moved data inside of wallet
+    // we will go ahead and get a backup of wallet
+    const prepareBackupStatus: PrepareBackupStatus = yield select(
+      getPrepareBackupStatus
+    )
+    if (prepareBackupStatus !== PREPARE_BACKUP_SUCCESS) {
+      // prepare backup can only be in 3 states, loading, success, failure
+      // if it is not success, then we check for failure
+      if (prepareBackupStatus === PREPARE_BACKUP_FAILURE) {
+        throw new Error('Failed to write data back to wallet')
+      }
+      // if status is neither success nor failure, then we wait for it to success
+
+      // we will wait for 2 minutes for data to go into wallet
+      // and then we will timeout
+      const { prepareBackupSuccess, timeout } = yield race({
+        prepareBackupSuccess: take(PREPARE_BACKUP_SUCCESS),
+        timeout: call(delay, 120000),
+      })
+      if (timeout) {
+        throw new Error('Could not write data back to wallet in 2 minutes')
+      }
+    }
+
     // call VCX method to encrypt wallet. Given path to store it, file name, & key to encrypt it
     yield call(encryptWallet, {
       encryptedFileLocation,
@@ -133,6 +176,56 @@ export function* generateBackupSaga(
     captureError(e)
     yield put(
       generateBackupFileFail({
+        ...ERROR_GENERATE_BACKUP_FILE,
+        message: `${ERROR_GENERATE_BACKUP_FILE.message} ${e.message}`,
+      })
+    )
+  }
+}
+
+const resolvedPromise = () => Promise.resolve()
+
+export function* prepareBackupSaga(
+  action: PrepareBackupLoadingAction
+): Generator<*, *, *> {
+  const skipItems = [__uniqueId, WALLET_KEY]
+
+  try {
+    // get all items saved in secure storage
+    const secureStorage = yield call(secureGetAll)
+    // for Android secureGetAll returns an object
+    // while for ios it returns an array of array
+    if (Platform.OS === 'android') {
+      yield all(
+        Object.keys(secureStorage).map(key => {
+          if (skipItems.indexOf(key) === -1) {
+            return call(walletSet, key, secureStorage[key])
+          }
+
+          return call(resolvedPromise)
+        })
+      )
+    } else {
+      if (secureStorage.length > 0) {
+        yield all(
+          secureStorage[0].map(item => {
+            const { key, value } = item
+            // check for things we don't want stored in the wallet
+            if (skipItems.indexOf(key) === -1) {
+              // store items into wallet
+              return call(walletSet, key, value)
+            }
+
+            return call(resolvedPromise)
+          })
+        )
+      }
+    }
+
+    yield put(prepareBackupSuccess())
+  } catch (e) {
+    yield put(
+      prepareBackupFail({
         ...ERROR_GENERATE_BACKUP_FILE,
         message: `${ERROR_GENERATE_BACKUP_FILE.message} ${e.message}`,
       })
@@ -176,8 +269,6 @@ export function* exportBackupSaga(
   }
 }
 
-// we should not need to call this now
-// TODO:KS Verify and remove this
 export function* deletePersistedPassphrase(): Generator<*, *, *> {
   yield all([
     call(secureDelete, PASSPHRASE_STORAGE_KEY),
@@ -185,13 +276,30 @@ export function* deletePersistedPassphrase(): Generator<*, *, *> {
   ])
 }
 
+export function* hydratePassphraseFromWallet(): Generator<*, *, *> {
+  try {
+    const [passphrase, passphraseSalt] = yield all([
+      call(walletGet, PASSPHRASE_STORAGE_KEY),
+      call(walletGet, PASSPHRASE_SALT_STORAGE_KEY),
+    ])
+    yield all([
+      call(secureSet, PASSPHRASE_STORAGE_KEY, passphrase),
+      call(secureSet, PASSPHRASE_SALT_STORAGE_KEY, passphraseSalt),
+    ])
+  } catch (e) {
+    // not sure what to do if we don't get passphrase data
+    // user would see new passphrase next time user is generating a backup
+  }
+}
+
 export function* generateRecoveryPhraseSaga(
   action: GenerateRecoveryPhraseLoadingAction
 ): Generator<*, *, *> {
-  const vcxInitializedState = yield select(getVcxInitializationState)
-  if (vcxInitializedState !== VCX_INIT_SUCCESS) {
+  const vcxResult = yield* ensureVcxInitSuccess()
+  if (vcxResult && vcxResult.fail) {
     yield take(VCX_INIT_SUCCESS)
   }
+
   // If it failed then we'll retry it a few times
   let retryCount = 0
   let lastInitException = new Error('')
@@ -236,6 +344,17 @@ export function* generateRecoveryPhraseSaga(
   }
 }
 
+export const prepareBackupSuccess = () => ({
+  type: PREPARE_BACKUP_SUCCESS,
+  status: BACKUP_STORE_STATUS.PREPARE_BACKUP_SUCCESS,
+})
+
+export const prepareBackupFail = (error: CustomError) => ({
+  type: PREPARE_BACKUP_FAILURE,
+  status: BACKUP_STORE_STATUS.PREPARE_BACKUP_FAILURE,
+  error,
+})
+
 export const generateBackupFileSuccess = (backupWalletPath: string) => ({
   type: GENERATE_BACKUP_FILE_SUCCESS,
   status: BACKUP_STORE_STATUS.GENERATE_BACKUP_FILE_SUCCESS,
@@ -262,6 +381,10 @@ function* watchBackupStart(): any {
   yield takeLatest(GENERATE_BACKUP_FILE_LOADING, generateBackupSaga)
 }
 
+function* watchPrepareBackup(): any {
+  yield takeLatest(PREPARE_BACKUP_LOADING, prepareBackupSaga)
+}
+
 function* watchExportBackup(): any {
   yield takeLatest(EXPORT_BACKUP_LOADING, exportBackupSaga)
 }
@@ -273,6 +396,7 @@ function* watchGenerateRecoveryPhrase(): any {
 export function* watchBackup(): any {
   yield all([
     watchBackupStart(),
+    watchPrepareBackup(),
     watchGenerateRecoveryPhrase(),
     watchExportBackup(),
     watchBackupBannerPrompt(),
@@ -359,7 +483,7 @@ export const generateRecoveryPhrase = () => ({
 
 export const generateRecoveryPhraseSuccess = (passphrase: Passphrase) => ({
   type: GENERATE_RECOVERY_PHRASE_SUCCESS,
-  status: BACKUP_STORE_STATUS.GENERATE_BACKUP_FILE_SUCCESS,
+  status: BACKUP_STORE_STATUS.GENERATE_PHRASE_SUCCESS,
   passphrase: passphrase,
 })
 
@@ -367,6 +491,11 @@ export const generateRecoveryPhraseFail = (error: CustomError) => ({
   type: GENERATE_RECOVERY_PHRASE_FAILURE,
   status: BACKUP_STORE_STATUS.GENERATE_BACKUP_FILE_FAILURE,
   error,
+})
+
+export const prepareBackup = () => ({
+  type: PREPARE_BACKUP_LOADING,
+  status: BACKUP_STORE_STATUS.PREPARE_BACKUP_LOADING,
 })
 
 export const exportBackup = () => ({
@@ -495,6 +624,13 @@ export default function backupReducer(
       return {
         ...state,
         error: action.error,
+      }
+    case PREPARE_BACKUP_LOADING:
+    case PREPARE_BACKUP_SUCCESS:
+    case PREPARE_BACKUP_FAILURE:
+      return {
+        ...state,
+        prepareBackupStatus: action.status,
       }
     default:
       return state

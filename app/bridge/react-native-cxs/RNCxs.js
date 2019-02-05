@@ -54,7 +54,8 @@ import type { GenericStringObject } from '../../common/type-common'
 import type { Passphrase } from '../../backup/type-backup'
 import type { GetClaimVcxResult } from '../../claim/type-claim'
 import uniqueId from 'react-native-unique-id'
-import { setItem } from '../../services/secure-storage'
+import { smallDeviceMemory } from './type-cxs'
+import { secureSet } from '../../services/storage'
 import { __uniqueId } from '../../store/type-config-store'
 import type { LedgerFeesData } from '../../store/ledger/type-ledger-store'
 
@@ -177,7 +178,7 @@ export async function simpleInit(): Promise<boolean> {
 
 export const getWalletPoolName = memoize(async function() {
   const appUniqueId = await uniqueId()
-  await setItem(__uniqueId, appUniqueId)
+  await secureSet(__uniqueId, appUniqueId)
   const walletName = `${appUniqueId}-cm-wallet`
   // Not sure why, but VCX is applying validation check on pool name
   // they don't like alphanumeric or _, so we have to remove "-"
@@ -547,4 +548,17 @@ export async function getLedgerFees(): Promise<LedgerFeesData> {
   const fees: string = await RNIndy.getLedgerFees()
 
   return convertVcxLedgerFeesToLedgerFees(fees)
+}
+
+export const checkIfAnimationToUse = memoize(function() {
+  return Platform.OS === 'android'
+    ? RNIndy.totalMemory / smallDeviceMemory < 1 ? true : false
+    : false
+})
+
+export async function getBiometricError(): Promise<string> {
+  if (Platform.OS === 'ios') {
+    return await RNIndy.getBiometricError()
+  }
+  return ''
 }

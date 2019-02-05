@@ -1,4 +1,8 @@
 {
   "flow.useNPMPackagedFlow": true,
   "javascript.validate.enable": false,
+  "cSpell.words": [
+    "Onfido"
+  ],
+  "flow.useLSP": false
 }

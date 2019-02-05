@@ -1,14 +1,15 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { TextInput, StyleSheet, Platform, Keyboard } from 'react-native'
+import { TextInput, StyleSheet, Platform, Keyboard, Text } from 'react-native'
 import { PIN_SETUP_STATE } from '../../lock/type-lock'
 import PinCodeDigit from './pin-code-digit'
-import { CustomView } from '../../components'
+import { CustomView, Keyboard as CustomKeyboard } from '../../components'
 import type {
   PinCodeBoxProps,
   PinCodeBoxState,
   TextInputRef,
 } from './type-pin-code-box'
+import { color } from '../../common/styles/constant'
 
 const keyboard = Platform.OS === 'ios' ? 'number-pad' : 'numeric'
 
@@ -30,9 +31,15 @@ export default class PinCodeBox extends PureComponent<
 
   keyboardDidHideListener = null
 
+  customKeyboardRef = null
+
   inputBox: ?TextInputRef = null
 
+  pinCodeArray = [1, 2, 3, 4, 5, 6]
+
   maxLength = 6
+
+  maxValue = '999999'
 
   componentDidMount = () => {
     this.keyboardDidHideListener = Keyboard.addListener(
@@ -55,6 +62,7 @@ export default class PinCodeBox extends PureComponent<
     // parent can call this to clear entered input
     // either in case pin was wrong, or we want them to enter it again
     this.inputBox && this.inputBox.clear()
+    this.customKeyboardRef && this.customKeyboardRef.clear()
     this.setState({ pin: '' })
   }
 
@@ -77,33 +85,41 @@ export default class PinCodeBox extends PureComponent<
       this.props.onPinComplete(this.state.pin)
     }
   }
-
-  render() {
-    // We always want to render 6 <PinCodeDigit />
-    // however, they will contain a sovrin icon, only if that digit is entered
-    // in text input, if user entered only 2 digits, then logic for `isEntered`
-    // will return true for first 2 and false for rest of them
-    // this will give an impression that we are showing all underlines and
-    // filling only the ones which are typed
-    let pinCodeDigits = []
-    let isEntered = false
-    for (let i = 0; i < this.maxLength; i++) {
-      isEntered = this.state.pin[i] !== undefined
-      pinCodeDigits.push(
-        <PinCodeDigit
-          onPress={this.showKeyboard}
-          key={i}
-          entered={isEntered}
-          testID={`pin-code-digit-${i}`}
+  saveCustomKeyboardRef: Function = (ref: CustomKeyboard) =>
+    (this.customKeyboardRef = ref)
+  customKeyboard = () => {
+    if (this.props.enableCustomKeyboard) {
+      return (
+        <CustomKeyboard
+          maxLength={this.maxLength}
+          onPress={this.onPinChange}
+          color={color.bg.seventh.font.fifth}
+          customKeyboard
+          showDecimal
+          ref={this.saveCustomKeyboardRef}
+          maxValue={this.maxValue}
         />
       )
     }
+    return null
+  }
 
+  render() {
     return (
       <CustomView>
         <CustomView onPress={this.showKeyboard} row>
-          {pinCodeDigits}
+          {this.pinCodeArray.map((keycode, index) => {
+            return (
+              <PinCodeDigit
+                onPress={this.showKeyboard}
+                key={index}
+                entered={this.state.pin[index] !== undefined}
+                testID={`pin-code-digit-${index}`}
+              />
+            )
+          })}
         </CustomView>
+        {this.customKeyboard()}
         <TextInput
           autoCorrect={false}
           autoFocus={true}

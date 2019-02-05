@@ -49,6 +49,7 @@ export const CustomView = (props: GenericObject) => {
     small,
     safeArea,
     debounceAction = true,
+    shadowNoOffset,
   } = props
   const passedStyles = props.style || []
   const absoluteStyles = absolute
@@ -82,6 +83,7 @@ export const CustomView = (props: GenericObject) => {
     shadow ? style.shadow : null,
     imageShadow ? style.imageShadow : null,
     spaceAround ? style.spaceAround : null,
+    shadowNoOffset ? style.shadowNoOffset : null,
     ...absoluteStyles,
     ...passedStyles,
   ])

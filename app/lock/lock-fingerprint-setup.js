@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Alert, StyleSheet } from 'react-native'
+import { Alert, StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { TouchId } from '../components/touch-id/touch-id'
@@ -12,6 +12,7 @@ import {
   lockPinSetupRoute,
   lockSelectionRoute,
   settingsTabRoute,
+  settingsRoute,
 } from '../common'
 
 import {
@@ -24,8 +25,14 @@ import { disableTouchIdAction, enableTouchIdAction } from '../lock/lock-store'
 import {
   AllowedFallbackToucheIDErrors,
   LAErrorTouchIDTooManyAttempts,
+  LAErrorTouchIDNotSupported,
+  touchIDAlerts,
+  touchIDNotSupportAlertAndroid,
 } from './type-lock'
 import type { LockFingerprintSetupProps } from './type-lock'
+import { AsyncStorage } from 'react-native'
+import { safeSet } from '../services/storage'
+import { getBiometricError } from '../bridge/react-native-cxs/RNCxs'
 
 export class LockFingerprintSetup extends PureComponent<
   LockFingerprintSetupProps,
@@ -36,10 +43,10 @@ export class LockFingerprintSetup extends PureComponent<
       this.props.disableTouchIdAction()
       Alert.alert(
         null,
-        `You'll need to use your passcode to unlock this app from now on`,
+        touchIDAlerts.usePasscodeAlert,
         [
           {
-            text: 'OK',
+            text: 'Ok',
             onPress: () => this.props.navigation.goBack(null),
           },
         ],
@@ -50,61 +57,85 @@ export class LockFingerprintSetup extends PureComponent<
       this.props.navigation.goBack(null)
     }
   }
-
   goToPinSetupScreen = () => {
     this.props.enableTouchIdAction()
     this.props.navigation.navigate(lockPinSetupRoute, { touchIdActive: true })
   }
 
-  touchIdHandler = () => {
-    TouchId.isSupported()
-      .then(success => {
-        TouchId.authenticate('', this.touchIdHandler)
-          .then(success => {
-            this.props.fromSettings
-              ? this.goToSettingsScreen()
-              : this.goToPinSetupScreen()
-          })
-          .catch(error => {
-            // captureError(error)
-            if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
-              if (error.code === LAErrorTouchIDTooManyAttempts) {
-                Alert.alert(
-                  null,
-                  `Maximum attempts reached. ${
-                    this.props.fromSettings ? '' : 'Please use Passcode'
-                  }`,
-                  [
-                    {
-                      text: 'OK',
-                      onPress: () =>
-                        this.props.fromSettings
-                          ? this.props.navigation.goBack(null)
-                          : this.props.navigation.navigate(lockSelectionRoute),
-                    },
-                  ],
-                  { cancelable: false }
-                )
-              } else {
-                this.props.fromSettings
-                  ? this.props.navigation.goBack(null)
-                  : this.props.navigation.navigate(lockSelectionRoute)
+  popUpNativeAlert = (message: string) => {
+    Alert &&
+      Alert.alert(
+        null,
+        message,
+        [
+          {
+            text: 'Ok',
+            onPress: () => {
+              this.props.fromSettings
+                ? this.props.navigation.goBack(null)
+                : this.props.navigation.navigate(lockSelectionRoute)
+            },
+          },
+        ],
+        { cancelable: false }
+      )
+  }
+  handleTouchID = () => {
+    this.touchIdHandler()
+  }
+  touchIdHandler = async () => {
+    if (
+      !this.props.fromSettings ||
+      (this.props.fromSettings && this.props.currentScreen === settingsRoute)
+    )
+      return TouchId.isSupported()
+        .then(success => {
+          return TouchId.authenticate('', this.handleTouchID)
+            .then(success => {
+              this.props.fromSettings
+                ? this.goToSettingsScreen()
+                : this.goToPinSetupScreen()
+            })
+            .catch(error => {
+              // captureError(error)
+              if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
+                if (error.code === LAErrorTouchIDTooManyAttempts) {
+                  this.popUpNativeAlert(touchIDAlerts.biometricsExceedAlert)
+                } else {
+                  this.props.fromSettings
+                    ? this.props.navigation.goBack(null)
+                    : this.props.navigation.navigate(lockSelectionRoute)
+                }
               }
+            })
+        })
+        .catch(error => {
+          captureError(error)
+          if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
+            let alertMessage = touchIDAlerts.notSupportedBiometrics
+            if (Platform.OS === 'android') {
+              if (touchIDNotSupportAlertAndroid.indexOf(error.code) < 0) {
+                alertMessage = touchIDAlerts.enableBiometrics
+              }
+              this.popUpNativeAlert(alertMessage)
+            } else {
+              return getBiometricError().catch(err => {
+                if (err.code === 'BiometricsLockOut') {
+                  alertMessage = touchIDAlerts.biometricsExceedAlert
+                } else if (err.code === 'BiometricsNotEnrolled') {
+                  alertMessage = touchIDAlerts.enableBiometrics
+                } else {
+                  alertMessage = touchIDAlerts.notSupportedBiometrics
+                }
+                this.popUpNativeAlert(alertMessage)
+              })
             }
-          })
-      })
-      .catch(error => {
-        captureError(error)
-        if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
-          this.props.fromSettings
-            ? this.props.navigation.goBack(null)
-            : this.props.navigation.navigate(lockSelectionRoute)
-        }
-      })
+          }
+        })
   }
 
   componentDidMount() {
-    this.touchIdHandler()
+    this.handleTouchID()
   }
 
   render() {
@@ -114,6 +145,7 @@ export class LockFingerprintSetup extends PureComponent<
 
 const mapStateToProps = (state: Store, props) => ({
   touchIdActive: state.lock.isTouchIdEnabled,
+  currentScreen: state.route.currentScreen,
   fromSettings:
     props.navigation.state.params !== undefined
       ? props.navigation.state.params.fromSettings

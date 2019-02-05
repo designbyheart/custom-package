@@ -4,11 +4,13 @@ import React, { PureComponent } from 'react'
 import { StyleSheet, Clipboard, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Container } from '../components/layout/container'
-import { CustomView } from '../components/layout/custom-view'
-import CustomText from '../components/text'
-import CustomButton from '../components/button'
-import CustomActivityIndicator from '../components/custom-activity-indicator/custom-activity-indicator'
+import {
+  Container,
+  CustomView,
+  CustomText,
+  CustomButton,
+  Loader,
+} from '../components'
 import type {
   WalletTabReceiveProps,
   WalletTabReceiveState,
@@ -19,6 +21,7 @@ import { getWalletAddresses } from '../store/store-selector'
 import { refreshWalletAddresses } from './wallet-store'
 import { promptBackupBanner } from '../backup/backup-store'
 import { STORE_STATUS } from './type-wallet'
+import { walletRoute } from '../common'
 
 export class WalletTabReceive extends PureComponent<
   WalletTabReceiveProps,
@@ -34,7 +37,6 @@ export class WalletTabReceive extends PureComponent<
 
   copyToClipboard = () => {
     const { walletAddresses, promptBackupBanner } = this.props
-
     if (walletAddresses.length) {
       promptBackupBanner(true)
       Clipboard.setString(walletAddresses[0])
@@ -42,9 +44,11 @@ export class WalletTabReceive extends PureComponent<
         copyButtonText: 'Copied!',
       })
       setTimeout(() => {
-        this.setState({
-          copyButtonText: 'Copy Address To Clipboard',
-        })
+        if (this.props.currentScreen === walletRoute) {
+          this.setState({
+            copyButtonText: 'Copy Address To Clipboard',
+          })
+        }
       }, 2000)
     }
   }
@@ -68,10 +72,10 @@ export class WalletTabReceive extends PureComponent<
                 style={[styles.heading]}
               >
                 {isLoading
-                  ? 'FETCHING YOUR SOVRIN TOKEN PAYMENT ADDRESS'
-                  : 'YOUR SOVRIN TOKEN PAYMENT ADDRESS IS:'}
+                  ? 'Fetching your Sovrin token payment address'
+                  : 'Your Sovrin token payment address is:'}
               </CustomText>
-              {isLoading && <CustomActivityIndicator />}
+              {isLoading && <Loader showMessage={false} />}
               {walletAddresses.map((walletAddress: string) => {
                 return (
                   <CustomText
@@ -90,14 +94,15 @@ export class WalletTabReceive extends PureComponent<
           </CustomView>
         </Container>
         <CustomView safeArea style={[styles.alignItemsCenter]}>
-          <CustomButton
-            onPress={this.copyToClipboard}
-            testID="token-copy-to-clipboard-label"
-            style={[customStyles.ctaButton]}
-            primary
-            title={this.state.copyButtonText}
-            disabled={isLoading}
-          />
+          {!isLoading && (
+            <CustomButton
+              onPress={this.copyToClipboard}
+              testID="token-copy-to-clipboard-label"
+              style={[customStyles.ctaButton]}
+              primary
+              title={this.state.copyButtonText}
+            />
+          )}
         </CustomView>
       </Container>
     )
@@ -112,6 +117,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     letterSpacing: -0.38,
     marginBottom: 20,
+    paddingHorizontal: 16,
   },
   paymentAddress: {
     marginTop: 5,
@@ -136,6 +142,7 @@ const mapStateToProps = (state: Store) => {
   return {
     walletAddresses: getWalletAddresses(state),
     addressStatus: state.wallet.walletAddresses.status,
+    currentScreen: state.route.currentScreen,
   }
 }
 

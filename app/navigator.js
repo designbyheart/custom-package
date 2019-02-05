@@ -35,7 +35,7 @@ import ExportBackupFile from './backup/export-backup'
 import BackupComplete from './backup/backup-complete'
 import BackupErrorScreen from './backup/backup-error'
 import WalletTabs from './wallet/wallet-tabs'
-import { Icon } from './components'
+import { Icon, CustomView } from './components'
 import {
   splashScreenRoute,
   homeRoute,
@@ -71,6 +71,10 @@ import {
   restorePassphraseRoute,
   backupErrorRoute,
   sendLogsRoute,
+  connectionsTabRoute,
+  credentialsTabRoute,
+  discoverTabRoute,
+  menuTabRoute,
 } from './common/'
 import { color } from './common/styles'
 import WalletTabSendDetails from './wallet/wallet-tab-send-details'
@@ -78,68 +82,217 @@ import EulaScreen from './eula/eula'
 import RestoreStartScreen from './restore/restore'
 import RestoreWaitScreen from './restore/restore-wait'
 import RestorePassphrase from './restore/restore-passphrase'
+import { checkIfAnimationToUse } from './bridge/react-native-cxs/RNCxs'
+import SvgCustomIcon from './components/svg-custom-icon'
+import {
+  TAB_CONNECTIONS_TITLE,
+  TAB_CREDENTIALS_TITLE,
+  TAB_DISCOVER_TITLE,
+  TAB_MENU_TITLE,
+  TAB_SCAN_TITLE,
+} from './type-navigator'
+import { Button } from 'react-native-elements'
 
 if (__DEV__) {
   require('../tools/reactotron-config')
 }
 
 const styles = StyleSheet.create({
+  // tabBarContainer: {
+  //   backgroundColor: color.bg.tertiary.color,
+  //   borderTopWidth: 0,
+  // },
   tabBarContainer: {
     backgroundColor: color.bg.tertiary.color,
-    borderTopWidth: 0,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    paddingVertical: 4,
+  },
+  tabBarTitle: {
+    fontWeight: 'bold',
   },
 })
 
+// const Tabs = createTabNavigator(
+//   {
+//     [homeTabRoute]: {
+//       screen: HomeScreen,
+//       navigationOptions: {
+//         tabBarTestIDProps: {
+//           testID: 'tab-bar-home-icon',
+//           accessible: true,
+//           accessibleLabel: 'tab-bar-home-icon',
+//           accessibilityLabel: 'tab-bar-home-icon',
+//         },
+//         tabBarIcon: ({ focused }) => {
+//           return focused ? (
+//             <Icon src={require('./images/dashboard_large.png')} mediumLarge />
+//           ) : (
+//             <Icon src={require('./images/dashboard.png')} medium />
+//           )
+//         },
+//       },
+//     },
+//     [settingsTabRoute]: {
+//       screen: Settings,
+//       navigationOptions: {
+//         tabBarTestIDProps: {
+//           testID: 'tab-bar-settings-icon',
+//           accessible: true,
+//           accessibleLabel: 'tab-bar-settings-icon',
+//           accessibilityLabel: 'tab-bar-settings-icon',
+//         },
+//         tabBarIcon: ({ focused }) => {
+//           return focused ? (
+//             <Icon src={require('./images/settings_large.png')} mediumLarge />
+//           ) : (
+//             <Icon src={require('./images/settings.png')} medium />
+//           )
+//         },
+//       },
+//     },
+//     [qrCodeScannerTabRoute]: {
+//       screen: QRCodeScanner,
+//       navigationOptions: {
+//         tabBarTestIDProps: {
+//           testID: 'tab-bar-qrcode-icon',
+//           accessible: true,
+//           accessibleLabel: 'tab-bar-qrcode-icon',
+//           accessibilityLabel: 'tab-bar-qrcode-icon',
+//         },
+//         tabBarVisible: false,
+//         tabBarIcon: () => {
+//           return <Icon src={require('./images/addConnection.png')} medium />
+//         },
+//       },
+//     },
+//   },
+//   {
+//     animationEnabled: true,
+//     swipeEnabled: true,
+//     lazy: false,
+//     initialRouteName: homeTabRoute,
+//     order: [settingsTabRoute, homeTabRoute, qrCodeScannerTabRoute],
+//     tabBarOptions: {
+//       showLabel: false,
+//       style: styles.tabBarContainer,
+//     },
+//     tabBarComponent: TabBarBottom,
+//     tabBarPosition: 'bottom',
+//   }
+// )
+
 const Tabs = createTabNavigator(
   {
-    [homeTabRoute]: {
+    [connectionsTabRoute]: {
       screen: HomeScreen,
       navigationOptions: {
+        title: TAB_CONNECTIONS_TITLE,
         tabBarTestIDProps: {
           testID: 'tab-bar-home-icon',
           accessible: true,
-          accessibleLabel: 'tab-bar-home-icon',
-          accessibilityLabel: 'tab-bar-home-icon',
+          accessibilityRole: 'button',
+          accessibilityLabel: `Go to ${TAB_CONNECTIONS_TITLE}`,
         },
         tabBarIcon: ({ focused }) => {
-          return focused ? (
-            <Icon src={require('./images/dashboard_large.png')} mediumLarge />
-          ) : (
-            <Icon src={require('./images/dashboard.png')} medium />
+          return (
+            <SvgCustomIcon
+              name="Connections"
+              fill={focused ? color.actions.font.seventh : color.actions.sixth}
+            />
           )
         },
       },
     },
-    [settingsTabRoute]: {
-      screen: Settings,
-      navigationOptions: {
-        tabBarTestIDProps: {
-          testID: 'tab-bar-settings-icon',
-          accessible: true,
-          accessibleLabel: 'tab-bar-settings-icon',
-          accessibilityLabel: 'tab-bar-settings-icon',
-        },
-        tabBarIcon: ({ focused }) => {
-          return focused ? (
-            <Icon src={require('./images/settings_large.png')} mediumLarge />
-          ) : (
-            <Icon src={require('./images/settings.png')} medium />
-          )
-        },
-      },
-    },
+    //   [credentialsTabRoute]: {
+    //     screen: Settings,
+    //     navigationOptions: {
+    //       title: TAB_CREDENTIALS_TITLE,
+    //       tabBarTestIDProps: {
+    //         testID: 'tab-bar-settings-icon',
+    //         accessible: true,
+    //         accessibilityRole: "button",
+    //         accessibilityLabel: `Go to ${TAB_CREDENTIALS_TITLE}`,
+    //       },
+    //       tabBarIcon: ({ focused }) => {
+    //         if (focused) {
+    //           return <SvgCustomIcon name="CredentialsOn" />
+    //         }
+    //         return <SvgCustomIcon name="Credentials" />
+    //       },
+    //     },
+    //   },
+    //   [discoverTabRoute]: {
+    //     screen: Settings,
+    //     navigationOptions: {
+    //       title: TAB_DISCOVER_TITLE,
+    //       tabBarTestIDProps: {
+    //         testID: 'tab-bar-qrcode-icon',
+    //         accessible: true,
+    //         accessibilityRole: "button",
+    //         accessibilityLabel: `Go to ${TAB_DISCOVER_TITLE}`,
+    //       },
+    //       tabBarIcon: ({ focused }) => {
+    //         return (
+    //           <SvgCustomIcon
+    //             name="Discover"
+    //             fill={focused ? color.actions.font.seventh : color.actions.sixth}
+    //           />
+    //         )
+    //       },
+    //     },
+    //  },
     [qrCodeScannerTabRoute]: {
       screen: QRCodeScanner,
       navigationOptions: {
+        title: TAB_SCAN_TITLE,
         tabBarTestIDProps: {
           testID: 'tab-bar-qrcode-icon',
           accessible: true,
-          accessibleLabel: 'tab-bar-qrcode-icon',
-          accessibilityLabel: 'tab-bar-qrcode-icon',
+          accessibilityRole: 'button',
+          accessibilityLabel: `Go to ${TAB_SCAN_TITLE}`,
         },
         tabBarVisible: false,
-        tabBarIcon: () => {
-          return <Icon src={require('./images/addConnection.png')} medium />
+        tabBarIcon: ({ focused }) => {
+          if (focused) {
+            return (
+              <SvgCustomIcon
+                name="ScanOn"
+                fill={
+                  focused ? color.actions.font.seventh : color.actions.sixth
+                }
+              />
+            )
+          }
+          return (
+            <SvgCustomIcon
+              name="Scan"
+              fill={focused ? color.actions.font.seventh : color.actions.sixth}
+            />
+          )
+        },
+      },
+    },
+    [menuTabRoute]: {
+      screen: Settings,
+      navigationOptions: {
+        title: TAB_MENU_TITLE,
+        tabBarTestIDProps: {
+          testID: 'tab-bar-qrcode-icon',
+          accessible: true,
+          accessibilityRole: 'button',
+          accessibilityLabel: `Go to ${TAB_MENU_TITLE}`,
+        },
+        tabBarIcon: ({ focused }) => {
+          return (
+            <CustomView style={[{ paddingTop: 10 }]}>
+              <SvgCustomIcon
+                name="Menu"
+                fill={
+                  focused ? color.actions.font.seventh : color.actions.sixth
+                }
+              />
+            </CustomView>
+          )
         },
       },
     },
@@ -148,17 +301,24 @@ const Tabs = createTabNavigator(
     animationEnabled: true,
     swipeEnabled: true,
     lazy: true,
-    initialRouteName: homeTabRoute,
-    order: [settingsTabRoute, homeTabRoute, qrCodeScannerTabRoute],
+    initialRouteName: connectionsTabRoute,
+    order: [
+      connectionsTabRoute,
+      // credentialsTabRoute,
+      // discoverTabRoute,
+      qrCodeScannerTabRoute,
+      menuTabRoute,
+    ],
     tabBarOptions: {
-      showLabel: false,
-      style: styles.tabBarContainer,
+      style: [styles.tabBarContainer],
+      labelStyle: [styles.tabBarTitle],
+      activeTintColor: color.actions.font.seventh,
+      inactiveTintColor: color.actions.sixth,
     },
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
   }
 )
-
 const CardStack = createStackNavigator(
   {
     [splashScreenRoute]: {
@@ -237,7 +397,7 @@ const CardStack = createStackNavigator(
 const transitionConfig = () => {
   return {
     transitionSpec: {
-      duration: 300,
+      duration: checkIfAnimationToUse() ? 30 : 300,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
       useNativeDriver: true,

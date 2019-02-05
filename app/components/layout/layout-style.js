@@ -98,6 +98,13 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 8,
   },
+  shadowNoOffset: {
+    shadowColor: 'rgba(0, 0, 0, 0.2)',
+    shadowOpacity: 1,
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 10,
+    elevation: 10,
+  },
   absolute: {
     position: 'absolute',
   },

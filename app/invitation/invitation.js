@@ -4,11 +4,18 @@ import { View, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { captureError } from '../services/error/error-handler'
-import { Request, Container } from '../components'
+import {
+  Request,
+  Container,
+  CustomModal,
+  Loader,
+  CustomText,
+  CustomView,
+} from '../components'
 import { homeRoute } from '../common'
+import { OFFSET_1X } from '../common/styles'
 import { ResponseType } from '../components/request/type-request'
 import { sendInvitationResponse, invitationRejected } from './invitation-store'
-import ConnectionSuccessModal from '../authentication/connection-success-modal'
 import type { Store } from '../store/type-store'
 import type { ResponseTypes } from '../components/request/type-request'
 import type { InvitationProps, InvitationState } from './type-invitation'
@@ -16,27 +23,26 @@ import type { ReactNavigation } from '../common/type-common'
 import { smsPendingInvitationSeen } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { SMSPendingInvitationStatus } from '../sms-pending-invitation/type-sms-pending-invitation'
 import { NavigationActions } from 'react-navigation'
-import { barStyleDark } from '../common/styles/constant'
+import { barStyleDark, color } from '../common/styles/constant'
 
 export class Invitation extends PureComponent<
   InvitationProps,
   InvitationState
 > {
   state = {
-    isSuccessModalVisible: false,
+    loading: false,
   }
 
-  _showModal = () => this.setState({ isSuccessModalVisible: true })
-
-  _hideModal = () => this.setState({ isSuccessModalVisible: false })
+  isLoading = (state: boolean) => this.setState({ loading: state })
 
   navigate = () => {
     this.props.navigation.navigate(homeRoute)
   }
 
-  onSuccessModalContinue = () => {
-    this._hideModal()
-    this.navigate()
+  onSuccess = () => {
+    setTimeout(() => {
+      this.navigate()
+    }, 500)
   }
 
   onAction = (response: ResponseTypes) => {
@@ -54,7 +60,7 @@ export class Invitation extends PureComponent<
           this.navigate()
         }
       } else {
-        this.navigate()
+        this.onSuccess()
       }
     }
   }
@@ -67,7 +73,7 @@ export class Invitation extends PureComponent<
         nextProps.invitation.payload !== this.props.invitation.payload
       ) {
         // a new invitation was received
-        this._hideModal()
+        this.isLoading(false)
       } else {
         if (nextProps.invitation.isFetching === false) {
           if (nextProps.invitation.error) {
@@ -77,16 +83,19 @@ export class Invitation extends PureComponent<
               // as of now it would fail for JSON objects, as we are using
               // captureException of Sentry which is supposed to take only Error object
               // captureError(nextProps.invitation.error, this.props.showErrorAlerts)
+              this.isLoading(false)
             }
           } else {
             // api response was successful, but now we have to check
             // if user accepted or declined the request
             if (nextProps.invitation.status === ResponseType.accepted) {
-              this._showModal()
+              this.isLoading(false)
+              this.onSuccess()
             }
           }
         } else {
           // TODO:KS show loading indicator, API request was sent
+          this.isLoading(true)
         }
       }
     }
@@ -96,12 +105,13 @@ export class Invitation extends PureComponent<
     if (this.props.isSmsInvitationNotSeen) {
       this.props.smsPendingInvitationSeen(this.props.smsToken)
     }
-    StatusBar.setBarStyle(barStyleDark, true)
   }
 
   render() {
-    if (this.props.invitation) {
-      let { payload } = this.props.invitation
+    const { invitation, showErrorAlerts, navigation } = this.props
+
+    if (invitation) {
+      let { payload } = invitation
       let senderName = ''
       let title = 'Hi'
       let message = 'You have received a connection request'
@@ -113,23 +123,44 @@ export class Invitation extends PureComponent<
         senderLogoUrl = payload.senderLogoUrl
         return (
           <Container>
-            <StatusBar barStyle={barStyleDark} />
+            <StatusBar
+              barStyle={barStyleDark}
+              animated={true}
+              backgroundColor={color.bg.fifth.color}
+            />
             <Request
               title={title}
               message={message}
               senderLogoUrl={senderLogoUrl}
               onAction={this.onAction}
               testID={'invitation'}
-              navigation={this.props.navigation}
-              showErrorAlerts={this.props.showErrorAlerts}
-              invitationError={this.props.invitation.error}
+              navigation={navigation}
+              showErrorAlerts={showErrorAlerts}
+              invitationError={invitation.error}
+              senderName={senderName}
             />
-            <ConnectionSuccessModal
-              isModalVisible={this.state.isSuccessModalVisible}
-              showConnectionSuccessModal={this.onSuccessModalContinue}
-              name={senderName}
-              logoUrl={senderLogoUrl}
-            />
+            {this.state.loading && (
+              <CustomModal
+                testID={'invitation'}
+                isVisible={this.state.loading}
+                fullScreen
+              >
+                <CustomView center style={[{ height: '90%' }]}>
+                  <CustomText
+                    h5
+                    center
+                    tertiary
+                    bg="tertiary"
+                    transparentBg
+                    style={[{ marginBottom: OFFSET_1X / 2 }]}
+                    bold
+                  >
+                    Connecting...
+                  </CustomText>
+                  <Loader />
+                </CustomView>
+              </CustomModal>
+            )}
           </Container>
         )
       }

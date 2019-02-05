@@ -2,6 +2,7 @@
 import type { ReactNavigation } from '../common/type-common'
 import type { CustomError } from '../common/type-common'
 import type { IsValid } from '../components/input-control/type-input-control'
+import type { CredentialOfferModalStatus } from '../claim-offer/type-claim-offer'
 
 export type BackupWalletProps = {
   backup: BackupInfo,
@@ -85,6 +86,7 @@ export type WalletTabReceiveProps = {
   refreshWalletAddresses: () => {},
   promptBackupBanner: (showBackup: boolean) => {},
   addressStatus: $Keys<typeof STORE_STATUS>,
+  currentScreen: string,
 }
 
 export type WalletTabReceiveState = {
@@ -99,8 +101,7 @@ export type WalletSendPaymentData = {
 export type WalletTabSendDetailsState = {
   showPaymentAddress: boolean,
   isPaymentAddressValid: IsValid,
-  tokenSentFailedVisible: boolean,
-  showTransactionFeesModal: boolean,
+  credentialOfferModalStatus: CredentialOfferModalStatus,
 }
 
 export type WalletHistoryProps = {

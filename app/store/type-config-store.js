@@ -20,6 +20,7 @@ export const SERVER_ENVIRONMENT = {
   DEVTEAM1: 'DEVTEAM1',
   DEVTEAM2: 'DEVTEAM2',
   DEVTEAM3: 'DEVTEAM3',
+  PROD: 'PROD',
 }
 
 export const __uniqueId = '__uniqueId'

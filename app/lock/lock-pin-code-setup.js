@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { StyleSheet, InteractionManager } from 'react-native'
+import { StyleSheet, Keyboard, Platform } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -59,37 +59,44 @@ export class LockPinSetup extends PureComponent<
 > {
   state: LockPinSetupState = {
     pinSetupState: PIN_SETUP_STATE.INITIAL,
-    interactionsDone: false,
     enteredPin: null,
+    pinReEnterSuccessPin: null,
+    keyboardHidden: false,
+    showCustomKeyboard: false,
   }
 
   pinCodeBox = null
+  keyboardDidHideListener = null
+  keyboardDidShowListener = null
 
   static navigationOptions = ({ navigation }) => ({
     header: (
-      <CustomHeader flatHeader backgroundColor={color.bg.tertiary.color}>
-        <CustomView>
-          <Icon
-            small
-            testID={'back-arrow'}
-            iconStyle={[styles.headerLeft]}
-            src={require('../images/icon_backArrow.png')}
-            resizeMode="contain"
-            onPress={() =>
-              navigation.state.params &&
-              navigation.state.params.existingPin === true
-                ? navigation.navigate(settingsTabRoute)
-                : navigation.navigate(lockSelectionRoute)
-            }
-          />
-        </CustomView>
-
-        <CustomText bg="tertiary" tertiary transparentBg semiBold>
-          App Security
-        </CustomText>
-
-        <CustomView />
-      </CustomHeader>
+      <CustomHeader
+        flatHeader
+        backgroundColor={color.bg.tertiary.color}
+        leftComponent={
+          <CustomView>
+            <Icon
+              small
+              testID={'back-arrow'}
+              iconStyle={[styles.headerLeft]}
+              src={require('../images/icon_backArrow.png')}
+              resizeMode="contain"
+              onPress={() =>
+                navigation.state.params &&
+                navigation.state.params.existingPin === true
+                  ? navigation.navigate(settingsTabRoute)
+                  : navigation.navigate(lockSelectionRoute)
+              }
+            />
+          </CustomView>
+        }
+        centerComponent={
+          <CustomText bg="tertiary" tertiary transparentBg semiBold>
+            App Security
+          </CustomText>
+        }
+      />
     ),
   })
 
@@ -129,8 +136,33 @@ export class LockPinSetup extends PureComponent<
     this.pinCodeBox && this.pinCodeBox.hideKeyboard()
     this.setState({
       pinSetupState: PIN_SETUP_STATE.REENTER_SUCCESS,
+      pinReEnterSuccessPin: pin,
     })
-    this.onPinSetup(pin)
+  }
+
+  onKeyboardHide = (status: boolean, event: any = null) => {
+    if (this.state.keyboardHidden !== status) {
+      this.setState({
+        keyboardHidden: status,
+        showCustomKeyboard: false,
+      })
+    } else {
+      if (
+        status === false &&
+        event &&
+        event.endCoordinates.height < 100 &&
+        !this.state.keyboardHidden &&
+        Platform.OS === 'ios'
+      ) {
+        this.setState({
+          showCustomKeyboard: true,
+        })
+      } else {
+        this.setState({
+          showCustomKeyboard: false,
+        })
+      }
+    }
   }
 
   onFirstPinEnter = (enteredPin: string) => {
@@ -156,13 +188,64 @@ export class LockPinSetup extends PureComponent<
   }
 
   componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({ interactionsDone: true })
-    })
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        this.onKeyboardHide(true)
+      }
+    )
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      e => {
+        this.onKeyboardHide(false, e)
+      }
+    )
+  }
+
+  componentDidUpdate(prevProps: LockPinCodeSetupProps) {
+    if (
+      this.state.keyboardHidden &&
+      this.state.pinSetupState === PIN_SETUP_STATE.REENTER_SUCCESS &&
+      this.props.navigation.isFocused()
+    ) {
+      const pin = this.state.pinReEnterSuccessPin || ''
+      this.onPinSetup(pin)
+    }
+    if (this.props.navigation.isFocused()) {
+      if (!this.keyboardDidHideListener && !this.keyboardDidShowListener) {
+        this.keyboardDidHideListener = Keyboard.addListener(
+          'keyboardDidHide',
+          () => {
+            this.onKeyboardHide(true)
+          }
+        )
+        this.keyboardDidShowListener = Keyboard.addListener(
+          'keyboardDidShow',
+          e => {
+            this.onKeyboardHide(false, e)
+          }
+        )
+      }
+    } else {
+      if (this.state.pinSetupState === PIN_SETUP_STATE.REENTER_SUCCESS) {
+        this.setState({
+          pinSetupState: PIN_SETUP_STATE.INITIAL,
+          pinReEnterSuccessPin: null,
+          keyboardHidden: false,
+        })
+      }
+      this.keyboardDidShowListener && this.keyboardDidShowListener.remove()
+      this.keyboardDidHideListener && this.keyboardDidHideListener.remove()
+    }
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener && this.keyboardDidShowListener.remove()
+    this.keyboardDidHideListener && this.keyboardDidHideListener.remove()
   }
 
   render() {
-    const { pinSetupState, interactionsDone } = this.state
+    const { pinSetupState } = this.state
     const passCodeSetupText =
       this.props.navigation.state &&
       this.props.navigation.state.params &&
@@ -208,17 +291,17 @@ export class LockPinSetup extends PureComponent<
         <CustomView style={[styles.title]}>
           {pinSetupState === PIN_SETUP_STATE.INITIAL && EnterPinText}
           {pinSetupState === PIN_SETUP_STATE.REENTER && ReEnterPinText}
+          {pinSetupState === PIN_SETUP_STATE.REENTER_SUCCESS && ReEnterPinText}
           {pinSetupState === PIN_SETUP_STATE.REENTER_FAIL && ReEnterPinFailText}
         </CustomView>
         <CustomView center>
-          {interactionsDone && (
-            <PinCodeBox
-              ref={pinCodeBox => {
-                this.pinCodeBox = pinCodeBox
-              }}
-              onPinComplete={this.onPinComplete}
-            />
-          )}
+          <PinCodeBox
+            ref={pinCodeBox => {
+              this.pinCodeBox = pinCodeBox
+            }}
+            onPinComplete={this.onPinComplete}
+            enableCustomKeyboard={this.state.showCustomKeyboard}
+          />
         </CustomView>
       </Container>
     )

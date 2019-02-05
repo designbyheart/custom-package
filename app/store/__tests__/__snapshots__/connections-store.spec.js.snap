@@ -8,7 +8,7 @@ Object {
   "remoteConnectionId": "5iZiu2aLYrQXSdon123456",
   "senderDID": "123819kkjywdppuj987",
   "senderEndpoint": "https://test-endpoint.com",
-  "senderName": "Evernym",
+  "senderName": "Unknown",
   "size": 120,
 }
 `;
@@ -191,24 +191,7 @@ Object {
           "STORAGE_KEY_THEMES",
         ],
         "context": null,
-        "fn": "@@redux-saga-test-plan/json/function/secureGet",
-      },
-    },
-  ],
-  "put": Array [
-    Object {
-      "@@redux-saga/IO": true,
-      "PUT": Object {
-        "action": Object {
-          "themes": Object {
-            "http://cr0ybot.github.io/ingress-logos/ingress.png": Object {
-              "primary": "rgba(100,200,100,1)",
-              "secondary": "rgba(100,200,100,0.6)",
-            },
-          },
-          "type": "HYDRATE_CONNECTION_THEMES",
-        },
-        "channel": null,
+        "fn": "@@redux-saga-test-plan/json/function/getHydrationItem",
       },
     },
   ],

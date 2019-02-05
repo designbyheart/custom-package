@@ -26,14 +26,12 @@ export type ClearPendingRedirectAction = {
 
 export const PIN_HASH = 'PIN_HASH'
 export const SALT = 'SALT'
-export const PIN_STORAGE_KEY = 'APP_PIN_LOCK'
 export const PIN_ENABLED_KEY = 'APP_PIN_LOCK_ENABLED'
 export const IN_RECOVERY = 'IN_RECOVERY'
 export type InRecovery = {
   type: typeof IN_RECOVERY,
   inRecovery: string,
 }
-export const SALT_STORAGE_KEY = 'APP_PIN_SALT'
 export const SET_PIN = 'SET_PIN'
 export type SetPinAction = {
   type: typeof SET_PIN,
@@ -128,6 +126,7 @@ export type LockStore = {
   isTouchIdEnabled: boolean,
   showDevMode: boolean,
   inRecovery: string,
+  biometricsAvaliable?: string,
 }
 
 export type LockSelectionProps = {
@@ -137,6 +136,12 @@ export type LockSelectionProps = {
   pressedOnOrInLockSelectionScreen: () => void,
   switchErrorAlerts: () => void,
   safeToDownloadSmsInvitation: () => void,
+  changeEnvironment: (
+    agencyUrl: string,
+    agencyDID: string,
+    agencyVerificationKey: string,
+    poolConfig: string
+  ) => void,
 } & ReactNavigation
 
 export type LockActions =
@@ -152,17 +157,18 @@ export type LockActions =
   | SwitchErrorAlerts
 
 export type LockEnterPinProps = {
-  pendingRedirection: Array<PendingRedirection>,
+  pendingRedirection: ?Array<PendingRedirection>,
   isFetchingInvitation?: boolean,
   clearPendingRedirect: () => void,
   unlockApp: () => void,
   existingPin: boolean,
   isAppLocked: boolean,
   inRecovery: string,
+  currentScreen: string,
 } & ReactNavigation
 
 export type LockEnterFingerProps = {
-  pendingRedirection: Array<PendingRedirection>,
+  pendingRedirection: ?Array<PendingRedirection>,
   isFetchingInvitation?: boolean,
   clearPendingRedirect: () => void,
   unlockApp: () => void,
@@ -171,6 +177,8 @@ export type LockEnterFingerProps = {
 
 export type LockEnterPinState = {
   authenticationSuccess: boolean,
+  isKeyboardHidden: boolean,
+  showCustomKeyboard: boolean,
 }
 export type LockEnterFingerState = {
   authenticationSuccess: boolean,
@@ -189,8 +197,10 @@ export const PIN_SETUP_STATE = {
 
 export type LockPinSetupState = {
   pinSetupState: $Keys<typeof PIN_SETUP_STATE>,
-  interactionsDone: boolean,
   enteredPin: ?string,
+  pinReEnterSuccessPin: ?string,
+  keyboardHidden: boolean,
+  showCustomKeyboard: boolean,
 }
 
 export const SHOW_DEV_MODE = 'SHOW_DEV_MODE'
@@ -212,6 +222,7 @@ export type LockEnterProps = {
   checkPinStatus: CheckPinStatus,
   fromRecovery: boolean,
   setupNewPassCode?: () => void,
+  enableCustomKeyboard?: boolean,
 }
 
 export type LockAuthorizationProps = {
@@ -222,6 +233,7 @@ export type LockAuthorizationProps = {
 export type LockFingerprintSetupProps = {
   touchIdActive: boolean,
   fromSettings: boolean,
+  currentScreen: string,
   disableTouchIdAction: () => void,
   enableTouchIdAction: () => void,
 } & ReactNavigation
@@ -238,6 +250,10 @@ export type LockSetupSuccessProps = {
   clearPendingRedirect: () => void,
   isFetchingInvitation: boolean,
 } & ReactNavigation
+
+export type LockSetupSuccessState = {
+  interactionsDone: boolean,
+}
 
 export const LAErrorAuthenticationFailed = 'LAErrorAuthenticationFailed'
 export const LAErrorUserCancel = 'LAErrorUserCancel'
@@ -262,4 +278,21 @@ export const AllowedFallbackToucheIDErrors = [
   LAErrorUserFallback,
   LAErrorTouchIDNotSupported,
   TouchIDError,
+]
+
+export const touchIDAlerts = {
+  notSupportedBiometrics: `Your phone doesn’t support biometrics.`,
+  enableBiometrics:
+    'You need to enable biometrics for Connect.Me in your device settings.',
+  iOSBiometricsAlert:
+    'You need to enable biometrics for Connect.Me or you have exceeded attempts for authentication',
+  biometricsExceedAlert:
+    'You have exceeded the maximum biometric attempts allowed by your phone. Try again later.',
+  usePasscodeAlert: `You'll need to use your passcode to unlock this app from now on`,
+}
+
+export const touchIDNotSupportAlertAndroid = [
+  'NOT_PRESENT',
+  'NOT_AVAILABLE',
+  'NOT_SUPPORTED',
 ]

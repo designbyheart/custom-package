@@ -1,6 +1,9 @@
 //  Created by react-native-create-bridge
 
 #import "RNIndy.h"
+#import <LocalAuthentication/LocalAuthentication.h>
+#import <React/RCTUtils.h>
+#import "React/RCTConvert.h"
 
 // import RCTBridge
 #if __has_include(<React/RCTBridge.h>)
@@ -20,7 +23,7 @@
 #import “React/RCTEventDispatcher.h” // Required when used as a Pod in a Swift project
 #endif
 
-#import <vcx/vcx/vcx.h>
+#import "vcx/vcx.h"
 
 @implementation RNIndy
 
@@ -74,15 +77,24 @@ RCT_EXPORT_METHOD(init: (NSString *)config
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] initWithConfig:config completion:^(NSError *error) {
-    if (error != nil && error.code != 0 && error.code != 1044)
-    {
-      NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
-      reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while initializing vcx: %@ :: %ld",error.domain, (long)error.code], error);
-    }else{
-      resolve(@true);
-    }
-  }];
+  ConnectMeVcx *conn = [[ConnectMeVcx alloc] init];
+  int retCode = 0; //[conn initNullPay];
+
+  if(retCode != 0) {
+    NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)retCode];
+    reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while initializing sovtoken: %ld", (long)retCode], NULL);
+  } else {
+    [conn initWithConfig:config completion:^(NSError *error) {
+      if (error != nil && error.code != 0 && error.code != 1044)
+      {
+        NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+        reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while initializing vcx: %@ :: %ld",error.domain, (long)error.code], error);
+      }else{
+        //[conn setDefaultLogger:@"trace"];
+        resolve(@true);
+      }
+    }];
+  }
 }
 
 RCT_EXPORT_METHOD(reset:
@@ -324,7 +336,7 @@ RCT_EXPORT_METHOD(createOneTimeInfo: (NSString *)config
                            rejecter: (RCTPromiseRejectBlock) reject)
 {
   [[[ConnectMeVcx alloc] init] agentProvisionAsync:config completion:^(NSError *error, NSString *oneTimeInfo) {
-    NSLog(@"applicationDidBecomeActive callback:%@",oneTimeInfo);
+    NSLog(@"createOneTimeInfo callback:%@",oneTimeInfo);
     if (error != nil && error.code != 0)
     {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
@@ -798,6 +810,32 @@ RCT_EXPORT_METHOD(getLedgerFees: (RCTPromiseResolveBlock) resolve
       resolve(fees);
     }
   }];
+}
+
+RCT_EXPORT_METHOD(getBiometricError: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+    LAContext *context = [[LAContext alloc] init];
+    NSError *error;
+
+    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
+      resolve(@"");
+        // Device does not support TouchID
+    } else {
+      NSString *errorReason;
+      switch (error.code) {
+          case kLAErrorBiometryNotEnrolled:
+              errorReason = @"BiometricsNotEnrolled";
+              break;
+          case kLAErrorBiometryLockout:
+              errorReason = @"BiometricsLockOut";
+              break;
+          default:
+              errorReason = @"default";
+              break;
+        }
+        reject(errorReason, @"TouchIDBiometricsLockOut", nil);
+    }
 }
 
 @end

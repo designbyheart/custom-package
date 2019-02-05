@@ -8,6 +8,7 @@ import {
   all,
   select,
   takeEvery,
+  take,
 } from 'redux-saga/effects'
 import { Platform } from 'react-native'
 import Share from 'react-native-share'
@@ -16,7 +17,7 @@ import {
   secureSet,
   secureGet,
   secureDelete,
-  safeSet,
+  getHydrationItem,
 } from '../services/storage'
 import {
   HYDRATE_WALLET_BALANCE_FAIL,
@@ -60,6 +61,7 @@ import {
 } from './type-wallet'
 import { NEW_CONNECTION_SUCCESS } from '../store/connections-store'
 import type { AgencyPoolConfig } from '../store/type-config-store'
+import { VCX_INIT_SUCCESS } from '../store/type-config-store'
 import type {
   WalletStore,
   WalletStoreAction,
@@ -98,7 +100,7 @@ import {
   getWalletBalance as getWalletBalanceSelector,
 } from '../store/store-selector'
 import { WALLET_ENCRYPTION_KEY } from '../common/secure-storage-constants'
-import { ensureVcxInitSuccess } from '../store/config-store'
+import { ensureVcxInitSuccess } from '../store/route-store'
 import type { LedgerFeesData } from '../store/ledger/type-ledger-store'
 import { BigNumber } from 'bignumber.js'
 import { captureError } from '../services/error/error-handler'
@@ -211,8 +213,8 @@ export function* hydrateWalletStoreSaga(): Generator<*, *, *> {
 
 export function* hydrateWalletBalanceSaga(): Generator<*, *, *> {
   try {
-    const walletBalance: string = yield call(secureGet, WALLET_BALANCE)
-    if (walletBalance !== null) {
+    const walletBalance: string = yield call(getHydrationItem, WALLET_BALANCE)
+    if (walletBalance) {
       yield put(hydrateWalletBalanceStore(walletBalance))
     } else {
       yield put(
@@ -234,7 +236,7 @@ export function* hydrateWalletBalanceSaga(): Generator<*, *, *> {
 
 export function* hydrateWalletAddressesSaga(): Generator<*, *, *> {
   try {
-    const walletAddressesJson = yield call(secureGet, WALLET_ADDRESSES)
+    const walletAddressesJson = yield call(getHydrationItem, WALLET_ADDRESSES)
     if (walletAddressesJson !== null) {
       const walletAddresses = JSON.parse(walletAddressesJson)
       yield put(hydrateWalletAddressesStore(walletAddresses))
@@ -258,7 +260,7 @@ export function* hydrateWalletAddressesSaga(): Generator<*, *, *> {
 
 export function* hydrateWalletHistorySaga(): Generator<*, *, *> {
   try {
-    const walletHistoryJson = yield call(secureGet, WALLET_HISTORY)
+    const walletHistoryJson = yield call(getHydrationItem, WALLET_HISTORY)
     if (walletHistoryJson !== null) {
       const walletHistory = JSON.parse(walletHistoryJson)
       yield put(hydrateWalletHistoryStore(walletHistory))
@@ -350,8 +352,11 @@ export function* getAmountToTransfer(
 }
 
 export function* sendTokensSaga(action: SendTokensAction): Generator<*, *, *> {
-  yield* ensureVcxInitSuccess()
   try {
+    const vcxResult = yield* ensureVcxInitSuccess()
+    if (vcxResult && vcxResult.fail) {
+      throw new Error(JSON.stringify(vcxResult.fail.message))
+    }
     const amountToTransfer: BigNumber = yield* getAmountToTransfer(action)
 
     if (amountToTransfer.isLessThanOrEqualTo(0)) {
@@ -383,7 +388,10 @@ export function* sendTokensSaga(action: SendTokensAction): Generator<*, *, *> {
 }
 
 export function* refreshWalletBalanceSaga(): any {
-  yield* ensureVcxInitSuccess()
+  const vcxResult = yield* ensureVcxInitSuccess()
+  if (vcxResult && vcxResult.fail) {
+    yield take(VCX_INIT_SUCCESS)
+  }
   try {
     const walletBalanceData: string = yield call(getWalletBalance)
     yield put(walletBalanceRefreshed(walletBalanceData))
@@ -400,7 +408,10 @@ export function* refreshWalletBalanceSaga(): any {
 }
 
 export function* refreshWalletHistorySaga(): any {
-  yield* ensureVcxInitSuccess()
+  const vcxResult = yield* ensureVcxInitSuccess()
+  if (vcxResult && vcxResult.fail) {
+    yield take(VCX_INIT_SUCCESS)
+  }
   try {
     const walletHistoryData = yield call(getWalletHistory)
     yield put(walletHistoryRefreshed(walletHistoryData))
@@ -418,7 +429,10 @@ export function* refreshWalletHistorySaga(): any {
 
 export function* refreshWalletAddressesSaga(): Generator<*, *, *> {
   yield put(walletAddressesFetchStart())
-  yield* ensureVcxInitSuccess()
+  const vcxResult = yield* ensureVcxInitSuccess()
+  if (vcxResult && vcxResult.fail) {
+    yield take(VCX_INIT_SUCCESS)
+  }
   try {
     let walletAddressesData: string[] = yield call(getWalletAddresses)
     if (walletAddressesData.length === 0) {

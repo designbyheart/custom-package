@@ -22,7 +22,25 @@ export type GenerateRecoveryPhraseProps = {
   recoveryStatus: $Keys<typeof BACKUP_STORE_STATUS>,
 } & ReactNavigationBackup
 
-export type GenerateRecoveryPhraseState = {}
+export type GenerateRecoveryPhraseState = {
+  chatBubbleDimensions: ChatBubbleDimensions,
+}
+
+export type ChatBubbleDimensions = {
+  width: number,
+  height: number,
+  x: number,
+  y: number,
+}
+
+export type PassphraseTextProps = {
+  recoveryPassphrase: Passphrase,
+  chatBubbleDimensions: ChatBubbleDimensions,
+}
+
+export type PassphraseErrorProps = {
+  chatBubbleDimensions: ChatBubbleDimensions,
+}
 
 export type VerifyRecoveryPhraseProps = {
   recoveryPassphrase: Passphrase,
@@ -54,6 +72,11 @@ export type BackupCompleteState = {
   recoveryPassphrase: string,
 }
 
+export const PREPARE_BACK_IDLE = 'PREPARE_BACKUP_IDLE'
+export const PREPARE_BACKUP_LOADING = 'PREPARE_BACKUP_LOADING'
+export const PREPARE_BACKUP_SUCCESS = 'PREPARE_BACKUP_SUCCESS'
+export const PREPARE_BACKUP_FAILURE = 'PREPARE_BACKUP_FAILURE'
+
 export const BACKUP_STORE_STATUS = {
   IDLE: 'IDLE',
   GENERATE_PHRASE_LOADING: 'GENERATE_PHRASE_LOADING',
@@ -62,6 +85,10 @@ export const BACKUP_STORE_STATUS = {
   GENERATE_BACKUP_FILE_LOADING: 'GENERATE_BACKUP_FILE_LOADING',
   GENERATE_BACKUP_FILE_SUCCESS: 'GENERATE_BACKUP_FILE_SUCCESS',
   GENERATE_BACKUP_FILE_FAILURE: 'GENERATE_BACKUP_FILE_FAILURE',
+  PREPARE_BACKUP_LOADING,
+  PREPARE_BACKUP_SUCCESS,
+  PREPARE_BACKUP_FAILURE,
+  PREPARE_BACK_IDLE,
   EXPORT_BACKUP_LOADING: 'EXPORT_BACKUP_LOADING',
   EXPORT_BACKUP_SUCCESS: 'EXPORT_BACKUP_SUCCESS',
   EXPORT_BACKUP_FAILURE: 'EXPORT_BACKUP_FAILURE',
@@ -75,6 +102,12 @@ export type Passphrase = {
   hash: string,
 }
 
+export type PrepareBackupStatus =
+  | typeof PREPARE_BACK_IDLE
+  | typeof PREPARE_BACKUP_LOADING
+  | typeof PREPARE_BACKUP_SUCCESS
+  | typeof PREPARE_BACKUP_FAILURE
+
 export type BackupStore = {
   passphrase: Passphrase,
   backupWalletPath: string,
@@ -83,6 +116,7 @@ export type BackupStore = {
   // TODO: fix flow type
   error: any,
   status: string,
+  prepareBackupStatus: PrepareBackupStatus,
 }
 
 export type StoreError = { error: ?CustomError }
@@ -182,6 +216,11 @@ export type ExportBackupLoadingAction = {
   backupWalletPath: string,
 }
 
+export type PrepareBackupLoadingAction = {
+  type: typeof PREPARE_BACKUP_LOADING,
+  status: $Keys<typeof BACKUP_STORE_STATUS>,
+}
+
 export type ExportBackupNoShareAction = {
   type: typeof EXPORT_BACKUP_NO_SHARE,
   status: $Keys<typeof BACKUP_STORE_STATUS>,
@@ -220,6 +259,16 @@ export type PromptBackupBannerAction = {
   showBanner: boolean,
 }
 
+export type PrepareBackupSuccessAction = {
+  type: typeof PREPARE_BACKUP_SUCCESS,
+  status: $Keys<typeof BACKUP_STORE_STATUS>,
+}
+
+export type PrepareBackupFailureAction = {
+  type: typeof PREPARE_BACKUP_FAILURE,
+  status: $Keys<typeof BACKUP_STORE_STATUS>,
+}
+
 export type BackupStoreAction =
   | BackupStartAction
   | GenerateBackupFileLoadingAction
@@ -228,6 +277,7 @@ export type BackupStoreAction =
   | GenerateRecoveryPhraseLoadingAction
   | GenerateRecoveryPhraseSuccessAction
   | GenerateBackupFileFailureAction
+  | PrepareBackupLoadingAction
   | ExportBackupLoadingAction
   | ExportBackupSuccessAction
   | ExportBackupFailureAction
@@ -235,3 +285,5 @@ export type BackupStoreAction =
   | BackupCompleteAction
   | HydrateBackupAction
   | HydrateBackupFailAction
+  | PrepareBackupSuccessAction
+  | PrepareBackupFailureAction

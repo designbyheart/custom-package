@@ -4,668 +4,663 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
 <View
   style={
     Object {
+      "alignContent": "center",
       "backgroundColor": "#ffffff",
       "flex": 1,
+      "flexDirection": "column",
+      "justifyContent": "space-around",
     }
   }
   tertiary={true}
 >
   <View
+    style={Object {}}
+  >
+    <View
+      style={
+        Object {
+          "paddingVertical": 8,
+        }
+      }
+      verticalSpace={true}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        collapsable={undefined}
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={
+          Object {
+            "backgroundColor": "transparent",
+            "color": "#EB9B2D",
+            "fontFamily": "Lato",
+            "fontSize": 54.857142857142854,
+            "height": 70,
+            "lineHeight": 75,
+            "textAlign": "center",
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+            ],
+          }
+        }
+      >
+        0
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "fontSize": 15,
+          },
+          Object {
+            "fontFamily": "Lato",
+          },
+          Object {
+            "backgroundColor": "#333333",
+            "color": "#333333",
+          },
+          null,
+          Object {
+            "textAlign": "center",
+          },
+          Object {
+            "backgroundColor": "transparent",
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+        ]
+      }
+    >
+      SOVRIN TOKENS
+    </Text>
+  </View>
+  <View
     style={
       Object {
-        "flex": 1,
-        "paddingTop": 0,
+        "alignItems": "flex-start",
+        "marginBottom": 5,
+        "marginHorizontal": 32,
       }
     }
   >
     <View
-      style={Object {}}
+      row={true}
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": 36,
+          "marginTop": 8,
+        }
+      }
     >
       <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-1"
+        accessibilityTraits={undefined}
+        accessible={true}
+        center={true}
+        hitSlop={undefined}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "paddingVertical": 8,
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
           }
         }
-        verticalSpace={true}
+        testID="wallet-keyboard-id-label-1"
       >
         <Text
           accessible={true}
           allowFontScaling={true}
           collapsable={undefined}
           ellipsizeMode="tail"
-          numberOfLines={1}
           style={
             Object {
               "backgroundColor": "transparent",
               "color": "#EB9B2D",
               "fontFamily": "Lato",
-              "fontSize": 54.857142857142854,
-              "height": 70,
-              "lineHeight": 75,
+              "fontSize": 26,
+              "fontWeight": "500",
               "textAlign": "center",
-              "transform": Array [
-                Object {
-                  "translateX": 0,
-                },
-              ],
+            }
+          }
+        >
+          1
+        </Text>
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-2"
+        accessibilityTraits={undefined}
+        accessible={true}
+        center={true}
+        hitSlop={undefined}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        testID="wallet-keyboard-id-label-2"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          collapsable={undefined}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#EB9B2D",
+              "fontFamily": "Lato",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "textAlign": "center",
+            }
+          }
+        >
+          2
+        </Text>
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-3"
+        accessibilityTraits={undefined}
+        accessible={true}
+        center={true}
+        hitSlop={undefined}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        testID="wallet-keyboard-id-label-3"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          collapsable={undefined}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#EB9B2D",
+              "fontFamily": "Lato",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "textAlign": "center",
+            }
+          }
+        >
+          3
+        </Text>
+      </View>
+    </View>
+    <View
+      row={true}
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": 36,
+          "marginTop": 15,
+        }
+      }
+    >
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-4"
+        accessibilityTraits={undefined}
+        accessible={true}
+        center={true}
+        hitSlop={undefined}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        testID="wallet-keyboard-id-label-4"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          collapsable={undefined}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#EB9B2D",
+              "fontFamily": "Lato",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "textAlign": "center",
+            }
+          }
+        >
+          4
+        </Text>
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-5"
+        accessibilityTraits={undefined}
+        accessible={true}
+        center={true}
+        hitSlop={undefined}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        testID="wallet-keyboard-id-label-5"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          collapsable={undefined}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#EB9B2D",
+              "fontFamily": "Lato",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "textAlign": "center",
+            }
+          }
+        >
+          5
+        </Text>
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-6"
+        accessibilityTraits={undefined}
+        accessible={true}
+        center={true}
+        hitSlop={undefined}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        testID="wallet-keyboard-id-label-6"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          collapsable={undefined}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#EB9B2D",
+              "fontFamily": "Lato",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "textAlign": "center",
+            }
+          }
+        >
+          6
+        </Text>
+      </View>
+    </View>
+    <View
+      row={true}
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": 36,
+          "marginTop": 15,
+        }
+      }
+    >
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-7"
+        accessibilityTraits={undefined}
+        accessible={true}
+        center={true}
+        hitSlop={undefined}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        testID="wallet-keyboard-id-label-7"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          collapsable={undefined}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#EB9B2D",
+              "fontFamily": "Lato",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "textAlign": "center",
+            }
+          }
+        >
+          7
+        </Text>
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-8"
+        accessibilityTraits={undefined}
+        accessible={true}
+        center={true}
+        hitSlop={undefined}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        testID="wallet-keyboard-id-label-8"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          collapsable={undefined}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#EB9B2D",
+              "fontFamily": "Lato",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "textAlign": "center",
+            }
+          }
+        >
+          8
+        </Text>
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-9"
+        accessibilityTraits={undefined}
+        accessible={true}
+        center={true}
+        hitSlop={undefined}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        testID="wallet-keyboard-id-label-9"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          collapsable={undefined}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#EB9B2D",
+              "fontFamily": "Lato",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "textAlign": "center",
+            }
+          }
+        >
+          9
+        </Text>
+      </View>
+    </View>
+    <View
+      row={true}
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": 36,
+          "marginTop": 15,
+        }
+      }
+    >
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-."
+        accessibilityTraits={undefined}
+        accessible={true}
+        center={true}
+        hitSlop={undefined}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        testID="wallet-keyboard-id-label-."
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          collapsable={undefined}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#EB9B2D",
+              "fontFamily": "Lato",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "textAlign": "center",
+            }
+          }
+        >
+          .
+        </Text>
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-0"
+        accessibilityTraits={undefined}
+        accessible={true}
+        center={true}
+        hitSlop={undefined}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        testID="wallet-keyboard-id-label-0"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          collapsable={undefined}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#EB9B2D",
+              "fontFamily": "Lato",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "textAlign": "center",
             }
           }
         >
           0
         </Text>
       </View>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel="wallet-keyboard-id-label-back-space-touchable"
+        accessibilityTraits={undefined}
+        accessible={false}
+        center={true}
+        hitSlop={
+          Object {
+            "bottom": 20,
+            "left": 20,
+            "right": 20,
+            "top": 20,
+          }
+        }
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "fontSize": 15,
-            },
-            Object {
-              "fontFamily": "Lato",
-            },
-            Object {
-              "backgroundColor": "#333333",
-              "color": "#333333",
-            },
-            null,
-            Object {
-              "textAlign": "center",
-            },
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+        testID="wallet-keyboard-id-label-back-space-touchable"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          collapsable={undefined}
+          ellipsizeMode="tail"
+          style={
             Object {
               "backgroundColor": "transparent",
-            },
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-          ]
-        }
-      >
-        SOVRIN TOKENS
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "alignItems": "flex-start",
-          "marginHorizontal": 32,
-        }
-      }
-    >
-      <View
-        row={true}
-        style={
-          Object {
-            "flexDirection": "row",
-            "height": 30,
-            "marginTop": 8,
-          }
-        }
-      >
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-1"
-          accessibilityTraits={undefined}
-          accessible={true}
-          center={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
+              "color": "#EB9B2D",
+              "fontFamily": "Lato",
+              "fontSize": 26,
+              "fontWeight": "500",
+              "textAlign": "center",
             }
           }
-          testID="wallet-keyboard-id-label-1"
         >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            1
-          </Text>
-        </View>
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-2"
-          accessibilityTraits={undefined}
-          accessible={true}
-          center={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-          testID="wallet-keyboard-id-label-2"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            2
-          </Text>
-        </View>
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-3"
-          accessibilityTraits={undefined}
-          accessible={true}
-          center={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-          testID="wallet-keyboard-id-label-3"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            3
-          </Text>
-        </View>
-      </View>
-      <View
-        row={true}
-        style={
-          Object {
-            "flexDirection": "row",
-            "height": 30,
-            "marginTop": 15,
-          }
-        }
-      >
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-4"
-          accessibilityTraits={undefined}
-          accessible={true}
-          center={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-          testID="wallet-keyboard-id-label-4"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            4
-          </Text>
-        </View>
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-5"
-          accessibilityTraits={undefined}
-          accessible={true}
-          center={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-          testID="wallet-keyboard-id-label-5"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            5
-          </Text>
-        </View>
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-6"
-          accessibilityTraits={undefined}
-          accessible={true}
-          center={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-          testID="wallet-keyboard-id-label-6"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            6
-          </Text>
-        </View>
-      </View>
-      <View
-        row={true}
-        style={
-          Object {
-            "flexDirection": "row",
-            "height": 30,
-            "marginTop": 15,
-          }
-        }
-      >
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-7"
-          accessibilityTraits={undefined}
-          accessible={true}
-          center={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-          testID="wallet-keyboard-id-label-7"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            7
-          </Text>
-        </View>
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-8"
-          accessibilityTraits={undefined}
-          accessible={true}
-          center={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-          testID="wallet-keyboard-id-label-8"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            8
-          </Text>
-        </View>
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-9"
-          accessibilityTraits={undefined}
-          accessible={true}
-          center={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-          testID="wallet-keyboard-id-label-9"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            9
-          </Text>
-        </View>
-      </View>
-      <View
-        row={true}
-        style={
-          Object {
-            "flexDirection": "row",
-            "height": 30,
-            "marginTop": 15,
-          }
-        }
-      >
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-."
-          accessibilityTraits={undefined}
-          accessible={true}
-          center={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-          testID="wallet-keyboard-id-label-."
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            .
-          </Text>
-        </View>
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-0"
-          accessibilityTraits={undefined}
-          accessible={true}
-          center={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-          testID="wallet-keyboard-id-label-0"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            0
-          </Text>
-        </View>
-        <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="wallet-keyboard-id-label-back-space-touchable"
-          accessibilityTraits={undefined}
-          accessible={false}
-          center={true}
-          hitSlop={
-            Object {
-              "bottom": 20,
-              "left": 20,
-              "right": 20,
-              "top": 20,
-            }
-          }
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-          testID="wallet-keyboard-id-label-back-space-touchable"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            collapsable={undefined}
-            ellipsizeMode="tail"
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#EB9B2D",
-                "fontFamily": "Lato",
-                "fontSize": 26,
-                "fontWeight": "500",
-                "textAlign": "center",
-              }
-            }
-          >
-            &lt;
-          </Text>
-        </View>
+          &lt;
+        </Text>
       </View>
     </View>
   </View>
@@ -674,8 +669,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
     style={
       Object {
         "marginBottom": 6,
-        "marginLeft": "5%",
-        "marginRight": "5%",
+        "marginHorizontal": "5%",
       }
     }
   >
@@ -720,8 +714,8 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
               Object {
                 "backgroundColor": "rgba(237, 156, 46, 1)",
                 "borderRadius": 5,
+                "flex": -1,
                 "height": 43,
-                "width": "100%",
               },
             ],
           ]
@@ -760,8 +754,8 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
                 Object {
                   "backgroundColor": "rgba(237, 156, 46, 1)",
                   "borderRadius": 5,
+                  "flex": -1,
                   "height": 43,
-                  "width": "100%",
                 },
               ],
               Object {

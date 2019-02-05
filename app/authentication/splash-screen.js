@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { View } from 'react-native'
 import { bindActionCreators } from 'redux'
 import SplashScreen from 'react-native-splash-screen'
 import {
@@ -15,6 +16,7 @@ import {
   eulaRoute,
   restoreRoute,
 } from '../common/route-constants'
+import { Container, Loader } from '../components'
 import {
   TOKEN_EXPIRED_CODE,
   PENDING_CONNECTION_REQUEST_CODE,
@@ -124,7 +126,7 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
             const senderDID = payload.senderDetail.DID
             this.props.deepLinkProcessed(invitationToken)
             if (this.props.lock.isAppLocked === false) {
-              this.props.navigation.navigate(invitationRoute, {
+              this.props.navigation.push(invitationRoute, {
                 senderDID,
                 token: invitationToken,
               })
@@ -149,28 +151,7 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
     if (this.props.isInitialized !== prevProps.isInitialized) {
       // hydrated is changed, and if it is changed to true,
       // that means this is the only time we would get inside this if condition
-      if (this.props.isInitialized) {
-        SplashScreen.hide()
-        // now we can safely check value of isAlreadyInstalled
-        if (
-          !this.props.lock.isLockEnabled ||
-          this.props.lock.isLockEnabled === 'false'
-        ) {
-          // user is opening the app for first time after installing
-          if (!this.props.eula.isEulaAccept) {
-            this.props.navigation.navigate(eulaRoute)
-          } else {
-            this.props.navigation.navigate(restoreRoute)
-          }
-        } else {
-          // not the first time user is opening app
-          if (this.props.lock.isTouchIdEnabled) {
-            this.props.navigation.navigate(lockEnterFingerprintRoute)
-          } else {
-            this.props.navigation.navigate(lockEnterPinRoute)
-          }
-        }
-      }
+      this.initializationCheck()
     }
 
     // check if deepLink is changed, then that means we either got token
@@ -195,14 +176,25 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
   }
 
   componentDidMount() {
+    // if the SplashScreen component has been mounted for 2 seconds, hide it to render the Loading component
+    global.setTimeout(() => {
+      SplashScreen.hide()
+    }, 2000)
     // It might be the case the hydration finishes
     // even before component is mounted,
     // so we need to check for pin code here as well
 
+    this.initializationCheck()
+  }
+
+  initializationCheck() {
     if (this.props.isInitialized) {
       SplashScreen.hide()
       // now we can safely check value of isAlreadyInstalled
-      if (this.props.lock.isLockEnabled === 'false') {
+      if (
+        !this.props.lock.isLockEnabled ||
+        this.props.lock.isLockEnabled === 'false'
+      ) {
         // user is opening the app for first time after installing
         if (!this.props.eula.isEulaAccept) {
           this.props.navigation.navigate(eulaRoute)
@@ -220,8 +212,13 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
     }
   }
 
+  // conditional render is to eliminate InteractionManager.allowInteractions issues
   render() {
-    return null
+    return this.props.isInitialized ? null : (
+      <Container center>
+        <Loader />
+      </Container>
+    )
   }
 }
 

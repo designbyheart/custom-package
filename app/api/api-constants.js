@@ -44,8 +44,10 @@ export const STATUS_CODE = {
 
 export const ERROR_ALREADY_EXIST = {
   code: 'OCS',
-  message: 'duplicate connection request',
+  message: 'You already have a relationship with ',
 }
+
+export const ERROR_ALREADY_EXIST_TITLE = 'Relationship already established'
 
 export const ERROR_INVITATION_RESPONSE_PARSE_CODE = 'RN-100'
 
@@ -56,3 +58,6 @@ export const ERROR_PENDING_INVITATION_RESPONSE_PARSE_CODE = 'RN-101'
 
 export const ERROR_PENDING_INVITATION_RESPONSE_PARSE =
   'Error parsing error message Pending Invitation SMS'
+
+export const ERROR_INVITATION_RESPONSE_FAILED =
+  'Failed to establish connection. Please try again later.'

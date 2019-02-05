@@ -6,7 +6,7 @@ exports[`app lock selection page should render properly 1`] = `
     Object {
       "backgroundColor": "#ffffff",
       "flex": 1,
-      "paddingBottom": 20,
+      "paddingBottom": 5,
       "paddingHorizontal": 20,
       "paddingTop": 30,
     }
@@ -39,7 +39,7 @@ exports[`app lock selection page should render properly 1`] = `
   >
     <Text
       accessible={true}
-      allowFontScaling={true}
+      allowFontScaling={false}
       ellipsizeMode="tail"
       style={
         Array [
@@ -71,7 +71,7 @@ exports[`app lock selection page should render properly 1`] = `
         ]
       }
     >
-      Choose How To Unlock App
+      Choose how to unlock App
     </Text>
   </View>
   <View
@@ -85,7 +85,7 @@ exports[`app lock selection page should render properly 1`] = `
   >
     <Text
       accessible={true}
-      allowFontScaling={true}
+      allowFontScaling={false}
       ellipsizeMode="tail"
       style={
         Array [
@@ -152,7 +152,7 @@ exports[`app lock selection page should render properly 1`] = `
       onResponderTerminate={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
-      shadow={true}
+      shadowNoOffset={true}
       style={
         Object {
           "alignItems": "center",
@@ -166,11 +166,11 @@ exports[`app lock selection page should render properly 1`] = `
           "paddingTop": 5,
           "shadowColor": "rgba(0, 0, 0, 0.2)",
           "shadowOffset": Object {
-            "height": 10,
+            "height": 0,
             "width": 0,
           },
           "shadowOpacity": 1,
-          "shadowRadius": 30,
+          "shadowRadius": 10,
         }
       }
       testID="touch-id-selection-touchable"
@@ -188,7 +188,7 @@ exports[`app lock selection page should render properly 1`] = `
       <Text
         accessibilityLabel="use-touch-id-text"
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         onLongPress={[Function]}
         onPress={[Function]}
@@ -255,7 +255,7 @@ exports[`app lock selection page should render properly 1`] = `
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [
@@ -314,7 +314,7 @@ exports[`app lock selection page should render properly 1`] = `
       onResponderTerminate={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
-      shadow={true}
+      shadowNoOffset={true}
       style={
         Object {
           "backgroundColor": "#ffffff",
@@ -326,11 +326,11 @@ exports[`app lock selection page should render properly 1`] = `
           "paddingTop": 5,
           "shadowColor": "rgba(0, 0, 0, 0.2)",
           "shadowOffset": Object {
-            "height": 10,
+            "height": 0,
             "width": 0,
           },
           "shadowOpacity": 1,
-          "shadowRadius": 30,
+          "shadowRadius": 10,
         }
       }
       testID="pin-code-selection-touchable"
@@ -361,7 +361,7 @@ exports[`app lock selection page should render properly 1`] = `
         >
           <Text
             accessible={true}
-            allowFontScaling={true}
+            allowFontScaling={false}
             ellipsizeMode="tail"
             style={
               Array [
@@ -409,7 +409,7 @@ exports[`app lock selection page should render properly 1`] = `
         >
           <Text
             accessible={true}
-            allowFontScaling={true}
+            allowFontScaling={false}
             ellipsizeMode="tail"
             style={
               Array [
@@ -457,7 +457,7 @@ exports[`app lock selection page should render properly 1`] = `
         >
           <Text
             accessible={true}
-            allowFontScaling={true}
+            allowFontScaling={false}
             ellipsizeMode="tail"
             style={
               Array [
@@ -505,7 +505,7 @@ exports[`app lock selection page should render properly 1`] = `
         >
           <Text
             accessible={true}
-            allowFontScaling={true}
+            allowFontScaling={false}
             ellipsizeMode="tail"
             style={
               Array [
@@ -553,7 +553,7 @@ exports[`app lock selection page should render properly 1`] = `
         >
           <Text
             accessible={true}
-            allowFontScaling={true}
+            allowFontScaling={false}
             ellipsizeMode="tail"
             style={
               Array [
@@ -601,7 +601,7 @@ exports[`app lock selection page should render properly 1`] = `
         >
           <Text
             accessible={true}
-            allowFontScaling={true}
+            allowFontScaling={false}
             ellipsizeMode="tail"
             style={
               Array [
@@ -640,7 +640,7 @@ exports[`app lock selection page should render properly 1`] = `
       <Text
         accessibilityLabel="use-pass-code-text"
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         onLongPress={[Function]}
         onPress={[Function]}
@@ -682,6 +682,144 @@ exports[`app lock selection page should render properly 1`] = `
         testID="use-pass-code-text"
       >
         Use Passcode
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#ffffff",
+        "marginHorizontal": 30,
+        "marginTop": 20,
+      }
+    }
+    tertiary={true}
+  >
+    <View
+      row={true}
+      spaceBetween={true}
+      style={
+        Object {
+          "backgroundColor": "#ffffff",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+      tertiary={true}
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "center",
+            "backgroundColor": "#ffffff",
+          }
+        }
+        tertiary={true}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={false}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "fontSize": 17,
+              },
+              Object {
+                "fontFamily": "Lato",
+              },
+              Object {
+                "backgroundColor": "#ffffff",
+                "color": "#777777",
+              },
+              Object {
+                "fontWeight": "bold",
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+            ]
+          }
+        >
+          Use App In Test Mode
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#ffffff",
+          }
+        }
+        tertiary={true}
+      >
+        <RCTSwitch
+          disabled={false}
+          onChange={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          onTintColor="#85bf43"
+          onValueChange={[Function]}
+          style={
+            Array [
+              Object {
+                "height": 31,
+                "width": 51,
+              },
+              undefined,
+            ]
+          }
+          value={false}
+        />
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#ffffff",
+          "paddingVertical": 8,
+        }
+      }
+      tertiary={true}
+      verticalSpace={true}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "fontSize": 15,
+            },
+            Object {
+              "fontFamily": "Lato",
+            },
+            Object {
+              "backgroundColor": "#ffffff",
+              "color": "#777777",
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+          ]
+        }
+      >
+        (For developers only. Uses the Sovrin Test Network)
       </Text>
     </View>
   </View>

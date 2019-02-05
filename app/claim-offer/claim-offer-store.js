@@ -89,7 +89,7 @@ import type { ApiClaimRequest, EdgeClaimRequest } from '../api/type-api'
 import type { UserOneTimeInfo } from '../store/user/type-user-store'
 import type { Connection } from '../store/type-connection-store'
 import { RESET } from '../common/type-common'
-import { secureSet, secureGet, secureDelete } from '../services/storage'
+import { secureSet, secureDelete, getHydrationItem } from '../services/storage'
 import { BigNumber } from 'bignumber.js'
 import { refreshWalletBalance } from '../wallet/wallet-store'
 import type {
@@ -304,7 +304,11 @@ export function* claimOfferAccepted(
       }
     } catch (e) {
       captureError(e)
-      yield put(sendClaimRequestFail(messageId))
+      if (isPaidCredential) {
+        yield put(paidCredentialRequestFail(messageId))
+      } else {
+        yield put(sendClaimRequestFail(messageId))
+      }
     }
 
     // since we have sent claim request, state of claim offer in vcx is changed
@@ -448,7 +452,7 @@ export function* removePersistedSerializedClaimOffersSaga(): Generator<
 
 export function* hydrateClaimOffersSaga(): Generator<*, *, *> {
   try {
-    const claimOffersJson = yield call(secureGet, CLAIM_OFFERS)
+    const claimOffersJson = yield call(getHydrationItem, CLAIM_OFFERS)
     if (claimOffersJson) {
       const serializedClaimOffers = JSON.parse(claimOffersJson)
       yield put(hydrateClaimOffers(serializedClaimOffers))

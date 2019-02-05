@@ -21,6 +21,18 @@ export const initialTestAction = () => ({
 export type NavigationParams = {
   [string]: any,
 }
+export type NavigationRoute = NavigationLeafRoute
+export type NavigationState = {
+  index: number,
+  routes: Array<NavigationRoute>,
+}
+
+export type NavigationLeafRoute = {|
+  key: string,
+  routeName: string,
+  path?: string,
+  params?: NavigationParams,
+|}
 
 export type ReactNavigation = NavigationScreenProp
 
@@ -77,3 +89,5 @@ export const STORE_STATUS = {
 
 export type StoreError = { +error: ?CustomError }
 export type StoreStatus = { +status: $Keys<typeof STORE_STATUS> }
+
+export type StatusBarStyle = 'default' | 'light-content' | 'dark-content'

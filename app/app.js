@@ -38,11 +38,13 @@ import {
   sendLogsRoute,
 } from './common'
 import { NavigationActions } from 'react-navigation'
-import type { AppState } from './type-app'
+import type { AppProps } from './type-app'
+import type { NavigationState, NavigationParams } from './common/type-common'
 import { exitAppAndroid } from './bridge/react-native-cxs/RNCxs'
 import AppStatus from './app-status/app-status'
 import { setupFeedback } from './feedback'
 import RNShake from 'react-native-shake'
+import Offline from './offline/offline'
 
 const backButtonDisableRoutes = [
   lockEnterPinRoute,
@@ -77,7 +79,7 @@ const backButtonConditionalRoutes = [
   lockAuthorizationHomeRoute,
 ]
 
-class ConnectMeApp extends PureComponent<void, AppState> {
+export class ConnectMeApp extends PureComponent<AppProps, void> {
   currentRouteKey: string = ''
   currentRoute: string = ''
   navigatorRef = null
@@ -85,9 +87,9 @@ class ConnectMeApp extends PureComponent<void, AppState> {
   exitTimeout: number = 0
 
   componentWillMount() {
-    RNShake.addEventListener('ShakeEvent', () => {
-      this.navigateToRoute(sendLogsRoute)
-    })
+    // RNShake.addEventListener('ShakeEvent', () => {
+    //   this.navigateToRoute(sendLogsRoute)
+    // })
   }
 
   componentDidMount() {
@@ -97,10 +99,17 @@ class ConnectMeApp extends PureComponent<void, AppState> {
         this.handleBackButtonClick
       )
     }
+    // components that are mounted inside of the app can also
+    // change status bar style and it is getting overridden
+    // so we are setting status bar style again after component is mounted
+    StatusBar.setBarStyle(barStyleDark, true)
+    if (Platform.OS === 'android') {
+      StatusBar.setBackgroundColor(whiteSmokeSecondary)
+    }
   }
 
   componentWillUnmount() {
-    RNShake.removeEventListener('ShakeEvent', () => {})
+    //RNShake.removeEventListener('ShakeEvent', () => {})
 
     if (Platform.OS === 'android') {
       BackHandler.removeEventListener(
@@ -148,13 +157,14 @@ class ConnectMeApp extends PureComponent<void, AppState> {
   onBackPressExit() {
     if (this.exitTimeout && this.exitTimeout + 2000 >= Date.now()) {
       exitAppAndroid()
+      return
     }
     this.exitTimeout = Date.now()
     ToastAndroid.show('Press again to exit!', ToastAndroid.SHORT)
   }
 
   // gets the current screen from navigation state
-  getCurrentRoute = navigationState => {
+  getCurrentRoute = (navigationState: NavigationState) => {
     const route = navigationState.routes[navigationState.index]
     // dive into nested navigators
     if (route.routes) {
@@ -164,7 +174,10 @@ class ConnectMeApp extends PureComponent<void, AppState> {
     return route
   }
 
-  navigationChangeHandler = (previousState, currentState) => {
+  navigationChangeHandler = (
+    previousState: NavigationState,
+    currentState: NavigationState
+  ) => {
     if (currentState) {
       const { routeName, key, params } = this.getCurrentRoute(currentState)
       const currentScreen = routeName
@@ -180,7 +193,7 @@ class ConnectMeApp extends PureComponent<void, AppState> {
     }
   }
 
-  navigateToRoute = (routeName, params = {}) => {
+  navigateToRoute = (routeName: string, params: NavigationParams = {}) => {
     const navigateAction = NavigationActions.navigate({
       routeName,
       params,
@@ -203,6 +216,7 @@ class ConnectMeApp extends PureComponent<void, AppState> {
             ref={navigatorRef => (this.navigatorRef = navigatorRef)}
             onNavigationStateChange={this.navigationChangeHandler}
           />
+          <Offline overlay />
         </Container>
       </Provider>
     )

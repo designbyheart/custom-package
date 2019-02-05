@@ -7,7 +7,7 @@ import {
   select,
   all,
 } from 'redux-saga/effects'
-import { secureSet, secureGet, secureDelete } from '../services/storage'
+import { secureSet, secureDelete, getHydrationItem } from '../services/storage'
 import { CONNECTIONS } from '../common'
 import {
   getAgencyUrl,
@@ -81,7 +81,7 @@ const initialState: ConnectionStore = {
 export const connectionMapper = ({
   logoUrl,
   size = bubbleSize.XL,
-  senderName = 'Evernym',
+  senderName = 'Unknown',
   ...otherArgs
 }: GenericObject) => ({
   logoUrl,
@@ -220,7 +220,7 @@ export const hydrateConnections = (connections: Connections) => ({
 
 export function* hydrateConnectionSaga(): Generator<*, *, *> {
   try {
-    const connections = yield call(secureGet, CONNECTIONS)
+    const connections = yield call(getHydrationItem, CONNECTIONS)
     if (connections) {
       yield put(hydrateConnections(JSON.parse(connections)))
     }
@@ -279,7 +279,7 @@ export function* persistThemes(): Generator<*, *, *> {
 
 export function* hydrateThemes(): Generator<*, *, *> {
   try {
-    const themes = yield call(secureGet, STORAGE_KEY_THEMES)
+    const themes = yield call(getHydrationItem, STORAGE_KEY_THEMES)
     if (themes) {
       yield put(hydrateConnectionThemes(JSON.parse(themes)))
     }

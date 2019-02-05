@@ -12,8 +12,8 @@ import {
   Icon,
   CustomButton,
   CustomHeader,
+  Loader,
 } from '../components'
-import CustomActivityIndicator from '../components/custom-activity-indicator/custom-activity-indicator'
 
 import {
   exportBackupFileRoute,
@@ -98,14 +98,14 @@ export class ExportBackupFile extends PureComponent<
     ) {
       return (
         <CustomView doubleVerticalSpace>
-          <CustomActivityIndicator tintColor={color.actions.none} />
+          <Loader showMessage={false} type="light" size={40} />
         </CustomView>
       )
     }
 
     return (
       <CustomView center style={[styles.lockIconImage]}>
-        <Image source={encryptedFile} style={[styles.imageIcon]} />
+        <Image source={encryptedFile} style={[styles.imageIconEncryptFile]} />
       </CustomView>
     )
   }
@@ -154,7 +154,7 @@ export class ExportBackupFile extends PureComponent<
         <Container style={[styles.wrapper]}>
           <CustomView center>
             <CustomText transparentBg center style={[styles.exportBackupTitle]}>
-              Export Your Encrypted Backup File
+              Export your encrypted backup file
             </CustomText>
           </CustomView>
           <CustomView center>
@@ -168,7 +168,8 @@ export class ExportBackupFile extends PureComponent<
           </CustomView>
           <CustomView
             center
-            verticalSpace={isBiggerThanVeryShortDevice ? true : false}
+            verticalSpace
+            doubleVerticalSpace={isBiggerThanVeryShortDevice ? true : false}
           >
             <CustomText
               center
@@ -184,7 +185,7 @@ export class ExportBackupFile extends PureComponent<
           {this.BackupPath(backupPath)}
         </Container>
 
-        <CustomView verticalSpace>
+        <CustomView verticalSpace={isBiggerThanVeryShortDevice ? true : false}>
           <CustomView center>
             <CustomText
               center

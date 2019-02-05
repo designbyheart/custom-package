@@ -82,7 +82,7 @@ exports[`Restore screen should render properly and match the snapshot 1`] = `
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [
@@ -122,11 +122,11 @@ exports[`Restore screen should render properly and match the snapshot 1`] = `
           ]
         }
       >
-        Thanks for installing connect.me.
+        Thanks for installing Connect.Me.
       </Text>
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [
@@ -172,7 +172,7 @@ exports[`Restore screen should render properly and match the snapshot 1`] = `
       </Text>
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [

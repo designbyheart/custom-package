@@ -15,6 +15,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.graphics.Palette;
 import android.util.Base64;
 import android.util.Log;
+import android.app.ActivityManager;
+import android.app.ActivityManager.MemoryInfo;
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.net.Uri;
 import android.os.Environment;
@@ -55,6 +58,11 @@ import java.util.TimerTask;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import java.io.InputStream;
+import java.lang.Long;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Nullable;
 
 public class RNIndyModule extends ReactContextBaseJavaModule {
     public static final String REACT_CLASS = "RNIndy";
@@ -122,7 +130,14 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void init(String config, Promise promise) {
         Log.d(TAG, " ==> init() called with: config = [" + config + "], promise = [" + promise + "]");
+        // When we restore data, then we are not calling createOneTimeInfo
+        // and hence ca-crt is not written within app directory
+        // since the logic to write ca cert checks for file existence
+        // we won't have to pay too much cost for calling this function inside init
+        BridgeUtils.writeCACert(this.getReactApplicationContext());
+
         try {
+            //int retCode = VcxApi.initNullPay();
             VcxApi.vcxInitWithConfig(config).exceptionally((t) -> {
                 Log.e(TAG, "init: ", t);
                 promise.reject("FutureException", t.getMessage());
@@ -142,6 +157,7 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
                 // async
                 // block and above try catch would not catch this exception
                 if (result != -1) {
+                    //VcxApi.vcxSetDefaultLogger("trace");
                     promise.resolve(true);
                 }
             });
@@ -163,7 +179,7 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
                 + inviteDetails + "], promise = [" + promise + "]");
         try {
             ConnectionApi.vcxCreateConnectionWithInvite(invitationId, inviteDetails).exceptionally((t) -> {
-                Log.e(TAG, "createOneTimeInfo: ", t);
+                Log.e(TAG, "createConnectionWithInvite: ", t);
                 promise.reject("FutureException", t.getMessage());
                 return -1;
             }).thenAccept(result -> {
@@ -249,7 +265,7 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void generateProof(String proofRequestId, String requestedAttrs, String requestedPredicates,
-            String proofName, Promise promise) {
+            String revocationInterval, String proofName, Promise promise) {
         try {
             ProofApi.proofCreate(proofRequestId, requestedAttrs, requestedPredicates, proofName).exceptionally((t) -> {
                 Log.e(TAG, "generateProof: ", t);
@@ -1003,5 +1019,16 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
             Log.e(TAG, "createWalletKey: ", e);
             promise.reject("Exception", e.getMessage());
         }
+    }
+
+    @Override
+    public @Nullable
+    Map<String, Object> getConstants() {
+    HashMap<String, Object> constants = new HashMap<String, Object>();
+      ActivityManager actManager = (ActivityManager) reactContext.getSystemService(Context.ACTIVITY_SERVICE);
+      MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+      actManager.getMemoryInfo(memInfo);
+      constants.put("totalMemory", memInfo.totalMem);
+      return constants;
     }
 }

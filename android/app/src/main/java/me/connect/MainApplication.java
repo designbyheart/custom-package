@@ -1,14 +1,15 @@
 package me.connect;
 
 import android.app.Application;
-import com.apptentive.android.sdk.reactlibrary.RNApptentivePackage;
-import com.surajit.rnrg.RNRadialGradientPackage;
 import com.facebook.react.ReactApplication;
 import com.chirag.RNMail.RNMail;
 import com.clipsub.RNShake.RNShakeEventPackage;
-import rnpbkdf2.PBKDF2Package;
-import io.sentry.RNSentryPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
+import com.apptentive.android.sdk.reactlibrary.RNApptentivePackage;
+import com.gijoehosaphat.keepscreenon.KeepScreenOnPackage;
+import com.horcrux.svg.SvgPackage;
+import rnpbkdf2.PBKDF2Package;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import com.rnziparchive.RNZipArchivePackage;
@@ -18,11 +19,8 @@ import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import cl.json.RNSharePackage;
 import cl.json.ShareApplication;
 import com.apsl.versionnumber.RNVersionNumberPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
-//import com.horcrux.svg.SvgPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import io.branch.rnbranch.RNBranchPackage;
@@ -54,9 +52,12 @@ public class MainApplication extends Application implements ShareApplication, Re
         new MainReactPackage(),
             new RNMail(),
             new RNShakeEventPackage(),
+            new PickerPackage(),
+            new RNFirebasePackage(),
+            new RNApptentivePackage(),
+            new KeepScreenOnPackage(),
+            new SvgPackage(),
             new PBKDF2Package(),
-        new RNSentryPackage(),
-        new RNFirebasePackage(),
         new RNFirebaseNotificationsPackage(),
         new RNFirebaseMessagingPackage(),
         new RNZipArchivePackage(),
@@ -65,7 +66,6 @@ public class MainApplication extends Application implements ShareApplication, Re
         new RNSensitiveInfoPackage(),
         new RNSharePackage(),
         new RNVersionNumberPackage(),
-        new PickerPackage(),
         new ImageResizerPackage(),
         new FingerprintAuthPackage(),
         new RNFetchBlobPackage(),
@@ -73,9 +73,7 @@ public class MainApplication extends Application implements ShareApplication, Re
         new RNBranchPackage(),
         new VectorIconsPackage(),
         new SplashScreenReactPackage(),
-        new RNIndyPackage(),
-        new RNRadialGradientPackage(),
-        new RNApptentivePackage()
+        new RNIndyPackage()
       );
     }
 

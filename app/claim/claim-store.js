@@ -49,13 +49,11 @@ import {
   getSerializedClaimOffers,
   getConnectionByUserDid,
 } from '../store/store-selector'
-import { secureSet, secureGet } from '../services/storage'
+import { secureSet, getHydrationItem } from '../services/storage'
 import { CLAIM_MAP } from '../common/secure-storage-constants'
 import { RESET } from '../common/type-common'
-import {
-  ensureVcxInitSuccess,
-  updateMessageStatus,
-} from '../store/config-store'
+import { updateMessageStatus } from '../store/config-store'
+import { ensureVcxInitSuccess } from '../store/route-store'
 import type { SerializedClaimOffer } from '../claim-offer/type-claim-offer'
 import { VCX_CLAIM_OFFER_STATE } from '../claim-offer/type-claim-offer'
 import { saveSerializedClaimOffer } from '../claim-offer/claim-offer-store'
@@ -110,7 +108,7 @@ export const hydrateClaimMapFail = (error: CustomError) => ({
 
 export function* hydrateClaimMapSaga(): Generator<*, *, *> {
   try {
-    const fetchedClaimMap = yield call(secureGet, CLAIM_MAP)
+    const fetchedClaimMap = yield call(getHydrationItem, CLAIM_MAP)
     if (fetchedClaimMap) {
       const claimMap: ClaimMap = JSON.parse(fetchedClaimMap)
       yield put(hydrateClaimMap(claimMap))
@@ -135,7 +133,10 @@ export function* claimReceivedVcxSaga(
   action: ClaimReceivedAction
 ): Generator<*, *, *> {
   const { forDID, remotePairwiseDID, connectionHandle, uid } = action.claim
-  yield* ensureVcxInitSuccess()
+  const vcxResult = yield* ensureVcxInitSuccess()
+  if (vcxResult && vcxResult.fail) {
+    return
+  }
 
   // when we receive a claim we only know claim message id,
   // and user id for which claim was sent

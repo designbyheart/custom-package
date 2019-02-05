@@ -93,7 +93,7 @@ exports[`<ConnectionHistoryDetails /> should ConnectionHistoryDetails render pro
                     <Text
                       accessibilityLabel="custom-list-label-0"
                       accessible={true}
-                      allowFontScaling={true}
+                      allowFontScaling={false}
                       ellipsizeMode="tail"
                       style={
                         Array [
@@ -143,7 +143,7 @@ exports[`<ConnectionHistoryDetails /> should ConnectionHistoryDetails render pro
                     <Text
                       accessibilityLabel="custom-list-data-0"
                       accessible={true}
-                      allowFontScaling={true}
+                      allowFontScaling={false}
                       ellipsizeMode="tail"
                       style={
                         Array [
@@ -193,21 +193,25 @@ exports[`<ConnectionHistoryDetails /> should ConnectionHistoryDetails render pro
                     }
                   }
                 >
-                  <Image
-                    resizeMode="cover"
-                    source={null}
-                    style={
-                      Array [
-                        Object {
-                          "height": 30,
-                          "width": 30,
-                        },
-                        Object {
-                          "borderRadius": 15,
-                        },
-                      ]
-                    }
-                  />
+                  <View
+                    style={Object {}}
+                  >
+                    <Image
+                      resizeMode="cover"
+                      source={null}
+                      style={
+                        Array [
+                          Object {
+                            "height": 30,
+                            "width": 30,
+                          },
+                          Object {
+                            "borderRadius": 15,
+                          },
+                        ]
+                      }
+                    />
+                  </View>
                 </View>
               </View>
             </View>

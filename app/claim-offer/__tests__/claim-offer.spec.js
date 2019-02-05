@@ -4,7 +4,11 @@ import 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import { ClaimOffer } from '../claim-offer'
-import { CLAIM_OFFER_STATUS, CLAIM_REQUEST_STATUS } from '../type-claim-offer'
+import {
+  CLAIM_OFFER_STATUS,
+  CLAIM_REQUEST_STATUS,
+  CREDENTIAL_OFFER_MODAL_STATUS,
+} from '../type-claim-offer'
 import { color } from '../../common/styles'
 import {
   getStore,
@@ -13,21 +17,37 @@ import {
   senderLogoUrl1,
 } from '../../../__mocks__/static-data'
 
+let navigation = {
+  goBack: jest.fn(),
+  state: {
+    params: {
+      uid: 'asd123',
+    },
+  },
+}
+const props = {
+  claimOfferShown: jest.fn(),
+  acceptClaimOffer: jest.fn(),
+  claimOfferIgnored: jest.fn(),
+  claimOfferRejected: jest.fn(),
+  navigation: navigation,
+  uid: navigation.state.params.uid,
+  isValid: true,
+  logoUrl: senderLogoUrl1,
+  claimThemeSecondary: color.bg.secondary.color,
+  claimThemePrimary: color.bg.secondary.color,
+  updateStatusBarTheme: jest.fn(),
+  claimOfferShowStart: jest.fn(),
+  resetClaimRequestStatus: jest.fn(),
+}
+
 describe('Paid <ClaimOffer />', () => {
   const store = getStore()
 
   let wrapper
-  let claimOfferShown
-  let acceptClaimOffer
-  let claimOfferRejected
-  let claimOfferIgnored
   let tree
-  let navigation
-  let componentInstance
-  let claimOfferShowStart
-  let resetClaimRequestStatus
-  const logoUrl = senderLogoUrl1
 
+  let componentInstance
   const paidClaimOfferData = {
     data: {
       name: 'Home Address',
@@ -59,41 +79,11 @@ describe('Paid <ClaimOffer />', () => {
   const isValid = true
   const claimThemePrimary = color.bg.secondary.color
   const claimThemeSecondary = color.bg.secondary.color
-  const updateStatusBarTheme = jest.fn()
 
   beforeEach(() => {
-    claimOfferShown = jest.fn()
-    acceptClaimOffer = jest.fn()
-    claimOfferRejected = jest.fn()
-    claimOfferIgnored = jest.fn()
-    claimOfferShowStart = jest.fn()
-    resetClaimRequestStatus = jest.fn()
-    navigation = {
-      goBack: jest.fn(),
-      state: {
-        params: {
-          uid: 'asd123',
-        },
-      },
-    }
     wrapper = renderer.create(
       <Provider store={store}>
-        <ClaimOffer
-          claimOfferData={paidClaimOfferData}
-          claimOfferShown={claimOfferShown}
-          acceptClaimOffer={acceptClaimOffer}
-          claimOfferIgnored={claimOfferIgnored}
-          claimOfferRejected={claimOfferRejected}
-          navigation={navigation}
-          uid={navigation.state.params.uid}
-          isValid={isValid}
-          logoUrl={logoUrl}
-          claimThemeSecondary={claimThemeSecondary}
-          claimThemePrimary={claimThemePrimary}
-          updateStatusBarTheme={updateStatusBarTheme}
-          claimOfferShowStart={claimOfferShowStart}
-          resetClaimRequestStatus={resetClaimRequestStatus}
-        />
+        <ClaimOffer {...props} claimOfferData={paidClaimOfferData} />
       </Provider>
     )
     tree = wrapper.toJSON()
@@ -104,7 +94,48 @@ describe('Paid <ClaimOffer />', () => {
   // However not clear how to write and assertion of token balance text
   it('should call claimOfferShown on componentDidMount', () => {
     expect(tree).toMatchSnapshot()
-    expect(claimOfferShown).toHaveBeenCalled()
+    expect(props.claimOfferShown).toHaveBeenCalled()
+  })
+
+  it('should show Insufficient Balance Modal', () => {
+    jest.useFakeTimers()
+    wrapper.update(
+      <Provider store={store}>
+        <ClaimOffer
+          {...props}
+          claimOfferData={{
+            ...paidClaimOfferData,
+            claimRequestStatus: CLAIM_REQUEST_STATUS.INSUFFICIENT_BALANCE,
+          }}
+          payTokenValue={paidClaimOfferData.payTokenValue}
+        />
+      </Provider>
+    )
+    componentInstance.onCredentialOfferModalHide()
+    jest.runOnlyPendingTimers()
+    expect(componentInstance.state.credentialOfferModalStatus).toBe(
+      CREDENTIAL_OFFER_MODAL_STATUS.INSUFFICIENT_BALANCE
+    )
+    expect(wrapper.toJSON()).toMatchSnapshot()
+  })
+
+  it('should show Ledger Fees Modal', () => {
+    jest.useFakeTimers()
+    wrapper.update(
+      <Provider store={store}>
+        <ClaimOffer
+          {...props}
+          claimOfferData={{
+            ...paidClaimOfferData,
+          }}
+          payTokenValue={paidClaimOfferData.payTokenValue}
+        />
+      </Provider>
+    )
+    componentInstance.setState({
+      credentialOfferModalStatus: CREDENTIAL_OFFER_MODAL_STATUS.LEDGER_FEES,
+    })
+    expect(wrapper.toJSON()).toMatchSnapshot()
   })
 })
 
@@ -112,15 +143,9 @@ describe('<ClaimOffer />', () => {
   const store = getStore()
 
   let wrapper
-  let claimOfferShown
-  let acceptClaimOffer
-  let claimOfferRejected
-  let claimOfferIgnored
   let tree
   let navigation
   let componentInstance
-  let claimOfferShowStart
-  let resetClaimRequestStatus
   const logoUrl = senderLogoUrl1
   const claimOfferData = {
     data: {
@@ -154,38 +179,9 @@ describe('<ClaimOffer />', () => {
   const updateStatusBarTheme = jest.fn()
 
   beforeEach(() => {
-    claimOfferShown = jest.fn()
-    acceptClaimOffer = jest.fn()
-    claimOfferRejected = jest.fn()
-    claimOfferIgnored = jest.fn()
-    claimOfferShowStart = jest.fn()
-    resetClaimRequestStatus = jest.fn()
-    navigation = {
-      goBack: jest.fn(),
-      state: {
-        params: {
-          uid: 'asd123',
-        },
-      },
-    }
     wrapper = renderer.create(
       <Provider store={store}>
-        <ClaimOffer
-          claimOfferData={claimOfferData}
-          claimOfferShown={claimOfferShown}
-          acceptClaimOffer={acceptClaimOffer}
-          claimOfferIgnored={claimOfferIgnored}
-          claimOfferRejected={claimOfferRejected}
-          navigation={navigation}
-          uid={navigation.state.params.uid}
-          isValid={isValid}
-          logoUrl={logoUrl}
-          claimThemeSecondary={claimThemeSecondary}
-          claimThemePrimary={claimThemePrimary}
-          updateStatusBarTheme={updateStatusBarTheme}
-          claimOfferShowStart={claimOfferShowStart}
-          resetClaimRequestStatus={resetClaimRequestStatus}
-        />
+        <ClaimOffer claimOfferData={claimOfferData} {...props} />
       </Provider>
     )
     tree = wrapper.toJSON()
@@ -194,22 +190,68 @@ describe('<ClaimOffer />', () => {
 
   it('should call claimOfferShown on componentDidMount', () => {
     expect(tree).toMatchSnapshot()
-    expect(claimOfferShown).toHaveBeenCalled()
+    expect(props.claimOfferShown).toHaveBeenCalled()
   })
   it('should call acceptClaimOffer if offer is accepted', () => {
     componentInstance.onAccept()
-    expect(acceptClaimOffer).toHaveBeenCalled()
+    expect(props.acceptClaimOffer).toHaveBeenCalled()
   })
 
-  it('should call claimOfferIgnored if close button is pressed', () => {
+  it('should call claimOfferIgnored if ignored', () => {
     componentInstance.onIgnore()
-    expect(claimOfferIgnored).toHaveBeenCalled()
-    expect(navigation.goBack).toHaveBeenCalled()
+    expect(props.claimOfferIgnored).toHaveBeenCalled()
   })
 
-  it('should call claimOfferRejected if ignore button is pressed', () => {
+  it('should show Send Paid Credential Request Fail Modal', () => {
+    jest.useFakeTimers()
+    wrapper.update(
+      <Provider store={store}>
+        <ClaimOffer
+          claimOfferData={{
+            ...claimOfferData,
+            claimRequestStatus:
+              CLAIM_REQUEST_STATUS.PAID_CREDENTIAL_REQUEST_FAIL,
+          }}
+          {...props}
+        />
+      </Provider>
+    )
+    componentInstance.onCredentialOfferModalHide()
+    jest.runOnlyPendingTimers()
+    expect(componentInstance.state.credentialOfferModalStatus).toBe(
+      CREDENTIAL_OFFER_MODAL_STATUS.SEND_PAID_CREDENTIAL_REQUEST_FAIL
+    )
+    expect(wrapper.toJSON()).toMatchSnapshot()
+  })
+
+  it('should enable accept button if claim offer error occurs', () => {
+    jest.useFakeTimers()
+    wrapper.update(
+      <Provider store={store}>
+        <ClaimOffer
+          claimOfferData={{
+            ...claimOfferData,
+            claimRequestStatus: CLAIM_REQUEST_STATUS.SEND_CLAIM_REQUEST_FAIL,
+          }}
+          {...props}
+        />
+      </Provider>
+    )
+    jest.runOnlyPendingTimers()
+    expect(componentInstance.state.disableAcceptButton).toBe(false)
+    expect(wrapper.toJSON()).toMatchSnapshot()
+  })
+
+  it('should call claimOfferRejected if rejected', () => {
     componentInstance.onReject()
-    expect(claimOfferRejected).toHaveBeenCalled()
-    expect(navigation.goBack).toHaveBeenCalled()
+    expect(props.claimOfferRejected).toHaveBeenCalled()
+  })
+
+  it('should call close if closed', () => {
+    componentInstance.close()
+    expect(componentInstance.state.credentialOfferModalStatus).toBe(
+      CREDENTIAL_OFFER_MODAL_STATUS.NONE
+    )
+    expect(props.navigation.goBack).toHaveBeenCalled()
   })
 })

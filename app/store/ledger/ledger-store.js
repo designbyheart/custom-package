@@ -17,7 +17,7 @@ import type {
 } from './type-ledger-store'
 import { put, take, all, call, select, takeLatest } from 'redux-saga/effects'
 import { getLedgerFees } from '../../bridge/react-native-cxs/RNCxs'
-import { ensureVcxInitSuccess } from '../config-store'
+import { ensureVcxInitSuccess } from '../route-store'
 import { captureError } from '../../services/error/error-handler'
 
 const initialState = {
@@ -31,8 +31,11 @@ const initialState = {
 }
 
 export function* getLedgerFeesSaga(): Generator<*, *, *> {
-  yield* ensureVcxInitSuccess()
   try {
+    const vcxResult = yield* ensureVcxInitSuccess()
+    if (vcxResult && vcxResult.fail) {
+      throw new Error(JSON.stringify(vcxResult.fail.message))
+    }
     const fees: LedgerFeesData = yield call(getLedgerFees)
     yield put(getLedgerFeesSuccess(fees))
   } catch (e) {

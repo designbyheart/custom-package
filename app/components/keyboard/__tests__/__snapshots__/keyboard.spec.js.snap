@@ -5,6 +5,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
   style={
     Object {
       "alignItems": "flex-start",
+      "marginBottom": 5,
       "marginHorizontal": 32,
     }
   }
@@ -14,7 +15,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
     style={
       Object {
         "flexDirection": "row",
-        "height": 30,
+        "height": 36,
         "marginTop": 8,
       }
     }
@@ -154,7 +155,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
     style={
       Object {
         "flexDirection": "row",
-        "height": 30,
+        "height": 36,
         "marginTop": 15,
       }
     }
@@ -294,7 +295,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
     style={
       Object {
         "flexDirection": "row",
-        "height": 30,
+        "height": 36,
         "marginTop": 15,
       }
     }
@@ -434,7 +435,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
     style={
       Object {
         "flexDirection": "row",
-        "height": 30,
+        "height": 36,
         "marginTop": 15,
       }
     }

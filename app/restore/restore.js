@@ -144,7 +144,7 @@ export class RestoreStartScreen extends PureComponent<RestoreProps, void> {
                 center
                 h4a
               >
-                Thanks for installing connect.me.
+                Thanks for installing Connect.Me.
               </CustomText>
               <CustomText
                 center

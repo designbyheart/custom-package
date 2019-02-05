@@ -34,7 +34,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         numberOfLines={1}
         style={
@@ -71,7 +71,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
           ]
         }
       >
-        Recovery Phrase Generated
+        Recovery Phrase generated
       </Text>
     </View>
     <View
@@ -85,7 +85,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [
@@ -119,13 +119,13 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
               "fontSize": 16,
               "fontWeight": "500",
               "lineHeight": 20,
-              "marginBottom": 0,
+              "marginBottom": 5,
               "paddingHorizontal": 20,
             },
           ]
         }
       >
-        This is your recovery phrase. Write it down, and don't share it with anyone.
+        This is your Recovery Phrase. Write it down, and don't share it with anyone.
       </Text>
     </View>
     <View
@@ -138,12 +138,13 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
       }
     >
       <Image
+        onLayout={[Function]}
         source={1}
         style={
           Array [
             Object {
               "marginBottom": 0,
-              "resizeMode": "contain",
+              "resizeMode": "stretch",
               "width": "100%",
             },
           ]
@@ -153,17 +154,16 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
         style={
           Object {
             "left": 20,
-            "marginLeft": "5%",
-            "marginRight": "5%",
+            "paddingHorizontal": "7%",
             "position": "absolute",
-            "right": 20,
             "top": 20,
+            "width": 320,
           }
         }
       >
         <Text
           accessible={true}
-          allowFontScaling={true}
+          allowFontScaling={false}
           ellipsizeMode="tail"
           style={
             Array [
@@ -215,7 +215,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [
@@ -254,7 +254,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
           ]
         }
       >
-        You will need this recovery phrase to restore from a backup. Keep it safe.
+        You will need this Recovery Phrase to restore from a backup. Keep it safe.
       </Text>
     </View>
   </View>
@@ -272,7 +272,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [
@@ -504,7 +504,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         numberOfLines={1}
         style={
@@ -541,7 +541,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
           ]
         }
       >
-        Recovery Phrase Generated
+        Recovery Phrase generated
       </Text>
     </View>
     <View
@@ -555,7 +555,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [
@@ -589,13 +589,13 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
               "fontSize": 16,
               "fontWeight": "500",
               "lineHeight": 20,
-              "marginBottom": 0,
+              "marginBottom": 5,
               "paddingHorizontal": 20,
             },
           ]
         }
       >
-        This is your recovery phrase. Write it down, and don't share it with anyone.
+        This is your Recovery Phrase. Write it down, and don't share it with anyone.
       </Text>
     </View>
     <View
@@ -608,12 +608,13 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
       }
     >
       <Image
+        onLayout={[Function]}
         source={1}
         style={
           Array [
             Object {
               "marginBottom": 0,
-              "resizeMode": "contain",
+              "resizeMode": "stretch",
               "width": "100%",
             },
           ]
@@ -623,17 +624,16 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
         style={
           Object {
             "left": 20,
-            "marginLeft": "5%",
-            "marginRight": "5%",
+            "paddingHorizontal": "7%",
             "position": "absolute",
-            "right": 20,
             "top": 20,
+            "width": 320,
           }
         }
       >
         <Text
           accessible={true}
-          allowFontScaling={true}
+          allowFontScaling={false}
           ellipsizeMode="tail"
           style={
             Array [
@@ -682,7 +682,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [
@@ -721,7 +721,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
           ]
         }
       >
-        You will need this recovery phrase to restore from a backup. Keep it safe.
+        You will need this Recovery Phrase to restore from a backup. Keep it safe.
       </Text>
     </View>
   </View>
@@ -739,7 +739,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [
@@ -980,7 +980,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         numberOfLines={1}
         style={
@@ -1017,7 +1017,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
           ]
         }
       >
-        Recovery Phrase Generated
+        Recovery Phrase generated
       </Text>
     </View>
     <View
@@ -1031,7 +1031,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [
@@ -1065,13 +1065,13 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
               "fontSize": 16,
               "fontWeight": "500",
               "lineHeight": 20,
-              "marginBottom": 0,
+              "marginBottom": 5,
               "paddingHorizontal": 20,
             },
           ]
         }
       >
-        This is your recovery phrase. Write it down, and don't share it with anyone.
+        This is your Recovery Phrase. Write it down, and don't share it with anyone.
       </Text>
     </View>
     <View
@@ -1084,12 +1084,13 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
       }
     >
       <Image
+        onLayout={[Function]}
         source={1}
         style={
           Array [
             Object {
               "marginBottom": 0,
-              "resizeMode": "contain",
+              "resizeMode": "stretch",
               "width": "100%",
             },
           ]
@@ -1098,51 +1099,12 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
       <View
         style={
           Object {
-            "left": 20,
-            "marginLeft": "5%",
-            "marginRight": "5%",
+            "padding": 40,
             "position": "absolute",
-            "right": 20,
-            "top": 20,
+            "top": 0,
           }
         }
-      >
-        <View
-          style={
-            Object {
-              "padding": 40,
-            }
-          }
-        >
-          <View
-            center={true}
-            style={
-              Object {
-                "alignItems": "center",
-                "flex": 1,
-                "justifyContent": "center",
-              }
-            }
-          >
-            <Image
-              collapsable={undefined}
-              source={1}
-              style={
-                Object {
-                  "height": 30,
-                  "tintColor": "#777777",
-                  "transform": Array [
-                    Object {
-                      "rotate": "0deg",
-                    },
-                  ],
-                  "width": 30,
-                }
-              }
-            />
-          </View>
-        </View>
-      </View>
+      />
     </View>
     <View
       center={true}
@@ -1155,7 +1117,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [
@@ -1194,7 +1156,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
           ]
         }
       >
-        You will need this recovery phrase to restore from a backup. Keep it safe.
+        You will need this Recovery Phrase to restore from a backup. Keep it safe.
       </Text>
     </View>
   </View>
@@ -1212,7 +1174,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
     >
       <Text
         accessible={true}
-        allowFontScaling={true}
+        allowFontScaling={false}
         ellipsizeMode="tail"
         style={
           Array [

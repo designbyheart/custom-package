@@ -17,6 +17,8 @@ import type { EulaStore } from '../eula/type-eula'
 import type { BackupStore } from '../backup/type-backup'
 import type { RestoreStore } from '../restore/type-restore'
 import type { LedgerStore } from './ledger/type-ledger-store'
+import type { OfflineStore } from '../offline/type-offline'
+import type { OnfidoStore } from '../onfido/type-onfido'
 
 export type PushNotificationStore = {
   isAllowed: boolean,
@@ -31,6 +33,7 @@ export type PushNotificationStore = {
 
 export type RouteStore = {
   currentScreen: string,
+  timeStamp: number,
 }
 
 export type Store = {
@@ -54,6 +57,8 @@ export type Store = {
   backup: BackupStore,
   restore: RestoreStore,
   ledger: LedgerStore,
+  offline: OfflineStore,
+  onfido: OnfidoStore,
 }
 
 export type { AuthenticationStore } from '../authentication/type-authentication'

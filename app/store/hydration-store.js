@@ -4,8 +4,9 @@ import {
   safeDelete,
   safeGet,
   safeSet,
-  secureGet,
   safeMultiRemove,
+  secureDelete,
+  secureGet,
 } from '../services/storage'
 import { hydratePushTokenSaga } from '../push-notification/push-notification-store'
 import { hydrateEulaAccept } from '../eula/eula-store'
@@ -16,11 +17,29 @@ import {
   hydrateConnectionSaga,
 } from '../store/connections-store'
 import { hydrateClaimMapSaga } from '../claim/claim-store'
-import { CONNECTIONS, PUSH_COM_METHOD, LAST_SUCCESSFUL_BACKUP } from '../common'
+import {
+  CONNECTIONS,
+  PUSH_COM_METHOD,
+  LAST_SUCCESSFUL_BACKUP,
+  CONNECT_ME_STORAGE_KEY,
+  CLAIM_MAP,
+  WALLET_ENCRYPTION_KEY,
+  WALLET_BALANCE,
+  WALLET_ADDRESSES,
+  WALLET_HISTORY,
+  PASSPHRASE_SALT_STORAGE_KEY,
+  PASSPHRASE_STORAGE_KEY,
+} from '../common'
+import { STORAGE_KEY_USER_ONE_TIME_INFO } from '../store/user/type-user-store'
+import { CLAIM_OFFERS } from '../claim-offer/type-claim-offer'
+import { STORAGE_KEY_THEMES } from '../store/type-connection-store'
+import { HISTORY_EVENT_STORAGE_KEY } from '../connection-history/type-connection-history'
 import {
   TOUCH_ID_STORAGE_KEY,
   PIN_ENABLED_KEY,
   IN_RECOVERY,
+  PIN_HASH,
+  SALT,
 } from '../lock/type-lock'
 import {
   hydrateUserStoreSaga,
@@ -30,6 +49,7 @@ import { hydrateWalletStoreSaga } from '../wallet/wallet-store'
 import {
   promptBackupBanner,
   deletePersistedPassphrase,
+  hydratePassphraseFromWallet,
 } from '../backup/backup-store'
 import {
   STORAGE_KEY_SWITCHED_ENVIRONMENT_DETAIL,
@@ -45,10 +65,10 @@ import { IS_ALREADY_INSTALLED } from '../common'
 import {
   alreadyInstalledAction,
   hydrated,
-  ensureVcxInitSuccess,
   hydrateSwitchedEnvironmentDetails,
   initialized,
 } from './config-store'
+import { ensureVcxInitSuccess } from './route-store'
 import {
   lockEnable,
   enableTouchIdAction,
@@ -64,11 +84,14 @@ import {
 import { STORAGE_KEY_USER_AVATAR_NAME } from './user/type-user-store'
 import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { hydrateProofRequestsSaga } from './../proof-request/proof-request-store'
-import { deleteItem, getItem } from '../services/secure-storage'
 import { WALLET_KEY } from '../bridge/react-native-cxs/vcx-transformers'
 import RNFetchBlob from 'react-native-fetch-blob'
 import { Platform } from 'react-native'
 import { customLogger } from '../store/custom-logger'
+import {
+  removePersistedOnfidoApplicantIdSaga,
+  removePersistedOnfidoDidSaga,
+} from '../onfido/onfido-store'
 
 export function* deleteDeviceSpecificData(): Generator<*, *, *> {
   try {
@@ -92,13 +115,30 @@ function* deleteSecureStorageData(): Generator<*, *, *> {
     const secureKeysToDelete = [
       WALLET_KEY,
       STORAGE_KEY_SWITCHED_ENVIRONMENT_DETAIL,
+      CONNECTIONS,
+      CONNECT_ME_STORAGE_KEY,
+      CLAIM_MAP,
+      WALLET_ENCRYPTION_KEY,
+      WALLET_BALANCE,
+      WALLET_ADDRESSES,
+      WALLET_HISTORY,
+      PASSPHRASE_SALT_STORAGE_KEY,
+      PASSPHRASE_STORAGE_KEY,
+      CLAIM_OFFERS,
+      STORAGE_KEY_USER_ONE_TIME_INFO,
+      STORAGE_KEY_THEMES,
+      HISTORY_EVENT_STORAGE_KEY,
+      PIN_HASH,
+      SALT,
     ]
     const deleteOperations = []
     for (let index = 0; index < secureKeysToDelete.length; index++) {
       const secureKey = secureKeysToDelete[index]
       // not waiting for one delete operation to finish
-      deleteOperations.push(call(deleteItem, secureKey))
+      deleteOperations.push(call(secureDelete, secureKey))
     }
+    deleteOperations.push(call(removePersistedOnfidoApplicantIdSaga))
+    deleteOperations.push(call(removePersistedOnfidoDidSaga))
     // wait till all delete operations are done in parallel
     yield all(deleteOperations)
   } catch (e) {
@@ -137,7 +177,7 @@ export function* alreadyInstalledNotFound(): Generator<*, *, *> {
 }
 
 export function* confirmFirstInstallationWithWallet(): Generator<*, *, *> {
-  const appUniqueId = yield call(getItem, __uniqueId)
+  const appUniqueId = yield call(secureGet, __uniqueId)
   const walletName = appUniqueId && `${appUniqueId}-cm-wallet`
   if (!walletName) {
     throw new Error(ERROR_NO_WALLET_NAME)
@@ -216,8 +256,10 @@ export function* hydrate(): any {
       // for all three flags and redirection logic can move forward
       yield put(initialized())
 
-      // replace below line with wallet init saga
-      yield call(simpleInit)
+      if (inRecovery === 'true') {
+        // replace below line with wallet init saga
+        yield call(simpleInit)
+      }
 
       yield* hydrateSwitchedEnvironmentDetails()
       // since we hydrated environment details, so now we can start downloading sms
@@ -234,10 +276,15 @@ export function* hydrate(): any {
       yield* hydrateClaimOffersSaga()
       yield* loadHistorySaga()
 
-      // TODO: Move vcx shutdown logic inside ensureVcxInitSuccess
-      yield call(vcxShutdown, false)
+      if (inRecovery === 'true') {
+        // TODO: Move vcx shutdown logic inside ensureVcxInitSuccess
+        yield call(vcxShutdown, false)
+      }
       yield put(hydrated())
-      yield* ensureVcxInitSuccess()
+      const vcxResult = yield* ensureVcxInitSuccess()
+      if (vcxResult && vcxResult.fail) {
+        throw new Error(JSON.stringify(vcxResult.fail.message))
+      }
     } catch (e) {
       captureError(e)
       customLogger.error(`hydrateSaga: ${e}`)
@@ -251,4 +298,14 @@ export function* hydrate(): any {
     customLogger.error(`hydrateSaga: ${e}`)
     yield* alreadyInstalledNotFound()
   }
+}
+
+export function* hydrateNonReduxData(): Generator<*, *, *> {
+  // this saga is supposed to be run while restoring wallet
+  // gets the data from wallet and hydrate that data in keychain/keystore
+  // reason we are doing this separately than in hydrate saga
+  // is that this data is not stored in redux-store because we pull it
+  // when needed, so hydrate won't hydrate this data
+  // but we still need to take this data out of wallet and put in Keychain
+  yield* hydratePassphraseFromWallet()
 }

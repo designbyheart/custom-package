@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>758</string>
+	<string>783</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
 	<key>ITSEncryptionExportComplianceCode</key>
@@ -91,6 +91,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Enabling Face ID allows you quick and secure access to your app.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow us access to Camera so that we can scan QR code</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -156,8 +158,6 @@
 		<key>test</key>
 		<string>key_test_fnzEMTMuTnr6HZWEBbJVOmfhsymtrs8S</string>
 	</dict>
-	<key>NSFaceIDUsageDescription</key>
-	<string>ConnectMe uses your Face ID biometric to secure your wallet.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>ConnectMe uses your microphone to support audio messages.</string>
 </dict>

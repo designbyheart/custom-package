@@ -69,11 +69,11 @@ import {
   getHandleBySerializedConnection,
   serializeClaimOffer,
 } from '../bridge/react-native-cxs/RNCxs'
-import { HYDRATED } from '../store/type-config-store'
+import { HYDRATED, VCX_INIT_SUCCESS } from '../store/type-config-store'
 import { CONNECT_REGISTER_CREATE_AGENT_DONE } from '../store/user/type-user-store'
 import uniqueId from 'react-native-unique-id'
 import { RESET } from '../common/type-common'
-import { ensureVcxInitSuccess } from '../store/config-store'
+import { ensureVcxInitSuccess } from '../store/route-store'
 import type { Connection } from '../store/type-connection-store'
 import type { CxsCredentialOfferResult } from '../bridge/react-native-cxs/type-cxs'
 import type {
@@ -114,6 +114,7 @@ import { customLogger } from '../store/custom-logger'
 async function delay(ms): Promise<number> {
   return new Promise(res => setTimeout(res, ms))
 }
+
 const blackListedRoute = {
   [proofRequestRoute]: proofRequestRoute,
   [claimOfferRoute]: claimOfferRoute,
@@ -124,6 +125,7 @@ const blackListedRoute = {
   [lockEnterFingerprintRoute]: lockEnterFingerprintRoute,
   [lockAuthorizationRoute]: lockAuthorizationRoute,
   [lockAuthorizationHomeRoute]: lockAuthorizationHomeRoute,
+  [invitationRoute]: invitationRoute,
 }
 
 const initialState = {
@@ -153,7 +155,10 @@ export function* onPushTokenUpdate(
   try {
     const pushToken = `FCM:${action.token}`
     const id = yield uniqueId()
-    yield* ensureVcxInitSuccess()
+    const vcxResult = yield* ensureVcxInitSuccess()
+    if (vcxResult && vcxResult.fail) {
+      yield take(VCX_INIT_SUCCESS)
+    }
     yield call(updatePushTokenVcx, { uniqueId: id, pushToken })
     yield* savePushTokenSaga(pushToken)
   } catch (e) {
@@ -177,10 +182,16 @@ export function convertClaimOfferPushPayloadToAppClaimOffer(
    * ]
    */
   const revealedAttributes = Object.keys(pushPayload.claim).map(
-    attributeName => ({
-      label: attributeName,
-      data: pushPayload.claim[attributeName][0],
-    })
+    attributeName => {
+      let attributeValue = pushPayload.claim[attributeName]
+      if (Array.isArray(attributeValue)) {
+        attributeValue = attributeValue[0]
+      }
+      return {
+        label: attributeName,
+        data: attributeValue,
+      }
+    }
   )
 
   return {
@@ -283,7 +294,11 @@ export function* fetchAdditionalDataSaga(
     }
     yield put(setFetchAdditionalDataPendingKeys(uid, forDID))
   }
-  yield* ensureVcxInitSuccess()
+
+  const vcxResult = yield* ensureVcxInitSuccess()
+  if (vcxResult && vcxResult.fail) {
+    yield take(VCX_INIT_SUCCESS)
+  }
 
   if (!forDID) {
     yield put(

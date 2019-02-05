@@ -28,7 +28,7 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
         <View>
           <Text
             accessible={true}
-            allowFontScaling={true}
+            allowFontScaling={false}
             ellipsizeMode="tail"
             style={
               Array [
@@ -65,15 +65,16 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
                   "letterSpacing": -0.38,
                   "lineHeight": 18,
                   "marginBottom": 20,
+                  "paddingHorizontal": 16,
                 },
               ]
             }
           >
-            YOUR SOVRIN TOKEN PAYMENT ADDRESS IS:
+            Your Sovrin token payment address is:
           </Text>
           <Text
             accessible={true}
-            allowFontScaling={true}
+            allowFontScaling={false}
             ellipsizeMode="tail"
             style={
               Array [
@@ -179,8 +180,8 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
               Object {
                 "backgroundColor": "rgba(237, 156, 46, 1)",
                 "borderRadius": 5,
+                "flex": -1,
                 "height": 43,
-                "width": "100%",
               },
             ],
           ]
@@ -219,12 +220,12 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
                 Object {
                   "backgroundColor": "rgba(237, 156, 46, 1)",
                   "borderRadius": 5,
+                  "flex": -1,
                   "height": 43,
-                  "width": "100%",
                 },
               ],
-              false,
-              false,
+              undefined,
+              undefined,
             ]
           }
         >
@@ -259,7 +260,7 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
                   undefined,
                   undefined,
                   undefined,
-                  false,
+                  undefined,
                 ],
               ]
             }

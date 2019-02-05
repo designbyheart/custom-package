@@ -221,7 +221,7 @@ class ProofRequestAttributeList extends PureComponent<
                         multiline={true}
                         maxLength={200}
                         maxHeight={50}
-                        placeholder={`enter ${item.label}`}
+                        placeholder={`Enter ${item.label}`}
                         returnKeyType="done"
                         testID={`${testID}-input-${adjustedLabel}`}
                         accessible={true}
@@ -403,7 +403,7 @@ export class ProofRequest extends PureComponent<
       this.setState({
         disableSendButton: true,
       })
-      this.props.updateAttributeClaim(this.state.selectedClaims)
+      this.props.updateAttributeClaim(this.props.uid, this.state.selectedClaims)
     } else {
       // we need to change the text to send once we know that generate proof is clicked
       // also, we need to disable user inputs once user has submitted those fields
@@ -421,6 +421,10 @@ export class ProofRequest extends PureComponent<
         this.props.uid
       )
     }
+  }
+
+  onRetry = () => {
+    this.props.updateAttributeClaim(this.props.uid, this.state.selectedClaims)
   }
 
   canEnablePrimaryAction = (
@@ -450,13 +454,52 @@ export class ProofRequest extends PureComponent<
     }
 
     if (
-      this.props.proofGenerationError !== nextProps.proofGenerationError &&
-      nextProps.proofGenerationError
+      (this.props.proofGenerationError !== nextProps.proofGenerationError &&
+        nextProps.proofGenerationError) ||
+      nextProps.proofStatus === PROOF_STATUS.SEND_PROOF_FAIL
     ) {
       setTimeout(() => {
         Alert.alert(
           MESSAGE_ERROR_PROOF_GENERATION_TITLE,
-          MESSAGE_ERROR_PROOF_GENERATION_DESCRIPTION
+          MESSAGE_ERROR_PROOF_GENERATION_DESCRIPTION,
+          [
+            {
+              text: 'Ok',
+              onPress: () => {
+                this.setState({
+                  disableSendButton: false,
+                })
+              },
+            },
+          ],
+          { cancelable: false }
+        )
+      }, 300)
+    }
+
+    if (
+      this.props.errorProofSendData !== nextProps.errorProofSendData &&
+      nextProps.errorProofSendData
+    ) {
+      setTimeout(() => {
+        Alert.alert(
+          MESSAGE_ERROR_PROOF_GENERATION_TITLE,
+          MESSAGE_ERROR_PROOF_GENERATION_DESCRIPTION,
+          [
+            {
+              text: 'Retry',
+              onPress: () => {
+                this.onRetry()
+              },
+            },
+            {
+              text: 'Cancel',
+              onPress: () => {
+                this.onIgnore()
+              },
+            },
+          ],
+          { cancelable: false }
         )
       }, 300)
     }
@@ -601,6 +644,7 @@ export class ProofRequest extends PureComponent<
                 style={[styles.verifierLogo]}
                 iconStyle={[styles.verifierLogoIcon]}
                 testID={`${testID}-verifier-logo`}
+                backgroundRoundWhite
               />
             </CustomView>
           </CustomView>
@@ -656,6 +700,10 @@ const mapStateToProps = (state: Store, props) => {
   const { name } = requester
   const isValid = proofRequestData && data && data.requestedAttributes
   const proofGenerationError = state.proof[uid] ? state.proof[uid].error : null
+  const errorProofSendData =
+    state.proof[uid] && state.proof[uid].proofData
+      ? state.proof[uid].proofData.error
+      : null
 
   return {
     isValid,
@@ -668,6 +716,7 @@ const mapStateToProps = (state: Store, props) => {
     claimMap: state.claim.claimMap,
     missingAttributes,
     userAvatarSource: getUserAvatarSource(state.user.avatarName),
+    errorProofSendData,
   }
 }
 

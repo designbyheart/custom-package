@@ -41,6 +41,8 @@ import wallet, { watchWalletStore } from '../wallet/wallet-store'
 import eula, { watchEula } from '../eula/eula-store'
 import restore, { watchRestore } from '../restore/restore-store'
 import backup, { watchBackup } from '../backup/backup-store'
+import onfido, { watchOnfido } from '../onfido/onfido-store'
+import offline, { watchOffline } from '../offline/offline-store'
 import { hydrate } from './hydration-store'
 import {
   watchLedgerStore,
@@ -70,6 +72,8 @@ const appReducer = combineReducers({
   restore,
   backup,
   ledger,
+  offline,
+  onfido,
 })
 
 let middlewares = [historyRecorder]
@@ -112,6 +116,8 @@ sagaMiddleware.run(function*() {
     watchPersistProofRequests(),
     watchProofRequestReceived(),
     watchLedgerStore(),
+    watchOffline(),
+    watchOnfido(),
   ])
 })
 

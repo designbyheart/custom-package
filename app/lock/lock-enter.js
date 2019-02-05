@@ -66,12 +66,7 @@ export const WrongPinText = (
 )
 
 export class LockEnter extends PureComponent<LockEnterProps, LockEnterState> {
-  state = {
-    interactionsDone: false,
-  }
-
   pinCodeBox = null
-
   clearFailStatus = () => {
     this.props.checkPinStatusIdle()
   }
@@ -101,10 +96,6 @@ export class LockEnter extends PureComponent<LockEnterProps, LockEnterState> {
     if (this.props.checkPinStatus === CHECK_PIN_SUCCESS) {
       this.clearFailStatus()
     }
-
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({ interactionsDone: true })
-    })
   }
 
   render() {
@@ -153,31 +144,28 @@ export class LockEnter extends PureComponent<LockEnterProps, LockEnterState> {
                 heavy
                 charcoal
               >
-                Please Enter Your Current Connect.Me Passcode!
+                Please enter your current Connect.Me passcode!
               </CustomText>
             </CustomView>
             <CustomView center>
-              {this.state.interactionsDone && (
-                <PinCodeBox
-                  ref={pinCodeBox => {
-                    this.pinCodeBox = pinCodeBox
-                  }}
-                  onPinComplete={this.onPinComplete}
-                />
-              )}
+              <PinCodeBox
+                ref={pinCodeBox => {
+                  this.pinCodeBox = pinCodeBox
+                }}
+                onPinComplete={this.onPinComplete}
+              />
             </CustomView>
             <CustomView center doubleVerticalSpace>
               <CustomText
                 transparentBg
                 center
                 h6
-                heavy
-                secondaryColor
+                bold
                 style={[stylesRecovery.newPasscodeText]}
                 onPress={this.props.setupNewPassCode}
                 testID={'set-up-new-passcode-recovery'}
               >
-                Or setup new Passcode
+                Or Setup New Passcode
               </CustomText>
             </CustomView>
           </Container>
@@ -194,14 +182,13 @@ export class LockEnter extends PureComponent<LockEnterProps, LockEnterState> {
               {checkPinStatus === CHECK_PIN_FAIL && WrongPinText}
             </CustomView>
             <CustomView center>
-              {this.state.interactionsDone && (
-                <PinCodeBox
-                  ref={pinCodeBox => {
-                    this.pinCodeBox = pinCodeBox
-                  }}
-                  onPinComplete={this.onPinComplete}
-                />
-              )}
+              <PinCodeBox
+                ref={pinCodeBox => {
+                  this.pinCodeBox = pinCodeBox
+                }}
+                onPinComplete={this.onPinComplete}
+                enableCustomKeyboard={this.props.enableCustomKeyboard}
+              />
             </CustomView>
           </Container>
         )}
@@ -259,6 +246,7 @@ const stylesRecovery = StyleSheet.create({
         marginTop: isBiggerThanShortDevice ? '2%' : 0,
       },
     }),
+    color: color.bg.fifteenth.color,
   },
 })
 

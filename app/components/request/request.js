@@ -1,11 +1,11 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { View } from 'react-native'
+import { View, Alert } from 'react-native'
 import firebase from 'react-native-firebase'
 import { bindActionCreators } from 'redux'
 import { Container, TouchId } from '../../components'
 import { connect } from 'react-redux'
-import { TOUCH_ID_MESSAGE, TOUCH_ID_NOT_AVAILABLE } from '../../common'
+import { TOUCH_ID_MESSAGE, TOUCH_ID_NOT_AVAILABLE, noop } from '../../common'
 import RequestDetail from './request-detail'
 import FooterActions from '../footer-actions/footer-actions'
 import type { RequestProps, RequestState, ResponseTypes } from './type-request'
@@ -13,6 +13,11 @@ import { captureError } from '../../services/error/error-handler'
 import { lockAuthorizationRoute } from '../../common/route-constants'
 import type { Store } from '../../store/type-store'
 import { pushNotificationPermissionAction } from '../../push-notification/push-notification-store'
+import {
+  ERROR_ALREADY_EXIST,
+  ERROR_INVITATION_RESPONSE_FAILED,
+  ERROR_ALREADY_EXIST_TITLE,
+} from '../../api/api-constants'
 
 export class Request extends PureComponent<RequestProps, RequestState> {
   state = {
@@ -34,10 +39,14 @@ export class Request extends PureComponent<RequestProps, RequestState> {
     this.props.onAction(response)
   }
 
+  onDuplicateConnectionError = () => {
+    this.onSuccessfulAuthorization('rejected')
+  }
+
   onAvoidAuthorization = () => {
     /**
-     * User can choose to avoid entering pass code either by canceling
-     * or by pressing back button and choose to ignore pass code
+     * User can choose to avoid entering passcode either by canceling
+     * or by pressing back button and choose to ignore passcode
      * then once user comes back, we need to re-enable button
      * so that user can press accept or decline button again
      */
@@ -78,7 +87,7 @@ export class Request extends PureComponent<RequestProps, RequestState> {
         // in success and fail both, so we can move it outside of promise
         // but we need to authenticate after user take allow/deny action
         // for push notification, after user allows/denies push notification
-        // we need to authenticate user either with TouchId or pass code
+        // we need to authenticate user either with TouchId or passcode
         // unfortunately React-Native's (ES6's as well) Promise implementation
         // does not have finally block
         this.checkIfTouchIdEnabled(response)
@@ -89,10 +98,32 @@ export class Request extends PureComponent<RequestProps, RequestState> {
   }
 
   componentDidUpdate(prevProps: RequestProps) {
+    // When Accept invitation errors out we are re-enabling accept button. Giving user the option to retry.
     if (
       this.props.invitationError !== prevProps.invitationError &&
       this.props.invitationError
     ) {
+      const isDuplicateConnection =
+        this.props.invitationError.code === ERROR_ALREADY_EXIST.code
+      const errorMessage = isDuplicateConnection
+        ? `${this.props.invitationError.message}${this.props.senderName}`
+        : ERROR_INVITATION_RESPONSE_FAILED
+      const okAction = isDuplicateConnection
+        ? this.onDuplicateConnectionError
+        : noop
+      const errorTitle = isDuplicateConnection
+        ? ERROR_ALREADY_EXIST_TITLE
+        : null
+
+      Alert.alert(
+        errorTitle,
+        errorMessage,
+        [{ text: 'Ok', onPress: okAction }],
+        {
+          cancelable: false,
+        }
+      )
+
       this.setState({
         disableAccept: false,
       })
