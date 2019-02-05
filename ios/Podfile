@@ -25,6 +25,8 @@ target 'ConnectMe' do
     pod 'Onfido', '10.0.0'
     pod 'apptentive-ios', '5.2.2'
 
+    pod 'react-native-mail', :path => '../node_modules/react-native-mail'
+
     target 'ConnectMeTests' do
         inherit! :search_paths
         # Pods for testing
