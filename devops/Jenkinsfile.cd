@@ -60,7 +60,7 @@ pipelineWrapper({
                     }
 
                     sshagent(credentials: ['iosdev-evernym-rsa-key']) {
-	                    withEnv(["DEVELOPER_DIR=/Applications/Xcode_10.app/Contents/Developer/"]) {
+	                    withEnv(["DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer/"]) {
                         // TODO: Add checks for Xcode version
 	                        withCredentials([
 	                        	string(credentialsId: hockeyapp_credentials, variable: 'HOCKEYAPP_TOKEN'),

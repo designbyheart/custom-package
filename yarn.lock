@@ -8041,10 +8041,10 @@ react-native-flip-toggle-button@^1.0.5:
   dependencies:
     prop-types "^15.5.7"
 
-react-native-image-crop-picker@^0.20.1:
-  version "0.20.1"
-  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.20.1.tgz#048c70219ba9f4fcf70fea5819f8dcaadefc63f9"
-  integrity sha512-FR43/y5HjamlOHrdp5run9fAw2edkQfy2ayHDM9QMmNIVRZLdEtFDskno+h8r4CkqXbnoIyqQT90VMByCo+fgw==
+react-native-image-crop-picker@^0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.22.0.tgz#8f7f657dcde45cc366ac529a624205155571c03f"
+  integrity sha512-F8ytcTAbrUgsCaz3v+jm/qi4XAgv4qywxNnFH/qC3cApI0KwvHZ/WjiyzJbWiLQ+6UKDUeUCGum4oY4fzOlzpA==
 
 react-native-image-resizer@^1.0.0:
   version "1.0.0"
