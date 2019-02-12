@@ -69,6 +69,10 @@
 		87FBD37D8CBD436FBC57962F /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A44F43A44D54A14B590472B /* Foundation.ttf */; };
 		88A67A898FDDDD23EFD9850D /* Pods_ConnectMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C0DA9E3EBFF6BFAD0C3B766 /* Pods_ConnectMe.framework */; };
 		8E85E93721E6742B000F94EA /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E85E93421E67408000F94EA /* libRNMail.a */; };
+		8E90A4D422136A560052BC5F /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEECB4E217FC50C004F9994 /* RSKImageCropper.framework */; };
+		8E90A4D522136A560052BC5F /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEECB4E217FC50C004F9994 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8E90A4D622136A560052BC5F /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEECBD5217FCED6004F9994 /* QBImagePicker.framework */; };
+		8E90A4D722136A560052BC5F /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEECBD5217FCED6004F9994 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8EEECB33217FC276004F9994 /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEECB2B217FC250004F9994 /* libRNShare.a */; };
 		8EEECB3A217FC4BB004F9994 /* libRNZipArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEECB39217FC4A1004F9994 /* libRNZipArchive.a */; };
 		8EEECB44217FC4D9004F9994 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EEECB41217FC4CB004F9994 /* libRNSVG.a */; };
@@ -538,6 +542,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		8E90A4D822136A560052BC5F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8E90A4D522136A560052BC5F /* RSKImageCropper.framework in Embed Frameworks */,
+				8E90A4D722136A560052BC5F /* QBImagePicker.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
@@ -726,10 +745,12 @@
 				1CB546CE3C7B4634B83B8B3A /* libRNSensitiveInfo.a in Frameworks */,
 				91F5774B57B249D291E502DC /* libreact-native-branch.a in Frameworks */,
 				08908E89D4E84FACB3C6F3A8 /* libSplashScreen.a in Frameworks */,
+				8E90A4D422136A560052BC5F /* RSKImageCropper.framework in Frameworks */,
 				4B0AFC4C695A4198A3D2AB69 /* libz.tbd in Frameworks */,
 				99110BC82DCA412080679731 /* libRCTCamera.a in Frameworks */,
 				6DCB3A1C5B944A298B038611 /* libRNFetchBlob.a in Frameworks */,
 				A74C5698A80E4A9B9E0CA956 /* libRNRandomBytes.a in Frameworks */,
+				8E90A4D622136A560052BC5F /* QBImagePicker.framework in Frameworks */,
 				0D7053EE074B45559597F368 /* libRCTPBKDF2.a in Frameworks */,
 				98AEC6BE3DD84ED598CD2DF6 /* libRNShakeEvent.a in Frameworks */,
 				625B4D73617348FDB4B65C47 /* libKeepScreenOn.a in Frameworks */,
@@ -1329,6 +1350,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				4F25372745CB4C4B9757BA25 /* Upload Debug Symbols to Sentry */,
 				1DCCD926DE4263305516A9B0 /* [CP] Embed Pods Frameworks */,
+				8E90A4D822136A560052BC5F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
