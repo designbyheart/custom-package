@@ -124,24 +124,26 @@ export default class ConnectionBubbles extends PureComponent<
     disableTaps: false,
     interactionsDone: false,
   }
+
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       this.setState({ interactionsDone: true })
     })
   }
+
   getBubblePosition = (
     bubbleIndex: number,
     deviceWidth: number,
     deviceHeight: number
   ) => {
-    //returns top and left position of the connection bubble
-    //based on the bubbleIndex the position is calculated
+    // returns top and left position of the connection bubble
+    // based on the bubbleIndex the position is calculated
 
-    //top position for 0th bubble
-    let verticalOffset = deviceHeight * 0.58
-    //left position for 0th bubble should be somewhere around the mid of the device
-    //we are subtracting bubble radius to adjust the bubble width in the offset
-    //so that center of bubble comes in mid
+    // top position for 0th bubble
+    let verticalOffset = deviceHeight * 0.66
+    // left position for 0th bubble should be somewhere around the mid of the device
+    // we are subtracting bubble radius to adjust the bubble width in the offset
+    // so that center of bubble comes in mid
     let horizontalOffset = deviceWidth / 2 - deviceHeight / 16
 
     // we adjust the width and height of bubble just to calculate position
@@ -159,7 +161,7 @@ export default class ConnectionBubbles extends PureComponent<
     //we need to adjust bubbles in a column with some space in between
     //such that atleast 4 bubbles get adjusted
     //so if deviceHeight is 568 and
-    //bubble container is having height 511(90%of deviceHeight)
+    //bubble container is having height 545(96%of deviceHeight)
     //bubbleAdjustedHeight will be 94
     const bubbleAdjustedHeight = deviceHeight / 6
 
@@ -190,7 +192,7 @@ export default class ConnectionBubbles extends PureComponent<
 
   getBubbleContainerHeight = (deviceHeight: number) => {
     return {
-      height: 90 * deviceHeight / 100,
+      height: 96 * deviceHeight / 100,
     }
   }
 
@@ -207,8 +209,6 @@ export default class ConnectionBubbles extends PureComponent<
 
   render() {
     let { width, height } = Dimensions.get('window')
-    //Adjusting height in android due to navigational bar
-    height = Platform.OS === 'ios' ? height : height - 44
     let deviceClass = ''
 
     if (Platform.OS === 'ios') {

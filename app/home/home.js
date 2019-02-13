@@ -201,9 +201,10 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
               <Loader type="dark" delay={1000} />
             </Container>
           ) : null}
-          <CustomView style={[styles.userAvatarContainer]}>
+          {/* DO not remove commented code */}
+          {/* <CustomView style={[styles.userAvatarContainer]}>
             <UserAvatar />
-          </CustomView>
+          </CustomView> */}
         </Container>
       </Container>
     )
@@ -220,6 +221,7 @@ const mapStateToProps = (state: Store) => {
     unSeenMessages,
   }
 }
+
 export const getHeight = (height: number) => {
   if (isIphoneX) {
     return height - 300
@@ -232,6 +234,7 @@ export const getHeight = (height: number) => {
   }
   return height - 224
 }
+
 export default createStackNavigator({
   [homeRoute]: {
     screen: connect(mapStateToProps)(DashboardScreen),

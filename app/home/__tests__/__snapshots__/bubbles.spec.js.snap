@@ -5,7 +5,7 @@ exports[`<Bubbles/> should render Bubbles 1`] = `
   collapsable={undefined}
   style={
     Object {
-      "height": 486,
+      "height": 518.4,
       "left": 0,
       "overflow": "hidden",
       "position": "absolute",
@@ -31,7 +31,7 @@ exports[`<Bubbles/> should render Bubbles 1`] = `
         },
         Object {
           "left": 126,
-          "top": 313,
+          "top": 356,
         },
       ]
     }
@@ -113,7 +113,7 @@ exports[`<Bubbles/> should render Bubbles 1`] = `
         },
         Object {
           "left": 34,
-          "top": 363,
+          "top": 406,
         },
       ]
     }
@@ -195,7 +195,7 @@ exports[`<Bubbles/> should render Bubbles 1`] = `
         },
         Object {
           "left": 217,
-          "top": 363,
+          "top": 406,
         },
       ]
     }
@@ -274,7 +274,7 @@ exports[`<Bubbles/> should show the dot on the Bubbles 1`] = `
   collapsable={undefined}
   style={
     Object {
-      "height": 486,
+      "height": 518.4,
       "left": 0,
       "overflow": "hidden",
       "position": "absolute",
@@ -300,7 +300,7 @@ exports[`<Bubbles/> should show the dot on the Bubbles 1`] = `
         },
         Object {
           "left": 126,
-          "top": 313,
+          "top": 356,
         },
       ]
     }
@@ -382,7 +382,7 @@ exports[`<Bubbles/> should show the dot on the Bubbles 1`] = `
         },
         Object {
           "left": 34,
-          "top": 363,
+          "top": 406,
         },
       ]
     }
@@ -464,7 +464,7 @@ exports[`<Bubbles/> should show the dot on the Bubbles 1`] = `
         },
         Object {
           "left": 217,
-          "top": 363,
+          "top": 406,
         },
       ]
     }
