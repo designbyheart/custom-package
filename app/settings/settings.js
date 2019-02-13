@@ -367,14 +367,14 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         rightIcon: '',
         onPress: this.openAboutApp,
       },
-      // {
-      //   id: 6,
-      //   title: 'Onfido',
-      //   subtitle: '',
-      //   avatar: <Icon src={require('../images/onfido_colour.png')} />,
-      //   rightIcon: '',
-      //   onPress: this.openOnfido,
-      // },
+      {
+        id: 6,
+        title: 'Onfido',
+        subtitle: '',
+        avatar: <Icon src={require('../images/onfido_colour.png')} />,
+        rightIcon: '',
+        onPress: this.openOnfido,
+      },
     ]
     return (
       <Container style={[style.mainContainer]}>

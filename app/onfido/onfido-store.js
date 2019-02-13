@@ -10,6 +10,7 @@ import {
   race,
 } from 'redux-saga/effects'
 import { NativeModules } from 'react-native'
+import firebase from 'react-native-firebase'
 
 import type {
   OnfidoStore,
@@ -17,6 +18,7 @@ import type {
   LaunchOnfidoSDKAction,
   OnfidoProcessStatus,
   OnfidoConnectionStatus,
+  UpdateOnfidoProcessStatusAction,
 } from './type-onfido'
 import type { CustomError, GenericObject } from '../common/type-common'
 import type { Store } from '../store/type-store'
@@ -59,6 +61,7 @@ import { NEW_CONNECTION_SUCCESS } from '../store/connections-store'
 import { ensureAppHydrated } from '../store/config-store'
 import { getUserPairwiseDid } from '../store/store-selector'
 import { INVITATION_RESPONSE_FAIL } from '../invitation/type-invitation'
+import { pushNotificationPermissionAction } from '../push-notification/push-notification-store'
 
 const initialState = {
   status: onfidoProcessStatus.IDLE,
@@ -316,6 +319,7 @@ export function* makeConnectionWithOnfidoSaga(
       )
       return
     }
+    yield fork(askPushNotificationPermission)
     yield put(onfidoConnectionEstablished(onfidoDid))
     yield put(
       updateOnfidoConnectionStatus(onfidoConnectionStatus.CONNECTION_SUCCESS)
@@ -356,6 +360,45 @@ export function* getOnfidoDidSaga(): Generator<*, *, *> {
   yield* removePersistedOnfidoDidSaga()
   return null
 }
+
+export function* askPushNotificationPermission(): Generator<*, *, *> {
+  const onfidoStatus: OnfidoProcessStatus = yield select(selectOnfidoStatus)
+  const {
+    CHECK_UUID_SUCCESS,
+    CHECK_UUID_ERROR,
+    SDK_ERROR,
+  } = onfidoProcessStatus
+  const validStatesToAskPermission = [
+    CHECK_UUID_SUCCESS,
+    CHECK_UUID_ERROR,
+    SDK_ERROR,
+  ]
+  if (!validStatesToAskPermission.includes(onfidoStatus)) {
+    // if we don't have onfido process in any of the valid states
+    // then we wait for onfido process to go into any of these states
+    // and then we will move ahead with permission
+    while (true) {
+      const { status }: UpdateOnfidoProcessStatusAction = yield take(
+        UPDATE_ONFIDO_PROCESS_STATUS
+      )
+      if (validStatesToAskPermission.includes(status)) {
+        break
+      }
+    }
+  }
+
+  try {
+    // ask permission and update store about it
+    yield call(() => firebase.messaging().requestPermission())
+    yield put(pushNotificationPermissionAction(true))
+  } catch (e) {
+    // not sure what can be done if we get error while asking
+    // for push permission, for now just ignore and let user continue
+    console.log(e)
+  }
+}
+
+export const selectOnfidoStatus = (state: Store) => state.onfido.status
 
 const ONFIDO_DID_STORAGE_KEY = 'ONFIDO_DID_STORAGE_KEY'
 export function* removePersistedOnfidoDidSaga(): Generator<*, *, *> {

@@ -126,6 +126,14 @@ export class PushNotification extends PureComponent<
           // user doesn't have a device token
         }
       })
+      .catch(e => {
+        // we didn't get a token
+        // for now we can just ignore it
+        // but we might need to add a feature which will remind user to give
+        // permission and thereby getting token
+        // or we need to retry getToken function a few times
+        // TODO:KS Don't know what to do for now
+      })
   }
 
   componentDidUpdate(prevProps: PushNotificationProps) {

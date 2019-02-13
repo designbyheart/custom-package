@@ -22,7 +22,8 @@ class OnfidoSDK: NSObject {
   private func run(withApplicationID id: String,
                    resolver resolve: @escaping RCTResponseSenderBlock,
                    rejecter reject: @escaping RCTResponseSenderBlock) {
-    let token = "test_iePALvXVOtTzKLuySX5kzN8nyGmPNYRK"
+    let tesToken = "test_iePALvXVOtTzKLuySX5kzN8nyGmPNYRK"
+    let token = "live_z7RRdU1p3SJZHk9mdfnoGaxH5bMrm3KM"
 
     let onfidoConfig = try! OnfidoConfig.builder()
       .withToken(token)
@@ -42,6 +43,7 @@ class OnfidoSDK: NSObject {
           resolve([id])
         case .cancel:
           self?.dismiss()
+          reject(["cancelled"])
         }
       })
 
