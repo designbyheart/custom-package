@@ -32,7 +32,8 @@ public class OnfidoSDK extends ReactContextBaseJavaModule {
     private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
         @Override
         public void onActivityResult(final Activity activity, int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
+            super.onActivityResult(activity, requestCode, resultCode, data);
+
             client.handleActivityResult(resultCode, data, new Onfido.OnfidoResultListener() {
                 @Override
                 public void userCompleted(Applicant applicant, Captures captures) {
@@ -46,7 +47,9 @@ public class OnfidoSDK extends ReactContextBaseJavaModule {
 
                 @Override
                 public void onError(OnfidoException error, Applicant applicant) {
-                    mErrorCallback.invoke(error.getMessage());
+                    if (mErrorCallback != null) {
+                        mErrorCallback.invoke(error.getMessage());
+                    }
                 }
             });
         }
@@ -77,9 +80,6 @@ public class OnfidoSDK extends ReactContextBaseJavaModule {
         try {
             Applicant applicant = Applicant.builder()
                     .withId(applicantId)
-                    //.withFirstName("John")
-                    //.withLastName("Smith")
-                    //.withDateOfBirth(new GregorianCalendar(1980, 01, 22).getGregorianChange())
                     .build();
             OnfidoConfig onfidoConfig = OnfidoConfig.builder()
                     .withApplicant(applicant)

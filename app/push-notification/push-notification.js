@@ -136,15 +136,23 @@ export class PushNotification extends PureComponent<
       this.getToken()
     }
   }
+
   componentWillUnmount() {
     // stop listening for events
-    this.notificationListener && this.notificationListener.remove()
-    this.refreshTokenListener && this.refreshTokenListener.remove()
+    this.notificationListener &&
+      this.notificationListener.remove &&
+      this.notificationListener.remove()
+    this.refreshTokenListener &&
+      this.refreshTokenListener.remove &&
+      this.refreshTokenListener.remove()
     this.notificationDisplayedListener &&
+      this.notificationDisplayedListener.remove &&
       this.notificationDisplayedListener.remove()
     this.onNotificationOpenedListener &&
+      this.onNotificationOpenedListener.remove &&
       this.onNotificationOpenedListener.remove()
   }
+
   render() {
     return (
       <PushNotificationNavigator navigateToRoute={this.props.navigateToRoute} />
