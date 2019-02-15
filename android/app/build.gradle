@@ -111,7 +111,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 26
         multiDexEnabled true
-        versionCode 802
+        versionCode 803
         versionName "1.0.3"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
