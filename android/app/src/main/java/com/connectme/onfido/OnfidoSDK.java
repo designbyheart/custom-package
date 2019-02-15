@@ -86,7 +86,7 @@ public class OnfidoSDK extends ReactContextBaseJavaModule {
                     .build();
             OnfidoConfig onfidoConfig = OnfidoConfig.builder()
                     .withApplicant(applicant)
-                    .withToken(token)
+                    .withToken(testToken)
                     .build();
             client.startActivityForResult(currentActivity, 1, onfidoConfig);
         }

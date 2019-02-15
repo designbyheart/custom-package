@@ -22,11 +22,11 @@ class OnfidoSDK: NSObject {
   private func run(withApplicationID id: String,
                    resolver resolve: @escaping RCTResponseSenderBlock,
                    rejecter reject: @escaping RCTResponseSenderBlock) {
-    let tesToken = "test_iePALvXVOtTzKLuySX5kzN8nyGmPNYRK"
+    let testToken = "test_iePALvXVOtTzKLuySX5kzN8nyGmPNYRK"
     let token = "live_z7RRdU1p3SJZHk9mdfnoGaxH5bMrm3KM"
 
     let onfidoConfig = try! OnfidoConfig.builder()
-      .withToken(token)
+      .withToken(testToken)
       .withApplicantId(id)
       .withDocumentStep()
       .withFaceStep(ofVariant: .photo)
