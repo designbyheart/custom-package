@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 import {
   StyleSheet,
   Platform,
+  InteractionManager,
   FlatList,
   View,
   StatusBar,
@@ -130,7 +131,7 @@ export class ClaimOffer extends PureComponent<
   }
 
   state = {
-    disableAcceptButton: false,
+    disableAcceptButton: true,
     credentialOfferModalStatus: CREDENTIAL_OFFER_MODAL_STATUS.NONE,
   }
 
@@ -181,26 +182,37 @@ export class ClaimOffer extends PureComponent<
   }
 
   onAccept = () => {
-    this.setState({
-      disableAcceptButton: true,
-    })
-    if (this.props.claimOfferData.payTokenValue) {
-      this.setState({
-        credentialOfferModalStatus: CREDENTIAL_OFFER_MODAL_STATUS.LEDGER_FEES,
-      })
-    } else {
-      this.setState({
-        credentialOfferModalStatus:
-          CREDENTIAL_OFFER_MODAL_STATUS.CREDENTIAL_REQUEST_STATUS,
-      })
-      this.props.acceptClaimOffer(this.props.uid)
-    }
+    this.setState(
+      {
+        disableAcceptButton: true,
+      },
+      () => {
+        if (this.props.claimOfferData.payTokenValue) {
+          this.setState({
+            credentialOfferModalStatus:
+              CREDENTIAL_OFFER_MODAL_STATUS.LEDGER_FEES,
+          })
+        } else {
+          this.setState(
+            {
+              credentialOfferModalStatus:
+                CREDENTIAL_OFFER_MODAL_STATUS.CREDENTIAL_REQUEST_STATUS,
+            },
+            () => this.props.acceptClaimOffer(this.props.uid)
+          )
+        }
+      }
+    )
   }
 
   componentDidMount() {
     // update store that offer is shown to user
     this.props.claimOfferShown(this.props.uid)
     this.props.updateStatusBarTheme(this.props.claimThemePrimary)
+
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ disableAcceptButton: false })
+    })
   }
 
   onCredentialOfferModalHide = () => {
