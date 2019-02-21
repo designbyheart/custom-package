@@ -9,7 +9,7 @@ import type { GenericObject } from '../common/type-common'
 // those documents
 // Having said above things, we have to discuss this with onFido team
 // because onFido team suggested this approach
-const onfidoAuthorizationToken = 'test_wSVTpffhcS0014N11jRHoWyQrm_J3DRM'
+const onfidoAuthorizationTestToken = 'test_wSVTpffhcS0014N11jRHoWyQrm_J3DRM'
 const onfidoAuthorizationProdToken = 'live_z7RRdU1p3SJZHk9mdfnoGaxH5bMrm3KM'
 const applicantParams = {
   // as per onFido team we can hard code name and user's name
@@ -57,7 +57,7 @@ async function post(config: {
       'Content-Type': config.contentType
         ? config.contentType
         : 'application/x-www-form-urlencoded;charset=UTF-8',
-      Authorization: `Token token=${onfidoAuthorizationProdToken}`,
+      Authorization: `Token token=${onfidoAuthorizationTestToken}`,
     },
     body: config.body,
   })

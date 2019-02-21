@@ -26,7 +26,7 @@ class OnfidoSDK: NSObject {
     let token = "live_z7RRdU1p3SJZHk9mdfnoGaxH5bMrm3KM"
 
     let onfidoConfig = try! OnfidoConfig.builder()
-      .withToken(token)
+      .withToken(testToken)
       .withApplicantId(id)
       .withDocumentStep()
       .withFaceStep(ofVariant: .photo)

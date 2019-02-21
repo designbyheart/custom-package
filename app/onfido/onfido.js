@@ -125,11 +125,8 @@ export class Onfido extends PureComponent<OnfidoProps, void> {
         </Container>
         <CustomView row safeArea>
           <Container>
-            <CustomView center>
-              <Image
-                source={require('../images/neutral.png')}
-                style={styles.poweredByOnfido}
-              />
+            <CustomView center style={[styles.poweredByOnfido]}>
+              <Image source={require('../images/neutral.png')} />
             </CustomView>
             <CustomButton
               testID="onfido-yes"
@@ -347,8 +344,8 @@ const styles = StyleSheet.create({
     lineHeight: 25,
   },
   poweredByOnfido: {
-    height: 30,
-    marginVertical: 8,
+    height: 40,
+    paddingVertical: 8,
   },
 })
 
