@@ -142,6 +142,8 @@ export const TEXT_ONFIDO_I_ACCEPT = 'I accept'
 export const TEXT_ONFIDO_OK = 'OK'
 
 export const TEXT_ONFIDO_ID = 'Onfido ID'
+export const TEXT_ONFIDO_ID_PARAGRAPH = `Your Onfido ID is reusable digital proof of identity. To start, all you need is a passport or driver's license and yourself.`
+export const TEXT_ONFIDO_HEADING_2 = 'Important information'
 export const TEXT_ONFIDO_TNC_FIRST_PARAGRAPH = `This is the BETA release of the Onfido ID. It should give you a preview of how the Onfido ID might operate and look. We are still developing the Onfido ID and while we build it, help and troubleshooting resources won't be in place. So the Onfido ID is not intended for any specific use by individual users or commercial enterprises relying on this verification.`
 export const TEXT_ONFIDO_TNC_SECOND_1 =
   'By going ahead and using the Onfido ID in BETA, you agree to the '

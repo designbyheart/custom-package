@@ -1,7 +1,14 @@
 // @flow
 
 import React, { PureComponent } from 'react'
-import { StyleSheet, Linking, Alert, ScrollView, StatusBar } from 'react-native'
+import {
+  StyleSheet,
+  Linking,
+  Alert,
+  ScrollView,
+  StatusBar,
+  Image,
+} from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -11,6 +18,7 @@ import type {
   OnfidoProcessStatus,
   OnfidoConnectionStatus,
 } from './type-onfido'
+import type { ReactNavigation } from '../common/type-common'
 
 import {
   Container,
@@ -36,11 +44,13 @@ import {
   TEXT_ONFIDO_TNC_SECOND_1,
   TEXT_ONFIDO_TNC_SECOND_2,
   TEXT_ONFIDO_TNC_SECOND_3,
+  TEXT_ONFIDO_ID_PARAGRAPH,
+  TEXT_ONFIDO_HEADING_2,
 } from './type-onfido'
 import { connectionsTabRoute, connectionHistoryDetailsRoute } from '../common'
 
 export class Onfido extends PureComponent<OnfidoProps, void> {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }: ReactNavigation) => ({
     headerStyle: {
       backgroundColor: color.bg.tertiary.color,
       borderBottomWidth: 0,
@@ -49,7 +59,8 @@ export class Onfido extends PureComponent<OnfidoProps, void> {
       shadowOpacity: 0,
     },
     headerTintColor: color.actions.ninth,
-  }
+    headerTitle: navigation.getParam('title', ''),
+  })
 
   onAction = () => {
     if (isSuccess(this.props.status, this.props.connectionStatus)) {
@@ -63,6 +74,26 @@ export class Onfido extends PureComponent<OnfidoProps, void> {
 
   componentDidMount() {
     this.props.resetOnfidoStatues()
+  }
+
+  componentDidUpdate(prevProps: OnfidoProps) {
+    const { status, connectionStatus } = this.props
+    // below logic is to set title of screen to 'Onfido ID'
+    // only after user is either on success section
+    // or on error section, so we check if statues are
+    // changed and if we got error or success
+    // and then set title to 'Onfido ID'
+    if (
+      status !== prevProps.status ||
+      connectionStatus !== prevProps.connectionStatus
+    ) {
+      if (
+        hasError(status, connectionStatus) ||
+        isSuccess(status, connectionStatus)
+      ) {
+        this.props.navigation.setParams({ title: 'Onfido ID' })
+      }
+    }
   }
 
   render() {
@@ -94,6 +125,12 @@ export class Onfido extends PureComponent<OnfidoProps, void> {
         </Container>
         <CustomView row safeArea>
           <Container>
+            <CustomView center>
+              <Image
+                source={require('../images/neutral.png')}
+                style={styles.poweredByOnfido}
+              />
+            </CustomView>
             <CustomButton
               testID="onfido-yes"
               title={getActionButtonText(status, connectionStatus)}
@@ -113,6 +150,7 @@ export class Onfido extends PureComponent<OnfidoProps, void> {
 const LoaderVisibleOnfidoStates = [
   onfidoProcessStatus.APPLICANT_ID_FETCHING,
   onfidoProcessStatus.APPLICANT_ID_SUCCESS,
+  onfidoProcessStatus.START_NO_CONNECTION,
   onfidoProcessStatus.CHECK_UUID_FETCHING,
   onfidoProcessStatus.SDK_SUCCESS,
 ]
@@ -260,10 +298,16 @@ const OnfidoDefault = () => (
     <CustomText bg="tertiary" h3a>
       {TEXT_ONFIDO_ID}
     </CustomText>
-    <CustomText bg="tertiary" h6 style={[styles.onfidoTnC]}>
+    <CustomText bg="tertiary" h6 style={[styles.onfidoParagraphText]}>
+      {TEXT_ONFIDO_ID_PARAGRAPH}
+    </CustomText>
+    <CustomText bg="tertiary" bold h5 style={[styles.onfidoParagraphText]}>
+      {TEXT_ONFIDO_HEADING_2}
+    </CustomText>
+    <CustomText bg="tertiary" h6 style={[styles.onfidoParagraphText]}>
       {TEXT_ONFIDO_TNC_FIRST_PARAGRAPH}
     </CustomText>
-    <CustomText bg="tertiary" h6 style={[styles.onfidoTnC]}>
+    <CustomText bg="tertiary" h6 style={[styles.onfidoParagraphText]}>
       {TEXT_ONFIDO_TNC_SECOND_1}
       <OnfidoTNC />
       {TEXT_ONFIDO_TNC_SECOND_2}
@@ -298,9 +342,13 @@ const styles = StyleSheet.create({
     color: toryBlue,
     textDecorationLine: 'underline',
   },
-  onfidoTnC: {
+  onfidoParagraphText: {
     marginTop: 15,
     lineHeight: 25,
+  },
+  poweredByOnfido: {
+    height: 30,
+    marginVertical: 8,
   },
 })
 
