@@ -14,6 +14,7 @@ describe('send logs screen', () => {
   const props = {
     navigation: getNavigation(),
     environmentName: 'DEMO',
+    logIsEncrypted: false,
   }
 
   it('should render properly and snapshot should match', () => {

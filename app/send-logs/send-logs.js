@@ -40,6 +40,13 @@ import { createStackNavigator, NavigationActions } from 'react-navigation'
 import { homeRoute, sendLogsRoute } from '../common/route-constants'
 import Mailer from 'react-native-mail'
 import { customLogger } from '../store/custom-logger'
+import { Loader } from '../components'
+import { getLogEncryptionStatus } from '../store/store-selector'
+import {
+  UPDATE_LOG_ISENCRYPTED,
+  ENCRYPT_LOG_FILE,
+} from '../send-logs/type-send-logs'
+import store from '../store'
 
 const width = Dimensions.get('window').width //full width
 const height = Dimensions.get('window').height //full height
@@ -71,10 +78,16 @@ export class SendLogs extends PureComponent<SendLogsProps, void> {
     super(props)
   }
 
+  componentDidMount() {
+    store.dispatch({
+      type: ENCRYPT_LOG_FILE,
+    })
+  }
+
   //static emailMessageBody = ''
 
   static handleEmail = () => {
-    const logFile = customLogger.getVcxLogFile()
+    const logFile = customLogger.getEncryptedVcxLogFile()
     Mailer.mail(
       {
         subject: 'ConnectMe Application Log: ' + logFile,
@@ -90,12 +103,15 @@ export class SendLogs extends PureComponent<SendLogsProps, void> {
       (error, event) => {
         const sentButton = {
           text: 'OK',
-          onPress: () => customLogger.log('SENT: ConnectMe Logs via Email'),
+          onPress: () => {
+            //customLogger.log('SENT: ConnectMe Logs via Email')
+          },
         }
         const cancelButton = {
           text: 'OK',
-          onPress: () =>
-            customLogger.log('CANCELLED: ConnectMe Logs NOT sent via Email'),
+          onPress: () => {
+            //customLogger.log('CANCELLED: ConnectMe Logs NOT sent via Email')
+          },
         }
         const notAvailableMsg =
           'Unable to send error report. Sending error logs requires you to be signed into at least one email account on the default mail app which came with the phone out of the factory (the "native" mail app). Please sign into an email account from the default email app that came with the phone out of the factory and try again.'
@@ -119,12 +135,18 @@ export class SendLogs extends PureComponent<SendLogsProps, void> {
   static goBack(navigation: any) {
     //Alert.alert('NOT sending logs')
     navigation.goBack(null)
+    setTimeout(() => {
+      store.dispatch({
+        type: UPDATE_LOG_ISENCRYPTED,
+        logIsEncrypted: false,
+      })
+    }, 3000)
   }
 
   static sendLogs(navigation: any) {
     //Alert.alert('sending logs from file: ' + String(customLogger.getVcxLogFile()))
     SendLogs.handleEmail()
-    navigation.goBack(null)
+    SendLogs.goBack(navigation)
   }
 
   static navigationOptions = ({ navigation }) => ({
@@ -157,7 +179,7 @@ export class SendLogs extends PureComponent<SendLogsProps, void> {
   })
 
   render() {
-    return (
+    return this.props.logIsEncrypted ? (
       <Container tertiary>
         <CustomView center>
           <CustomText bg="secondary" secondary transparentBg semiBold>
@@ -165,11 +187,20 @@ export class SendLogs extends PureComponent<SendLogsProps, void> {
           </CustomText>
         </CustomView>
       </Container>
+    ) : (
+      // Show spinner until the log file is encrypted...
+      <Container center>
+        <Loader message="Encrypting log..." />
+      </Container>
     )
   }
 }
 
-const mapStateToProps = (state: Store) => ({})
+const mapStateToProps = (state: Store) => {
+  return {
+    logIsEncrypted: getLogEncryptionStatus(state),
+  }
+}
 
 export const SendLogsStack = createStackNavigator({
   [sendLogsRoute]: {

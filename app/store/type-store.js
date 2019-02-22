@@ -15,6 +15,7 @@ import type { DeepLinkStore } from '../deep-link/type-deep-link'
 import type { WalletStore } from '../wallet/type-wallet'
 import type { EulaStore } from '../eula/type-eula'
 import type { BackupStore } from '../backup/type-backup'
+import type { SendLogsStore } from '../send-logs/type-send-logs'
 import type { RestoreStore } from '../restore/type-restore'
 import type { LedgerStore } from './ledger/type-ledger-store'
 import type { OfflineStore } from '../offline/type-offline'
@@ -55,6 +56,7 @@ export type Store = {
   wallet: WalletStore,
   eula: EulaStore,
   backup: BackupStore,
+  sendlogs: SendLogsStore,
   restore: RestoreStore,
   ledger: LedgerStore,
   offline: OfflineStore,

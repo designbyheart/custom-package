@@ -66,36 +66,26 @@ public class MainActivity extends ReactActivity {
    }
 
 
-//   @Override
-//   public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-//       switch (requestCode) {
-//           case RNIndyStaticData.REQUEST_WRITE_EXTERNAL_STORAGE: {
-//               if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                   // create the log file if it does not exist
-//                   try {
-//                       if(! new File(RNIndyStaticData.LOG_FILE_PATH).exists()) {
-//                           new FileWriter(RNIndyStaticData.LOG_FILE_PATH).close();
-//                       }
-//                   } catch(IOException ex) {
-//                       ex.printStackTrace();
-//                   }
-//
-//                   // Now monitor the logFile and empty it out when it's size is
-//                   // larger than MAX_ALLOWED_FILE_BYTES
-//                   RNIndyStaticData.logFileObserver = new LogFileObserver(RNIndyStaticData.LOG_FILE_PATH, RNIndyStaticData.MAX_ALLOWED_FILE_BYTES);
-//                   RNIndyStaticData.logFileObserver.startWatching();
-//
-//                   Toast.makeText(this,
-//                           "Logging Turned On",
-//                           Toast.LENGTH_SHORT).show();
-//               } else {
-//                   Toast.makeText(this,
-//                           "Logging Turned Off",
-//                           Toast.LENGTH_SHORT).show();
-//               }
-//               return;
-//           }
-//       }
-//       super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//   }
+   @Override
+   public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+       switch (requestCode) {
+           case RNIndyStaticData.REQUEST_WRITE_EXTERNAL_STORAGE: {
+               if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                   RNIndyStaticData.initLoggerFile(this);
+
+                   Toast.makeText(this,
+                           "Logging Turned On",
+                           Toast.LENGTH_SHORT).show();
+               } else {
+                   Toast.makeText(this,
+                           "Logging Turned Off",
+                           Toast.LENGTH_SHORT).show();
+               }
+               return;
+           }
+       }
+
+       super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+   }
+
 }

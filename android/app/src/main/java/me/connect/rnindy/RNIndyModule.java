@@ -47,18 +47,19 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.RandomAccessFile;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import java.io.InputStream;
-import java.lang.Long;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -137,30 +138,33 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
         BridgeUtils.writeCACert(this.getReactApplicationContext());
 
         try {
-            //int retCode = VcxApi.initNullPay();
-            VcxApi.vcxInitWithConfig(config).exceptionally((t) -> {
-                Log.e(TAG, "init: ", t);
-                promise.reject("FutureException", t.getMessage());
-                return -1;
-            }).thenAccept(result -> {
-                // Need to put this logic in every accept because that is how ugly Java's
-                // promise API is
-                // even if exceptionally is called, then also thenAccept block will be called
-                // we either need to switch to complete method and pass two callbacks as
-                // parameter
-                // till we change to that API, we have to live with this IF condition
-                // also reason to add this if condition is because we already rejected promise
-                // in
-                // exceptionally block, if we call promise.resolve now, then it `thenAccept`
-                // block
-                // would throw an exception that would not be caught here, because this is an
-                // async
-                // block and above try catch would not catch this exception
-                if (result != -1) {
-                    //VcxApi.vcxSetDefaultLogger("trace");
-                    promise.resolve(true);
-                }
-            });
+            int retCode = VcxApi.initNullPay();
+            if(retCode != 0) {
+                promise.reject("Could not init nullpay", String.valueOf(retCode));
+            } else {
+                VcxApi.vcxInitWithConfig(config).exceptionally((t) -> {
+                    Log.e(TAG, "init: ", t);
+                    promise.reject("FutureException", t.getMessage());
+                    return -1;
+                }).thenAccept(result -> {
+                    // Need to put this logic in every accept because that is how ugly Java's
+                    // promise API is
+                    // even if exceptionally is called, then also thenAccept block will be called
+                    // we either need to switch to complete method and pass two callbacks as
+                    // parameter
+                    // till we change to that API, we have to live with this IF condition
+                    // also reason to add this if condition is because we already rejected promise
+                    // in
+                    // exceptionally block, if we call promise.resolve now, then it `thenAccept`
+                    // block
+                    // would throw an exception that would not be caught here, because this is an
+                    // async
+                    // block and above try catch would not catch this exception
+                    if (result != -1) {
+                        promise.resolve(true);
+                    }
+                });
+            }
 
         } catch (AlreadyInitializedException e) {
             // even if we get already initialized exception
@@ -267,7 +271,7 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     public void generateProof(String proofRequestId, String requestedAttrs, String requestedPredicates,
             String revocationInterval, String proofName, Promise promise) {
         try {
-            ProofApi.proofCreate(proofRequestId, requestedAttrs, requestedPredicates, proofName).exceptionally((t) -> {
+            ProofApi.proofCreate(proofRequestId, requestedAttrs, requestedPredicates, revocationInterval, proofName).exceptionally((t) -> {
                 Log.e(TAG, "generateProof: ", t);
                 promise.reject("FutureException", t.getMessage());
                 return -1;
@@ -427,38 +431,76 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
         }
     }
 
+    private static int getLogLevel(String levelName) {
+        if("Error".equalsIgnoreCase(levelName)) {
+            return 1;
+        } else if("Warning".equalsIgnoreCase(levelName) || levelName.toLowerCase().contains("warn")) {
+            return 2;
+        } else if("Info".equalsIgnoreCase(levelName)) {
+            return 3;
+        } else if("Debug".equalsIgnoreCase(levelName)) {
+            return 4;
+        } else if("Trace".equalsIgnoreCase(levelName)) {
+            return 5;
+        } else {
+            return 3;
+        }
+    }
 
     @ReactMethod
-    public void setVcxLogger(String uniqueIdentifier, int MAX_ALLOWED_FILE_BYTES, Promise promise) {
+    public void encryptVcxLog(String logFilePath, String key, Promise promise) {
 
-        // NOTE: placeholder for calling the vcx logger api when it is stable
-        //LoggerApi.setVcxLogger(callbacks...);
+        try {
+            RandomAccessFile logFile = new RandomAccessFile(logFilePath, "r");
+            byte[] fileBytes = new byte[(int)logFile.length()];
+            logFile.readFully(fileBytes);
+            logFile.close();
 
+            VcxApi.anonCrypt(key, fileBytes).exceptionally((t) -> {
+                Log.e(TAG, "anonCrypt: ", t);
+                promise.reject("FutureException", "Error occurred while encrypting file: " + logFilePath + " :: " + t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                try {
+                    RandomAccessFile encLogFile = new RandomAccessFile(RNIndyStaticData.ENCRYPTED_LOG_FILE_PATH, "rw");
+                    encLogFile.write(result, 0, result.length);
+                    encLogFile.close();
+                    BridgeUtils.resolveIfValid(promise, RNIndyStaticData.ENCRYPTED_LOG_FILE_PATH);
+                } catch(IOException ex) {
+                    promise.reject("encryptVcxLog Exception", ex.getMessage());
+                    ex.printStackTrace();
+                }
+            });
+        } catch (VcxException | IOException e) {
+            promise.reject("encryptVcxLog Exception", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @ReactMethod
+    public  void writeToVcxLog(String loggerName, String logLevel, String message, String logFilePath, Promise promise) {
+        VcxApi.logMessage(loggerName, getLogLevel(logLevel), message);
+        promise.resolve(0);
+    }
+
+    @ReactMethod
+    public void setVcxLogger(String logLevel, String uniqueIdentifier, int MAX_ALLOWED_FILE_BYTES, Promise promise) {
+
+        ContextWrapper cw = new ContextWrapper(reactContext);
         RNIndyStaticData.MAX_ALLOWED_FILE_BYTES = MAX_ALLOWED_FILE_BYTES;
-        RNIndyStaticData.LOG_FILE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() +
+        RNIndyStaticData.LOG_FILE_PATH = cw.getFilesDir().getAbsolutePath() +
                 "/connectme.rotating." + uniqueIdentifier + ".log";
+        RNIndyStaticData.ENCRYPTED_LOG_FILE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() +
+                "/connectme.rotating." + uniqueIdentifier + ".log.enc";
         //get the documents directory:
         Log.d(TAG, "Setting vcx logger to: " + RNIndyStaticData.LOG_FILE_PATH);
 
-        ContextWrapper cw = new ContextWrapper(reactContext);
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             //RUNTIME PERMISSION Android M
             if(PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(cw, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 requestPermission(reactContext.getCurrentActivity());
             } else {
-                // create the log file if it does not exist
-                try {
-                    if(! new File(RNIndyStaticData.LOG_FILE_PATH).exists()) {
-                        new FileWriter(RNIndyStaticData.LOG_FILE_PATH).close();
-                    }
-                } catch(IOException ex) {
-                    ex.printStackTrace();
-                }
-
-                // Now monitor the logFile and empty it out when it's size is
-                // larger than MAX_ALLOWED_FILE_BYTES
-                RNIndyStaticData.logFileObserver = new LogFileObserver(RNIndyStaticData.LOG_FILE_PATH, RNIndyStaticData.MAX_ALLOWED_FILE_BYTES);
-                RNIndyStaticData.logFileObserver.startWatching();
+                RNIndyStaticData.initLoggerFile(cw);
             }
         }
 

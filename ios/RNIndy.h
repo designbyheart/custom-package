@@ -20,4 +20,8 @@
 
 @interface RNIndy : RCTEventEmitter <RCTBridgeModule>
 
++ (void) writeToVcxLogFile:(NSString*)logFilePath
+              withLevelName:(NSString*)levelName
+               withMessage:(NSString*)message;
+
 @end

@@ -41,6 +41,7 @@ import wallet, { watchWalletStore } from '../wallet/wallet-store'
 import eula, { watchEula } from '../eula/eula-store'
 import restore, { watchRestore } from '../restore/restore-store'
 import backup, { watchBackup } from '../backup/backup-store'
+import sendlogs, { watchSendLogs } from '../send-logs/send-logs-store'
 import onfido, { watchOnfido } from '../onfido/onfido-store'
 import offline, { watchOffline } from '../offline/offline-store'
 import { hydrate } from './hydration-store'
@@ -71,6 +72,7 @@ const appReducer = combineReducers({
   eula,
   restore,
   backup,
+  sendlogs,
   ledger,
   offline,
   onfido,
@@ -78,7 +80,8 @@ const appReducer = combineReducers({
 
 let middlewares = [historyRecorder]
 
-customLogger.init()
+// "Error", "Warning", "Info", "Debug", "Trace"
+customLogger.init('debug')
 let reduxLogger = createLogger({
   logger: customLogger,
 })
@@ -109,6 +112,7 @@ sagaMiddleware.run(function*() {
     watchUserStore(),
     watchWalletStore(),
     watchBackup(),
+    watchSendLogs(),
     watchEula(),
     watchRestore(),
     hydrate(),

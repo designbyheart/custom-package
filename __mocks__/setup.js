@@ -234,6 +234,8 @@ NativeModules.RNIndy = {
   setVcxLogger: jest.fn(_ =>
     Promise.resolve('./connectme.rotating.93939939.log')
   ),
+  writeToVcxLog: jest.fn(),
+  encryptVcxLog: jest.fn(),
   exitAppAndroid: jest.fn(),
   updateMessages: jest.fn(),
 }

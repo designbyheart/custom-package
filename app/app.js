@@ -86,13 +86,13 @@ export class ConnectMeApp extends PureComponent<AppProps, void> {
   currentRouteParams = null
   exitTimeout: number = 0
 
-  componentWillMount() {
-    // RNShake.addEventListener('ShakeEvent', () => {
-    //   this.navigateToRoute(sendLogsRoute)
-    // })
-  }
-
   componentDidMount() {
+    RNShake.addEventListener('ShakeEvent', () => {
+      if (this.currentRoute !== sendLogsRoute) {
+        this.navigateToRoute(sendLogsRoute)
+      }
+    })
+
     if (Platform.OS === 'android') {
       BackHandler.addEventListener(
         'hardwareBackPress',
@@ -109,7 +109,7 @@ export class ConnectMeApp extends PureComponent<AppProps, void> {
   }
 
   componentWillUnmount() {
-    //RNShake.removeEventListener('ShakeEvent', () => {})
+    RNShake.removeEventListener('ShakeEvent', () => {})
 
     if (Platform.OS === 'android') {
       BackHandler.removeEventListener(

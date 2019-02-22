@@ -2,23 +2,42 @@
 
 exports[`send logs screen should render properly and snapshot should match 1`] = `
 <View
+  center={true}
   style={
     Object {
-      "backgroundColor": "#ffffff",
+      "alignItems": "center",
       "flex": 1,
+      "justifyContent": "center",
     }
   }
-  tertiary={true}
 >
   <View
     center={true}
     style={
       Object {
         "alignItems": "center",
+        "flex": 1,
         "justifyContent": "center",
+        "padding": 20,
       }
     }
   >
+    <Image
+      collapsable={undefined}
+      source={1}
+      style={
+        Object {
+          "height": 30,
+          "tintColor": "#777777",
+          "transform": Array [
+            Object {
+              "rotate": "0deg",
+            },
+          ],
+          "width": 30,
+        }
+      }
+    />
     <Text
       accessible={true}
       allowFontScaling={false}
@@ -31,11 +50,14 @@ exports[`send logs screen should render properly and snapshot should match 1`] =
           Object {
             "fontFamily": "Lato",
           },
-          undefined,
           Object {
-            "fontWeight": "600",
+            "backgroundColor": "#333333",
+            "color": "#ffffff",
           },
           null,
+          Object {
+            "textAlign": "center",
+          },
           Object {
             "backgroundColor": "transparent",
           },
@@ -47,10 +69,20 @@ exports[`send logs screen should render properly and snapshot should match 1`] =
           null,
           null,
           null,
+          Object {
+            "color": "#464646",
+          },
+          Object {
+            "fontSize": 17,
+            "fontWeight": "500",
+            "letterSpacing": -0.42,
+            "lineHeight": 21,
+            "marginTop": 20,
+          },
         ]
       }
     >
-      Send error logs to cmsupport@evernym.com ?
+      Encrypting log...
     </Text>
   </View>
 </View>

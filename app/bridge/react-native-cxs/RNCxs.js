@@ -204,14 +204,32 @@ export async function createConnectionWithInvite(
 }
 
 export async function setVcxLogger(
+  logLevel: string,
   uniqueId: string,
   MAX_ALLOWED_FILE_BYTES: number
 ): Promise<string> {
-  const logFilePath: string = await RNIndy.setVcxLogger(
-    uniqueId,
-    MAX_ALLOWED_FILE_BYTES
+  return await RNIndy.setVcxLogger(logLevel, uniqueId, MAX_ALLOWED_FILE_BYTES)
+}
+
+export async function writeToVcxLog(
+  loggerName: string,
+  levelName: string,
+  logMessage: string,
+  logFilePath: string
+): Promise<void> {
+  return await RNIndy.writeToVcxLog(
+    loggerName,
+    levelName,
+    logMessage,
+    logFilePath
   )
-  return logFilePath
+}
+
+export async function encryptVcxLog(
+  logFilePath: string,
+  encryptionKey: string
+): Promise<string> {
+  return await RNIndy.encryptVcxLog(logFilePath, encryptionKey)
 }
 
 export async function serializeConnection(

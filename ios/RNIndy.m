@@ -4,6 +4,7 @@
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <React/RCTUtils.h>
 #import "React/RCTConvert.h"
+#include <pthread/pthread.h>
 
 // import RCTBridge
 #if __has_include(<React/RCTBridge.h>)
@@ -30,6 +31,9 @@
 static const unsigned long mask = DISPATCH_VNODE_DELETE | DISPATCH_VNODE_WRITE | DISPATCH_VNODE_EXTEND | DISPATCH_VNODE_ATTRIB | DISPATCH_VNODE_LINK | DISPATCH_VNODE_RENAME | DISPATCH_VNODE_REVOKE;
 static dispatch_source_t logSource;
 static void (^eventHandler)(void), (^cancelHandler)(void);
+static NSNumber *maxLogLevel = nil;
+
+#define levelMappings @{@"1": @"Error", @"2": @"Warning", @"3": @"Info", @"4": @"Debug", @"5": @"Trace"}
 
 @synthesize bridge = _bridge;
 
@@ -55,6 +59,46 @@ RCT_EXPORT_MODULE();
 #pragma mark - React Native exposed methods
 
 
++ (void) writeToVcxLogFile:(NSString*)logFilePath
+              withLevelName:(NSString*)levelName
+               withMessage:(NSString*)message {
+
+  NSNumber *level = @1U;
+  if([@"Error" caseInsensitiveCompare:levelName] == NSOrderedSame) {
+    level = @1U;
+  } else if([@"Warning" caseInsensitiveCompare:levelName] == NSOrderedSame || [[levelName lowercaseString] rangeOfString:@"warn"].location != NSNotFound) {
+    level = @2U;
+  } else if([@"Info" caseInsensitiveCompare:levelName] == NSOrderedSame) {
+    level = @3U;
+  } else if([@"Debug" caseInsensitiveCompare:levelName] == NSOrderedSame) {
+    level = @4U;
+  } else if([@"Trace" caseInsensitiveCompare:levelName] == NSOrderedSame) {
+    level = @5U;
+  }
+
+  NSComparisonResult levelRes = [level compare:maxLogLevel];
+  if (levelRes == NSOrderedSame || levelRes ==
+      NSOrderedAscending) {
+#if DEBUG
+    NSLog(@"%@\n", message);
+#endif
+
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
+    if (fileHandle){
+      [fileHandle seekToEndOfFile];
+      [fileHandle writeData:[[message stringByAppendingString:@"\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+      [fileHandle closeFile];
+    }
+    else{
+      [[message stringByAppendingString:@"\n"] writeToFile:logFilePath
+                atomically:NO
+                  encoding:NSStringEncodingConversionAllowLossy
+                     error:nil];
+    }
+
+  }
+}
+
 // delete connection
 RCT_EXPORT_METHOD(deleteConnection:(NSInteger) connectionHandle
                   resolver: (RCTPromiseResolveBlock) resolve
@@ -78,7 +122,7 @@ RCT_EXPORT_METHOD(init: (NSString *)config
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
   ConnectMeVcx *conn = [[ConnectMeVcx alloc] init];
-  int retCode = 0; //[conn initNullPay];
+  int retCode = [conn initNullPay];
 
   if(retCode != 0) {
     NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)retCode];
@@ -90,7 +134,6 @@ RCT_EXPORT_METHOD(init: (NSString *)config
         NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
         reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while initializing vcx: %@ :: %ld",error.domain, (long)error.code], error);
       }else{
-        //[conn setDefaultLogger:@"trace"];
         resolve(@true);
       }
     }];
@@ -125,34 +168,125 @@ RCT_EXPORT_METHOD(getSerializedConnection: (NSInteger)connectionHandle
   }];
 }
 
-RCT_EXPORT_METHOD(setVcxLogger: (NSString *) uniqueIdentifier
+
+RCT_EXPORT_METHOD(encryptVcxLog: (NSString *) logFilePath
+                  withKey: (NSString *) key
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  NSData *fileContent = [NSData dataWithContentsOfFile:logFilePath];
+  [IndySdk anonCrypt:fileContent theirKey:key
+                             completion:^(NSError *error, NSData *encryptedMsg) {
+    if (error != nil && error.code != 0) {
+      NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+      reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while encrypting file: %@", logFilePath], error);
+    } else {
+      NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+      NSString *documentsDirectory = [paths objectAtIndex:0];
+      // IMPORTANT NOTE: We are writing the encrypted log file to the applications Documents folder
+      // so that the encrypted log file can be sent via email to our support team
+      NSString *encryptedLogFile = [NSString stringWithFormat:@"%@/%@.enc", documentsDirectory, [logFilePath lastPathComponent]];
+      //NSLog(@"Writing encrypted log file to: %@", encryptedLogFile);
+
+      //NSString *encryptedLogFile = [NSString stringWithFormat:@"%@.enc", logFilePath];
+      if(! [[NSFileManager defaultManager] fileExistsAtPath:encryptedLogFile]) {
+        [[NSFileManager defaultManager] createFileAtPath:encryptedLogFile contents:encryptedMsg attributes:nil];
+      } else {
+        //DO NOT USE THIS -- [encryptedMsg writeToFile:encryptedLogFile atomically:YES];
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:encryptedLogFile];
+        [fileHandle truncateFileAtOffset: 0];
+        [fileHandle writeData:encryptedMsg];
+        [fileHandle closeFile];
+      }
+
+      resolve(encryptedLogFile);
+    }
+  }];
+}
+
+RCT_EXPORT_METHOD(writeToVcxLog: (NSString *) loggerName
+                  usingLevel: (NSString *) levelName
+                  withMessage: (NSString *) message
+                  toLogFile: (NSString *) logFilePath
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [RNIndy writeToVcxLogFile:logFilePath withLevelName:levelName withMessage:message];
+  resolve(@{});
+}
+
+RCT_EXPORT_METHOD(setVcxLogger: (NSString *) levelName
+                  withUniqueId: (NSString *) uniqueIdentifier
                   withMaxSize: (NSInteger) MAX_ALLOWED_FILE_BYTES
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-
-  // NOTE: placeholder for calling the vcx logger api when it is stable
-  //[[[ConnectMeVcx alloc] init] setVcxLogger: callbacks...];
-
   NSString *logFilePath = @"";
 
-  //get the documents directory:
-  NSArray *paths = NSSearchPathForDirectoriesInDomains
-  (NSDocumentDirectory, NSUserDomainMask, YES);
-  NSString *documentsDirectory = [paths objectAtIndex:0];
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+  NSString *librariesDirectory = [paths objectAtIndex:0];
+  // IMPORTANT NOTE: We are using the Library/Caches path so that the plain text log file is hidden
+  // from the user and so that the log file is NOT saved as part of an upgrade or backup.
+  // It is docuemented here: https://developer.apple.com/library/archive/qa/qa1699/_index.html
+  logFilePath = [NSString stringWithFormat:@"%@/%@/connectme.rotating.%@.log", librariesDirectory, @"Caches", uniqueIdentifier];
+  //NSLog(@"Setting vcx logger file to: %@", logFilePath);
 
   //make a file name to write the data to using the documents directory:
-  logFilePath = [NSString stringWithFormat:@"%@/connectme.rotating.%@.log",
-                        documentsDirectory, uniqueIdentifier];
-  NSLog(@"Setting vcx logger to: %@", logFilePath);
-
   if(! [[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
+    [[NSFileManager defaultManager] createDirectoryAtPath:[logFilePath stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:NULL];
     [[NSFileManager defaultManager] createFileAtPath:logFilePath contents:nil attributes:nil];
   }
 
   const char *cLogFilePath = [logFilePath cStringUsingEncoding:NSASCIIStringEncoding];
   int fdes = open(cLogFilePath, O_RDONLY);
   dispatch_queue_t queue = dispatch_get_global_queue(0, 0);
+
+  if (maxLogLevel == nil) {
+    maxLogLevel = @1U;
+    if([@"Error" caseInsensitiveCompare:levelName] == NSOrderedSame) {
+      maxLogLevel = @1U;
+    } else if([@"Warning" caseInsensitiveCompare:levelName] == NSOrderedSame || [[levelName lowercaseString] rangeOfString:@"warn"].location != NSNotFound) {
+      maxLogLevel = @2U;
+    } else if([@"Info" caseInsensitiveCompare:levelName] == NSOrderedSame) {
+      maxLogLevel = @3U;
+    } else if([@"Debug" caseInsensitiveCompare:levelName] == NSOrderedSame) {
+      maxLogLevel = @4U;
+    } else if([@"Trace" caseInsensitiveCompare:levelName] == NSOrderedSame) {
+      maxLogLevel = @5U;
+    }
+  }
+
+  static NSDateFormatter *dateFormatter = nil;
+  if (dateFormatter == nil) {
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss.SSSZ"];
+  }
+
+  [VcxLogger setLogger:^(NSObject *context, NSNumber *level, NSString *target, NSString *message, NSString *modulePath, NSString *file, NSNumber *line) {
+    NSComparisonResult levelRes = [level compare:maxLogLevel];
+    if (levelRes == NSOrderedSame || levelRes ==
+        NSOrderedAscending) {
+
+      NSString *CurrentTime = [dateFormatter stringFromDate:[NSDate date]];
+
+      __uint64_t threadId;
+      if (pthread_threadid_np(0, &threadId)) {
+        threadId = pthread_mach_thread_np(pthread_self());
+      }
+
+      // NOTE: We must restrict the size of the message because the message could be the whole
+      // contents of a file, like a 10 MB log file and we do not want all of that content logged
+      // into the log file itself... This is what the log statement would look like
+      // 2019-02-19 04:34:12.813-0700 ConnectMe[9216:8454774] Debug indy::commands::crypto | src/commands/crypto.rs:286 | anonymous_encrypt <<< res:
+      if ([message length] > 102400) {
+        // if message is more than 100K then log only 10K of the message
+        message = [message substringWithRange:NSMakeRange(0, 10240)];
+      }
+      NSString* content = [NSString stringWithFormat:@"%@ ConnectMe[%ld:%llu] %@ %@ | %@:%@ | %@", CurrentTime, (long) getpid(), threadId, [levelMappings valueForKey:[NSString stringWithFormat:@"%@", level]], modulePath, file, line, message];
+
+      [RNIndy writeToVcxLogFile:logFilePath withLevelName:levelName withMessage:content];
+    }
+  }];
 
   eventHandler = ^{
     unsigned long l = dispatch_source_get_data(logSource);
@@ -169,6 +303,7 @@ RCT_EXPORT_METHOD(setVcxLogger: (NSString *) uniqueIdentifier
 
       // fsize is the size of the file in bytes
       if(fsize > MAX_ALLOWED_FILE_BYTES) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:[logFilePath stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:NULL];
         [[NSFileManager defaultManager] createFileAtPath:logFilePath contents:nil attributes:nil];
       }
     }
@@ -177,6 +312,7 @@ RCT_EXPORT_METHOD(setVcxLogger: (NSString *) uniqueIdentifier
     if(logSource) {
       int fdes = dispatch_source_get_handle(logSource);
       close(fdes);
+      [[NSFileManager defaultManager] createDirectoryAtPath:[logFilePath stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:NULL];
       [[NSFileManager defaultManager] createFileAtPath:logFilePath contents:nil attributes:nil];
       // Wait for new file to exist.
       while ((fdes = open(cLogFilePath, O_RDONLY)) == -1)

@@ -995,6 +995,9 @@ export function getStore(store?: Store) {
         offline: {
           offline: false,
         },
+        sendlogs: {
+          encryptLogStatus: false,
+        },
       }
     },
     dispatch() {

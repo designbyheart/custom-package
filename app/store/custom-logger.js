@@ -1,107 +1,114 @@
 //@flow
 import RNFetchBlob from 'react-native-fetch-blob'
 import uniqueId from 'react-native-unique-id'
-import { setVcxLogger } from '../bridge/react-native-cxs/RNCxs'
+import {
+  setVcxLogger,
+  writeToVcxLog,
+  encryptVcxLog,
+} from '../bridge/react-native-cxs/RNCxs'
+import type { Dispatch } from 'redux'
+import { UPDATE_LOG_ISENCRYPTED } from '../send-logs/type-send-logs'
 
 export const CUSTOM_LOG_UTILS = {
-  fs: RNFetchBlob.fs,
-  MAX_ALLOWED_FILE_BYTES: 10000000,
-  alsoLogToConsole: process.env.NODE_ENV !== 'test' && __DEV__,
+  encryptionKey: '',
 }
 
 export const customLogger = {
   recordBuffer: [],
   vcxLogFile: null,
+  encryptedLogFile: null,
   initOnlyOnce: false,
+  logLevel: null,
+  alsoLogToConsole: process.env.NODE_ENV !== 'test' && __DEV__,
+  MAX_ALLOWED_FILE_BYTES: 10000000,
   log: function(...allArgs: any[]) {
     //console.log(JSON.stringify(allArgs))
-    //this.addRecord({ fname: 'log', args: allArgs })
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    this.addRecord({ levelName: 'log', args: allArgs })
+    if (this.alsoLogToConsole) {
       console.log.apply(null, allArgs)
     }
   },
   error: function(...allArgs: any[]) {
-    //this.addRecord({ fname: 'error', args: allArgs })
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    this.addRecord({ levelName: 'error', args: allArgs })
+    if (this.alsoLogToConsole) {
       console.error.apply(null, allArgs)
     }
   },
   assert: function(...allArgs: any[]) {
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.assert.apply(null, allArgs)
     }
   },
   clear: function(...allArgs: any[]) {
-    //this.addRecord({ fname: 'clear', args: allArgs })
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.clear.apply(null, allArgs)
     }
   },
   count: function(...allArgs: any[]) {
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.count.apply(null, allArgs)
     }
   },
   debug: function(...allArgs: any[]) {
-    //this.addRecord({ fname: 'debug', args: allArgs })
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    this.addRecord({ levelName: 'debug', args: allArgs })
+    if (this.alsoLogToConsole) {
       console.debug.apply(null, allArgs)
     }
   },
   dir: function(...allArgs: any[]) {
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.dir.apply(null, allArgs)
     }
   },
   dirxml: function(...allArgs: any[]) {
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.dirxml.apply(null, allArgs)
     }
   },
   group: function(...allArgs: any[]) {
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.group.apply(null, allArgs)
     }
   },
   groupCollapsed: function(...allArgs: any[]) {
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.groupCollapsed.apply(null, allArgs)
     }
   },
   groupEnd: function(...allArgs: any[]) {
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.groupEnd.apply(null, allArgs)
     }
   },
   info: function(...allArgs: any[]) {
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.info.apply(null, allArgs)
     }
   },
   table: function(...allArgs: any[]) {
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.table.apply(null, allArgs)
     }
   },
   time: function(...allArgs: any[]) {
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.time.apply(null, allArgs)
     }
   },
   timeEnd: function(...allArgs: any[]) {
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    if (this.alsoLogToConsole) {
       console.timeEnd.apply(null, allArgs)
     }
   },
   trace: function(...allArgs: any[]) {
-    //this.addRecord({ fname: 'trace', args: allArgs })
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    this.addRecord({ levelName: 'trace', args: allArgs })
+    if (this.alsoLogToConsole) {
       console.trace.apply(null, allArgs)
     }
   },
   warn: function(...allArgs: any[]) {
-    //this.addRecord({ fname: 'warn', args: allArgs })
-    if (CUSTOM_LOG_UTILS.alsoLogToConsole) {
+    this.addRecord({ levelName: 'warn', args: allArgs })
+    if (this.alsoLogToConsole) {
       console.warn.apply(null, allArgs)
     }
   },
@@ -118,21 +125,41 @@ export const customLogger = {
     return this.vcxLogFile
   },
 
-  init: function() {
+  getEncryptedVcxLogFile: function() {
+    return this.encryptedLogFile
+  },
+
+  init: function(levelName: string) {
     if (!this.initOnlyOnce) {
-      // invoke the RNIndy.setVcxLogger function
       this.initOnlyOnce = true
+      this.logLevel = levelName
+
+      const fetchPromise = fetch(
+        'https://connect.me/sendlogs.public.encryption.key.txt'
+      )
+      if (fetchPromise) {
+        fetchPromise
+          .then(function(response) {
+            return response.text()
+          })
+          .then(function(verKey) {
+            //console.log('The encryption key is: ', verKey)
+            CUSTOM_LOG_UTILS.encryptionKey = verKey
+          })
+      }
+
+      // invoke the RNIndy.setVcxLogger function
       uniqueId()
         .then(uniqueIdent => {
-          console.log('The app unique id is: ', uniqueIdent)
-          // setVcxLogger(uniqueIdent, CUSTOM_LOG_UTILS.MAX_ALLOWED_FILE_BYTES)
-          //   .then(logFilePath => {
-          //     this.setVcxLogFile(logFilePath)
-          //     console.log('Setting vcx log file to: ', logFilePath)
-          //   })
-          //   .catch(error => {
-          //     console.error('Error setting vcx log file: ', error)
-          //   })
+          //console.log('The app unique id is: ', uniqueIdent)
+          setVcxLogger(this.logLevel, uniqueIdent, this.MAX_ALLOWED_FILE_BYTES)
+            .then(logFilePath => {
+              this.setVcxLogFile(logFilePath)
+              //console.log('Setting vcx log file to: ', logFilePath)
+            })
+            .catch(error => {
+              console.error('Error setting vcx log file: ', error)
+            })
         })
         .catch(error => {
           console.error('Error getting unique id in redux store: ', error)
@@ -144,7 +171,7 @@ export const customLogger = {
     // write the logging record to the debug file
     const rotatingLog = this.getVcxLogFile()
     if (rotatingLog) {
-      CUSTOM_LOG_UTILS.fs
+      RNFetchBlob.fs
         .exists(rotatingLog)
         .then(exists => {
           if (exists) {
@@ -156,18 +183,18 @@ export const customLogger = {
             }
             this.writeToLog(rotatingLog, record)
           } else {
-            this.addRecordToBuffer(record, rotatingLog)
+            this.addRecordToBuffer(record)
           }
         })
         .catch(() => {
-          //console.log('Error when checking if file exists: ', rotatingLog)
+          console.log('Error when checking if file exists: ', rotatingLog)
         })
     } else {
-      this.addRecordToBuffer(record, rotatingLog)
+      this.addRecordToBuffer(record)
     }
   },
 
-  addRecordToBuffer: function(record: any, rotatingLog: string) {
+  addRecordToBuffer: function(record: any) {
     if (this.recordBuffer.length <= 0 && !this.initOnlyOnce) {
       // This logic MUST ensure that this.init() is only invoked ONCE
       this.init()
@@ -178,22 +205,33 @@ export const customLogger = {
   writeToLog: function(rotatingLog: string, record: any) {
     const recordAsString = JSON.stringify(record)
 
-    // if (recordAsString.indexOf('%c prev state') === -1) {
-    //   CUSTOM_LOG_UTILS.fs
-    //     .writeStream(
-    //       rotatingLog,
-    //       // encoding, should be one of `base64`, `utf8`, `ascii`
-    //       'utf8',
-    //       // should data append to existing content ?
-    //       true
-    //     )
-    //     .then(ofstream => {
-    //       ofstream.write('[' + new Date().toString() + '] :: ')
-    //       ofstream.write(recordAsString)
-    //       ofstream.write('\n')
-    //       ofstream.close()
-    //     })
-    // }
+    if (recordAsString.indexOf('%c prev state') === -1) {
+      writeToVcxLog(
+        'ConnectMe.ReactNative',
+        record.levelName,
+        recordAsString,
+        rotatingLog
+      )
+        .then(() => {
+          //console.log('Wrote log message ' + recordAsString + ' to log file: ', rotatingLog)
+        })
+        .catch(error => {
+          console.error(
+            'Error writing log message ' + recordAsString + ' to log file: ',
+            rotatingLog
+          )
+        })
+    }
+  },
+
+  encryptLogFile: async function() {
+    const rotatingLog = this.getVcxLogFile()
+    this.encryptedLogFile = await encryptVcxLog(
+      rotatingLog,
+      CUSTOM_LOG_UTILS.encryptionKey
+    )
+    //console.log('Setting encrypted vcx log file to: ', this.encryptedLogFile)
+    return this.encryptedLogFile
   },
 
   clearRecords: function() {},
