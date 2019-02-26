@@ -58,10 +58,11 @@ import { convertQrCodeToInvitation } from '../qr-code/qr-code'
 import { ResponseType } from '../components/request/type-request'
 import { QR_CODE_SENDER_DETAIL, QR_CODE_SENDER_DID } from '../api/api-constants'
 import { NEW_CONNECTION_SUCCESS } from '../store/connections-store'
-import { ensureAppHydrated } from '../store/config-store'
+import { ensureAppHydrated, getEnvironmentName } from '../store/config-store'
 import { getUserPairwiseDid } from '../store/store-selector'
 import { INVITATION_RESPONSE_FAIL } from '../invitation/type-invitation'
 import { pushNotificationPermissionAction } from '../push-notification/push-notification-store'
+import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 
 const initialState = {
   status: onfidoProcessStatus.IDLE,
@@ -70,6 +71,17 @@ const initialState = {
   onfidoDid: null,
   onfidoConnectionStatus: onfidoConnectionStatus.IDLE,
 }
+
+// although this seems like a big issue that we are committing this token
+// directly in source code, there is actually no issue with this
+// because even if people get this token, the most that they can do
+// is launch onFido SDK in their mobile app, and then scan documents
+// and scanned documents would only show up in our account if onfido approves
+// those documents
+// Having said above things, we have to discuss this with onFido team
+// because onFido team suggested this approach
+const testToken = 'test_iePALvXVOtTzKLuySX5kzN8nyGmPNYRK'
+const prodToken = 'live_z7RRdU1p3SJZHk9mdfnoGaxH5bMrm3KM'
 
 export const updateOnfidoStatus = (
   status: OnfidoProcessStatus,
@@ -163,36 +175,47 @@ export const selectOnfidoApplicantId = (state: Store) =>
 export const selectOnfidoDid = (state: Store) => state.onfido.onfidoDid
 
 export function* getApplicantIdSaga(): Generator<*, *, *> {
+  // we need to generate new applicant id every time we want to start onfido sdk
+  // also, we need to pass old applicant id as first name if we already have
+  // applicant id
   yield put(updateOnfidoStatus(onfidoProcessStatus.APPLICANT_ID_FETCHING))
-  let applicantId: ?string = yield select(selectOnfidoApplicantId)
-  if (!applicantId) {
-    applicantId = yield* hydrateOnfidoApplicantIdSaga()
+  let oldApplicantId: ?string = yield select(selectOnfidoApplicantId)
+  if (!oldApplicantId) {
+    oldApplicantId = yield* hydrateOnfidoApplicantIdSaga()
   }
 
   // check if connection is established with onfido
   let onfidoDid: ?string = yield* getOnfidoDidSaga()
-  // if connection is not established with onfido or maybe connection was deleted
-  // then we won't use previous applicant id, we create a new applicant id
-  if (applicantId && onfidoDid) {
-    yield put(updateOnfidoStatus(onfidoProcessStatus.APPLICANT_ID_SUCCESS))
-    return applicantId
+  // if connection with onfido was not established
+  // and we created applicant id, that means
+  // connect.me has created applicant but onfido does not have connection
+  // so, we can't pass applicant id as first_name unless connect.me
+  // is sure about successful connection establishment and applicant id
+  if (!onfidoDid) {
+    oldApplicantId = null
   }
-
-  const response: { id: string } = yield call(getApplicantIdApi)
+  const token: string = yield* getOnfidoToken()
+  const response: { id: string } = yield call(
+    getApplicantIdApi,
+    oldApplicantId,
+    token
+  )
   if (response && response.id) {
     yield put(updateOnfidoApplicantId(response.id))
     yield call(persistOnfidoApplicantId, response.id)
     yield put(updateOnfidoStatus(onfidoProcessStatus.APPLICANT_ID_SUCCESS))
+
     return response.id
   }
 
   throw new Error(ERROR_MESSAGE_NO_APPLICANT_ID)
 }
 
-function promisifyOnfidoStartSDK(applicantId: string) {
+function promisifyOnfidoStartSDK(applicantId: string, token: string) {
   return new Promise((resolve, reject) => {
     NativeModules.OnfidoSDK.startSDK(
       applicantId,
+      token,
       id => resolve(id),
       error => reject(new Error(error))
     )
@@ -209,12 +232,14 @@ export function* launchOnfidoSDKSaga(
 
     try {
       yield put(updateOnfidoStatus(onfidoProcessStatus.START_NO_CONNECTION))
-      yield call(promisifyOnfidoStartSDK, applicantId)
+      const token: string = yield* getOnfidoToken()
+      yield call(promisifyOnfidoStartSDK, applicantId, token)
       yield put(updateOnfidoStatus(onfidoProcessStatus.CHECK_UUID_FETCHING))
       try {
         const checkUuid: string | { error: { message: string } } = yield call(
           getCheckUuid,
-          applicantId
+          applicantId,
+          token
         )
         if (checkUuid.error && checkUuid.error.message) {
           throw new Error(checkUuid.error.message)
@@ -261,10 +286,11 @@ export function* makeConnectionWithOnfidoSaga(
         onfidoConnectionStatus.CONNECTION_DETAIL_FETCHING
       )
     )
+    const token: string = yield* getOnfidoToken()
     const invitationDetails: {
       invite: GenericObject,
       state: string,
-    } = yield call(getOnfidoInvitation, applicantId)
+    } = yield call(getOnfidoInvitation, applicantId, token)
 
     if (!invitationDetails.invite) {
       yield put(
@@ -398,7 +424,19 @@ export function* askPushNotificationPermission(): Generator<*, *, *> {
   }
 }
 
+export function* getOnfidoToken(): Generator<*, *, *> {
+  const environment: string = yield select(selectEnvironmentName)
+  if (environment === SERVER_ENVIRONMENT.PROD) {
+    return prodToken
+  }
+
+  return testToken
+}
+
 export const selectOnfidoStatus = (state: Store) => state.onfido.status
+
+export const selectEnvironmentName = (state: Store) =>
+  getEnvironmentName(state.config)
 
 const ONFIDO_DID_STORAGE_KEY = 'ONFIDO_DID_STORAGE_KEY'
 export function* removePersistedOnfidoDidSaga(): Generator<*, *, *> {

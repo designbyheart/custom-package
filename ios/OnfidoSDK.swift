@@ -12,21 +12,21 @@ import Onfido
 @objc(OnfidoSDK)
 class OnfidoSDK: NSObject {
   @objc func startSDK(_ applicantID: String,
+                      withToken token: String,
                       resolver resolve: @escaping RCTResponseSenderBlock,
                       rejecter reject: @escaping RCTResponseSenderBlock) -> Void {
     DispatchQueue.main.async {
-      self.run(withApplicationID: applicantID, resolver: resolve, rejecter: reject)
+      self.run(withApplicationID: applicantID, withToken: token, resolver: resolve, rejecter: reject)
     }
   }
 
   private func run(withApplicationID id: String,
+                   withToken token: String,
                    resolver resolve: @escaping RCTResponseSenderBlock,
                    rejecter reject: @escaping RCTResponseSenderBlock) {
-    let testToken = "test_iePALvXVOtTzKLuySX5kzN8nyGmPNYRK"
-    let token = "live_z7RRdU1p3SJZHk9mdfnoGaxH5bMrm3KM"
 
     let onfidoConfig = try! OnfidoConfig.builder()
-      .withToken(testToken)
+      .withToken(token)
       .withApplicantId(id)
       .withDocumentStep()
       .withFaceStep(ofVariant: .photo)

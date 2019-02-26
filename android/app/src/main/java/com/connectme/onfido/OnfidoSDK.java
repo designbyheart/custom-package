@@ -68,7 +68,7 @@ public class OnfidoSDK extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void startSDK(String applicantId, Callback successCallback, Callback errorCallback) {
+    public void startSDK(String applicantId, String token, Callback successCallback, Callback errorCallback) {
         Activity currentActivity = getCurrentActivity();
         mSuccessCallback = successCallback;
         mErrorCallback = errorCallback;
@@ -79,12 +79,9 @@ public class OnfidoSDK extends ReactContextBaseJavaModule {
         }
 
         try {
-            String testToken = "test_iePALvXVOtTzKLuySX5kzN8nyGmPNYRK";
-            String token = "live_z7RRdU1p3SJZHk9mdfnoGaxH5bMrm3KM";
-
             final FlowStep[] defaultStepsWithWelcomeScreen = new FlowStep[]{
-                    FlowStep.CAPTURE_DOCUMENT,              //Document Capture Step
-                    FlowStep.CAPTURE_FACE                 //Face Capture Step
+                FlowStep.CAPTURE_DOCUMENT,
+                FlowStep.CAPTURE_FACE
             };
 
             Applicant applicant = Applicant.builder()
@@ -92,7 +89,7 @@ public class OnfidoSDK extends ReactContextBaseJavaModule {
                     .build();
             OnfidoConfig onfidoConfig = OnfidoConfig.builder()
                     .withApplicant(applicant)
-                    .withToken(testToken)
+                    .withToken(token)
                     .withCustomFlow(defaultStepsWithWelcomeScreen)
                     .build();
             client.startActivityForResult(currentActivity, 1, onfidoConfig);

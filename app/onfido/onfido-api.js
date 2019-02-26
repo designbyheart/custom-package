@@ -1,16 +1,6 @@
 // @flow
 import type { GenericObject } from '../common/type-common'
 
-// although this seems like a big issue that we are committing this token
-// directly in source code, there is actually no issue with this
-// because even if people get this token, the most that they can do
-// is launch onFido SDK in their mobile app, and then scan documents
-// and scanned documents would only show up in our account if onfido approves
-// those documents
-// Having said above things, we have to discuss this with onFido team
-// because onFido team suggested this approach
-const onfidoAuthorizationTestToken = 'test_wSVTpffhcS0014N11jRHoWyQrm_J3DRM'
-const onfidoAuthorizationProdToken = 'live_z7RRdU1p3SJZHk9mdfnoGaxH5bMrm3KM'
 const applicantParams = {
   // as per onFido team we can hard code name and user's name
   // would be extracted from documents that user uploads
@@ -18,7 +8,7 @@ const applicantParams = {
   first_name: 'Evernym',
   last_name: 'connectme',
 }
-const applicantParamsQueryString = encodeStringify(applicantParams)
+
 const onFidoBaseUrl = 'https://api.onfido.com/v2/applicants/'
 const onFidoChecks = [
   ['type', 'express'],
@@ -50,6 +40,7 @@ async function post(config: {
   url: string,
   body: string,
   contentType: ?string,
+  token: string,
 }) {
   const response = await fetch(config.url, {
     method: 'POST',
@@ -57,7 +48,7 @@ async function post(config: {
       'Content-Type': config.contentType
         ? config.contentType
         : 'application/x-www-form-urlencoded;charset=UTF-8',
-      Authorization: `Token token=${onfidoAuthorizationTestToken}`,
+      Authorization: `Token token=${config.token}`,
     },
     body: config.body,
   })
@@ -65,26 +56,34 @@ async function post(config: {
   return await response.json()
 }
 
-export async function getApplicantId() {
+export async function getApplicantId(first_name: ?string, token: string) {
+  const applicantParamsQueryString = encodeStringify({
+    ...applicantParams,
+    ...{ first_name: first_name || applicantParams.first_name },
+  })
+
   return post({
     url: onFidoBaseUrl,
     body: applicantParamsQueryString,
     contentType: null,
+    token,
   })
 }
 
-export async function getCheckUuid(applicantId: string) {
+export async function getCheckUuid(applicantId: string, token: string) {
   return post({
     url: `${onFidoBaseUrl}${applicantId}/checks`,
     body: checkParamsQueryString,
     contentType: null,
+    token,
   })
 }
 
-export async function getOnfidoInvitation(applicantId: string) {
+export async function getOnfidoInvitation(applicantId: string, token: string) {
   return post({
     url: onfidoInvitationUrl,
     body: JSON.stringify({ applicant_uuid: applicantId }),
     contentType: 'application/json',
+    token,
   })
 }
