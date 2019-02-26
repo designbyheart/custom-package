@@ -17,6 +17,7 @@ import com.onfido.android.sdk.capture.OnfidoFactory;
 import com.onfido.android.sdk.capture.errors.OnfidoException;
 import com.onfido.api.client.data.Applicant;
 import com.onfido.android.sdk.capture.upload.Captures;
+import com.onfido.android.sdk.capture.ui.options.FlowStep;
 import android.widget.Toast;
 
 import java.util.GregorianCalendar;
@@ -81,12 +82,18 @@ public class OnfidoSDK extends ReactContextBaseJavaModule {
             String testToken = "test_iePALvXVOtTzKLuySX5kzN8nyGmPNYRK";
             String token = "live_z7RRdU1p3SJZHk9mdfnoGaxH5bMrm3KM";
 
+            final FlowStep[] defaultStepsWithWelcomeScreen = new FlowStep[]{
+                    FlowStep.CAPTURE_DOCUMENT,              //Document Capture Step
+                    FlowStep.CAPTURE_FACE                 //Face Capture Step
+            };
+
             Applicant applicant = Applicant.builder()
                     .withId(applicantId)
                     .build();
             OnfidoConfig onfidoConfig = OnfidoConfig.builder()
                     .withApplicant(applicant)
                     .withToken(testToken)
+                    .withCustomFlow(defaultStepsWithWelcomeScreen)
                     .build();
             client.startActivityForResult(currentActivity, 1, onfidoConfig);
         }
