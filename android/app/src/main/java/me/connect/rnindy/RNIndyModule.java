@@ -1058,7 +1058,7 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
                 BridgeUtils.resolveIfValid(promise, result);
             });
         } catch(VcxException e) {
-            Log.e(TAG, "createWalletKey: ", e);
+            Log.e(TAG, "getLedgerFees: ", e);
             promise.reject("Exception", e.getMessage());
         }
     }
