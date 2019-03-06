@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { View, StatusBar } from 'react-native'
+import { View, StatusBar, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { captureError } from '../services/error/error-handler'
@@ -12,37 +12,113 @@ import {
   CustomText,
   CustomView,
 } from '../components'
-import { homeRoute } from '../common'
+import { homeRoute, noop } from '../common'
 import { OFFSET_1X } from '../common/styles'
 import { ResponseType } from '../components/request/type-request'
 import { sendInvitationResponse, invitationRejected } from './invitation-store'
 import type { Store } from '../store/type-store'
 import type { ResponseTypes } from '../components/request/type-request'
-import type { InvitationProps, InvitationState } from './type-invitation'
+import type { InvitationProps } from './type-invitation'
 import type { ReactNavigation } from '../common/type-common'
 import { smsPendingInvitationSeen } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { SMSPendingInvitationStatus } from '../sms-pending-invitation/type-sms-pending-invitation'
 import { NavigationActions } from 'react-navigation'
 import { barStyleDark, color } from '../common/styles/constant'
+import {
+  ERROR_ALREADY_EXIST,
+  ERROR_INVITATION_RESPONSE_FAILED,
+  ERROR_ALREADY_EXIST_TITLE,
+} from '../api/api-constants'
 
-export class Invitation extends PureComponent<
-  InvitationProps,
-  InvitationState
-> {
-  state = {
-    loading: false,
+export class Invitation extends PureComponent<InvitationProps, void> {
+  render() {
+    const { invitation, showErrorAlerts, navigation } = this.props
+
+    const {
+      isValid,
+      senderName,
+      title,
+      message,
+      senderLogoUrl,
+    } = isValidInvitation(this.props.invitation)
+
+    if (!isValid) {
+      return <Container />
+    }
+
+    if (isLoading(this.props)) {
+      return (
+        <Container center fifth>
+          <StatusBar
+            barStyle={barStyleDark}
+            animated={true}
+            backgroundColor={color.bg.fifth.color}
+          />
+          <Loader type="dark" showMessage={true} message={'Connecting...'} />
+        </Container>
+      )
+    }
+
+    return (
+      <Container>
+        <StatusBar
+          barStyle={barStyleDark}
+          animated={true}
+          backgroundColor={color.bg.fifth.color}
+        />
+        <Request
+          title={title}
+          message={message}
+          senderLogoUrl={senderLogoUrl}
+          onAction={this.onAction}
+          testID={'invitation'}
+          navigation={navigation}
+          showErrorAlerts={showErrorAlerts}
+          invitationError={invitation.error}
+          senderName={senderName}
+        />
+      </Container>
+    )
   }
 
-  isLoading = (state: boolean) => this.setState({ loading: state })
+  componentDidMount() {
+    if (this.props.isSmsInvitationNotSeen) {
+      this.props.smsPendingInvitationSeen(this.props.smsToken)
+    }
+  }
+
+  componentDidUpdate(prevProps: InvitationProps) {
+    if (isError(prevProps, this.props)) {
+      this.handleError(this.props)
+    } else if (isSuccess(prevProps, this.props)) {
+      this.navigate()
+    }
+  }
+
+  handleError(currentProps: InvitationProps) {
+    const isDuplicateConnection =
+      currentProps.invitation.error.code === ERROR_ALREADY_EXIST.code
+    const errorMessage = isDuplicateConnection
+      ? `${currentProps.invitation.error.message}${
+          currentProps.invitation.payload.senderName
+        }`
+      : ERROR_INVITATION_RESPONSE_FAILED
+    const okAction = isDuplicateConnection
+      ? this.onDuplicateConnectionError
+      : noop
+    const errorTitle = isDuplicateConnection ? ERROR_ALREADY_EXIST_TITLE : null
+
+    Alert.alert(errorTitle, errorMessage, [{ text: 'Ok', onPress: okAction }], {
+      cancelable: false,
+    })
+  }
+
+  onDuplicateConnectionError = () => {
+    this.onAction(ResponseType.rejected)
+  }
 
   navigate = () => {
     this.props.navigation.navigate(homeRoute)
-  }
-
-  onSuccess = () => {
-    setTimeout(() => {
-      this.navigate()
-    }, 500)
   }
 
   onAction = (response: ResponseTypes) => {
@@ -60,112 +136,70 @@ export class Invitation extends PureComponent<
           this.navigate()
         }
       } else {
-        this.onSuccess()
+        this.navigate()
       }
     }
   }
+}
 
-  componentWillReceiveProps(nextProps: InvitationProps) {
-    // If invitation itself not generated then don't check payload
-    if (nextProps.invitation && this.props.invitation) {
-      if (
-        this.props.invitation !== undefined &&
-        nextProps.invitation.payload !== this.props.invitation.payload
-      ) {
-        // a new invitation was received
-        this.isLoading(false)
-      } else {
-        if (nextProps.invitation.isFetching === false) {
-          if (nextProps.invitation.error) {
-            // TODO:KS we got error from API response, what to do now
-            if (nextProps.invitation.error != this.props.invitation.error) {
-              // TODO: captureError should only accept Error object or only json
-              // as of now it would fail for JSON objects, as we are using
-              // captureException of Sentry which is supposed to take only Error object
-              // captureError(nextProps.invitation.error, this.props.showErrorAlerts)
-              this.isLoading(false)
-            }
-          } else {
-            // api response was successful, but now we have to check
-            // if user accepted or declined the request
-            if (nextProps.invitation.status === ResponseType.accepted) {
-              this.isLoading(false)
-              this.onSuccess()
-            }
-          }
-        } else {
-          // TODO:KS show loading indicator, API request was sent
-          this.isLoading(true)
-        }
-      }
+function isError(prevProps: InvitationProps, currentProps: InvitationProps) {
+  // invitation could be null
+  if (prevProps.invitation && currentProps.invitation) {
+    // we are assuming that invitation will have error
+    // only after user has taken some action
+    // so prevProps and currentProps would be used to decide if error occurs
+    // after user has taken action
+    return (
+      currentProps.invitation.isFetching === false &&
+      currentProps.invitation.error &&
+      currentProps.invitation.error !== prevProps.invitation.error
+    )
+  }
+
+  return false
+}
+
+function isSuccess(prevProps: InvitationProps, currentProps: InvitationProps) {
+  if (prevProps.invitation && currentProps.invitation) {
+    return (
+      currentProps.invitation.isFetching === false &&
+      currentProps.invitation.isFetching !== prevProps.invitation.isFetching &&
+      currentProps.invitation.status === ResponseType.accepted
+    )
+  }
+}
+
+function isLoading(currentProps: InvitationProps) {
+  return currentProps.invitation && currentProps.invitation.isFetching
+}
+
+function isValidInvitation(
+  invitation: $PropertyType<InvitationProps, 'invitation'>
+) {
+  let senderName = 'Anonymous'
+  let title = 'Hi'
+  let message = 'Anonymous wants to connect with you.'
+
+  if (invitation && invitation.payload) {
+    const { payload } = invitation
+    senderName = payload.senderName || senderName
+    title = payload.targetName ? `Hi ${payload.targetName}` : title
+    message = `${senderName} wants to connect with you.`
+    return {
+      isValid: true,
+      senderName,
+      title,
+      message,
+      senderLogoUrl: payload.senderLogoUrl,
     }
   }
 
-  componentDidMount() {
-    if (this.props.isSmsInvitationNotSeen) {
-      this.props.smsPendingInvitationSeen(this.props.smsToken)
-    }
-  }
-
-  render() {
-    const { invitation, showErrorAlerts, navigation } = this.props
-
-    if (invitation) {
-      let { payload } = invitation
-      let senderName = ''
-      let title = 'Hi'
-      let message = 'You have received a connection request'
-      let senderLogoUrl = undefined
-      if (payload) {
-        senderName = payload.senderName
-        title = `Hi ${payload.targetName}`
-        message = `${senderName} wants to connect with you.`
-        senderLogoUrl = payload.senderLogoUrl
-        return (
-          <Container>
-            <StatusBar
-              barStyle={barStyleDark}
-              animated={true}
-              backgroundColor={color.bg.fifth.color}
-            />
-            <Request
-              title={title}
-              message={message}
-              senderLogoUrl={senderLogoUrl}
-              onAction={this.onAction}
-              testID={'invitation'}
-              navigation={navigation}
-              showErrorAlerts={showErrorAlerts}
-              invitationError={invitation.error}
-              senderName={senderName}
-            />
-            {this.state.loading && (
-              <CustomModal
-                testID={'invitation'}
-                isVisible={this.state.loading}
-                fullScreen
-              >
-                <CustomView center style={[{ height: '90%' }]}>
-                  <CustomText
-                    h5
-                    center
-                    tertiary
-                    bg="tertiary"
-                    transparentBg
-                    style={[{ marginBottom: OFFSET_1X / 2 }]}
-                    bold
-                  >
-                    Connecting...
-                  </CustomText>
-                  <Loader />
-                </CustomView>
-              </CustomModal>
-            )}
-          </Container>
-        )
-      }
-    }
-    return <Container />
+  return {
+    isValid: false,
+    senderName,
+    title,
+    message,
+    senderLogoUrl: undefined,
   }
 }
 
@@ -177,6 +211,7 @@ const mapStateToProps = (state: Store, { navigation }: ReactNavigation) => {
     state.smsPendingInvitation[smsToken] &&
     state.smsPendingInvitation[smsToken].status !==
       SMSPendingInvitationStatus.SEEN
+
   return {
     invitation: state.invitation[senderDID],
     showErrorAlerts: state.config.showErrorAlerts,

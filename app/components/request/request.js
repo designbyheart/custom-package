@@ -103,27 +103,6 @@ export class Request extends PureComponent<RequestProps, RequestState> {
       this.props.invitationError !== prevProps.invitationError &&
       this.props.invitationError
     ) {
-      const isDuplicateConnection =
-        this.props.invitationError.code === ERROR_ALREADY_EXIST.code
-      const errorMessage = isDuplicateConnection
-        ? `${this.props.invitationError.message}${this.props.senderName}`
-        : ERROR_INVITATION_RESPONSE_FAILED
-      const okAction = isDuplicateConnection
-        ? this.onDuplicateConnectionError
-        : noop
-      const errorTitle = isDuplicateConnection
-        ? ERROR_ALREADY_EXIST_TITLE
-        : null
-
-      Alert.alert(
-        errorTitle,
-        errorMessage,
-        [{ text: 'Ok', onPress: okAction }],
-        {
-          cancelable: false,
-        }
-      )
-
       this.setState({
         disableAccept: false,
       })

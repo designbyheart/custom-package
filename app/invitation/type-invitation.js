@@ -107,10 +107,6 @@ export type InvitationProps = {
   isSmsInvitationNotSeen: boolean,
 } & ReactNavigation
 
-export type InvitationState = {
-  loading: boolean,
-}
-
 export const ERROR_INVITATION_VCX_INIT = {
   code: 'INVITATION-001',
   message: 'Could not initialize vcx while creating a connection',
