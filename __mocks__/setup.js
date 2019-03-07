@@ -84,7 +84,9 @@ jest.mock('react-native-animatable', () => ({
   View: 'Animatable.View',
 }))
 
-jest.mock('react-native-camera', () => mockCamera)
+jest.mock('react-native-camera', () => {
+  return { RNCamera: mockCamera }
+})
 
 jest.mock('Dimensions', () => ({
   get: jest.fn(() => ({
@@ -168,6 +170,10 @@ jest.mock('react-native-share', () => {})
 //jest.mock('react-native-shake', () => {})
 
 jest.mock('react-native-mail', () => {})
+
+jest.mock('react-native-permissions', () => ({
+  request: jest.fn(permission => Promise.resolve()),
+}))
 
 jest.mock('react-native-branch', () => {
   return {
