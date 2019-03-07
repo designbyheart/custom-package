@@ -2,7 +2,8 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import Camera from 'react-native-camera'
+import { RNCamera } from 'react-native-camera'
+import Permissions from 'react-native-permissions'
 import {
   Alert,
   Platform,
@@ -166,15 +167,13 @@ export class QRCodeScannerScreen extends PureComponent<
 
   checkCameraAuthorization = () => {
     if (Platform.OS === 'ios') {
-      Camera.checkVideoAuthorizationStatus()
-        .then((authorization: boolean) => {
-          if (authorization) {
-            this.setHasCameraAccessPermission()
-          } else {
-            this.setNoCameraAccessPermission()
-          }
-        })
-        .catch(this.setNoCameraAccessPermission)
+      Permissions.request('camera').then(response => {
+        if (response === 'authorized') {
+          this.setHasCameraAccessPermission()
+        } else {
+          this.setNoCameraAccessPermission()
+        }
+      })
     } else {
       PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
         title: 'App Camera Permission',

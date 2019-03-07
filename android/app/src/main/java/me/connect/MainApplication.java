@@ -22,7 +22,7 @@ import com.apsl.versionnumber.RNVersionNumberPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
-import com.lwansbrough.RCTCamera.RCTCameraPackage;
+import org.reactnative.camera.RNCameraPackage;
 import io.branch.rnbranch.RNBranchPackage;
 import io.branch.referral.Branch;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -69,7 +69,7 @@ public class MainApplication extends Application implements ShareApplication, Re
         new ImageResizerPackage(),
         new FingerprintAuthPackage(),
         new RNFetchBlobPackage(),
-        new RCTCameraPackage(),
+        new RNCameraPackage(),
         new RNBranchPackage(),
         new VectorIconsPackage(),
         new SplashScreenReactPackage(),

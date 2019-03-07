@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { Vibration, StyleSheet, View, Dimensions, Platform } from 'react-native'
-import Camera from 'react-native-camera'
+import { RNCamera } from 'react-native-camera'
 import { CustomView, Container, CustomText, Icon } from '../../components/'
 import {
   color,
@@ -153,12 +153,12 @@ export default class QRScanner extends PureComponent<
     return (
       <Container>
         {this.state.cameraActive ? (
-          <Camera onBarCodeRead={this.onRead} style={[cameraStyle.camera]}>
+          <RNCamera onBarCodeRead={this.onRead} style={[cameraStyle.camera]}>
             <CameraMarker
               status={this.state.scanStatus}
               onClose={this.props.onClose}
             />
-          </Camera>
+          </RNCamera>
         ) : null}
       </Container>
     )
