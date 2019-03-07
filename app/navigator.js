@@ -319,6 +319,55 @@ const Tabs = createTabNavigator(
     tabBarPosition: 'bottom',
   }
 )
+
+const transitionConfig = () => {
+  return {
+    transitionSpec: {
+      duration: checkIfAnimationToUse() ? 30 : 300,
+      easing: Easing.out(Easing.poly(4)),
+      timing: Animated.timing,
+      useNativeDriver: true,
+    },
+    screenInterpolator: sceneProps => {
+      const { layout, position, scene } = sceneProps
+
+      const thisSceneIndex = scene.index
+      const height = layout.initHeight
+      const width = layout.initWidth
+
+      const scale = position.interpolate({
+        inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.7, thisSceneIndex],
+        outputRange: [0.5, 0.7, 1],
+      })
+
+      // const opacity = position.interpolate({
+      //   inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.5, thisSceneIndex],
+      //   outputRange: [0, 0.3, 1],
+      // })
+
+      const translateY = position.interpolate({
+        inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
+        outputRange: [height, 200, 0],
+      })
+      const slideInFromBottom = {
+        opacity: 1,
+        transform: [{ translateY }],
+        containerStyle: {
+          backgroundColor: 'transparent',
+        },
+      }
+
+      if (scene.route.routeName === 'SendLogs') {
+        return slideInFromBottom
+      } else {
+        return {
+          opacity: 1,
+        }
+      }
+    },
+  }
+}
+
 const CardStack = createStackNavigator(
   {
     [splashScreenRoute]: {
@@ -342,9 +391,6 @@ const CardStack = createStackNavigator(
     },
     [lockSelectionRoute]: {
       screen: LockSelectionScreen,
-    },
-    [sendLogsRoute]: {
-      screen: SendLogsScreen,
     },
     [lockEnterPinRoute]: {
       screen: LockEnterPinScreen,
@@ -391,41 +437,13 @@ const CardStack = createStackNavigator(
     navigationOptions: {
       gesturesEnabled: false,
     },
+    transitionConfig,
+    transparentCard: true,
+    cardStyle: {
+      opacity: 1,
+    },
   }
 )
-
-const transitionConfig = () => {
-  return {
-    transitionSpec: {
-      duration: checkIfAnimationToUse() ? 30 : 300,
-      easing: Easing.out(Easing.poly(4)),
-      timing: Animated.timing,
-      useNativeDriver: true,
-    },
-    screenInterpolator: sceneProps => {
-      const { layout, position, scene } = sceneProps
-
-      const thisSceneIndex = scene.index
-      const height = layout.initHeight
-      const width = layout.initWidth
-
-      const scale = position.interpolate({
-        inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.7, thisSceneIndex],
-        outputRange: [0.5, 0.7, 1],
-      })
-
-      const opacity = position.interpolate({
-        inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.5, thisSceneIndex],
-        outputRange: [0, 0.3, 1],
-      })
-
-      return {
-        opacity,
-        transform: [{ scale }],
-      }
-    },
-  }
-}
 
 // TODO:KS create a custom navigator to track page changes
 // for flows to support deep link, etc.
@@ -444,11 +462,16 @@ const ConnectMeAppNavigator = createStackNavigator(
     [walletTabSendDetailsRoute]: {
       screen: WalletTabSendDetails,
     },
+    [sendLogsRoute]: {
+      screen: SendLogsScreen,
+    },
   },
   {
     mode: 'modal',
     headerMode: 'none',
     transitionConfig,
+    cardStyle: { opacity: 1 },
+    transparentCard: true,
   }
 )
 
