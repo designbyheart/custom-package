@@ -335,10 +335,10 @@ const transitionConfig = () => {
       const height = layout.initHeight
       const width = layout.initWidth
 
-      const scale = position.interpolate({
-        inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.7, thisSceneIndex],
-        outputRange: [0.5, 0.7, 1],
-      })
+      // const scale = position.interpolate({
+      //   inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.7, thisSceneIndex],
+      //   outputRange: [0.5, 0.7, 1],
+      // })
 
       // const opacity = position.interpolate({
       //   inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.5, thisSceneIndex],
@@ -362,6 +362,7 @@ const transitionConfig = () => {
       } else {
         return {
           opacity: 1,
+          //transform: [{ scale }],
         }
       }
     },
