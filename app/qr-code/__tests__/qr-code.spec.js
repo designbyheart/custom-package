@@ -3,7 +3,8 @@ import React from 'react'
 import 'react-native'
 import { Alert } from 'react-native'
 import renderer from 'react-test-renderer'
-import Camera from 'react-native-camera'
+import { RNCamera } from 'react-native-camera'
+import Permissions from 'react-native-permissions'
 import {
   qrCodeScannerTabRoute,
   invitationRoute,
@@ -43,7 +44,7 @@ describe('<QRScannerScreen />', () => {
 
     let tree = component.toJSON()
     expect(tree).toMatchSnapshot()
-    expect(Camera.checkVideoAuthorizationStatus).toHaveBeenCalledTimes(1)
+    expect(Permissions.request).toHaveBeenCalledTimes(1)
   })
 
   it('match snapshot when camera is not authorized', () => {
@@ -82,8 +83,6 @@ describe('<QRScannerScreen />', () => {
   it('check camera permission screen is updated', () => {
     const { instance, props, component } = setup()
 
-    const calledTimesBeforeUpdating =
-      Camera.checkVideoAuthorizationStatus.mock.calls.length
     const updatedComponent = (
       <QRCodeScannerScreen
         {...props}
@@ -92,10 +91,7 @@ describe('<QRScannerScreen />', () => {
     )
 
     // component.update(updatedComponent)
-
-    expect(Camera.checkVideoAuthorizationStatus).toHaveBeenCalledTimes(
-      calledTimesBeforeUpdating
-    )
+    expect(Permissions.request).toHaveBeenCalledTimes(5)
   })
 
   it(`show alert if environment switch url is scanned,

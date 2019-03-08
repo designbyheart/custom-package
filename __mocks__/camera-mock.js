@@ -19,6 +19,8 @@ const constants = {
 class MockCamera extends React.Component<any, void> {
   static constants = constants
   static checkVideoAuthorizationStatus = jest.fn(() => Promise.resolve(true))
+  static onCameraReady = jest.fn(() => Promise.resolve(true))
+  static onStatusChange = jest.fn(() => Promise.resolve(true))
 
   render() {
     return <View>{this.props.children}</View>
