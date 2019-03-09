@@ -84,6 +84,8 @@ export class PushNotification extends PureComponent<
       .messaging()
       .onMessage((message: RemoteMessage) => {
         // Process your message as required
+        // https://rnfirebase.io/docs/v5.x.x/messaging/receiving-messages
+        // https://rnfirebase.io/docs/v5.x.x/messaging/upstream-messages
         console.log('message: ', message)
       })
 
