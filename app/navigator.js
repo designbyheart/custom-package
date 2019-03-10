@@ -76,7 +76,7 @@ import {
   discoverTabRoute,
   menuTabRoute,
 } from './common/'
-import { color } from './common/styles'
+import { color, font } from './common/styles'
 import WalletTabSendDetails from './wallet/wallet-tab-send-details'
 import EulaScreen from './eula/eula'
 import RestoreStartScreen from './restore/restore'
@@ -103,11 +103,19 @@ const styles = StyleSheet.create({
   //   borderTopWidth: 0,
   // },
   tabBarContainer: {
-    backgroundColor: color.bg.tertiary.color,
-    borderTopWidth: StyleSheet.hairlineWidth,
+    backgroundColor: color.bg.figmaStyle.color,
+    borderStyle: 'solid',
+    borderTopWidth: 1,
+    borderTopColor: '#F2F2F2',
     paddingVertical: 4,
+    height: 50,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   tabBarTitle: {
+    fontSize: font.size.XXXS,
     fontWeight: 'bold',
   },
 })
@@ -197,7 +205,9 @@ const Tabs = createTabNavigator(
           return (
             <SvgCustomIcon
               name="Connections"
-              fill={focused ? color.actions.font.seventh : color.actions.sixth}
+              fill={
+                focused ? color.actions.font.greenColor : color.actions.sixth
+              }
             />
           )
         },
@@ -258,7 +268,7 @@ const Tabs = createTabNavigator(
               <SvgCustomIcon
                 name="ScanOn"
                 fill={
-                  focused ? color.actions.font.seventh : color.actions.sixth
+                  focused ? color.actions.font.greenColor : color.actions.sixth
                 }
               />
             )
@@ -266,7 +276,9 @@ const Tabs = createTabNavigator(
           return (
             <SvgCustomIcon
               name="Scan"
-              fill={focused ? color.actions.font.seventh : color.actions.sixth}
+              fill={
+                focused ? color.actions.font.greenColor : color.actions.sixth
+              }
             />
           )
         },
@@ -288,7 +300,7 @@ const Tabs = createTabNavigator(
               <SvgCustomIcon
                 name="Menu"
                 fill={
-                  focused ? color.actions.font.seventh : color.actions.sixth
+                  focused ? color.actions.font.greenColor : color.actions.sixth
                 }
               />
             </CustomView>
@@ -312,8 +324,11 @@ const Tabs = createTabNavigator(
     tabBarOptions: {
       style: [styles.tabBarContainer],
       labelStyle: [styles.tabBarTitle],
-      activeTintColor: color.actions.font.seventh,
+      activeTintColor: color.actions.font.greenColor,
       inactiveTintColor: color.actions.sixth,
+      indicatorStyle: {
+        backgroundColor: 'transparent',
+      },
     },
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
