@@ -701,6 +701,7 @@ export function* processMessages(
     MESSAGE_TYPE.PROOF_REQUEST,
     MESSAGE_TYPE.CLAIM,
     MESSAGE_TYPE.CLAIM_OFFER,
+    MESSAGE_TYPE.QUESTION,
   ]
   // send each message in data to handleMessage
   // additional data will be fetched and passed to relevant( claim, claimOffer, proofRequest,etc )store.
@@ -954,6 +955,20 @@ export function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
         senderName,
         proofHandle
       )
+    }
+
+    if (type === MESSAGE_TYPE.QUESTION) {
+      console.log('handleMessage: ', message)
+
+      const { decryptedPayload } = message
+      if (!decryptedPayload) return
+
+      console.log('decryptedPayload: ', decryptedPayload)
+
+      // const convertedCommittedAnswer = convertToCommittedAnswer(
+      //   decryptedPayload,
+      //   uid
+      // )
     }
 
     if (!additionalData) {

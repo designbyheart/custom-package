@@ -30,6 +30,7 @@ export const MESSAGE_TYPE = {
   PROOF_REQUEST: 'proofReq',
   PROOF: 'proof',
   CLAIM: 'cred',
+  QUESTION: 'Question',
 }
 
 export const PAYLOAD_TYPE = {

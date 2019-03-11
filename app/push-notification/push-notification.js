@@ -19,6 +19,7 @@ import type { PushNotificationProps } from './type-push-notification'
 import type { Store } from '../store/type-store'
 import type { NotificationPayload } from '../common/type-common'
 import { customLogger } from '../store/custom-logger'
+import { getUnacknowledgedMessages } from '../store/config-store'
 
 export class PushNotification extends PureComponent<
   PushNotificationProps,
@@ -82,11 +83,11 @@ export class PushNotification extends PureComponent<
 
     this.messageListener = firebase
       .messaging()
-      .onMessage((message: RemoteMessage) => {
+      .onMessage(async (message: RemoteMessage) => {
         // Process your message as required
         // https://rnfirebase.io/docs/v5.x.x/messaging/receiving-messages
         // https://rnfirebase.io/docs/v5.x.x/messaging/upstream-messages
-        console.log('message: ', message)
+        this.props.getUnacknowledgedMessages()
       })
 
     try {
@@ -191,6 +192,7 @@ const mapDispatchToProps = dispatch =>
       pushNotificationPermissionAction,
       updatePushToken,
       fetchAdditionalData,
+      getUnacknowledgedMessages,
     },
     dispatch
   )
