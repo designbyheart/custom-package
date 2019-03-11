@@ -44,6 +44,7 @@ import backup, { watchBackup } from '../backup/backup-store'
 import sendlogs, { watchSendLogs } from '../send-logs/send-logs-store'
 import onfido, { watchOnfido } from '../onfido/onfido-store'
 import offline, { watchOffline } from '../offline/offline-store'
+import { watchQuestion } from '../question/question-store'
 import { hydrate } from './hydration-store'
 import {
   watchLedgerStore,
@@ -122,6 +123,7 @@ sagaMiddleware.run(function*() {
     watchLedgerStore(),
     watchOffline(),
     watchOnfido(),
+    watchQuestion(),
   ])
 })
 

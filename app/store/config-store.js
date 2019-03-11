@@ -129,6 +129,7 @@ import type {
   ProofRequestData,
 } from '../proof-request/type-proof-request'
 import type { ClaimPushPayloadVcx } from './../claim/type-claim'
+import type { Question, QuestionRequest } from './../question/type-question'
 import { MESSAGE_TYPE } from '../api/api-constants'
 import {
   saveSerializedClaimOffer,
@@ -823,6 +824,33 @@ const convertToSerializedClaimOffer = (
   return ''
 }
 
+const convertDecryptedPayloadToQuestion = (
+  connectionHandle: any,
+  decryptedPayload: string,
+  uid: string,
+  forDID: string,
+  senderDID: string
+): Question => {
+  const parsedPayload = JSON.parse(decryptedPayload)
+  const parsedMsg: QuestionRequest = JSON.parse(parsedPayload['@msg'])
+
+  return {
+    '@type': parsedMsg['@type'],
+    messageId: parsedMsg['@id'],
+    question_text: parsedMsg.question_text,
+    question_detail: parsedMsg.question_detail,
+    valid_responses: parsedMsg.valid_responses,
+    timing: parsedMsg['@timing'],
+    issuer_did: '',
+    remoteDid: '',
+    uid,
+    from_did: '',
+    forDID,
+    connectionHandle,
+    remotePairwiseDID: '',
+  }
+}
+
 const convertDecryptedPayloadToAdditionalPayload = (
   decryptedPayload: string,
   uid: string,
@@ -899,6 +927,7 @@ export function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
       | ProofRequestPushPayload
       | ClaimPushPayload
       | ClaimPushPayloadVcx
+      | Question
       | null = null
     if (type === MESSAGE_TYPE.CLAIM_OFFER) {
       const { decryptedPayload } = message
@@ -958,17 +987,15 @@ export function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
     }
 
     if (type === MESSAGE_TYPE.QUESTION) {
-      console.log('handleMessage: ', message)
-
       const { decryptedPayload } = message
       if (!decryptedPayload) return
-
-      console.log('decryptedPayload: ', decryptedPayload)
-
-      // const convertedCommittedAnswer = convertToCommittedAnswer(
-      //   decryptedPayload,
-      //   uid
-      // )
+      additionalData = convertDecryptedPayloadToQuestion(
+        connectionHandle,
+        decryptedPayload,
+        uid,
+        forDID,
+        senderDID
+      )
     }
 
     if (!additionalData) {

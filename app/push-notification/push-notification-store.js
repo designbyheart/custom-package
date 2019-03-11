@@ -107,6 +107,7 @@ import {
 } from '../common'
 import type { Claim } from '../claim/type-claim'
 import { claimReceivedVcx } from '../claim/claim-store'
+import { questionReceived } from '../question/question-store'
 import { NavigationActions } from 'react-navigation'
 import type { SerializedClaimOffer } from './../claim-offer/type-claim-offer'
 import { customLogger } from '../store/custom-logger'
@@ -501,6 +502,9 @@ export function* updatePayloadToRelevantStoreSaga(
             remotePairwiseDID,
           })
         )
+        break
+      case MESSAGE_TYPE.QUESTION:
+        yield put(questionReceived(additionalData))
         break
     }
   }
