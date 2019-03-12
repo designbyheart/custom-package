@@ -216,14 +216,10 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          borderWidth: 3,
-          borderColor: 'green',
         }}
       >
         <ScrollView
           style={{
-            borderWidth: 3,
-            borderColor: 'red',
             width: '100%',
             height: '100%',
           }}
@@ -493,6 +489,6 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     width: '100%',
-    height: 50,
+    height: 48,
   },
 })
