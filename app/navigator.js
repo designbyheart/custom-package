@@ -322,13 +322,23 @@ const Tabs = createTabNavigator(
       menuTabRoute,
     ],
     tabBarOptions: {
-      style: [styles.tabBarContainer],
+      style: {
+        backgroundColor: 'rgba(255, 255, 255, 0.8)', // set up white color transparency
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        height: 50,
+        zIndex: 100,
+        borderWidth: 0,
+      },
+      tabStyle: {
+        height: 57,
+        paddingBottom: 3,
+        alignItems: 'center',
+      },
       labelStyle: [styles.tabBarTitle],
       activeTintColor: color.actions.font.greenColor,
       inactiveTintColor: color.actions.sixth,
-      indicatorStyle: {
-        backgroundColor: 'transparent',
-      },
     },
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',

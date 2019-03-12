@@ -7,6 +7,9 @@ import {
   Dimensions,
   View,
   Text,
+  ScrollView,
+  Button,
+  Image,
 } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
@@ -55,6 +58,7 @@ import { NavigationActions } from 'react-navigation'
 import { getUnseenMessages } from '../store/store-selector'
 import { scale } from 'react-native-size-matters'
 import { size } from './../components/icon'
+import { BlurView } from 'react-native-blur'
 
 const { width, height } = Dimensions.get('window')
 
@@ -150,63 +154,273 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
     const connectionsCheck = connections && connections.length > 0
 
     return (
-      <Container tertiary>
-        <Container tertiary>
-          <Banner navigation={this.props.navigation} />
-          {connectionsCheck ? (
-            <Bubbles
-              navigation={this.props.navigation}
-              height={bubblesHeight}
-              connections={connections}
-              unSeenMessages={unSeenMessages}
-            />
-          ) : (
-            <Container center>
-              {/*Do not remove below commented code, it is commented only till we get a website up for faber*/}
-              {/* <View style={styles.messageBox}>
-                <CustomText demiBold primary h4 transparentBg>
-                  {HOW_IT_WORKS}
-                </CustomText>
-                <Text
-                  style={[
-                    styles.messageBoxBodyText,
-                    { paddingTop: 20, paddingBottom: 20 },
-                  ]}
-                >
-                  <Text style={{ color: color.actions.font.seventh }}>
-                    {ON_COMPUTER}
-                  </Text>
-                  <Text
-                    style={{
-                      color: color.bg.secondary.color,
-                    }}
-                  >
-                    {GO_TO_FABER}
-                  </Text>
-                </Text>
-                <CustomText
-                  h4
-                  style={[
-                    { color: color.bg.secondary.color, paddingBottom: '40%' },
-                  ]}
-                  transparentBg
-                >
-                  {USE_TUTORIAL}
-                </CustomText>
-              </View> */}
-            </Container>
-          )}
-          {!hydrated ? (
-            <Container center>
-              <Loader type="dark" delay={1000} />
-            </Container>
-          ) : null}
-          {/* DO not remove commented code */}
-          {/* <CustomView style={[styles.userAvatarContainer]}>
-            <UserAvatar />
-          </CustomView> */}
-        </Container>
-      </Container>
+      // <Container tertiary>
+      //   <Container tertiary>
+      //     <Banner navigation={this.props.navigation} />
+      //     {connectionsCheck ? (
+      //       <Bubbles
+      //         navigation={this.props.navigation}
+      //         height={bubblesHeight}
+      //         connections={connections}
+      //         unSeenMessages={unSeenMessages}
+      //       />
+      //     ) : (
+      //       <Container center>
+      //         {/*Do not remove below commented code, it is commented only till we get a website up for faber*/}
+      //         {/* <View style={styles.messageBox}>
+      //           <CustomText demiBold primary h4 transparentBg>
+      //             {HOW_IT_WORKS}
+      //           </CustomText>
+      //           <Text
+      //             style={[
+      //               styles.messageBoxBodyText,
+      //               { paddingTop: 20, paddingBottom: 20 },
+      //             ]}
+      //           >
+      //             <Text style={{ color: color.actions.font.seventh }}>
+      //               {ON_COMPUTER}
+      //             </Text>
+      //             <Text
+      //               style={{
+      //                 color: color.bg.secondary.color,
+      //               }}
+      //             >
+      //               {GO_TO_FABER}
+      //             </Text>
+      //           </Text>
+      //           <CustomText
+      //             h4
+      //             style={[
+      //               { color: color.bg.secondary.color, paddingBottom: '40%' },
+      //             ]}
+      //             transparentBg
+      //           >
+      //             {USE_TUTORIAL}
+      //           </CustomText>
+      //         </View> */}
+      //       </Container>
+      //     )}
+      //     {!hydrated ? (
+      //       <Container center>
+      //         <Loader type="dark" delay={1000} />
+      //       </Container>
+      //     ) : null}
+      //     {/* DO not remove commented code */}
+      //     {/* <CustomView style={[styles.userAvatarContainer]}>
+      //       <UserAvatar />
+      //     </CustomView> */}
+      //   </Container>
+      // </Container>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderWidth: 3,
+          borderColor: 'green',
+        }}
+      >
+        <ScrollView
+          style={{
+            borderWidth: 3,
+            borderColor: 'red',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <Button
+            title="FirstScreen Button"
+            onPress={() => this.props.navigation.navigate('Details')}
+          />
+          <Text style={{ fontSize: 96 }}>Scroll me plz</Text>
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Text style={{ fontSize: 96 }}>If you like</Text>
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Text style={{ fontSize: 96 }}>Scrolling down</Text>
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Text style={{ fontSize: 96 }}>What's the best</Text>
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Text style={{ fontSize: 96 }}>Framework around?</Text>
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Image
+            source={{
+              uri: 'https://facebook.github.io/react-native/img/favicon.png',
+              width: 64,
+              height: 64,
+            }}
+          />
+          <Text style={{ fontSize: 80 }}>React Native</Text>
+        </ScrollView>
+        <BlurView
+          style={styles.absolute}
+          viewRef={this.state.viewRef}
+          blurType="light"
+          blurAmount={8}
+        />
+      </View>
     )
   }
 }
@@ -273,5 +487,12 @@ const styles = StyleSheet.create({
   },
   messageBoxBodyText: {
     fontSize: 20,
+  },
+  absolute: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    height: 50,
   },
 })
