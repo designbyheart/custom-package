@@ -824,12 +824,14 @@ const convertToSerializedClaimOffer = (
   return ''
 }
 
-const convertDecryptedPayloadToQuestion = (
+export const convertDecryptedPayloadToQuestion = (
   connectionHandle: any,
   decryptedPayload: string,
   uid: string,
   forDID: string,
-  senderDID: string
+  senderDID: string,
+  messageTitle: string,
+  messageText: string
 ): Question => {
   const parsedPayload = JSON.parse(decryptedPayload)
   const parsedMsg: QuestionRequest = JSON.parse(parsedPayload['@msg'])
@@ -848,6 +850,8 @@ const convertDecryptedPayloadToQuestion = (
     forDID,
     connectionHandle,
     remotePairwiseDID: '',
+    messageTitle,
+    messageText,
   }
 }
 
@@ -994,7 +998,9 @@ export function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
         decryptedPayload,
         uid,
         forDID,
-        senderDID
+        senderDID,
+        '',
+        ''
       )
     }
 

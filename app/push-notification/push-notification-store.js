@@ -105,6 +105,7 @@ import {
   processMessages,
   handleMessage,
   traverseAndGetAllMessages,
+  convertDecryptedPayloadToQuestion,
 } from '../store/config-store'
 import {
   claimOfferRoute,
@@ -413,21 +414,30 @@ export function* fetchAdditionalDataSaga(
         const messages: Array<DownloadedMessage> = traverseAndGetAllMessages(
           parsedData
         )
-        for (let i = 0; i < messages.length; i++) {
-          yield* handleMessage(messages[i])
-        }
         const {
           pushNotifMsgTitle,
           pushNotifMsgText,
         } = action.notificationPayload
-        yield* redirectToRelevantScreen({
-          additionalData: { pushNotifMsgTitle, pushNotifMsgText },
-          forDID,
-          remotePairwiseDID,
-          uiType: null,
-          type,
-          uid,
-        })
+        for (let i = 0; i < messages.length; i++) {
+          //yield* handleMessage(messages[i])
+          additionalData = convertDecryptedPayloadToQuestion(
+            connectionHandle,
+            messages[i].decryptedPayload ? messages[i].decryptedPayload : '',
+            uid,
+            forDID,
+            messages[i].senderDID,
+            pushNotifMsgTitle ? pushNotifMsgTitle : '',
+            pushNotifMsgText ? pushNotifMsgText : ''
+          )
+        }
+        // yield* redirectToRelevantScreen({
+        //   additionalData: { pushNotifMsgTitle, pushNotifMsgText },
+        //   forDID,
+        //   remotePairwiseDID,
+        //   uiType: null,
+        //   type,
+        //   uid,
+        // })
         //yield* processMessages(parsedData)
         //yield* acknowledgeServer(parsedData)
         // additionalData = {

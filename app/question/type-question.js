@@ -12,6 +12,8 @@ export type QuestionResponse = {
 }
 
 export type Question = {
+  messageTitle: string,
+  messageText: string,
   '@type': string,
   messageId: string,
   question_text: string,
