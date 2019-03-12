@@ -47,6 +47,30 @@ export class PushNotification extends PureComponent<
     }
   }
 
+  remoteMessageParser(message: RemoteMessage) {
+    const {
+      data: {
+        forDID,
+        uid,
+        type,
+        remotePairwiseDID,
+        pushNotifMsgText,
+        pushNotifMsgTitle,
+        senderLogoUrl,
+      },
+    } = message
+
+    return {
+      forDID,
+      uid,
+      type,
+      remotePairwiseDID,
+      senderLogoUrl,
+      pushNotifMsgText,
+      pushNotifMsgTitle,
+    }
+  }
+
   componentDidMount = async () => {
     // TODO: refactor to run this based off of actions so that we're not creating a new push notification token when user is trying to restore wallet
 
@@ -83,11 +107,13 @@ export class PushNotification extends PureComponent<
 
     this.messageListener = firebase
       .messaging()
-      .onMessage(async (message: RemoteMessage) => {
+      .onMessage((message: RemoteMessage) => {
         // Process your message as required
         // https://rnfirebase.io/docs/v5.x.x/messaging/receiving-messages
         // https://rnfirebase.io/docs/v5.x.x/messaging/upstream-messages
-        this.props.getUnacknowledgedMessages()
+        //console.log('Remote message: ', message)
+        //this.props.getUnacknowledgedMessages()
+        this.onPushNotificationReceived(this.remoteMessageParser(message))
       })
 
     try {
