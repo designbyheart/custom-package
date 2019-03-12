@@ -676,7 +676,7 @@ export function* getMessagesSaga(): Generator<*, *, *> {
   }
 }
 
-const traverseAndGetAllMessages = (
+export const traverseAndGetAllMessages = (
   data: DownloadedConnectionsWithMessages
 ): Array<DownloadedMessage> => {
   let messages: Array<DownloadedMessage> = []

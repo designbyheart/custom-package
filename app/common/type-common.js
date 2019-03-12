@@ -74,6 +74,8 @@ export type NotificationPayload = {
   type: string,
   remotePairwiseDID: string,
   senderLogoUrl?: ?string,
+  pushNotifMsgText?: ?string,
+  pushNotifMsgTitle?: ?string,
 }
 
 export type ImmutableGenericStringObject = {
