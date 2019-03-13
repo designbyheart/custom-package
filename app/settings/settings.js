@@ -399,242 +399,36 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
       },
     ]
     return (
-      // <Container style={[style.mainContainer]}>
-      //   <CustomView tertiary>
-      //     <ScrollView>
-      //       {userAvatar}
-      //       <List containerStyle={[style.mainContainer, style.listContainer]}>
-      //         {settingsItemList.map((item, index) => {
-      //           return (
-      //             <ListItem
-      //               containerStyle={[style.listItemContainer]}
-      //               titleStyle={[style.titleStyle]}
-      //               subtitleStyle={[style.subtitleStyle]}
-      //               key={index}
-      //               title={item.title}
-      //               subtitle={item.subtitle}
-      //               avatarStyle={[style.avatarStyle]}
-      //               avatar={item.avatar}
-      //               rightIcon={
-      //                 item.rightIcon !== ''
-      //                   ? item.rightIcon
-      //                   : { name: 'chevron-right' }
-      //               }
-      //               hideChevron={item.rightIcon === ''}
-      //               onPress={item.onPress}
-      //             />
-      //           )
-      //         })}
-      //       </List>
-      //     </ScrollView>
-      //   </CustomView>
-      // </Container>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <ScrollView
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-        >
-          <Button
-            title="FirstScreen Button"
-            onPress={() => this.props.navigation.navigate('Details')}
-          />
-          <Text style={{ fontSize: 96 }}>Scroll me plz</Text>
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Text style={{ fontSize: 96 }}>If you like</Text>
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Text style={{ fontSize: 96 }}>Scrolling down</Text>
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Text style={{ fontSize: 96 }}>What's the best</Text>
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Text style={{ fontSize: 96 }}>Framework around?</Text>
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Text style={{ fontSize: 80 }}>React Native</Text>
-        </ScrollView>
-        <BlurView
-          style={style.absolute}
-          viewRef={this.state.viewRef}
-          blurType="light"
-          blurAmount={8}
-        />
-      </View>
+      <Container style={[style.mainContainer]}>
+        <CustomView tertiary>
+          <ScrollView>
+            {userAvatar}
+            <List containerStyle={[style.mainContainer, style.listContainer]}>
+              {settingsItemList.map((item, index) => {
+                return (
+                  <ListItem
+                    containerStyle={[style.listItemContainer]}
+                    titleStyle={[style.titleStyle]}
+                    subtitleStyle={[style.subtitleStyle]}
+                    key={index}
+                    title={item.title}
+                    subtitle={item.subtitle}
+                    avatarStyle={[style.avatarStyle]}
+                    avatar={item.avatar}
+                    rightIcon={
+                      item.rightIcon !== ''
+                        ? item.rightIcon
+                        : { name: 'chevron-right' }
+                    }
+                    hideChevron={item.rightIcon === ''}
+                    onPress={item.onPress}
+                  />
+                )
+              })}
+            </List>
+          </ScrollView>
+        </CustomView>
+      </Container>
     )
   }
 }
