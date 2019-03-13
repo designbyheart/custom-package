@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { StyleSheet, Animated, Easing } from 'react-native'
+import { StyleSheet, Animated, Easing, Platform } from 'react-native'
 import {
   createStackNavigator,
   TabBarBottom,
@@ -323,7 +323,10 @@ const Tabs = createTabNavigator(
     ],
     tabBarOptions: {
       style: {
-        backgroundColor: 'rgba(255, 255, 255, 0.8)', // set up white color transparency
+        backgroundColor:
+          Platform.OS === 'ios'
+            ? 'rgba(255, 255, 255, 0.8)'
+            : 'rgba(255, 255, 255, 255)',
         position: 'absolute',
         bottom: 0,
         width: '100%',

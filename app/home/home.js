@@ -410,12 +410,14 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
           />
           <Text style={{ fontSize: 80 }}>React Native</Text>
         </ScrollView>
-        <BlurView
-          style={styles.absolute}
-          viewRef={this.state.viewRef}
-          blurType="light"
-          blurAmount={8}
-        />
+        {Platform.OS === 'ios' ? (
+          <BlurView
+            style={styles.absolute}
+            viewRef={this.state.viewRef}
+            blurType="light"
+            blurAmount={8}
+          />
+        ) : null}
       </View>
     )
   }
@@ -489,6 +491,9 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     width: '100%',
+    //iphone 6s
     height: 48,
+    //iphone x
+    height: 82,
   },
 })
