@@ -352,9 +352,6 @@ const transitionConfig = () => {
       const slideInFromBottom = {
         opacity: 1,
         transform: [{ translateY }],
-        containerStyle: {
-          backgroundColor: 'transparent',
-        },
       }
 
       if (scene.route.routeName === 'SendLogs') {
