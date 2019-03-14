@@ -1,9 +1,13 @@
 // @flow
+import type { ReactNavigation } from '../common/type-common'
 
 export const QUESTION_RECEIVED = 'QUESTION_RECEIVED'
+
+export type QuestionProps = {} & ReactNavigation
+
 export type QuestionReceivedAction = {
   type: typeof QUESTION_RECEIVED,
-  question: Question,
+  question: QuestionPayload,
 }
 
 export type QuestionResponse = {
@@ -11,7 +15,7 @@ export type QuestionResponse = {
   nonce: string,
 }
 
-export type Question = {
+export type QuestionPayload = {
   messageTitle: string,
   messageText: string,
   '@type': string,

@@ -1,6 +1,6 @@
 // @flow
 
-import type { Question, QuestionReceivedAction } from './type-question'
+import type { QuestionPayload, QuestionReceivedAction } from './type-question'
 import { QUESTION_RECEIVED } from './type-question'
 import {
   put,
@@ -13,7 +13,7 @@ import {
 } from 'redux-saga/effects'
 
 export const questionReceived = (
-  question: Question
+  question: QuestionPayload
 ): QuestionReceivedAction => ({
   type: QUESTION_RECEIVED,
   question,

@@ -129,7 +129,10 @@ import type {
   ProofRequestData,
 } from '../proof-request/type-proof-request'
 import type { ClaimPushPayloadVcx } from './../claim/type-claim'
-import type { Question, QuestionRequest } from './../question/type-question'
+import type {
+  QuestionPayload,
+  QuestionRequest,
+} from './../question/type-question'
 import { MESSAGE_TYPE } from '../api/api-constants'
 import {
   saveSerializedClaimOffer,
@@ -832,7 +835,7 @@ export const convertDecryptedPayloadToQuestion = (
   senderDID: string,
   messageTitle: string,
   messageText: string
-): Question => {
+): QuestionPayload => {
   const parsedPayload = JSON.parse(decryptedPayload)
   const parsedMsg: QuestionRequest = JSON.parse(parsedPayload['@msg'])
 
@@ -931,7 +934,7 @@ export function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
       | ProofRequestPushPayload
       | ClaimPushPayload
       | ClaimPushPayloadVcx
-      | Question
+      | QuestionPayload
       | null = null
     if (type === MESSAGE_TYPE.CLAIM_OFFER) {
       const { decryptedPayload } = message

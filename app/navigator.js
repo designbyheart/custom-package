@@ -16,6 +16,7 @@ import ExpiredTokenScreen from './expired-token/expired-token'
 import QRCodeScanner from './qr-code/qr-code'
 import LockSelectionScreen from './lock/lock-selection'
 import SendLogsScreen from './send-logs/send-logs'
+import QuestionScreen from './question/question'
 import LockEnterPinScreen from './lock/lock-enter-pin-code'
 import LockTouchIdSetupScreen from './lock/lock-fingerprint-setup'
 import LockPinCodeSetupScreen from './lock/lock-pin-code-setup'
@@ -71,6 +72,7 @@ import {
   restorePassphraseRoute,
   backupErrorRoute,
   sendLogsRoute,
+  questionRoute,
   connectionsTabRoute,
   credentialsTabRoute,
   discoverTabRoute,
@@ -462,6 +464,9 @@ const ConnectMeAppNavigator = createStackNavigator(
     },
     [sendLogsRoute]: {
       screen: SendLogsScreen,
+    },
+    [questionRoute]: {
+      screen: QuestionScreen,
     },
   },
   {

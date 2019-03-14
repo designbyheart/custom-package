@@ -128,7 +128,7 @@ import { questionReceived } from '../question/question-store'
 import { NavigationActions } from 'react-navigation'
 import type { SerializedClaimOffer } from './../claim-offer/type-claim-offer'
 import { customLogger } from '../store/custom-logger'
-import type { Question } from './../question/type-question'
+import type { QuestionPayload } from './../question/type-question'
 
 async function delay(ms): Promise<number> {
   return new Promise(res => setTimeout(res, ms))
@@ -360,7 +360,7 @@ export function* fetchAdditionalDataSaga(
       | ProofRequestPushPayload
       | ClaimPushPayload
       | ClaimPushPayloadVcx
-      | Question
+      | QuestionPayload
       | null = null
 
     if (type === MESSAGE_TYPE.CLAIM_OFFER) {
