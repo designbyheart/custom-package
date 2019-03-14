@@ -39,7 +39,7 @@ DEPENDENCIES:
   - apptentive-ios (= 5.2.2)
   - Firebase/Messaging (= 4.8.0)
   - Onfido (= 10.0.0)
-  - vcx (= 0.0.86)
+  - vcx (= 0.0.85)
 
 SPEC REPOS:
   "git@github.com:evernym/indy-sdk.git":
