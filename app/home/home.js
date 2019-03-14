@@ -11,6 +11,7 @@ import {
   Button,
   Image,
 } from 'react-native'
+
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import {
@@ -59,6 +60,7 @@ import { getUnseenMessages } from '../store/store-selector'
 import { scale } from 'react-native-size-matters'
 import { size } from './../components/icon'
 import { BlurView } from 'react-native-blur'
+import measurements from '../common/styles/measurements'
 
 const { width, height } = Dimensions.get('window')
 
@@ -491,9 +493,6 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     width: '100%',
-    //iphone 6s
-    height: 48,
-    //iphone x
-    height: 82,
+    height: Measurements.bottomBlurNavBarHeight,
   },
 })

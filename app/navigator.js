@@ -92,6 +92,7 @@ import {
   TAB_SCAN_TITLE,
 } from './type-navigator'
 import { Button } from 'react-native-elements'
+import measurements from './common/styles/measurements'
 
 if (__DEV__) {
   require('../tools/reactotron-config')
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   tabBarTitle: {
+    marginBottom: -1,
     fontSize: font.size.XXXS,
     fontWeight: 'bold',
   },
@@ -330,14 +332,9 @@ const Tabs = createTabNavigator(
         position: 'absolute',
         bottom: 0,
         width: '100%',
-        height: 50,
+        height: measurements.bottomNavBarHeight,
         zIndex: 100,
         borderWidth: 0,
-      },
-      tabStyle: {
-        height: 57,
-        paddingBottom: 3,
-        alignItems: 'center',
       },
       labelStyle: [styles.tabBarTitle],
       activeTintColor: color.actions.font.greenColor,
