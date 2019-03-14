@@ -493,6 +493,6 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     width: '100%',
-    height: Measurements.bottomBlurNavBarHeight,
+    height: measurements.bottomBlurNavBarHeight,
   },
 })

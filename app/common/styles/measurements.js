@@ -1,6 +1,7 @@
 // @flow
 
 import { Dimensions, PixelRatio, Platform } from 'react-native'
+import { iPhoneXHeight } from './constant'
 
 const windowSize = Dimensions.get('window')
 const WINDOW_WIDTH = windowSize.width
@@ -8,10 +9,9 @@ const WINDOW_HEIGHT = windowSize.height
 
 //default values for connect me
 const bottomNavBarHeight = 50
-//const bottomBlurNavBarHeight = 48;
 let bottomBlurNavBarHeight
 switch (WINDOW_HEIGHT) {
-  case 812:
+  case iPhoneXHeight:
     bottomBlurNavBarHeight = 82
     break
   default:
