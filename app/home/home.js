@@ -413,12 +413,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
           <Text style={{ fontSize: 80 }}>React Native</Text>
         </ScrollView>
         {Platform.OS === 'ios' ? (
-          <BlurView
-            style={styles.absolute}
-            viewRef={this.state.viewRef}
-            blurType="light"
-            blurAmount={8}
-          />
+          <BlurView style={styles.absolute} blurType="light" blurAmount={8} />
         ) : null}
       </View>
     )

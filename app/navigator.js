@@ -104,16 +104,18 @@ const styles = StyleSheet.create({
   //   borderTopWidth: 0,
   // },
   tabBarContainer: {
-    backgroundColor: color.bg.figmaStyle.color,
     borderStyle: 'solid',
     borderTopWidth: 1,
     borderTopColor: '#F2F2F2',
-    paddingVertical: 4,
-    height: 50,
+    backgroundColor:
+      Platform.OS === 'ios'
+        ? 'rgba(255, 255, 255, 0.8)'
+        : 'rgba(255, 255, 255, 255)',
     position: 'absolute',
-    left: 0,
-    right: 0,
     bottom: 0,
+    width: '100%',
+    height: measurements.bottomNavBarHeight,
+    zIndex: 100,
   },
   tabBarTitle: {
     marginBottom: -1,
@@ -324,18 +326,7 @@ const Tabs = createTabNavigator(
       menuTabRoute,
     ],
     tabBarOptions: {
-      style: {
-        backgroundColor:
-          Platform.OS === 'ios'
-            ? 'rgba(255, 255, 255, 0.8)'
-            : 'rgba(255, 255, 255, 255)',
-        position: 'absolute',
-        bottom: 0,
-        width: '100%',
-        height: measurements.bottomNavBarHeight,
-        zIndex: 100,
-        borderWidth: 0,
-      },
+      style: [styles.tabBarContainer],
       labelStyle: [styles.tabBarTitle],
       activeTintColor: color.actions.font.greenColor,
       inactiveTintColor: color.actions.sixth,
