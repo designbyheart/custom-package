@@ -60,7 +60,7 @@ import { getUnseenMessages } from '../store/store-selector'
 import { scale } from 'react-native-size-matters'
 import { size } from './../components/icon'
 import { BlurView } from 'react-native-blur'
-import measurements from '../common/styles/measurements'
+import { measurements } from '../common/styles/measurements'
 
 const { width, height } = Dimensions.get('window')
 

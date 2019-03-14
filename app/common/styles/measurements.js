@@ -18,7 +18,7 @@ switch (WINDOW_HEIGHT) {
     bottomBlurNavBarHeight = 48
 }
 
-export default {
+export const measurements = {
   WINDOW_WIDTH: WINDOW_WIDTH,
   WINDOW_HEIGHT: WINDOW_HEIGHT,
   bottomNavBarHeight,

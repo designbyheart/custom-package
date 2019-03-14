@@ -92,7 +92,7 @@ import {
   TAB_SCAN_TITLE,
 } from './type-navigator'
 import { Button } from 'react-native-elements'
-import measurements from './common/styles/measurements'
+import { measurements } from './common/styles/measurements'
 
 if (__DEV__) {
   require('../tools/reactotron-config')
