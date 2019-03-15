@@ -41,3 +41,9 @@ export type QuestionRequest = {
   valid_responses: Array<QuestionResponse>,
   '@timing': { expires_time: string },
 }
+
+export type QuestionStore = {
+  question?: ?QuestionPayload,
+}
+
+export type QuestionAction = QuestionReceivedAction

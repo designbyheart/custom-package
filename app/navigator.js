@@ -356,7 +356,7 @@ const transitionConfig = () => {
         transform: [{ translateY }],
       }
 
-      if (scene.route.routeName === 'SendLogs') {
+      if (scene.route.routeName === questionRoute) {
         return slideInFromBottom
       } else {
         return {

@@ -32,6 +32,7 @@ import proofRequest, {
 } from '../proof-request/proof-request-store'
 import invitation, { watchInvitation } from '../invitation/invitation-store'
 import claim, { watchClaim } from '../claim/claim-store'
+import question, { watchQuestion } from '../question/question-store'
 import proof, { watchProof } from '../proof/proof-store'
 import history, {
   watchConnectionHistory,
@@ -44,7 +45,6 @@ import backup, { watchBackup } from '../backup/backup-store'
 import sendlogs, { watchSendLogs } from '../send-logs/send-logs-store'
 import onfido, { watchOnfido } from '../onfido/onfido-store'
 import offline, { watchOffline } from '../offline/offline-store'
-import { watchQuestion } from '../question/question-store'
 import { hydrate } from './hydration-store'
 import {
   watchLedgerStore,
@@ -77,6 +77,7 @@ const appReducer = combineReducers({
   ledger,
   offline,
   onfido,
+  question,
 })
 
 let middlewares = [historyRecorder]
