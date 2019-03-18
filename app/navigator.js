@@ -1,10 +1,12 @@
 // @flow
 import React from 'react'
-import { StyleSheet, Animated, Easing } from 'react-native'
+import { StyleSheet, Animated, Easing, Platform } from 'react-native'
 import {
   createStackNavigator,
   TabBarBottom,
   createTabNavigator,
+  NavigationTransitionProps,
+  TransitionConfig,
 } from 'react-navigation'
 import AboutApp from './about-app/about-app'
 import AuthenticationScreen from './authentication/authentication'
@@ -322,7 +324,11 @@ const Tabs = createTabNavigator(
   }
 )
 
-const transitionConfig = () => {
+const transitionConfig = (
+  transitionProps: NavigationTransitionProps,
+  prevTransitionProps: ?NavigationTransitionProps,
+  isModal: boolean
+): TransitionConfig => {
   return {
     transitionSpec: {
       duration: checkIfAnimationToUse() ? 30 : 300,
@@ -331,21 +337,25 @@ const transitionConfig = () => {
       useNativeDriver: true,
     },
     screenInterpolator: sceneProps => {
-      const { layout, position, scene } = sceneProps
+      const { layout, position, scene, scenes } = sceneProps
+
+      const index = scene.index
+      const lastSceneIndexInScenes = scenes.length - 1
+      const isBack = !scenes[lastSceneIndexInScenes].isActive
 
       const thisSceneIndex = scene.index
       const height = layout.initHeight
       const width = layout.initWidth
 
-      // const scale = position.interpolate({
-      //   inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.7, thisSceneIndex],
-      //   outputRange: [0.5, 0.7, 1],
-      // })
+      const scale = position.interpolate({
+        inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.7, thisSceneIndex],
+        outputRange: [0.5, 0.7, 1],
+      })
 
-      // const opacity = position.interpolate({
-      //   inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.5, thisSceneIndex],
-      //   outputRange: [0, 0.3, 1],
-      // })
+      const opacity = position.interpolate({
+        inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.5, thisSceneIndex],
+        outputRange: [0, 0.3, 1],
+      })
 
       const translateY = position.interpolate({
         inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
@@ -356,7 +366,19 @@ const transitionConfig = () => {
         transform: [{ translateY }],
       }
 
-      if (scene.route.routeName === questionRoute) {
+      // console.log("end scene in scenes array: ", scenes[lastSceneIndexInScenes].route.routeName)
+      // console.log("current scene: ", scene.route.routeName)
+      if (
+        scenes[lastSceneIndexInScenes].route.routeName === questionRoute &&
+        scene.route.routeName !== questionRoute
+      ) {
+        // if (isBack) {
+        //   console.log("Going back to page: ", scene.route.routeName)
+        // }
+        return {
+          opacity: 1,
+        }
+      } else if (scene.route.routeName === questionRoute) {
         return slideInFromBottom
       } else {
         return {
