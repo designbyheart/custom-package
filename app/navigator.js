@@ -352,9 +352,13 @@ const transitionConfig = (
         outputRange: [0.5, 0.7, 1],
       })
 
+      // const opacity = position.interpolate({
+      //   inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.5, thisSceneIndex],
+      //   outputRange: [0, 0.3, 1],
+      // })
       const opacity = position.interpolate({
-        inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.5, thisSceneIndex],
-        outputRange: [0, 0.3, 1],
+        inputRange: [thisSceneIndex - 1, thisSceneIndex],
+        outputRange: [0, 1],
       })
 
       const translateY = position.interpolate({
@@ -362,12 +366,12 @@ const transitionConfig = (
         outputRange: [height, 200, 0],
       })
       const slideInFromBottom = {
-        opacity: 1,
+        opacity,
         transform: [{ translateY }],
       }
 
-      // console.log("end scene in scenes array: ", scenes[lastSceneIndexInScenes].route.routeName)
-      // console.log("current scene: ", scene.route.routeName)
+      //console.log("end scene in scenes array: ", scenes[lastSceneIndexInScenes].route.routeName)
+      //console.log("current scene: ", scene.route.routeName)
       if (
         scenes[lastSceneIndexInScenes].route.routeName === questionRoute &&
         scene.route.routeName !== questionRoute
@@ -376,7 +380,7 @@ const transitionConfig = (
         //   console.log("Going back to page: ", scene.route.routeName)
         // }
         return {
-          opacity: 1,
+          opacity: 0.3,
         }
       } else if (scene.route.routeName === questionRoute) {
         return slideInFromBottom
@@ -460,10 +464,6 @@ const CardStack = createStackNavigator(
       gesturesEnabled: false,
     },
     transitionConfig,
-    transparentCard: true,
-    cardStyle: {
-      opacity: 1,
-    },
   }
 )
 
@@ -495,8 +495,6 @@ const ConnectMeAppNavigator = createStackNavigator(
     mode: 'modal',
     headerMode: 'none',
     transitionConfig,
-    cardStyle: { opacity: 1 },
-    transparentCard: true,
   }
 )
 
