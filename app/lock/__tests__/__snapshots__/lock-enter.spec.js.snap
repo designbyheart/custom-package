@@ -871,7 +871,7 @@ exports[`<LockEnter /> should match snapshot for recovery flow 1`] = `
         }
         testID="set-up-new-passcode-recovery"
       >
-        Or Setup New Passcode
+        Or Set Up New Passcode
       </Text>
     </View>
   </RCTSafeAreaView>
