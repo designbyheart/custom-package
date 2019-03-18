@@ -174,5 +174,7 @@
 	<string>ConnectMe uses Apple Music.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>ConnectMe uses motion.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>ConnectMe uses the calendar.</string>
 </dict>
 </plist>
