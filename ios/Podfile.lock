@@ -33,13 +33,13 @@ PODS:
   - nanopb/encode (0.3.901)
   - Onfido (10.0.0)
   - Protobuf (3.6.1)
-  - vcx (0.0.85)
+  - vcx (0.0.86)
 
 DEPENDENCIES:
   - apptentive-ios (= 5.2.2)
   - Firebase/Messaging (= 4.8.0)
   - Onfido (= 10.0.0)
-  - vcx (= 0.0.85)
+  - vcx (= 0.0.86)
 
 SPEC REPOS:
   "git@github.com:evernym/indy-sdk.git":
