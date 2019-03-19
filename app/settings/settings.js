@@ -163,20 +163,12 @@ const style = StyleSheet.create({
     height: 24,
     marginHorizontal: 10,
   },
-  absolute: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    width: '100%',
-    height: 48,
-  },
 })
 
 export class Settings extends PureComponent<SettingsProps, SettingsState> {
   state = {
     walletBackupModalVisible: false,
     disableTouchIdSwitch: false,
-    viewRef: 15,
   }
   onChangePinClick = () => {
     if (this.props.navigation.isFocused()) {
