@@ -157,7 +157,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       <Container tertiary>
         <Container tertiary>
           <Banner navigation={this.props.navigation} />
-          //TODO: Add updateable FlatList, remove below code
+          {/* TODO: Add updateable FlatList, remove below code */}
           {connectionsCheck ? (
             <Bubbles
               navigation={this.props.navigation}
