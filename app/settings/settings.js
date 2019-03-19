@@ -8,7 +8,6 @@ import {
   ScrollView,
   FlatList,
   Image,
-  View,
   Button,
 } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
