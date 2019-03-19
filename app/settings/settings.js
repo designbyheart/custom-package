@@ -89,7 +89,6 @@ import { getWalletBalance } from '../store/store-selector'
 import CustomDate from '../components/custom-date/custom-date'
 import { matterhornSecondary } from '../common/styles/constant'
 import { tokenAmountSize } from '../home/home'
-import { BlurView } from 'react-native-blur'
 const { width, height } = Dimensions.get('window')
 
 const style = StyleSheet.create({
