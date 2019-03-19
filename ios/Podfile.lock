@@ -33,7 +33,7 @@ PODS:
   - nanopb/encode (0.3.901)
   - Onfido (10.0.0)
   - Protobuf (3.6.1)
-  - vcx (0.0.86)
+  - vcx (0.0.85)
 
 DEPENDENCIES:
   - apptentive-ios (= 5.2.2)

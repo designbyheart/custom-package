@@ -106,11 +106,11 @@ const styles = StyleSheet.create({
   tabBarContainer: {
     borderStyle: 'solid',
     borderTopWidth: 1,
-    borderTopColor: '#F2F2F2',
+    borderTopColor: color.bg.figmaStyle.topBorder,
     backgroundColor:
       Platform.OS === 'ios'
-        ? 'rgba(255, 255, 255, 0.8)'
-        : 'rgba(255, 255, 255, 255)',
+        ? color.bg.figmaStyle.iosBackgroundColor
+        : color.bg.figmaStyle.androidBackgroundColor,
     position: 'absolute',
     bottom: 0,
     width: '100%',
