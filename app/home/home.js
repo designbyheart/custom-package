@@ -156,266 +156,66 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
     const connectionsCheck = connections && connections.length > 0
 
     return (
-      // <Container tertiary>
-      //   <Container tertiary>
-      //     <Banner navigation={this.props.navigation} />
-      //     {connectionsCheck ? (
-      //       <Bubbles
-      //         navigation={this.props.navigation}
-      //         height={bubblesHeight}
-      //         connections={connections}
-      //         unSeenMessages={unSeenMessages}
-      //       />
-      //     ) : (
-      //       <Container center>
-      //         {/*Do not remove below commented code, it is commented only till we get a website up for faber*/}
-      //         {/* <View style={styles.messageBox}>
-      //           <CustomText demiBold primary h4 transparentBg>
-      //             {HOW_IT_WORKS}
-      //           </CustomText>
-      //           <Text
-      //             style={[
-      //               styles.messageBoxBodyText,
-      //               { paddingTop: 20, paddingBottom: 20 },
-      //             ]}
-      //           >
-      //             <Text style={{ color: color.actions.font.seventh }}>
-      //               {ON_COMPUTER}
-      //             </Text>
-      //             <Text
-      //               style={{
-      //                 color: color.bg.secondary.color,
-      //               }}
-      //             >
-      //               {GO_TO_FABER}
-      //             </Text>
-      //           </Text>
-      //           <CustomText
-      //             h4
-      //             style={[
-      //               { color: color.bg.secondary.color, paddingBottom: '40%' },
-      //             ]}
-      //             transparentBg
-      //           >
-      //             {USE_TUTORIAL}
-      //           </CustomText>
-      //         </View> */}
-      //       </Container>
-      //     )}
-      //     {!hydrated ? (
-      //       <Container center>
-      //         <Loader type="dark" delay={1000} />
-      //       </Container>
-      //     ) : null}
-      //     {/* DO not remove commented code */}
-      //     {/* <CustomView style={[styles.userAvatarContainer]}>
-      //       <UserAvatar />
-      //     </CustomView> */}
-      //   </Container>
-      // </Container>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <ScrollView
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-        >
-          <Button
-            title="FirstScreen Button"
-            onPress={() => this.props.navigation.navigate('Details')}
-          />
-          <Text style={{ fontSize: 96 }}>Scroll me plz</Text>
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Text style={{ fontSize: 96 }}>If you like</Text>
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Text style={{ fontSize: 96 }}>Scrolling down</Text>
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Text style={{ fontSize: 96 }}>What's the best</Text>
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Text style={{ fontSize: 96 }}>Framework around?</Text>
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Image
-            source={{
-              uri: 'https://facebook.github.io/react-native/img/favicon.png',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Text style={{ fontSize: 80 }}>React Native</Text>
-        </ScrollView>
+      <Container tertiary>
+        <Container tertiary>
+          <Banner navigation={this.props.navigation} />
+          {connectionsCheck ? (
+            <Bubbles
+              navigation={this.props.navigation}
+              height={bubblesHeight}
+              connections={connections}
+              unSeenMessages={unSeenMessages}
+            />
+          ) : (
+            <Container center>
+              {/*Do not remove below commented code, it is commented only till we get a website up for faber*/}
+              {/* <View style={styles.messageBox}>
+                <CustomText demiBold primary h4 transparentBg>
+                  {HOW_IT_WORKS}
+                </CustomText>
+                <Text
+                  style={[
+                    styles.messageBoxBodyText,
+                    { paddingTop: 20, paddingBottom: 20 },
+                  ]}
+                >
+                  <Text style={{ color: color.actions.font.seventh }}>
+                    {ON_COMPUTER}
+                  </Text>
+                  <Text
+                    style={{
+                      color: color.bg.secondary.color,
+                    }}
+                  >
+                    {GO_TO_FABER}
+                  </Text>
+                </Text>
+                <CustomText
+                  h4
+                  style={[
+                    { color: color.bg.secondary.color, paddingBottom: '40%' },
+                  ]}
+                  transparentBg
+                >
+                  {USE_TUTORIAL}
+                </CustomText>
+              </View> */}
+            </Container>
+          )}
+          {!hydrated ? (
+            <Container center>
+              <Loader type="dark" delay={1000} />
+            </Container>
+          ) : null}
+          {/* DO not remove commented code */}
+          {/* <CustomView style={[styles.userAvatarContainer]}>
+            <UserAvatar />
+          </CustomView> */}
+        </Container>
         {Platform.OS === 'ios' ? (
           <BlurView style={styles.absolute} blurType="light" blurAmount={8} />
         ) : null}
-      </View>
+      </Container>
     )
   }
 }
