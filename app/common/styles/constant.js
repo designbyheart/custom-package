@@ -58,8 +58,8 @@ const darkgray = '#4A4A4A'
 const jordyBlue = '#79ade7'
 const palePink = '#FFD5DB'
 const whiteTransparent = 'rgba(255, 255, 255, 0.85)'
-const androidWhiteSolidColor = 'rgba(255, 255, 255, 255)'
-const borderTopColor = '#F2F2F2'
+const whiteSolid = 'rgba(255, 255, 255, 255)'
+const cmGrey5 = '#F2F2F2'
 export const lightWhite = '#E5E5EA'
 
 // color shades
@@ -202,8 +202,8 @@ export const color = {
     },
     figmaStyle: {
       iosBackgroundColor: whiteTransparent,
-      topBorder: borderTopColor,
-      androidBackgroundColor: androidWhiteSolidColor,
+      topBorder: cmGrey5,
+      androidBackgroundColor: whiteSolid,
       font: {
         primary: white,
       },
