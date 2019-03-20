@@ -57,9 +57,9 @@ const errorBg = 'rgba(255, 214, 219, 1)'
 const darkgray = '#4A4A4A'
 const jordyBlue = '#79ade7'
 const palePink = '#FFD5DB'
-const whiteTransparent = 'rgba(255, 255, 255, 0.85)'
-const whiteSolid = 'rgba(255, 255, 255, 255)'
-const cmGrey5 = '#F2F2F2'
+export const whiteTransparent = 'rgba(255, 255, 255, 0.85)'
+export const whiteSolid = 'rgba(255, 255, 255, 255)'
+export const cmGrey5 = '#F2F2F2'
 export const lightWhite = '#E5E5EA'
 
 // color shades
@@ -196,14 +196,6 @@ export const color = {
     },
     dark: {
       color: black,
-      font: {
-        primary: white,
-      },
-    },
-    figmaStyle: {
-      iosBackgroundColor: whiteTransparent,
-      topBorder: cmGrey5,
-      androidBackgroundColor: whiteSolid,
       font: {
         primary: white,
       },

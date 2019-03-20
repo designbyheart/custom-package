@@ -93,6 +93,11 @@ import {
 } from './type-navigator'
 import { Button } from 'react-native-elements'
 import { measurements } from './common/styles/measurements'
+import {
+  whiteTransparent,
+  whiteSolid,
+  cmGrey5,
+} from '../app/common/styles/constant'
 
 if (__DEV__) {
   require('../tools/reactotron-config')
@@ -106,11 +111,8 @@ const styles = StyleSheet.create({
   tabBarContainer: {
     borderStyle: 'solid',
     borderTopWidth: 1,
-    borderTopColor: color.bg.figmaStyle.topBorder,
-    backgroundColor:
-      Platform.OS === 'ios'
-        ? color.bg.figmaStyle.iosBackgroundColor
-        : color.bg.figmaStyle.androidBackgroundColor,
+    borderTopColor: cmGrey5,
+    backgroundColor: Platform.OS === 'ios' ? whiteTransparent : whiteSolid,
     position: 'absolute',
     bottom: 0,
     width: '100%',
