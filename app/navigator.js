@@ -211,9 +211,7 @@ const Tabs = createTabNavigator(
           return (
             <SvgCustomIcon
               name="Connections"
-              fill={
-                focused ? color.actions.font.greenColor : color.actions.sixth
-              }
+              fill={focused ? color.actions.font.tenth : color.actions.sixth}
             />
           )
         },
@@ -273,18 +271,14 @@ const Tabs = createTabNavigator(
             return (
               <SvgCustomIcon
                 name="ScanOn"
-                fill={
-                  focused ? color.actions.font.greenColor : color.actions.sixth
-                }
+                fill={focused ? color.actions.font.tenth : color.actions.sixth}
               />
             )
           }
           return (
             <SvgCustomIcon
               name="Scan"
-              fill={
-                focused ? color.actions.font.greenColor : color.actions.sixth
-              }
+              fill={focused ? color.actions.font.tenth : color.actions.sixth}
             />
           )
         },
@@ -305,9 +299,7 @@ const Tabs = createTabNavigator(
             <CustomView style={[{ paddingTop: 10 }]}>
               <SvgCustomIcon
                 name="Menu"
-                fill={
-                  focused ? color.actions.font.greenColor : color.actions.sixth
-                }
+                fill={focused ? color.actions.font.tenth : color.actions.sixth}
               />
             </CustomView>
           )
@@ -330,7 +322,7 @@ const Tabs = createTabNavigator(
     tabBarOptions: {
       style: [styles.tabBarContainer],
       labelStyle: [styles.tabBarTitle],
-      activeTintColor: color.actions.font.greenColor,
+      activeTintColor: color.actions.font.tenth,
       inactiveTintColor: color.actions.sixth,
     },
     tabBarComponent: TabBarBottom,

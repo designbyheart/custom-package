@@ -99,7 +99,7 @@ export const color = {
       seventh: yellowSea,
       eighth: lightDarkBlue,
       ninth: white,
-      greenColor: atlantis,
+      tenth: atlantis,
     },
   },
   bg: {
