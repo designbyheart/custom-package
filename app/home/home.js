@@ -6,9 +6,9 @@ import {
   Platform,
   Dimensions,
   View,
-  Text,
-  FlatList,
+  Text
 } from 'react-native'
+
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import {
@@ -57,6 +57,8 @@ import { NavigationActions } from 'react-navigation'
 import { getUnseenMessages } from '../store/store-selector'
 import { scale } from 'react-native-size-matters'
 import { size } from './../components/icon'
+import { BlurView } from 'react-native-blur'
+import { measurements } from '../common/styles/measurements'
 
 const { width, height } = Dimensions.get('window')
 
@@ -211,6 +213,9 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
             <UserAvatar />
           </CustomView> */}
         </Container>
+        {Platform.OS === 'ios' ? (
+          <BlurView style={styles.absolute} blurType="light" blurAmount={8} />
+        ) : null}
       </Container>
     )
   }
@@ -278,5 +283,12 @@ const styles = StyleSheet.create({
   },
   messageBoxBodyText: {
     fontSize: 20,
+  },
+  absolute: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    height: measurements.bottomBlurNavBarHeight,
   },
 })

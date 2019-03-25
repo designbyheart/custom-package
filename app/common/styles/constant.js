@@ -57,6 +57,9 @@ const errorBg = 'rgba(255, 214, 219, 1)'
 const darkgray = '#4A4A4A'
 const jordyBlue = '#79ade7'
 const palePink = '#FFD5DB'
+export const whiteTransparent = 'rgba(255, 255, 255, 0.85)'
+export const whiteSolid = 'rgba(255, 255, 255, 255)'
+export const cmGrey5 = '#F2F2F2'
 export const lightWhite = '#E5E5EA'
 
 // color shades
@@ -96,6 +99,7 @@ export const color = {
       seventh: yellowSea,
       eighth: lightDarkBlue,
       ninth: white,
+      tenth: atlantis,
     },
   },
   bg: {
@@ -197,6 +201,7 @@ export const color = {
       },
     },
   },
+
   border: {
     primary: whisper,
     secondary: yellowSea,
@@ -211,6 +216,7 @@ export const color = {
 
 export const font = {
   size: {
+    XXXS: 10,
     XXS: 11,
     XS: 12,
     S: 15,
