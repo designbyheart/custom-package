@@ -197,24 +197,6 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
       }
     />
   </View>
-  <BlurView
-    blurAmount={8}
-    blurType="light"
-    style={
-      Array [
-        Object {
-          "backgroundColor": "transparent",
-        },
-        Object {
-          "bottom": 0,
-          "height": 48,
-          "left": 0,
-          "position": "absolute",
-          "width": "100%",
-        },
-      ]
-    }
-  />
 </View>
 `;
 
@@ -415,24 +397,6 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
       }
     />
   </View>
-  <BlurView
-    blurAmount={8}
-    blurType="light"
-    style={
-      Array [
-        Object {
-          "backgroundColor": "transparent",
-        },
-        Object {
-          "bottom": 0,
-          "height": 48,
-          "left": 0,
-          "position": "absolute",
-          "width": "100%",
-        },
-      ]
-    }
-  />
 </View>
 `;
 
@@ -643,23 +607,5 @@ exports[`<DashboardScreen /> should render Home and show loader 1`] = `
       }
     />
   </View>
-  <BlurView
-    blurAmount={8}
-    blurType="light"
-    style={
-      Array [
-        Object {
-          "backgroundColor": "transparent",
-        },
-        Object {
-          "bottom": 0,
-          "height": 48,
-          "left": 0,
-          "position": "absolute",
-          "width": "100%",
-        },
-      ]
-    }
-  />
 </View>
 `;

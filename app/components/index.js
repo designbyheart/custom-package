@@ -37,7 +37,4 @@ export { default as CustomDate } from './custom-date/custom-date'
 export { default as UserAvatar } from './user-avatar/user-avatar'
 export { default as Keyboard } from './keyboard/keyboard'
 export { default as CustomHeader } from './custom-header/custom-header'
-export {
-  default as CustomizableHeader,
-} from './customizable-header/customizable-header'
 export { default as Loader } from './loader/loader'
