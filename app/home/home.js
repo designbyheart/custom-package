@@ -6,7 +6,7 @@ import {
   Platform,
   Dimensions,
   View,
-  Text
+  Text,
 } from 'react-native'
 
 import { connect } from 'react-redux'
@@ -135,13 +135,6 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       firebase.notifications().setBadge(0)
     }
   }
-
-  updateConnectionCards = () => {
-    const connectionsCheck = connections && connections.length > 0
-
-    if (connectionsCheck) connectionCards.push(connections)
-  }
-
   render() {
     const bubblesHeight = this.state.scrollY.interpolate({
       inputRange: [0, 5],
