@@ -2464,7 +2464,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = ConnectMe/ConnectMe.entitlements;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Evernym Automation (3XVZBU8VAE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: IT Evernym (L2TWAW7TG8)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 827;
 				DEAD_CODE_STRIPPING = NO;
@@ -2502,7 +2502,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.evernym.connectme.callcenter;
 				PRODUCT_NAME = ConnectMe;
-				PROVISIONING_PROFILE = "5d536e00-2c2a-4d62-bdd3-de1526c2ed68";
+				PROVISIONING_PROFILE = "cebc52fe-c9ba-4d07-8e31-9919e070cee4";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.evernym.connectme.callcenter";
 				SWIFT_OBJC_BRIDGING_HEADER = "ConnectMe/ConnectMe-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
