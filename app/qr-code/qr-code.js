@@ -291,7 +291,6 @@ export class QRCodeScannerScreen extends PureComponent<
       //so that it doesn't look odd
       <Container dark collapsable={true}>
         {this.state.isCameraAuthorized &&
-        this.state.isCameraEnabled &&
         this.props.currentScreen === qrCodeScannerTabRoute ? (
           <QRScanner
             onRead={this.onRead}

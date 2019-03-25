@@ -165,7 +165,7 @@ export class LockEnter extends PureComponent<LockEnterProps, LockEnterState> {
                 onPress={this.props.setupNewPassCode}
                 testID={'set-up-new-passcode-recovery'}
               >
-                Or Setup New Passcode
+                Or Set Up New Passcode
               </CustomText>
             </CustomView>
           </Container>

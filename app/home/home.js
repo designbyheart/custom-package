@@ -6,10 +6,7 @@ import {
   Platform,
   Dimensions,
   View,
-  Text,
-  ScrollView,
-  Button,
-  Image,
+  Text
 } from 'react-native'
 
 import { connect } from 'react-redux'
@@ -22,6 +19,7 @@ import {
   CustomText,
   CustomHeader,
   Loader,
+  CustomizableHeader,
 } from '../components'
 
 import { createStackNavigator } from 'react-navigation'
@@ -68,67 +66,63 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
   state = {
     scrollY: new Animated.Value(0),
   }
+  connectionCards = []
 
   static navigationOptions = ({ navigation }) => ({
     header: (
-      <CustomHeader
-        backgroundColor={whiteSmokeSecondary}
-        outerContainerStyles={styles.headerOuterContainer}
-        largeHeader
-      >
-        {/* DO NOT REMOVE THIS COMMENTED CODE */}
-        {/* Below code is commented just because we don't want to release this as of now */}
-        {/* <WalletBalance
-          render={balance => (
-            <CustomView
-              row
-              center
-              onPress={() => {
-                const navigateAction = NavigationActions.navigate({
-                  routeName: walletRoute,
-                  key: walletRoute,
-                })
-                navigation.dispatch(navigateAction)
-              }}
-              testID={SOVRINTOKEN_AMOUNT_TEST_ID}
-            >
-              <Icon
-                small
-                testID={SOVRINTOKEN_TEST_ID}
-                src={require('../images/sovrinTokenOrange.png')}
-              />
-              <CustomText
-                h5
-                demiBold
-                center
-                style={[
-                  styles.floatTokenAmount,
-                  {
-                    fontSize: tokenAmountSize(balance ? balance.length : 0),
-                  },
-                ]}
-                transparentBg
-                testID={SOVRINTOKEN_AMOUNT_TEST_ID}
-                formatNumber
-              >
-                {balance}
-              </CustomText>
-            </CustomView>
-          )}
-        /> */}
-        {/* Added blank view because we removed above view
-          so this view keeps feedback icon to left */}
-        <CustomView />
+      <CustomizableHeader headerType="primary" />
+      // {/* DO NOT REMOVE THIS COMMENTED CODE */}
+      // {/* Below code is commented just because we don't want to release this as of now */}
+      // {/* <WalletBalance
+      //   render={balance => (
+      //     <CustomView
+      //       row
+      //       center
+      //       onPress={() => {
+      //         const navigateAction = NavigationActions.navigate({
+      //           routeName: walletRoute,
+      //           key: walletRoute,
+      //         })
+      //         navigation.dispatch(navigateAction)
+      //       }}
+      //       testID={SOVRINTOKEN_AMOUNT_TEST_ID}
+      //     >
+      //       <Icon
+      //         small
+      //         testID={SOVRINTOKEN_TEST_ID}
+      //         src={require('../images/sovrinTokenOrange.png')}
+      //       />
+      //       <CustomText
+      //         h5
+      //         demiBold
+      //         center
+      //         style={[
+      //           styles.floatTokenAmount,
+      //           {
+      //             fontSize: tokenAmountSize(balance ? balance.length : 0),
+      //           },
+      //         ]}
+      //         transparentBg
+      //         testID={SOVRINTOKEN_AMOUNT_TEST_ID}
+      //         formatNumber
+      //       >
+      //         {balance}
+      //       </CustomText>
+      //     </CustomView>
+      //   )}
+      // /> */}
+      // {/* Added blank view because we removed above view
+      //   so this view keeps feedback icon to left */}
+      // {/* <CustomView />
 
-        <CustomView horizontalSpace>
-          <Icon
-            medium
-            onPress={() => Apptentive.presentMessageCenter()}
-            testID={FEEDBACK_TEST_ID}
-            src={require('../images/icon_feedback_grey.png')}
-          />
-        </CustomView>
-      </CustomHeader>
+      // <CustomView horizontalSpace>
+      //   <Icon
+      //     medium
+      //     onPress={() => Apptentive.presentMessageCenter()}
+      //     testID={FEEDBACK_TEST_ID}
+      //     src={require('../images/icon_feedback_grey.png')}
+      //   />
+      // </CustomView> */}
     ),
   })
 
@@ -140,6 +134,12 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
     if (noUnSeenMessages) {
       firebase.notifications().setBadge(0)
     }
+  }
+
+  updateConnectionCards = () => {
+    const connectionsCheck = connections && connections.length > 0
+
+    if (connectionsCheck) connectionCards.push(connections)
   }
 
   render() {
@@ -159,6 +159,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       <Container tertiary>
         <Container tertiary>
           <Banner navigation={this.props.navigation} />
+          {/* TODO: Add updateable FlatList, remove below code */}
           {connectionsCheck ? (
             <Bubbles
               navigation={this.props.navigation}
