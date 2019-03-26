@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   tabBarTitle: {
-    marginBottom: -1,
     fontSize: font.size.XXXS,
     fontWeight: 'bold',
   },
