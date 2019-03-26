@@ -392,6 +392,9 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
       ]
     }
   />
+      }
+    />
+  </View>
 </View>
 `;
 
@@ -479,6 +482,7 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
             "fontSize": 96,
           }
         }
+<<<<<<< HEAD
       >
         Scroll me plz
       </Text>
@@ -787,6 +791,11 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
       ]
     }
   />
+=======
+      }
+    />
+  </View>
+>>>>>>> master
 </View>
 `;
 
@@ -885,6 +894,7 @@ exports[`<DashboardScreen /> should render Home and show loader 1`] = `
             "width": 64,
           }
         }
+<<<<<<< HEAD
       />
       <Image
         source={
@@ -1182,5 +1192,10 @@ exports[`<DashboardScreen /> should render Home and show loader 1`] = `
       ]
     }
   />
+=======
+      }
+    />
+  </View>
+>>>>>>> master
 </View>
 `;
