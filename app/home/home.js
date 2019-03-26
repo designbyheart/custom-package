@@ -215,8 +215,6 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ScrollView
           style={{
-            borderWidth: 3,
-            borderColor: 'red',
             width: '100%',
             height: '100%',
           }}
