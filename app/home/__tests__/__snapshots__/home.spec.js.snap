@@ -13,8 +13,6 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
   <RCTScrollView
     style={
       Object {
-        "borderColor": "red",
-        "borderWidth": 3,
         "height": "100%",
         "width": "100%",
       }
@@ -410,8 +408,6 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
   <RCTScrollView
     style={
       Object {
-        "borderColor": "red",
-        "borderWidth": 3,
         "height": "100%",
         "width": "100%",
       }
@@ -807,8 +803,6 @@ exports[`<DashboardScreen /> should render Home and show loader 1`] = `
   <RCTScrollView
     style={
       Object {
-        "borderColor": "red",
-        "borderWidth": 3,
         "height": "100%",
         "width": "100%",
       }
