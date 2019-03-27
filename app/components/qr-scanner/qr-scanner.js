@@ -157,6 +157,7 @@ export default class QRScanner extends PureComponent<
             <CameraMarker
               status={this.state.scanStatus}
               onClose={this.props.onClose}
+              captureAudio={false}
             />
           </RNCamera>
         ) : null}
