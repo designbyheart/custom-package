@@ -76,7 +76,8 @@
     "redux-logger": "^3.0.1",
     "redux-saga": "0.16.0",
     "url": "0.11.0",
-    "url-parse": "^1.2.0"
+    "url-parse": "^1.2.0",
+    "react-native-blur": "3.2.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
@@ -84,7 +85,7 @@
     "babel-plugin-jest-hoist": "22.4.4",
     "babel-preset-react-native": "4.0.0",
     "child-process-async": "^1.0.1",
-    "detox": "^9.0.5",
+    "detox": "^12.1.1",
     "eslint": "^3.19.0",
     "eslint-plugin-flowtype": "^2.47.1",
     "eslint-plugin-import": "^2.2.0",

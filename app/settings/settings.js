@@ -8,6 +8,7 @@ import {
   ScrollView,
   FlatList,
   Image,
+  Button,
 } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import BackupWallet from './backup-wallet'
