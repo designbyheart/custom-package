@@ -229,7 +229,7 @@ dependencies {
     // compile 'com.evernym:vcx:1.0.0-25-01-2019T17-14@aar'
     // compile 'com.evernym:vcx:0.2.35288886-baaa532@aar'
     // current libvcx aar
-    compile 'com.evernym:vcx:0.2.38307483-ef2ae4b@aar'
+    compile 'com.evernym:vcx:0.2.38387956-45c8fe9@aar'
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.6.2'
     implementation 'net.sourceforge.streamsupport:android-retrostreams:1.6.2'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.59'

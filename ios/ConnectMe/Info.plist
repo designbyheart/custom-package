@@ -176,5 +176,7 @@
 	<string>ConnectMe uses motion.</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>ConnectMe uses the calendar.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>ConnectMe uses the location always.</string>
 </dict>
 </plist>
