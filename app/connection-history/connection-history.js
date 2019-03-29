@@ -66,6 +66,7 @@ import { getUnseenMessages } from '../store/store-selector'
 import { goToUIScreen } from '../push-notification/push-notification-store'
 import Color from 'color'
 import { getStatusBarStyle } from '../components/custom-header/custom-header'
+import { QUESTION_RECEIVED } from '../question/type-question'
 
 const statusMsg = {
   ['PENDING']: 'Pending',
@@ -75,6 +76,7 @@ const statusMsg = {
   ['SHARED']: 'Sent on',
   ['PROOF RECEIVED']: 'New request to share',
   ['CLAIM OFFER RECEIVED']: 'New credential offer',
+  [QUESTION_RECEIVED]: 'New message',
 }
 
 const historyIcons = {
@@ -85,9 +87,14 @@ const historyIcons = {
   ['PROOF RECEIVED']: require('../images/received.png'),
   ['ACCEPTED & SAVED']: require('../images/received.png'),
   ['SHARED']: require('../images/sent.png'),
+  [QUESTION_RECEIVED]: require('../images/received.png'),
 }
 
-const historyShowUI = ['CLAIM OFFER RECEIVED', 'PROOF RECEIVED']
+const historyShowUI = [
+  'CLAIM OFFER RECEIVED',
+  'PROOF RECEIVED',
+  QUESTION_RECEIVED,
+]
 
 const HistoryTitle = ({ action, name, theme }) => (
   <CustomView>

@@ -90,7 +90,7 @@ import type {
 } from './type-config-store'
 import type { CustomError } from '../common/type-common'
 import { downloadEnvironmentDetails } from '../api/api'
-import schemaValidator from '../services/schema-validator'
+import { schemaValidator } from '../services/schema-validator'
 import type { EnvironmentDetailUrlDownloaded } from '../api/type-api'
 import {
   init,

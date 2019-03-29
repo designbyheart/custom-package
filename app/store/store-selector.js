@@ -1,19 +1,27 @@
 // @flow
 import type { Store } from './type-store'
 import type { ClaimOfferStore } from '../claim-offer/type-claim-offer'
-import type { ProofRequestStore } from '../proof-request/type-proof-request'
+import type {
+  ProofRequestStore,
+  ProofRequestPayload,
+} from '../proof-request/type-proof-request'
 import type {
   ClaimOfferPayload,
   SerializedClaimOffersPerDid,
 } from '../claim-offer/type-claim-offer'
 import type { Connections, Connection } from './type-connection-store'
 import type { ConnectionHistoryEvent } from '../connection-history/type-connection-history'
+import type {
+  QuestionStoreData,
+  QuestionStoreMessage,
+} from '../question/type-question'
 import RNFetchBlob from 'react-native-fetch-blob'
 import { Platform } from 'react-native'
 import { whiteSmoke } from '../common/styles/constant'
 import memoize from 'lodash.memoize'
 import { CLAIM_OFFER_STATUS } from './../claim-offer/type-claim-offer'
 import { PROOF_REQUEST_STATUS } from './../proof-request/type-proof-request'
+import { QUESTION_STATUS } from '../question/type-question'
 
 export const getConfig = (state: Store) => state.config
 
@@ -325,13 +333,14 @@ export const getLogEncryptionStatus = (state: Store) =>
 export const getBackupShowBanner = (state: Store) => state.backup.showBanner
 
 const addUidsWithStatusToConnections = (
-  events: ProofRequestStore | ClaimOfferStore,
+  events: ProofRequestStore | ClaimOfferStore | QuestionStoreData,
   filterStatus,
-  obj
+  obj,
+  getRemotePairwiseDid: any => string
 ) => {
   ;(Object.keys(events): Array<string>).map(uid => {
     if (events[uid].status === filterStatus) {
-      const remoteDid: string = events[uid].remotePairwiseDID
+      const remoteDid: string = getRemotePairwiseDid(events[uid])
       obj[remoteDid] = obj[remoteDid] || []
       obj[remoteDid].push(uid)
     }
@@ -341,20 +350,36 @@ const addUidsWithStatusToConnections = (
 //  getUnseenMessages should take a connection, and parse though claim store and proof requests for unseen messages and return a json object like bellow.
 export const getUnseenMessages = memoize(
   (state: Store) => {
-    const { claimOffer, proofRequest } = state
+    const { claimOffer, proofRequest, question } = state
     let obj = {}
 
-    addUidsWithStatusToConnections(claimOffer, CLAIM_OFFER_STATUS.RECEIVED, obj)
+    addUidsWithStatusToConnections(
+      claimOffer,
+      CLAIM_OFFER_STATUS.RECEIVED,
+      obj,
+      (claimOfferMessage: ClaimOfferPayload) =>
+        claimOfferMessage.remotePairwiseDID
+    )
     addUidsWithStatusToConnections(
       proofRequest,
       PROOF_REQUEST_STATUS.RECEIVED,
-      obj
+      obj,
+      (proofRequestMessage: ProofRequestPayload) =>
+        proofRequestMessage.remotePairwiseDID
+    )
+    addUidsWithStatusToConnections(
+      question.data,
+      QUESTION_STATUS.RECEIVED,
+      obj,
+      (questionMessage: QuestionStoreMessage) =>
+        questionMessage.payload.from_did
     )
     return obj
   },
-  ({ claimOffer, proofRequest }) => ({
+  ({ claimOffer, proofRequest, question }) => ({
     ...claimOffer,
     ...proofRequest,
+    ...question.data,
   })
 )
 

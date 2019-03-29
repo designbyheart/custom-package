@@ -16,6 +16,10 @@ import {
   HISTORY_EVENT_STORAGE_KEY,
 } from './type-connection-history'
 import { historyEventOccurred } from './connection-history-store'
+import {
+  QUESTION_RECEIVED,
+  UPDATE_QUESTION_ANSWER,
+} from '../question/type-question'
 
 const actionToRecord = [
   // removing invitation received from record array
@@ -30,6 +34,8 @@ const actionToRecord = [
   SEND_CLAIM_REQUEST_SUCCESS,
   CLAIM_STORAGE_SUCCESS,
   SEND_PROOF_SUCCESS,
+  QUESTION_RECEIVED,
+  UPDATE_QUESTION_ANSWER,
 ]
 
 // TODO:KS Fix any type using `redux` provided Generic Types

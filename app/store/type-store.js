@@ -20,6 +20,7 @@ import type { RestoreStore } from '../restore/type-restore'
 import type { LedgerStore } from './ledger/type-ledger-store'
 import type { OfflineStore } from '../offline/type-offline'
 import type { OnfidoStore } from '../onfido/type-onfido'
+import type { QuestionStore } from '../question/type-question'
 
 export type PushNotificationStore = {
   isAllowed: boolean,
@@ -61,6 +62,7 @@ export type Store = {
   ledger: LedgerStore,
   offline: OfflineStore,
   onfido: OnfidoStore,
+  question: QuestionStore,
 }
 
 export type { AuthenticationStore } from '../authentication/type-authentication'

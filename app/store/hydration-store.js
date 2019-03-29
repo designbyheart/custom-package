@@ -92,6 +92,8 @@ import {
   removePersistedOnfidoApplicantIdSaga,
   removePersistedOnfidoDidSaga,
 } from '../onfido/onfido-store'
+import { hydrateQuestionSaga } from '../question/question-store'
+import { QUESTION_STORAGE_KEY } from '../question/type-question'
 
 export function* deleteDeviceSpecificData(): Generator<*, *, *> {
   try {
@@ -130,6 +132,7 @@ function* deleteSecureStorageData(): Generator<*, *, *> {
       HISTORY_EVENT_STORAGE_KEY,
       PIN_HASH,
       SALT,
+      QUESTION_STORAGE_KEY,
     ]
     const deleteOperations = []
     for (let index = 0; index < secureKeysToDelete.length; index++) {
@@ -275,6 +278,7 @@ export function* hydrate(): any {
       yield* hydrateClaimMapSaga()
       yield* hydrateClaimOffersSaga()
       yield* loadHistorySaga()
+      yield* hydrateQuestionSaga()
 
       if (inRecovery === 'true') {
         // TODO: Move vcx shutdown logic inside ensureVcxInitSuccess

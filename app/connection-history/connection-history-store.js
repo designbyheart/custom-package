@@ -60,6 +60,7 @@ import type {
   SendProofSuccessAction,
   ProofRequestPayload,
 } from '../proof-request/type-proof-request'
+import type { QuestionReceivedAction } from '../question/type-question'
 import {
   PROOF_REQUEST_RECEIVED,
   SEND_PROOF_SUCCESS,
@@ -81,6 +82,11 @@ import { RESET } from '../common/type-common'
 import { CLAIM_OFFER_RECEIVED } from '../claim-offer/type-claim-offer'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
+import {
+  QUESTION_RECEIVED,
+  UPDATE_QUESTION_ANSWER,
+} from '../question/type-question'
+import { MESSAGE_TYPE } from '../api/api-constants'
 
 const initialState = {
   error: null,
@@ -294,6 +300,25 @@ export function convertProofSendToHistoryEvent(
   }
 }
 
+export function convertQuestionReceivedToHistoryEvent(
+  action: QuestionReceivedAction
+) {
+  return {
+    action: HISTORY_EVENT_STATUS[QUESTION_RECEIVED],
+    data: action.question,
+    id: uuid(),
+    name: '',
+    status: HISTORY_EVENT_STATUS[QUESTION_RECEIVED],
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.QUESTION,
+    remoteDid: action.question.from_did,
+    originalPayload: {
+      payloadInfo: action.question,
+      type: MESSAGE_TYPE.QUESTION,
+    },
+  }
+}
+
 export const recordHistoryEvent = (historyEvent: ConnectionHistoryEvent) => ({
   type: RECORD_HISTORY_EVENT,
   historyEvent,
@@ -400,6 +425,13 @@ export function* historyEventOccurredSaga(
         PROOF_REQUEST_RECEIVED
       )
       if (oldHistoryEvent) yield put(deleteHistoryEvent(oldHistoryEvent))
+    }
+
+    if (event.type === QUESTION_RECEIVED) {
+      historyEvent = convertQuestionReceivedToHistoryEvent(event)
+    }
+
+    if (event.type === UPDATE_QUESTION_ANSWER) {
     }
 
     if (historyEvent) {

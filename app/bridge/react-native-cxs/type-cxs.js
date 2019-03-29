@@ -200,3 +200,17 @@ export type WalletTokenInfo = {
 }
 
 export const smallDeviceMemory = 1073741824
+
+export type SignDataResponse = {
+  data: string,
+  signature: string,
+}
+
+export const signDataResponseSchema = {
+  type: 'object',
+  properties: {
+    data: { type: 'string', minLength: 1 },
+    signature: { type: 'string', minLength: 1 },
+  },
+  required: ['data', 'signature'],
+}
