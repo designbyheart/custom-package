@@ -153,11 +153,14 @@ export default class QRScanner extends PureComponent<
     return (
       <Container>
         {this.state.cameraActive ? (
-          <RNCamera onBarCodeRead={this.onRead} style={[cameraStyle.camera]}>
+          <RNCamera
+            onBarCodeRead={this.onRead}
+            style={[cameraStyle.camera]}
+            captureAudio={false}
+          >
             <CameraMarker
               status={this.state.scanStatus}
               onClose={this.props.onClose}
-              captureAudio={false}
             />
           </RNCamera>
         ) : null}
