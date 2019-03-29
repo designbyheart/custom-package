@@ -69,7 +69,7 @@ export type QuestionPayload = {
   uid: string,
   from_did: string,
   forDID: string,
-  remotePairwiseDID: string,
+  remotePairwiseDID?: string,
 }
 
 export type QuestionRequest = {
