@@ -95,10 +95,10 @@
 	<string>Enabling Face ID allows you quick and secure access to your app.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow us access to Camera so that we can scan QR code</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Please allow us access to Photo library so that you can change your profile photo</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>ConnectMe uses location.</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>ConnectMe uses photo library.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
