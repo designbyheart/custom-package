@@ -93,3 +93,19 @@ export type StoreError = { +error: ?CustomError }
 export type StoreStatus = { +status: $Keys<typeof STORE_STATUS> }
 
 export type StatusBarStyle = 'default' | 'light-content' | 'dark-content'
+
+export const ERROR_VCX_INIT_FAIL = (message: ?string) => ({
+  code: 'CM-001',
+  message: `VCX_INIT Failed ${message || ''}`,
+})
+
+export const STORAGE_STATUS = {
+  IDLE: 'IDLE',
+  RESTORE_START: 'RESTORE_START',
+  RESTORE_SUCCESS: 'RESTORE_SUCCESS',
+  RESTORE_FAIL: 'RESTORE_FAIL',
+  PERSIST_START: 'PERSIST_START',
+  PERSIST_FAIL: 'PERSIST_FAIL',
+  PERSIST_SUCCESS: 'PERSIST_SUCCESS',
+}
+export type StorageStatus = $Keys<typeof STORAGE_STATUS>

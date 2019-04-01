@@ -23,6 +23,7 @@ import type {
   VcxProofRequest,
   WalletTokenInfo,
   PaymentAddress,
+  SignDataResponse,
 } from './type-cxs'
 import type { InvitationPayload } from '../../invitation/type-invitation'
 import {
@@ -54,10 +55,11 @@ import type { GenericStringObject } from '../../common/type-common'
 import type { Passphrase } from '../../backup/type-backup'
 import type { GetClaimVcxResult } from '../../claim/type-claim'
 import uniqueId from 'react-native-unique-id'
-import { smallDeviceMemory } from './type-cxs'
+import { smallDeviceMemory, signDataResponseSchema } from './type-cxs'
 import { secureSet } from '../../services/storage'
 import { __uniqueId } from '../../store/type-config-store'
 import type { LedgerFeesData } from '../../store/ledger/type-ledger-store'
+import { schemaValidator } from '../../services/schema-validator'
 
 const { RNIndy } = NativeModules
 
@@ -579,4 +581,65 @@ export async function getBiometricError(): Promise<string> {
     return await RNIndy.getBiometricError()
   }
   return ''
+}
+
+export async function connectionSendMessage(
+  connectionHandle: number,
+  message: string,
+  messageType: string,
+  messageTitle: string
+): Promise<string> {
+  const msgId: string = await RNIndy.connectionSendMessage(
+    connectionHandle,
+    message,
+    messageType,
+    messageTitle
+  )
+
+  // since we are calling an external API, we need to make sure that
+  // the data that we are receiving is the data that we need
+  if (typeof msgId !== 'string' || msgId.length === 0) {
+    throw new Error(
+      `Invalid data received from wrapper. Excepted msgId, got ${msgId}`
+    )
+  }
+
+  return msgId
+}
+
+export async function connectionSignData(
+  connectionHandle: number,
+  data: string
+): Promise<SignDataResponse> {
+  const response: SignDataResponse = await RNIndy.connectionSignData(
+    connectionHandle,
+    data
+  )
+
+  // external API data needs to be validated
+  if (!schemaValidator.validate(signDataResponseSchema, response)) {
+    // if data is not as per our expectation from external API
+    // then we raise invalid data error
+    throw new Error(`Invalid data received`)
+  }
+
+  return response
+}
+
+export async function connectionVerifySignature(
+  connectionHandle: number,
+  data: string,
+  signature: string
+): Promise<boolean> {
+  const response: boolean = await RNIndy.connectionVerifySignature(
+    connectionHandle,
+    data,
+    signature
+  )
+
+  if (typeof response !== 'boolean') {
+    throw new Error(`Expected response type was boolean but got ${response}`)
+  }
+
+  return response
 }
