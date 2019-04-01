@@ -11,10 +11,10 @@ let bottomBlurNavBarHeight
 
 switch (WINDOW_HEIGHT) {
   case iPhoneXHeight:
-    bottomBlurNavBarHeight = 82
+    bottomBlurNavBarHeight = 83
     break
   default:
-    bottomBlurNavBarHeight = 48
+    bottomBlurNavBarHeight = 49
 }
 
 export const measurements = {
