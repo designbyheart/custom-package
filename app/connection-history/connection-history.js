@@ -66,7 +66,10 @@ import { getUnseenMessages } from '../store/store-selector'
 import { goToUIScreen } from '../push-notification/push-notification-store'
 import Color from 'color'
 import { getStatusBarStyle } from '../components/custom-header/custom-header'
-import { QUESTION_RECEIVED } from '../question/type-question'
+import {
+  QUESTION_RECEIVED,
+  UPDATE_QUESTION_ANSWER,
+} from '../question/type-question'
 
 const statusMsg = {
   ['PENDING']: 'Pending',
@@ -77,6 +80,7 @@ const statusMsg = {
   ['PROOF RECEIVED']: 'New request to share',
   ['CLAIM OFFER RECEIVED']: 'New credential offer',
   [QUESTION_RECEIVED]: 'New message',
+  [UPDATE_QUESTION_ANSWER]: 'You answered',
 }
 
 const historyIcons = {
@@ -88,12 +92,14 @@ const historyIcons = {
   ['ACCEPTED & SAVED']: require('../images/received.png'),
   ['SHARED']: require('../images/sent.png'),
   [QUESTION_RECEIVED]: require('../images/received.png'),
+  [UPDATE_QUESTION_ANSWER]: require('../images/sent.png'),
 }
 
 const historyShowUI = [
   'CLAIM OFFER RECEIVED',
   'PROOF RECEIVED',
   QUESTION_RECEIVED,
+  UPDATE_QUESTION_ANSWER,
 ]
 
 const HistoryTitle = ({ action, name, theme }) => (
@@ -291,7 +297,10 @@ export class ConnectionHistory extends Component<
             },
           }
 
-          if (h.action === 'CONNECTED') {
+          if (
+            h.action === 'CONNECTED' ||
+            h.action === HISTORY_EVENT_STATUS[UPDATE_QUESTION_ANSWER]
+          ) {
             itemProps.hideChevron = true
             delete itemProps.onPress
           }

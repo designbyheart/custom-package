@@ -60,7 +60,11 @@ import type {
   SendProofSuccessAction,
   ProofRequestPayload,
 } from '../proof-request/type-proof-request'
-import type { QuestionReceivedAction } from '../question/type-question'
+import type {
+  QuestionReceivedAction,
+  QuestionPayload,
+  UpdateQuestionAnswerAction,
+} from '../question/type-question'
 import {
   PROOF_REQUEST_RECEIVED,
   SEND_PROOF_SUCCESS,
@@ -302,7 +306,7 @@ export function convertProofSendToHistoryEvent(
 
 export function convertQuestionReceivedToHistoryEvent(
   action: QuestionReceivedAction
-) {
+): ConnectionHistoryEvent {
   return {
     action: HISTORY_EVENT_STATUS[QUESTION_RECEIVED],
     data: action.question,
@@ -314,6 +318,26 @@ export function convertQuestionReceivedToHistoryEvent(
     remoteDid: action.question.from_did,
     originalPayload: {
       payloadInfo: action.question,
+      type: MESSAGE_TYPE.QUESTION,
+    },
+  }
+}
+
+export function convertQuestionAnswerToHistoryEvent(
+  action: UpdateQuestionAnswerAction,
+  question: QuestionPayload
+): ConnectionHistoryEvent {
+  return {
+    action: HISTORY_EVENT_STATUS[UPDATE_QUESTION_ANSWER],
+    data: { payload: question, ...action },
+    id: uuid(),
+    name: '',
+    status: HISTORY_EVENT_STATUS[UPDATE_QUESTION_ANSWER],
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.QUESTION,
+    remoteDid: question.from_did,
+    originalPayload: {
+      payloadInfo: question,
       type: MESSAGE_TYPE.QUESTION,
     },
   }
@@ -432,6 +456,18 @@ export function* historyEventOccurredSaga(
     }
 
     if (event.type === UPDATE_QUESTION_ANSWER) {
+      const questionPayload: QuestionPayload = yield select(
+        selectQuestion,
+        event.uid
+      )
+      historyEvent = convertQuestionAnswerToHistoryEvent(event, questionPayload)
+      const oldHistoryEvent = yield select(
+        getHistoryEvent,
+        event.uid,
+        historyEvent.remoteDid,
+        MESSAGE_TYPE.QUESTION
+      )
+      if (oldHistoryEvent) yield put(deleteHistoryEvent(oldHistoryEvent))
     }
 
     if (historyEvent) {
