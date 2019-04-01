@@ -8,11 +8,11 @@ def vcx_version_for_debug_or_release
     if ENV['CONNECTME_DEBUG'] == "true"
         # stable cocoapod
         #'0.0.64'
-        '0.0.96'
+        '0.0.98'
     else
         # stable cocoapod
         #'0.0.63'
-        '0.0.95'
+        '0.0.97'
     end
 end
 
