@@ -80,7 +80,7 @@ import {
   discoverTabRoute,
   menuTabRoute,
 } from './common/'
-import { color } from './common/styles'
+import { color, font } from './common/styles'
 import WalletTabSendDetails from './wallet/wallet-tab-send-details'
 import EulaScreen from './eula/eula'
 import RestoreStartScreen from './restore/restore'
@@ -96,6 +96,12 @@ import {
   TAB_SCAN_TITLE,
 } from './type-navigator'
 import { Button } from 'react-native-elements'
+import { measurements } from './common/styles/measurements'
+import {
+  whiteTransparent,
+  whiteSolid,
+  cmGrey5,
+} from '../app/common/styles/constant'
 
 if (__DEV__) {
   require('../tools/reactotron-config')
@@ -107,11 +113,20 @@ const styles = StyleSheet.create({
   //   borderTopWidth: 0,
   // },
   tabBarContainer: {
-    backgroundColor: color.bg.tertiary.color,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    paddingVertical: 4,
+    borderStyle: 'solid',
+    borderTopWidth: 1,
+    borderTopColor: cmGrey5,
+    backgroundColor: Platform.OS === 'ios' ? whiteTransparent : whiteSolid,
+    position: 'absolute',
+    paddingVertical: 3,
+    bottom: 0,
+    width: '100%',
+    height: measurements.bottomNavBarHeight,
+    zIndex: 100,
   },
   tabBarTitle: {
+    marginBottom: -0.2,
+    fontSize: font.size.XXXS,
     fontWeight: 'bold',
   },
 })
@@ -201,7 +216,7 @@ const Tabs = createTabNavigator(
           return (
             <SvgCustomIcon
               name="Connections"
-              fill={focused ? color.actions.font.seventh : color.actions.sixth}
+              fill={focused ? color.actions.font.tenth : color.actions.sixth}
             />
           )
         },
@@ -261,16 +276,14 @@ const Tabs = createTabNavigator(
             return (
               <SvgCustomIcon
                 name="ScanOn"
-                fill={
-                  focused ? color.actions.font.seventh : color.actions.sixth
-                }
+                fill={focused ? color.actions.font.tenth : color.actions.sixth}
               />
             )
           }
           return (
             <SvgCustomIcon
               name="Scan"
-              fill={focused ? color.actions.font.seventh : color.actions.sixth}
+              fill={focused ? color.actions.font.tenth : color.actions.sixth}
             />
           )
         },
@@ -291,9 +304,7 @@ const Tabs = createTabNavigator(
             <CustomView style={[{ paddingTop: 10 }]}>
               <SvgCustomIcon
                 name="Menu"
-                fill={
-                  focused ? color.actions.font.seventh : color.actions.sixth
-                }
+                fill={focused ? color.actions.font.tenth : color.actions.sixth}
               />
             </CustomView>
           )
@@ -316,7 +327,7 @@ const Tabs = createTabNavigator(
     tabBarOptions: {
       style: [styles.tabBarContainer],
       labelStyle: [styles.tabBarTitle],
-      activeTintColor: color.actions.font.seventh,
+      activeTintColor: color.actions.font.tenth,
       inactiveTintColor: color.actions.sixth,
     },
     tabBarComponent: TabBarBottom,

@@ -8,6 +8,7 @@ import {
   ScrollView,
   FlatList,
   Image,
+  Button,
 } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import BackupWallet from './backup-wallet'
@@ -373,19 +374,19 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         rightIcon: '',
         onPress: this.openAboutApp,
       },
-      {
-        id: 6,
-        title: 'Get your ID verified by Onfido',
-        subtitle: '',
-        avatar: (
-          <Image
-            style={style.onfidoIcon}
-            source={require('../images/onfido-logo.png')}
-          />
-        ),
-        rightIcon: '',
-        onPress: this.openOnfido,
-      },
+      // {
+      //   id: 6,
+      //   title: 'Get your ID verified by Onfido',
+      //   subtitle: '',
+      //   avatar: (
+      //     <Image
+      //       style={style.onfidoIcon}
+      //       source={require('../images/onfido-logo.png')}
+      //     />
+      //   ),
+      //   rightIcon: '',
+      //   onPress: this.openOnfido,
+      // },
     ]
     return (
       <Container style={[style.mainContainer]}>

@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.5</string>
+	<string>1.0.7</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>820</string>
+	<string>837</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
 	<key>ITSEncryptionExportComplianceCode</key>
@@ -95,10 +95,10 @@
 	<string>Enabling Face ID allows you quick and secure access to your app.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow us access to Camera so that we can scan QR code</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Please allow us access to Photo library so that you can change your profile photo</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>ConnectMe uses location.</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>ConnectMe uses photo library.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
@@ -174,5 +174,9 @@
 	<string>ConnectMe uses Apple Music.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>ConnectMe uses motion.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>ConnectMe uses the calendar.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>ConnectMe uses the location always.</string>
 </dict>
 </plist>
