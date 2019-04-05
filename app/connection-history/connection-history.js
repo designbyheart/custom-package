@@ -118,7 +118,7 @@ const HistoryTitle = ({ action, name, theme }) => (
       </CustomText>
     </CustomView>
     <CustomView>
-      {name && (
+      {!!name && (
         <CustomText
           h5
           semiBold
@@ -307,6 +307,7 @@ export class ConnectionHistory extends Component<
 
           return <ListItem {...itemProps} />
         })
+
         const history = (
           <CustomView key={i}>
             <CustomText

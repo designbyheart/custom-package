@@ -109,3 +109,10 @@ export const STORAGE_STATUS = {
   PERSIST_SUCCESS: 'PERSIST_SUCCESS',
 }
 export type StorageStatus = $Keys<typeof STORAGE_STATUS>
+
+export type ComponentStatus = {
+  error: boolean,
+  success: boolean,
+  loading: boolean,
+  idle: boolean,
+}

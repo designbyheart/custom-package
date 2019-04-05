@@ -6,7 +6,17 @@ import type {
   StorageStatus,
 } from '../common/type-common'
 
-export type QuestionProps = {} & ReactNavigation
+export type QuestionProps = {
+  updateQuestionStatus: (
+    uid: string,
+    status: QuestionStatus,
+    error: ?CustomError
+  ) => UpdateQuestionStatusAction,
+  sendAnswerToQuestion: (
+    uid: string,
+    answer: QuestionResponse
+  ) => SendAnswerToQuestionAction,
+} & ReactNavigation
 
 export const QUESTION_RECEIVED = 'QUESTION_RECEIVED'
 export type QuestionReceivedAction = {

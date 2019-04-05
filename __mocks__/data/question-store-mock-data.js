@@ -21,7 +21,7 @@ export const mockQuestionPayload = {
   issuer_did: 'issuerDid',
   remoteDid: 'remoteDid',
   uid: '001',
-  from_did: 'senderDid',
+  from_did: 'senderDID1',
   forDID: 'myPairwiseDid',
 }
 

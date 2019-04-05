@@ -568,10 +568,6 @@ export function* updatePayloadToRelevantStoreSaga(
         )
         break
       case MESSAGE_TYPE.QUESTION:
-        // Show the question to the user
-        // yield put(goToUIScreen({
-        //   uiType
-        // }))
         yield put(questionReceived(additionalData))
         break
     }
@@ -625,13 +621,9 @@ function* redirectToRelevantScreen({
           break
 
         case MESSAGE_TYPE.QUESTION:
-          yield call(delay, 1000)
-          //console.log("Redirecting to questionRoute: ", questionRoute, uid, type)
           yield handleRedirection(questionRoute, {
             uid,
-            additionalData,
           })
-
           break
       }
 }

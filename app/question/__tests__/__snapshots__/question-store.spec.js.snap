@@ -10,7 +10,7 @@ Object {
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
         "forDID": "myPairwiseDid",
-        "from_did": "senderDid",
+        "from_did": "senderDID1",
         "issuer_did": "issuerDid",
         "messageId": "MSG-ID",
         "messageText": "Message Text",
@@ -50,7 +50,7 @@ Object {
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
         "forDID": "myPairwiseDid",
-        "from_did": "senderDid",
+        "from_did": "senderDID1",
         "issuer_did": "issuerDid",
         "messageId": "MSG-ID",
         "messageText": "Message Text",
@@ -90,7 +90,7 @@ Object {
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
         "forDID": "myPairwiseDid",
-        "from_did": "senderDid",
+        "from_did": "senderDID1",
         "issuer_did": "issuerDid",
         "messageId": "MSG-ID",
         "messageText": "Message Text",
@@ -130,7 +130,7 @@ Object {
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
         "forDID": "myPairwiseDid",
-        "from_did": "senderDid",
+        "from_did": "senderDID1",
         "issuer_did": "issuerDid",
         "messageId": "MSG-ID",
         "messageText": "Message Text",
@@ -173,7 +173,7 @@ Object {
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
         "forDID": "myPairwiseDid",
-        "from_did": "senderDid",
+        "from_did": "senderDID1",
         "issuer_did": "issuerDid",
         "messageId": "MSG-ID",
         "messageText": "Message Text",
@@ -213,7 +213,7 @@ Object {
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
         "forDID": "myPairwiseDid",
-        "from_did": "senderDid",
+        "from_did": "senderDID1",
         "issuer_did": "issuerDid",
         "messageId": "MSG-ID",
         "messageText": "Message Text",
@@ -256,7 +256,7 @@ Object {
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
         "forDID": "myPairwiseDid",
-        "from_did": "senderDid",
+        "from_did": "senderDID1",
         "issuer_did": "issuerDid",
         "messageId": "MSG-ID",
         "messageText": "Message Text",
@@ -296,7 +296,7 @@ Object {
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
         "forDID": "myPairwiseDid",
-        "from_did": "senderDid",
+        "from_did": "senderDID1",
         "issuer_did": "issuerDid",
         "messageId": "MSG-ID",
         "messageText": "Message Text",
