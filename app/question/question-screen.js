@@ -45,50 +45,13 @@ import { QUESTION_STATUS } from './type-question'
 import { updateQuestionStatus, sendAnswerToQuestion } from './question-store'
 
 export class Question extends Component<QuestionProps, void> {
-  static goBack(navigation: any) {
-    navigation.goBack(null)
-  }
-
-  static answer(navigation: any) {}
-
-  static navigationOptions = ({ navigation }) => ({
-    header: (
-      <CustomHeader
-        backgroundColor={color.bg.tertiary.color}
-        outerContainerStyles={{ borderBottomWidth: 0 }}
-      >
-        <Icon
-          testID={'question-close-icon'}
-          iconStyle={[styles.headerLeft]}
-          src={require('../images/icon_close.png')}
-          resizeMode="contain"
-          onPress={() => Question.goBack(navigation)}
-          small
-        />
-        <Icon
-          testID={'question-submit-icon'}
-          iconStyle={[styles.headerRight]}
-          src={require('../images/iconRArrow.png')}
-          resizeMode="contain"
-          onPress={() => Question.answer(navigation)}
-          small
-        />
-        <CustomText bg="tertiary" tertiary transparentBg semiBold />
-        <CustomView />
-      </CustomHeader>
-    ),
-    swipeEnabled: false,
-  })
-
   render() {
     return (
-      <Container tertiary>
-        <CustomView center>
-          <CustomText bg="secondary" secondary transparentBg semiBold>
-            Answer this question...
-          </CustomText>
-        </CustomView>
-      </Container>
+      <CustomView style={{ height: 200 }} clearBg center>
+        <CustomText bg="secondary" secondary transparentBg semiBold>
+          Answer this question...
+        </CustomText>
+      </CustomView>
     )
   }
 
@@ -167,10 +130,16 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export const QuestionStack = createStackNavigator({
-  [questionRoute]: {
-    screen: connect(mapStateToProps)(Question),
+export const QuestionStack = createStackNavigator(
+  {
+    [questionRoute]: {
+      screen: connect(mapStateToProps)(Question),
+    },
   },
-})
+  {
+    headerMode: 'none',
+    cardStyle: { backgroundColor: 'transparent' },
+  }
+)
 
 export default QuestionStack
