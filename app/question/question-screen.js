@@ -43,15 +43,27 @@ import { questionRoute } from '../common/route-constants'
 import { Loader } from '../components'
 import { QUESTION_STATUS } from './type-question'
 import { updateQuestionStatus, sendAnswerToQuestion } from './question-store'
+import {
+  transparentHeaderStyle,
+  noBorderNoShadowHeaderStyle,
+} from '../components/layout/header-styles'
 
 export class Question extends Component<QuestionProps, void> {
+  static navigationOptions = ({ navigation }) => ({
+    headerStyle: {
+      ...transparentHeaderStyle,
+      ...noBorderNoShadowHeaderStyle,
+    },
+    header: <QuestionScreenHeader navigation={navigation} />,
+  })
+
   render() {
     return (
-      <CustomView style={{ height: 200 }} clearBg center>
-        <CustomText bg="secondary" secondary transparentBg semiBold>
+      <Container primary style={[{ flex: 8 }]}>
+        <CustomText bg="secondary" secondary semiBold>
           Answer this question...
         </CustomText>
-      </CustomView>
+      </Container>
     )
   }
 
@@ -85,30 +97,41 @@ function getScreenStatus(questionStatus: QuestionStatus): ComponentStatus {
   }
 }
 
-const width = Dimensions.get('window').width
-const height = Dimensions.get('window').height
-
-const styles = StyleSheet.create({
-  headerLeft: {
-    width: OFFSET_2X,
-  },
-  headerRight: {
-    width: OFFSET_2X,
-  },
-  inputBox: {
-    backgroundColor: lightGray,
-    padding: 10,
-    textAlignVertical: 'top',
-    fontSize: 18,
-    borderColor: grey,
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    height: height * 0.4,
-    width: width * 0.8,
-  },
-})
+export class QuestionScreenHeader extends React.Component<
+  ReactNavigation,
+  void
+> {
+  render() {
+    return (
+      <CustomView
+        row
+        style={[{ backgroundColor: 'rgba(255,255,255,0.7)', flex: 2 / 10 }]}
+      >
+        <Container onPress={() => this.props.navigation.goBack(null)} />
+        <CustomView
+          style={[
+            {
+              justifyContent: 'flex-end',
+              marginBottom: 30,
+            },
+          ]}
+        >
+          <CustomView
+            style={[
+              {
+                width: 40,
+                height: 10,
+                borderRadius: 5,
+                backgroundColor: '#000000',
+              },
+            ]}
+          />
+        </CustomView>
+        <Container onPress={() => this.props.navigation.goBack(null)} />
+      </CustomView>
+    )
+  }
+}
 
 const mapStateToProps = (state: Store, { navigation }: ReactNavigation) => {
   const uid: string | null = navigation.getParam('uid', null)
@@ -137,7 +160,6 @@ export const QuestionStack = createStackNavigator(
     },
   },
   {
-    headerMode: 'none',
     cardStyle: { backgroundColor: 'transparent' },
   }
 )

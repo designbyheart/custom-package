@@ -366,6 +366,9 @@ const ConnectMeAppNavigator = createStackNavigator(
     cardStyle: {
       backgroundColor: 'transparent',
     },
+    navigationOptions: {
+      gesturesEnabled: true,
+    },
   }
 )
 
