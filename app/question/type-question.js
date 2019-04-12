@@ -4,9 +4,10 @@ import type {
   CustomError,
   InitialTestAction,
   StorageStatus,
+  GenericObject,
 } from '../common/type-common'
 
-export type QuestionProps = {
+export type QuestionScreenProps = {
   updateQuestionStatus: (
     uid: string,
     status: QuestionStatus,
@@ -16,7 +17,21 @@ export type QuestionProps = {
     uid: string,
     answer: QuestionResponse
   ) => SendAnswerToQuestionAction,
+  question?: QuestionStoreMessage,
+  senderLogoUrl: number | GenericObject,
+  senderName: string,
 } & ReactNavigation
+
+export type QuestionScreenState = {
+  response: ?QuestionResponse,
+}
+
+export type QuestionActionProps = {
+  selectedResponse: ?QuestionResponse,
+  onSubmit: () => void,
+  onCancel: () => void,
+  question: QuestionStoreMessage,
+}
 
 export const QUESTION_RECEIVED = 'QUESTION_RECEIVED'
 export type QuestionReceivedAction = {
@@ -168,3 +183,9 @@ export const QUESTION_ANSWER_PROTOCOL1 =
 export const MESSAGE_TYPE_ANSWER = 'Answer'
 export const MESSAGE_TITLE_ANSWER = 'Peer Sent Answer'
 export const QUESTION_STORAGE_KEY = 'QUESTION_STORAGE_KEY'
+
+export const TEXT_IGNORE = 'Ignore'
+export const TEXT_SUBMIT = 'Submit'
+export const TEXT_CANCEL = 'Cancel'
+export const TEXT_TRY_AGAIN = 'Try Again'
+export const TEXT_OK = 'OK'

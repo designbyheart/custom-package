@@ -102,16 +102,13 @@ import {
   whiteSolid,
   cmGrey5,
 } from '../app/common/styles/constant'
+import { modalTransitionConfig } from './transition'
 
 if (__DEV__) {
   require('../tools/reactotron-config')
 }
 
 const styles = StyleSheet.create({
-  // tabBarContainer: {
-  //   backgroundColor: color.bg.tertiary.color,
-  //   borderTopWidth: 0,
-  // },
   tabBarContainer: {
     borderStyle: 'solid',
     borderTopWidth: 1,
@@ -130,75 +127,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 })
-
-// const Tabs = createTabNavigator(
-//   {
-//     [homeTabRoute]: {
-//       screen: HomeScreen,
-//       navigationOptions: {
-//         tabBarTestIDProps: {
-//           testID: 'tab-bar-home-icon',
-//           accessible: true,
-//           accessibleLabel: 'tab-bar-home-icon',
-//           accessibilityLabel: 'tab-bar-home-icon',
-//         },
-//         tabBarIcon: ({ focused }) => {
-//           return focused ? (
-//             <Icon src={require('./images/dashboard_large.png')} mediumLarge />
-//           ) : (
-//             <Icon src={require('./images/dashboard.png')} medium />
-//           )
-//         },
-//       },
-//     },
-//     [settingsTabRoute]: {
-//       screen: Settings,
-//       navigationOptions: {
-//         tabBarTestIDProps: {
-//           testID: 'tab-bar-settings-icon',
-//           accessible: true,
-//           accessibleLabel: 'tab-bar-settings-icon',
-//           accessibilityLabel: 'tab-bar-settings-icon',
-//         },
-//         tabBarIcon: ({ focused }) => {
-//           return focused ? (
-//             <Icon src={require('./images/settings_large.png')} mediumLarge />
-//           ) : (
-//             <Icon src={require('./images/settings.png')} medium />
-//           )
-//         },
-//       },
-//     },
-//     [qrCodeScannerTabRoute]: {
-//       screen: QRCodeScanner,
-//       navigationOptions: {
-//         tabBarTestIDProps: {
-//           testID: 'tab-bar-qrcode-icon',
-//           accessible: true,
-//           accessibleLabel: 'tab-bar-qrcode-icon',
-//           accessibilityLabel: 'tab-bar-qrcode-icon',
-//         },
-//         tabBarVisible: false,
-//         tabBarIcon: () => {
-//           return <Icon src={require('./images/addConnection.png')} medium />
-//         },
-//       },
-//     },
-//   },
-//   {
-//     animationEnabled: true,
-//     swipeEnabled: true,
-//     lazy: false,
-//     initialRouteName: homeTabRoute,
-//     order: [settingsTabRoute, homeTabRoute, qrCodeScannerTabRoute],
-//     tabBarOptions: {
-//       showLabel: false,
-//       style: styles.tabBarContainer,
-//     },
-//     tabBarComponent: TabBarBottom,
-//     tabBarPosition: 'bottom',
-//   }
-// )
 
 const Tabs = createTabNavigator(
   {
@@ -335,76 +263,6 @@ const Tabs = createTabNavigator(
   }
 )
 
-const transitionConfig = (
-  transitionProps: NavigationTransitionProps,
-  prevTransitionProps: ?NavigationTransitionProps,
-  isModal: boolean
-): TransitionConfig => {
-  return {
-    transitionSpec: {
-      duration: checkIfAnimationToUse() ? 30 : 300,
-      easing: Easing.out(Easing.poly(4)),
-      timing: Animated.timing,
-      useNativeDriver: true,
-    },
-    screenInterpolator: sceneProps => {
-      const { layout, position, scene, scenes } = sceneProps
-
-      const index = scene.index
-      const lastSceneIndexInScenes = scenes.length - 1
-      const isBack = !scenes[lastSceneIndexInScenes].isActive
-
-      const thisSceneIndex = scene.index
-      const height = layout.initHeight
-      const width = layout.initWidth
-
-      const scale = position.interpolate({
-        inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.7, thisSceneIndex],
-        outputRange: [0.5, 0.7, 1],
-      })
-
-      // const opacity = position.interpolate({
-      //   inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.5, thisSceneIndex],
-      //   outputRange: [0, 0.3, 1],
-      // })
-      const opacity = position.interpolate({
-        inputRange: [thisSceneIndex - 1, thisSceneIndex],
-        outputRange: [0, 1],
-      })
-
-      const translateY = position.interpolate({
-        inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
-        outputRange: [height, 200, 0],
-      })
-      const slideInFromBottom = {
-        opacity,
-        transform: [{ translateY }],
-      }
-
-      //console.log("end scene in scenes array: ", scenes[lastSceneIndexInScenes].route.routeName)
-      //console.log("current scene: ", scene.route.routeName)
-      if (
-        scenes[lastSceneIndexInScenes].route.routeName === questionRoute &&
-        scene.route.routeName !== questionRoute
-      ) {
-        // if (isBack) {
-        //   console.log("Going back to page: ", scene.route.routeName)
-        // }
-        return {
-          opacity: 0.3,
-        }
-      } else if (scene.route.routeName === questionRoute) {
-        return slideInFromBottom
-      } else {
-        return {
-          opacity: 1,
-          //transform: [{ scale }],
-        }
-      }
-    },
-  }
-}
-
 const CardStack = createStackNavigator(
   {
     [splashScreenRoute]: {
@@ -428,6 +286,9 @@ const CardStack = createStackNavigator(
     },
     [lockSelectionRoute]: {
       screen: LockSelectionScreen,
+    },
+    [sendLogsRoute]: {
+      screen: SendLogsScreen,
     },
     [lockEnterPinRoute]: {
       screen: LockEnterPinScreen,
@@ -474,7 +335,6 @@ const CardStack = createStackNavigator(
     navigationOptions: {
       gesturesEnabled: false,
     },
-    transitionConfig,
   }
 )
 
@@ -495,9 +355,6 @@ const ConnectMeAppNavigator = createStackNavigator(
     [walletTabSendDetailsRoute]: {
       screen: WalletTabSendDetails,
     },
-    [sendLogsRoute]: {
-      screen: SendLogsScreen,
-    },
     [questionRoute]: {
       screen: QuestionScreen,
     },
@@ -505,7 +362,13 @@ const ConnectMeAppNavigator = createStackNavigator(
   {
     mode: 'modal',
     headerMode: 'none',
-    transitionConfig,
+    transitionConfig: modalTransitionConfig,
+    cardStyle: {
+      backgroundColor: 'transparent',
+    },
+    navigationOptions: {
+      gesturesEnabled: true,
+    },
   }
 )
 
