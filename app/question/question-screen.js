@@ -434,7 +434,7 @@ const mapStateToProps = (state: Store, { navigation }: ReactNavigation) => {
     question.payload.from_did
   )
   const senderLogoUrl =
-    connection.length > 0 ? connection[0].logoUrl : { uri: '' }
+    connection.length > 0 ? { uri: connection[0].logoUrl } : { uri: '' }
   const senderName = connection.length > 0 ? connection[0].senderName : ''
 
   return {
