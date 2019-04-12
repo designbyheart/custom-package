@@ -25,6 +25,27 @@ export const mockQuestionPayload = {
   forDID: 'myPairwiseDid',
 }
 
+export const mockQuestionPayload2 = {
+  messageTitle: 'Survey request for family members',
+  messageText: 'Hi User,',
+  '@type': QUESTION_ANSWER_PROTOCOL1,
+  messageId: 'MSG-ID-2',
+  question_text: 'How many members are in your family',
+  question_detail:
+    'Some more details regarding question that should scrolled along with some data',
+  valid_responses: [
+    { text: '0 to 2 people', nonce: 'akdfakjfkjdaadkgak' },
+    { text: '3 to 5 people', nonce: 'hyjjjjuifhjkiutyojoh' },
+    { text: '6 to 10 people', nonce: 'hyjjjjuifhjkiutyojoh' },
+  ],
+  timing: { expires_time: '2017-06-01:05:07:07' },
+  issuer_did: 'issuerDid',
+  remoteDid: 'remoteDid',
+  uid: '002',
+  from_did: 'senderDID1',
+  forDID: 'myPairwiseDid',
+}
+
 export const mockQuestionReceivedState = {
   data: {
     [mockQuestionPayload.uid]: {

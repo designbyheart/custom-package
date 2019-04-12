@@ -91,6 +91,7 @@ import {
   UPDATE_QUESTION_ANSWER,
 } from '../question/type-question'
 import { MESSAGE_TYPE } from '../api/api-constants'
+import { selectQuestion } from '../question/question-store'
 
 const initialState = {
   error: null,
@@ -331,7 +332,7 @@ export function convertQuestionAnswerToHistoryEvent(
     action: HISTORY_EVENT_STATUS[UPDATE_QUESTION_ANSWER],
     data: { payload: question, ...action },
     id: uuid(),
-    name: `You replied: ${action.answer.text}`,
+    name: `You responded with: ${action.answer.text}`,
     status: HISTORY_EVENT_STATUS[UPDATE_QUESTION_ANSWER],
     timestamp: moment().format(),
     type: HISTORY_EVENT_TYPE.QUESTION,

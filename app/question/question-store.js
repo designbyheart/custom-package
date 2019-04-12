@@ -272,15 +272,15 @@ const initialState = {
   storageStatus: STORAGE_STATUS.IDLE,
 }
 
-function selectQuestion(state: Store, uid: string) {
+export function selectQuestion(state: Store, uid: string) {
   return state.question.data[uid].payload
 }
 
-function selectQuestionStorageStatus(state: Store) {
+export function selectQuestionStorageStatus(state: Store) {
   return state.question.storageStatus
 }
 
-function selectQuestionStoreData(state: Store) {
+export function selectQuestionStoreData(state: Store) {
   return state.question.data
 }
 
