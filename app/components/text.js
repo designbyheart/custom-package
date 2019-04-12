@@ -55,20 +55,36 @@ const CustomText = (props: GenericObject) => {
     secondaryColor,
     darkgray,
     medium,
+    // set text color by passing value such as primary, secondary, tertiary
+    // to color prop
+    // for example: <CustomText bg="primary" color="primary">Text</CustomText>
+    color,
+    // set size of text from available font sizes
+    // ideally we should have only 6-7 sizes and we can try to use
+    // following pattern to choose among those sizes
+    // <CustomText size="h3" />
+    size,
   } = props
 
-  const colorType = quaternary
-    ? 'Quaternary'
-    : secondary ? 'Secondary' : tertiary ? 'Tertiary' : 'Primary'
-  const size = h3
-    ? 'h3'
-    : h3a ? 'h3a' : h4 ? 'h4' : h4a ? 'h4a' : h6 ? 'h6' : h7 ? 'h7' : 'h5'
+  // preference is given to color prop to set text color
+  const colorType = color
+    ? capitalizeFirstLetter(color)
+    : quaternary
+      ? 'Quaternary'
+      : secondary ? 'Secondary' : tertiary ? 'Tertiary' : 'Primary'
+  // preference is given to size prop, so if user pass both size and h3-h7
+  // value of size will override other values
+  const sizeStyle = size
+    ? size
+    : h3
+      ? 'h3'
+      : h3a ? 'h3a' : h4 ? 'h4' : h4a ? 'h4a' : h6 ? 'h6' : h7 ? 'h7' : 'h5'
   const fontFamily = 'fontLato'
   const textStyles = [
-    styles[size],
+    styles[sizeStyle],
     styles[fontFamily],
     // $FlowFixMe Flow does not support below syntax for type checking
-    styles[`${bg}Bg${colorType}`],
+    styles[`${bg}Bg${colorType}`] || {},
     bold
       ? styles.bold
       : semiBold
@@ -144,6 +160,9 @@ export const styles = StyleSheet.create({
   },
   h3a: {
     fontSize: font.size.L1,
+  },
+  h3b: {
+    fontSize: font.size.ML1,
   },
   h4a: {
     fontSize: font.size.M1,
@@ -245,3 +264,7 @@ export const styles = StyleSheet.create({
     color: color.textColor.darkgray,
   },
 })
+
+function capitalizeFirstLetter(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
