@@ -228,6 +228,10 @@ export const styles = StyleSheet.create({
     color: color.bg.tertiary.font.tertiary,
     backgroundColor: color.bg.tertiary.color,
   },
+  tertiaryBgSeventh: {
+    color: color.bg.tertiary.font.seventh,
+    backgroundColor: color.bg.tertiary.color,
+  },
   septenaryBgPrimary: {
     color: color.bg.tertiary.font.primary,
     backgroundColor: color.bg.seventh.color,

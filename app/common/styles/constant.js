@@ -139,6 +139,7 @@ export const color = {
         quaternary: yellowSea,
         fifth: nobelSecondary,
         sixth: dimGraySecondary,
+        seventh: cmGrey1,
       },
     },
     quaternary: {

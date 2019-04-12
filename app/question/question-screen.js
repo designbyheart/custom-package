@@ -416,7 +416,7 @@ function QuestionSuccess() {
 
 function QuestionScreenText(props) {
   return (
-    <CustomText bg="tertiary" color="primary" bold {...props}>
+    <CustomText bg="tertiary" color="seventh" bold {...props}>
       {props.children}
     </CustomText>
   )
