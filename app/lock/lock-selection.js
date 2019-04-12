@@ -229,7 +229,7 @@ export class LockSelection extends PureComponent<LockSelectionProps, *> {
           <CustomView tertiary row spaceBetween>
             <CustomView tertiary style={[style.devSwitchText]}>
               <CustomText bg="tertiary" tertiary h5 bold>
-                Use App In Test Mode
+                Use Staging Net
               </CustomText>
             </CustomView>
             <CustomView tertiary>
@@ -259,7 +259,7 @@ export class LockSelection extends PureComponent<LockSelectionProps, *> {
           </CustomView>
           <CustomView tertiary verticalSpace>
             <CustomText bg="tertiary" tertiary h6>
-              (For developers only. Uses the Sovrin Test Network)
+              (An alternative network for app developers)
             </CustomText>
           </CustomView>
         </CustomView>

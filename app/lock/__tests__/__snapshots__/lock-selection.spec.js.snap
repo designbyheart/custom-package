@@ -748,7 +748,7 @@ exports[`app lock selection page should render properly 1`] = `
             ]
           }
         >
-          Use App In Test Mode
+          Use Staging Net
         </Text>
       </View>
       <View
@@ -819,7 +819,7 @@ exports[`app lock selection page should render properly 1`] = `
           ]
         }
       >
-        (For developers only. Uses the Sovrin Test Network)
+        (An alternative network for app developers)
       </Text>
     </View>
   </View>
