@@ -37,6 +37,8 @@ export default class CustomButton extends PureComponent<*, void> {
       customColor = {},
       disabled,
       ninth,
+      eleventh,
+      twelfth,
     } = this.props
     const buttonStyles = this.props.style || empty
     const style = [
@@ -54,8 +56,15 @@ export default class CustomButton extends PureComponent<*, void> {
             ? 'quaternary'
             : dangerous
               ? 'dangerous'
-              : fifth ? 'eighth' : ninth ? 'ninth' : 'fifth'
-    const buttonProps = { ...getButtonProps(buttonType), ...customColor }
+              : fifth
+                ? 'eighth'
+                : ninth
+                  ? 'ninth'
+                  : eleventh ? 'eleventh' : twelfth ? 'twelfth' : 'fifth'
+    const buttonProps = {
+      ...getButtonProps(buttonType),
+      ...customColor,
+    }
     // when button is disabled, we want to apply same color that is
     // generated while picking up the color from image
     const disabledStyles = [

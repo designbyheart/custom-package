@@ -232,39 +232,80 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getMessage(String url, String requestId, String myPairwiseDid, String myPairwiseVerKey,
-            String myPairwiseAgentDid, String myPairwiseAgentVerKey, String myOneTimeAgentDid,
-            String myOneTimeAgentVerKey, String myOneTimeDid, String myOneTimeVerKey, String myAgencyVerKey,
-            String poolConfig, Promise promise) {
-        promise.resolve(staticData.getMessage());
+    public void connectionSendMessage(int connectionHandle, String message, String messageType, String messageTitle, Promise promise) {
+        try {
+            ConnectionApi.connectionSendMessage(connectionHandle, message, messageType, messageTitle).exceptionally((t) -> {
+                Log.e(TAG, "connectionSendMessage", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch(VcxException e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
     }
 
     @ReactMethod
-    public void sendMessage(String url, String messageType, String messageReplyId, String message, String myPairwiseDid,
-            String myPairwiseVerKey, String myPairwiseAgentDid, String myPairwiseAgentVerKey, String myOneTimeAgentDid,
-            String myOneTimeAgentVerKey, String myOneTimeDid, String myOneTimeVerKey, String myAgencyVerKey,
-            String myPairwisePeerVerKey, String poolConfig, Promise promise) {
-        promise.resolve(true);
+    public void connectionSignData(int connectionHandle, String data, Promise promise) {
+        try {
+            byte[] dataToSign = Base64.encode(data.getBytes(), Base64.NO_WRAP);
+            ConnectionApi.connectionSignData(connectionHandle, dataToSign, dataToSign.length).exceptionally((t) -> {
+                Log.e(TAG, "connectionSignData", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                try {
+                    // We would get Byte array from libvcx
+                    // we cannot perform operation on Buffer inside react-native due to react-native limitations for Buffer
+                    // so, we are converting byte[] to Base64 encoded string and then returning that data to react-native
+                    if (result != null) {
+                        // since we took the data from JS layer as simple string and
+                        // then converted that string to Base64 encoded byte[]
+                        // we need to pass same Base64 encoded byte[] back to JS layer, so that it can included in full message response
+                        // otherwise we would be doing this calculation again in JS layer which does not handle Buffer
+                        WritableMap signResponse = Arguments.createMap();
+                        signResponse.putString("data", new String(dataToSign));
+                        signResponse.putString("signature", Base64.encodeToString(result, Base64.NO_WRAP));
+                        promise.resolve(signResponse);
+                    } else {
+                        promise.reject("NULL-VALUE", "Null value was received as result from wrapper");
+                    }
+                } catch(Exception e) {
+                    // it might happen that we get value of result to not be a byte array
+                    // or we might get empty byte array
+                    // in all those case outer try...catch will not work because this inside callback of a Future
+                    // so we need to handle the case for Future callback inside that callback
+                    promise.reject(e);
+                }
+            });
+        } catch(VcxException e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
     }
 
     @ReactMethod
-    public void generateClaimRequest(String remoteDid, String claimOffer, String poolConfig, Promise promise) {
-        promise.resolve(staticData.generateClaimRequest());
-    }
-
-    @ReactMethod
-    public void addClaim(String claim, String poolConfig, Promise promise) {
-        promise.resolve("{}");
-    }
-
-    @ReactMethod
-    public void getClaim(String filterJson, String poolConfig, Promise promise) {
-        promise.resolve(staticData.getClaim());
-    }
-
-    @ReactMethod
-    public void prepareProof(String proofRequest, String poolConfig, Promise promise) {
-        promise.resolve("{}");
+    public void connectionVerifySignature(int connectionHandle, String data, String signature, Promise promise) {
+        // Base64 decode signature because we encoded signature returned by libvcx to base64 encoded string
+        // Convert data to just byte[], because base64 encoded byte[] was used to generate signature
+        byte[] dataToVerify = data.getBytes();
+        byte[] signatureToVerify = Base64.decode(signature, Base64.NO_WRAP);
+        try {
+            ConnectionApi.connectionVerifySignature(
+                    connectionHandle, dataToVerify, dataToVerify.length, signatureToVerify, signatureToVerify.length
+            ).exceptionally((t) -> {
+                Log.e(TAG, "connectionVerifySignature", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch(VcxException e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
     }
 
     @ReactMethod

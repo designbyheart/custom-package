@@ -5,6 +5,8 @@ import {
   createStackNavigator,
   TabBarBottom,
   createTabNavigator,
+  NavigationTransitionProps,
+  TransitionConfig,
 } from 'react-navigation'
 import AboutApp from './about-app/about-app'
 import AuthenticationScreen from './authentication/authentication'
@@ -16,6 +18,7 @@ import ExpiredTokenScreen from './expired-token/expired-token'
 import QRCodeScanner from './qr-code/qr-code'
 import LockSelectionScreen from './lock/lock-selection'
 import SendLogsScreen from './send-logs/send-logs'
+import QuestionScreen from './question/question-screen'
 import LockEnterPinScreen from './lock/lock-enter-pin-code'
 import LockTouchIdSetupScreen from './lock/lock-fingerprint-setup'
 import LockPinCodeSetupScreen from './lock/lock-pin-code-setup'
@@ -71,6 +74,7 @@ import {
   restorePassphraseRoute,
   backupErrorRoute,
   sendLogsRoute,
+  questionRoute,
   connectionsTabRoute,
   credentialsTabRoute,
   discoverTabRoute,
@@ -98,16 +102,13 @@ import {
   whiteSolid,
   cmGrey5,
 } from '../app/common/styles/constant'
+import { modalTransitionConfig } from './transition'
 
 if (__DEV__) {
   require('../tools/reactotron-config')
 }
 
 const styles = StyleSheet.create({
-  // tabBarContainer: {
-  //   backgroundColor: color.bg.tertiary.color,
-  //   borderTopWidth: 0,
-  // },
   tabBarContainer: {
     borderStyle: 'solid',
     borderTopWidth: 1,
@@ -126,75 +127,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 })
-
-// const Tabs = createTabNavigator(
-//   {
-//     [homeTabRoute]: {
-//       screen: HomeScreen,
-//       navigationOptions: {
-//         tabBarTestIDProps: {
-//           testID: 'tab-bar-home-icon',
-//           accessible: true,
-//           accessibleLabel: 'tab-bar-home-icon',
-//           accessibilityLabel: 'tab-bar-home-icon',
-//         },
-//         tabBarIcon: ({ focused }) => {
-//           return focused ? (
-//             <Icon src={require('./images/dashboard_large.png')} mediumLarge />
-//           ) : (
-//             <Icon src={require('./images/dashboard.png')} medium />
-//           )
-//         },
-//       },
-//     },
-//     [settingsTabRoute]: {
-//       screen: Settings,
-//       navigationOptions: {
-//         tabBarTestIDProps: {
-//           testID: 'tab-bar-settings-icon',
-//           accessible: true,
-//           accessibleLabel: 'tab-bar-settings-icon',
-//           accessibilityLabel: 'tab-bar-settings-icon',
-//         },
-//         tabBarIcon: ({ focused }) => {
-//           return focused ? (
-//             <Icon src={require('./images/settings_large.png')} mediumLarge />
-//           ) : (
-//             <Icon src={require('./images/settings.png')} medium />
-//           )
-//         },
-//       },
-//     },
-//     [qrCodeScannerTabRoute]: {
-//       screen: QRCodeScanner,
-//       navigationOptions: {
-//         tabBarTestIDProps: {
-//           testID: 'tab-bar-qrcode-icon',
-//           accessible: true,
-//           accessibleLabel: 'tab-bar-qrcode-icon',
-//           accessibilityLabel: 'tab-bar-qrcode-icon',
-//         },
-//         tabBarVisible: false,
-//         tabBarIcon: () => {
-//           return <Icon src={require('./images/addConnection.png')} medium />
-//         },
-//       },
-//     },
-//   },
-//   {
-//     animationEnabled: true,
-//     swipeEnabled: true,
-//     lazy: false,
-//     initialRouteName: homeTabRoute,
-//     order: [settingsTabRoute, homeTabRoute, qrCodeScannerTabRoute],
-//     tabBarOptions: {
-//       showLabel: false,
-//       style: styles.tabBarContainer,
-//     },
-//     tabBarComponent: TabBarBottom,
-//     tabBarPosition: 'bottom',
-//   }
-// )
 
 const Tabs = createTabNavigator(
   {
@@ -330,6 +262,7 @@ const Tabs = createTabNavigator(
     tabBarPosition: 'bottom',
   }
 )
+
 const CardStack = createStackNavigator(
   {
     [splashScreenRoute]: {
@@ -405,39 +338,6 @@ const CardStack = createStackNavigator(
   }
 )
 
-const transitionConfig = () => {
-  return {
-    transitionSpec: {
-      duration: checkIfAnimationToUse() ? 30 : 300,
-      easing: Easing.out(Easing.poly(4)),
-      timing: Animated.timing,
-      useNativeDriver: true,
-    },
-    screenInterpolator: sceneProps => {
-      const { layout, position, scene } = sceneProps
-
-      const thisSceneIndex = scene.index
-      const height = layout.initHeight
-      const width = layout.initWidth
-
-      const scale = position.interpolate({
-        inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.7, thisSceneIndex],
-        outputRange: [0.5, 0.7, 1],
-      })
-
-      const opacity = position.interpolate({
-        inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.5, thisSceneIndex],
-        outputRange: [0, 0.3, 1],
-      })
-
-      return {
-        opacity,
-        transform: [{ scale }],
-      }
-    },
-  }
-}
-
 // TODO:KS create a custom navigator to track page changes
 // for flows to support deep link, etc.
 const ConnectMeAppNavigator = createStackNavigator(
@@ -455,11 +355,20 @@ const ConnectMeAppNavigator = createStackNavigator(
     [walletTabSendDetailsRoute]: {
       screen: WalletTabSendDetails,
     },
+    [questionRoute]: {
+      screen: QuestionScreen,
+    },
   },
   {
     mode: 'modal',
     headerMode: 'none',
-    transitionConfig,
+    transitionConfig: modalTransitionConfig,
+    cardStyle: {
+      backgroundColor: 'transparent',
+    },
+    navigationOptions: {
+      gesturesEnabled: true,
+    },
   }
 )
 

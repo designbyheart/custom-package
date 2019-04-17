@@ -17,7 +17,7 @@ import {
 describe('<ConnectionHistory />', () => {
   const store = getStore()
 
-  function props() {
+  function getProps() {
     return {
       navigation: getNavigation({
         image: 'https://test.com/image.png',
@@ -37,7 +37,7 @@ describe('<ConnectionHistory />', () => {
   it('should ConnectionHistory render properly', () => {
     const component = renderer.create(
       <Provider store={store}>
-        <ConnectionHistory {...props()} />
+        <ConnectionHistory {...getProps()} />
       </Provider>
     )
     expect(component).toMatchSnapshot()

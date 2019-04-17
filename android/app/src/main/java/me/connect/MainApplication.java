@@ -2,6 +2,7 @@ package me.connect;
 
 import android.app.Application;
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.lottie.LottiePackage;
 import com.chirag.RNMail.RNMail;
 import com.clipsub.RNShake.RNShakeEventPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
@@ -50,6 +51,7 @@ public class MainApplication extends Application implements ShareApplication, Re
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new LottiePackage(),
             new RNMail(),
             new RNShakeEventPackage(),
             new PickerPackage(),

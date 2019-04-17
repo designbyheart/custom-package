@@ -50,6 +50,9 @@ export const CustomView = (props: GenericObject) => {
     safeArea,
     debounceAction = true,
     shadowNoOffset,
+    // eventually, we will retire props such as primary, secondary, etc.
+    // and use bg for setting our backgrounds
+    bg,
   } = props
   const passedStyles = props.style || []
   const absoluteStyles = absolute
@@ -71,6 +74,11 @@ export const CustomView = (props: GenericObject) => {
     senary ? style.senaryBg : null,
     septenary ? style.septenaryBg : null,
     dark ? style.darkBg : null,
+    // the reason for doing `${bg}Bg` is that if user passes bg="primary"
+    // then our styles are named as `primaryBg` so we add `Bg` to bg value
+    // and then we get our style
+    // $FlowFixMe flow does not support below syntax for dynamic property access
+    bg ? style[`${bg}Bg`] || {} : null,
     row ? style.row : null,
     left ? style.left : null,
     right ? style.right : null,

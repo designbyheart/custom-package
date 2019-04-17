@@ -4,7 +4,11 @@ import { View } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
-import type { Notification, NotificationOpen } from 'react-native-firebase'
+import type {
+  Notification,
+  NotificationOpen,
+  RemoteMessage,
+} from 'react-native-firebase'
 import {
   pushNotificationPermissionAction,
   updatePushToken,
@@ -15,6 +19,7 @@ import type { PushNotificationProps } from './type-push-notification'
 import type { Store } from '../store/type-store'
 import type { NotificationPayload } from '../common/type-common'
 import { customLogger } from '../store/custom-logger'
+import { getUnacknowledgedMessages } from '../store/config-store'
 
 export class PushNotification extends PureComponent<
   PushNotificationProps,
@@ -25,6 +30,7 @@ export class PushNotification extends PureComponent<
   refreshTokenListener = null
   notificationDisplayedListener = null
   onNotificationOpenedListener = null
+  messageListener = null
 
   // Because the type returned from Notification for data is: { [string]: string }, we're parsing it in order to have proper type checks
   notificationParser(notification: Notification) {
@@ -38,6 +44,30 @@ export class PushNotification extends PureComponent<
       type,
       remotePairwiseDID,
       senderLogoUrl,
+    }
+  }
+
+  remoteMessageParser(message: RemoteMessage) {
+    const {
+      data: {
+        forDID,
+        uid,
+        type,
+        remotePairwiseDID,
+        pushNotifMsgText,
+        pushNotifMsgTitle,
+        senderLogoUrl,
+      },
+    } = message
+
+    return {
+      forDID,
+      uid,
+      type,
+      remotePairwiseDID,
+      senderLogoUrl,
+      pushNotifMsgText,
+      pushNotifMsgTitle,
     }
   }
 
@@ -73,6 +103,17 @@ export class PushNotification extends PureComponent<
         // Get information about the notification that was opened
         const notification: Notification = notificationOpen.notification
         this.onPushNotificationReceived(this.notificationParser(notification))
+      })
+
+    this.messageListener = firebase
+      .messaging()
+      .onMessage((message: RemoteMessage) => {
+        // Process your message as required
+        // https://rnfirebase.io/docs/v5.x.x/messaging/receiving-messages
+        // https://rnfirebase.io/docs/v5.x.x/messaging/upstream-messages
+        //console.log('Remote message: ', message)
+        //this.props.getUnacknowledgedMessages()
+        this.onPushNotificationReceived(this.remoteMessageParser(message))
       })
 
     try {
@@ -159,6 +200,9 @@ export class PushNotification extends PureComponent<
     this.onNotificationOpenedListener &&
       this.onNotificationOpenedListener.remove &&
       this.onNotificationOpenedListener.remove()
+    this.messageListener &&
+      this.messageListener.remove &&
+      this.messageListener.remove()
   }
 
   render() {
@@ -174,6 +218,7 @@ const mapDispatchToProps = dispatch =>
       pushNotificationPermissionAction,
       updatePushToken,
       fetchAdditionalData,
+      getUnacknowledgedMessages,
     },
     dispatch
   )
