@@ -32,7 +32,6 @@ import proofRequest, {
 } from '../proof-request/proof-request-store'
 import invitation, { watchInvitation } from '../invitation/invitation-store'
 import claim, { watchClaim } from '../claim/claim-store'
-import question, { watchQuestion } from '../question/question-store'
 import proof, { watchProof } from '../proof/proof-store'
 import history, {
   watchConnectionHistory,
@@ -77,7 +76,6 @@ const appReducer = combineReducers({
   ledger,
   offline,
   onfido,
-  question,
 })
 
 let middlewares = [historyRecorder]
@@ -124,7 +122,6 @@ sagaMiddleware.run(function*() {
     watchLedgerStore(),
     watchOffline(),
     watchOnfido(),
-    watchQuestion(),
   ])
 })
 

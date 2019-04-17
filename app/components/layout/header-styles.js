@@ -72,17 +72,3 @@ export const tertiaryHeaderStyles = StyleSheet.create({
     color: color.bg.tertiary.font.tertiary,
   },
 })
-
-export const transparentHeaderStyle = {
-  backgroundColor: 'transparent',
-}
-
-export const noBorderNoShadowHeaderStyle = {
-  borderBottomWidth: 0,
-  shadowOpacity: 0,
-  shadowOffset: {
-    height: 0,
-  },
-  shadowRadius: 0,
-  elevation: 0,
-}

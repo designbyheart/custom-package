@@ -26,7 +26,6 @@ import {
   getIsAppLocked,
   getSerializedClaimOffer,
   getCurrentScreen,
-  getAllConnectionsPairwiseDid,
 } from '../store/store-selector'
 import {
   PUSH_NOTIFICATION_PERMISSION,
@@ -69,17 +68,8 @@ import {
   downloadProofRequest,
   getHandleBySerializedConnection,
   serializeClaimOffer,
-  downloadMessages,
 } from '../bridge/react-native-cxs/RNCxs'
-import {
-  HYDRATED,
-  VCX_INIT_SUCCESS,
-  MESSAGE_RESPONSE_CODE,
-} from '../store/type-config-store'
-import type {
-  DownloadedConnectionsWithMessages,
-  DownloadedMessage,
-} from '../store/type-config-store'
+import { HYDRATED, VCX_INIT_SUCCESS } from '../store/type-config-store'
 import { CONNECT_REGISTER_CREATE_AGENT_DONE } from '../store/user/type-user-store'
 import uniqueId from 'react-native-unique-id'
 import { RESET } from '../common/type-common'
@@ -100,13 +90,7 @@ import { addPendingRedirection } from '../lock/lock-store'
 import { authenticationRequestReceived } from '../authentication/authentication-store'
 import { claimOfferReceived } from '../claim-offer/claim-offer-store'
 import { proofRequestReceived } from '../proof-request/proof-request-store'
-import {
-  updateMessageStatus,
-  processMessages,
-  handleMessage,
-  traverseAndGetAllMessages,
-  convertDecryptedPayloadToQuestion,
-} from '../store/config-store'
+import { updateMessageStatus } from '../store/config-store'
 import {
   claimOfferRoute,
   invitationRoute,
@@ -120,15 +104,12 @@ import {
   lockEnterFingerprintRoute,
   lockAuthorizationRoute,
   lockAuthorizationHomeRoute,
-  questionRoute,
 } from '../common'
 import type { Claim } from '../claim/type-claim'
 import { claimReceivedVcx } from '../claim/claim-store'
-import { questionReceived } from '../question/question-store'
 import { NavigationActions } from 'react-navigation'
 import type { SerializedClaimOffer } from './../claim-offer/type-claim-offer'
 import { customLogger } from '../store/custom-logger'
-import type { QuestionPayload } from './../question/type-question'
 
 async function delay(ms): Promise<number> {
   return new Promise(res => setTimeout(res, ms))
@@ -360,7 +341,6 @@ export function* fetchAdditionalDataSaga(
       | ProofRequestPushPayload
       | ClaimPushPayload
       | ClaimPushPayloadVcx
-      | QuestionPayload
       | null = null
 
     if (type === MESSAGE_TYPE.CLAIM_OFFER) {
@@ -402,50 +382,6 @@ export function* fetchAdditionalDataSaga(
       )
     }
 
-    if (type === MESSAGE_TYPE.QUESTION) {
-      const data = yield call(
-        downloadMessages,
-        MESSAGE_RESPONSE_CODE.MESSAGE_PENDING,
-        uid,
-        forDID
-      )
-      if (data && data.length != 0) {
-        const parsedData: DownloadedConnectionsWithMessages = JSON.parse(data)
-        const messages: Array<DownloadedMessage> = traverseAndGetAllMessages(
-          parsedData
-        )
-        const {
-          pushNotifMsgTitle,
-          pushNotifMsgText,
-        } = action.notificationPayload
-        for (let i = 0; i < messages.length; i++) {
-          //yield* handleMessage(messages[i])
-          additionalData = convertDecryptedPayloadToQuestion(
-            connectionHandle,
-            messages[i].decryptedPayload ? messages[i].decryptedPayload : '',
-            uid,
-            forDID,
-            messages[i].senderDID,
-            pushNotifMsgTitle ? pushNotifMsgTitle : '',
-            pushNotifMsgText ? pushNotifMsgText : ''
-          )
-        }
-        // yield* redirectToRelevantScreen({
-        //   additionalData: { pushNotifMsgTitle, pushNotifMsgText },
-        //   forDID,
-        //   remotePairwiseDID,
-        //   uiType: null,
-        //   type,
-        //   uid,
-        // })
-        //yield* processMessages(parsedData)
-        //yield* acknowledgeServer(parsedData)
-        // additionalData = {
-        //   parsedData[0],
-        // }
-      }
-    }
-
     if (!additionalData) {
       // we did not get any data or either push notification type is not supported
       return
@@ -465,7 +401,6 @@ export function* fetchAdditionalDataSaga(
       })
     )
   } catch (e) {
-    customLogger.log(e)
     captureError(e)
     yield put(
       fetchAdditionalDataError({
@@ -567,15 +502,11 @@ export function* updatePayloadToRelevantStoreSaga(
           })
         )
         break
-      case MESSAGE_TYPE.QUESTION:
-        yield put(questionReceived(additionalData))
-        break
     }
   }
 }
 
 function* redirectToRelevantScreen({
-  additionalData,
   uiType,
   type,
   uid,
@@ -616,12 +547,6 @@ function* redirectToRelevantScreen({
 
         case 'PROOF_REQUEST_RECEIVED':
           yield handleRedirection(proofRequestRoute, {
-            uid,
-          })
-          break
-
-        case MESSAGE_TYPE.QUESTION:
-          yield handleRedirection(questionRoute, {
             uid,
           })
           break
