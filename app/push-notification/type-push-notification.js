@@ -236,7 +236,6 @@ export type PushNotificationProps = {
   navigateToRoute: (routeName: string, params: NavigationParams) => void,
   isAllowed: boolean,
   pushToken?: string,
-  getUnacknowledgedMessages: () => void,
 }
 
 export const HYDRATE_PUSH_TOKEN = 'HYDRATE_PUSH_TOKEN'

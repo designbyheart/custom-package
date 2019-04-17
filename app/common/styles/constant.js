@@ -17,7 +17,6 @@ const mantisRGB = '133, 191, 67'
 export const greyRGB = '119, 119, 119'
 export const white = '#ffffff'
 export const whisper = '#EAEAEA'
-export const cmGrey4 = whisper
 export const lightDarkBlue = '#4A8FE3'
 export const darkGray = '#505050'
 export const maroonRed = '#d1021b'
@@ -25,8 +24,6 @@ export const lightDarkGray = '#F4F4F4'
 export const dodgerBlue = '#0d8ffc'
 export const toryBlue = '#303F9F'
 export const gainsBoro = '#E3E3E3'
-export const caribbeanGreen = '#01C8A1'
-export const darkGray2 = '#A5A5A5'
 
 const sirocco = '#636564'
 const corduroy = '#3f4140'
@@ -64,9 +61,6 @@ export const whiteTransparent = 'rgba(255, 255, 255, 0.85)'
 export const whiteSolid = 'rgba(255, 255, 255, 255)'
 export const cmGrey5 = '#F2F2F2'
 export const lightWhite = '#E5E5EA'
-export const blackTransparent = `rgba(0, 0, 0, 0.8)`
-export const cmGrey1 = '#505050'
-export const cmGrey2 = grey
 
 // color shades
 const primaryShade = '1.0'
@@ -84,8 +78,6 @@ export const color = {
     ninth: toryBlue,
     dangerous: venetianRed,
     none: white,
-    eleventh: caribbeanGreen,
-    twelfth: white,
     button: {
       primary: {
         rgba: greyRGB + ', ' + primaryShade,
@@ -108,8 +100,6 @@ export const color = {
       eighth: lightDarkBlue,
       ninth: white,
       tenth: atlantis,
-      eleventh: white,
-      twelfth: cmGrey2,
     },
   },
   bg: {
@@ -139,7 +129,6 @@ export const color = {
         quaternary: yellowSea,
         fifth: nobelSecondary,
         sixth: dimGraySecondary,
-        seventh: cmGrey1,
       },
     },
     quaternary: {

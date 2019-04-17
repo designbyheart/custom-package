@@ -2,8 +2,6 @@
 import { NativeModules } from 'react-native'
 import { getHandleBySerializedConnection } from '../RNCxs'
 import { vcxConnectionSerialized } from '../../../../__mocks__/data/vcx-mock-data'
-import { schemaValidator } from '../../../services/schema-validator'
-import { signDataResponseSchema } from '../type-cxs'
 
 describe('RNCxs', () => {
   function setup() {
@@ -39,36 +37,5 @@ describe('RNCxs', () => {
 
     mockGetHandleBySerializedConnection.mockReset()
     mockGetHandleBySerializedConnection.mockRestore()
-  })
-
-  it('should validate SignDataResponseSchema', () => {
-    expect(
-      schemaValidator.validate(signDataResponseSchema, {
-        data: 'a',
-        signature: 'a',
-      })
-    ).toBe(true)
-    expect(
-      schemaValidator.validate(signDataResponseSchema, {
-        data: '',
-        signature: '',
-      })
-    ).toBe(false)
-    expect(
-      schemaValidator.validate(signDataResponseSchema, {
-        data: '',
-      })
-    ).toBe(false)
-    expect(schemaValidator.validate(signDataResponseSchema, null)).toBe(false)
-    expect(
-      schemaValidator.validate(signDataResponseSchema, {
-        signature: 'a',
-      })
-    ).toBe(false)
-    expect(
-      schemaValidator.validate(signDataResponseSchema, {
-        data: 'a',
-      })
-    ).toBe(false)
   })
 })
