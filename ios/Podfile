@@ -6,12 +6,8 @@ source 'git@github.com:evernym/indy-sdk.git'
 
 def vcx_version_for_debug_or_release
     if ENV['CONNECTME_DEBUG'] == "true"
-        # stable cocoapod
-        #'0.0.64'
         '0.0.100'
     else
-        # stable cocoapod
-        #'0.0.63'
         '0.0.99'
     end
 end

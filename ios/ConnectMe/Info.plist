@@ -95,10 +95,10 @@
 	<string>Enabling Face ID allows you quick and secure access to your app.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow us access to Camera so that we can scan QR code</string>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>ConnectMe uses location.</string>
-  <key>NSPhotoLibraryUsageDescription</key>
-  <string>ConnectMe uses photo library.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>ConnectMe uses location.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>ConnectMe uses photo library.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
@@ -162,12 +162,8 @@
 	<string>ConnectMe uses your microphone to support audio messages.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>ConnectMe uses bluetooth.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>ConnectMe uses location.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>ConnectMe uses audio.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>ConnectMe uses photo library.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>ConnectMe uses speech recognition.</string>
 	<key>NSAppleMusicUsageDescription</key>

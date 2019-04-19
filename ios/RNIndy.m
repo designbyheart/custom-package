@@ -374,6 +374,83 @@ RCT_EXPORT_METHOD(shutdownVcx: (BOOL *) deletePool
   resolve([NSNumber numberWithInt:[[[ConnectMeVcx alloc] init] vcxShutdown: deletePool]]);
 }
 
+RCT_EXPORT_METHOD(connectionSendMessage: (NSInteger) connectionHandle
+                  withMessage: (NSString *) message
+                  withMessageType: (NSString *)messageType
+                  withMessageTitle: (NSString *)messageTitle
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] connectionSendMessage:connectionHandle
+                                         withMessage:message
+                                            withType:messageType
+                                           withTitle:messageTitle
+                                      withCompletion:^(NSError *error, NSString *msg_id)
+  {
+    if (error != nil && error.code != 0) {
+      NSString *vcxErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+      reject(vcxErrorCode, @"Error occurred while sending message", error);
+    } else {
+      resolve(msg_id);
+    }
+  }];
+}
+
+
+RCT_EXPORT_METHOD(connectionSignData: (NSInteger) connectionHandle
+                  withData: (NSString *) data
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  // convert data to based64 encoded byte array
+  NSData *dataToSign = [[data dataUsingEncoding:NSUTF8StringEncoding] base64EncodedDataWithOptions:0];
+  [[[ConnectMeVcx alloc] init] connectionSignData:connectionHandle
+                                         withData:dataToSign
+                                   withCompletion:^(NSError *error, NSData *signature_raw, vcx_u32_t signature_len)
+  {
+    if (error != nil && error.code != 0) {
+      NSString *vcxErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+      reject(vcxErrorCode, @"Error occurred while signing data", error);
+    } else {
+      // since we took the data from JS layer as simple string and
+      // then converted that string to Base64 encoded byte[]
+      // we need to pass same Base64 encoded byte[] back to JS layer, so that it can included in full message response
+      // otherwise we would be doing this calculation again in JS layer which does not handle Buffer
+      resolve(@{
+                @"data": [[data dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
+                @"signature": [signature_raw base64EncodedStringWithOptions:0]
+                });
+    }
+  }];
+}
+
+RCT_EXPORT_METHOD(connectionVerifySignature: (NSInteger) connectionHandle
+                  withData: (NSString *) data
+                  withSignature: (NSString *)signature
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  // Base64 decode signature because we encoded signature returned by libvcx to base64 encoded string
+  // Convert data to just byte[], because base64 encoded byte[] was used to generate signature
+  NSData *dataToVerify = [data dataUsingEncoding:NSUTF8StringEncoding];
+  NSData *signatureToVerify = [[NSData alloc] initWithBase64EncodedString:signature options:0];
+  [[[ConnectMeVcx alloc] init] connectionVerifySignature:connectionHandle
+                                                withData:dataToVerify
+                                       withSignatureData:signatureToVerify
+                                          withCompletion:^(NSError *error, vcx_bool_t valid)
+  {
+    if (error != nil && error.code != 0) {
+      NSString *vcxErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+      reject(vcxErrorCode, @"Error occurred while verifying data", error);
+    } else {
+      if (valid) {
+        resolve(@YES);
+      } else {
+        resolve(@NO);
+      }
+    }
+  }];
+}
 
 RCT_EXPORT_METHOD(credentialCreateWithMsgId: (NSString *) sourceId
                   withConnectionHandle: (NSInteger) connectionHandle

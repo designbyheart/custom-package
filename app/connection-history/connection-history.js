@@ -7,6 +7,7 @@ import {
   Dimensions,
   View,
   StatusBar,
+  Platform,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { List, ListItem } from 'react-native-elements'
@@ -66,6 +67,10 @@ import { getUnseenMessages } from '../store/store-selector'
 import { goToUIScreen } from '../push-notification/push-notification-store'
 import Color from 'color'
 import { getStatusBarStyle } from '../components/custom-header/custom-header'
+import {
+  QUESTION_RECEIVED,
+  UPDATE_QUESTION_ANSWER,
+} from '../question/type-question'
 
 const statusMsg = {
   ['PENDING']: 'Pending',
@@ -75,6 +80,8 @@ const statusMsg = {
   ['SHARED']: 'Sent on',
   ['PROOF RECEIVED']: 'New request to share',
   ['CLAIM OFFER RECEIVED']: 'New credential offer',
+  [QUESTION_RECEIVED]: 'New message',
+  [UPDATE_QUESTION_ANSWER]: 'Response sent',
 }
 
 const historyIcons = {
@@ -85,9 +92,16 @@ const historyIcons = {
   ['PROOF RECEIVED']: require('../images/received.png'),
   ['ACCEPTED & SAVED']: require('../images/received.png'),
   ['SHARED']: require('../images/sent.png'),
+  [QUESTION_RECEIVED]: require('../images/received.png'),
+  [UPDATE_QUESTION_ANSWER]: require('../images/sent.png'),
 }
 
-const historyShowUI = ['CLAIM OFFER RECEIVED', 'PROOF RECEIVED']
+const historyShowUI = [
+  'CLAIM OFFER RECEIVED',
+  'PROOF RECEIVED',
+  QUESTION_RECEIVED,
+  UPDATE_QUESTION_ANSWER,
+]
 
 const HistoryTitle = ({ action, name, theme }) => (
   <CustomView>
@@ -105,7 +119,7 @@ const HistoryTitle = ({ action, name, theme }) => (
       </CustomText>
     </CustomView>
     <CustomView>
-      {name && (
+      {!!name && (
         <CustomText
           h5
           semiBold
@@ -153,6 +167,17 @@ export class ConnectionHistory extends Component<
 
   componentDidMount() {
     this.props.updateStatusBarTheme(this.props.activeConnectionThemePrimary)
+  }
+
+  componentDidUpdate() {
+    if (Platform.OS === 'android') {
+      // TODO: Refactor this code sometime later so that this code executes
+      // only when this screen comes in focus and not on every component update
+      StatusBar.setBackgroundColor(
+        this.props.activeConnectionThemePrimary,
+        true
+      )
+    }
   }
 
   closeDebounce = () => {
@@ -284,13 +309,17 @@ export class ConnectionHistory extends Component<
             },
           }
 
-          if (h.action === 'CONNECTED') {
+          if (
+            h.action === 'CONNECTED' ||
+            h.action === HISTORY_EVENT_STATUS[UPDATE_QUESTION_ANSWER]
+          ) {
             itemProps.hideChevron = true
             delete itemProps.onPress
           }
 
           return <ListItem {...itemProps} />
         })
+
         const history = (
           <CustomView key={i}>
             <CustomText

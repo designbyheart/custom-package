@@ -18,6 +18,7 @@ describe('<PushNotification />', () => {
       pushNotificationPermissionAction: jest.fn(),
       updatePushToken: jest.fn(),
       isAllowed: false,
+      getUnacknowledgedMessages: jest.fn(),
     }
   }
 

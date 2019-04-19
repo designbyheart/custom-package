@@ -7,12 +7,28 @@ import type {
   CustomError,
   ResetAction,
 } from '../common/type-common'
+import type { InvitationReceivedAction } from '../invitation/type-invitation'
+import type { NewConnectionAction } from '../store/type-connection-store'
+import type { SendClaimRequestAction } from '../claim-offer/type-claim-offer'
+import type { ClaimReceivedAction } from '../claim/type-claim'
+import type { ClaimOfferReceivedAction } from '../claim-offer/type-claim-offer'
+import type { Connection } from '../connection/type-connection'
+import type {
+  ProofRequestReceivedAction,
+  SendProofSuccessAction,
+  AdditionalProofDataPayload,
+} from '../proof-request/type-proof-request'
+import type {
+  Attribute,
+  AdditionalDataPayload,
+  NotificationPayloadInfo,
+} from '../push-notification/type-push-notification'
+import type { ClaimMap } from '../claim/type-claim'
+
 import {
   INVITATION_RECEIVED,
   INVITATION_REJECTED,
 } from '../invitation/type-invitation'
-import type { InvitationReceivedAction } from '../invitation/type-invitation'
-import type { NewConnectionAction } from '../store/type-connection-store'
 import {
   CLAIM_OFFER_RECEIVED,
   CLAIM_OFFER_ACCEPTED,
@@ -21,9 +37,6 @@ import {
   SEND_CLAIM_REQUEST,
   SEND_CLAIM_REQUEST_SUCCESS,
 } from '../claim-offer/type-claim-offer'
-import type { SendClaimRequestAction } from '../claim-offer/type-claim-offer'
-import type { ClaimReceivedAction } from '../claim/type-claim'
-import type { ClaimOfferReceivedAction } from '../claim-offer/type-claim-offer'
 import { CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
 import {
   PROOF_REQUEST_RECEIVED,
@@ -32,20 +45,12 @@ import {
   PROOF_REQUEST_REJECTED,
   SEND_PROOF_SUCCESS,
 } from '../proof-request/type-proof-request'
-import type { Connection } from '../connection/type-connection'
-import type {
-  ProofRequestReceivedAction,
-  SendProofSuccessAction,
-  AdditionalProofDataPayload,
-} from '../proof-request/type-proof-request'
 import { NEW_CONNECTION_SUCCESS } from '../store/connections-store'
 import { PROOF_SUCCESS } from '../proof/type-proof'
-import type {
-  Attribute,
-  AdditionalDataPayload,
-  NotificationPayloadInfo,
-} from '../push-notification/type-push-notification'
-import type { ClaimMap } from '../claim/type-claim'
+import {
+  QUESTION_RECEIVED,
+  UPDATE_QUESTION_ANSWER,
+} from '../question/type-question'
 
 export const HISTORY_EVENT_STATUS = {
   [INVITATION_RECEIVED]: 'CONNECTION REQUEST',
@@ -61,6 +66,8 @@ export const HISTORY_EVENT_STATUS = {
   [PROOF_REQUEST_IGNORED]: 'IGNORED',
   [PROOF_REQUEST_REJECTED]: 'REJECTED',
   [SEND_PROOF_SUCCESS]: 'SHARED',
+  [QUESTION_RECEIVED]: QUESTION_RECEIVED,
+  [UPDATE_QUESTION_ANSWER]: UPDATE_QUESTION_ANSWER,
 }
 
 export type HistoryEventStatus = $Keys<typeof HISTORY_EVENT_STATUS>
@@ -70,6 +77,7 @@ export const HISTORY_EVENT_TYPE = {
   CLAIM: 'CLAIM',
   PROOF: 'PROOF',
   AUTHENTICATION: 'AUTHENTICATION',
+  QUESTION: 'QUESTION',
 }
 
 export type HistoryEventType = $Keys<typeof HISTORY_EVENT_TYPE>
@@ -93,6 +101,7 @@ export const EventTypeToEventStatusMap = {
     PROOF_REQUEST_IGNORED,
     PROOF_REQUEST_REJECTED,
   ],
+  QUESTION: [QUESTION_RECEIVED, UPDATE_QUESTION_ANSWER],
 }
 
 export type ConnectionHistoryEvent = {
