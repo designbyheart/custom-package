@@ -12,11 +12,11 @@ export class QuestionScreenHeader extends React.Component<
 > {
   render() {
     return (
-      <CustomView row style={[questionStyles.headerContainer]}>
+      <Container row style={[questionStyles.headerContainer]}>
         <ViewCloser {...this.props} />
         <HeaderHandlebar />
         <ViewCloser {...this.props} />
-      </CustomView>
+      </Container>
     )
   }
 }

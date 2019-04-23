@@ -5,9 +5,9 @@ exports[`<QuestionScreenHeader /> should match snapshot 1`] = `
   row={true}
   style={
     Object {
-      "backgroundColor": "rgba(0, 0, 0, 0.8)",
+      "backgroundColor": "transparent",
+      "flex": 1,
       "flexDirection": "row",
-      "minHeight": "20%",
     }
   }
 >

@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react'
+import { Dimensions } from 'react-native'
 
 import type { QuestionResponse, QuestionStoreMessage } from '../type-question'
 
@@ -18,6 +19,7 @@ import {
   questionStyles,
   disabledStyle,
 } from '../question-screen-style'
+import { isSmallWidthDevice } from '../../common/styles'
 
 export class QuestionActions extends React.Component<
   QuestionActionProps,
@@ -67,40 +69,47 @@ export class QuestionActions extends React.Component<
     )
 
     return (
-      <CustomView
-        bg="tertiary"
-        row
-        safeArea
-        style={[questionStyles.questionActionContainer]}
-      >
-        {shouldRenderIgnoreButton && (
-          <Container style={[questionStyles.buttonSpacing]}>
-            <CustomButton
-              {...questionActionButtonDefaultProps}
-              twelfth
-              style={[questionStyles.actionButton, questionStyles.cancelButton]}
-              title={cancelButtonTitle}
-              testID={`${testID}-cancel`}
-              onPress={this.props.onCancel}
-            />
-          </Container>
-        )}
-        <Container>
-          {shouldRenderSubmitButton ? (
-            <CustomButton
-              {...questionActionButtonDefaultProps}
-              eleventh
-              style={[questionStyles.actionButton, questionStyles.submitButton]}
-              title={submitButtonTitle}
-              disabled={isSubmitDisabled}
-              testID={`${testID}-submit`}
-              onPress={this.props.onSubmit}
-              customColor={disabledStyle}
-            />
-          ) : (
-            responseButtons
+      <CustomView safeArea>
+        <CustomView
+          bg="tertiary"
+          row
+          style={[questionStyles.questionActionContainer]}
+        >
+          {shouldRenderIgnoreButton && (
+            <Container style={[questionStyles.buttonSpacing]}>
+              <CustomButton
+                {...questionActionButtonDefaultProps}
+                twelfth
+                style={[
+                  questionStyles.actionButton,
+                  questionStyles.cancelButton,
+                ]}
+                title={cancelButtonTitle}
+                testID={`${testID}-cancel`}
+                onPress={this.props.onCancel}
+              />
+            </Container>
           )}
-        </Container>
+          <Container>
+            {shouldRenderSubmitButton ? (
+              <CustomButton
+                {...questionActionButtonDefaultProps}
+                eleventh
+                style={[
+                  questionStyles.actionButton,
+                  questionStyles.submitButton,
+                ]}
+                title={submitButtonTitle}
+                disabled={isSubmitDisabled}
+                testID={`${testID}-submit`}
+                onPress={this.props.onSubmit}
+                customColor={disabledStyle}
+              />
+            ) : (
+              responseButtons
+            )}
+          </Container>
+        </CustomView>
       </CustomView>
     )
   }
@@ -113,11 +122,29 @@ function QuestionResponseButtons(props: QuestionResponseButtonsProps) {
     return null
   }
 
-  return responses.map(response => (
+  // as per requirements, we need to render responses in reverse order
+  // so that first response in array is at bottom which is closer
+  // to user's thumb.
+  // below we are slicing first, because `reverse` modifies the original array
+  // and since we are getting this array in props, we don't want to modify props
+  // so first, we create a copy of passed array and then reverse it
+  const reversedResponses = responses.slice().reverse()
+  // Also, only first (or last in reversed array) response in array
+  // is supposed to look green (primary button)
+  // and all other responses needs to look secondary
+  const lastItemIndex = reversedResponses.length - 1
+  // if we have only single response, then we need some more business logic
+  // as per our requirement, see <QuestionResponseButton /> render method
+  // for more logic
+  const isSingleResponse = reversedResponses.length === 1
+
+  return reversedResponses.map((response: QuestionResponse, index: number) => (
     <QuestionResponseButton
       response={response}
       key={response.nonce}
       onPress={onPress}
+      isPrimaryResponse={index === lastItemIndex}
+      isSingleResponse={isSingleResponse}
     />
   ))
 }
@@ -127,14 +154,37 @@ class QuestionResponseButton extends React.PureComponent<
   void
 > {
   render() {
-    const { response } = this.props
+    const { response, isPrimaryResponse, isSingleResponse } = this.props
+
+    // We need to show only one line of text on action buttons
+    // Normally, we should have used react-native's numberOfLines prop
+    // but since we are using an external library for Buttons
+    // and this version is bit older, in newer versions we can specify
+    // numberOfLines prop for Button component
+    // So, for now just using substring on response text
+    // Also, if there is only a single response
+    // then we need to show half text limit on button, because in single response
+    // buttons are placed side by side and has less width
+    // TODO: Upgrade react-native-elements and use numberOfLines prop
+    const buttonText = isSingleResponse
+      ? ellipsis(response.text, Math.floor(getResponseButtonsTextLimit() / 2))
+      : ellipsis(response.text, getResponseButtonsTextLimit())
+
     return (
-      <CustomView style={[questionStyles.responseButton]}>
+      <CustomView
+        style={[isSingleResponse ? {} : questionStyles.responseButton]}
+      >
         <CustomButton
           {...questionActionButtonDefaultProps}
-          eleventh
-          style={[questionStyles.actionButton, questionStyles.submitButton]}
-          title={response.text}
+          eleventh={isPrimaryResponse}
+          twelfth={!isPrimaryResponse}
+          style={[
+            questionStyles.actionButton,
+            isPrimaryResponse
+              ? questionStyles.submitButton
+              : questionStyles.cancelButton,
+          ]}
+          title={buttonText}
           testID={`${response.nonce}-submit`}
           onPress={this.onPress}
         />
@@ -145,6 +195,20 @@ class QuestionResponseButton extends React.PureComponent<
   onPress = () => {
     this.props.onPress(this.props.response)
   }
+}
+
+function ellipsis(text: string, maxLength: number) {
+  const stringLargerThanMaxLength = text.length > maxLength
+  const trimmedText = text.substring(
+    0,
+    stringLargerThanMaxLength ? maxLength - 3 : maxLength
+  )
+  return stringLargerThanMaxLength ? trimmedText + '...' : trimmedText
+}
+
+function getResponseButtonsTextLimit() {
+  const responseTextLimit = 40
+  return isSmallWidthDevice ? responseTextLimit - 5 : responseTextLimit
 }
 
 export type QuestionActionProps = {
@@ -163,4 +227,6 @@ type QuestionResponseButtonsProps = {
 type QuestionResponseButtonProps = {
   response: QuestionResponse,
   onPress: (response: QuestionResponse) => void,
+  isPrimaryResponse: boolean,
+  isSingleResponse: boolean,
 }

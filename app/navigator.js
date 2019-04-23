@@ -95,7 +95,6 @@ import {
   TAB_MENU_TITLE,
   TAB_SCAN_TITLE,
 } from './type-navigator'
-import { Button } from 'react-native-elements'
 import { measurements } from './common/styles/measurements'
 import {
   whiteTransparent,

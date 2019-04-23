@@ -95,6 +95,10 @@ jest.mock('Dimensions', () => ({
   })),
 }))
 
+jest.mock('UIManager', () => ({
+  configureNextLayoutAnimation: jest.fn(),
+}))
+
 jest.mock('react-native-touch-id', () => {
   return {
     authenticate: jest.fn(message => Promise.resolve()),

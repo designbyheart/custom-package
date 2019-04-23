@@ -1,7 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { View, StyleSheet, Image } from 'react-native'
-import { Button } from 'react-native-elements'
 import Modal from 'react-native-modal'
 import {
   CustomModal,

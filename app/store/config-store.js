@@ -853,8 +853,8 @@ export const convertDecryptedPayloadToQuestion = (
     forDID,
     connectionHandle,
     remotePairwiseDID: senderDID,
-    messageTitle: messageTitle || parsedMsg.question_text,
-    messageText: messageText || parsedMsg.question_detail,
+    messageTitle: parsedMsg.question_text || messageTitle,
+    messageText: parsedMsg.question_detail || messageText,
   }
 }
 

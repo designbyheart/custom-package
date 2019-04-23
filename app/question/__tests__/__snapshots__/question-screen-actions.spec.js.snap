@@ -2,1462 +2,28 @@
 
 exports[`<QuestionActions /> when more than two responses are present match snapshot if in error status 1`] = `
 <RCTSafeAreaView
-  bg="tertiary"
-  row={true}
   safeArea={true}
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#ffffff",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "justifyContent": "space-around",
-      "marginVertical": 30,
-    }
-  }
+  style={Object {}}
 >
   <View
+    bg="tertiary"
+    row={true}
     style={
       Object {
-        "flex": 1,
-        "marginRight": "3%",
-      }
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
-      }
-    >
-      <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-cancel"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#A5A5A5",
-              },
-            ],
-          ]
-        }
-        testID="question-action-cancel"
-        tvParallaxProperties={undefined}
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#A5A5A5",
-                },
-              ],
-              undefined,
-              undefined,
-            ]
-          }
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#777777",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  undefined,
-                ],
-              ]
-            }
-          >
-            Cancel
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-  <View
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
-      }
-    >
-      <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-submit"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#01C8A1",
-              },
-            ],
-          ]
-        }
-        testID="question-action-submit"
-        tvParallaxProperties={undefined}
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#01C8A1",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
-              false,
-              false,
-            ]
-          }
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
-                ],
-              ]
-            }
-          >
-            Try Again
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-</RCTSafeAreaView>
-`;
-
-exports[`<QuestionActions /> when more than two responses are present match snapshot if in success status 1`] = `
-<RCTSafeAreaView
-  bg="tertiary"
-  row={true}
-  safeArea={true}
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#ffffff",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "justifyContent": "space-around",
-      "marginVertical": 30,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
-      }
-    >
-      <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-submit"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#01C8A1",
-              },
-            ],
-          ]
-        }
-        testID="question-action-submit"
-        tvParallaxProperties={undefined}
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#01C8A1",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
-              false,
-              false,
-            ]
-          }
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
-                ],
-              ]
-            }
-          >
-            OK
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-</RCTSafeAreaView>
-`;
-
-exports[`<QuestionActions /> when more than two responses are present render Ignore and Submit button 1`] = `
-<RCTSafeAreaView
-  bg="tertiary"
-  row={true}
-  safeArea={true}
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#ffffff",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "justifyContent": "space-around",
-      "marginVertical": 30,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "flex": 1,
-        "marginRight": "3%",
-      }
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
-      }
-    >
-      <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-cancel"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#A5A5A5",
-              },
-            ],
-          ]
-        }
-        testID="question-action-cancel"
-        tvParallaxProperties={undefined}
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#A5A5A5",
-                },
-              ],
-              undefined,
-              undefined,
-            ]
-          }
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#777777",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  undefined,
-                ],
-              ]
-            }
-          >
-            Ignore
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-  <View
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
-      }
-    >
-      <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-submit"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#01C8A1",
-              },
-            ],
-          ]
-        }
-        testID="question-action-submit"
-        tvParallaxProperties={undefined}
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#01C8A1",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
-              Object {
-                "backgroundColor": "#dadee0",
-              },
-              Array [
-                Object {
-                  "backgroundColor": "#01C8A1",
-                },
-                Object {
-                  "opacity": 0.4,
-                },
-              ],
-            ]
-          }
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  undefined,
-                ],
-              ]
-            }
-          >
-            Submit
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-</RCTSafeAreaView>
-`;
-
-exports[`<QuestionActions /> when one response is present match snapshot if in error status 1`] = `
-<RCTSafeAreaView
-  bg="tertiary"
-  row={true}
-  safeArea={true}
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#ffffff",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "justifyContent": "space-around",
-      "marginVertical": 30,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "flex": 1,
-        "marginRight": "3%",
-      }
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
-      }
-    >
-      <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-cancel"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#A5A5A5",
-              },
-            ],
-          ]
-        }
-        testID="question-action-cancel"
-        tvParallaxProperties={undefined}
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#A5A5A5",
-                },
-              ],
-              undefined,
-              undefined,
-            ]
-          }
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#777777",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  undefined,
-                ],
-              ]
-            }
-          >
-            Cancel
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-  <View
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
-      }
-    >
-      <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-submit"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#01C8A1",
-              },
-            ],
-          ]
-        }
-        testID="question-action-submit"
-        tvParallaxProperties={undefined}
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#01C8A1",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
-              false,
-              false,
-            ]
-          }
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
-                ],
-              ]
-            }
-          >
-            Try Again
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-</RCTSafeAreaView>
-`;
-
-exports[`<QuestionActions /> when one response is present match snapshot if in success status 1`] = `
-<RCTSafeAreaView
-  bg="tertiary"
-  row={true}
-  safeArea={true}
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#ffffff",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "justifyContent": "space-around",
-      "marginVertical": 30,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
-      }
-    >
-      <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-submit"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#01C8A1",
-              },
-            ],
-          ]
-        }
-        testID="question-action-submit"
-        tvParallaxProperties={undefined}
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#01C8A1",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
-              false,
-              false,
-            ]
-          }
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
-                ],
-              ]
-            }
-          >
-            OK
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-</RCTSafeAreaView>
-`;
-
-exports[`<QuestionActions /> when one response is present render Ignore and response button 1`] = `
-<RCTSafeAreaView
-  bg="tertiary"
-  row={true}
-  safeArea={true}
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#ffffff",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "justifyContent": "space-around",
-      "marginVertical": 30,
-    }
-  }
->
-  <View
-    style={
-      Object {
-        "flex": 1,
-        "marginRight": "3%",
-      }
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
-      }
-    >
-      <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-cancel"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#A5A5A5",
-              },
-            ],
-          ]
-        }
-        testID="question-action-cancel"
-        tvParallaxProperties={undefined}
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#A5A5A5",
-                },
-              ],
-              undefined,
-              undefined,
-            ]
-          }
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#777777",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  undefined,
-                ],
-              ]
-            }
-          >
-            Ignore
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-  <View
-    style={
-      Object {
-        "flex": 1,
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "justifyContent": "space-around",
+        "marginVertical": "3%",
       }
     }
   >
     <View
       style={
         Object {
-          "marginTop": 10,
+          "flex": 1,
+          "marginRight": "3%",
         }
       }
     >
@@ -1479,7 +45,154 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
       >
         <View
           accessibilityComponentType={undefined}
-          accessibilityLabel="akdfakjfkjdaadkgak-submit"
+          accessibilityLabel="question-action-cancel"
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Array [
+                Object {
+                  "borderRadius": 5,
+                  "borderWidth": 1,
+                },
+                Object {
+                  "borderColor": "#A5A5A5",
+                },
+              ],
+            ]
+          }
+          testID="question-action-cancel"
+          tvParallaxProperties={undefined}
+        >
+          <View
+            pointerEvents="box-only"
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#ffffff",
+                },
+                undefined,
+                Object {
+                  "padding": 12,
+                },
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  null,
+                  Object {
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                  },
+                  Object {
+                    "borderColor": "#A5A5A5",
+                  },
+                ],
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#777777",
+                    },
+                    Object {
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "fontSize": 17,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+            >
+              Cancel
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "marginLeft": 15,
+              "marginRight": 15,
+            },
+            undefined,
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel="question-action-submit"
           accessibilityTraits={undefined}
           accessible={true}
           hasTVPreferredFocus={undefined}
@@ -1509,7 +222,7 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
               ],
             ]
           }
-          testID="akdfakjfkjdaadkgak-submit"
+          testID="question-action-submit"
           tvParallaxProperties={undefined}
         >
           <View
@@ -1548,8 +261,505 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
                     "borderColor": "#01C8A1",
                   },
                 ],
+                false,
+                false,
+              ]
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#ffffff",
+                    },
+                    Object {
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "fontSize": 17,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    false,
+                  ],
+                ]
+              }
+            >
+              Try Again
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
+
+exports[`<QuestionActions /> when more than two responses are present match snapshot if in success status 1`] = `
+<RCTSafeAreaView
+  safeArea={true}
+  style={Object {}}
+>
+  <View
+    bg="tertiary"
+    row={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "justifyContent": "space-around",
+        "marginVertical": "3%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "marginLeft": 15,
+              "marginRight": 15,
+            },
+            undefined,
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel="question-action-submit"
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Array [
+                Object {
+                  "borderRadius": 5,
+                  "borderWidth": 1,
+                },
+                Object {
+                  "borderColor": "#01C8A1",
+                },
+              ],
+            ]
+          }
+          testID="question-action-submit"
+          tvParallaxProperties={undefined}
+        >
+          <View
+            pointerEvents="box-only"
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
                 undefined,
                 undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#01C8A1",
+                },
+                undefined,
+                Object {
+                  "padding": 12,
+                },
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  null,
+                  Object {
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                  },
+                  Object {
+                    "borderColor": "#01C8A1",
+                  },
+                ],
+                false,
+                false,
+              ]
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#ffffff",
+                    },
+                    Object {
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "fontSize": 17,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    false,
+                  ],
+                ]
+              }
+            >
+              OK
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
+
+exports[`<QuestionActions /> when more than two responses are present render Ignore and Submit button 1`] = `
+<RCTSafeAreaView
+  safeArea={true}
+  style={Object {}}
+>
+  <View
+    bg="tertiary"
+    row={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "justifyContent": "space-around",
+        "marginVertical": "3%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "marginRight": "3%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "marginLeft": 15,
+              "marginRight": 15,
+            },
+            undefined,
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel="question-action-cancel"
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Array [
+                Object {
+                  "borderRadius": 5,
+                  "borderWidth": 1,
+                },
+                Object {
+                  "borderColor": "#A5A5A5",
+                },
+              ],
+            ]
+          }
+          testID="question-action-cancel"
+          tvParallaxProperties={undefined}
+        >
+          <View
+            pointerEvents="box-only"
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#ffffff",
+                },
+                undefined,
+                Object {
+                  "padding": 12,
+                },
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  null,
+                  Object {
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                  },
+                  Object {
+                    "borderColor": "#A5A5A5",
+                  },
+                ],
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#777777",
+                    },
+                    Object {
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "fontSize": 17,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+            >
+              Ignore
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "marginLeft": 15,
+              "marginRight": 15,
+            },
+            undefined,
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel="question-action-submit"
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Array [
+                Object {
+                  "borderRadius": 5,
+                  "borderWidth": 1,
+                },
+                Object {
+                  "borderColor": "#01C8A1",
+                },
+              ],
+            ]
+          }
+          testID="question-action-submit"
+          tvParallaxProperties={undefined}
+        >
+          <View
+            pointerEvents="box-only"
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#01C8A1",
+                },
+                undefined,
+                Object {
+                  "padding": 12,
+                },
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  null,
+                  Object {
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                  },
+                  Object {
+                    "borderColor": "#01C8A1",
+                  },
+                ],
+                Object {
+                  "backgroundColor": "#dadee0",
+                },
+                Array [
+                  Object {
+                    "backgroundColor": "#01C8A1",
+                  },
+                  Object {
+                    "opacity": 0.4,
+                  },
+                ],
               ]
             }
           >
@@ -1595,8 +805,818 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
                 ]
               }
             >
-              Yes
+              Submit
             </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
+
+exports[`<QuestionActions /> when one response is present match snapshot if in error status 1`] = `
+<RCTSafeAreaView
+  safeArea={true}
+  style={Object {}}
+>
+  <View
+    bg="tertiary"
+    row={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "justifyContent": "space-around",
+        "marginVertical": "3%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "marginRight": "3%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "marginLeft": 15,
+              "marginRight": 15,
+            },
+            undefined,
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel="question-action-cancel"
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Array [
+                Object {
+                  "borderRadius": 5,
+                  "borderWidth": 1,
+                },
+                Object {
+                  "borderColor": "#A5A5A5",
+                },
+              ],
+            ]
+          }
+          testID="question-action-cancel"
+          tvParallaxProperties={undefined}
+        >
+          <View
+            pointerEvents="box-only"
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#ffffff",
+                },
+                undefined,
+                Object {
+                  "padding": 12,
+                },
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  null,
+                  Object {
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                  },
+                  Object {
+                    "borderColor": "#A5A5A5",
+                  },
+                ],
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#777777",
+                    },
+                    Object {
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "fontSize": 17,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+            >
+              Cancel
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "marginLeft": 15,
+              "marginRight": 15,
+            },
+            undefined,
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel="question-action-submit"
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Array [
+                Object {
+                  "borderRadius": 5,
+                  "borderWidth": 1,
+                },
+                Object {
+                  "borderColor": "#01C8A1",
+                },
+              ],
+            ]
+          }
+          testID="question-action-submit"
+          tvParallaxProperties={undefined}
+        >
+          <View
+            pointerEvents="box-only"
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#01C8A1",
+                },
+                undefined,
+                Object {
+                  "padding": 12,
+                },
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  null,
+                  Object {
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                  },
+                  Object {
+                    "borderColor": "#01C8A1",
+                  },
+                ],
+                false,
+                false,
+              ]
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#ffffff",
+                    },
+                    Object {
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "fontSize": 17,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    false,
+                  ],
+                ]
+              }
+            >
+              Try Again
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
+
+exports[`<QuestionActions /> when one response is present match snapshot if in success status 1`] = `
+<RCTSafeAreaView
+  safeArea={true}
+  style={Object {}}
+>
+  <View
+    bg="tertiary"
+    row={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "justifyContent": "space-around",
+        "marginVertical": "3%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "marginLeft": 15,
+              "marginRight": 15,
+            },
+            undefined,
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel="question-action-submit"
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Array [
+                Object {
+                  "borderRadius": 5,
+                  "borderWidth": 1,
+                },
+                Object {
+                  "borderColor": "#01C8A1",
+                },
+              ],
+            ]
+          }
+          testID="question-action-submit"
+          tvParallaxProperties={undefined}
+        >
+          <View
+            pointerEvents="box-only"
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#01C8A1",
+                },
+                undefined,
+                Object {
+                  "padding": 12,
+                },
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  null,
+                  Object {
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                  },
+                  Object {
+                    "borderColor": "#01C8A1",
+                  },
+                ],
+                false,
+                false,
+              ]
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#ffffff",
+                    },
+                    Object {
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "fontSize": 17,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    false,
+                  ],
+                ]
+              }
+            >
+              OK
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
+
+exports[`<QuestionActions /> when one response is present render Ignore and response button 1`] = `
+<RCTSafeAreaView
+  safeArea={true}
+  style={Object {}}
+>
+  <View
+    bg="tertiary"
+    row={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "justifyContent": "space-around",
+        "marginVertical": "3%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "marginRight": "3%",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "marginLeft": 15,
+              "marginRight": 15,
+            },
+            undefined,
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel="question-action-cancel"
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Array [
+                Object {
+                  "borderRadius": 5,
+                  "borderWidth": 1,
+                },
+                Object {
+                  "borderColor": "#A5A5A5",
+                },
+              ],
+            ]
+          }
+          testID="question-action-cancel"
+          tvParallaxProperties={undefined}
+        >
+          <View
+            pointerEvents="box-only"
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#ffffff",
+                },
+                undefined,
+                Object {
+                  "padding": 12,
+                },
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  null,
+                  Object {
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                  },
+                  Object {
+                    "borderColor": "#A5A5A5",
+                  },
+                ],
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#777777",
+                    },
+                    Object {
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "fontSize": 17,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+            >
+              Ignore
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={Object {}}
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "marginLeft": 15,
+                "marginRight": 15,
+              },
+              undefined,
+              Object {
+                "marginLeft": 0,
+                "marginRight": 0,
+              },
+              undefined,
+            ]
+          }
+        >
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel="akdfakjfkjdaadkgak-submit"
+            accessibilityTraits={undefined}
+            accessible={true}
+            hasTVPreferredFocus={undefined}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                Array [
+                  Object {
+                    "borderRadius": 5,
+                    "borderWidth": 1,
+                  },
+                  Object {
+                    "borderColor": "#01C8A1",
+                  },
+                ],
+              ]
+            }
+            testID="akdfakjfkjdaadkgak-submit"
+            tvParallaxProperties={undefined}
+          >
+            <View
+              pointerEvents="box-only"
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#9E9E9E",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "padding": 19,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Object {
+                    "backgroundColor": "#01C8A1",
+                  },
+                  undefined,
+                  Object {
+                    "padding": 12,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    null,
+                    Object {
+                      "borderRadius": 5,
+                      "borderWidth": 1,
+                    },
+                    Object {
+                      "borderColor": "#01C8A1",
+                    },
+                  ],
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={
+                  Array [
+                    Object {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Array [
+                      Object {
+                        "color": "white",
+                        "fontSize": 16,
+                      },
+                      Object {
+                        "color": "#ffffff",
+                      },
+                      Object {
+                        "fontSize": 14,
+                      },
+                      Object {
+                        "fontSize": 17,
+                      },
+                      undefined,
+                      Object {
+                        "fontWeight": "bold",
+                      },
+                      Object {
+                        "fontFamily": "Lato",
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                Yes
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -1607,107 +1627,69 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
 
 exports[`<QuestionActions /> when two responses are present match snapshot if in error status 1`] = `
 <RCTSafeAreaView
-  bg="tertiary"
-  row={true}
   safeArea={true}
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#ffffff",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "justifyContent": "space-around",
-      "marginVertical": 30,
-    }
-  }
+  style={Object {}}
 >
   <View
+    bg="tertiary"
+    row={true}
     style={
       Object {
-        "flex": 1,
-        "marginRight": "3%",
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "justifyContent": "space-around",
+        "marginVertical": "3%",
       }
     }
   >
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "flex": 1,
+          "marginRight": "3%",
+        }
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-cancel"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           Array [
             Object {
-              "backgroundColor": "transparent",
+              "marginLeft": 15,
+              "marginRight": 15,
             },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#A5A5A5",
-              },
-            ],
+            undefined,
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            undefined,
           ]
         }
-        testID="question-action-cancel"
-        tvParallaxProperties={undefined}
       >
         <View
-          pointerEvents="box-only"
+          accessibilityComponentType={undefined}
+          accessibilityLabel="question-action-cancel"
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Array [
               Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
+                "backgroundColor": "transparent",
               },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
               Array [
-                null,
                 Object {
                   "borderRadius": 5,
                   "borderWidth": 1,
@@ -1716,145 +1698,145 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
                   "borderColor": "#A5A5A5",
                 },
               ],
-              undefined,
-              undefined,
             ]
           }
+          testID="question-action-cancel"
+          tvParallaxProperties={undefined}
         >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
+            pointerEvents="box-only"
             style={
               Array [
-                Object {},
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 undefined,
+                Object {
+                  "backgroundColor": "#ffffff",
+                },
                 undefined,
+                Object {
+                  "padding": 12,
+                },
                 undefined,
                 undefined,
                 undefined,
                 Array [
+                  null,
                   Object {
-                    "color": "white",
-                    "fontSize": 16,
+                    "borderRadius": 5,
+                    "borderWidth": 1,
                   },
                   Object {
-                    "color": "#777777",
+                    "borderColor": "#A5A5A5",
                   },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  undefined,
                 ],
+                undefined,
+                undefined,
               ]
             }
           >
-            Cancel
-          </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#777777",
+                    },
+                    Object {
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "fontSize": 17,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+            >
+              Cancel
+            </Text>
+          </View>
         </View>
       </View>
     </View>
-  </View>
-  <View
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-  >
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "flex": 1,
+        }
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-submit"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           Array [
             Object {
-              "backgroundColor": "transparent",
+              "marginLeft": 15,
+              "marginRight": 15,
             },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#01C8A1",
-              },
-            ],
+            undefined,
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            undefined,
           ]
         }
-        testID="question-action-submit"
-        tvParallaxProperties={undefined}
       >
         <View
-          pointerEvents="box-only"
+          accessibilityComponentType={undefined}
+          accessibilityLabel="question-action-submit"
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Array [
               Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
+                "backgroundColor": "transparent",
               },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#01C8A1",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
               Array [
-                null,
                 Object {
                   "borderRadius": 5,
                   "borderWidth": 1,
@@ -1863,55 +1845,97 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
                   "borderColor": "#01C8A1",
                 },
               ],
-              false,
-              false,
             ]
           }
+          testID="question-action-submit"
+          tvParallaxProperties={undefined}
         >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
+            pointerEvents="box-only"
             style={
               Array [
-                Object {},
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 undefined,
+                Object {
+                  "backgroundColor": "#01C8A1",
+                },
                 undefined,
+                Object {
+                  "padding": 12,
+                },
                 undefined,
                 undefined,
                 undefined,
                 Array [
+                  null,
                   Object {
-                    "color": "white",
-                    "fontSize": 16,
+                    "borderRadius": 5,
+                    "borderWidth": 1,
                   },
                   Object {
-                    "color": "#ffffff",
+                    "borderColor": "#01C8A1",
                   },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
                 ],
+                false,
+                false,
               ]
             }
           >
-            Try Again
-          </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#ffffff",
+                    },
+                    Object {
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "fontSize": 17,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    false,
+                  ],
+                ]
+              }
+            >
+              Try Again
+            </Text>
+          </View>
         </View>
       </View>
     </View>
@@ -1921,106 +1945,68 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
 
 exports[`<QuestionActions /> when two responses are present match snapshot if in success status 1`] = `
 <RCTSafeAreaView
-  bg="tertiary"
-  row={true}
   safeArea={true}
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#ffffff",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "justifyContent": "space-around",
-      "marginVertical": 30,
-    }
-  }
+  style={Object {}}
 >
   <View
+    bg="tertiary"
+    row={true}
     style={
       Object {
-        "flex": 1,
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "justifyContent": "space-around",
+        "marginVertical": "3%",
       }
     }
   >
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "flex": 1,
+        }
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel="question-action-submit"
-        accessibilityTraits={undefined}
-        accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
-        isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           Array [
             Object {
-              "backgroundColor": "transparent",
+              "marginLeft": 15,
+              "marginRight": 15,
             },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#01C8A1",
-              },
-            ],
+            undefined,
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            undefined,
           ]
         }
-        testID="question-action-submit"
-        tvParallaxProperties={undefined}
       >
         <View
-          pointerEvents="box-only"
+          accessibilityComponentType={undefined}
+          accessibilityLabel="question-action-submit"
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Array [
               Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
+                "backgroundColor": "transparent",
               },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#01C8A1",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
               Array [
-                null,
                 Object {
                   "borderRadius": 5,
                   "borderWidth": 1,
@@ -2029,55 +2015,97 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
                   "borderColor": "#01C8A1",
                 },
               ],
-              false,
-              false,
             ]
           }
+          testID="question-action-submit"
+          tvParallaxProperties={undefined}
         >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
+            pointerEvents="box-only"
             style={
               Array [
-                Object {},
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 undefined,
+                Object {
+                  "backgroundColor": "#01C8A1",
+                },
                 undefined,
+                Object {
+                  "padding": 12,
+                },
                 undefined,
                 undefined,
                 undefined,
                 Array [
+                  null,
                   Object {
-                    "color": "white",
-                    "fontSize": 16,
+                    "borderRadius": 5,
+                    "borderWidth": 1,
                   },
                   Object {
-                    "color": "#ffffff",
+                    "borderColor": "#01C8A1",
                   },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
                 ],
+                false,
+                false,
               ]
             }
           >
-            OK
-          </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#ffffff",
+                    },
+                    Object {
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "fontSize": 17,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "bold",
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    false,
+                  ],
+                ]
+              }
+            >
+              OK
+            </Text>
+          </View>
         </View>
       </View>
     </View>
@@ -2087,260 +2115,222 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
 
 exports[`<QuestionActions /> when two responses are present render both response buttons and no ignore button 1`] = `
 <RCTSafeAreaView
-  bg="tertiary"
-  row={true}
   safeArea={true}
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#ffffff",
-      "flexDirection": "row",
-      "flexWrap": "wrap",
-      "justifyContent": "space-around",
-      "marginVertical": 30,
-    }
-  }
+  style={Object {}}
 >
   <View
+    bg="tertiary"
+    row={true}
     style={
       Object {
-        "flex": 1,
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "justifyContent": "space-around",
+        "marginVertical": "3%",
       }
     }
   >
     <View
       style={
         Object {
-          "marginTop": 10,
+          "flex": 1,
         }
       }
     >
       <View
         style={
-          Array [
-            Object {
-              "marginLeft": 15,
-              "marginRight": 15,
-            },
-            undefined,
-            Object {
-              "marginLeft": 0,
-              "marginRight": 0,
-            },
-            undefined,
-          ]
+          Object {
+            "marginTop": 10,
+          }
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="akdfakjfkjdaadkgak-submit"
-          accessibilityTraits={undefined}
-          accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
-          isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "marginLeft": 15,
+                "marginRight": 15,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
+              undefined,
+              Object {
+                "marginLeft": 0,
+                "marginRight": 0,
+              },
+              undefined,
             ]
           }
-          testID="akdfakjfkjdaadkgak-submit"
-          tvParallaxProperties={undefined}
         >
           <View
-            pointerEvents="box-only"
+            accessibilityComponentType={undefined}
+            accessibilityLabel="hyjjjjuifhjkiutyojoh-submit"
+            accessibilityTraits={undefined}
+            accessible={true}
+            hasTVPreferredFocus={undefined}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
               Array [
                 Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
+                  "backgroundColor": "transparent",
                 },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "backgroundColor": "#01C8A1",
-                },
-                undefined,
-                Object {
-                  "padding": 12,
-                },
-                undefined,
-                undefined,
-                undefined,
                 Array [
-                  null,
                   Object {
                     "borderRadius": 5,
                     "borderWidth": 1,
                   },
                   Object {
-                    "borderColor": "#01C8A1",
+                    "borderColor": "#A5A5A5",
                   },
                 ],
-                undefined,
-                undefined,
               ]
             }
+            testID="hyjjjjuifhjkiutyojoh-submit"
+            tvParallaxProperties={undefined}
           >
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
+            <View
+              pointerEvents="box-only"
               style={
                 Array [
-                  Object {},
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#9E9E9E",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "padding": 19,
+                  },
                   undefined,
                   undefined,
                   undefined,
                   undefined,
                   undefined,
+                  Object {
+                    "backgroundColor": "#ffffff",
+                  },
                   undefined,
+                  Object {
+                    "padding": 12,
+                  },
                   undefined,
                   undefined,
                   undefined,
                   Array [
+                    null,
                     Object {
-                      "color": "white",
-                      "fontSize": 16,
+                      "borderRadius": 5,
+                      "borderWidth": 1,
                     },
                     Object {
-                      "color": "#ffffff",
+                      "borderColor": "#A5A5A5",
                     },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    undefined,
                   ],
+                  undefined,
+                  undefined,
                 ]
               }
             >
-              Answer 1
-            </Text>
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={
+                  Array [
+                    Object {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Array [
+                      Object {
+                        "color": "white",
+                        "fontSize": 16,
+                      },
+                      Object {
+                        "color": "#777777",
+                      },
+                      Object {
+                        "fontSize": 14,
+                      },
+                      Object {
+                        "fontSize": 17,
+                      },
+                      undefined,
+                      Object {
+                        "fontWeight": "bold",
+                      },
+                      Object {
+                        "fontFamily": "Lato",
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                Answer 2
+              </Text>
+            </View>
           </View>
         </View>
       </View>
-    </View>
-    <View
-      style={
-        Object {
-          "marginTop": 10,
-        }
-      }
-    >
       <View
         style={
-          Array [
-            Object {
-              "marginLeft": 15,
-              "marginRight": 15,
-            },
-            undefined,
-            Object {
-              "marginLeft": 0,
-              "marginRight": 0,
-            },
-            undefined,
-          ]
+          Object {
+            "marginTop": 10,
+          }
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel="hyjjjjuifhjkiutyojoh-submit"
-          accessibilityTraits={undefined}
-          accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
-          isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "marginLeft": 15,
+                "marginRight": 15,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
+              undefined,
+              Object {
+                "marginLeft": 0,
+                "marginRight": 0,
+              },
+              undefined,
             ]
           }
-          testID="hyjjjjuifhjkiutyojoh-submit"
-          tvParallaxProperties={undefined}
         >
           <View
-            pointerEvents="box-only"
+            accessibilityComponentType={undefined}
+            accessibilityLabel="akdfakjfkjdaadkgak-submit"
+            accessibilityTraits={undefined}
+            accessible={true}
+            hasTVPreferredFocus={undefined}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
             style={
               Array [
                 Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
+                  "backgroundColor": "transparent",
                 },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "backgroundColor": "#01C8A1",
-                },
-                undefined,
-                Object {
-                  "padding": 12,
-                },
-                undefined,
-                undefined,
-                undefined,
                 Array [
-                  null,
                   Object {
                     "borderRadius": 5,
                     "borderWidth": 1,
@@ -2349,55 +2339,97 @@ exports[`<QuestionActions /> when two responses are present render both response
                     "borderColor": "#01C8A1",
                   },
                 ],
-                undefined,
-                undefined,
               ]
             }
+            testID="akdfakjfkjdaadkgak-submit"
+            tvParallaxProperties={undefined}
           >
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
+            <View
+              pointerEvents="box-only"
               style={
                 Array [
-                  Object {},
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#9E9E9E",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "padding": 19,
+                  },
                   undefined,
                   undefined,
                   undefined,
                   undefined,
                   undefined,
+                  Object {
+                    "backgroundColor": "#01C8A1",
+                  },
                   undefined,
+                  Object {
+                    "padding": 12,
+                  },
                   undefined,
                   undefined,
                   undefined,
                   Array [
+                    null,
                     Object {
-                      "color": "white",
-                      "fontSize": 16,
+                      "borderRadius": 5,
+                      "borderWidth": 1,
                     },
                     Object {
-                      "color": "#ffffff",
+                      "borderColor": "#01C8A1",
                     },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    undefined,
                   ],
+                  undefined,
+                  undefined,
                 ]
               }
             >
-              Answer 2
-            </Text>
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={
+                  Array [
+                    Object {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Array [
+                      Object {
+                        "color": "white",
+                        "fontSize": 16,
+                      },
+                      Object {
+                        "color": "#ffffff",
+                      },
+                      Object {
+                        "fontSize": 14,
+                      },
+                      Object {
+                        "fontSize": 17,
+                      },
+                      undefined,
+                      Object {
+                        "fontWeight": "bold",
+                      },
+                      Object {
+                        "fontFamily": "Lato",
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                Answer 1
+              </Text>
+            </View>
           </View>
         </View>
       </View>

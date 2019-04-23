@@ -5,11 +5,11 @@ import { NavigationTransitionProps } from 'react-navigation'
 
 import { checkIfAnimationToUse } from './bridge/react-native-cxs/RNCxs'
 
-const useAnimation = checkIfAnimationToUse()
-const duration = useAnimation ? 30 : 300
+const notUseAnimation = checkIfAnimationToUse()
+const duration = notUseAnimation ? 30 : 300
 // when closing page, we want closing animation to be quicker than opening animation
 // this is followed in general animation guidelines for material
-const backDuration = useAnimation ? 10 : 150
+const backDuration = notUseAnimation ? 10 : 150
 
 export function modalTransitionConfig(
   toSceneProps: NavigationTransitionProps,

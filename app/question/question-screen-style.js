@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet, Platform, Dimensions } from 'react-native'
 import {
   blackTransparent,
   OFFSET_2X,
@@ -17,26 +17,12 @@ import {
   darkGray2,
 } from '../common/styles'
 
-const FLEX_10 = 10
-const questionScreenContainerFlex = 8
-// we want remainder of screen to go to Header
-const questionScreenHeaderFlex = (FLEX_10 - questionScreenContainerFlex) / 10
-const questionScreenHeaderHeightPercentage =
-  (FLEX_10 - questionScreenContainerFlex) * 100 / FLEX_10
 const QUESTION_SENDER_LOGO_DIMENSION = 32
 const questionScreenSpacing = '5%'
 
 export const questionStyles = StyleSheet.create({
   headerContainer: {
-    backgroundColor: blackTransparent,
-    ...Platform.select({
-      ios: {
-        minHeight: `${questionScreenHeaderHeightPercentage}%`,
-      },
-      android: {
-        flex: questionScreenHeaderFlex,
-      },
-    }),
+    backgroundColor: 'transparent',
   },
   headerHandleContainer: {
     justifyContent: 'flex-end',
@@ -48,8 +34,10 @@ export const questionStyles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: cmGrey5,
   },
+  mainContainer: {
+    backgroundColor: blackTransparent,
+  },
   screenContainer: {
-    flex: questionScreenContainerFlex,
     borderRadius: 8,
     paddingLeft: questionScreenSpacing,
     paddingRight: questionScreenSpacing,
@@ -57,7 +45,6 @@ export const questionStyles = StyleSheet.create({
   questionSenderContainer: {
     minHeight: 64,
     maxHeight: 90,
-    borderRadius: 8,
   },
   questionSenderLogo: {
     width: QUESTION_SENDER_LOGO_DIMENSION,
@@ -73,6 +60,12 @@ export const questionStyles = StyleSheet.create({
   },
   questionText: {
     marginBottom: OFFSET_3X,
+  },
+  questionResponsesContainer: {
+    maxHeight: getQuestionResponsesHeight(),
+  },
+  questionResponsesContainerSingleResponse: {
+    maxHeight: getQuestionResponsesHeight(true),
   },
   questionResponseRadio: {
     borderWidth: 0,
@@ -97,7 +90,7 @@ export const questionStyles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginVertical: OFFSET_3X,
+    marginVertical: '3%',
   },
   buttonSpacing: {
     marginRight: '3%',
@@ -119,6 +112,16 @@ export const questionStyles = StyleSheet.create({
   responseButton: {
     marginTop: OFFSET_1X,
   },
+  questionLoaderContainer: {
+    minHeight: '20%',
+    marginVertical: '10%',
+  },
+  questionErrorContainer: {
+    marginVertical: '10%',
+  },
+  questionSuccessContainer: {
+    marginVertical: '10%',
+  },
 })
 
 export const questionActionButtonDefaultProps = {
@@ -129,4 +132,20 @@ export const questionActionButtonDefaultProps = {
 
 export const disabledStyle = {
   backgroundColor: caribbeanGreen,
+}
+
+function getQuestionResponsesHeight(singleResponse: ?boolean) {
+  const { height } = Dimensions.get('window')
+  const headerHeight = height * 10 / 100
+  const bottomActionsHeight = height * (singleResponse ? 10 : 20) / 100
+  const senderDetailsHeight = 100
+  const titleHeight = 100
+
+  return (
+    height -
+    headerHeight -
+    bottomActionsHeight -
+    senderDetailsHeight -
+    titleHeight
+  )
 }

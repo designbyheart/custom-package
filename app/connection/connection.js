@@ -8,7 +8,6 @@ import {
   StyleSheet,
 } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
-import { Icon } from 'react-native-elements'
 import { Badge, InfoSectionList, CustomView } from '../components'
 import ConnectionStatus from './connection-status'
 import ConnectionInfo from './connection-info'
