@@ -120,6 +120,7 @@ export function* loadHistorySaga(): Generator<*, *, *> {
       getHydrationItem,
       HISTORY_EVENT_STORAGE_KEY
     )
+
     if (historyEvents) {
       yield put(loadHistorySuccess(JSON.parse(historyEvents)))
     }

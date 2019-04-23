@@ -37,7 +37,7 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
     accessible={true}
     style={
       Object {
-        "borderBottomColor": "#EAEAEA",
+        "borderBottomColor": "#f2f2f2",
         "borderBottomWidth": 1,
       }
     }
@@ -163,7 +163,7 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
     accessible={true}
     style={
       Object {
-        "borderBottomColor": "#EAEAEA",
+        "borderBottomColor": "#f2f2f2",
         "borderBottomWidth": 1,
       }
     }

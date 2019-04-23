@@ -11,10 +11,7 @@ import {
   PROOF_REQUEST_RECEIVED,
   SEND_PROOF_SUCCESS,
 } from '../proof-request/type-proof-request'
-import {
-  RECORD_HISTORY_EVENT,
-  HISTORY_EVENT_STORAGE_KEY,
-} from './type-connection-history'
+import { RECORD_HISTORY_EVENT } from './type-connection-history'
 import { historyEventOccurred } from './connection-history-store'
 import {
   QUESTION_RECEIVED,

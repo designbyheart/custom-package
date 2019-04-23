@@ -5,17 +5,16 @@ import type {
   Connection,
 } from '../store/type-connection-store'
 
-export type BubbleProps = {
-  size: number,
-  image: ?string,
-  testID: string,
-  senderName: string,
-  senderDID: string,
-  radius: number,
+export type ConnectionCardProps = {
+  onPress: Function,
+  keyExtractor: Function,
   identifier: string,
-  disableTaps: boolean,
-  disableTopView: () => void,
-  allowInteractions: boolean,
+  image: string,
+  status: string,
+  senderName: string,
+  date: string,
+  type: string,
+  credentialName: string,
   showBadge: boolean,
 } & ReactNavigation
 

@@ -20,6 +20,7 @@ const CustomText = (props: GenericObject) => {
   const {
     h3,
     h3a,
+    h3b,
     h4,
     h4a,
     h5,

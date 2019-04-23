@@ -2698,7 +2698,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.evernym.connectme.callcenter;
 				PRODUCT_NAME = ConnectMe;
 				PROVISIONING_PROFILE = "3010dc9c-611b-410c-a932-7b166c3e6107";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.evernym.connectme.callcenter";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.evernym.connectme.callcenter";
 				SWIFT_OBJC_BRIDGING_HEADER = "ConnectMe/ConnectMe-Bridging-Header.h";
 				SWIFT_VERSION = 4.1;
 				VERSIONING_SYSTEM = "apple-generic";

@@ -17,6 +17,7 @@ const mantisRGB = '133, 191, 67'
 export const greyRGB = '119, 119, 119'
 export const white = '#ffffff'
 export const whisper = '#EAEAEA'
+const cardBorder = '#f2f2f2'
 export const cmGrey4 = whisper
 export const lightDarkBlue = '#4A8FE3'
 export const darkGray = '#505050'
@@ -25,9 +26,9 @@ export const lightDarkGray = '#F4F4F4'
 export const dodgerBlue = '#0d8ffc'
 export const toryBlue = '#303F9F'
 export const gainsBoro = '#E3E3E3'
+export const mediumGray = '#a5a5a5'
 export const caribbeanGreen = '#01C8A1'
 export const darkGray2 = '#A5A5A5'
-
 const sirocco = '#636564'
 const corduroy = '#3f4140'
 const eclipse = '#3f3f3f'
@@ -47,6 +48,7 @@ const black = '#000000'
 const yellowSea = '#EB9B2D'
 export const cornFlowerBlue = '#4A90E2'
 export const atlantis = '#86B93B'
+const atlantisOpacity = '#86B93B1A'
 const gamboge = '#DD9012'
 const blueViolet = '#8D13FE'
 const seaBuckthorn = '#f79347'
@@ -205,6 +207,9 @@ export const color = {
     fifteenth: {
       color: jordyBlue,
     },
+    sixteenth: {
+      color: atlantisOpacity,
+    },
     dark: {
       color: black,
       font: {
@@ -214,13 +219,14 @@ export const color = {
   },
 
   border: {
-    primary: whisper,
+    primary: cardBorder,
     secondary: yellowSea,
   },
   textColor: {
     charcoal: charcoal,
     grey: grey,
     darkgray: darkgray,
+    mediumGray: mediumGray,
   },
   palePink,
 }
@@ -235,6 +241,7 @@ export const font = {
     M1: 18,
     ML: 20,
     ML1: 23,
+    ML2: 26,
     L1: 34,
     L: 40,
     PREFIX: 14,

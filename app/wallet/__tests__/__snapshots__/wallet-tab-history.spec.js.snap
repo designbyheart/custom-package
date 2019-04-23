@@ -112,7 +112,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                 "paddingTop": 10,
               },
               Object {
-                "borderBottomColor": "#EAEAEA",
+                "borderBottomColor": "#f2f2f2",
                 "borderBottomWidth": 1,
               },
               false,
@@ -444,7 +444,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                 "paddingTop": 10,
               },
               Object {
-                "borderBottomColor": "#EAEAEA",
+                "borderBottomColor": "#f2f2f2",
                 "borderBottomWidth": 1,
               },
               false,

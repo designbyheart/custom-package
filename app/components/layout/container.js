@@ -12,7 +12,7 @@ const empty = []
 export const Container = (props: GenericObject) => {
   const passedStyles = props.style ? props.style : empty
   return (
-    <CustomView {...props} style={[...passedStyles, style.container]}>
+    <CustomView {...props} style={[style.container, ...passedStyles]}>
       {props.children}
     </CustomView>
   )
