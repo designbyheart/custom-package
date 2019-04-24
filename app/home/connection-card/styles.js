@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     height: '50%',
   },
   infoSectionBottomRow: {
-    width: '80%',
+    width: '82.6%',
     height: '50%',
   },
   companyNameSection: {
@@ -61,14 +61,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   companyNameText: {
-    flex: 1,
     fontFamily: 'Lato',
     fontSize: 17,
     fontWeight: 'bold',
     color: color.textColor.darkgray,
   },
   descriptionText: {
-    flex: 1,
     fontFamily: 'Lato',
     fontSize: 14,
     color: color.textColor.grey,
