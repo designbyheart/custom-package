@@ -10,40 +10,53 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: color.border.primary,
   },
+  initialsContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: color.border.primary,
+  },
+  initialsText: {
+    fontFamily: 'Lato',
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: color.textColor.darkgray,
+  },
   newCardContainer: {
     backgroundColor: color.bg.sixteenth.color,
   },
   avatarSection: {
     height: '100%',
-    width: '20%',
+    width: 64,
     paddingTop: 16,
-    paddingLeft: 16,
+    alignItems: 'center',
   },
   infoSection: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
   },
-
   infoSectionTopRow: {
+    flex: 1,
     flexDirection: 'row',
-    width: '80%',
     height: '50%',
   },
   infoSectionBottomRow: {
-    width: '82.6%',
+    flex: 1,
     height: '50%',
   },
   companyNameSection: {
-    width: '70%',
+    width: '68%',
     height: '100%',
     justifyContent: 'flex-end',
   },
   descriptionSection: {
-    width: '95%',
+    width: '96%',
     height: '100%',
   },
   dateButtonSection: {
-    width: '30%',
+    width: '32%',
     height: '100%',
     flexDirection: 'row',
     alignItems: 'flex-end',

@@ -1,7 +1,6 @@
 // @flow
 export type ConnectionCardProps = {
   onPress: Function,
-  keyExtractor: Function,
   identifier: string,
   image: string,
   status: string,
@@ -9,5 +8,6 @@ export type ConnectionCardProps = {
   date: string,
   type: string,
   credentialName: string,
+  question: string,
   showBadge: boolean,
 }

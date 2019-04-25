@@ -90,7 +90,8 @@ class ConnectionCard extends Component<ConnectionCardProps, void> {
   getInfoMessage = (
     status: string,
     senderName: string,
-    credentialName: string
+    credentialName: string,
+    question: string
   ) => {
     const statusMsg = {
       PENDING:
@@ -103,6 +104,8 @@ class ConnectionCard extends Component<ConnectionCardProps, void> {
       SHARED: 'You shared ' + credentialName + ' with ' + senderName,
       'PROOF RECEIVED': senderName + ' wants you to share some information',
       'CLAIM OFFER RECEIVED': 'Offering ' + credentialName,
+      QUESTION_RECEIVED: question,
+      UPDATE_QUESTION_ANSWER: question,
     }
 
     return statusMsg[status]
@@ -149,9 +152,12 @@ class ConnectionCard extends Component<ConnectionCardProps, void> {
       type,
       status,
       onPress,
+      question,
     } = this.props
     const {
       container,
+      initialsContainer,
+      initialsText,
       newCardContainer,
       avatarSection,
       infoSection,
@@ -162,20 +168,20 @@ class ConnectionCard extends Component<ConnectionCardProps, void> {
       infoSectionTopRow,
       infoSectionBottomRow,
     } = styles
-    let source = ''
-    if (!image) {
-      source = require('../../images/cb_evernym.png')
-    }
-    if (typeof image === 'string') {
-      source = { uri: image }
-    }
+
     return (
       <TouchableOpacity
         style={[container, showBadge ? newCardContainer : null]}
         onPress={onPress}
       >
         <View style={avatarSection}>
-          <Avatar radius={16} src={source} />
+          {typeof image === 'string' ? (
+            <Avatar radius={16} src={{ uri: image }} />
+          ) : (
+            <View style={initialsContainer}>
+              <Text style={initialsText}>{senderName[0]}</Text>
+            </View>
+          )}
         </View>
         <View style={infoSection}>
           <View style={infoSectionTopRow}>
@@ -197,7 +203,12 @@ class ConnectionCard extends Component<ConnectionCardProps, void> {
                 numberOfLines={1}
                 ellipsizeMode="tail"
               >
-                {this.getInfoMessage(status, senderName, credentialName)}
+                {this.getInfoMessage(
+                  status,
+                  senderName,
+                  credentialName,
+                  question
+                )}
               </Text>
             </View>
           </View>

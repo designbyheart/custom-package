@@ -71,7 +71,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       firebase.notifications().setBadge(0)
     }
   }
-  keyExtractor = (item: Object, index: number) => item.identifier
+  keyExtractor = (item: Object) => item.identifier
   onCardPress = (
     senderName: string,
     image: ?string,
@@ -91,6 +91,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       logoUrl,
       senderDID,
       identifier,
+      questionTitle,
       status,
       type,
       credentialName,
@@ -103,7 +104,6 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
         onPress={() =>
           this.onCardPress(senderName, logoUrl, senderDID, identifier)
         }
-        keyExtractor={this.keyExtractor}
         identifier={identifier}
         image={logoUrl}
         status={status}
@@ -111,6 +111,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
         type={type}
         credentialName={credentialName}
         date={date}
+        question={questionTitle}
         showBadge={showBadge}
       />
     )
@@ -160,6 +161,15 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
             history.data[connection.senderDID][
               history.data[connection.senderDID].length - 1
             ].status,
+          questionTitle:
+            history.data &&
+            history.data[connection.senderDID] &&
+            history.data[connection.senderDID][
+              history.data[connection.senderDID].length - 1
+            ] &&
+            history.data[connection.senderDID][
+              history.data[connection.senderDID].length - 1
+            ].name,
           credentialName:
             history.data &&
             history.data[connection.senderDID] &&
@@ -188,6 +198,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
     return (
       <View style={container}>
         <FlatList
+          keyExtractor={this.keyExtractor}
           style={flatListContainer}
           contentContainerStyle={flatListInnerContainer}
           data={connections}

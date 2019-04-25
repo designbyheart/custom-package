@@ -7,7 +7,6 @@ import type {
 
 export type ConnectionCardProps = {
   onPress: Function,
-  keyExtractor: Function,
   identifier: string,
   image: string,
   status: string,
