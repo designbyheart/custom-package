@@ -1,3 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<WalletTabs /> should render properly and match the snapshot 1`] = `<View />`;
+exports[`<WalletTabs /> should render properly and match the snapshot 1`] = `
+<View
+  screenProps={
+    Object {
+      "navigation": Object {
+        "dispatch": [MockFunction],
+        "goBack": [MockFunction],
+        "isFocused": [MockFunction],
+        "navigate": [MockFunction],
+        "push": [MockFunction],
+        "setParams": [MockFunction],
+        "state": Object {
+          "params": Object {},
+        },
+      },
+    }
+  }
+/>
+`;

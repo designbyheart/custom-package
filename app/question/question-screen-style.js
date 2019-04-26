@@ -15,12 +15,16 @@ import {
   cmGrey2,
   caribbeanGreen,
   darkGray2,
+  color,
 } from '../common/styles'
 
 const QUESTION_SENDER_LOGO_DIMENSION = 32
 const questionScreenSpacing = '5%'
 
 export const questionStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   headerContainer: {
     backgroundColor: 'transparent',
   },
@@ -38,9 +42,11 @@ export const questionStyles = StyleSheet.create({
     backgroundColor: blackTransparent,
   },
   screenContainer: {
-    borderRadius: 8,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
     paddingLeft: questionScreenSpacing,
     paddingRight: questionScreenSpacing,
+    backgroundColor: color.bg.tertiary.color,
   },
   questionSenderContainer: {
     minHeight: 64,

@@ -28,6 +28,7 @@
 .*/node_modules/react-native-permissions/.*
 .*/node_modules/eslint-plugin-jsx-a11y/.*
 .*/node_modules/react-native-keyboard-aware-scroll-view/.*
+.*/node_modules/react-native-gesture-handler/.*
 ; Although this library has definition, but they are not correct. So, we have defined our own type
 .*/node_modules/react-native-image-resizer/.*
 

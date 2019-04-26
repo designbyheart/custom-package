@@ -367,9 +367,6 @@ const ConnectMeAppNavigator = createStackNavigator(
     },
     navigationOptions: {
       gesturesEnabled: true,
-      gestureResponseDistance: {
-        vertical: getResponderDistance(),
-      },
     },
   }
 )

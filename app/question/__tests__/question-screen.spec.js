@@ -90,6 +90,17 @@ describe('<QuestionScreen />', () => {
     expect(submitButton.props.disabled).toBe(true)
   })
 
+  it('should match invalid data', () => {
+    const props = getProps()
+    const { component } = setup({
+      payload: {
+        ...props.question.payload,
+        valid_responses: null,
+      },
+    })
+    expect(component.toJSON()).toMatchSnapshot()
+  })
+
   function getProps(extraProps: ?GenericObject = {}) {
     return {
       updateQuestionStatus: jest.fn(),

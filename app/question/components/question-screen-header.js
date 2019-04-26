@@ -7,7 +7,7 @@ import { Container, CustomView } from '../../components'
 import { questionStyles } from '../question-screen-style'
 
 export class QuestionScreenHeader extends React.Component<
-  ReactNavigation,
+  QuestionScreenHeaderProps,
   void
 > {
   render() {
@@ -31,3 +31,5 @@ export const HeaderHandlebar = () => (
     <CustomView style={[questionStyles.headerHandlebar]} />
   </CustomView>
 )
+
+type QuestionScreenHeaderProps = {} & ReactNavigation

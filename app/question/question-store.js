@@ -1,6 +1,7 @@
 // @flow
 
 import moment from 'moment'
+import uniqBy from 'lodash.uniqby'
 
 import type {
   QuestionPayload,
@@ -37,6 +38,12 @@ import {
   HYDRATE_QUESTION_STORE,
   UPDATE_QUESTION_STORAGE_STATUS,
   QUESTION_STORAGE_KEY,
+  ERROR_NO_QUESTION_DATA,
+  ERROR_NO_RESPONSE_ARRAY,
+  ERROR_NOT_ENOUGH_RESPONSES,
+  ERROR_RESPONSE_NOT_PROPERLY_FORMATTED,
+  ERROR_RESPONSE_NOT_UNIQUE_NONCE,
+  ERROR_TOO_MANY_RESPONSES,
 } from './type-question'
 import {
   put,
@@ -335,6 +342,49 @@ export function getScreenStatus(
     error,
     idle,
   }
+}
+
+// Passing explicit any because we need to validate this structure
+// at runtime, and we can't perform validation with exact type
+// QuestionMessage
+export function getQuestionValidity(question: any): null | CustomError {
+  if (!question) {
+    return ERROR_NO_QUESTION_DATA
+  }
+
+  const { valid_responses } = question
+  if (!Array.isArray(valid_responses)) {
+    return ERROR_NO_RESPONSE_ARRAY
+  }
+
+  if (valid_responses.length === 0) {
+    return ERROR_NOT_ENOUGH_RESPONSES
+  }
+
+  if (valid_responses.length > 1000) {
+    return ERROR_TOO_MANY_RESPONSES
+  }
+
+  const everyResponseValid = valid_responses.every(
+    (response: QuestionResponse) => {
+      const { text, nonce } = response
+      // check both text and nonce are string and has some value
+      return (
+        typeof text === 'string' && typeof nonce === 'string' && text && nonce
+      )
+    }
+  )
+  if (!everyResponseValid) {
+    return ERROR_RESPONSE_NOT_PROPERLY_FORMATTED
+  }
+
+  const uniqueResponses = uniqBy(valid_responses, 'nonce')
+  const isEveryNonceUnique = uniqueResponses.length === valid_responses.length
+  if (!isEveryNonceUnique) {
+    return ERROR_RESPONSE_NOT_UNIQUE_NONCE
+  }
+
+  return null
 }
 
 export default function questionReducer(

@@ -181,6 +181,7 @@ configurations.all {
 }
 
 dependencies {
+    compile project(':react-native-gesture-handler')
     compile project(':lottie-react-native')
     compile project(':react-native-mail')
     compile project(':react-native-shake')

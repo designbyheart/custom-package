@@ -53,6 +53,8 @@ exports[`<App/> in ios environment. should render properly and snapshot should m
     }
   }
 >
-  <View />
+  <View
+    onNavigationStateChange={[Function]}
+  />
 </View>
 `;

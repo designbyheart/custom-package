@@ -263,7 +263,15 @@ jest.mock('apptentive-react-native', () => ({
   },
   ApptentiveConfiguration: () => null,
 }))
+
 jest.mock('BackHandler', () => ({
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),
+}))
+
+jest.mock('react-native-gesture-handler', () => ({
+  State: {
+    END: 'END',
+  },
+  PanGestureHandler: mockView,
 }))

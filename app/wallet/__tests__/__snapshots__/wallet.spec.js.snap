@@ -10,6 +10,22 @@ exports[`<Wallet /> should render Wallet 1`] = `
   }
   tertiary={true}
 >
-  <View />
+  <View
+    screenProps={
+      Object {
+        "navigation": Object {
+          "dispatch": [MockFunction],
+          "goBack": [MockFunction],
+          "isFocused": [MockFunction],
+          "navigate": [MockFunction],
+          "push": [MockFunction],
+          "setParams": [MockFunction],
+          "state": Object {
+            "params": Object {},
+          },
+        },
+      }
+    }
+  />
 </View>
 `;

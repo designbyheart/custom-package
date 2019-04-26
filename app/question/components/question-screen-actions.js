@@ -70,11 +70,7 @@ export class QuestionActions extends React.Component<
 
     return (
       <CustomView safeArea>
-        <CustomView
-          bg="tertiary"
-          row
-          style={[questionStyles.questionActionContainer]}
-        >
+        <CustomView row style={[questionStyles.questionActionContainer]}>
           {shouldRenderIgnoreButton && (
             <Container style={[questionStyles.buttonSpacing]}>
               <CustomButton

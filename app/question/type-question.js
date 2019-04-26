@@ -170,6 +170,37 @@ export const ERROR_QUESTION_ANSWER_SEND = (message: ?string) => ({
   message: `Failed to send answer: ${message || ''}`,
 })
 
+export const ERROR_NO_QUESTION_DATA = {
+  code: 'CM-QUE-004',
+  message: 'No data received for this message.',
+}
+
+export const ERROR_NO_RESPONSE_ARRAY = {
+  code: 'CM-QUE-005',
+  message: 'Property valid_responses should be a JSON array.',
+}
+
+export const ERROR_NOT_ENOUGH_RESPONSES = {
+  code: 'CM-QUE-006',
+  message: 'Property valid_responses should have at least one response.',
+}
+
+export const ERROR_TOO_MANY_RESPONSES = {
+  code: 'CM-QUE-007',
+  message: 'There are more than 1000 responses.',
+}
+
+export const ERROR_RESPONSE_NOT_PROPERLY_FORMATTED = {
+  code: 'CM-QUE-008',
+  message:
+    'One or more of response in valid_responses property is not in correct format {text: string, nonce: string}.',
+}
+
+export const ERROR_RESPONSE_NOT_UNIQUE_NONCE = {
+  code: 'CM-QUE-009',
+  message: 'Not every response in valid_responses array has unique nonce',
+}
+
 export const QUESTION_ANSWER_PROTOCOL1 =
   'did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer'
 

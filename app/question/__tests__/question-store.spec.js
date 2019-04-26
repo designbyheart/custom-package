@@ -13,6 +13,7 @@ import questionReducer, {
   getUserAnswer,
   updateQuestionStorageStatus,
   hydrateQuestionStore,
+  getQuestionValidity,
 } from '../question-store'
 import { initialTestAction, STORAGE_STATUS } from '../../common/type-common'
 import {
@@ -163,6 +164,68 @@ describe('Question Store', () => {
       )
       .put(updateQuestionAnswer(uid, answer, answerMsgId))
       .run()
+  })
+})
+
+describe('fn:getQuestionValidity', () => {
+  it('should return error ERROR_NO_QUESTION_DATA', () => {
+    expect(getQuestionValidity()).toMatchSnapshot()
+  })
+
+  it('should return error ERROR_NO_RESPONSE_ARRAY', () => {
+    expect(getQuestionValidity({})).toMatchSnapshot()
+    expect(
+      getQuestionValidity({ response: [{ nonce: '1', text: '2' }] })
+    ).toMatchSnapshot()
+  })
+
+  it('should return error ERROR_NOT_ENOUGH_RESPONSES', () => {
+    expect(getQuestionValidity({ valid_responses: [] })).toMatchSnapshot()
+  })
+
+  it('should return error ERROR_TOO_MANY_RESPONSES', () => {
+    const valid_responses = Array.from({ length: 1001 }, (v, index) => index++)
+    expect(getQuestionValidity({ valid_responses })).toMatchSnapshot()
+  })
+
+  it('should return error ERROR_RESPONSE_NOT_PROPERLY_FORMATTED', () => {
+    const valid_responses = [
+      { text: 'some valid text', nonce: 'some valid nonce' },
+      { text: '', nonce: 'valid nonce, but invalid text' },
+    ]
+    expect(getQuestionValidity({ valid_responses })).toMatchSnapshot()
+
+    const valid_responses1 = [
+      { text: 'only text, no nonce' },
+      { text: 'some valid text', nonce: 'some valid nonce' },
+    ]
+    expect(
+      getQuestionValidity({ valid_responses: valid_responses1 })
+    ).toMatchSnapshot()
+
+    const valid_responses2 = [
+      { nonce: 'only nonce, no text' },
+      { text: 'valid text', nonce: 'valid nonce' },
+    ]
+    expect(
+      getQuestionValidity({ valid_responses: valid_responses2 })
+    ).toMatchSnapshot()
+  })
+
+  it('should return error ERROR_RESPONSE_NOT_UNIQUE_NONCE', () => {
+    const valid_responses = [
+      { text: 'valid text', nonce: 'same nonce' },
+      { text: 'another valid text', nonce: 'same nonce' },
+    ]
+    expect(getQuestionValidity({ valid_responses })).toMatchSnapshot()
+  })
+
+  it('should return null if everything is fine', () => {
+    const valid_responses = [
+      { text: 'valid text', nonce: 'same nonce' },
+      { text: 'another valid text', nonce: 'unique nonce' },
+    ]
+    expect(getQuestionValidity({ valid_responses })).toMatchSnapshot()
   })
 })
 

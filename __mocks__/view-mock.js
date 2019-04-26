@@ -4,7 +4,7 @@ import { View } from 'react-native'
 
 class MockView extends React.Component<any, void> {
   render() {
-    return <View>{this.props.children}</View>
+    return <View {...this.props}>{this.props.children}</View>
   }
 }
 

@@ -397,3 +397,68 @@ Object {
   "storageStatus": "RESTORE_START",
 }
 `;
+
+exports[`fn:getQuestionValidity should return error ERROR_NO_QUESTION_DATA 1`] = `
+Object {
+  "code": "CM-QUE-004",
+  "message": "No data received for this message.",
+}
+`;
+
+exports[`fn:getQuestionValidity should return error ERROR_NO_RESPONSE_ARRAY 1`] = `
+Object {
+  "code": "CM-QUE-005",
+  "message": "Property valid_responses should be a JSON array.",
+}
+`;
+
+exports[`fn:getQuestionValidity should return error ERROR_NO_RESPONSE_ARRAY 2`] = `
+Object {
+  "code": "CM-QUE-005",
+  "message": "Property valid_responses should be a JSON array.",
+}
+`;
+
+exports[`fn:getQuestionValidity should return error ERROR_NOT_ENOUGH_RESPONSES 1`] = `
+Object {
+  "code": "CM-QUE-006",
+  "message": "Property valid_responses should have at least one response.",
+}
+`;
+
+exports[`fn:getQuestionValidity should return error ERROR_RESPONSE_NOT_PROPERLY_FORMATTED 1`] = `
+Object {
+  "code": "CM-QUE-008",
+  "message": "One or more of response in valid_responses property is not in correct format {text: string, nonce: string}.",
+}
+`;
+
+exports[`fn:getQuestionValidity should return error ERROR_RESPONSE_NOT_PROPERLY_FORMATTED 2`] = `
+Object {
+  "code": "CM-QUE-008",
+  "message": "One or more of response in valid_responses property is not in correct format {text: string, nonce: string}.",
+}
+`;
+
+exports[`fn:getQuestionValidity should return error ERROR_RESPONSE_NOT_PROPERLY_FORMATTED 3`] = `
+Object {
+  "code": "CM-QUE-008",
+  "message": "One or more of response in valid_responses property is not in correct format {text: string, nonce: string}.",
+}
+`;
+
+exports[`fn:getQuestionValidity should return error ERROR_RESPONSE_NOT_UNIQUE_NONCE 1`] = `
+Object {
+  "code": "CM-QUE-009",
+  "message": "Not every response in valid_responses array has unique nonce",
+}
+`;
+
+exports[`fn:getQuestionValidity should return error ERROR_TOO_MANY_RESPONSES 1`] = `
+Object {
+  "code": "CM-QUE-007",
+  "message": "There are more than 1000 responses.",
+}
+`;
+
+exports[`fn:getQuestionValidity should return null if everything is fine 1`] = `null`;

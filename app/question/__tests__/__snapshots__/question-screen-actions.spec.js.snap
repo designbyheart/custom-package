@@ -6,12 +6,10 @@ exports[`<QuestionActions /> when more than two responses are present match snap
   style={Object {}}
 >
   <View
-    bg="tertiary"
     row={true}
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
         "flexDirection": "row",
         "flexWrap": "wrap",
         "justifyContent": "space-around",
@@ -324,12 +322,10 @@ exports[`<QuestionActions /> when more than two responses are present match snap
   style={Object {}}
 >
   <View
-    bg="tertiary"
     row={true}
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
         "flexDirection": "row",
         "flexWrap": "wrap",
         "justifyContent": "space-around",
@@ -494,12 +490,10 @@ exports[`<QuestionActions /> when more than two responses are present render Ign
   style={Object {}}
 >
   <View
-    bg="tertiary"
     row={true}
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
         "flexDirection": "row",
         "flexWrap": "wrap",
         "justifyContent": "space-around",
@@ -821,12 +815,10 @@ exports[`<QuestionActions /> when one response is present match snapshot if in e
   style={Object {}}
 >
   <View
-    bg="tertiary"
     row={true}
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
         "flexDirection": "row",
         "flexWrap": "wrap",
         "justifyContent": "space-around",
@@ -1139,12 +1131,10 @@ exports[`<QuestionActions /> when one response is present match snapshot if in s
   style={Object {}}
 >
   <View
-    bg="tertiary"
     row={true}
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
         "flexDirection": "row",
         "flexWrap": "wrap",
         "justifyContent": "space-around",
@@ -1309,12 +1299,10 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
   style={Object {}}
 >
   <View
-    bg="tertiary"
     row={true}
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
         "flexDirection": "row",
         "flexWrap": "wrap",
         "justifyContent": "space-around",
@@ -1631,12 +1619,10 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
   style={Object {}}
 >
   <View
-    bg="tertiary"
     row={true}
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
         "flexDirection": "row",
         "flexWrap": "wrap",
         "justifyContent": "space-around",
@@ -1949,12 +1935,10 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
   style={Object {}}
 >
   <View
-    bg="tertiary"
     row={true}
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
         "flexDirection": "row",
         "flexWrap": "wrap",
         "justifyContent": "space-around",
@@ -2119,12 +2103,10 @@ exports[`<QuestionActions /> when two responses are present render both response
   style={Object {}}
 >
   <View
-    bg="tertiary"
     row={true}
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
         "flexDirection": "row",
         "flexWrap": "wrap",
         "justifyContent": "space-around",

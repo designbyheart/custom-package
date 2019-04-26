@@ -8,6 +8,8 @@ import {
   Image,
   LayoutAnimation,
   UIManager,
+  Animated,
+  Dimensions,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -18,6 +20,7 @@ import RadioForm, {
   RadioButtonLabel,
 } from 'react-native-simple-radio-button'
 import LottieView from 'lottie-react-native'
+import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
 import type {
   QuestionScreenProps,
@@ -27,7 +30,11 @@ import type {
   QuestionStoreMessage,
 } from './type-question'
 import type { Store } from '../store/type-store'
-import type { ComponentStatus, ReactNavigation } from '../common/type-common'
+import type {
+  ComponentStatus,
+  ReactNavigation,
+  CustomError,
+} from '../common/type-common'
 import type { Connection } from '../store/type-connection-store'
 
 import { Container, CustomView, CustomText, CustomButton } from '../components'
@@ -45,6 +52,7 @@ import {
   updateQuestionStatus,
   sendAnswerToQuestion,
   getScreenStatus,
+  getQuestionValidity,
 } from './question-store'
 import {
   transparentHeaderStyle,
@@ -61,15 +69,20 @@ import {
   cmGrey4,
   caribbeanGreen,
   blackTransparent,
+  color,
 } from '../common/styles'
 import { getConnectionByUserDid, getConnection } from '../store/store-selector'
 import { QuestionActions } from './components/question-screen-actions'
 import { checkIfAnimationToUse } from '../bridge/react-native-cxs/RNCxs'
 
+const { height } = Dimensions.get('window')
+
 export class Question extends PureComponent<
   QuestionScreenProps,
   QuestionScreenState
 > {
+  _translateY = new Animated.Value(0)
+
   constructor(props: QuestionScreenProps) {
     super(props)
     UIManager.setLayoutAnimationEnabledExperimental &&
@@ -86,61 +99,88 @@ export class Question extends PureComponent<
 
   render() {
     const { question } = this.props
-    if (!question) {
-      return (
-        <Container
-          center
-          bg="tertiary"
-          style={[questionStyles.screenContainer]}
-        >
-          <QuestionScreenText size="h5">
-            Invalid data passed in Question
-          </QuestionScreenText>
-        </Container>
-      )
-    }
 
+    const validationError: null | CustomError = getQuestionValidity(
+      question && question.payload
+    )
     const { success, error, loading, idle }: ComponentStatus = getScreenStatus(
       question.status
     )
+    const transform = this._getTransform(this._translateY)
+    const opacity = this._getOpacity(this._translateY)
 
     return (
-      <Container style={[questionStyles.mainContainer]}>
-        <QuestionScreenHeader navigation={this.props.navigation} />
-        <CustomView bg="tertiary" style={[questionStyles.screenContainer]}>
-          <QuestionSenderDetail
-            source={this.props.senderLogoUrl}
-            senderName={this.props.senderName}
-          />
+      <Animated.View
+        style={[
+          questionStyles.container,
+          questionStyles.mainContainer,
+          {
+            opacity,
+          },
+        ]}
+      >
+        <Animated.View style={[questionStyles.container, { transform }]}>
+          <Container style={[questionStyles.headerContainer]}>
+            <PanGestureHandler
+              onGestureEvent={this._onPanGestureEvent}
+              onHandlerStateChange={this._onHandlerStateChange}
+            >
+              <Animated.View style={[questionStyles.container]}>
+                <QuestionScreenHeader navigation={this.props.navigation} />
+              </Animated.View>
+            </PanGestureHandler>
+          </Container>
           {/*
-            if component status is idle (user hasn't taken any action yet),
-            then render question details
-          */}
-          {idle && (
-            <QuestionDetails
-              question={question}
-              selectedResponse={this.state.response}
-              onResponseSelect={this.onResponseSelect}
-            />
+              if we get validation error then render validation error code
+              and nothing else should be rendered
+             */}
+          {validationError != null && (
+            <CustomView center style={[questionStyles.screenContainer]}>
+              <QuestionScreenText size="h5">
+                {`Invalid data. Validation error code: ${validationError.code}`}
+              </QuestionScreenText>
+            </CustomView>
           )}
-          {loading && <QuestionLoader />}
-          {success && <QuestionSuccess />}
-          {error && <QuestionError />}
           {/*
-            We need to show action buttons all the time except when screen 
-            is in loading state
-          */}
-          {!loading && (
-            <QuestionActions
-              selectedResponse={this.state.response}
-              onSubmit={this.onSubmit}
-              onCancel={this.onCancel}
-              onSelectResponseAndSubmit={this.onSelectResponseAndSubmit}
-              question={this.props.question}
-            />
+              if there is no validation error, render data from question payload
+            */}
+          {validationError == null && (
+            <Animated.View style={[questionStyles.screenContainer]}>
+              <QuestionSenderDetail
+                source={this.props.senderLogoUrl}
+                senderName={this.props.senderName}
+              />
+              {/*
+                if component status is idle (user hasn't taken any action yet),
+                then render question details
+              */}
+              {idle && (
+                <QuestionDetails
+                  question={question}
+                  selectedResponse={this.state.response}
+                  onResponseSelect={this.onResponseSelect}
+                />
+              )}
+              {loading && <QuestionLoader />}
+              {success && <QuestionSuccess />}
+              {error && <QuestionError />}
+              {/*
+                We need to show action buttons all the time except when screen 
+                is in loading state
+              */}
+              {!loading && (
+                <QuestionActions
+                  selectedResponse={this.state.response}
+                  onSubmit={this.onSubmit}
+                  onCancel={this.onCancel}
+                  onSelectResponseAndSubmit={this.onSelectResponseAndSubmit}
+                  question={this.props.question}
+                />
+              )}
+            </Animated.View>
           )}
-        </CustomView>
-      </Container>
+        </Animated.View>
+      </Animated.View>
     )
   }
 
@@ -218,6 +258,44 @@ export class Question extends PureComponent<
   onCancel = () => {
     this.props.navigation.goBack(null)
   }
+
+  _onPanGestureEvent = Animated.event(
+    [
+      {
+        nativeEvent: {
+          translationY: this._translateY,
+        },
+      },
+    ],
+    {
+      useNativeDriver: true,
+    }
+  )
+
+  _onHandlerStateChange = event => {
+    const { state, velocityY, translationY } = event.nativeEvent
+    if (state === State.END) {
+      const minimumDistanceToClose = 150
+      if (velocityY > 60 || translationY > minimumDistanceToClose) {
+        this.onCancel()
+        return
+      }
+
+      Animated.spring(this._translateY, {
+        toValue: 0,
+        useNativeDriver: true,
+      }).start()
+    }
+  }
+
+  _getTransform = translateY => [{ translateY }]
+
+  _getOpacity = translateY =>
+    translateY.interpolate({
+      inputRange: [0, height],
+      outputRange: [1, 0.2],
+      extrapolate: 'clamp',
+    })
 }
 
 function QuestionSenderDetail(props: {
@@ -225,12 +303,7 @@ function QuestionSenderDetail(props: {
   senderName: string,
 }) {
   return (
-    <CustomView
-      bg="tertiary"
-      row
-      style={[questionStyles.questionSenderContainer]}
-      center
-    >
+    <CustomView row style={[questionStyles.questionSenderContainer]} center>
       <CustomView>
         <Image
           style={[questionStyles.questionSenderLogo]}
@@ -256,7 +329,7 @@ function QuestionDetails(props: {
   const isSingleResponse = question.payload.valid_responses.length === 1
 
   return (
-    <CustomView bg="tertiary">
+    <CustomView>
       <QuestionTitle title={question.payload.messageTitle} />
       <ScrollView
         style={[
@@ -410,7 +483,15 @@ function QuestionLoader() {
 
 function QuestionScreenText(props) {
   return (
-    <CustomText bg="tertiary" color="seventh" bold {...props}>
+    <CustomText
+      bg={false}
+      bold
+      {...props}
+      style={[
+        { color: color.bg.tertiary.font.seventh },
+        ...(props.style || []),
+      ]}
+    >
       {props.children}
     </CustomText>
   )
