@@ -47,13 +47,13 @@ platform :ios do
     remote_branch = remote_branch.split('/').last
 
     if remote_branch == "master"
-      hockey(api_token: ENV["QA_HOCKEYAPP_TOKEN"])
+      hockey(api_token: ENV["QA_HOCKEYAPP_TOKEN"], bypass_cdn: true)
     elsif remote_branch == "stage"
       build_type = "ConnectMe Stage Build"
-      hockey(api_token: ENV["STAGE_HOCKEYAPP_TOKEN"])
+      hockey(api_token: ENV["STAGE_HOCKEYAPP_TOKEN"], bypass_cdn: true)
     else
       build_type = "ConnectMe Dev Build"
-      hockey(api_token: ENV["DEV_HOCKEYAPP_TOKEN"])
+      hockey(api_token: ENV["DEV_HOCKEYAPP_TOKEN"], bypass_cdn: true)
     end
 
     if remote_branch == "master" || remote_branch == "stage" || remote_branch == "stable"
@@ -100,7 +100,7 @@ platform :ios do
     hockey_token = ENV["HOCKEYAPP_TOKEN"]
     UI.user_error!("You didn't set token for HockeyApp") if hockey_token.empty?
     build_type = ENV["BUILD_TYPE"] || "#{build_type}"
-    hockey(api_token: hockey_token)
+    hockey(api_token: hockey_token, bypass_cdn: true)
 
   end
 
@@ -131,7 +131,7 @@ platform :ios do
     hockey_token = ENV["HOCKEYAPP_TOKEN"]
     UI.user_error!("You didn't set token for HockeyApp") if hockey_token.empty?
     build_type = ENV["BUILD_TYPE"] || "#{build_type}"
-    hockey(api_token: hockey_token)
+    hockey(api_token: hockey_token, bypass_cdn: true)
 
     build(
         match_type: "appstore",
