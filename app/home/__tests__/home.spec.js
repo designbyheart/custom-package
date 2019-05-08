@@ -31,6 +31,7 @@ function props(claimOfferStatus, noConnections) {
       size: 100,
       logoUrl: 'https://logourl.com/logo.png',
       vcxSerializedConnection,
+      publicDID: null,
       ...myPairWiseConnectionDetails,
     },
   }

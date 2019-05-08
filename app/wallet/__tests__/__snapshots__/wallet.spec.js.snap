@@ -15,6 +15,7 @@ exports[`<Wallet /> should render Wallet 1`] = `
       Object {
         "navigation": Object {
           "dispatch": [MockFunction],
+          "getParam": [MockFunction],
           "goBack": [MockFunction],
           "isFocused": [MockFunction],
           "navigate": [MockFunction],

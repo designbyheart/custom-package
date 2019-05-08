@@ -27,6 +27,7 @@ describe('<QRScannerScreen />', () => {
       changeEnvironmentUrl: jest.fn(),
       enableCamera: jest.fn(),
       isCameraEnabled: true,
+      publicDIDs: {},
     }
   }
 

@@ -906,6 +906,8 @@ export function getNavigation(params?: NavigationParams) {
     isFocused: jest.fn().mockReturnValue(true),
     // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
     push: jest.fn(),
+    // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
+    getParam: jest.fn((paramName, defaultValue) => defaultValue),
   }
 }
 
@@ -1156,6 +1158,7 @@ export const connections = {
     remoteConnectionId: '70075yyojywdppuje79',
     size: 100,
     logoUrl: 'https://logourl.com/logo.png',
+    publicDID: null,
   },
   ['3nj819kkjywdppuje86']: {
     ...successConnectionData.newConnection,
@@ -1167,6 +1170,7 @@ export const connections = {
     remoteConnectionId: '70075yyojywdppuje79',
     size: 100,
     logoUrl: 'https://logourl.com/logo.png',
+    publicDID: null,
   },
   ['7fj819kkjywdppuje34']: {
     ...successConnectionData.newConnection,
@@ -1178,6 +1182,7 @@ export const connections = {
     remoteConnectionId: '70075yyojywdppuje79',
     size: 100,
     logoUrl: 'https://logourl.com/logo.png',
+    publicDID: null,
   },
 }
 
@@ -1189,6 +1194,7 @@ export const connection = {
   remoteConnectionId: '70075yyojywdppuje79',
   size: 100,
   logoUrl: 'https://logourl.com/logo.png',
+  publicDID: null,
 }
 
 export const getClaimFormat = {

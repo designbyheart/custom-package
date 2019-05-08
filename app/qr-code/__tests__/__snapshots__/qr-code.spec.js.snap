@@ -36,6 +36,7 @@ Object {
     },
     "logoUrl": "ent-logo-url",
     "name": "ent-name",
+    "publicDID": undefined,
     "verKey": "74xeXSEac5QTWzQmh84JqzjuXc8yvXLzWKeiqyUnYokx",
   },
   "senderEndpoint": "52.38.32.107:80/agency/msg",

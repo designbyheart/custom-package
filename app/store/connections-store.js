@@ -174,6 +174,7 @@ export function* loadNewConnectionSaga(
     myPairwiseAgentVerKey,
     myPairwisePeerVerKey,
     vcxSerializedConnection,
+    publicDID,
   }: Connection = action.connection.newConnection
 
   try {
@@ -189,6 +190,7 @@ export function* loadNewConnectionSaga(
       myPairwiseAgentVerKey,
       myPairwisePeerVerKey,
       vcxSerializedConnection,
+      publicDID,
     }
 
     yield put(promptBackupBanner(true))

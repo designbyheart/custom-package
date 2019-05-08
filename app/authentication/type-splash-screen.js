@@ -6,6 +6,7 @@ import type { DeepLinkStore } from '../deep-link/type-deep-link'
 import type { SMSPendingInvitationStore } from '../sms-pending-invitation/type-sms-pending-invitation'
 import type { LockStore, PendingRedirection } from '../lock/type-lock'
 import type { EulaStore } from '../eula/type-eula'
+import type { Connection } from '../store/type-connection-store'
 
 export type SplashScreenProps = {
   eula: EulaStore,
@@ -13,6 +14,7 @@ export type SplashScreenProps = {
   deepLink: DeepLinkStore,
   smsPendingInvitation: SMSPendingInvitationStore,
   lock: LockStore,
+  publicDIDs: { [publicDID: string]: Connection },
   getSmsPendingInvitation: (token: string) => void,
   addPendingRedirection: (
     pendingRedirection: Array<?PendingRedirection>

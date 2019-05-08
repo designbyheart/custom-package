@@ -6,6 +6,7 @@ exports[`<WalletTabs /> should render properly and match the snapshot 1`] = `
     Object {
       "navigation": Object {
         "dispatch": [MockFunction],
+        "getParam": [MockFunction],
         "goBack": [MockFunction],
         "isFocused": [MockFunction],
         "navigate": [MockFunction],

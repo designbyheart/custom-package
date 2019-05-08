@@ -2,6 +2,7 @@ package me.connect;
 
 import android.app.Application;
 import com.facebook.react.ReactApplication;
+import com.azendoo.reactnativesnackbar.SnackbarPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.chirag.RNMail.RNMail;
@@ -52,6 +53,7 @@ public class MainApplication extends Application implements ShareApplication, Re
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new SnackbarPackage(),
             new RNGestureHandlerPackage(),
         new LottiePackage(),
             new RNMail(),

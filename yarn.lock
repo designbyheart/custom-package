@@ -8367,6 +8367,11 @@ react-native-size-matters@^0.1.2:
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.1.2.tgz#837d939992d5c7b4c2164e689e927276b5459239"
   integrity sha512-ACKDQLFQCJmjWdKf0x2LKseDyBlFJ3oDGY4k2pN2VhBYrKyM2qLYdrhPvUgGTjtaTSfsWAr+efkrisIF3Y7AsQ==
 
+react-native-snackbar@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/react-native-snackbar/-/react-native-snackbar-0.5.5.tgz#b481e8a37ef2c435acd54d37976705a23d3deeee"
+  integrity sha512-P98ucpnjHtsPKqzYaQwL7yki+Lem63431Qa8+qyGgTb8mNzqKeiK6glMU+1lpgJr/eqgO+V0agtfb0CSSl0fWg==
+
 react-native-splash-screen@3.0.6:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.0.6.tgz#c0bbf2c8ae40a313c4c7044f55e569414ff68332"

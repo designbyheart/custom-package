@@ -15,6 +15,7 @@ import type {
   QuestionStoreData,
   QuestionStoreMessage,
 } from '../question/type-question'
+import type { ConnectionStore } from './type-connection-store'
 import RNFetchBlob from 'react-native-fetch-blob'
 import { Platform } from 'react-native'
 import { whiteSmoke } from '../common/styles/constant'
@@ -409,3 +410,20 @@ export const getProofData = (state: Store, proofRequestId: string) =>
 
 export const getPrepareBackupStatus = (state: Store) =>
   state.backup.prepareBackupStatus
+
+// get data from connections store for public DIDs
+// data is returned in format {"publicDID": ConnectionData}
+export const getAllPublicDid = (connections: ConnectionStore) => {
+  const pairwiseConnections = connections.data || {}
+  return Object.keys(pairwiseConnections).reduce((acc, senderDID) => {
+    const connection = pairwiseConnections[senderDID]
+    if (connection.publicDID) {
+      return {
+        ...acc,
+        [connection.publicDID]: connection,
+      }
+    }
+
+    return acc
+  }, {})
+}

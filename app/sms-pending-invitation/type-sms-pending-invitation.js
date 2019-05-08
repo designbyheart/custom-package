@@ -28,6 +28,7 @@ export type InvitationSenderDetail = {
   DID: string,
   logoUrl: string,
   verKey: string,
+  publicDID?: string,
 }
 
 export type InvitationSenderAgencyDetail = {

@@ -31,11 +31,13 @@ import {
   QR_CODE_SENDER_AGENCY_DID,
   QR_CODE_SENDER_AGENCY_KEY,
   QR_CODE_SENDER_AGENCY_ENDPOINT,
+  QR_CODE_SENDER_PUBLIC_DID,
 } from '../api/api-constants'
 import {
   invitationRoute,
   qrCodeScannerTabRoute,
   homeTabRoute,
+  connectionHistoryRoute,
 } from '../common/'
 import type { QrCode } from '../components/qr-scanner/type-qr-scanner'
 import type { Store } from '../store/type-store'
@@ -53,6 +55,7 @@ import {
 import type { EnvironmentSwitchUrlQrCode } from '../components/qr-scanner/type-qr-scanner'
 import { changeEnvironmentUrl } from '../store/config-store'
 import { captureError } from '../services/error/error-handler'
+import { getAllPublicDid } from '../store/store-selector'
 
 export function convertQrCodeToInvitation(qrCode: QrCode) {
   const qrSenderDetail = qrCode[QR_CODE_SENDER_DETAIL]
@@ -72,6 +75,7 @@ export function convertQrCodeToInvitation(qrCode: QrCode) {
     DID: qrSenderDetail[QR_CODE_SENDER_DID],
     logoUrl: qrSenderDetail[QR_CODE_LOGO_URL],
     verKey: qrSenderDetail[QR_CODE_SENDER_VERIFICATION_KEY],
+    publicDID: qrSenderDetail[QR_CODE_SENDER_PUBLIC_DID],
   }
 
   const senderAgencyDetail = {
@@ -112,10 +116,7 @@ export class QRCodeScannerScreen extends PureComponent<
       const invitation = {
         payload: convertQrCodeToInvitation(qrCode),
       }
-      this.props.invitationReceived(invitation)
-      this.props.navigation.push(invitationRoute, {
-        senderDID: invitation.payload.senderDID,
-      })
+      this.checkExistingConnectionAndRedirect(invitation)
     }
   }
 
@@ -138,11 +139,43 @@ export class QRCodeScannerScreen extends PureComponent<
 
   onInvitationUrl = (payload: InvitationPayload) => {
     if (this.props.currentScreen === qrCodeScannerTabRoute) {
-      this.props.invitationReceived({ payload })
-      this.props.navigation.push(invitationRoute, {
-        senderDID: payload.senderDID,
-      })
+      this.checkExistingConnectionAndRedirect({ payload })
     }
+  }
+
+  checkExistingConnectionAndRedirect = (invitation: {
+    payload: InvitationPayload,
+  }) => {
+    // check if we got public DID in invitation
+    // if we have public DID, then check if connection already exist
+    // if connection exist, then redirect to connection history
+    // and show Snack bar stating that connection already exist
+    // otherwise redirect to invitation screen
+    const { publicDID = '' } = invitation.payload.senderDetail
+    const { senderDID } = invitation.payload
+    const connectionAlreadyExist = publicDID in this.props.publicDIDs
+
+    if (connectionAlreadyExist) {
+      const { senderName, identifier, logoUrl: image } = this.props.publicDIDs[
+        publicDID
+      ]
+      const params = {
+        senderDID,
+        senderName,
+        image,
+        identifier,
+        backRedirectRoute: homeTabRoute,
+        showExistingConnectionSnack: true,
+      }
+      this.props.navigation.navigate(connectionHistoryRoute, params)
+
+      return
+    }
+
+    this.props.invitationReceived(invitation)
+    this.props.navigation.push(invitationRoute, {
+      senderDID: invitation.payload.senderDID,
+    })
   }
 
   onClose = () => {
@@ -307,6 +340,7 @@ export class QRCodeScannerScreen extends PureComponent<
 
 const mapStateToProps = (state: Store) => ({
   currentScreen: state.route.currentScreen,
+  publicDIDs: getAllPublicDid(state.connections),
 })
 
 const mapDispatchToProps = dispatch =>

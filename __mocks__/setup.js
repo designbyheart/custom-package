@@ -275,3 +275,8 @@ jest.mock('react-native-gesture-handler', () => ({
   },
   PanGestureHandler: mockView,
 }))
+
+jest.mock('react-native-snackbar', () => ({
+  show: jest.fn(),
+  LENGTH_LONG: 3,
+}))

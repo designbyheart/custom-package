@@ -21,6 +21,7 @@ export type QrCode = {
     d: string,
     l: string,
     v: string,
+    publicDID?: string,
   },
   sa: {
     d: string,

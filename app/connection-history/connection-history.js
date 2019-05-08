@@ -14,6 +14,8 @@ import { List, ListItem } from 'react-native-elements'
 import moment from 'moment'
 import groupBy from 'lodash.groupby'
 import { bindActionCreators } from 'redux'
+import Snackbar from 'react-native-snackbar'
+
 import { updateStatusBarTheme } from '../../app/store/connections-store'
 import {
   InfoSectionList,
@@ -50,6 +52,7 @@ import type {
 import {
   HISTORY_EVENT_STATUS,
   HISTORY_EVENT_OCCURRED,
+  CONNECTION_ALREADY_EXIST,
 } from './type-connection-history'
 import type { ReactNavigation } from '../common/type-common'
 import showDID from '../components/show-pairwise-info'
@@ -167,9 +170,10 @@ export class ConnectionHistory extends Component<
 
   componentDidMount() {
     this.props.updateStatusBarTheme(this.props.activeConnectionThemePrimary)
+    this.showSnackBar()
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps: ConnectionHistoryProps) {
     if (Platform.OS === 'android') {
       // TODO: Refactor this code sometime later so that this code executes
       // only when this screen comes in focus and not on every component update
@@ -178,13 +182,48 @@ export class ConnectionHistory extends Component<
         true
       )
     }
+
+    // check if connection history updated with new params
+    const oldShowSnack = prevProps.navigation.getParam(
+      'showExistingConnectionSnack',
+      false
+    )
+    const newShowSnack = this.props.navigation.getParam(
+      'showExistingConnectionSnack',
+      false
+    )
+    if (oldShowSnack !== newShowSnack && newShowSnack === true) {
+      this.showSnackBar()
+    }
+  }
+
+  showSnackBar = () => {
+    const showExistingConnectionSnack = this.props.navigation.getParam(
+      'showExistingConnectionSnack',
+      false
+    )
+    if (showExistingConnectionSnack) {
+      Snackbar.show({
+        title: CONNECTION_ALREADY_EXIST,
+        duration: Snackbar.LENGTH_LONG,
+      })
+    }
   }
 
   closeDebounce = () => {
     if (!this.state.disableTaps) {
       const { navigation } = this.props
 
-      navigation.goBack(null)
+      const backRedirectRoute = this.props.navigation.getParam(
+        'backRedirectRoute',
+        null
+      )
+      if (backRedirectRoute) {
+        navigation.navigate(backRedirectRoute)
+      } else {
+        navigation.goBack(null)
+      }
+
       this.setState({ disableTaps: true })
     }
   }

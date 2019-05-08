@@ -4,6 +4,7 @@ import type {
   InvitationReceivedAction,
 } from '../invitation/type-invitation'
 import type { ReactNavigation } from '../common/type-common'
+import type { Connection } from '../store/type-connection-store'
 
 export type QRCodeScannerScreenState = {
   isCameraAuthorized: boolean,
@@ -13,6 +14,7 @@ export type QRCodeScannerScreenState = {
 
 export type QRCodeScannerScreenProps = {
   currentScreen: string,
+  publicDIDs: { [publicDID: string]: Connection },
   invitationReceived: (
     data: InvitationReceivedActionData
   ) => InvitationReceivedAction,

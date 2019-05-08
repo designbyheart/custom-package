@@ -15,6 +15,8 @@ import {
   waitForInvitationRoute,
   eulaRoute,
   restoreRoute,
+  connectionHistoryRoute,
+  homeTabRoute,
 } from '../common/route-constants'
 import { Container, Loader } from '../components'
 import {
@@ -32,6 +34,7 @@ import { SMSPendingInvitationStatus } from '../sms-pending-invitation/type-sms-p
 import type { SMSPendingInvitations } from '../sms-pending-invitation/type-sms-pending-invitation'
 import { deepLinkProcessed } from '../deep-link/deep-link-store'
 import { DEEP_LINK_STATUS } from '../deep-link/type-deep-link'
+import { getAllPublicDid } from '../store/store-selector'
 
 const isReceived = ({ payload, status }) =>
   payload &&
@@ -125,15 +128,40 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
           if (payload) {
             const senderDID = payload.senderDetail.DID
             this.props.deepLinkProcessed(invitationToken)
-            if (this.props.lock.isAppLocked === false) {
-              this.props.navigation.push(invitationRoute, {
+            // check if invitation has public did
+            // if we have public did then we have to check for duplicate connection
+            // and if we already have same public did in one of our existing connection
+            // then we need to redirect to that connection screen
+            // instead of invitation screen
+            const { publicDID = '' } = payload.senderDetail
+            const connectionAlreadyExist = publicDID in this.props.publicDIDs
+
+            let routeName = invitationRoute
+            let params = { senderDID, token: invitationToken }
+            if (connectionAlreadyExist) {
+              routeName = connectionHistoryRoute
+              const {
+                senderName,
+                identifier,
+                logoUrl: image,
+              } = this.props.publicDIDs[publicDID]
+              params = {
                 senderDID,
-                token: invitationToken,
-              })
+                senderName,
+                image,
+                identifier,
+                backRedirectRoute: homeTabRoute,
+                showExistingConnectionSnack: true,
+              }
             }
+
+            if (this.props.lock.isAppLocked === false) {
+              this.props.navigation.push(routeName, params)
+            }
+
             return {
-              routeName: invitationRoute,
-              params: { senderDID, token: invitationToken },
+              routeName,
+              params,
             }
           }
         }
@@ -228,6 +256,7 @@ const mapStateToProps = ({
   lock,
   smsPendingInvitation,
   eula,
+  connections,
 }: Store) => ({
   isInitialized: config.isInitialized,
   // DeepLink should be it's own component that will handle only deep link logic
@@ -238,6 +267,7 @@ const mapStateToProps = ({
   smsPendingInvitation,
   // only need isEulaAccept
   eula,
+  publicDIDs: getAllPublicDid(connections),
 })
 
 const mapDispatchToProps = dispatch =>

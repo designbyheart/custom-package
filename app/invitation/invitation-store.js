@@ -139,6 +139,7 @@ export function* sendResponse(
         myPairwiseAgentVerKey: pairwiseInfo.myPairwiseAgentVerKey,
         myPairwisePeerVerKey: pairwiseInfo.myPairwisePeerVerKey,
         vcxSerializedConnection,
+        publicDID: payload.senderDetail.publicDID,
         ...payload,
       },
     }
