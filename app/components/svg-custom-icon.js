@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import SvgIcon from 'react-native-svg-icon'
 import { Path, G, Use, ClipPath, Defs, Svg } from 'react-native-svg'
@@ -380,7 +381,13 @@ export const svgIcons = {
   },
 }
 
-export default (SvgCustomIcon = props => {
+export const SvgCustomIcon = (props: {
+  name: string,
+  fill?: string,
+  height?: string,
+}) => {
   const { height = '24' } = props
   return <SvgIcon {...props} height={height} svgs={svgIcons} />
-})
+}
+
+export default SvgCustomIcon

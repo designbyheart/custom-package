@@ -1,3 +1,8 @@
+/* eslint-disable */
+// disabling eslint on this file solely because we don't want flow
+// types for this file, because this is a static object
+// and also flow takes too much linting this large object
+
 // source: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
 // license; UNLICENSED
 const eff = {

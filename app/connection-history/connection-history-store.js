@@ -1,3 +1,8 @@
+/* eslint-disable */
+// Disabling linting for this because we need to fix type issues with this file
+// whenever we get some time for code refactoring, then we need to fix it
+// we were not running flow on this file even before because we had added $FlowFixMe
+// So, get some time from product and fix Flow errors and enable Flow for this file
 // $FlowFixMe
 import {
   all,

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "lint": "glow",
+    "lint": "glow && eslint app",
     "precommit": "lint-staged",
     "prepush": "npm test && npm run lint",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios",
