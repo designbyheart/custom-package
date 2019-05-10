@@ -202,10 +202,9 @@ async def ent_create_connection():
 
     logger.info("--  use public did:{}".format(use_public_did))
     if use_public_did:
-        await connection.connect('{"use_public_did":true}')
-        invite_details = await connection.invite_details(False)
-        if debug:
-            print("\t-- Send_offer: invite_details:", invite_details)
+        await connection.connect('{"use_public_did":true,"connection_type":"QR"}')
+        invite_details = await connection.invite_details(True)
+        print("\t-- Send_offer: invite_details:", invite_details)
         my_invite_details.put(invite_details)
     else:
         await connection.connect('{"connection_type":"QR"}')
@@ -262,7 +261,10 @@ async def ent_create_connection():
     # uid = _answer_q.get()
 
     try:
-        messages = await vcx_messages_download('MS-103', '', None)
+        originalMessage = await vcx_messages_download('', "{}".format(msg_id.decode('utf-8')), None)
+        originalMessage = json.loads(originalMessage.decode('utf-8'))
+        responseMessageId = originalMessage[0]['msgs'][0]['refMsgId']
+        messages = await vcx_messages_download('', "{}".format(responseMessageId), None)
         # messages = json.loads(messages) # Python3.6
         print("-- Enterprise message downloaded")
         logger.info("-- Enterprise message downloaded")
@@ -506,7 +508,7 @@ if __name__ == '__main__':
 
     # Show the public DID for the connection
     # False means use a QR code
-    use_public_did = False
+    use_public_did = True
 
     # The invite details will be transferred using queue
     my_invite_details = Queue()
@@ -530,12 +532,12 @@ if __name__ == '__main__':
     con_instituion_name = 'Test consumer'
     con_instituion_logo = 'http://robohash.org/674'
 
-    # QATest1 agency information
-    print("\nUse QATest1 settings")
+    # TestNet agency information
+    print("\nUse TestNet settings")
     ent_wallet_name = 'ent_provable-wallet'
-    ent_agency_url = 'http://easq002.pqa.evernym.com'
-    ent_agency_did = 'FtdtGa9Hua1ZYF874yK6iC'
-    ent_agency_verkey = '97iEbD8rS3p51DzmLc4orS9AsE1YFnRZCVCEAUqfsj8D'
+    ent_agency_url = 'http://eas01.pps.evernym.com'
+    ent_agency_did = 'UNM2cmvMVoWpk6r3pG5FAq'
+    ent_agency_verkey = 'FvA7e4DuD2f9kYHq6B3n7hE7NQvmpgeFRrox3ELKv9vX'
 
     con_wallet_name = 'con_provable-wallet'
     con_agency_url = 'http://casq002.pqa.evernym.com'
