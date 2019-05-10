@@ -99,6 +99,7 @@ export class ConnectMeApp extends PureComponent<AppProps, void> {
         this.handleBackButtonClick
       )
     }
+
     // components that are mounted inside of the app can also
     // change status bar style and it is getting overridden
     // so we are setting status bar style again after component is mounted
@@ -205,10 +206,6 @@ export class ConnectMeApp extends PureComponent<AppProps, void> {
     return (
       <Provider store={store}>
         <Container>
-          <StatusBar
-            backgroundColor={whiteSmokeSecondary}
-            barStyle={barStyleDark}
-          />
           <PushNotification navigateToRoute={this.navigateToRoute} />
           <DeepLink />
           <AppStatus />

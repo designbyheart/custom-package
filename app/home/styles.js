@@ -1,5 +1,6 @@
 // @flow
 import { StyleSheet } from 'react-native'
+import { measurements } from '../common/styles/measurements'
 
 const externalStyles = StyleSheet.create({
   container: {
@@ -15,6 +16,13 @@ const externalStyles = StyleSheet.create({
   },
   flatListInnerContainer: {
     paddingBottom: 170,
+  },
+  blurContainer: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    height: measurements.bottomBlurNavBarHeight,
   },
 })
 

@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
+import { BlurView } from 'react-native-blur'
 import {
   Container,
   CustomView,
@@ -58,6 +59,7 @@ import { getUnseenMessages } from '../store/store-selector'
 import { scale } from 'react-native-size-matters'
 import { size } from './../components/icon'
 import { externalStyles } from './styles'
+
 const { width, height } = Dimensions.get('window')
 export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
   static navigationOptions = ({ navigation }) => ({
@@ -121,6 +123,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       container,
       flatListContainer,
       flatListInnerContainer,
+      blurContainer,
     } = externalStyles
     const {
       connections: { data, hydrated },
@@ -204,6 +207,9 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
           data={connections}
           renderItem={this.renderItem}
         />
+        {Platform.OS === 'ios' ? (
+          <BlurView style={blurContainer} blurType="light" blurAmount={8} />
+        ) : null}
       </View>
     )
   }

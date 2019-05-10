@@ -12,7 +12,12 @@ import {
   AppState,
 } from 'react-native'
 import { Container, QRScanner } from '../components'
-import { color, barStyleLight, barStyleDark } from '../common/styles/constant'
+import {
+  color,
+  barStyleLight,
+  barStyleDark,
+  whiteSmokeSecondary,
+} from '../common/styles/constant'
 import { invitationReceived } from '../invitation/invitation-store'
 import {
   PENDING_CONNECTION_REQUEST_CODE,
@@ -276,6 +281,11 @@ export class QRCodeScannerScreen extends PureComponent<
       StatusBar.setBarStyle(barStyleLight, true)
       if (Platform.OS === 'android') {
         StatusBar.setBackgroundColor(color.bg.sixth.color)
+      }
+    } else {
+      StatusBar.setBarStyle(barStyleDark, true)
+      if (Platform.OS === 'android') {
+        StatusBar.setBackgroundColor(whiteSmokeSecondary)
       }
     }
   }
