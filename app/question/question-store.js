@@ -134,9 +134,12 @@ export function* answerToQuestionSaga(
         const answerMsgId: string = yield call(
           connectionSendMessage,
           connectionHandle,
-          JSON.stringify(userAnswer),
-          MESSAGE_TYPE_ANSWER,
-          MESSAGE_TITLE_ANSWER
+          {
+            message: JSON.stringify(userAnswer),
+            messageType: MESSAGE_TYPE_ANSWER,
+            messageTitle: MESSAGE_TITLE_ANSWER,
+            refMessageId: uid,
+          }
         )
         yield put(
           updateQuestionStatus(

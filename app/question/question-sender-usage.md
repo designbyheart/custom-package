@@ -30,6 +30,15 @@ await connection.send_message(JSON.stringify(aboveJson), "Question", question_te
 ```
 - User should receive a message with above data
 - Once user responds, we can use libvcx method vcx_messages_download method to download user response
+```python
+  # check our own message for changes in refMsgId property
+  originalMessage = await vcx_messages_download('', "{}".format(msg_id.decode('utf-8')), None)
+  originalMessage = json.loads(originalMessage.decode('utf-8'))
+  # get user's response message id from message that we sent
+  responseMessageId = originalMessage[0]['msgs'][0]['refMsgId']
+  # download user response for message that we sent
+  userResponseMessage = await vcx_messages_download('', "{}".format(responseMessageId), None)
+```
 - User response should look like
 ```js
 {

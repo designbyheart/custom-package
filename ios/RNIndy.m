@@ -376,15 +376,13 @@ RCT_EXPORT_METHOD(shutdownVcx: (BOOL *) deletePool
 
 RCT_EXPORT_METHOD(connectionSendMessage: (NSInteger) connectionHandle
                   withMessage: (NSString *) message
-                  withMessageType: (NSString *)messageType
-                  withMessageTitle: (NSString *)messageTitle
+                  withSendMessageOptions: (NSString *)sendMessageOptions
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
   [[[ConnectMeVcx alloc] init] connectionSendMessage:connectionHandle
                                          withMessage:message
-                                            withType:messageType
-                                           withTitle:messageTitle
+                                            withSendMessageOptions:sendMessageOptions
                                       withCompletion:^(NSError *error, NSString *msg_id)
   {
     if (error != nil && error.code != 0) {

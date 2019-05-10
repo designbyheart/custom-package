@@ -149,13 +149,12 @@ describe('Question Store', () => {
       ])
       .call(getHandleBySerializedConnection, vcxSerializedConnection)
       .call(connectionSignData, connectionHandle, answer.nonce)
-      .call(
-        connectionSendMessage,
-        connectionHandle,
-        JSON.stringify(getUserAnswer(signDataResponse)),
-        MESSAGE_TYPE_ANSWER,
-        MESSAGE_TITLE_ANSWER
-      )
+      .call(connectionSendMessage, connectionHandle, {
+        message: JSON.stringify(getUserAnswer(signDataResponse)),
+        messageType: MESSAGE_TYPE_ANSWER,
+        messageTitle: MESSAGE_TITLE_ANSWER,
+        refMessageId: uid,
+      })
       .put(
         updateQuestionStatus(
           uid,

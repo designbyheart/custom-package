@@ -585,15 +585,23 @@ export async function getBiometricError(): Promise<string> {
 
 export async function connectionSendMessage(
   connectionHandle: number,
-  message: string,
-  messageType: string,
-  messageTitle: string
+  options: {
+    message: string,
+    messageType: string,
+    messageTitle: string,
+    refMessageId?: string,
+  }
 ): Promise<string> {
+  const sendMessageOptions = JSON.stringify({
+    msg_type: options.messageType,
+    msg_title: options.messageTitle,
+    ref_msg_id: options.refMessageId || null,
+  })
+
   const msgId: string = await RNIndy.connectionSendMessage(
     connectionHandle,
-    message,
-    messageType,
-    messageTitle
+    options.message,
+    sendMessageOptions
   )
 
   // since we are calling an external API, we need to make sure that

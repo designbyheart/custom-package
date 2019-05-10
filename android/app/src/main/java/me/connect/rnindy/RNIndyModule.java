@@ -232,9 +232,9 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void connectionSendMessage(int connectionHandle, String message, String messageType, String messageTitle, Promise promise) {
+    public void connectionSendMessage(int connectionHandle, String message, String sendMessageOptions, Promise promise) {
         try {
-            ConnectionApi.connectionSendMessage(connectionHandle, message, messageType, messageTitle).exceptionally((t) -> {
+            ConnectionApi.connectionSendMessage(connectionHandle, message, sendMessageOptions).exceptionally((t) -> {
                 Log.e(TAG, "connectionSendMessage", t);
                 promise.reject("FutureException", t.getMessage());
                 return null;
