@@ -3,7 +3,11 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 import { createLogger } from 'redux-logger'
-import { customLogger } from './custom-logger'
+import {
+  customLogger,
+  PiiHiddenTransformer,
+  PiiHiddenActionTransformer,
+} from './custom-logger'
 import user, { watchUserStore } from './user/user-store'
 import pushNotification, {
   watchPushNotification,
@@ -86,6 +90,8 @@ let middlewares = [historyRecorder]
 customLogger.init('debug')
 let reduxLogger = createLogger({
   logger: customLogger,
+  stateTransformer: PiiHiddenTransformer,
+  actionTransformer: PiiHiddenActionTransformer,
 })
 middlewares.push(reduxLogger)
 

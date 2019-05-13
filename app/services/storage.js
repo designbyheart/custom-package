@@ -82,10 +82,7 @@ export async function walletUpdate(key: string, data: string) {
     await updateWalletItem(key, data)
   } catch (err) {
     captureError(err)
-    customLogger.log(
-      'walletUpdate error :: key: ' + key + ' :: data: ' + data + ' :: err: ',
-      err
-    )
+    customLogger.log('walletUpdate error :: key: ' + key + ' :: err: ', err)
   }
 }
 
