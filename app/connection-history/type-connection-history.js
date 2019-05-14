@@ -253,4 +253,4 @@ export type ConnectionHistoryProps = {
   ) => void,
 } & ReactNavigation
 
-export const CONNECTION_ALREADY_EXIST = 'Connection already exist.'
+export const CONNECTION_ALREADY_EXIST = 'Connection already exists.'
