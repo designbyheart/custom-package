@@ -828,7 +828,7 @@ const convertToSerializedClaimOffer = (
 }
 
 export const convertDecryptedPayloadToQuestion = (
-  connectionHandle: any,
+  connectionHandle: number,
   decryptedPayload: string,
   uid: string,
   forDID: string,
@@ -855,6 +855,7 @@ export const convertDecryptedPayloadToQuestion = (
     remotePairwiseDID: senderDID,
     messageTitle: parsedMsg.question_text || messageTitle,
     messageText: parsedMsg.question_detail || messageText,
+    externalLinks: parsedMsg.external_links || [],
   }
 }
 

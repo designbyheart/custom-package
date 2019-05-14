@@ -6,6 +6,17 @@ import {
 } from '../../app/question/type-question'
 import { STORAGE_STATUS } from '../../app/common/type-common'
 
+export const mockExternalLink = {
+  text: 'An external link',
+  src: 'https://somexternal.com/link',
+}
+
+export const mockExternalLinkNoText = {
+  src: 'https://secondlink.com/external',
+}
+
+export const mockExternalLinks = [mockExternalLink, mockExternalLinkNoText]
+
 export const mockQuestionPayload = {
   messageTitle: 'Message Title',
   messageText: 'Message Text',
@@ -23,6 +34,7 @@ export const mockQuestionPayload = {
   uid: '001',
   from_did: 'senderDID1',
   forDID: 'myPairwiseDid',
+  externalLinks: [],
 }
 
 export const mockQuestionPayload2 = {
@@ -44,6 +56,7 @@ export const mockQuestionPayload2 = {
   uid: '002',
   from_did: 'senderDID1',
   forDID: 'myPairwiseDid',
+  externalLinks: mockExternalLinks,
 }
 
 export const mockQuestionPayload3 = {
@@ -60,6 +73,7 @@ export const mockQuestionPayload3 = {
   uid: '003',
   from_did: 'senderDID1',
   forDID: 'myPairwiseDid',
+  externalLinks: [],
 }
 
 export const mockQuestionReceivedState = {

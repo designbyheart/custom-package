@@ -74,6 +74,7 @@ import {
 import { getConnectionByUserDid, getConnection } from '../store/store-selector'
 import { QuestionActions } from './components/question-screen-actions'
 import { checkIfAnimationToUse } from '../bridge/react-native-cxs/RNCxs'
+import { QuestionExternalLinks } from './components/question-external-links'
 
 const { height } = Dimensions.get('window')
 
@@ -162,7 +163,9 @@ export class Question extends PureComponent<
                 />
               )}
               {loading && <QuestionLoader />}
-              {success && <QuestionSuccess />}
+              {success && (
+                <QuestionSuccess afterSuccessShown={this.afterSuccessShown} />
+              )}
               {error && <QuestionError />}
               {/*
                 We need to show action buttons all the time except when screen 
@@ -296,6 +299,26 @@ export class Question extends PureComponent<
       outputRange: [1, 0.2],
       extrapolate: 'clamp',
     })
+
+  // this a common pattern when we want to be sure that we are not running
+  // actions after a component is unmounted
+  // in our case, user can close modal either by pressing "okay" or clicking outside
+  // so we need to be sure that we are not running code after this component
+  // is unmounted from react-native tree
+  isUnmounted = false
+
+  componentWillUnmount() {
+    this.isUnmounted = true
+  }
+
+  afterSuccessShown = () => {
+    // auto close after success is shown to user
+    setTimeout(() => {
+      if (!this.isUnmounted) {
+        this.onCancel()
+      }
+    }, 200)
+  }
 }
 
 function QuestionSenderDetail(props: {
@@ -344,6 +367,7 @@ function QuestionDetails(props: {
           selectedResponse={selectedResponse}
           onResponseSelect={onResponseSelect}
         />
+        <QuestionExternalLinks externalLinks={question.payload.externalLinks} />
       </ScrollView>
     </CustomView>
   )
@@ -451,7 +475,7 @@ function QuestionError() {
   )
 }
 
-function QuestionSuccess() {
+function QuestionSuccess(props: { afterSuccessShown: () => void }) {
   return (
     <CustomView
       bg="tertiary"
@@ -464,6 +488,7 @@ function QuestionSuccess() {
           autoPlay
           loop={false}
           style={questionStyles.feedbackIcon}
+          onAnimationFinish={props.afterSuccessShown}
         />
       </CustomView>
       <QuestionScreenText size="h4" bold={false}>

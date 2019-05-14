@@ -9,6 +9,7 @@ Object {
       "error": null,
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
+        "externalLinks": Array [],
         "forDID": "myPairwiseDid",
         "from_did": "senderDID1",
         "issuer_did": "issuerDid",
@@ -41,6 +42,15 @@ Object {
       "error": null,
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
+        "externalLinks": Array [
+          Object {
+            "src": "https://somexternal.com/link",
+            "text": "An external link",
+          },
+          Object {
+            "src": "https://secondlink.com/external",
+          },
+        ],
         "forDID": "myPairwiseDid",
         "from_did": "senderDID1",
         "issuer_did": "issuerDid",
@@ -85,6 +95,7 @@ Object {
       "error": null,
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
+        "externalLinks": Array [],
         "forDID": "myPairwiseDid",
         "from_did": "senderDID1",
         "issuer_did": "issuerDid",
@@ -117,6 +128,15 @@ Object {
       "error": null,
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
+        "externalLinks": Array [
+          Object {
+            "src": "https://somexternal.com/link",
+            "text": "An external link",
+          },
+          Object {
+            "src": "https://secondlink.com/external",
+          },
+        ],
         "forDID": "myPairwiseDid",
         "from_did": "senderDID1",
         "issuer_did": "issuerDid",
@@ -161,6 +181,7 @@ Object {
       "error": null,
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
+        "externalLinks": Array [],
         "forDID": "myPairwiseDid",
         "from_did": "senderDID1",
         "issuer_did": "issuerDid",
@@ -201,6 +222,7 @@ Object {
       "error": null,
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
+        "externalLinks": Array [],
         "forDID": "myPairwiseDid",
         "from_did": "senderDID1",
         "issuer_did": "issuerDid",
@@ -244,6 +266,7 @@ Object {
       "error": null,
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
+        "externalLinks": Array [],
         "forDID": "myPairwiseDid",
         "from_did": "senderDID1",
         "issuer_did": "issuerDid",
@@ -284,6 +307,7 @@ Object {
       "error": null,
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
+        "externalLinks": Array [],
         "forDID": "myPairwiseDid",
         "from_did": "senderDID1",
         "issuer_did": "issuerDid",
@@ -327,6 +351,7 @@ Object {
       },
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
+        "externalLinks": Array [],
         "forDID": "myPairwiseDid",
         "from_did": "senderDID1",
         "issuer_did": "issuerDid",
@@ -367,6 +392,7 @@ Object {
       "error": null,
       "payload": Object {
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer",
+        "externalLinks": Array [],
         "forDID": "myPairwiseDid",
         "from_did": "senderDID1",
         "issuer_did": "issuerDid",

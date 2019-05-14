@@ -21,7 +21,11 @@
   ],
   '@timing': {
     'expires_time': 'future'
-  }
+  },
+  'external_links': [
+    {'text': 'Some external link', 'src': 'https://www.externalwebsite.com/'},
+    {'src': 'https://www.directlinkwithouttext.com/'},
+  ]
 }
 ```
 - Stringify above JSON and call libvcx method connection_send_message
@@ -59,6 +63,7 @@ await connection.send_message(JSON.stringify(aboveJson), "Question", question_te
 - `@id` and `@type` are required
 - Other properties are not required
 - If `question_detail` or `question_text` or both are passed, they have to be of string type. Otherwise app won't show them on UI
+- If `external_links` is specified, then it should be a JSON array of objects with type `{ text?: string, src: string}`. In this object `text` is optional. As of now we support only those links which mobile OS can directly open. So, links that start with other app's url schemes such as `tel:`, `instagram://`, etc. won't be opened. Property `src` should have valid scheme for it to open in browser. For example: `www.google.com` is an invalid link, `https://www.google.com` is correct link since it specifies the scheme of link.
 - Here are different validation error with codes that could occur on UI
 ```js
 
@@ -91,6 +96,21 @@ ERROR_RESPONSE_NOT_PROPERLY_FORMATTED = {
 ERROR_RESPONSE_NOT_UNIQUE_NONCE = {
   code: 'CM-QUE-009',
   message: 'Not every response in valid_responses array has unique nonce',
+}
+
+ERROR_EXTERNAL_LINKS_NOT_ARRAY = {
+  code: 'CM-QUE-010',
+  message: 'property "external_links" should be an array of object type { text?:string, src:string }'
+}
+
+ERROR_EXTERNAL_LINKS_NOT_PROPERLY_FORMATTED = {
+  code: 'CM-QUE-011',
+  message: 'One or more link object inside "external_links" array is invalid. Link object should be of format { text?:string, src:string }, where "text" property is optional. However, if "text" property is defined, then it should be a string with less than or equal to 1000 characters. "src" property should be a string and is not optional.'
+}
+
+ERROR_TOO_MANY_EXTERNAL_LINKS = {
+  code: 'CM-QUE-012',
+  message: '"external_links" array should not have more than 1000 link objects.'
 }
 ```
 
@@ -178,7 +198,11 @@ async def ent_create_connection():
             {'text': 'No, that is not me!', 'nonce': '<unique_identifier_b+2018-12-13T17:00:00+0000'}],
         '@timing': {
             'expires_time': future
-        }
+        },
+        'external_links': [
+            {'text': 'Some external link', 'src': 'https://www.externalwebsite.com/'},
+            {'src': 'https://www.directlinkwithouttext.com/'},
+        ]
     }
 
     # Init the payment plug-in

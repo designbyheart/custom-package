@@ -88,6 +88,7 @@ export type QuestionPayload = {
   from_did: string,
   forDID: string,
   remotePairwiseDID?: string,
+  externalLinks: Array<ExternalLink>,
 }
 
 export type QuestionRequest = {
@@ -97,6 +98,12 @@ export type QuestionRequest = {
   question_detail: string,
   valid_responses: Array<QuestionResponse>,
   '@timing': { expires_time: string },
+  external_links?: Array<ExternalLink>,
+}
+
+export type ExternalLink = {
+  text?: string,
+  src: string,
 }
 
 export const QUESTION_STATUS = {
@@ -199,6 +206,24 @@ export const ERROR_RESPONSE_NOT_PROPERLY_FORMATTED = {
 export const ERROR_RESPONSE_NOT_UNIQUE_NONCE = {
   code: 'CM-QUE-009',
   message: 'Not every response in valid_responses array has unique nonce',
+}
+
+export const ERROR_EXTERNAL_LINKS_NOT_ARRAY = {
+  code: 'CM-QUE-010',
+  message:
+    'property "external_links" should be an array of object type { text?:string, src:string }',
+}
+
+export const ERROR_EXTERNAL_LINKS_NOT_PROPERLY_FORMATTED = {
+  code: 'CM-QUE-011',
+  message:
+    'One or more link object inside "external_links" array is invalid. Link object should be of format { text?:string, src:string }, where "text" property is optional. However, if "text" property is defined, then it should be a string with less than or equal to 1000 characters. "src" property should be a string and is not optional.',
+}
+
+export const ERROR_TOO_MANY_EXTERNAL_LINKS = {
+  code: 'CM-QUE-012',
+  message:
+    '"external_links" array should not have more than 1000 link objects.',
 }
 
 export const QUESTION_ANSWER_PROTOCOL1 =
