@@ -79,8 +79,8 @@ export class QuestionExternalLink extends PureComponent<
 
   onLinkClick = () => {
     Alert.alert(
-      `Proceed to external link?`,
-      'Contents of this link are not controlled by ConnectMe. The link you are about to access is not covered by privacy policy and license agreement of ConnectMe. Click OK to proceed.',
+      `You are about to leave Connect.Me`,
+      'The contents of this link are not controlled by Connect.Me and are not covered by its Privacy Policy and End User License Agreement. Proceed?',
       [alertCancel, { text: 'OK', onPress: this.openLink }]
     )
   }
