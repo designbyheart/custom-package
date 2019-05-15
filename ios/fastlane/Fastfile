@@ -112,6 +112,9 @@ platform :ios do
 
     UI.user_error!("You can run this lane only on CI!") unless Helper.is_ci?
 
+    remote_branch = git_branch
+    remote_branch = remote_branch.split('/').last
+
     reset_git_repo(force: true)
     cocoapods(
       try_repo_update_on_error: true,
