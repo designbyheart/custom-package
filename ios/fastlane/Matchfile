@@ -1,5 +1,4 @@
-
-git_url "git@github.com:evernym/connectme-callcenter-certs.git"
+git_url "git@gitlab.corp.evernym.com:dev/connectme/connectme-callcenter-certs.git"
 
 type "development"
 
