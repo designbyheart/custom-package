@@ -65,7 +65,7 @@ build-master:
     FASTLANE_COMMAND: 'bundle exec fastlane cd --disable_runner_upgrades --verbose'
   only:
     refs:
-      - master
+      - master@dev/connectme/ConnectMe
 
 build-stage:
   extends: .build
@@ -77,7 +77,7 @@ build-stage:
     FASTLANE_COMMAND: 'bundle exec fastlane cd --disable_runner_upgrades --verbose'
   only:
     refs:
-      - stage
+      - stage@dev/connectme/ConnectMe
 
 build-stable:
   extends: .build
@@ -88,4 +88,4 @@ build-stable:
     FASTLANE_COMMAND: 'bundle exec fastlane cd --disable_runner_upgrades --verbose'
   only:
     refs:
-      - stable
+      - stable@dev/connectme/ConnectMe
