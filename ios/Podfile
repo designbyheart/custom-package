@@ -2,7 +2,7 @@
 
 platform :ios, '10.2'
 source 'https://github.com/CocoaPods/Specs.git'
-source 'git@github.com:evernym/indy-sdk.git'
+source 'https://github.com/evernym/indy-sdk.git'
 
 def vcx_version_for_debug_or_release
     if ENV['CONNECTME_DEBUG'] == "true"

@@ -14,7 +14,7 @@
     "test:e2e:build": "detox build",
     "test:e2e:android": "detox build --configuration android.emu.debug && detox test --configuration android.emu.debug",
     "pod:dev:install": "cd ios && CONNECTME_DEBUG=true pod install",
-    "pod:install": "cd ios && pod install"
+    "pod:install": "cd ios && pod setup && pod install"
   },
   "lint-staged": {
     "*.js": [

@@ -26,7 +26,7 @@ OVERRIDE_ASSETS = $(shell find assets/override -type d 2> /dev/null) $(shell fin
 ifeq ($(OS), Darwin)
 ifdef BUNDLE
 	@echo Getting Cocoapods dependencies;
-	@cd ios && bundle exec pod install;
+	@cd ios && bundle install; bundle exec pod install;
 else
 	@echo "Cocoapods is not installed https://cocoapods.org/"
 	@exit 1
@@ -61,7 +61,6 @@ clean: ## Cleans dependencies, previous builds and temp files
 	@rm -rf ios/Pods
 	@rm -rf android/app/build
 	@echo Cleanup finished
-
 cleancache: ## Cleans the npm packaging cache
 	@echo Cleaning cache started - Use Ctrl+c to exit when you see \'Loading dependency graph, done\'
 	@watchman watch-del-all
@@ -69,7 +68,7 @@ cleancache: ## Cleans the npm packaging cache
 	@rm -rf ${TMPDIR}/metro-bundler-cache-*
 	@npm cache verify
 	@yarn install --pure-lockfile
-	@npm start -- --reset-cache
+	@nohup npm start -- --reset-cache &
 
 post-install:
 	@./node_modules/.bin/remotedev-debugger --hostname localhost --port 5678 --injectserver

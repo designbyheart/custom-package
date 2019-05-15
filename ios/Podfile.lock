@@ -42,7 +42,7 @@ DEPENDENCIES:
   - vcx (= 0.0.103)
 
 SPEC REPOS:
-  "git@github.com:evernym/indy-sdk.git":
+  https://github.com/evernym/indy-sdk.git:
     - vcx
   https://github.com/cocoapods/specs.git:
     - apptentive-ios
