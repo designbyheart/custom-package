@@ -23,6 +23,9 @@ yarn-test:
     - macos
     - mojave
     - xcode10-1
+  artifacts:
+    paths:
+      - ios/ConnectMe.ipa
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /[[Cc][Ii]\s[Ss][Kk][Ii][Pp]]/

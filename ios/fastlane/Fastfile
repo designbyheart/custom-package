@@ -84,7 +84,6 @@ platform :ios do
 
     cocoapods(
       try_repo_update_on_error: true,
-      repo_update: true,
     )
     version_number = project_version_bump
 
@@ -118,7 +117,6 @@ platform :ios do
     reset_git_repo(force: true)
     cocoapods(
       try_repo_update_on_error: true,
-      repo_update: true,
     )
 
     version_number = project_version_bump
