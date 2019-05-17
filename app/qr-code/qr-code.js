@@ -291,7 +291,7 @@ export class QRCodeScannerScreen extends PureComponent<
   }
 
   componentDidMount() {
-    if (this.props.currentScreen === qrCodeScannerTabRoute) {
+    if (this.props.navigation.isFocused()) {
       // when this component is mounted first time, `cwrp` will not be called
       // so for the first time mount as well we need to check camera permission
       this.checkCameraAuthorization()

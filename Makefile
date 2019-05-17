@@ -52,7 +52,7 @@ check-style: .yarninstall ## Runs eslint
 
 clean: ## Cleans dependencies, previous builds and temp files
 	@echo Cleaning started
-	@yarn cache clean
+	@yarn cache clean --force
 	@rm -rf node_modules
 	@rm -f .yarninstall
 	@rm -f .podinstall
@@ -62,13 +62,17 @@ clean: ## Cleans dependencies, previous builds and temp files
 	@rm -rf android/app/build
 	@echo Cleanup finished
 cleancache: ## Cleans the npm packaging cache
-	@echo Cleaning cache started - Use Ctrl+c to exit when you see \'Loading dependency graph, done\'
 	@watchman watch-del-all
 	@rm -rf ${TMPDIR}/react-*
 	@rm -rf ${TMPDIR}/metro-bundler-cache-*
 	@npm cache verify
 	@yarn install --pure-lockfile
-	@nohup npm start -- --reset-cache &
+	@npm cache clean --force
+	@npm start -- --reset-cache > npm.start.reset-cache.log 2>&1 &
+	@sleep 6
+	@kill -9 `lsof -t -i :8081`
+	@rm npm.start.reset-cache.log
+	@echo "The npm reset-cache command was executed!"
 
 post-install:
 	@./node_modules/.bin/remotedev-debugger --hostname localhost --port 5678 --injectserver
