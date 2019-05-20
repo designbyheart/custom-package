@@ -1,0 +1,369 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NewConnectionInstructions /> should match snapshot 1`] = `
+<View
+  style={
+    Object {
+      "height": "100%",
+      "width": "100%",
+    }
+  }
+>
+  <Image
+    source={1}
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "height": "100%",
+          "width": "100%",
+        },
+        undefined,
+      ]
+    }
+  />
+  <View
+    center={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+        "marginTop": 64,
+      }
+    }
+  >
+    <View
+      center={true}
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source={1}
+        style={
+          Object {
+            "height": 90,
+          }
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "fontSize": 23,
+            },
+            Object {
+              "fontFamily": "Lato",
+            },
+            Object {
+              "backgroundColor": "#333333",
+              "color": "#ffffff",
+            },
+            Object {
+              "fontWeight": "bold",
+            },
+            null,
+            Object {
+              "backgroundColor": "transparent",
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            Object {
+              "color": "#EB9B2D",
+              "marginVertical": 5,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        You now have a digital wallet!
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "fontSize": 17,
+            },
+            Object {
+              "fontFamily": "Lato",
+            },
+            Object {
+              "backgroundColor": "#333333",
+              "color": "#ffffff",
+            },
+            Object {
+              "fontWeight": "bold",
+            },
+            null,
+            Object {
+              "backgroundColor": "transparent",
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            Object {
+              "color": "#505050",
+              "marginVertical": 5,
+            },
+          ]
+        }
+      >
+        Want to see how it works?
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "fontSize": 15,
+            },
+            Object {
+              "fontFamily": "Lato",
+            },
+            Object {
+              "backgroundColor": "#333333",
+              "color": "#ffffff",
+            },
+            null,
+            null,
+            Object {
+              "backgroundColor": "transparent",
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            Object {
+              "color": "#505050",
+              "marginHorizontal": "5%",
+              "marginVertical": 5,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        We have setup an optional tutorial site for you to go through using this Connect.Me app. To start this process, go to
+         
+        <Text
+          accessible={true}
+          allowFontScaling={false}
+          ellipsizeMode="tail"
+          onPress={[Function]}
+          style={
+            Array [
+              Object {
+                "fontSize": 15,
+              },
+              Object {
+                "fontFamily": "Lato",
+              },
+              Object {
+                "backgroundColor": "#333333",
+                "color": "#ffffff",
+              },
+              null,
+              null,
+              Object {
+                "backgroundColor": "transparent",
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              Object {
+                "color": "#EB9B2D",
+              },
+            ]
+          }
+        >
+          try.connect.me
+        </Text>
+         
+        in a desktop browser, or click the button below!
+      </Text>
+      <View
+        center={true}
+        style={
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+            "marginTop": "2%",
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "marginLeft": 15,
+                "marginRight": 15,
+              },
+              undefined,
+              Object {
+                "marginLeft": 0,
+                "marginRight": 0,
+              },
+              undefined,
+            ]
+          }
+        >
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            hasTVPreferredFocus={undefined}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                Array [
+                  Object {
+                    "backgroundColor": "#86B93B",
+                    "borderRadius": 5,
+                    "marginHorizontal": "6%",
+                  },
+                ],
+              ]
+            }
+            testID={undefined}
+            tvParallaxProperties={undefined}
+          >
+            <View
+              pointerEvents="box-only"
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "#9E9E9E",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "padding": 19,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Object {
+                    "backgroundColor": "#ffffff",
+                  },
+                  undefined,
+                  Object {
+                    "padding": 12,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    null,
+                    Object {
+                      "backgroundColor": "#86B93B",
+                      "borderRadius": 5,
+                      "marginHorizontal": "6%",
+                    },
+                  ],
+                  undefined,
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={
+                  Array [
+                    Object {},
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Array [
+                      Object {
+                        "color": "white",
+                        "fontSize": 16,
+                      },
+                      Object {
+                        "color": "#ffffff",
+                      },
+                      Object {
+                        "fontSize": 14,
+                      },
+                      Object {
+                        "fontSize": 18,
+                      },
+                      undefined,
+                      Object {
+                        "fontWeight": "600",
+                      },
+                      undefined,
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                Start Tutorial
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
