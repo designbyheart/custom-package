@@ -59,12 +59,14 @@ import { getUnseenMessages } from '../store/store-selector'
 import { scale } from 'react-native-size-matters'
 import { size } from './../components/icon'
 import { externalStyles } from './styles'
+import { NewConnectionInstructions } from './new-connection-instructions'
 
 const { width, height } = Dimensions.get('window')
 export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
   static navigationOptions = ({ navigation }) => ({
     header: <PrimaryHeader headline="Connections" />,
   })
+
   componentDidUpdate(prevProps: HomeProps) {
     const noUnSeenMessages =
       Object.keys(prevProps.unSeenMessages).length &&
@@ -73,7 +75,9 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       firebase.notifications().setBadge(0)
     }
   }
+
   keyExtractor = (item: Object) => item.identifier
+
   onCardPress = (
     senderName: string,
     image: ?string,
@@ -87,6 +91,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       identifier,
     })
   }
+
   renderItem = ({ item }: { item: Object }) => {
     const {
       senderName,
@@ -118,6 +123,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       />
     )
   }
+
   render() {
     const {
       container,
@@ -198,8 +204,12 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
         let aTimestamp = new Date(a.date).getTime()
         return bTimestamp - aTimestamp
       })
+
+    const hasNoConnection = hydrated ? connections.length === 0 : false
+
     return (
       <View style={container}>
+        {hasNoConnection && <NewConnectionInstructions />}
         <FlatList
           keyExtractor={this.keyExtractor}
           style={flatListContainer}
@@ -214,6 +224,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
     )
   }
 }
+
 const mapStateToProps = (state: Store) => {
   // when ever there is change in claimOffer state and proof request state
   // getUnseenMessages selector will return updated data
@@ -224,11 +235,13 @@ const mapStateToProps = (state: Store) => {
     history: state.history,
   }
 }
+
 export default createStackNavigator({
   [homeRoute]: {
     screen: connect(mapStateToProps)(DashboardScreen),
   },
 })
+
 export const tokenAmountSize = (tokenAmountLength: number): number => {
   // this resizing logic is different than wallet tabs header
   switch (true) {

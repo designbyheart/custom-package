@@ -157,13 +157,15 @@ export class QRCodeScannerScreen extends PureComponent<
     // and show Snack bar stating that connection already exist
     // otherwise redirect to invitation screen
     const { publicDID = '' } = invitation.payload.senderDetail
-    const { senderDID } = invitation.payload
     const connectionAlreadyExist = publicDID in this.props.publicDIDs
 
     if (connectionAlreadyExist) {
-      const { senderName, identifier, logoUrl: image } = this.props.publicDIDs[
-        publicDID
-      ]
+      const {
+        senderDID,
+        senderName,
+        identifier,
+        logoUrl: image,
+      } = this.props.publicDIDs[publicDID]
       const params = {
         senderDID,
         senderName,

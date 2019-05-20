@@ -42,8 +42,6 @@ DEPENDENCIES:
   - vcx (= 0.0.103)
 
 SPEC REPOS:
-  https://github.com/evernym/indy-sdk.git:
-    - vcx
   https://github.com/cocoapods/specs.git:
     - apptentive-ios
     - Firebase
@@ -55,6 +53,8 @@ SPEC REPOS:
     - nanopb
     - Onfido
     - Protobuf
+  https://github.com/evernym/indy-sdk.git:
+    - vcx
 
 SPEC CHECKSUMS:
   apptentive-ios: a38ab3b2244f7294a06dd08e56afb8018d414bf4
@@ -69,6 +69,6 @@ SPEC CHECKSUMS:
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   vcx: 16ae5ec567a3197d86a486d32e062f38700b2137
 
-PODFILE CHECKSUM: 59747ce52c2073ddb664c5a532cc6efae5c04340
+PODFILE CHECKSUM: 482c8089375dd964489cb357ec5516bf2dbb3469
 
 COCOAPODS: 1.5.3

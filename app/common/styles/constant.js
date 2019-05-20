@@ -293,3 +293,10 @@ export const isBiggerThanShortDevice = height > SHORT_DEVICE
 export const isBiggerThanVeryShortDevice = height > VERY_SHORT_DEVICE
 export const isIphoneX = Platform.OS === 'ios' && height === 812
 export const deviceHeight = height
+
+export const verticalBreakpoint = {
+  extraSmall: height <= 550,
+  small: height <= VERY_SHORT_DEVICE,
+  medium: height < MEDIUM_DEVICE && height > VERY_SHORT_DEVICE,
+  large: height >= MEDIUM_DEVICE,
+}
