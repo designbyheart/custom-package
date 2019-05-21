@@ -44,7 +44,6 @@ platform :ios do
     )
 
     remote_branch = git_branch
-    remote_branch = remote_branch.split('/').last
 
     if remote_branch == "master"
       hockey(api_token: ENV["QA_HOCKEYAPP_TOKEN"], bypass_cdn: true)
@@ -80,7 +79,6 @@ platform :ios do
     reset_git_repo(force: true)
 
     remote_branch = git_branch
-    remote_branch = remote_branch.split('/').last
 
     cocoapods(
       try_repo_update_on_error: true,
@@ -112,7 +110,6 @@ platform :ios do
     UI.user_error!("You can run this lane only on CI!") unless Helper.is_ci?
 
     remote_branch = git_branch
-    remote_branch = remote_branch.split('/').last
 
     reset_git_repo(force: true)
     cocoapods(
@@ -223,12 +220,16 @@ platform :ios do
       include: %w[ android/app/build.gradle ]
     )
 
-    push_to_git_remote(
-      remote: "origin",
-      local_branch: "HEAD",
-      remote_branch: "#{options[:remote_branch]}",
-      force: true,
-      tags: false
-    )
+    if ENV["CI_PIPELINE_SOURCE"] == "merge_request"
+      UI.important("Build is from Merge Request. Skipping push to origin")
+    else
+      push_to_git_remote(
+        remote: "origin",
+        local_branch: "HEAD",
+        remote_branch: "#{options[:remote_branch]}",
+        force: true,
+        tags: false
+      )
+    end
   end
 end
