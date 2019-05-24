@@ -1,6 +1,7 @@
 ---
 stages:
   - test
+  - sync
   - build
 
 yarn-test:
@@ -16,6 +17,27 @@ yarn-test:
     - yarn install
     - yarn lint
     - yarn test
+
+# This stage is temporary until the android builds are converted to run internally
+sync:
+  stage: sync
+  image: gitlab.corp.evernym.com:4567/dev/containers/ssh-git:latest
+  tags:
+    - docker
+  only:
+    refs:
+      - master@dev/connectme/ConnectMe
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /[[Cc][Ii]\s[Ss][Kk][Ii][Pp]]/
+  script:
+    - mkdir -p ~/.ssh
+    - ssh-keyscan -4H github.com > ~/.ssh/known_hosts
+    - eval $(ssh-agent -s)
+    - echo "$GITHUB_DEPLOY_KEY_TEST" | tr -d '\r' | ssh-add - > /dev/null
+    - git checkout master && git pull origin master
+    - git remote add github git@github.com:evernym/ConnectMe-Synctest.git
+    - git push github master
 
 .build:
   stage: build
@@ -92,5 +114,3 @@ build-stable:
   only:
     refs:
       - stable@dev/connectme/ConnectMe
-
-#
