@@ -250,6 +250,16 @@ NativeModules.RNIndy = {
   updateMessages: jest.fn(),
 }
 
+NativeModules.I18nManager = {
+  localeIdentifier: 'en_US',
+  //localeIdentifier: jest.fn(), is there a way to make this dynamic?
+}
+NativeModules.SettingsManager = {
+  settings: {
+    AppleLocale: 'en_XX',
+  },
+}
+
 jest.mock('react-native-version-number', () => ({
   appVersion: '1.0',
   buildVersion: '500',
