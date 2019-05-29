@@ -36,7 +36,9 @@ export class NewConnectionInstructions extends PureComponent<{}> {
               source={require('../images/CredentialGraphic.png')}
               resizeMode="contain"
               style={
-                extraSmall ? styles.credentialSmallCard : styles.emptyStyle
+                extraSmall || small || medium
+                  ? styles.credentialSmallCard
+                  : styles.emptyStyle
               }
             />
             <CustomText transparentBg size="h3b" bold style={[styles.headline]}>
