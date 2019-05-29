@@ -33,13 +33,13 @@ PODS:
   - nanopb/encode (0.3.901)
   - Onfido (10.0.0)
   - Protobuf (3.6.1)
-  - vcx (0.0.103)
+  - vcx (0.0.107)
 
 DEPENDENCIES:
   - apptentive-ios (= 5.2.2)
   - Firebase/Messaging (= 4.8.0)
   - Onfido (= 10.0.0)
-  - vcx (= 0.0.103)
+  - vcx (= 0.0.107)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -67,8 +67,8 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Onfido: eb3bde6295f0dc6dd334b9eb01626d2bad5d3c1d
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
-  vcx: 16ae5ec567a3197d86a486d32e062f38700b2137
+  vcx: 3c0015b78d38d543434e2a8812045d1016bf4c0e
 
-PODFILE CHECKSUM: 482c8089375dd964489cb357ec5516bf2dbb3469
+PODFILE CHECKSUM: 6f7f1a2de5863026105d89f319973b682ab91b48
 
 COCOAPODS: 1.5.3
