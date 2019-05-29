@@ -45,7 +45,7 @@ if __name__ == '__main__':
         print("missing necessary parameters")
         print("expected: wallet name, path to log file, name of log file, verification key, and wallet key")
         print("If you are on a mac do...")
-        print("You MUST copy this script to the /Users/norm/forge/work/code/evernym/indy-sdk.evernym folder and run it from there or else it will not work")
+        print("You MUST copy this script to the /Users/norm/forge/work/code/evernym/indy-sdk.evernym/wrappers/python folder and run it from there or else it will not work")
         print("export DYLD_LIBRARY_PATH=[path_to_folder_containing_libindy.dylib]:${DYLD_LIBRARY_PATH}")
         print("ENV: export DYLD_LIBRARY_PATH=/Users/norm/.build_artifacts/libindy/master_6748627dcc42e9f3760411789f586d3c07b35138/target/x86_64-apple-darwin/release:${DYLD_LIBRARY_PATH}")
         print("Usage: python3 decrypt_logs.py LIBVCX_SDK_WALLET ~/Downloads kelly.testing.log.enc BS71ZbHNaN5XbPQ2Adg8wKvqL5xzKX2oFeNjTEvG1ho9 8dvfYSt5d1taSd6yJdpjq4emkwsPDDLYxkNFysFD2cZY")
