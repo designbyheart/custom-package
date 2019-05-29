@@ -1,13 +1,14 @@
 // @flow
-import { StyleSheet, Platform } from 'react-native'
-import {
-  isBiggerThanVeryShortDevice,
-  isBiggerThanShortDevice,
-} from '../../common/styles/constant'
+import { StyleSheet, Platform, PixelRatio } from 'react-native'
+// import { verticalBreakpoint } from '../../common/styles/constant'
 
-const containerHeight = isBiggerThanShortDevice
-  ? 120
-  : isBiggerThanVeryShortDevice ? 110 : 100
+// const { extraSmall, small, medium, large } = verticalBreakpoint
+
+// const containerHeight = large ? 120 : medium ? 100 : 90
+
+import { isBiggerThanVeryShortDevice } from '../../common/styles/constant'
+
+const containerHeight = isBiggerThanVeryShortDevice ? 100 : 90
 
 // original in icon{} and label{} marginTop was 73 and height was 120, thus the 47 to keep
 // subtracting 47 from containerHeight keeps it relative to what is was.
