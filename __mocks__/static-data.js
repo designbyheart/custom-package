@@ -11,7 +11,11 @@ import {
   NEW_CONNECTION_SUCCESS,
   saveNewConnection,
 } from '../app/store/connections-store'
-import { CLAIM_OFFER_ACCEPTED } from '../app/claim-offer/type-claim-offer'
+import {
+  CLAIM_OFFER_ACCEPTED,
+  CLAIM_OFFER_STATUS,
+  CLAIM_REQUEST_STATUS,
+} from '../app/claim-offer/type-claim-offer'
 import { invitationReceived } from '../app/invitation/invitation-store'
 import {
   claimOfferReceived,
@@ -47,6 +51,12 @@ import {
   onfidoProcessStatus,
   onfidoConnectionStatus,
 } from '../app/onfido/type-onfido'
+import { calendarFormat } from 'moment'
+import { STORAGE_STATUS } from '../app/common/type-common'
+import {
+  PROOF_REQUEST_STATUS,
+  PROOF_STATUS,
+} from '../app/proof-request/type-proof-request'
 
 // sadly, we can't export all variables in one line and use them in file as well
 // to use them in this file, we have to import them first
@@ -1011,6 +1021,101 @@ export function getStore(store?: Store) {
           onfidoDid: null,
           onfidoConnectionStatus: onfidoConnectionStatus.IDLE,
         },
+        history: {
+          data: {
+            senderDID3: connectionHistory['September 2017'],
+            senderDID4: connectionHistory['October 2017'],
+            senderDID5: connectionHistory['November 2017'],
+            senderDID6: connectionHistory['December 2017'],
+            senderDID7: connectionHistory['January 2017'],
+            senderDID8: connectionHistory['February 2017'],
+          },
+          isLoading: true,
+        },
+        claimOffer: {
+          vcxSerializedClaimOffers: {},
+          claimOfferUid: {
+            data: {
+              name: 'dataname',
+              revealedAttributes: [],
+              version: 'version',
+              claimDefinitionSchemaSequenceNumber: 34,
+            },
+            issuer: {
+              name: 'issuername',
+              did: 'adsfasdfadf',
+            },
+            uid: 'claimOfferUid',
+            status: CLAIM_OFFER_STATUS.RECEIVED,
+            remotePairwiseDID: 'claimOffer.remotePairwiseDID',
+            claimRequestStatus: CLAIM_REQUEST_STATUS.SENDING_CLAIM_REQUEST,
+          },
+        },
+        proofRequest: {
+          uidProofReceived: {
+            data: {
+              requestedAttributes: [],
+              version: 'proofRequestVersion',
+              name: 'proofRequestName',
+            },
+            uid: 'uidProofReceived',
+            status: PROOF_REQUEST_STATUS.RECEIVED,
+            remotePairwiseDID: 'remotePairwiseDID',
+            proofStatus: PROOF_STATUS.SEND_PROOF_SUCCESS,
+            requester: {
+              name: 'uidProofReceived.requester.name',
+            },
+            proofHandle: 1235890,
+            originalProofRequestData: {
+              version: 'asdf',
+              nonce: 'dsfsdf',
+              name: 'asdfasdf',
+              requested_attributes: {},
+            },
+          },
+          requester: {
+            uid: 'requesterUID',
+            status: PROOF_REQUEST_STATUS.RECEIVED,
+            remotePairwiseDID: 'remotePairwiseDID',
+            proofStatus: PROOF_STATUS.SEND_PROOF_SUCCESS,
+            requester: {
+              name: 'requester.name',
+            },
+            proofHandle: 12340987,
+            originalProofRequestData: {
+              version: 'asdf',
+              nonce: 'dsfsdf',
+              name: 'asdfasdf',
+              requested_attributes: {},
+            },
+            data: {
+              name: 'dataname',
+              version: 'dataversion',
+              requestedAttributes: [],
+            },
+          },
+        },
+        question: {
+          data: {},
+          storageStatus: STORAGE_STATUS.RESTORE_SUCCESS,
+        },
+        proof: {
+          uidProofReceived: {
+            proof: {
+              requested_proof: {
+                unrevealed_attrs: {},
+                self_attested_attrs: {},
+                revealed_attrs: {},
+                predicates: {},
+              },
+              proofs: {},
+              aggregated_proof: {
+                c_list: [],
+                c_hash: 'proofC_Hash',
+              },
+            },
+          },
+        },
       }
     },
     dispatch() {
@@ -1146,6 +1251,128 @@ export const connectionHistory = {
       status: 'INVITATION_RECEIVED',
       remoteDid: 'remoteDid',
       originalPayload: {},
+    },
+  ],
+  'October 2017': [
+    {
+      id: '1',
+      type: 'INVITATION',
+      icon: require('../app/images/linked.png'),
+      action: 'SHARED',
+      timestamp: '2017-09-06T00:00:00+05:30',
+      data: [
+        {
+          label: 'Evernym',
+          data: '2017-09-06T00:00:00+05:30',
+        },
+      ],
+      name: 'Enterprise name',
+      status: 'INVITATION_RECEIVED',
+      remoteDid: 'remoteDid',
+      originalPayload: {},
+    },
+  ],
+  'November 2017': [
+    {
+      id: '1',
+      type: 'INVITATION',
+      icon: require('../app/images/linked.png'),
+      action: 'PENDING',
+      timestamp: '2017-09-06T00:00:00+05:30',
+      data: [
+        {
+          label: 'Evernym',
+          data: '2017-09-06T00:00:00+05:30',
+        },
+      ],
+      name: 'Enterprise name',
+      status: 'INVITATION_RECEIVED',
+      remoteDid: 'remoteDid',
+      originalPayload: {},
+    },
+  ],
+  'December 2017': [
+    {
+      id: '1',
+      type: 'INVITATION',
+      icon: require('../app/images/linked.png'),
+      action: 'PROOF RECEIVED',
+      timestamp: '2017-09-06T00:00:00+05:30',
+      data: [
+        {
+          label: 'Evernym',
+          data: '2017-09-06T00:00:00+05:30',
+        },
+      ],
+      name: 'Enterprise name',
+      status: 'INVITATION_RECEIVED',
+      remoteDid: 'remoteDid',
+      originalPayload: {
+        payloadInfo: {
+          uid: 'uidProofReceived',
+        },
+        payload: {
+          requester: {
+            name: 'bob',
+          },
+        },
+      },
+    },
+  ],
+  'January 2017': [
+    {
+      id: '1',
+      type: 'INVITATION',
+      icon: require('../app/images/linked.png'),
+      action: 'RECEIVED',
+      timestamp: '2017-09-06T00:00:00+05:30',
+      data: [
+        {
+          label: 'Evernym',
+          data: '2017-09-06T00:00:00+05:30',
+        },
+      ],
+      name: 'Enterprise name',
+      status: 'INVITATION_RECEIVED',
+      remoteDid: 'remoteDid',
+      originalPayload: {
+        payloadInfo: {
+          uid: 'uidProofReceived',
+        },
+        payload: {
+          requester: {
+            name: 'bob',
+          },
+        },
+      },
+    },
+  ],
+  'February 2017': [
+    {
+      id: '1',
+      type: 'INVITATION',
+      icon: require('../app/images/linked.png'),
+      action: 'CLAIM OFFER RECEIVED',
+      timestamp: '2017-09-06T00:00:00+05:30',
+      data: [
+        {
+          label: 'Evernym',
+          data: '2017-09-06T00:00:00+05:30',
+        },
+      ],
+      name: 'Enterprise name',
+      status: 'INVITATION_RECEIVED',
+      remoteDid: 'remoteDid',
+      originalPayload: {
+        payloadInfo: {
+          uid: 'uidProofReceived',
+        },
+        payload: {
+          requester: {
+            name: 'bob',
+          },
+        },
+      },
     },
   ],
 }

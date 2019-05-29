@@ -3,13 +3,13 @@ import type {
   CustomError,
   ResetAction,
   NotificationPayload,
-} from '../common/type-common'
+} from '../../../common/type-common'
 import type {
   AdditionalDataPayload,
   ClaimProofNavigation,
   Attribute,
   NotificationPayloadInfo,
-} from '../push-notification/type-push-notification'
+} from '../../../push-notification/type-push-notification'
 
 export const CLAIM_OFFER_STATUS = {
   IDLE: 'IDLE',

@@ -25,7 +25,9 @@ import LockPinCodeSetupScreen from './lock/lock-pin-code-setup'
 import LockSetupSuccessScreen from './lock/lock-setup-success'
 import LockEnterFingerprintScreen from './lock/lock-enter-fingerprint'
 import ClaimOffer from './claim-offer/claim-offer'
+import ClaimOfferModal from './connection-details/components/claim-offer-modal'
 import ProofRequestScreen from './proof-request/proof-request'
+import ProofRequestModal from './connection-details/components/proof-request-modal'
 import InvitationScreen from './invitation/invitation'
 import ConnectionHistoryNavigator from './connection-history/connection-history-navigator'
 import SwitchEnvironmentScreen from './switch-environment/switch-environment'
@@ -39,6 +41,7 @@ import BackupComplete from './backup/backup-complete'
 import BackupErrorScreen from './backup/backup-error'
 import WalletTabs from './wallet/wallet-tabs'
 import { Icon, CustomView } from './components'
+import ConnectionHistNavigator from './connection-details/connection-details-navigator'
 import {
   splashScreenRoute,
   homeRoute,
@@ -53,10 +56,12 @@ import {
   lockSetupSuccessRoute,
   lockEnterFingerprintRoute,
   claimOfferRoute,
+  claimOfferNewRoute,
   homeTabRoute,
   settingsTabRoute,
   qrCodeScannerTabRoute,
   proofRequestRoute,
+  proofRequestNewRoute,
   invitationRoute,
   switchEnvironmentRoute,
   lockAuthorizationRoute,
@@ -79,6 +84,7 @@ import {
   credentialsTabRoute,
   discoverTabRoute,
   menuTabRoute,
+  connectionHistRoute,
 } from './common/'
 import { color, font } from './common/styles'
 import WalletTabSendDetails from './wallet/wallet-tab-send-details'
@@ -342,13 +348,16 @@ const CardStack = createStackNavigator(
 const ConnectMeAppNavigator = createStackNavigator(
   {
     CardStack: { screen: CardStack },
-    [claimOfferRoute]: { screen: ClaimOffer },
+    [claimOfferRoute]: { screen: ClaimOfferModal },
     [lockAuthorizationRoute]: { screen: LockAuthorization },
     [proofRequestRoute]: {
-      screen: ProofRequestScreen,
+      screen: ProofRequestModal,
     },
     [connectionHistoryRoute]: {
       screen: ConnectionHistoryNavigator,
+    },
+    [connectionHistRoute]: {
+      screen: ConnectionHistNavigator,
     },
     [walletRoute]: { screen: Wallet },
     [walletTabSendDetailsRoute]: {

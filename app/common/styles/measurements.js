@@ -8,16 +8,21 @@ const WINDOW_HEIGHT = windowSize.height
 
 const bottomNavBarHeight = 50
 let bottomBlurNavBarHeight
+let connectionDetailsNav
 
 switch (WINDOW_HEIGHT) {
   case iPhoneXHeight:
     bottomBlurNavBarHeight = 83
+    connectionDetailsNav = 175
     break
   default:
     bottomBlurNavBarHeight = 49
+    connectionDetailsNav = 175
 }
 
 export const measurements = {
+  WINDOW_HEIGHT,
   bottomNavBarHeight,
   bottomBlurNavBarHeight,
+  connectionDetailsNav,
 }

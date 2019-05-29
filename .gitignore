@@ -81,3 +81,5 @@ android/app/src/main/assets/index.android.bundle.meta
 
 # Bitrise secret ignore
 .bitrise.secrets.yml
+
+ios/ConnectMe/RNbundle
