@@ -1,5 +1,6 @@
 // @flow
 import 'react-native'
+import { Platform } from 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
@@ -184,6 +185,9 @@ describe('user settings screen', () => {
   })
 
   it('should navigate to onfido screen', () => {
+    // have NativeModules.I18nManager.localeIdentifier(android) set to 'en_US'
+    // in setup.js which is valid location and onfido should navigate
+    Platform.OS = 'android'
     const { props } = setup()
     const { navigation } = props
     const wrapper = renderer.create(
@@ -194,6 +198,22 @@ describe('user settings screen', () => {
     const componentInstance = wrapper.root.findByType(Settings).instance
     componentInstance.openOnfido()
     expect(navigation.navigate).toHaveBeenCalledWith(onfidoRoute, {})
+  })
+
+  it('should not navigate to onfido screen', () => {
+    // have NativeModules.SettingsManager.settings.AppleLocale(ios) set to 'en_XX'
+    // in setup.js which is NOT a valid location and onfido should NOT navigate
+    Platform.OS = 'ios'
+    const { props } = setup()
+    const { navigation } = props
+    const wrapper = renderer.create(
+      <Provider store={store}>
+        <Settings {...props} navigation={navigation} />
+      </Provider>
+    )
+    const componentInstance = wrapper.root.findByType(Settings).instance
+    componentInstance.openOnfido()
+    expect(navigation.navigate).not.toBeCalled()
   })
 
   it('should invoke Apptentive message center', () => {

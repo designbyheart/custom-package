@@ -1,9 +1,11 @@
 // @flow
 import React, { PureComponent } from 'react'
 import {
+  Alert,
   Text,
   Switch,
   StyleSheet,
+  NativeModules,
   Platform,
   ScrollView,
   FlatList,
@@ -60,7 +62,6 @@ import {
   ABOUT_APP_TEST_ID,
   ONFIDO_TEST_ID,
 } from './settings-constant'
-
 import type { Store } from '../store/type-store'
 import type { SettingsProps, SettingsState } from './type-settings'
 import { tertiaryHeaderStyles } from '../components/layout/header-styles'
@@ -207,7 +208,25 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   }
 
   openOnfido = () => {
-    this.props.navigation.navigate(onfidoRoute, {})
+    let localeInfo = ''
+    if (Platform.OS === 'android') {
+      localeInfo = NativeModules.I18nManager.localeIdentifier
+    } else {
+      localeInfo = NativeModules.SettingsManager.settings.AppleLocale
+    }
+    const countryCodde = localeInfo.split('_')[1]
+    if (['US', 'GB', 'CA'].includes(countryCodde)) {
+      this.props.navigation.navigate(onfidoRoute, {})
+    } else {
+      Alert.alert(
+        'Coming Soon',
+        'The Onfido digital credential feature is not yet available in your region',
+        [{ text: 'OK' }],
+        {
+          cancelable: false,
+        }
+      )
+    }
   }
 
   openFeedback = () => {

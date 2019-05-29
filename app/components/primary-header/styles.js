@@ -1,10 +1,5 @@
 // @flow
 import { StyleSheet, Platform, PixelRatio } from 'react-native'
-// import { verticalBreakpoint } from '../../common/styles/constant'
-
-// const { extraSmall, small, medium, large } = verticalBreakpoint
-
-// const containerHeight = large ? 120 : medium ? 100 : 90
 
 import { isBiggerThanVeryShortDevice } from '../../common/styles/constant'
 
