@@ -66,6 +66,8 @@ sync:
     - cd ios
     - bundle install
     - ${FASTLANE_COMMAND}
+  after_script:
+    - cat ./ios/react-native-xcode.sh.log
 
 build-merge-request:
   extends: .build

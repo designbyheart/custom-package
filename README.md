@@ -145,4 +145,4 @@ try to re-enable The MacBook Pro keyboard but if it still fails then use this wo
 
 - *Problem*: `third-party/glog-0.3.4/src/base/mutex.h 'config.h' file not found`. *Solution*: https://github.com/facebook/react-native/issues/16097. Basically from the ConnectMe toplevel source code directory do 1) cd node_modules/react-native/third-party/glog-0.3.4/ && ../../scripts/ios-configure-glog.sh
 
-trigger build 1
+trigger build 2

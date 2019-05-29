@@ -106,6 +106,7 @@ Object {
   },
   "history": Object {
     "data": "****",
+    "isLoading": true,
   },
   "ledger": Object {
     "fees": Object {
@@ -139,6 +140,7 @@ Object {
   "proofRequest": "****",
   "question": Object {
     "data": "****",
+    "storageStatus": "RESTORE_SUCCESS",
   },
   "restore": Object {
     "error": null,
