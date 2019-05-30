@@ -83,3 +83,4 @@ android/app/src/main/assets/index.android.bundle.meta
 .bitrise.secrets.yml
 
 ios/ConnectMe/RNbundle
+ios/react-native-xcode.sh.log
