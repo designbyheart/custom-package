@@ -144,9 +144,16 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
                 senderName,
                 identifier,
                 logoUrl: image,
+                senderDID: existingConnectionSenderDID,
               } = this.props.publicDIDs[publicDID]
               params = {
-                senderDID,
+                // if we already have a connection, then we need to use
+                // existing connection senderDID and not the senderDID
+                // that comes from payload, because only in new invitation
+                // only publicDID would be common, and senderDID could be different
+                // so if we take senderDID from new invitation, then we can't
+                // redirect user to connection history screen
+                senderDID: existingConnectionSenderDID,
                 senderName,
                 image,
                 identifier,
