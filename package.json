@@ -6,8 +6,10 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "lint": "glow && eslint app",
-    "precommit": "lint-staged",
+    "precommit": "yarn run pod:install && lint-staged",
     "prepush": "npm test && npm run lint",
+    "postcheckout": "yarnhook",
+    "postmerge": "yarnhook",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios",
     "coverage": "npm test -- --coverage",
     "test:e2e": "detox test -c ios.sim.release",
@@ -20,6 +22,9 @@
   "lint-staged": {
     "*.js": [
       "prettier --single-quote --no-semi --trailing-comma es5 --write \"{app,__{tests,mocks}__}/**/*.js\"",
+      "git add"
+    ],
+    "Podfile.lock": [
       "git add"
     ]
   },
@@ -62,6 +67,7 @@
     "react-native-pbkdf2": "https://github.com/quan-to/react-native-pbkdf2",
     "react-native-permissions": "1.1.1",
     "react-native-randombytes": "^3.2.0",
+    "react-native-reanimated": "^1.0.1",
     "react-native-sensitive-info": "5.2.0",
     "react-native-shake": "^3.2.4",
     "react-native-share": "^1.0.27",
@@ -113,7 +119,8 @@
     "reactotron-redux": "1.13.0",
     "redux-saga-test-plan": "^3.6.0",
     "remote-redux-devtools": "^0.5.12",
-    "remotedev-rn-debugger": "0.8.3"
+    "remotedev-rn-debugger": "0.8.3",
+    "yarnhook": "^0.4.0"
   },
   "rnpm": {
     "assets": [

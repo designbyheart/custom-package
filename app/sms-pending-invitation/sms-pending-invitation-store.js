@@ -43,6 +43,7 @@ import {
 import { RESET } from '../common/type-common'
 import { captureError } from '../services/error/error-handler'
 import { isValidInvitationUrl } from '../components/qr-scanner/qr-invitation-url-validator'
+import { schemaValidator } from '../services/schema-validator'
 
 const initialState = {}
 
@@ -175,6 +176,15 @@ export function* callSmsPendingInvitationRequest(
       url: invitationLink.url,
     })
 
+    if (
+      !schemaValidator.validate(
+        smsInvitationExpectedSchema,
+        pendingInvitationPayload
+      )
+    ) {
+      throw new Error('Invitation payload object format is not as expected')
+    }
+
     yield put(
       invitationReceived({
         payload: convertSmsPayloadToInvitation(pendingInvitationPayload),
@@ -193,6 +203,35 @@ export function* callSmsPendingInvitationRequest(
     captureError(e)
     yield put(smsPendingInvitationFail(smsToken, error))
   }
+}
+
+export const smsInvitationExpectedSchema = {
+  type: 'object',
+  properties: {
+    senderDetail: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        agentKeyDlgProof: { type: 'object' },
+        DID: { type: 'string' },
+        logoUrl: { type: 'string' },
+        verKey: { type: 'string' },
+        publicDID: { type: 'string' },
+      },
+      required: ['DID', 'verKey', 'agentKeyDlgProof'],
+    },
+    senderAgencyDetail: {
+      type: 'object',
+      properties: {
+        DID: { type: 'string' },
+        verKey: { type: 'string' },
+        endpoint: { type: 'string' },
+      },
+      required: ['DID', 'verKey', 'endpoint'],
+    },
+    targetName: { type: 'string' },
+  },
+  required: ['senderDetail', 'senderAgencyDetail'],
 }
 
 function* watchSmsPendingInvitationRequest(): any {

@@ -535,6 +535,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNGestureHandler;
 		};
+		DD1828AF22A06A6F00D9C233 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD18287122A06A6E00D9C233 /* RNReanimated.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNReanimated;
+		};
 		DD268A3A1F01C06500EAE9A0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AEB54E1DD05B44129DEDADC0 /* RNBranch.xcodeproj */;
@@ -748,6 +755,7 @@
 		D5195723B48F485BA8835F82 /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = "<group>"; };
 		DA7BA45366374CBDAB9927BD /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		DD15A6A52272535A00B42F03 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
+		DD18287122A06A6E00D9C233 /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
 		DD50AF6061694976ADE6B034 /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
 		DD5AFE8122674634008ECFB4 /* Lottie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lottie.xcodeproj; path = "../node_modules/lottie-ios/Lottie.xcodeproj"; sourceTree = "<group>"; };
 		DD5AFED222674651008ECFB4 /* LottieReactNative.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LottieReactNative.xcodeproj; path = "../node_modules/lottie-react-native/src/ios/LottieReactNative.xcodeproj"; sourceTree = "<group>"; };
@@ -1100,6 +1108,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				DD18287122A06A6E00D9C233 /* RNReanimated.xcodeproj */,
 				DDA099A62281B55F003CB2B9 /* RNSnackbar.xcodeproj */,
 				DD15A6A52272535A00B42F03 /* RNGestureHandler.xcodeproj */,
 				DD5AFED222674651008ECFB4 /* LottieReactNative.xcodeproj */,
@@ -1352,6 +1361,14 @@
 			isa = PBXGroup;
 			children = (
 				DD15A6DE2272535A00B42F03 /* libRNGestureHandler.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DD18287222A06A6E00D9C233 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DD1828B022A06A6F00D9C233 /* libRNReanimated.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1742,6 +1759,10 @@
 				{
 					ProductGroup = 8E8B329E20DC487500788CD4 /* Products */;
 					ProjectRef = DD50AF6061694976ADE6B034 /* RNRandomBytes.xcodeproj */;
+				},
+				{
+					ProductGroup = DD18287222A06A6E00D9C233 /* Products */;
+					ProjectRef = DD18287122A06A6E00D9C233 /* RNReanimated.xcodeproj */;
 				},
 				{
 					ProductGroup = 27C75C681EBA334C0072036E /* Products */;
@@ -2199,6 +2220,13 @@
 			fileType = archive.ar;
 			path = libRNGestureHandler.a;
 			remoteRef = DD15A6DD2272535A00B42F03 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DD1828B022A06A6F00D9C233 /* libRNReanimated.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNReanimated.a;
+			remoteRef = DD1828AF22A06A6F00D9C233 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		DD268A3B1F01C06500EAE9A0 /* libreact-native-branch.a */ = {
