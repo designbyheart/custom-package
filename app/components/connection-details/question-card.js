@@ -40,6 +40,7 @@ class QuestionCard extends React.Component<any, {}> {
             <Text style={styles.viewText}>View</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.helperView} />
       </View>
     )
   }
@@ -52,14 +53,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '86%',
-    marginLeft: '7%',
+    width: '100%',
+    paddingLeft: '7%',
+    paddingRight: '7%',
     paddingTop: 15,
-    paddingBottom: 15,
     flexDirection: 'column',
     alignItems: 'stretch',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
   },
   absolute: {
     position: 'absolute',
@@ -123,5 +122,11 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: '700',
     fontFamily: 'Lato',
+  },
+  helperView: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f2f2',
+    width: '100%',
+    paddingTop: 15,
   },
 })

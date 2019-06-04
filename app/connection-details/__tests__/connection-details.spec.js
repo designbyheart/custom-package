@@ -20,6 +20,8 @@ describe('<ConnectionDetails />', () => {
         state: {
           params: {
             senderDID: senderdid,
+            senderName: 'jim',
+            image: 'https://robothash.com/logo.png',
           },
         },
         getParam: jest.fn(),

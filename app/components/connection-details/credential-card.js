@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { proofRequestRoute, claimOfferRoute } from '../../common'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
 class CredentialCard extends React.Component<any, {}> {
@@ -9,7 +10,11 @@ class CredentialCard extends React.Component<any, {}> {
     this.state = {}
   }
   updateAndShowModal = () => {
-    this.props.showModal(this.props.order)
+    if (this.props.proof) {
+      this.props.navigation.navigate(proofRequestRoute, { uid: this.props.uid })
+    } else {
+      this.props.navigation.navigate(claimOfferRoute, { uid: this.props.uid })
+    }
   }
   render() {
     return (
@@ -39,6 +44,7 @@ class CredentialCard extends React.Component<any, {}> {
             <Text style={styles.viewText}>View</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.helperView} />
       </View>
     )
   }
@@ -51,14 +57,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '86%',
-    marginLeft: '7%',
+    width: '100%',
+    paddingLeft: '7%',
+    paddingRight: '7%',
     paddingTop: 15,
-    paddingBottom: 15,
     flexDirection: 'column',
     alignItems: 'stretch',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
   },
   absolute: {
     position: 'absolute',
@@ -122,5 +126,11 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: '700',
     fontFamily: 'Lato',
+  },
+  helperView: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f2f2',
+    width: '100%',
+    paddingTop: 15,
   },
 })

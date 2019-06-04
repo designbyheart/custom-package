@@ -7,7 +7,6 @@ import {
   StyleSheet,
   TextInput,
   Alert,
-  Dimensions,
 } from 'react-native'
 import { ModalButtons } from '../../components/connection-details/modal-buttons'
 import { connect } from 'react-redux'
@@ -26,6 +25,7 @@ import {
   UserAvatar,
   headerStyles,
 } from '../../components'
+import { BorderSeparator } from '../../components/connection-details/border-separator'
 import type {
   ProofRequestProps,
   AdditionalProofDataPayload,
@@ -66,7 +66,6 @@ import {
   updateAttributeClaim,
   getProof,
 } from '../../proof/proof-store'
-import { BorderSeparator } from '../../components/connection-details/border-separator'
 import { brown } from 'color-name'
 import type {
   GenericObject,
@@ -75,9 +74,6 @@ import type {
 } from '../../common/type-common'
 import type { Attribute } from '../../push-notification/type-push-notification'
 import type { Store } from '../../store/type-store'
-
-const windowSize = Dimensions.get('window')
-const WINDOW_WIDTH = windowSize.width
 
 export function generateStateForMissingAttributes(
   missingAttributes: MissingAttributes | {}
@@ -193,8 +189,8 @@ class ProofRequestAttributeList extends PureComponent<
           return (
             <View key={index} style={styles.wrapper}>
               <Text style={styles.title}>{item.label}</Text>
-              <View style={styles.inputBoxWrapper}>
-                <View>
+              <View style={styles.textAvatarWrapper}>
+                <View style={styles.textWrapper}>
                   {showInputBox ? (
                     <TextInput
                       style={styles.content}
@@ -219,7 +215,7 @@ class ProofRequestAttributeList extends PureComponent<
                     <Text style={styles.title}>{item.data}</Text>
                   )}
                 </View>
-                <View style={styles.iconWrapper}>
+                <View style={styles.avatarWrapper}>
                   <Icon
                     medium
                     round
@@ -240,7 +236,7 @@ class ProofRequestAttributeList extends PureComponent<
     const attributes: Array<Attribute> = this.props.list
     return (
       <KeyboardAwareFlatList
-        width={WINDOW_WIDTH}
+        style={styles.keyboardFlatList}
         data={attributes}
         keyExtractor={this.keyExtractor}
         renderItem={this.renderItem}
@@ -464,6 +460,15 @@ class ModalContentProof extends PureComponent<
     }
   }
 
+  canEnablePrimaryAction = (
+    canEnable: boolean,
+    selfAttestedAttributes: GenericStringObject
+  ) => {
+    this.setState({
+      allMissingAttributesFilled: canEnable,
+      selfAttestedAttributes,
+    })
+  }
   updateFirstTimeClaim() {
     const selectedClaims = this.props.data.requestedAttributes.reduce(
       (acc, item) => {
@@ -484,15 +489,6 @@ class ModalContentProof extends PureComponent<
     this.setState({ selectedClaims })
   }
 
-  canEnablePrimaryAction = (
-    canEnable: boolean,
-    selfAttestedAttributes: GenericStringObject
-  ) => {
-    this.setState({
-      allMissingAttributesFilled: canEnable,
-      selfAttestedAttributes,
-    })
-  }
   componentDidMount() {
     this.props.proofRequestShown(this.props.uid)
     this.props.getProof(this.props.uid)
@@ -645,18 +641,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(ModalContentProof)
 
 const styles = StyleSheet.create({
   wrapper: {
+    flex: 1,
     backgroundColor: '#f2f2f2',
-    width: '90%',
-    marginLeft: '5%',
+    width: '100%',
     paddingTop: 12,
     position: 'relative',
   },
-  inputBoxWrapper: {
+  textAvatarWrapper: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    width: '100%',
   },
-  iconWrapper: {
+  textWrapper: {
+    width: '85%',
+  },
+  avatarWrapper: {
     marginTop: -15,
+    width: '15%',
   },
   title: {
     fontSize: 14,
@@ -675,6 +675,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontFamily: 'Lato',
     paddingBottom: 12,
+    marginLeft: '-1.2%',
   },
   outerModalWrapper: {
     width: '100%',
@@ -683,5 +684,9 @@ const styles = StyleSheet.create({
   innerModalWrapper: {
     flex: 1,
     backgroundColor: '#f2f2f2',
+  },
+  keyboardFlatList: {
+    marginLeft: '5%',
+    marginRight: '5%',
   },
 })

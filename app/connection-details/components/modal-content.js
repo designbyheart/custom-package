@@ -22,9 +22,11 @@ class ModalContent extends React.Component<any, {}> {
                   <Text style={styles.title}>{userData.label}</Text>
                   <Text style={styles.content}>{userData.data}</Text>
                 </View>
-                <View style={styles.avatarWrapper}>
-                  <Avatar radius={16} src={{ uri: this.props.imageUrl }} />
-                </View>
+                {this.props.showSidePicture && (
+                  <View style={styles.avatarWrapper}>
+                    <Avatar radius={16} src={{ uri: this.props.imageUrl }} />
+                  </View>
+                )}
               </View>
               <Border borderColor={'#a5a5a5'} />
             </View>

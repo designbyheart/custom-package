@@ -11,6 +11,31 @@ const duration = notUseAnimation ? 30 : 300
 // this is followed in general animation guidelines for material
 const backDuration = notUseAnimation ? 10 : 150
 
+export const cardTransitionConfig = () => ({
+  transitionSpec: {
+    duration: 500,
+    easing: Easing.out(Easing.poly(4)),
+    timing: Animated.timing,
+  },
+  screenInterpolator: (sceneProps: NavigationTransitionProps) => {
+    const { layout, position, scene } = sceneProps
+    const { index } = scene
+
+    const width = layout.initWidth
+    const translateX = position.interpolate({
+      inputRange: [index - 1, index, index + 1],
+      outputRange: [width, 0, 0],
+    })
+
+    const opacity = position.interpolate({
+      inputRange: [index - 1, index - 0.99, index],
+      outputRange: [0, 1, 1],
+    })
+
+    return { opacity, transform: [{ translateX: translateX }] }
+  },
+})
+
 export function modalTransitionConfig(
   toSceneProps: NavigationTransitionProps,
   fromSceneProps: ?NavigationTransitionProps

@@ -78,6 +78,13 @@ class Modal extends PureComponent<any, {}> {
     switch (data.action) {
       case 'CLAIM OFFER RECEIVED':
       case 'SHARED':
+        return (
+          <ModalContent
+            content={this.props.data.data}
+            imageUrl={this.props.imageUrl}
+            showSidePicture={true}
+          />
+        )
       case 'RECEIVED':
         return (
           <ModalContent

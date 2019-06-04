@@ -13,14 +13,15 @@ class ModalButton extends React.Component<any, {}> {
     const { onClose } = this.props
 
     return (
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: this.props.colorBackground },
-        ]}
-      >
+      <View style={styles.container}>
         <View style={styles.innerWrapper}>
-          <TouchableOpacity style={styles.buttonClose} onPress={onClose}>
+          <TouchableOpacity
+            style={[
+              styles.buttonClose,
+              { backgroundColor: this.props.colorBackground },
+            ]}
+            onPress={onClose}
+          >
             <Text style={styles.close}>Close</Text>
           </TouchableOpacity>
         </View>
@@ -33,6 +34,7 @@ export { ModalButton }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#f2f2f2',
     width: '100%',
     padding: 15,
     paddingBottom: 45,
@@ -45,6 +47,9 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   buttonClose: {
+    padding: 17.5,
+    paddingLeft: 30,
+    paddingRight: 30,
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
