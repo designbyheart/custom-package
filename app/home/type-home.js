@@ -5,6 +5,10 @@ import type {
   Connection,
 } from '../store/type-connection-store'
 
+export type NewConnectionInstructionsProps = {
+  usingProductionNetwork: boolean,
+}
+
 export type ConnectionCardProps = {
   onPress: Function,
   identifier: string,
