@@ -112,7 +112,7 @@ android {
         targetSdkVersion 26
         multiDexEnabled true
         versionCode 885
-        versionName "1.0.13"
+        versionName "1.0.14"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8

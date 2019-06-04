@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  SafeAreaView,
 } from 'react-native'
 import { ConnectionDetailsNav } from './components/connection-details-nav'
 import { CredentialCard } from '../components/connection-details/credential-card'
@@ -22,7 +23,6 @@ import { ConnectionPending } from '../components/connection-details/connection-p
 import Modal from './components/modal'
 import { updateStatusBarTheme } from '../../app/store/connections-store'
 import { BlurView } from 'react-native-blur'
-import { SafeAreaView } from 'react-navigation'
 import Snackbar from 'react-native-snackbar'
 
 import { measurements } from '../../app/common/styles/measurements'
@@ -53,6 +53,8 @@ class ConnectionDetails extends Component<
   ConnectionHistoryProps,
   ConnectionHistoryState
 > {
+  scrollView: any = {}
+
   state = {
     moveMoreOptions: new Animated.Value(ScreenWidth),
     fadeInOut: new Animated.Value(0),
@@ -63,6 +65,7 @@ class ConnectionDetails extends Component<
     disableTaps: false,
     newMessageLine: false,
   }
+
   componentDidUpdate(prevProps: ConnectionHistoryProps) {
     if (Platform.OS === 'android') {
       // TODO: Refactor this code sometime later so that this code executes
@@ -289,6 +292,8 @@ class ConnectionDetails extends Component<
                   messageContent={attributesText}
                   showButtons={true}
                   showModal={this.showModal}
+                  navigation={this.props.navigation}
+                  proof={true}
                   colorBackground={activeConnectionThemePrimary}
                 />
               )
@@ -379,7 +384,7 @@ class ConnectionDetails extends Component<
                   }
                   uid={histForDid.data.uid}
                   requestStatus={'YOU ANSWERED'}
-                  requestAction={histForDid.data.answer.text}
+                  requestAction={'"' + histForDid.data.answer.text + '"'}
                   //buttonText={'VIEW'}
                   navigation={this.props.navigation}
                 />
@@ -404,6 +409,8 @@ class ConnectionDetails extends Component<
                   messageContent={histForDid.name}
                   showButtons={true}
                   showModal={this.showModal}
+                  uid={histForDid.originalPayload.payloadInfo.uid}
+                  navigation={this.props.navigation}
                   colorBackground={activeConnectionThemePrimary}
                 />
               )
@@ -420,67 +427,77 @@ class ConnectionDetails extends Component<
       })
 
       return (
-        <View style={styles.container}>
-          <ConnectionDetailsNav
-            navigation={this.props.navigation}
-            moreOptionsOpen={this.moreOptionsOpen}
-            colorBackground={activeConnectionThemePrimary}
-          />
-          <Animated.View
-            style={[
-              styles.moreOptionsWrapper,
-              { transform: [{ translateX: this.state.moveMoreOptions }] },
-            ]}
-          >
-            <MoreOptions
+        <SafeAreaView style={styles.safeAreaContainer}>
+          <View style={styles.container}>
+            <ConnectionDetailsNav
               navigation={this.props.navigation}
-              moreOptionsClose={this.moreOptionsClose}
+              moreOptionsOpen={this.moreOptionsOpen}
+              colorBackground={activeConnectionThemePrimary}
             />
-          </Animated.View>
-
-          <ScrollView style={styles.scrollView}>
-            <View style={styles.helperWrapper} />
-            {arrayUI.reverse()}
-          </ScrollView>
-          {Platform.OS === 'ios' ? (
-            <BlurView
-              style={styles.absoluteTop}
-              blurType="light"
-              blurAmount={8}
-            />
-          ) : null}
-          <Animated.View
-            style={[
-              styles.outerModalWrapper,
-              {
-                transform: [{ translateY: this.state.moveModal }],
-                opacity: this.state.fadeInOut,
-              },
-            ]}
-          >
             <Animated.View
               style={[
-                styles.innerModalWrapper,
-                { transform: [{ translateY: this.state.moveModalHeight }] },
+                styles.moreOptionsWrapper,
+                { transform: [{ translateX: this.state.moveMoreOptions }] },
               ]}
             >
-              {modalData[this.state.modalDataOrder] ? (
-                <Modal
-                  hideModal={this.hideModal}
-                  updatePosition={this.updatePosition}
-                  data={modalData[this.state.modalDataOrder]}
-                  imageUrl={this.props.navigation.state.params.image}
-                  institutialName={
-                    this.props.navigation.state.params.senderName
-                  }
-                  colorBackground={activeConnectionThemePrimary}
-                  secondColorBackground={activeConnectionThemeSecondary}
-                />
-              ) : null}
+              <MoreOptions
+                navigation={this.props.navigation}
+                moreOptionsClose={this.moreOptionsClose}
+              />
             </Animated.View>
-          </Animated.View>
-        </View>
+
+            <ScrollView
+              style={styles.scrollView}
+              ref={ref => (this.scrollView = ref)}
+              onContentSizeChange={(contentWidth, contentHeight) => {
+                this.scrollView.scrollToEnd({ animated: true })
+              }}
+            >
+              <View style={styles.helperWrapper} />
+              {arrayUI.reverse()}
+            </ScrollView>
+            {Platform.OS === 'ios' ? (
+              <BlurView
+                style={styles.absoluteTop}
+                blurType="light"
+                blurAmount={8}
+              />
+            ) : null}
+            <Animated.View
+              style={[
+                styles.outerModalWrapper,
+                {
+                  transform: [{ translateY: this.state.moveModal }],
+                  opacity: this.state.fadeInOut,
+                },
+              ]}
+            >
+              <Animated.View
+                style={[
+                  styles.innerModalWrapper,
+                  { transform: [{ translateY: this.state.moveModalHeight }] },
+                ]}
+              >
+                {modalData[this.state.modalDataOrder] ? (
+                  <Modal
+                    hideModal={this.hideModal}
+                    updatePosition={this.updatePosition}
+                    data={modalData[this.state.modalDataOrder]}
+                    imageUrl={this.props.navigation.state.params.image}
+                    institutialName={
+                      this.props.navigation.state.params.senderName
+                    }
+                    colorBackground={activeConnectionThemePrimary}
+                    secondColorBackground={activeConnectionThemeSecondary}
+                  />
+                ) : null}
+              </Animated.View>
+            </Animated.View>
+          </View>
+        </SafeAreaView>
       )
+    } else {
+      return null
     }
   }
 }
@@ -515,12 +532,15 @@ const mapDispatchToProps = dispatch =>
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectionDetails)
 
 const styles = StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    position: 'relative',
+    // position: 'relative',
   },
   moreOptionsWrapper: {
     position: 'absolute',

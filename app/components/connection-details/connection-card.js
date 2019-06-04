@@ -74,6 +74,7 @@ class ConnectionCard extends React.Component<any, {}> {
             </TouchableOpacity>
           </View>
         </View>
+        <View style={styles.helperView} />
       </View>
     )
   }
@@ -90,11 +91,8 @@ const styles = StyleSheet.create({
     paddingLeft: '7%',
     paddingRight: '7%',
     paddingTop: 15,
-    paddingBottom: 15,
     flexDirection: 'column',
     alignItems: 'stretch',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
   },
   innerWrapper: {
     marginTop: 15,
@@ -201,5 +199,11 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'flex-start',
     justifyContent: 'flex-end',
+  },
+  helperView: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f2f2',
+    width: '100%',
+    paddingTop: 15,
   },
 })

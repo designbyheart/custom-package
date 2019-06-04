@@ -107,7 +107,11 @@ import {
   whiteSolid,
   cmGrey5,
 } from '../app/common/styles/constant'
-import { modalTransitionConfig, getResponderDistance } from './transition'
+import {
+  modalTransitionConfig,
+  cardTransitionConfig,
+  getResponderDistance,
+} from './transition'
 
 if (__DEV__) {
   require('../tools/reactotron-config')
@@ -370,6 +374,8 @@ const ConnectMeAppNavigator = createStackNavigator(
   {
     mode: 'modal',
     headerMode: 'none',
+    // TODO:test transition
+    //transitionConfig: cardTransitionConfig,
     transitionConfig: modalTransitionConfig,
     cardStyle: {
       backgroundColor: 'transparent',
