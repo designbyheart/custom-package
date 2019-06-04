@@ -21,10 +21,16 @@ import {
   venetianRed,
 } from '../common/styles'
 
+import type { NewConnectionInstructionsProps } from './type-home'
+
 const { extraSmall, small, medium, large } = verticalBreakpoint
 
-export class NewConnectionInstructions extends PureComponent<{}> {
+export class NewConnectionInstructions extends PureComponent<
+  NewConnectionInstructionsProps,
+  void
+> {
   render() {
+    const { usingProductionNetwork } = this.props
     return (
       <ImageBackground
         source={require('../images/connection-items-placeholder.png')}
@@ -47,27 +53,37 @@ export class NewConnectionInstructions extends PureComponent<{}> {
             <CustomText transparentBg bold size="h5" style={[styles.title]}>
               Want to see how it works?
             </CustomText>
-            <CustomText transparentBg size="h6" style={[styles.text]}>
-              We have setup an optional tutorial site for you to go through
-              using this Connect.Me app. To start this process, go to{' '}
-              <CustomText
-                transparentBg
-                size="h6"
-                style={[styles.link]}
-                onPress={this.openTryConnectMe}
-              >
-                try.connect.me
-              </CustomText>{' '}
-              in a desktop browser, or click the button below!
-            </CustomText>
-            <CustomView center style={[styles.buttonContainer]}>
-              <CustomButton
-                title="Start Tutorial"
-                style={[styles.startTutorialButton]}
-                customColor={buttonColor}
-                onPress={this.openTryConnectMe}
-              />
-            </CustomView>
+            {usingProductionNetwork && (
+              <CustomText transparentBg size="h6" style={[styles.text]}>
+                We have setup an optional tutorial site for you to go through
+                using this Connect.Me app. To start this process, go to{' '}
+                <CustomText
+                  transparentBg
+                  size="h6"
+                  style={[styles.link]}
+                  onPress={this.openTryConnectMe}
+                >
+                  try.connect.me
+                </CustomText>{' '}
+                in a desktop browser, or click the button below!
+              </CustomText>
+            )}
+            {usingProductionNetwork && (
+              <CustomView center style={[styles.buttonContainer]}>
+                <CustomButton
+                  title="Start Tutorial"
+                  style={[styles.startTutorialButton]}
+                  customColor={buttonColor}
+                  onPress={this.openTryConnectMe}
+                />
+              </CustomView>
+            )}
+            {!usingProductionNetwork && (
+              <CustomText transparentBg size="h6" style={[styles.text]}>
+                We see you are not on the live network. Get with an Evernym team
+                member to help you use Connect.Me!
+              </CustomText>
+            )}
           </CustomView>
         </Container>
       </ImageBackground>

@@ -63,6 +63,8 @@ import { scale } from 'react-native-size-matters'
 import { size } from './../components/icon'
 import { externalStyles } from './styles'
 import { NewConnectionInstructions } from './new-connection-instructions'
+import { getEnvironmentName } from '../store/config-store'
+import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 
 const { width, height } = Dimensions.get('window')
 export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
@@ -135,6 +137,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       blurContainer,
     } = externalStyles
     const {
+      environmentName,
       connections: { data, hydrated },
       unSeenMessages,
       history,
@@ -151,6 +154,7 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
           unSeenMessages[connection.senderDID].length > 0
             ? true
             : false
+
         return {
           ...connection,
           index,
@@ -209,10 +213,13 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       })
 
     const hasNoConnection = hydrated ? connections.length === 0 : false
-
     return (
       <View style={container}>
-        {hasNoConnection && <NewConnectionInstructions />}
+        {hasNoConnection && (
+          <NewConnectionInstructions
+            usingProductionNetwork={environmentName === SERVER_ENVIRONMENT.PROD}
+          />
+        )}
         <FlatList
           keyExtractor={this.keyExtractor}
           style={flatListContainer}
@@ -236,6 +243,7 @@ const mapStateToProps = (state: Store) => {
     connections: state.connections,
     unSeenMessages,
     history: state.history,
+    environmentName: getEnvironmentName(state.config),
   }
 }
 

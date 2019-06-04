@@ -7,7 +7,16 @@ import { NewConnectionInstructions } from '../new-connection-instructions'
 
 describe('<NewConnectionInstructions />', () => {
   it('should match snapshot', () => {
-    const component = renderer.create(<NewConnectionInstructions />)
+    const component = renderer.create(
+      <NewConnectionInstructions usingProductionNetwork={true} />
+    )
+    expect(component.toJSON()).toMatchSnapshot()
+  })
+
+  it('should match snapshot for test network', () => {
+    const component = renderer.create(
+      <NewConnectionInstructions usingProductionNetwork={false} />
+    )
     expect(component.toJSON()).toMatchSnapshot()
   })
 })
