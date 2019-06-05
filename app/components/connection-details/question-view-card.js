@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     alignItems: 'stretch',
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: '#f2f2f2',
   },
   contentRow: {
     flex: 1,

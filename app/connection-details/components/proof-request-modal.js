@@ -152,7 +152,7 @@ class ProofRequestModal extends React.Component<any, any> {
               <ModalHeader
                 institutialName={this.props.name}
                 credentialName={this.props.data.name}
-                credentialText={'is offering to issue you'}
+                credentialText={'Wants you to fill out a form:'}
                 imageUrl={this.props.logoUrl}
                 colorBackground={this.props.claimThemePrimary}
               />
