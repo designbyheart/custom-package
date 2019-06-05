@@ -8,34 +8,29 @@ import {
   QuestionScreenHeader,
   ViewCloser,
 } from '../components/question-screen-header'
-import { getNavigation } from '../../../__mocks__/static-data'
 import { Container } from '../../components'
 
 describe('<QuestionScreenHeader />', () => {
   function getProps() {
     return {
-      ...getNavigation(),
+      onCancel: jest.fn(),
     }
   }
 
   it('should match snapshot', () => {
     const props = getProps()
-    const tree = renderer
-      .create(<QuestionScreenHeader navigation={props} />)
-      .toJSON()
+    const tree = renderer.create(<QuestionScreenHeader {...props} />).toJSON()
     expect(tree).toMatchSnapshot()
   })
 
-  it('click on header should trigger goBack on screen', () => {
+  it('click on header should trigger onCancel on header', () => {
     const props = getProps()
-    const component = renderer.create(
-      <QuestionScreenHeader navigation={props} />
-    )
+    const component = renderer.create(<QuestionScreenHeader {...props} />)
     const componentViewCloser = component.root.findAllByType(ViewCloser)
     componentViewCloser.map(viewCloser => {
       const container = viewCloser.findByType(Container)
       container.props.onPress()
     })
-    expect(props.goBack).toHaveBeenCalledTimes(componentViewCloser.length)
+    expect(props.onCancel).toHaveBeenCalledTimes(componentViewCloser.length)
   })
 })
