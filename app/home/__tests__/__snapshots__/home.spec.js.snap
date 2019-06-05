@@ -219,7 +219,7 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
       Object {
         "backgroundColor": "#fff",
         "height": "100%",
-        "paddingTop": 120,
+        "paddingTop": 100,
         "width": "100%",
       }
     }
@@ -469,7 +469,7 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
       Object {
         "backgroundColor": "#fff",
         "height": "100%",
-        "paddingTop": 120,
+        "paddingTop": 100,
         "width": "100%",
       }
     }
@@ -539,7 +539,7 @@ exports[`<DashboardScreen /> should render Home and show loader 1`] = `
       Object {
         "backgroundColor": "#fff",
         "height": "100%",
-        "paddingTop": 120,
+        "paddingTop": 100,
         "width": "100%",
       }
     }

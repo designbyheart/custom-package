@@ -1,6 +1,7 @@
 // @flow
 import { StyleSheet } from 'react-native'
 import { measurements } from '../common/styles/measurements'
+import { primaryHeaderHeight } from '../common/styles/constant'
 
 const externalStyles = StyleSheet.create({
   container: {
@@ -12,7 +13,7 @@ const externalStyles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#fff',
-    paddingTop: 120,
+    paddingTop: primaryHeaderHeight,
   },
   flatListInnerContainer: {
     paddingBottom: 170,

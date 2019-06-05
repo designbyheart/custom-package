@@ -1,19 +1,17 @@
 // @flow
 import { StyleSheet, Platform, PixelRatio } from 'react-native'
 
-import { isBiggerThanVeryShortDevice } from '../../common/styles/constant'
-
-const containerHeight = isBiggerThanVeryShortDevice ? 100 : 90
+import { primaryHeaderHeight } from '../../common/styles/constant'
 
 // original in icon{} and label{} marginTop was 73 and height was 120, thus the 47 to keep
 // subtracting 47 from containerHeight keeps it relative to what is was.
-const marginTop = containerHeight - 47
+const marginTop = primaryHeaderHeight - 47
 
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: 0,
-    height: containerHeight,
+    height: primaryHeaderHeight,
     width: '100%',
     flexDirection: 'row',
     backgroundColor:
