@@ -337,10 +337,14 @@ const CardStack = createStackNavigator(
     [verifyRecoveryPhraseRoute]: { screen: VerifyRecoveryPhrase },
     [exportBackupFileRoute]: { screen: ExportBackupFile },
     [backupCompleteRoute]: { screen: BackupComplete },
+    [connectionHistRoute]: {
+      screen: ConnectionHistNavigator,
+    },
   },
   {
     headerMode: 'none',
     initialRouteName: splashScreenRoute,
+    transitionConfig: cardTransitionConfig,
     navigationOptions: {
       gesturesEnabled: false,
     },
@@ -360,9 +364,6 @@ const ConnectMeAppNavigator = createStackNavigator(
     [connectionHistoryRoute]: {
       screen: ConnectionHistoryNavigator,
     },
-    [connectionHistRoute]: {
-      screen: ConnectionHistNavigator,
-    },
     [walletRoute]: { screen: Wallet },
     [walletTabSendDetailsRoute]: {
       screen: WalletTabSendDetails,
@@ -374,8 +375,6 @@ const ConnectMeAppNavigator = createStackNavigator(
   {
     mode: 'modal',
     headerMode: 'none',
-    // TODO:test transition
-    //transitionConfig: cardTransitionConfig,
     transitionConfig: modalTransitionConfig,
     cardStyle: {
       backgroundColor: 'transparent',

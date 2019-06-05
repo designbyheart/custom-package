@@ -15,9 +15,6 @@ export default createStackNavigator(
     [connectionHistRoute]: {
       screen: ConnectionDetails,
     },
-    [homeRoute]: {
-      screen: Home,
-    },
   },
   {
     headerMode: 'none',

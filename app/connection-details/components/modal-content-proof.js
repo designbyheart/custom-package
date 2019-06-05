@@ -212,7 +212,7 @@ class ProofRequestAttributeList extends PureComponent<
                       underlineColorAndroid="transparent"
                     />
                   ) : (
-                    <Text style={styles.title}>{item.data}</Text>
+                    <Text style={styles.titleFilledValues}>{item.data}</Text>
                   )}
                 </View>
                 <View style={styles.avatarWrapper}>
@@ -662,6 +662,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
     color: '#a5a5a5',
+    width: '100%',
+    textAlign: 'left',
+    marginBottom: 2,
+    fontFamily: 'Lato',
+  },
+  titleFilledValues: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#505050',
     width: '100%',
     textAlign: 'left',
     marginBottom: 2,
