@@ -22,8 +22,8 @@ export class QuestionScreenHeader extends React.Component<
 }
 
 // this component is used to close screen, when user taps on header
-export const ViewCloser = (props: ReactNavigation) => (
-  <Container onPress={() => props.navigation.goBack(null)} />
+export const ViewCloser = (props: QuestionScreenHeaderProps) => (
+  <Container onPress={props.onCancel} />
 )
 
 export const HeaderHandlebar = () => (
@@ -32,4 +32,6 @@ export const HeaderHandlebar = () => (
   </CustomView>
 )
 
-type QuestionScreenHeaderProps = {} & ReactNavigation
+type QuestionScreenHeaderProps = {
+  onCancel: () => void,
+}

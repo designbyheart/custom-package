@@ -127,7 +127,7 @@ export class Question extends PureComponent<
               onHandlerStateChange={this._onHandlerStateChange}
             >
               <Animated.View style={[questionStyles.container]}>
-                <QuestionScreenHeader navigation={this.props.navigation} />
+                <QuestionScreenHeader onCancel={this.onCancel} />
               </Animated.View>
             </PanGestureHandler>
           </Container>
@@ -259,7 +259,10 @@ export class Question extends PureComponent<
   }
 
   onCancel = () => {
-    this.props.navigation.goBack(null)
+    !this.isUnmounted &&
+      !this.isCloseTriggered &&
+      this.props.navigation.goBack(null)
+    this.isCloseTriggered = true
   }
 
   _onPanGestureEvent = Animated.event(
@@ -306,6 +309,12 @@ export class Question extends PureComponent<
   // so we need to be sure that we are not running code after this component
   // is unmounted from react-native tree
   isUnmounted = false
+  // this variable is just to ensure that on slow devices
+  // if user clicks on gray area and component was already scheduled to close
+  // by auto close, or by user clicking on okay button and then auto-close trigger
+  // we want to make sure that close is triggered by either action
+  // and we don't want to run close again in any case
+  isCloseTriggered = false
 
   componentWillUnmount() {
     this.isUnmounted = true
@@ -313,11 +322,7 @@ export class Question extends PureComponent<
 
   afterSuccessShown = () => {
     // auto close after success is shown to user
-    setTimeout(() => {
-      if (!this.isUnmounted) {
-        this.onCancel()
-      }
-    }, 200)
+    setTimeout(this.onCancel, 100)
   }
 }
 
