@@ -12,6 +12,9 @@ import type { ConnectionCardProps } from './type-connection-card'
 import { styles } from './styles'
 import { mediumGray } from '../../common/styles/constant'
 class ConnectionCard extends Component<ConnectionCardProps, void> {
+  state = {
+    removeBadge: false,
+  }
   pad = (dateOrMonth: number) => {
     return dateOrMonth < 10 ? '0' + dateOrMonth : dateOrMonth
   }
@@ -121,7 +124,8 @@ class ConnectionCard extends Component<ConnectionCardProps, void> {
       newLabel,
       newLabelText,
     } = styles
-    if (!showBadge) {
+
+    if (this.state.removeBadge) {
       return (
         <View style={dateButtonSection}>
           <View style={dateSection}>
@@ -132,7 +136,7 @@ class ConnectionCard extends Component<ConnectionCardProps, void> {
           </View>
         </View>
       )
-    } else {
+    } else if (showBadge) {
       return (
         <View style={newButtonSection}>
           <View style={newLabel}>
@@ -141,6 +145,48 @@ class ConnectionCard extends Component<ConnectionCardProps, void> {
         </View>
       )
     }
+
+    // if (showBadge) {
+    //   return (
+    //     <View style={newButtonSection}>
+    //       <View style={newLabel}>
+    //         <Text style={newLabelText}>NEW</Text>
+    //       </View>
+    //     </View>
+    //   )
+    // } else if (this.state.removeBadge) {
+    //   return (
+    //     <View style={dateButtonSection}>
+    //       <View style={dateSection}>
+    //         <Text style={dateText}>{this.getCorrectDateLabel(date)}</Text>
+    //       </View>
+    //       <View style={buttonSection}>
+    //         <SvgCustomIcon name="ChevronRight" fill={mediumGray} />
+    //       </View>
+    //     </View>
+    //   )
+    // }
+
+    // if (!showBadge) {
+    //   return (
+    //     <View style={dateButtonSection}>
+    //       <View style={dateSection}>
+    //         <Text style={dateText}>{this.getCorrectDateLabel(date)}</Text>
+    //       </View>
+    //       <View style={buttonSection}>
+    //         <SvgCustomIcon name="ChevronRight" fill={mediumGray} />
+    //       </View>
+    //     </View>
+    //   )
+    // } else {
+    //   return (
+    //     <View style={newButtonSection}>
+    //       <View style={newLabel}>
+    //         <Text style={newLabelText}>NEW</Text>
+    //       </View>
+    //     </View>
+    //   )
+    // }
   }
 
   render() {
@@ -171,8 +217,13 @@ class ConnectionCard extends Component<ConnectionCardProps, void> {
 
     return (
       <TouchableOpacity
-        style={[container, showBadge ? newCardContainer : null]}
-        onPress={onPress}
+        style={[
+          container,
+          this.state.removeBadge ? null : showBadge ? newCardContainer : null,
+        ]}
+        onPress={() => {
+          this.setState({ removeBadge: true }, onPress)
+        }}
       >
         <View style={avatarSection}>
           {typeof image === 'string' ? (
