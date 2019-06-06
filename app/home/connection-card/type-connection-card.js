@@ -11,3 +11,7 @@ export type ConnectionCardProps = {
   question: string,
   showBadge: boolean,
 }
+
+export type ConnectionCardState = {
+  removeBadge: boolean,
+}

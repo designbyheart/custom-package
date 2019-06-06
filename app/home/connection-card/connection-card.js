@@ -8,10 +8,16 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native'
-import type { ConnectionCardProps } from './type-connection-card'
+import type {
+  ConnectionCardProps,
+  ConnectionCardState,
+} from './type-connection-card'
 import { styles } from './styles'
 import { mediumGray } from '../../common/styles/constant'
-class ConnectionCard extends Component<ConnectionCardProps, void> {
+class ConnectionCard extends Component<
+  ConnectionCardProps,
+  ConnectionCardState
+> {
   state = {
     removeBadge: false,
   }
