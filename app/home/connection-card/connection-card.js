@@ -19,7 +19,7 @@ class ConnectionCard extends Component<
   ConnectionCardState
 > {
   state = {
-    removeBadge: false,
+    showBadge: this.props.showBadge,
   }
   pad = (dateOrMonth: number) => {
     return dateOrMonth < 10 ? '0' + dateOrMonth : dateOrMonth
@@ -131,7 +131,7 @@ class ConnectionCard extends Component<
       newLabelText,
     } = styles
 
-    if (this.state.removeBadge) {
+    if (!this.state.showBadge) {
       return (
         <View style={dateButtonSection}>
           <View style={dateSection}>
@@ -142,7 +142,7 @@ class ConnectionCard extends Component<
           </View>
         </View>
       )
-    } else if (showBadge) {
+    } else {
       return (
         <View style={newButtonSection}>
           <View style={newLabel}>
@@ -151,48 +151,6 @@ class ConnectionCard extends Component<
         </View>
       )
     }
-
-    // if (showBadge) {
-    //   return (
-    //     <View style={newButtonSection}>
-    //       <View style={newLabel}>
-    //         <Text style={newLabelText}>NEW</Text>
-    //       </View>
-    //     </View>
-    //   )
-    // } else if (this.state.removeBadge) {
-    //   return (
-    //     <View style={dateButtonSection}>
-    //       <View style={dateSection}>
-    //         <Text style={dateText}>{this.getCorrectDateLabel(date)}</Text>
-    //       </View>
-    //       <View style={buttonSection}>
-    //         <SvgCustomIcon name="ChevronRight" fill={mediumGray} />
-    //       </View>
-    //     </View>
-    //   )
-    // }
-
-    // if (!showBadge) {
-    //   return (
-    //     <View style={dateButtonSection}>
-    //       <View style={dateSection}>
-    //         <Text style={dateText}>{this.getCorrectDateLabel(date)}</Text>
-    //       </View>
-    //       <View style={buttonSection}>
-    //         <SvgCustomIcon name="ChevronRight" fill={mediumGray} />
-    //       </View>
-    //     </View>
-    //   )
-    // } else {
-    //   return (
-    //     <View style={newButtonSection}>
-    //       <View style={newLabel}>
-    //         <Text style={newLabelText}>NEW</Text>
-    //       </View>
-    //     </View>
-    //   )
-    // }
   }
 
   render() {
@@ -223,12 +181,9 @@ class ConnectionCard extends Component<
 
     return (
       <TouchableOpacity
-        style={[
-          container,
-          this.state.removeBadge ? null : showBadge ? newCardContainer : null,
-        ]}
+        style={[container, this.state.showBadge ? newCardContainer : null]}
         onPress={() => {
-          this.setState({ removeBadge: true }, onPress)
+          this.setState({ showBadge: false }, onPress)
         }}
       >
         <View style={avatarSection}>
