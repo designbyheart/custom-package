@@ -7,7 +7,6 @@ import debounce from 'lodash.debounce'
 class ModalButtons extends React.Component<any, {}> {
   constructor(props: any) {
     super(props)
-    this.state = {}
   }
   debounceButtonPress = debounce(
     event => {
@@ -20,7 +19,7 @@ class ModalButtons extends React.Component<any, {}> {
   )
 
   render() {
-    const { onIgnore, onPress } = this.props
+    const { onIgnore, onPress, disableAccept = false } = this.props
 
     return (
       <View style={styles.container}>
@@ -39,9 +38,12 @@ class ModalButtons extends React.Component<any, {}> {
               styles.buttonAccept,
               { backgroundColor: this.props.colorBackground },
             ]}
+            disabled={disableAccept}
             onPress={this.debounceButtonPress}
           >
-            <Text style={styles.accept}>{this.props.rightBtnText}</Text>
+            <View style={{ opacity: disableAccept ? 0.4 : 1 }}>
+              <Text style={styles.accept}>{this.props.rightBtnText}</Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
