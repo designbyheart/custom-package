@@ -2571,21 +2571,29 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
                   testID={undefined}
                   tvParallaxProperties={undefined}
                 >
-                  <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
+                  <View
                     style={
                       Object {
-                        "color": "#fff",
-                        "fontFamily": "Lato",
-                        "fontSize": 17,
-                        "fontWeight": "700",
+                        "opacity": 1,
                       }
                     }
                   >
-                    Accept
-                  </Text>
+                    <Text
+                      accessible={true}
+                      allowFontScaling={true}
+                      ellipsizeMode="tail"
+                      style={
+                        Object {
+                          "color": "#fff",
+                          "fontFamily": "Lato",
+                          "fontSize": 17,
+                          "fontWeight": "700",
+                        }
+                      }
+                    >
+                      Accept
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -7273,21 +7281,29 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
                     testID={undefined}
                     tvParallaxProperties={undefined}
                   >
-                    <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
+                    <View
                       style={
                         Object {
-                          "color": "#fff",
-                          "fontFamily": "Lato",
-                          "fontSize": 17,
-                          "fontWeight": "700",
+                          "opacity": 1,
                         }
                       }
                     >
-                      Send
-                    </Text>
+                      <Text
+                        accessible={true}
+                        allowFontScaling={true}
+                        ellipsizeMode="tail"
+                        style={
+                          Object {
+                            "color": "#fff",
+                            "fontFamily": "Lato",
+                            "fontSize": 17,
+                            "fontWeight": "700",
+                          }
+                        }
+                      >
+                        Send
+                      </Text>
+                    </View>
                   </View>
                 </View>
               </View>

@@ -7,7 +7,6 @@ import debounce from 'lodash.debounce'
 class ModalButtons extends React.Component<any, {}> {
   constructor(props: any) {
     super(props)
-    this.state = {}
   }
   debounceButtonPress = debounce(
     event => {
@@ -20,7 +19,14 @@ class ModalButtons extends React.Component<any, {}> {
   )
 
   render() {
-    const { onIgnore, onPress } = this.props
+    const { onIgnore, onPress, disableAccept = false } = this.props
+
+    let themeType = this.props.colorBackground
+    if (disableAccept) {
+      const colorsWithoutOpacity = this.props.colorBackground.split(',', 3)
+      colorsWithoutOpacity.push('0.4)')
+      themeType = colorsWithoutOpacity.join(',')
+    }
 
     return (
       <View style={styles.container}>
@@ -35,13 +41,13 @@ class ModalButtons extends React.Component<any, {}> {
             <Text style={styles.ignore}>{this.props.leftBtnText}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[
-              styles.buttonAccept,
-              { backgroundColor: this.props.colorBackground },
-            ]}
+            style={[styles.buttonAccept, { backgroundColor: themeType }]}
+            disabled={disableAccept}
             onPress={this.debounceButtonPress}
           >
-            <Text style={styles.accept}>{this.props.rightBtnText}</Text>
+            <View style={{ opacity: disableAccept ? 0.4 : 1 }}>
+              <Text style={styles.accept}>{this.props.rightBtnText}</Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>

@@ -433,21 +433,29 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                 testID={undefined}
                 tvParallaxProperties={undefined}
               >
-                <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
+                <View
                   style={
                     Object {
-                      "color": "#fff",
-                      "fontFamily": "Lato",
-                      "fontSize": 17,
-                      "fontWeight": "700",
+                      "opacity": 1,
                     }
                   }
                 >
-                  Accept
-                </Text>
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    style={
+                      Object {
+                        "color": "#fff",
+                        "fontFamily": "Lato",
+                        "fontSize": 17,
+                        "fontWeight": "700",
+                      }
+                    }
+                  >
+                    Accept
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
