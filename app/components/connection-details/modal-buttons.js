@@ -21,6 +21,13 @@ class ModalButtons extends React.Component<any, {}> {
   render() {
     const { onIgnore, onPress, disableAccept = false } = this.props
 
+    let themeType = this.props.colorBackground
+    if (disableAccept) {
+      const colorsWithoutOpacity = this.props.colorBackground.split(',', 3)
+      colorsWithoutOpacity.push('0.4)')
+      themeType = colorsWithoutOpacity.join(',')
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.innerWrapper}>
@@ -34,10 +41,7 @@ class ModalButtons extends React.Component<any, {}> {
             <Text style={styles.ignore}>{this.props.leftBtnText}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[
-              styles.buttonAccept,
-              { backgroundColor: this.props.colorBackground },
-            ]}
+            style={[styles.buttonAccept, { backgroundColor: themeType }]}
             disabled={disableAccept}
             onPress={this.debounceButtonPress}
           >
