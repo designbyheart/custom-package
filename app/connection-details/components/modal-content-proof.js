@@ -584,6 +584,9 @@ class ModalContentProof extends PureComponent<
           secondColorBackground={this.props.secondColorBackground}
           leftBtnText={'Ignore'}
           rightBtnText={primaryActionText}
+          disableAccept={
+            !enablePrimaryActionStatus || this.state.disableSendButton
+          }
         />
       </View>
     )
