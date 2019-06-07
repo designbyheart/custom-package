@@ -37,7 +37,7 @@ sync:
     - echo "$GITHUB_DEPLOY_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - git checkout master && git pull origin master
     - git remote add github git@github.com:evernym/ConnectMe.git
-    - git push github master
+    - git push --force github master
 
 .build:
   stage: build
