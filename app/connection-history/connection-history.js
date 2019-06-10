@@ -31,8 +31,6 @@ import {
 } from '../components'
 import { dimGray, OFFSET_9X, white } from '../../app/common/styles'
 import {
-  homeRoute,
-  connectionHistoryRoute,
   connectionHistoryDetailsRoute,
   connectionHistoryPendingRoute,
 } from '../common/route-constants'

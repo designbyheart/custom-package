@@ -15,8 +15,8 @@ import {
   waitForInvitationRoute,
   eulaRoute,
   restoreRoute,
-  connectionHistoryRoute,
   homeTabRoute,
+  connectionHistRoute,
 } from '../common/route-constants'
 import { Container, Loader } from '../components'
 import {
@@ -139,7 +139,7 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
             let routeName = invitationRoute
             let params = { senderDID, token: invitationToken }
             if (connectionAlreadyExist) {
-              routeName = connectionHistoryRoute
+              routeName = connectionHistRoute
               const {
                 senderName,
                 identifier,
