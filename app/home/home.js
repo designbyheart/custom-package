@@ -40,10 +40,7 @@ import { homeRoute, walletRoute } from '../common'
 import { getConnections } from '../store/connections-store'
 import type { Store } from '../store/type-store'
 import type { HomeProps, HomeState } from './type-home'
-import {
-  connectionHistRoute,
-  connectionHistoryRoute,
-} from '../common/route-constants'
+import { connectionHistRoute } from '../common/route-constants'
 import {
   FEEDBACK_TEST_ID,
   SOVRINTOKEN_TEST_ID,

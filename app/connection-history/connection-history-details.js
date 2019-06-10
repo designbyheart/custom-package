@@ -14,10 +14,7 @@ import {
   Icon,
   CustomSafeAreaView,
 } from '../components'
-import {
-  connectionHistoryDetailsRoute,
-  connectionHistoryRoute,
-} from '../common'
+import { connectionHistoryDetailsRoute } from '../common'
 import {
   OFFSET_1X,
   OFFSET_3X,

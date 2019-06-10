@@ -1,30 +1,18 @@
 // @flow
 import React from 'react'
 import SvgCustomIcon from '../../components/svg-custom-icon'
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-} from 'react-native'
-import { homeRoute } from '../../common'
+import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { measurements } from '../../../app/common/styles/measurements'
 
 // TODO: Fix the <any, void> to be the correct types for props and state
 class ConnectionDetailsNav extends React.Component<any, void> {
   render() {
     const { navigation } = this.props
-
     const { key, params } = this.props.navigation.state
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack(null)}
-          style={styles.buttonBack}
-        >
+        <TouchableOpacity onPress={this.goBack} style={styles.buttonBack}>
           <SvgCustomIcon name="Arrow" fill={'#777777'} width={24} height={22} />
         </TouchableOpacity>
         <View style={styles.iconAndName}>
@@ -51,9 +39,23 @@ class ConnectionDetailsNav extends React.Component<any, void> {
       </View>
     )
   }
+
+  goBack = () => {
+    const { navigation } = this.props
+    const backRedirectRoute = this.props.navigation.getParam(
+      'backRedirectRoute',
+      null
+    )
+    if (backRedirectRoute) {
+      navigation.navigate(backRedirectRoute)
+    } else {
+      navigation.goBack(null)
+    }
+  }
 }
 
 export { ConnectionDetailsNav }
+
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',

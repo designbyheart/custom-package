@@ -42,7 +42,7 @@ import {
   invitationRoute,
   qrCodeScannerTabRoute,
   homeTabRoute,
-  connectionHistoryRoute,
+  connectionHistRoute,
 } from '../common/'
 import type { QrCode } from '../components/qr-scanner/type-qr-scanner'
 import type { Store } from '../store/type-store'
@@ -174,7 +174,7 @@ export class QRCodeScannerScreen extends PureComponent<
         backRedirectRoute: homeTabRoute,
         showExistingConnectionSnack: true,
       }
-      this.props.navigation.navigate(connectionHistoryRoute, params)
+      this.props.navigation.navigate(connectionHistRoute, params)
 
       return
     }
