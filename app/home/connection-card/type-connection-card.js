@@ -9,9 +9,7 @@ export type ConnectionCardProps = {
   type: string,
   credentialName: string,
   question: string,
-  showBadge: boolean,
-}
-
-export type ConnectionCardState = {
-  showBadge: boolean,
+  newBadge: boolean,
+  onNewConnectionSeen: Function,
+  senderDID: string,
 }

@@ -14,6 +14,7 @@ import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
 import { ModalButtons } from '../../components/connection-details/modal-buttons'
 import { ModalButton } from '../../components/connection-details/modal-button'
+import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import { measurements } from '../../../app/common/styles/measurements'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -58,6 +59,7 @@ class ClaimOfferModal extends React.Component<any, any> {
   }
 
   onIgnore = () => {
+    this.props.newConnectionSeen(this.props.claimOfferData.issuer.did)
     this.hideModal()
     this.setState(() => this.props.claimOfferIgnored(this.props.uid))
   }
@@ -66,6 +68,7 @@ class ClaimOfferModal extends React.Component<any, any> {
   }
 
   onAccept = () => {
+    this.props.newConnectionSeen(this.props.claimOfferData.issuer.did)
     this.hideModal()
 
     this.setState(() => this.props.acceptClaimOffer(this.props.uid))
@@ -233,6 +236,7 @@ const mapDispatchToProps = dispatch =>
       updateStatusBarTheme,
       claimOfferShowStart,
       resetClaimRequestStatus,
+      newConnectionSeen,
     },
     dispatch
   )

@@ -165,6 +165,13 @@ export type ResetClaimRequestStatusAction = {
   uid: string,
 }
 
+// TODO: See if this needs to be put somewhere else
+export const NEW_CONNECTION_SEEN = 'NEW_CONNECTION_SEEN'
+export type NewConnectionSeenAction = {
+  type: typeof NEW_CONNECTION_SEEN,
+  senderDid: string,
+}
+
 export type ClaimOfferAction =
   | ClaimOfferReceivedAction
   | ClaimOfferFailedAction

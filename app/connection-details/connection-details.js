@@ -297,7 +297,7 @@ class ConnectionDetails extends Component<
                   colorBackground={activeConnectionThemePrimary}
                 />
               )
-              modalData.push(histForDid)
+              modalData.push('')
               arrayUI.push(proof)
             }
 

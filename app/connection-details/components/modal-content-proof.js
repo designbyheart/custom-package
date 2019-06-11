@@ -495,6 +495,7 @@ class ModalContentProof extends PureComponent<
     this.updateFirstTimeClaim()
   }
   onIgnore = () => {
+    this.props.newConnectionSeen(this.props.remotePairwiseDID)
     this.props.ignoreProofRequest(this.props.uid)
     this.props.hideModal()
   }
@@ -519,6 +520,7 @@ class ModalContentProof extends PureComponent<
       this.setState({
         disableSendButton: true,
       })
+      this.props.newConnectionSeen(this.props.remotePairwiseDID)
       this.props.updateAttributeClaim(this.props.uid, this.state.selectedClaims)
       this.props.hideModal()
     } else {
@@ -623,6 +625,7 @@ const mapStateToProps = (state: Store, mergeProps) => {
     missingAttributes,
     userAvatarSource: getUserAvatarSource(state.user.avatarName),
     errorProofSendData,
+    remotePairwiseDID,
   }
 }
 
@@ -687,7 +690,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontFamily: 'Lato',
     paddingBottom: 12,
-    marginLeft: '-1.2%',
   },
   outerModalWrapper: {
     width: '100%',

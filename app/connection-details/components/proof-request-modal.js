@@ -31,6 +31,7 @@ import {
   proofRequestShown,
   proofRequestShowStart,
 } from '../../proof-request/proof-request-store'
+import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import { updateStatusBarTheme } from '../../../app/store/connections-store'
 import type {
   ClaimOfferProps,
@@ -162,6 +163,7 @@ class ProofRequestModal extends React.Component<any, any> {
                 colorBackground={this.props.claimThemePrimary}
                 secondColorBackground={this.props.claimThemeSecondary}
                 hideModal={() => this.onClose()}
+                newConnectionSeen={this.props.newConnectionSeen}
               />
             </View>
           </ScrollView>
@@ -210,7 +212,15 @@ const mapStateToProps = (state: Store, props: ReactNavigation) => {
   }
 }
 
-export default connect(mapStateToProps, null)(ProofRequestModal)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      newConnectionSeen,
+    },
+    dispatch
+  )
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProofRequestModal)
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: '#f2f2f2',

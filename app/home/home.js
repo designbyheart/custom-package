@@ -12,6 +12,7 @@ import {
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import { BlurView } from 'react-native-blur'
+import { newConnectionSeen } from '../connection-history/connection-history-store'
 import {
   Container,
   CustomView,
@@ -105,14 +106,15 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
       type,
       credentialName,
       date,
-      showBadge,
+      newBadge,
     } = item
 
     return (
       <ConnectionCard
-        onPress={() =>
+        onPress={() => {
           this.onCardPress(senderName, logoUrl, senderDID, identifier)
-        }
+        }}
+        onNewConnectionSeen={this.props.onNewConnectionSeen}
         identifier={identifier}
         image={logoUrl}
         status={status}
@@ -121,7 +123,8 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
         credentialName={credentialName}
         date={date}
         question={questionTitle}
-        showBadge={showBadge}
+        newBadge={newBadge}
+        senderDID={senderDID}
       />
     )
   }
@@ -201,6 +204,8 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
             history.data[connection.senderDID][
               history.data[connection.senderDID].length - 1
             ].type,
+          newBadge: history.newBadge && history.newBadge[connection.senderDID],
+          senderDID: connection.senderDID,
         }
       })
       .sort((a, b) => {
@@ -244,9 +249,17 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onNewConnectionSeen: senderDid => {
+      dispatch(newConnectionSeen(senderDid))
+    },
+  }
+}
+
 export default createStackNavigator({
   [homeRoute]: {
-    screen: connect(mapStateToProps)(DashboardScreen),
+    screen: connect(mapStateToProps, mapDispatchToProps)(DashboardScreen),
   },
 })
 

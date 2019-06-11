@@ -250,6 +250,7 @@ Object {
   "data": null,
   "error": null,
   "isLoading": true,
+  "newBadge": Object {},
 }
 `;
 
@@ -261,6 +262,7 @@ Object {
     "message": "Load History failed",
   },
   "isLoading": false,
+  "newBadge": Object {},
 }
 `;
 
@@ -504,6 +506,7 @@ Object {
   },
   "error": null,
   "isLoading": false,
+  "newBadge": Object {},
 }
 `;
 
@@ -565,6 +568,7 @@ Object {
   },
   "error": null,
   "isLoading": false,
+  "newBadge": Object {},
 }
 `;
 
@@ -573,5 +577,6 @@ Object {
   "data": null,
   "error": null,
   "isLoading": false,
+  "newBadge": Object {},
 }
 `;

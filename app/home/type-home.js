@@ -11,6 +11,7 @@ export type NewConnectionInstructionsProps = {
 
 export type ConnectionCardProps = {
   onPress: Function,
+  onNewConnectionSeen: Function,
   identifier: string,
   image: string,
   status: string,
@@ -18,7 +19,8 @@ export type ConnectionCardProps = {
   date: string,
   type: string,
   credentialName: string,
-  showBadge: boolean,
+  newBadge: boolean,
+  senderDID: string,
 } & ReactNavigation
 
 export type BubbleState = {

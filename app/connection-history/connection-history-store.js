@@ -88,7 +88,10 @@ import {
 import { CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
 import type { UserOneTimeInfo } from '../store/user/type-user-store'
 import { RESET } from '../common/type-common'
-import { CLAIM_OFFER_RECEIVED } from '../claim-offer/type-claim-offer'
+import {
+  CLAIM_OFFER_RECEIVED,
+  NEW_CONNECTION_SEEN,
+} from '../claim-offer/type-claim-offer'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import {
@@ -102,7 +105,13 @@ const initialState = {
   error: null,
   isLoading: false,
   data: null,
+  newBadge: {},
 }
+
+export const newConnectionSeen = (senderDid: string) => ({
+  type: NEW_CONNECTION_SEEN,
+  senderDid,
+})
 
 export const loadHistory = () => ({
   type: LOAD_HISTORY,
@@ -583,6 +592,24 @@ export default function connectionHistoryReducer(
         },
       }
     }
+
+    case NEW_CONNECTION_SEEN:
+      return {
+        ...state,
+        newBadge: {
+          [action.senderDid]: false,
+        },
+      }
+
+    case CLAIM_OFFER_RECEIVED:
+    case PROOF_REQUEST_RECEIVED:
+    case QUESTION_RECEIVED:
+      return {
+        ...state,
+        newBadge: {
+          [action.payloadInfo.remotePairwiseDID]: true,
+        },
+      }
 
     case RESET:
       return initialState
