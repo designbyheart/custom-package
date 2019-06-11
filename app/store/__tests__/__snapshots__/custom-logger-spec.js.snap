@@ -107,6 +107,7 @@ Object {
   "history": Object {
     "data": "****",
     "isLoading": true,
+    "newBadge": Object {},
   },
   "ledger": Object {
     "fees": Object {

@@ -229,6 +229,7 @@ export type ConnectionHistoryStore = {
   error?: ?CustomError,
   isLoading: boolean,
   data: ?ConnectionHistoryData,
+  newBadge: Object,
 }
 
 export const HISTORY_EVENT_STORAGE_KEY = 'HISTORY_EVENT_STORAGE_KEY'

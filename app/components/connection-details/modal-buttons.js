@@ -43,7 +43,9 @@ class ModalButtons extends React.Component<any, {}> {
           <TouchableOpacity
             style={[styles.buttonAccept, { backgroundColor: themeType }]}
             disabled={disableAccept}
-            onPress={this.debounceButtonPress}
+            onPress={() => {
+              this.debounceButtonPress()
+            }}
           >
             <View style={{ opacity: disableAccept ? 0.4 : 1 }}>
               <Text style={styles.accept}>{this.props.rightBtnText}</Text>

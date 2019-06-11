@@ -8,19 +8,10 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native'
-import type {
-  ConnectionCardProps,
-  ConnectionCardState,
-} from './type-connection-card'
+import type { ConnectionCardProps } from './type-connection-card'
 import { styles } from './styles'
 import { mediumGray } from '../../common/styles/constant'
-class ConnectionCard extends Component<
-  ConnectionCardProps,
-  ConnectionCardState
-> {
-  state = {
-    showBadge: this.props.showBadge,
-  }
+class ConnectionCard extends Component<ConnectionCardProps, void> {
   pad = (dateOrMonth: number) => {
     return dateOrMonth < 10 ? '0' + dateOrMonth : dateOrMonth
   }
@@ -120,7 +111,7 @@ class ConnectionCard extends Component<
     return statusMsg[status]
   }
   renderButtonSection = () => {
-    const { showBadge, date } = this.props
+    const { newBadge, date } = this.props
     const {
       dateSection,
       dateText,
@@ -131,7 +122,7 @@ class ConnectionCard extends Component<
       newLabelText,
     } = styles
 
-    if (!this.state.showBadge) {
+    if (!newBadge) {
       return (
         <View style={dateButtonSection}>
           <View style={dateSection}>
@@ -156,13 +147,15 @@ class ConnectionCard extends Component<
   render() {
     const {
       image,
-      showBadge,
       senderName,
       credentialName,
       type,
       status,
       onPress,
       question,
+      onNewConnectionSeen,
+      senderDID,
+      newBadge,
     } = this.props
     const {
       container,
@@ -181,9 +174,10 @@ class ConnectionCard extends Component<
 
     return (
       <TouchableOpacity
-        style={[container, this.state.showBadge ? newCardContainer : null]}
+        style={[container, newBadge ? newCardContainer : null]}
         onPress={() => {
-          this.setState({ showBadge: false }, onPress)
+          onPress()
+          onNewConnectionSeen(senderDID)
         }}
       >
         <View style={avatarSection}>

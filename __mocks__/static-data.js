@@ -1031,6 +1031,7 @@ export function getStore(store?: Store) {
             senderDID8: connectionHistory['February 2017'],
           },
           isLoading: true,
+          newBadge: {},
         },
         claimOffer: {
           vcxSerializedClaimOffers: {},
