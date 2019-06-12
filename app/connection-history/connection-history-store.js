@@ -603,11 +603,18 @@ export default function connectionHistoryReducer(
 
     case CLAIM_OFFER_RECEIVED:
     case PROOF_REQUEST_RECEIVED:
-    case QUESTION_RECEIVED:
       return {
         ...state,
         newBadge: {
           [action.payloadInfo.remotePairwiseDID]: true,
+        },
+      }
+
+    case QUESTION_RECEIVED:
+      return {
+        ...state,
+        newBadge: {
+          [action.question.remotePairwiseDID]: true,
         },
       }
 
