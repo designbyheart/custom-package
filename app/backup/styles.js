@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     fontSize: isBiggerThanShortDevice ? 20 : 18,
     lineHeight: isBiggerThanShortDevice ? 30 : 28,
     fontWeight: '900',
+    flexWrap: 'wrap',
   },
   genRecoveryText: {
     marginBottom: isBiggerThanShortDevice ? 10 : '2%',

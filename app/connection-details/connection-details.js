@@ -261,6 +261,12 @@ class ConnectionDetails extends Component<
                   showBadge={false}
                   showModal={this.showModal}
                   colorBackground={activeConnectionThemePrimary}
+                  uid={histForDid.originalPayload.uid}
+                  proof={true}
+                  navigation={this.props.navigation}
+                  claimMap={this.props.claimMap}
+                  data={histForDid.data}
+                  type={histForDid.action}
                 />
               )
               modalData.push(histForDid)

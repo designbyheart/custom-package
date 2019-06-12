@@ -192,6 +192,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
               null,
               Object {
                 "color": "#4A90E2",
+                "flexWrap": "wrap",
                 "fontSize": 18,
                 "fontWeight": "900",
                 "lineHeight": 28,

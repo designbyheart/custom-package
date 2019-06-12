@@ -10,6 +10,11 @@ import {
   Platform,
 } from 'react-native'
 import { Border } from '../../components/connection-details/border'
+import {
+  proofRequestRoute,
+  claimOfferRoute,
+  modalContentProofShared,
+} from '../../common'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
 class ConnectionCard extends React.Component<any, {}> {
@@ -18,7 +23,15 @@ class ConnectionCard extends React.Component<any, {}> {
     this.state = {}
   }
   updateAndShowModal = () => {
-    this.props.showModal(this.props.order)
+    if (this.props.proof) {
+      this.props.navigation.navigate(modalContentProofShared, {
+        uid: this.props.uid,
+        data: this.props.data,
+        claimMap: this.props.claimMap,
+      })
+    } else {
+      this.props.showModal(this.props.order)
+    }
   }
   render() {
     return (

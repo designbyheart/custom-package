@@ -32,6 +32,9 @@ export {
 } from './claim-proof-header/claim-proof-header'
 export { default as Separator } from './separator'
 export { default as FooterActions } from './footer-actions/footer-actions'
+export {
+  default as CustomListProofRequest,
+} from './custom-list/custom-list-proof-request'
 export { default as CustomList } from './custom-list/custom-list'
 export { default as CustomDate } from './custom-date/custom-date'
 export { default as UserAvatar } from './user-avatar/user-avatar'
