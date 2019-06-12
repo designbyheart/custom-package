@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2f2f2',
     width: '100%',
     position: 'relative',
+    paddingTop: 12,
   },
   title: {
     fontSize: 14,
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
     width: '85%',
   },
   avatarWrapper: {
+    marginTop: -10,
     width: '15%',
     alignItems: 'center',
     justifyContent: 'center',
