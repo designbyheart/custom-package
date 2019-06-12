@@ -33,10 +33,10 @@ export class CustomListProofRequest extends PureComponent<
 
     return (
       <View key={index} style={styles.wrapper}>
-        <Text style={styles.title}>{item.label}</Text>
         <View style={styles.textAvatarWrapper}>
           <View style={styles.textWrapper}>
-            <Text style={styles.titleFilledValues}>{item.data}</Text>
+            <Text style={styles.title}>{item.label}</Text>
+            <Text style={styles.content}>{item.data}</Text>
           </View>
           <View style={styles.avatarWrapper}>
             <Icon
@@ -75,36 +75,14 @@ export default connect(mapStateToProps)(CustomListProofRequest)
 
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1,
     backgroundColor: '#f2f2f2',
     width: '100%',
-    paddingTop: 12,
     position: 'relative',
-  },
-  textAvatarWrapper: {
-    flexDirection: 'row',
-    width: '100%',
-  },
-  textWrapper: {
-    width: '85%',
-  },
-  avatarWrapper: {
-    marginTop: -15,
-    width: '15%',
   },
   title: {
     fontSize: 14,
     fontWeight: '700',
     color: '#a5a5a5',
-    width: '100%',
-    textAlign: 'left',
-    marginBottom: 2,
-    fontFamily: 'Lato',
-  },
-  titleFilledValues: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#505050',
     width: '100%',
     textAlign: 'left',
     marginBottom: 2,
@@ -118,6 +96,18 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontFamily: 'Lato',
     paddingBottom: 12,
+  },
+  textAvatarWrapper: {
+    width: '98.5%',
+    flexDirection: 'row',
+  },
+  textWrapper: {
+    width: '85%',
+  },
+  avatarWrapper: {
+    width: '15%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   keyboardFlatList: {
     marginLeft: '5%',
