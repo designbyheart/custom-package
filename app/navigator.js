@@ -28,6 +28,7 @@ import ClaimOffer from './claim-offer/claim-offer'
 import ClaimOfferModal from './connection-details/components/claim-offer-modal'
 import ProofRequestScreen from './proof-request/proof-request'
 import ProofRequestModal from './connection-details/components/proof-request-modal'
+import ModalContentProofShared from './connection-details/components/modal-content-proof-shared'
 import InvitationScreen from './invitation/invitation'
 import ConnectionHistoryNavigator from './connection-history/connection-history-navigator'
 import SwitchEnvironmentScreen from './switch-environment/switch-environment'
@@ -85,6 +86,7 @@ import {
   discoverTabRoute,
   menuTabRoute,
   connectionHistRoute,
+  modalContentProofShared,
 } from './common/'
 import { color, font } from './common/styles'
 import WalletTabSendDetails from './wallet/wallet-tab-send-details'
@@ -360,6 +362,9 @@ const ConnectMeAppNavigator = createStackNavigator(
     [lockAuthorizationRoute]: { screen: LockAuthorization },
     [proofRequestRoute]: {
       screen: ProofRequestModal,
+    },
+    [modalContentProofShared]: {
+      screen: ModalContentProofShared,
     },
     [connectionHistoryRoute]: {
       screen: ConnectionHistoryNavigator,
