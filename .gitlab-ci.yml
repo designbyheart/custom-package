@@ -39,7 +39,8 @@ sync:
     - git remote add github git@github.com:evernym/ConnectMe.git
     - git push github master
 
-.build:
+### - iOS - ###
+.build-ios:
   stage: build
   tags:
     - macos
@@ -69,8 +70,8 @@ sync:
   after_script:
     - cat ./ios/react-native-xcode.sh.log
 
-build-merge-request:
-  extends: .build
+build-ios-merge-request:
+  extends: .build-ios
   before_script:
     - export HOCKEYAPP_TOKEN="${HOCKEYAPP_TOKEN_MERGE_REQUEST}"
   variables:
@@ -81,8 +82,8 @@ build-merge-request:
     refs:
       - merge_requests
 
-build-master:
-  extends: .build
+build-ios-master:
+  extends: .build-ios
   # Variable expansion doesn't work in `variables` section. Do it here instead.
   before_script:
     - export HOCKEYAPP_TOKEN="${HOCKEYAPP_TOKEN_MASTER}"
@@ -94,8 +95,8 @@ build-master:
     refs:
       - master@dev/connectme/ConnectMe
 
-build-stage:
-  extends: .build
+build-ios-stage:
+  extends: .build-ios
   before_script:
     - export HOCKEYAPP_TOKEN="${HOCKEYAPP_TOKEN_STAGE}"
   variables:
@@ -106,8 +107,8 @@ build-stage:
     refs:
       - stage@dev/connectme/ConnectMe
 
-build-stable:
-  extends: .build
+build-ios-stable:
+  extends: .build-ios
   before_script:
     - export HOCKEYAPP_TOKEN="${HOCKEYAPP_TOKEN_STABLE}"
   variables:
@@ -116,3 +117,27 @@ build-stable:
   only:
     refs:
       - stable@dev/connectme/ConnectMe
+
+### - Android - ###
+.build-android:
+  stage: build
+  tags:
+    - docker
+  image: bitriseio/android-ndk-lts
+  artifacts:
+    paths:
+      - android/app/build/outputs/apk/release/app-release.apk
+    expire_in: 1 week
+  script:
+    - mkdir -p $HOME/keystores/
+    - echo ${ANDROID_KEYSTORE_B64} | base64 -d > $HOME/keystores/my_keystore.jks
+    - yes | sdkmanager --licenses || true
+    - yarn
+    - gem install fastlane
+    - cd android && fastlane alpha
+
+build-android-merge-request:
+  extends: .build-android
+  only:
+    refs:
+      - merge_requests
