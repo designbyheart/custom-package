@@ -271,7 +271,20 @@ export function convertSelectedCredentialAttributesToIndyProof(
   const credentialFilledAttributes = Object.keys(userSelectedCredentials)
 
   return credentialFilledAttributes.reduce((acc, attributeKey) => {
+    // this will give us the credential which user selected to fulfill attribute
+    // the reason we are taking this from userSelectedCredentials is because
+    // user might have multiple credential that can fulfill an attribute
+    // but user can select only one of the credential to fulfill an attribute
     const selectedAttribute = userSelectedCredentials[attributeKey]
+    const selectedCredentialAttributes = selectedAttribute[2].cred_info.attrs
+    const caseInsensitiveMap = Object.keys(selectedCredentialAttributes).reduce(
+      (acc, attributeName) => ({
+        ...acc,
+        [attributeName.toLowerCase().replace(/ /g, '')]: attributeName,
+      }),
+      {}
+    )
+
     // we only have attribute key at this point, we can still get attribute name
     // but then we would have to do a lot of other mapping
     // we should still do that but for now we know that attribute keys are formed
@@ -279,28 +292,29 @@ export function convertSelectedCredentialAttributesToIndyProof(
     // so we are removing that last _<index> from attribute key and generating attribute name
     // We will remove this logic and have it work without below hack
     // when we will refactor whole proof generation logic
-    const caseInsensitiveMap = Object.keys(
-      selectedAttribute[2].cred_info.attrs
-    ).reduce(
-      (acc, attributeName) => ({
-        ...acc,
-        [attributeName.toLowerCase().replace(/ /g, '')]: attributeName,
-      }),
-      {}
-    )
     let attributeLabel = attributeKey.split('_')
     if (attributeLabel.length > 1) {
       attributeLabel = attributeLabel.slice(0, -1)
     }
     attributeLabel = attributeLabel.join('_')
+    let attributeValueFromCredential =
+      selectedCredentialAttributes[
+        caseInsensitiveMap[attributeLabel.toLowerCase().replace(/ /g, '')]
+      ]
+    // if we find that we did not get the value from credential
+    // then attributeLabel must be wrong because this credential
+    // was selected by user then that means at time of cred selection
+    // it had value. So, we try to get value with attribute key now
+    if (!attributeValueFromCredential) {
+      attributeValueFromCredential =
+        selectedCredentialAttributes[
+          caseInsensitiveMap[attributeKey.toLowerCase().replace(/ /g, '')]
+        ]
+    }
+
     return {
       ...acc,
-      [attributeKey]: [
-        selectedAttribute[0],
-        selectedAttribute[2].cred_info.attrs[
-          caseInsensitiveMap[attributeLabel.toLowerCase().replace(/ /g, '')]
-        ],
-      ],
+      [attributeKey]: [selectedAttribute[0], attributeValueFromCredential],
     }
   }, {})
 }
