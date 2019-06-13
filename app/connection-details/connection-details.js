@@ -144,52 +144,9 @@ class ConnectionDetails extends Component<
       useNativeDriver: true,
     }).start()
   }
-  showModal = order => {
-    this.setState({ modalDataOrder: order })
-    Animated.parallel([
-      Animated.timing(this.state.moveModal, {
-        toValue: 0,
-        duration: 1,
-        useNativeDriver: true,
-      }),
-      Animated.timing(this.state.fadeInOut, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(this.state.moveModalHeight, {
-        toValue: 0,
-        duration: 400,
-        useNativeDriver: true,
-      }),
-    ]).start()
-  }
-  hideModal = () => {
-    Animated.sequence([
-      Animated.parallel([
-        Animated.timing(this.state.fadeInOut, {
-          toValue: 0,
-          duration: 400,
-          useNativeDriver: true,
-        }),
-        Animated.timing(this.state.moveModalHeight, {
-          toValue: ScreenHeight,
-          duration: 200,
-          useNativeDriver: true,
-        }),
-      ]),
-      Animated.timing(this.state.moveModal, {
-        toValue: ScreenHeight,
-        duration: 1,
-        useNativeDriver: true,
-      }),
-    ]).start()
-  }
 
   render() {
     let arrayUI = []
-
-    let modalData = []
 
     if (this.props.navigation.state) {
       const {
@@ -239,7 +196,6 @@ class ConnectionDetails extends Component<
               const shared = (
                 <ConnectionCard
                   key={historyIndex}
-                  order={historyIndex}
                   messageDate={
                     moment(histForDid.timestamp)
                       .format('DD MMM YYYY')
@@ -259,7 +215,6 @@ class ConnectionDetails extends Component<
                   noOfAttributes={histForDid.data.length}
                   buttonText={'VIEW REQUEST DETAILS'}
                   showBadge={false}
-                  showModal={this.showModal}
                   colorBackground={activeConnectionThemePrimary}
                   uid={histForDid.originalPayload.uid}
                   proof={true}
@@ -269,7 +224,6 @@ class ConnectionDetails extends Component<
                   type={histForDid.action}
                 />
               )
-              modalData.push(histForDid)
               arrayUI.push(shared)
             }
             if (histForDid.action === 'PROOF RECEIVED') {
@@ -294,16 +248,13 @@ class ConnectionDetails extends Component<
                     histForDid.originalPayload.payload.requester.name +
                     ' wants you to share the following:'
                   }
-                  order={historyIndex}
                   messageContent={attributesText}
                   showButtons={true}
-                  showModal={this.showModal}
                   navigation={this.props.navigation}
                   proof={true}
                   colorBackground={activeConnectionThemePrimary}
                 />
               )
-              modalData.push('')
               arrayUI.push(proof)
             }
 
@@ -322,7 +273,6 @@ class ConnectionDetails extends Component<
                   content={'ISSUING - PLEASE WAIT'}
                 />
               )
-              modalData.push(histForDid)
               arrayUI.push(pending)
             }
 
@@ -337,7 +287,6 @@ class ConnectionDetails extends Component<
                     ' | ' +
                     moment(histForDid.timestamp).format('h:mm A')
                   }
-                  order={historyIndex}
                   headerText={histForDid.name}
                   infoType={'ACCEPTED CREDENTIAL'}
                   infoDate={moment(histForDid.timestamp)
@@ -346,11 +295,18 @@ class ConnectionDetails extends Component<
                   noOfAttributes={histForDid.data.length}
                   buttonText={'VIEW CREDENTIAL'}
                   showBadge={true}
-                  showModal={this.showModal}
                   colorBackground={activeConnectionThemePrimary}
+                  navigation={this.props.navigation}
+                  received={true}
+                  data={histForDid}
+                  imageUrl={this.props.navigation.state.params.image}
+                  institutialName={
+                    this.props.navigation.state.params.senderName
+                  }
+                  colorBackground={activeConnectionThemePrimary}
+                  secondColorBackground={activeConnectionThemeSecondary}
                 />
               )
-              modalData.push(histForDid)
               arrayUI.push(received)
             }
             if (histForDid.action === 'QUESTION_RECEIVED') {
@@ -373,7 +329,6 @@ class ConnectionDetails extends Component<
                   colorBackground={activeConnectionThemePrimary}
                 />
               )
-              modalData.push(histForDid)
               arrayUI.push(questionReceived)
             }
             if (histForDid.action === 'UPDATE_QUESTION_ANSWER') {
@@ -395,7 +350,6 @@ class ConnectionDetails extends Component<
                   navigation={this.props.navigation}
                 />
               )
-              modalData.push(histForDid)
               arrayUI.push(updateQuestionAnswer)
             }
 
@@ -414,13 +368,11 @@ class ConnectionDetails extends Component<
                   order={historyIndex}
                   messageContent={histForDid.name}
                   showButtons={true}
-                  showModal={this.showModal}
                   uid={histForDid.originalPayload.payloadInfo.uid}
                   navigation={this.props.navigation}
                   colorBackground={activeConnectionThemePrimary}
                 />
               )
-              modalData.push(histForDid)
               arrayUI.push(claimOfferReceived)
             }
           }
@@ -470,36 +422,6 @@ class ConnectionDetails extends Component<
               blurAmount={8}
             />
           ) : null}
-          <Animated.View
-            style={[
-              styles.outerModalWrapper,
-              {
-                transform: [{ translateY: this.state.moveModal }],
-                opacity: this.state.fadeInOut,
-              },
-            ]}
-          >
-            <Animated.View
-              style={[
-                styles.innerModalWrapper,
-                { transform: [{ translateY: this.state.moveModalHeight }] },
-              ]}
-            >
-              {modalData[this.state.modalDataOrder] ? (
-                <Modal
-                  hideModal={this.hideModal}
-                  updatePosition={this.updatePosition}
-                  data={modalData[this.state.modalDataOrder]}
-                  imageUrl={this.props.navigation.state.params.image}
-                  institutialName={
-                    this.props.navigation.state.params.senderName
-                  }
-                  colorBackground={activeConnectionThemePrimary}
-                  secondColorBackground={activeConnectionThemeSecondary}
-                />
-              ) : null}
-            </Animated.View>
-          </Animated.View>
         </View>
       )
     } else {

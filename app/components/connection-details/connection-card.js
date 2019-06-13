@@ -14,6 +14,7 @@ import {
   proofRequestRoute,
   claimOfferRoute,
   modalContentProofShared,
+  modalScreenRoute,
 } from '../../common'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
@@ -30,7 +31,13 @@ class ConnectionCard extends React.Component<any, {}> {
         claimMap: this.props.claimMap,
       })
     } else {
-      this.props.showModal(this.props.order)
+      this.props.navigation.navigate(modalScreenRoute, {
+        data: this.props.data,
+        imageUrl: this.props.imageUrl,
+        institutialName: this.props.institutialName,
+        colorBackground: this.props.colorBackground,
+        secondColorBackground: this.props.secondColorBackground,
+      })
     }
   }
   render() {

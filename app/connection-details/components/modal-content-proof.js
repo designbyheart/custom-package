@@ -367,28 +367,6 @@ class ModalContentProof extends PureComponent<
 
   componentWillReceiveProps(nextProps: ProofRequestProps) {
     if (
-      this.props.data &&
-      this.props.data.requestedAttributes !== nextProps.data.requestedAttributes
-    ) {
-      const selectedClaims = nextProps.data.requestedAttributes.reduce(
-        (acc, item) => {
-          const items = { ...acc }
-          if (Array.isArray(item)) {
-            if (item[0].claimUuid) {
-              items[`${item[0].key}`] = [
-                item[0].claimUuid,
-                true,
-                item[0].cred_info,
-              ]
-            }
-          }
-          return items
-        },
-        {}
-      )
-      this.setState({ selectedClaims })
-    }
-    if (
       this.props.missingAttributes !== nextProps.missingAttributes &&
       hasMissingAttributes(nextProps.missingAttributes)
     ) {
@@ -448,6 +426,28 @@ class ModalContentProof extends PureComponent<
         )
       }, 300)
     }
+    if (
+      this.props.data &&
+      this.props.data.requestedAttributes !== nextProps.data.requestedAttributes
+    ) {
+      const selectedClaims = nextProps.data.requestedAttributes.reduce(
+        (acc, item) => {
+          const items = { ...acc }
+          if (Array.isArray(item)) {
+            if (item[0].claimUuid) {
+              items[`${item[0].key}`] = [
+                item[0].claimUuid,
+                true,
+                item[0].cred_info,
+              ]
+            }
+          }
+          return items
+        },
+        {}
+      )
+      this.setState({ selectedClaims })
+    }
   }
 
   updateSelectedClaims = (item: Attribute) => {
@@ -492,7 +492,6 @@ class ModalContentProof extends PureComponent<
   componentDidMount() {
     this.props.proofRequestShown(this.props.uid)
     this.props.getProof(this.props.uid)
-    this.updateFirstTimeClaim()
   }
   onIgnore = () => {
     this.props.newConnectionSeen(this.props.remotePairwiseDID)

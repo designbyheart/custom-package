@@ -1,6 +1,13 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { View, TouchableOpacity, ScrollView, StyleSheet } from 'react-native'
+import {
+  View,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  Dimensions,
+  Animated,
+} from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ModalHeader } from './modal-header'
@@ -25,23 +32,74 @@ import type {
   ClaimOfferAttributeListProps,
   ClaimOfferState,
 } from '../../claim-offer/type-claim-offer'
-
+let ScreenHeight = Dimensions.get('window').height
+let ScreenWidth = Dimensions.get('window').width
 // TODO: Fix the <any, {}> to be the correct types for props and state
-class Modal extends PureComponent<any, {}> {
+class Modal extends PureComponent<any, any> {
   constructor(props: any) {
     super(props)
-    this.state = {}
+    this.state = {
+      moveMoreOptions: new Animated.Value(ScreenWidth),
+      fadeInOut: new Animated.Value(0),
+      moveModal: new Animated.Value(ScreenHeight),
+      moveModalHeight: new Animated.Value(ScreenHeight),
+      positionValue: new Animated.Value(0),
+    }
     this.onAccept = this.onAccept.bind(this)
   }
-
-  handleScroll = event => {
+  handleScroll = (event: any) => {
     if (event.nativeEvent.contentOffset.y < -100) {
       this.props.updatePosition(event.nativeEvent.contentOffset.y)
-      this.props.hideModal()
+      this.hideModal()
     }
   }
+  updatePosition = value => {
+    Animated.timing(this.state.positionValue, {
+      toValue: value,
+      duration: 1,
+      useNativeDriver: true,
+    }).start()
+  }
+
+  moreOptionsClose = () => {
+    Animated.timing(this.state.moveMoreOptions, {
+      toValue: ScreenWidth,
+      duration: 1,
+      useNativeDriver: true,
+    }).start()
+  }
+  moreOptionsOpen = () => {
+    Animated.timing(this.state.moveMoreOptions, {
+      toValue: 0,
+      duration: 1,
+      useNativeDriver: true,
+    }).start()
+  }
+  showModal = () => {
+    Animated.parallel([
+      Animated.timing(this.state.moveModal, {
+        toValue: 0,
+        duration: 1,
+        useNativeDriver: true,
+      }),
+      Animated.timing(this.state.fadeInOut, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(this.state.moveModalHeight, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+    ]).start()
+  }
+  hideModal = () => {
+    this.props.navigation.goBack(null)
+  }
+
   onIgnore = () => {
-    this.props.hideModal()
+    this.hideModal()
     this.setState(() =>
       this.props.claimOfferIgnored(
         this.props.data.originalPayload.payloadInfo.uid
@@ -49,11 +107,11 @@ class Modal extends PureComponent<any, {}> {
     )
   }
   onClose = () => {
-    this.props.hideModal()
+    this.hideModal()
   }
 
   onAccept = () => {
-    this.props.hideModal()
+    this.hideModal()
     this.setState(() =>
       this.props.acceptClaimOffer(
         this.props.data.originalPayload.payloadInfo.uid
@@ -80,25 +138,22 @@ class Modal extends PureComponent<any, {}> {
       case 'SHARED':
         return (
           <ModalContent
-            content={this.props.data.data}
-            imageUrl={this.props.imageUrl}
+            content={data.data}
+            imageUrl={data.imageUrl}
             showSidePicture={true}
           />
         )
       case 'RECEIVED':
-        return (
-          <ModalContent
-            content={this.props.data.data}
-            imageUrl={this.props.imageUrl}
-          />
-        )
+        return <ModalContent content={data.data} imageUrl={data.imageUrl} />
       case 'PROOF RECEIVED':
         return (
           <ModalContentProof
-            content={this.props.data.data}
-            uid={this.props.data.originalPayload.payloadInfo.uid}
-            colorBackground={this.props.colorBackground}
-            secondColorBackground={this.props.secondColorBackground}
+            content={data.data}
+            uid={data.originalPayload.payloadInfo.uid}
+            colorBackground={this.props.navigation.state.params.colorBackground}
+            secondColorBackground={
+              this.props.navigation.state.params.secondColorBackground
+            }
             hideModal={() => this.onClose()}
           />
         )
@@ -112,8 +167,10 @@ class Modal extends PureComponent<any, {}> {
           <ModalButtons
             onPress={() => this.onAccept()}
             onIgnore={() => this.onIgnore()}
-            colorBackground={this.props.colorBackground}
-            secondColorBackground={this.props.secondColorBackground}
+            colorBackground={this.props.navigation.state.params.colorBackground}
+            secondColorBackground={
+              this.props.navigation.state.params.secondColorBackground
+            }
             leftBtnText={'Ignore'}
             rightBtnText={'Accept'}
           />
@@ -123,39 +180,70 @@ class Modal extends PureComponent<any, {}> {
         return (
           <ModalButton
             onClose={() => this.onClose()}
-            colorBackground={this.props.colorBackground}
+            colorBackground={this.props.navigation.state.params.colorBackground}
           />
         )
       default:
     }
   }
   render() {
-    const { imageUrl } = this.props
-
+    const {
+      colorBackground,
+      institutialName,
+      imageUrl,
+      secondColorBackground,
+    } = this.props.navigation.state.params
+    const { data } = this.props.navigation.state.params
+    this.showModal()
     return (
-      <ScrollView
-        onScrollEndDrag={this.handleScroll}
-        scrollEventThrottle={15}
-        bounces={false}
+      <Animated.View
+        style={[
+          styles.outerAnimatedWrapper,
+          {
+            transform: [{ translateY: this.state.moveModal }],
+            opacity: this.state.fadeInOut,
+          },
+        ]}
       >
-        <TouchableOpacity
-          style={styles.touchable}
-          onPress={this.props.hideModal}
+        <Animated.View
+          style={{
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transform: [{ translateY: this.state.moveModalHeight }],
+          }}
+          style={[
+            styles.innerAnimatedWrapper,
+            { transform: [{ translateY: this.state.moveModal }] },
+          ]}
         >
-          <View style={styles.helperWrapper} />
-        </TouchableOpacity>
-        <View style={styles.modalWrapper}>
-          <ModalHeader
-            institutialName={this.props.institutialName}
-            credentialName={this.props.data.name}
-            credentialText={this.renderText(this.props.data.action)}
-            imageUrl={imageUrl}
-            colorBackground={this.props.colorBackground}
-          />
-          {this.renderModalContent(this.props.data)}
-          {this.renderButtons(this.props.data)}
-        </View>
-      </ScrollView>
+          <ScrollView
+            onScrollEndDrag={this.handleScroll}
+            scrollEventThrottle={15}
+            bounces={false}
+          >
+            <TouchableOpacity
+              style={styles.touchable}
+              onPress={this.props.hideModal}
+            >
+              <View style={styles.helperWrapper} />
+            </TouchableOpacity>
+            <View style={styles.modalWrapper}>
+              <ModalHeader
+                institutialName={institutialName}
+                credentialName={data.name}
+                credentialText={this.renderText(data.action)}
+                imageUrl={imageUrl}
+                colorBackground={
+                  this.props.navigation.state.params.colorBackground
+                }
+              />
+              {this.renderModalContent(data)}
+              {this.renderButtons(data)}
+            </View>
+          </ScrollView>
+        </Animated.View>
+      </Animated.View>
     )
   }
 }
@@ -195,5 +283,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     height: measurements.WINDOW_HEIGHT * 0.85,
+  },
+  outerAnimatedWrapper: {
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    width: ScreenWidth,
+    height: ScreenHeight,
+    position: 'absolute',
+    // top: this.state.moveModal,
+    // left: 0,
+    zIndex: 999,
+    elevation: 20,
+  },
+  innerAnimatedWrapper: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
