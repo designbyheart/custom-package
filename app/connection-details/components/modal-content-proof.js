@@ -187,7 +187,7 @@ class ProofRequestAttributeList extends PureComponent<
             adjustedLabel in this.props.missingAttributes && !item.data
 
           return (
-            <View key={index} style={styles.wrapper}>
+            <View key={itemIndex} style={styles.wrapper}>
               <Text style={styles.title}>{item.label}</Text>
               <View style={styles.textAvatarWrapper}>
                 <View style={styles.textWrapper}>
@@ -339,6 +339,9 @@ class ModalContentProof extends PureComponent<
 > {
   constructor(props) {
     super(props)
+    if (this.props.uid) {
+      props.proofRequestShowStart(this.props.uid)
+    }
     this.state = {
       allMissingAttributesFilled: false,
       generateProofClicked: false,
