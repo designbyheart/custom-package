@@ -43,6 +43,7 @@ import { pushNotificationPermissionAction } from '../push-notification/push-noti
 import { safeGet, safeSet } from '../services/storage'
 import { PIN_ENABLED_KEY, IN_RECOVERY } from '../lock/type-lock'
 import { captureError } from '../services/error/error-handler'
+import { customLogger } from '../store/custom-logger'
 
 export const saveFileToAppDirectory = (data: SaveToAppDirectory) => ({
   type: SAVE_FILE_TO_APP_DIRECTORY,
@@ -123,18 +124,25 @@ export function* restoreFileDecrypt(
     yield* hydrate()
     // hydrate data in secure storage which is not put in store by hydrate saga
     yield fork(hydrateNonReduxData)
-    //Push Notification permissions are asked when we do our first connection
 
-    //but in this case if connections are imported from backup then that case is missed
-    //since connection is already there
-
-    // so after push token update
-    // we need to do requestPermission or else push notifications won't come
-    const requestPushNotificationPermission = () => {
-      firebase.messaging().requestPermission()
+    try {
+      //Push Notification permissions are asked when we do our first connection
+      //but in this case if connections are imported from backup then that case is missed
+      //since connection is already there
+      // so after push token update
+      // we need to do requestPermission or else push notifications won't come
+      const requestPushNotificationPermission = () => {
+        firebase.messaging().requestPermission()
+      }
+      yield call(requestPushNotificationPermission)
+      yield put(pushNotificationPermissionAction(true))
+    } catch (e) {
+      // even if we user does not give permission for push notification
+      // we should not be stopping from restore success event
+      customLogger.log(
+        'Push notification permission failed while restoring backup'
+      )
     }
-    yield call(requestPushNotificationPermission)
-    yield put(pushNotificationPermissionAction(true))
     yield put(restoreStatus(RestoreStatus.RESTORE_DATA_STORE_SUCCESS))
   } catch (e) {
     captureError(e)
