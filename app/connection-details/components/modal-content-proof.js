@@ -236,6 +236,7 @@ class ProofRequestAttributeList extends PureComponent<
     const attributes: Array<Attribute> = this.props.list
     return (
       <KeyboardAwareFlatList
+        enableOnAndroid
         style={styles.keyboardFlatList}
         data={attributes}
         keyExtractor={this.keyExtractor}
