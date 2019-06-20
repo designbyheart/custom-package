@@ -24,6 +24,7 @@ import {
   BACKUP_COMPLETE_SUBMIT_BUTTON_TITLE,
 } from './backup-constants'
 import styles from './styles'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const transparentBands = require('../images/transparentBands.png')
 const closeImage = require('../images/iconClose.png')
@@ -123,6 +124,6 @@ export class BackupComplete extends PureComponent<BackupCompleteProps, void> {
 
 export default createStackNavigator({
   [backupCompleteRoute]: {
-    screen: BackupComplete,
+    screen: withStatusBar({ color: color.bg.fourteenth.color })(BackupComplete),
   },
 })

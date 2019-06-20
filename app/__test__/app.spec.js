@@ -19,16 +19,9 @@ import store from './../store'
 describe('<App/>', () => {
   describe('in ios environment.', () => {
     let tree = null
-    let spySetBackgroundColor = null
 
     beforeAll(() => {
-      spySetBackgroundColor = jest.spyOn(StatusBar, 'setBackgroundColor')
       tree = renderer.create(<ConnectMeApp />)
-    })
-
-    afterEach(() => {
-      spySetBackgroundColor && spySetBackgroundColor.mockReset()
-      spySetBackgroundColor && spySetBackgroundColor.mockRestore()
     })
 
     it('should render properly and snapshot should match', () => {
@@ -38,17 +31,12 @@ describe('<App/>', () => {
     it(`should not call BackHandler addEventListner`, () => {
       expect(BackHandler.addEventListener).not.toHaveBeenCalled()
     })
-
-    it('should not call setBackgroundColor', () => {
-      expect(spySetBackgroundColor).not.toHaveBeenCalled()
-    })
   })
+
   describe('in android environment.', () => {
     let tree = null
-    let spySetBackgroundColor = null
 
     beforeEach(() => {
-      spySetBackgroundColor = jest.spyOn(StatusBar, 'setBackgroundColor')
       const platform = jest.mock('Platform', () => {
         const Platform = jest.requireActual('Platform')
         Platform.OS = 'android'
@@ -57,18 +45,10 @@ describe('<App/>', () => {
       tree = renderer.create(<ConnectMeApp />)
     })
 
-    afterEach(() => {
-      spySetBackgroundColor && spySetBackgroundColor.mockReset()
-      spySetBackgroundColor && spySetBackgroundColor.mockRestore()
-    })
-
     it(`should have been called BackHandler addEventListner`, () => {
       expect(BackHandler.addEventListener).toHaveBeenCalled()
     })
 
-    it('should have been called setBackgroundColor', () => {
-      expect(spySetBackgroundColor).toHaveBeenCalled()
-    })
     it(`should call BackHandler.removeEventListener before unmount`, () => {
       let instance = tree && tree.root && tree.root.instance
       instance && instance.componentWillUnmount()
@@ -83,6 +63,7 @@ describe('<App/>', () => {
       }
       expect(instance && instance.handleBackButtonClick()).toBe(false)
     })
+
     // lockPinSetupHomeRoute
     it(`should redirect to settingsTab screen if user has pressed back button from lockPinSetup screen if user has already setup `, () => {
       let instance = tree && tree.root && tree.root.instance
@@ -113,6 +94,7 @@ describe('<App/>', () => {
       dispatch.mockReset()
       dispatch.mockRestore()
     })
+
     it(`should call onAvoid method if user has pressed back button in lockAuthorization screen`, () => {
       let instance = tree && tree.root && tree.root.instance
       const onAvoid = jest.fn()

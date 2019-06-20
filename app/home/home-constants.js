@@ -1,8 +1,8 @@
 // @flow
 
 export const FEEDBACK_TEST_ID = 'home-feedback-id-label'
-export const SOVRINTOKEN_TEST_ID = 'home-sovrintoken-id-label'
-export const SOVRINTOKEN_AMOUNT_TEST_ID = 'home-sovrintoken-amount'
+export const SOVRIN_TOKEN_TEST_ID = 'home-sovrintoken-id-label'
+export const SOVRIN_TOKEN_AMOUNT_TEST_ID = 'home-sovrintoken-amount'
 
 export const HOW_IT_WORKS =
   'You now have a digital wallet! Want to see how it works?'

@@ -22,6 +22,7 @@ export type ChangeEnvironment = {
   poolConfig: string,
   agencyDID: string,
   agencyVerificationKey: string,
+  paymentHandle: string,
 }
 
 export const CONNECT_REGISTER_CREATE_AGENT_DONE =

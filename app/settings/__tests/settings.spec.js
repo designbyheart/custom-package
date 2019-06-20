@@ -282,12 +282,12 @@ describe('user settings screen', () => {
     ).toBe(true)
   })
 
-  it('navigation optioons should match snapshot when navigatioon state index is 0', () => {
+  it('navigation options should match snapshot when navigation state index is 0', () => {
     const navigation = { state: { index: 0 } }
     expect(SettingsStack.navigationOptions({ navigation })).toMatchSnapshot()
   })
 
-  it('navigation optioons should match snapshot when navigatioon state index is 1', () => {
+  it('navigation options should match snapshot when navigation state index is 1', () => {
     const navigation = { state: { index: 1 } }
     expect(SettingsStack.navigationOptions({ navigation })).toMatchSnapshot()
   })

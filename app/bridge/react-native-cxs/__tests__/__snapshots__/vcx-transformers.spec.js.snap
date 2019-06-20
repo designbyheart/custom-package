@@ -7,6 +7,7 @@ Object {
   "agency_verkey": "VCNhKASjLU5tVWnZpjcyEsoV1QC3adrPVMCCjeKMobn",
   "agent_seed": null,
   "enterprise_seed": null,
+  "payment_method": "sov",
   "wallet_key": "walletKey",
   "wallet_name": "walletName",
 }
@@ -26,6 +27,7 @@ Object {
   "institution_logo_url": "https://robothash.com/logo.png",
   "institution_name": "some-random-name",
   "institution_verkey": "oneTimeAgencyVerKey",
+  "payment_method": "sov",
   "pool_name": "poolName",
   "remote_to_sdk_did": "myOneTimeAgentDid",
   "remote_to_sdk_verkey": "myOneTimeAgentVerificationKey",

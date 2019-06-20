@@ -6,12 +6,14 @@ export type SwitchEnvironmentProps = {
     agencyUrl: string,
     agencyDID: string,
     agencyVerificationKey: string,
-    poolConfig: string
+    poolConfig: string,
+    paymentMethod: string
   ) => void,
   agencyDID: string,
   agencyVerificationKey: string,
   agencyUrl: string,
   poolConfig: string,
+  paymentMethod: string,
   disableDevMode: () => void,
 } & ReactNavigation
 
@@ -20,4 +22,5 @@ export type SwitchEnvironmentState = {
   agencyVerificationKey: string,
   agencyUrl: string,
   poolConfig: string,
+  paymentMethod: string,
 }

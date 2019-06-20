@@ -31,7 +31,6 @@ describe('<LedgerFeesModalComponent />', () => {
       onNo: jest.fn(),
       getLedgerFees: jest.fn(),
       resetLedgerFees: jest.fn(),
-      isVisible: true,
       ledgerFees,
       walletBalance: '0',
       ...props,

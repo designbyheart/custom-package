@@ -45,6 +45,7 @@ import { CONNECTION_ALREADY_EXIST } from './type-connection-details'
 
 import type { ReactNavigation } from '../common/type-common'
 import { getConnection, getConnectionTheme } from '../store/store-selector'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 let ScreenHeight = Dimensions.get('window').height
 let ScreenWidth = Dimensions.get('window').width
@@ -458,7 +459,9 @@ const mapStateToProps = (state: Store, props: ReactNavigation) => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ updateStatusBarTheme }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConnectionDetails)
+export default withStatusBar()(
+  connect(mapStateToProps, mapDispatchToProps)(ConnectionDetails)
+)
 
 const styles = StyleSheet.create({
   safeAreaContainer: {

@@ -140,7 +140,8 @@ export type LockSelectionProps = {
     agencyUrl: string,
     agencyDID: string,
     agencyVerificationKey: string,
-    poolConfig: string
+    poolConfig: string,
+    paymentMethod: string
   ) => void,
 } & ReactNavigation
 

@@ -29,6 +29,7 @@ import {
   ERROR_INVITATION_RESPONSE_FAILED,
   ERROR_ALREADY_EXIST_TITLE,
 } from '../api/api-constants'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class Invitation extends PureComponent<InvitationProps, void> {
   render() {
@@ -49,11 +50,6 @@ export class Invitation extends PureComponent<InvitationProps, void> {
     if (isLoading(this.props)) {
       return (
         <Container center fifth>
-          <StatusBar
-            barStyle={barStyleDark}
-            animated={true}
-            backgroundColor={color.bg.fifth.color}
-          />
           <Loader type="dark" showMessage={true} message={'Connecting...'} />
         </Container>
       )
@@ -61,11 +57,6 @@ export class Invitation extends PureComponent<InvitationProps, void> {
 
     return (
       <Container>
-        <StatusBar
-          barStyle={barStyleDark}
-          animated={true}
-          backgroundColor={color.bg.fifth.color}
-        />
         <Request
           title={title}
           message={message}
@@ -226,4 +217,6 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(Invitation)
+export default withStatusBar({ color: color.bg.fifth.color })(
+  connect(mapStateToProps, mapDispatchToProps)(Invitation)
+)

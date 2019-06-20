@@ -28,6 +28,7 @@ import { ListItem } from 'react-native-elements'
 import PrivacyTNC from '../privacy-tnc/privacy-tnc-screen'
 import type { Store } from '../store/type-store'
 import { getEnvironmentName } from '../store/config-store'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const styles = StyleSheet.create({
   headerLeft: {
@@ -174,4 +175,4 @@ const mapStateToProps = (state: Store) => ({
   environmentName: getEnvironmentName(state.config),
 })
 
-export default connect(mapStateToProps)(AboutApp)
+export default withStatusBar()(connect(mapStateToProps)(AboutApp))

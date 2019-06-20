@@ -21,6 +21,7 @@ import WalletBalance from './wallet-balance'
 import WalletTabs from './wallet-tabs'
 import type { WalletProps } from './type-wallet'
 import styles from './styles'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const closeImage = require('../images/iconClose.png')
 const sovrinLogo = require('../images/sovrinLogo.png')
@@ -142,6 +143,6 @@ export class Wallet extends PureComponent<WalletProps, void> {
 
 export default createStackNavigator({
   [walletRoute]: {
-    screen: Wallet,
+    screen: withStatusBar({ color: color.actions.font.seventh })(Wallet),
   },
 })

@@ -23,6 +23,7 @@ import type {
 import { baseUrls } from '../store/config-store'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const styles = StyleSheet.create({
   TextInput: {
@@ -46,6 +47,7 @@ class SwitchEnvironment extends PureComponent<
     agencyVerificationKey: '',
     agencyUrl: '',
     poolConfig: '',
+    paymentMethod: '',
   }
 
   onSave = () => {
@@ -54,13 +56,15 @@ class SwitchEnvironment extends PureComponent<
       agencyVerificationKey,
       agencyUrl,
       poolConfig,
+      paymentMethod,
     } = this.state
 
     this.props.changeEnvironment(
       agencyUrl,
       agencyDID,
       agencyVerificationKey,
-      poolConfig
+      poolConfig,
+      paymentMethod
     )
     this.props.navigation.goBack()
   }
@@ -76,9 +80,16 @@ class SwitchEnvironment extends PureComponent<
       agencyVerificationKey,
       disableDevMode,
       poolConfig,
+      paymentMethod,
     } = this.props
     disableDevMode()
-    this.setState({ agencyDID, agencyUrl, agencyVerificationKey, poolConfig })
+    this.setState({
+      agencyDID,
+      agencyUrl,
+      agencyVerificationKey,
+      poolConfig,
+      paymentMethod,
+    })
   }
 
   onSwitchTap = (environment: string) => {
@@ -233,6 +244,24 @@ class SwitchEnvironment extends PureComponent<
               autoCorrect={false}
               underlineColorAndroid="transparent"
             />
+            <CustomText
+              h7
+              uppercase
+              bold
+              bg="tertiary"
+              transparentBg
+              style={styles.label}
+            >
+              {'Payment Method'}
+            </CustomText>
+            <TextInput
+              style={styles.TextInput}
+              onChangeText={paymentMethod => this.setState({ paymentMethod })}
+              value={this.state.paymentMethod}
+              testID="text-input-paymentMethod"
+              autoCorrect={false}
+              underlineColorAndroid="transparent"
+            />
           </KeyboardAwareScrollView>
         </Container>
         <FooterActions
@@ -253,6 +282,7 @@ const mapStateToProps = ({ config }: Store) => {
     agencyDID: config.agencyDID,
     agencyVerificationKey: config.agencyVerificationKey,
     poolConfig: config.poolConfig,
+    paymentMethod: config.paymentMethod,
   }
 }
 
@@ -265,7 +295,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(SwitchEnvironment)
+export default withStatusBar()(
+  connect(mapStateToProps, mapDispatchToProps)(SwitchEnvironment)
+)
 
 const style = StyleSheet.create({
   buttonGroup: {

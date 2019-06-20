@@ -24,6 +24,7 @@ import { color } from '../common/styles/constant'
 import { LoaderGif } from '../components/loader-gif/loader-gif'
 import type { EulaScreenState } from './type-eula'
 import type { CustomError } from '../common/type-common'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class EulaScreen extends PureComponent<*, EulaScreenState> {
   state = {
@@ -101,6 +102,8 @@ const mapDispatchToProps = dispatch =>
 
 export default createStackNavigator({
   [eulaRoute]: {
-    screen: connect(mapStateToProps, mapDispatchToProps)(EulaScreen),
+    screen: withStatusBar()(
+      connect(mapStateToProps, mapDispatchToProps)(EulaScreen)
+    ),
   },
 })

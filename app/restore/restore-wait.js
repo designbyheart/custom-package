@@ -9,6 +9,7 @@ import { restoreRoute, restoreWaitRoute, lockEnterPinRoute } from '../common'
 import type { RestoreWaitScreenProps } from './type-restore'
 import type { Store } from '../store/type-store'
 import { RestoreStatus } from './type-restore'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class RestoreWaitScreen extends PureComponent<
   RestoreWaitScreenProps,
@@ -110,4 +111,6 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-export default connect(mapStateToProps, null)(RestoreWaitScreen)
+export default withStatusBar()(
+  connect(mapStateToProps, null)(RestoreWaitScreen)
+)

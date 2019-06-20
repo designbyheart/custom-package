@@ -37,6 +37,7 @@ import {
 import styles, { chatBubbleTextOffset } from './styles'
 import { getBackupPassphrase, getBackupStatus } from '../store/store-selector'
 import { PASSPHRASE_GENERATION_ERROR } from '../common'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const closeImage = require('../images/iconClose.png')
 const transparentBands = require('../images/transparentBands.png')
@@ -268,8 +269,8 @@ const mapDispatchToProps = dispatch =>
 
 export default createStackNavigator({
   [genRecoveryPhraseRoute]: {
-    screen: connect(mapStateToProps, mapDispatchToProps)(
-      GenerateRecoveryPhrase
+    screen: withStatusBar({ color: color.bg.eleventh.color })(
+      connect(mapStateToProps, mapDispatchToProps)(GenerateRecoveryPhrase)
     ),
   },
 })

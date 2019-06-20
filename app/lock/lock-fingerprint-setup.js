@@ -33,6 +33,7 @@ import type { LockFingerprintSetupProps } from './type-lock'
 import { AsyncStorage } from 'react-native'
 import { safeSet } from '../services/storage'
 import { getBiometricError } from '../bridge/react-native-cxs/RNCxs'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class LockFingerprintSetup extends PureComponent<
   LockFingerprintSetupProps,
@@ -169,6 +170,6 @@ const style = StyleSheet.create({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  LockFingerprintSetup
+export default withStatusBar()(
+  connect(mapStateToProps, mapDispatchToProps)(LockFingerprintSetup)
 )

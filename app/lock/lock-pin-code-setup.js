@@ -31,6 +31,7 @@ import { setPinAction, enableTouchIdAction } from './lock-store'
 import type { LockPinSetupState, LockPinCodeSetupProps } from './type-lock'
 import { PIN_SETUP_STATE } from './type-lock'
 import { tertiaryHeaderStyles } from '../components/layout/header-styles'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const styles = StyleSheet.create({
   headerLeft: {
@@ -319,6 +320,6 @@ const mapDispatchToProps = dispatch =>
 
 export default createStackNavigator({
   [lockPinSetupHomeRoute]: {
-    screen: connect(null, mapDispatchToProps)(LockPinSetup),
+    screen: withStatusBar()(connect(null, mapDispatchToProps)(LockPinSetup)),
   },
 })

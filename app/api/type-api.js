@@ -78,4 +78,5 @@ export type EnvironmentDetailUrlDownloaded = {
   agencyUrl: string,
   agencyVerificationKey: string,
   poolConfig: string,
+  paymentMethod: string,
 }

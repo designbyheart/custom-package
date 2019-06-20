@@ -5,14 +5,17 @@ import { Dimensions, Keyboard } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { CustomView, Icon, CustomHeader } from '../components'
-import { verifyRecoveryPhraseRoute, exportBackupFileRoute } from '../common'
-import { color } from '../common/styles/constant'
-import styles from './styles'
+
 import type {
   VerifyRecoveryPhraseProps,
   VerifyRecoveryPhraseState,
 } from './type-backup'
+import type { Store } from '../store/type-store'
+
+import { CustomView, Icon, CustomHeader } from '../components'
+import { verifyRecoveryPhraseRoute, exportBackupFileRoute } from '../common'
+import { color } from '../common/styles/constant'
+import styles from './styles'
 import {
   VERIFY_BACK_TEST_ID,
   VERIFY_CLOSE_TEST_ID,
@@ -24,7 +27,7 @@ import { pinHash as generateKey } from '../lock/pin-hash'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import VerifyPhrase from '../components/backup-restore-passphrase/backup-restore-passphrase'
 import { getBackupPassphrase } from '../store/store-selector'
-import type { Store } from '../store/type-store'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const transparentBands = require('../images/transparentBands2.png')
 const backImage = require('../images/icon_backArrow_white.png')
@@ -122,6 +125,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
 
 export default createStackNavigator({
   [verifyRecoveryPhraseRoute]: {
-    screen: connect(mapStateToProps, mapDispatchToProps)(VerifyRecoveryPhrase),
+    screen: withStatusBar({ color: color.bg.twelfth.color })(
+      connect(mapStateToProps, mapDispatchToProps)(VerifyRecoveryPhrase)
+    ),
   },
 })

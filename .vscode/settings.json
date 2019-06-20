@@ -4,5 +4,7 @@
   "cSpell.words": [
     "Onfido"
   ],
-  "flow.useLSP": false
+  "flow.useLSP": false,
+  "flow.pathToFlow": "${workspaceFolder}/node_modules/.bin/flow",
+  "flow.useBundledFlow": false
 }

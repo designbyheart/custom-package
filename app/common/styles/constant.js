@@ -44,7 +44,7 @@ export const veniceBlue = '#2A5270'
 export const hitSlop = { top: 15, bottom: 15, left: 15, right: 15 }
 export const iPhoneXHeight = 812
 
-const black = '#000000'
+export const black = '#000000'
 const yellowSea = '#EB9B2D'
 export const cornFlowerBlue = '#4A90E2'
 export const atlantis = '#86B93B'

@@ -28,6 +28,7 @@ import {
   BACKUP_ERROR_BACK_TEST_ID,
   BACKUP_ERROR_CLOSE_TEST_ID,
 } from './backup-constants'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const backImage = require('../images/icon_backArrow_white.png')
 const closeImage = require('../images/iconClose.png')
@@ -168,6 +169,8 @@ const mapDispatchToProps = dispatch =>
 
 export default createStackNavigator({
   [backupErrorRoute]: {
-    screen: connect(null, mapDispatchToProps)(BackupErrorScreen),
+    screen: withStatusBar({ color: venetianRed })(
+      connect(null, mapDispatchToProps)(BackupErrorScreen)
+    ),
   },
 })

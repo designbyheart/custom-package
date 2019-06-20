@@ -2,7 +2,6 @@
 
 import React, { Component, PureComponent } from 'react'
 import {
-  StatusBar,
   Platform,
   ScrollView,
   Image,
@@ -70,11 +69,13 @@ import {
   caribbeanGreen,
   blackTransparent,
   color,
+  black,
 } from '../common/styles'
 import { getConnectionByUserDid, getConnection } from '../store/store-selector'
 import { QuestionActions } from './components/question-screen-actions'
 import { checkIfAnimationToUse } from '../bridge/react-native-cxs/RNCxs'
 import { QuestionExternalLinks } from './components/question-external-links'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const { height } = Dimensions.get('window')
 
@@ -188,11 +189,6 @@ export class Question extends PureComponent<
   }
 
   componentDidMount() {
-    StatusBar.setBarStyle(barStyleLight, true)
-    if (Platform.OS === 'android') {
-      StatusBar.setBackgroundColor(blackTransparent, true)
-    }
-
     if (this.props.question) {
       this.props.updateQuestionStatus(
         this.props.question.payload.uid,
@@ -561,7 +557,9 @@ const mapDispatchToProps = dispatch =>
 export const QuestionStack = createStackNavigator(
   {
     [questionRoute]: {
-      screen: connect(mapStateToProps, mapDispatchToProps)(Question),
+      screen: withStatusBar({ color: black })(
+        connect(mapStateToProps, mapDispatchToProps)(Question)
+      ),
     },
   },
   {
