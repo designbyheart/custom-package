@@ -48,6 +48,7 @@ import { CREDENTIAL_OFFER_MODAL_STATUS } from '../claim-offer/type-claim-offer'
 import Modal from 'react-native-modal'
 import PaymentFailureModal from './payment-failure-modal'
 import CredentialOfferModal from './credential-offer-modal'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class WalletTabSendDetails extends Component<
   WalletTabSendDetailsProps,
@@ -192,6 +193,9 @@ export class WalletTabSendDetails extends Component<
   render() {
     const testID = 'wallet-tab-send-details'
     const fontSize = scale(FONT_SIZE_MAPPING(this.props.tokenAmount.length))
+    const showLedgerFeesModal = showLedgerFeesModalStates.includes(
+      this.state.credentialOfferModalStatus
+    )
 
     return (
       <Container safeArea fifth onPress={Keyboard.dismiss} testID={testID}>
@@ -282,20 +286,27 @@ export class WalletTabSendDetails extends Component<
           </CustomView>
         )}
 
-        <CredentialOfferModal
-          connectionName={this.paymentData.paymentTo}
-          credentialOfferModalStatus={this.state.credentialOfferModalStatus}
-          testID={`${testID}-payment-failure-modal`}
-          onClose={this.onTokenSentFailedClose}
-          onRetry={this.onSendTokens}
-          onYes={this.onStartTransfer}
-          onNo={this.onHideTransactionFeesModal}
-          transferAmount={this.props.tokenAmount}
-        />
+        {showLedgerFeesModal ? (
+          <CredentialOfferModal
+            connectionName={this.paymentData.paymentTo}
+            credentialOfferModalStatus={this.state.credentialOfferModalStatus}
+            testID={`${testID}-payment-failure-modal`}
+            onClose={this.onTokenSentFailedClose}
+            onRetry={this.onSendTokens}
+            onYes={this.onStartTransfer}
+            onNo={this.onHideTransactionFeesModal}
+            transferAmount={this.props.tokenAmount}
+          />
+        ) : null}
       </Container>
     )
   }
 }
+
+const showLedgerFeesModalStates = [
+  CREDENTIAL_OFFER_MODAL_STATUS.TOKEN_SENT_FAIL,
+  CREDENTIAL_OFFER_MODAL_STATUS.LEDGER_FEES,
+]
 
 const styles = StyleSheet.create({
   container: {
@@ -374,6 +385,8 @@ const mapDispatchToProps = dispatch =>
 
 export default createStackNavigator({
   WalletTabSendDetails: {
-    screen: connect(mapStateToProps, mapDispatchToProps)(WalletTabSendDetails),
+    screen: withStatusBar({ color: whiteSmokeSecondary })(
+      connect(mapStateToProps, mapDispatchToProps)(WalletTabSendDetails)
+    ),
   },
 })

@@ -62,6 +62,7 @@ export async function convertAgencyConfigToVcxProvision(
     wallet_key,
     agent_seed: null,
     enterprise_seed: null,
+    payment_method: config.paymentMethod,
   }
 }
 
@@ -101,6 +102,7 @@ export async function convertCxsInitToVcxInit(
     institution_logo_url: 'https://robothash.com/logo.png',
     institution_did: init.oneTimeAgencyDid,
     institution_verkey: init.oneTimeAgencyVerificationKey,
+    payment_method: init.paymentMethod,
   }
 }
 

@@ -1,13 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { Provider } from 'react-redux'
-import {
-  AppRegistry,
-  StatusBar,
-  BackHandler,
-  ToastAndroid,
-  Platform,
-} from 'react-native'
+import { AppRegistry, BackHandler, ToastAndroid, Platform } from 'react-native'
 import store from './store'
 import { ROUTE_UPDATE } from './store/route-store'
 import { getStatusBarTheme } from './store/store-selector'
@@ -98,14 +92,6 @@ export class ConnectMeApp extends PureComponent<AppProps, void> {
         'hardwareBackPress',
         this.handleBackButtonClick
       )
-    }
-
-    // components that are mounted inside of the app can also
-    // change status bar style and it is getting overridden
-    // so we are setting status bar style again after component is mounted
-    StatusBar.setBarStyle(barStyleDark, true)
-    if (Platform.OS === 'android') {
-      StatusBar.setBackgroundColor(whiteSmokeSecondary)
     }
   }
 

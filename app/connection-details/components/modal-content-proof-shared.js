@@ -9,6 +9,16 @@ import {
   Dimensions,
   Animated,
 } from 'react-native'
+
+import type { ReactNavigation } from '../../common/type-common'
+import type { Store } from '../../store/type-store'
+import type {
+  ClaimOfferProps,
+  ClaimOfferPayload,
+  ClaimOfferAttributeListProps,
+  ClaimOfferState,
+} from '../../claim-offer/type-claim-offer'
+
 import { CustomListProofRequest } from '../../components'
 import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
@@ -23,8 +33,6 @@ import {
   getConnectionTheme,
   getUserAvatarSource,
 } from '../../store/store-selector'
-import type { ReactNavigation } from '../../common/type-common'
-import type { Store } from '../../store/type-store'
 import {
   rejectProofRequest,
   acceptProofRequest,
@@ -34,12 +42,9 @@ import {
 } from '../../proof-request/proof-request-store'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import { updateStatusBarTheme } from '../../../app/store/connections-store'
-import type {
-  ClaimOfferProps,
-  ClaimOfferPayload,
-  ClaimOfferAttributeListProps,
-  ClaimOfferState,
-} from '../../claim-offer/type-claim-offer'
+import { withStatusBar } from '../../components/status-bar/status-bar'
+import { black } from '../../common/styles'
+
 let ScreenHeight = Dimensions.get('window').height
 let ScreenWidth = Dimensions.get('window').width
 class ProofRequestModal extends React.Component<any, any> {
@@ -177,6 +182,7 @@ class ProofRequestModal extends React.Component<any, any> {
     )
   }
 }
+
 const mapStateToProps = (state: Store, props: ReactNavigation) => {
   const { proofRequest } = state
   const { uid } = props.navigation.state.params
@@ -225,7 +231,10 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProofRequestModal)
+export default withStatusBar({ color: black })(
+  connect(mapStateToProps, mapDispatchToProps)(ProofRequestModal)
+)
+
 const styles = StyleSheet.create({
   container: {
     width: '100%',

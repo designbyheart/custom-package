@@ -1,12 +1,15 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { View, Image, StyleSheet } from 'react-native'
+
+import type { ReactNavigation } from '../common/type-common'
+
 import { Container, CustomView, CustomText, CustomButton } from '../components'
 import { isBiggerThanShortDevice, grey, color } from '../common/styles'
 import { homeRoute } from '../common'
-import type { ReactNavigation } from '../common/type-common'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
-export default class ExpiredToken extends PureComponent<ReactNavigation, void> {
+class ExpiredToken extends PureComponent<ReactNavigation, void> {
   okClicked = false
 
   onOk = () => {
@@ -52,6 +55,8 @@ export default class ExpiredToken extends PureComponent<ReactNavigation, void> {
     )
   }
 }
+
+export default withStatusBar({ color: color.bg.fifth.color })(ExpiredToken)
 
 const styles = StyleSheet.create({
   expiredTokenContainer: {

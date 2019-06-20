@@ -11,6 +11,7 @@ import {
   FlatList,
   Image,
   Button,
+  TouchableOpacity,
 } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import BackupWallet from './backup-wallet'
@@ -30,6 +31,7 @@ import {
   onfidoRoute,
   privacyTNCRoute,
   genRecoveryPhraseRoute,
+  walletRoute,
 } from '../common/route-constants'
 import ToggleSwitch from 'react-native-flip-toggle-button'
 import { connect } from 'react-redux'
@@ -81,8 +83,8 @@ import { scale } from 'react-native-size-matters'
 import { darkGray } from '../common/styles/constant'
 import { List, ListItem } from 'react-native-elements'
 import {
-  SOVRINTOKEN_AMOUNT_TEST_ID,
-  SOVRINTOKEN_TEST_ID,
+  SOVRIN_TOKEN_AMOUNT_TEST_ID,
+  SOVRIN_TOKEN_TEST_ID,
 } from '../home/home-constants'
 import get from 'lodash.get'
 import SvgCustomIcon from '../components/svg-custom-icon'
@@ -90,6 +92,8 @@ import { getWalletBalance } from '../store/store-selector'
 import CustomDate from '../components/custom-date/custom-date'
 import { matterhornSecondary } from '../common/styles/constant'
 import { tokenAmountSize } from '../home/home'
+import { withStatusBar } from '../components/status-bar/status-bar'
+
 const { width, height } = Dimensions.get('window')
 
 const style = StyleSheet.create({
@@ -136,6 +140,7 @@ const style = StyleSheet.create({
     fontSize: font.size.XXS,
     paddingTop: 5,
     paddingBottom: 5,
+    textAlign: 'center',
   },
   editIcon: {
     width: EDIT_ICON_DIMENSIONS,
@@ -294,36 +299,40 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
           </UserAvatar>
         </CustomView>
         {/* DO not remove commented code, this is just to temporarily hide token related stuff */}
-        {/* <CustomView row center testID={SOVRINTOKEN_AMOUNT_TEST_ID}>
-          <Icon
-            small
-            testID={SOVRINTOKEN_TEST_ID}
-            src={require('../images/sovrinTokenOrange.png')}
-          />
-          <CustomText
-            h5
-            demiBold
-            center
-            style={[
-              style.floatTokenAmount,
-              {
-                fontSize: tokenAmountSize(
-                  walletBalance ? walletBalance.length : 0
-                ),
-              },
-            ]}
-            transparentBg
-            testID={SOVRINTOKEN_AMOUNT_TEST_ID}
-            formatNumber
-          >
-            {walletBalance}
-          </CustomText>
-        </CustomView>
-        <CustomView>
-          <CustomText transparentBg darkgray style={[style.tokenText]}>
-            TOKENS
-          </CustomText>
-        </CustomView> */}
+        <TouchableOpacity
+          onPress={this.openTokenScreen}
+          testID={SOVRIN_TOKEN_AMOUNT_TEST_ID}
+        >
+          <CustomView row center>
+            <Icon
+              small
+              testID={SOVRIN_TOKEN_TEST_ID}
+              src={require('../images/sovrinTokenOrange.png')}
+            />
+            <CustomText
+              h5
+              demiBold
+              center
+              style={[
+                style.floatTokenAmount,
+                {
+                  fontSize: tokenAmountSize(
+                    walletBalance ? walletBalance.length : 0
+                  ),
+                },
+              ]}
+              transparentBg
+              formatNumber
+            >
+              {walletBalance}
+            </CustomText>
+          </CustomView>
+          <CustomView>
+            <CustomText transparentBg darkgray style={[style.tokenText]}>
+              TOKENS
+            </CustomText>
+          </CustomView>
+        </TouchableOpacity>
       </CustomView>
     )
 
@@ -440,6 +449,10 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
       </Container>
     )
   }
+
+  openTokenScreen = () => {
+    this.props.navigation.navigate(walletRoute)
+  }
 }
 
 const mapStateToProps = (state: Store) => ({
@@ -456,7 +469,9 @@ const mapDispatchToProps = dispatch =>
 
 export const SettingStack = createStackNavigator({
   [settingsRoute]: {
-    screen: connect(mapStateToProps, mapDispatchToProps)(Settings),
+    screen: withStatusBar()(
+      connect(mapStateToProps, mapDispatchToProps)(Settings)
+    ),
   },
   [aboutAppRoute]: {
     screen: AboutApp,

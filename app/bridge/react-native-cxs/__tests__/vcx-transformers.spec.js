@@ -14,6 +14,7 @@ import {
   agencyDID,
   agencyVerificationKey,
   poolConfig,
+  paymentMethod,
   userOneTimeInfo,
   getTestInvitationPayload,
   vcxClaimOffer,
@@ -25,6 +26,7 @@ const agencyPoolConfig = {
   agencyDID,
   agencyVerificationKey,
   poolConfig,
+  paymentMethod,
 }
 
 const initWithGenesisPathConfig = {

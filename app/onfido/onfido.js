@@ -1,14 +1,7 @@
 // @flow
 
 import React, { PureComponent } from 'react'
-import {
-  StyleSheet,
-  Linking,
-  Alert,
-  ScrollView,
-  StatusBar,
-  Image,
-} from 'react-native'
+import { StyleSheet, Linking, Alert, ScrollView, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -48,6 +41,7 @@ import {
   TEXT_ONFIDO_HEADING_2,
 } from './type-onfido'
 import { connectionsTabRoute, connectionHistoryDetailsRoute } from '../common'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class Onfido extends PureComponent<OnfidoProps, void> {
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
@@ -109,11 +103,6 @@ export class Onfido extends PureComponent<OnfidoProps, void> {
 
     return (
       <Container tertiary>
-        <StatusBar
-          barStyle={barStyleDark}
-          animated={true}
-          backgroundColor={color.bg.tertiary.color}
-        />
         <Container center horizontalSpace>
           {hasError(status, connectionStatus) ? (
             <OnfidoError status={status} connectionStatus={connectionStatus} />
@@ -357,4 +346,6 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ launchOnfidoSDK, resetOnfidoStatues }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Onfido)
+export default withStatusBar()(
+  connect(mapStateToProps, mapDispatchToProps)(Onfido)
+)

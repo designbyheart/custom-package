@@ -4,13 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { RNCamera } from 'react-native-camera'
 import Permissions from 'react-native-permissions'
-import {
-  Alert,
-  Platform,
-  PermissionsAndroid,
-  StatusBar,
-  AppState,
-} from 'react-native'
+import { Alert, Platform, PermissionsAndroid, AppState } from 'react-native'
 import { Container, QRScanner } from '../components'
 import {
   color,
@@ -61,6 +55,7 @@ import type { EnvironmentSwitchUrlQrCode } from '../components/qr-scanner/type-q
 import { changeEnvironmentUrl } from '../store/config-store'
 import { captureError } from '../services/error/error-handler'
 import { getAllPublicDid } from '../store/store-selector'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 export function convertQrCodeToInvitation(qrCode: QrCode) {
   const qrSenderDetail = qrCode[QR_CODE_SENDER_DETAIL]
@@ -278,34 +273,13 @@ export class QRCodeScannerScreen extends PureComponent<
     }
   }
 
-  updateStatusBarTheme() {
-    if (this.props.navigation.isFocused()) {
-      StatusBar.setBarStyle(barStyleLight, true)
-      if (Platform.OS === 'android') {
-        StatusBar.setBackgroundColor(color.bg.sixth.color)
-      }
-    } else {
-      StatusBar.setBarStyle(barStyleDark, true)
-      if (Platform.OS === 'android') {
-        StatusBar.setBackgroundColor(whiteSmokeSecondary)
-      }
-    }
-  }
-
   componentDidMount() {
     if (this.props.navigation.isFocused()) {
       // when this component is mounted first time, `cwrp` will not be called
       // so for the first time mount as well we need to check camera permission
       this.checkCameraAuthorization()
-      this.updateStatusBarTheme()
     }
     AppState.addEventListener('change', this._handleAppStateChange)
-  }
-
-  componentDidUpdate() {
-    if (this.props.currentScreen === qrCodeScannerTabRoute) {
-      this.updateStatusBarTheme()
-    }
   }
 
   componentWillUnmount() {
@@ -364,4 +338,6 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(QRCodeScannerScreen)
+export default withStatusBar({ color: color.bg.sixth.color })(
+  connect(mapStateToProps, mapDispatchToProps)(QRCodeScannerScreen)
+)

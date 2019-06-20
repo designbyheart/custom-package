@@ -39,6 +39,7 @@ import {
   agencyDID,
   agencyVerificationKey,
   poolConfig,
+  paymentMethod,
   vcxInitializationState,
   vcxInitializationError,
   configStoreNotHydratedInstalledVcxInit,
@@ -73,6 +74,7 @@ export {
   agencyDID,
   agencyVerificationKey,
   poolConfig,
+  paymentMethod,
   configStoreNotHydratedInstalledVcxInit,
 } from './data/config-store-mock-data'
 

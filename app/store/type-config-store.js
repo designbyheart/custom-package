@@ -57,6 +57,7 @@ export type ChangeEnvironment = {
   poolConfig: string,
   agencyDID: string,
   agencyVerificationKey: string,
+  paymentMethod: string,
 }
 
 export type SwitchEnvironmentAction = {
@@ -146,6 +147,7 @@ export type AgencyPoolConfig = {
   agencyDID: string,
   agencyVerificationKey: string,
   poolConfig: string,
+  paymentMethod: string,
 }
 
 export type ConfigStore = {
@@ -185,8 +187,17 @@ export const schemaDownloadedEnvironmentDetails = {
     poolConfig: {
       type: 'string',
     },
+    paymentMethod: {
+      type: 'string',
+    },
   },
-  required: ['agencyDID', 'agencyUrl', 'agencyVerificationKey', 'poolConfig'],
+  required: [
+    'agencyDID',
+    'agencyUrl',
+    'agencyVerificationKey',
+    'poolConfig',
+    'paymentMethod',
+  ],
 }
 
 export const MESSAGE_FAIL_ENVIRONMENT_SWITCH_TITLE =

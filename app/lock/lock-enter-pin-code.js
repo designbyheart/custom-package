@@ -24,6 +24,7 @@ import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
 import { unlockApp } from './lock-store'
 import { CustomText, CustomHeader } from '../components'
 import { Keyboard, Platform } from 'react-native'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class LockEnterPin extends PureComponent<
   LockEnterPinProps,
@@ -232,6 +233,8 @@ const mapDispatchToProps = dispatch =>
 
 export default createStackNavigator({
   [lockEnterPinRoute]: {
-    screen: connect(mapStateToProps, mapDispatchToProps)(LockEnterPin),
+    screen: withStatusBar()(
+      connect(mapStateToProps, mapDispatchToProps)(LockEnterPin)
+    ),
   },
 })

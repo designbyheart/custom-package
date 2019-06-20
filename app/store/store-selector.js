@@ -32,6 +32,8 @@ export const getAgencyDID = (state: Store) => state.config.agencyDID
 
 export const getPoolConfig = (state: Store) => state.config.poolConfig
 
+export const getPaymentMethod = (state: Store) => state.config.paymentMethod
+
 export const getAgencyVerificationKey = (state: Store) =>
   state.config.agencyVerificationKey
 

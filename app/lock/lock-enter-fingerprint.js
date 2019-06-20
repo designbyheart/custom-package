@@ -16,6 +16,7 @@ import type {
   PendingRedirection,
 } from './type-lock'
 import { AllowedFallbackToucheIDErrors } from './type-lock'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class LockEnterFingerprint extends PureComponent<
   LockEnterFingerProps,
@@ -126,6 +127,6 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  LockEnterFingerprint
+export default withStatusBar()(
+  connect(mapStateToProps, mapDispatchToProps)(LockEnterFingerprint)
 )

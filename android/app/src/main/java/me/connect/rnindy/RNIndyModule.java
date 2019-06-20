@@ -138,9 +138,9 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
         BridgeUtils.writeCACert(this.getReactApplicationContext());
 
         try {
-            int retCode = VcxApi.initNullPay();
+            int retCode = VcxApi.initSovToken();
             if(retCode != 0) {
-                promise.reject("Could not init nullpay", String.valueOf(retCode));
+                promise.reject("Could not init sovtoken", String.valueOf(retCode));
             } else {
                 VcxApi.vcxInitWithConfig(config).exceptionally((t) -> {
                     Log.e(TAG, "init: ", t);

@@ -66,12 +66,12 @@ import { updateStatusBarTheme } from '../../app/store/connections-store'
 import { CustomModal } from '../components'
 import PaymentFailureModal from '../wallet/payment-failure-modal'
 import CredentialOfferModal from '../wallet/credential-offer-modal'
-import { getStatusBarStyle } from '../components/custom-header/custom-header'
 import {
   LedgerFeesModalStatus,
   LedgerFeesDescriptionText,
 } from '../components/ledger-fees-modal/ledger-fees-modal'
 import { BigNumber } from 'bignumber.js'
+import { memoizeStatusBarStyle } from '../components/status-bar/status-bar'
 
 class ClaimOfferAttributeList extends PureComponent<
   ClaimOfferAttributeListProps,
@@ -312,7 +312,7 @@ export class ClaimOffer extends PureComponent<
       <Container style={[{ backgroundColor: claimThemePrimary }]}>
         <StatusBar
           backgroundColor={claimThemePrimary}
-          barStyle={getStatusBarStyle(claimThemePrimary)}
+          barStyle={memoizeStatusBarStyle(claimThemePrimary)}
         />
         {isValid && (
           <ClaimProofHeader

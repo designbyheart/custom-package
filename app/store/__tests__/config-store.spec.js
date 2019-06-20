@@ -59,6 +59,7 @@ import {
   agencyUrl,
   agencyVerificationKey,
   poolConfig,
+  paymentMethod,
   validQrCodeEnvironmentSwitchUrl,
   userOneTimeInfo,
 } from '../../../__mocks__/static-data'
@@ -108,6 +109,7 @@ describe('server environment should change', () => {
     agencyDID,
     agencyVerificationKey,
     agencyUrl,
+    paymentMethod,
   })
 
   beforeEach(() => {
@@ -152,13 +154,20 @@ describe('server environment should change', () => {
 
   it('should store switched environment details', () => {
     const gen = onEnvironmentSwitch(
-      changeEnvironment(agencyUrl, agencyDID, agencyVerificationKey, poolConfig)
+      changeEnvironment(
+        agencyUrl,
+        agencyDID,
+        agencyVerificationKey,
+        poolConfig,
+        paymentMethod
+      )
     )
     let switchedEnvironmentDetails = {
       poolConfig,
       agencyDID,
       agencyVerificationKey,
       agencyUrl,
+      paymentMethod,
     }
     expect(gen.next().value).toEqual(
       call(
@@ -178,6 +187,7 @@ describe('server environment should change', () => {
       agencyUrl,
       agencyVerificationKey,
       poolConfig,
+      paymentMethod,
     }
     expectSaga(watchSwitchEnvironment)
       .dispatch(
@@ -185,7 +195,8 @@ describe('server environment should change', () => {
           environmentDetails.agencyUrl,
           environmentDetails.agencyDID,
           environmentDetails.agencyVerificationKey,
-          environmentDetails.poolConfig
+          environmentDetails.poolConfig,
+          environmentDetails.paymentMethod
         )
       )
       .provide([
@@ -211,6 +222,7 @@ describe('server environment should change', () => {
       agencyUrl,
       agencyVerificationKey,
       poolConfig,
+      paymentMethod,
     }
     expectSaga(hydrateSwitchedEnvironmentDetails)
       .dispatch(
@@ -218,7 +230,8 @@ describe('server environment should change', () => {
           environmentDetails.agencyUrl,
           environmentDetails.agencyDID,
           environmentDetails.agencyVerificationKey,
-          environmentDetails.poolConfig
+          environmentDetails.poolConfig,
+          environmentDetails.paymentMethod
         )
       )
       .provide([
@@ -249,6 +262,7 @@ describe('server environment should change', () => {
       agencyDID,
       agencyVerificationKey,
       agencyUrl,
+      paymentMethod,
     }
     expect(gen.next(serializedEnvironmentDetail).value).toEqual(
       select(getAgencyUrl)
@@ -260,7 +274,8 @@ describe('server environment should change', () => {
           agencyUrl,
           agencyDID,
           agencyVerificationKey,
-          poolConfig
+          poolConfig,
+          paymentMethod
         )
       )
     )
@@ -284,6 +299,7 @@ describe('server environment should change', () => {
       agencyUrl,
       agencyVerificationKey,
       poolConfig,
+      paymentMethod,
     }
     // delete stored data, not interested in actual calls
     // those tests are being taken care in other test
@@ -303,7 +319,8 @@ describe('server environment should change', () => {
           agencyUrl,
           agencyDID,
           agencyVerificationKey,
-          poolConfig
+          poolConfig,
+          paymentMethod
         )
       )
     )
@@ -368,6 +385,7 @@ describe('server environment should change', () => {
       agencyUrl,
       agencyVerificationKey,
       poolConfig,
+      paymentMethod,
     }
     const pushToken = 'token'
     expectSaga(watchChangeEnvironmentUrl)
@@ -390,7 +408,8 @@ describe('server environment should change', () => {
           environmentDetails.agencyUrl,
           environmentDetails.agencyDID,
           environmentDetails.agencyVerificationKey,
-          environmentDetails.poolConfig
+          environmentDetails.poolConfig,
+          environmentDetails.paymentMethod
         )
       )
       .put(updatePushToken(pushToken))
@@ -437,6 +456,7 @@ describe('config-store:saga', () => {
     agencyDID,
     agencyVerificationKey,
     poolConfig,
+    paymentMethod,
   }
 
   it('initVcx, success', () => {
@@ -535,7 +555,8 @@ describe('config-store:saga', () => {
       agencyUrl,
       agencyDID,
       agencyVerificationKey,
-      'this is pool config with ' + '\\n' + ' charecter'
+      'this is pool config with ' + '\\n' + ' charecter',
+      paymentMethod
     )
     expect(poolConfig).toBe('this is pool config with ' + '\n' + ' charecter')
   })
@@ -545,7 +566,8 @@ describe('config-store:saga', () => {
       agencyUrl + '/',
       agencyDID,
       agencyVerificationKey,
-      poolConfig
+      poolConfig,
+      paymentMethod
     )
     expect(updtedAgencyUrl).toBe(agencyUrl)
   })

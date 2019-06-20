@@ -122,7 +122,8 @@ RCT_EXPORT_METHOD(init: (NSString *)config
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
   ConnectMeVcx *conn = [[ConnectMeVcx alloc] init];
-  int retCode = [conn initNullPay];
+  //int retCode = [conn initNullPay];
+  int retCode = [conn initSovToken];
 
   if(retCode != 0) {
     NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)retCode];

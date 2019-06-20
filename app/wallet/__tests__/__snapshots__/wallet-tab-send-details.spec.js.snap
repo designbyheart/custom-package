@@ -548,23 +548,5 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
       pay:sov:somepaymentaddress
     </Text>
   </View>
-  <Modal
-    animationIn="zoomIn"
-    animationOut="zoomOut"
-    animationOutTiming={100}
-    backdropColor="#f0f0f0"
-    hideModalContentWhileAnimating={true}
-    isVisible={false}
-    onBackButtonPress={[Function]}
-    onBackdropPress={[Function]}
-    onModalHide={undefined}
-    style={
-      Array [
-        Object {},
-      ]
-    }
-    testID="credential-offer-modal"
-    useNativeDriver={true}
-  />
 </RCTSafeAreaView>
 `;

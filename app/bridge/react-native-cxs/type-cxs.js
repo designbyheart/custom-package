@@ -69,6 +69,7 @@ export type VcxProvision = {
   agency_url: string,
   agency_did: string,
   agency_verkey: string,
+  payment_method: string,
 }
 
 export type VcxProvisionResult = {

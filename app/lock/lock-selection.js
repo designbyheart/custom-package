@@ -49,6 +49,7 @@ import {
 } from './lock-store'
 import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class LockSelection extends PureComponent<LockSelectionProps, *> {
   constructor(props: LockSelectionProps) {
@@ -89,7 +90,8 @@ export class LockSelection extends PureComponent<LockSelectionProps, *> {
           env.agencyUrl,
           env.agencyDID,
           env.agencyVerificationKey,
-          env.poolConfig
+          env.poolConfig,
+          env.paymentMethod
         )
       })
     }
@@ -287,7 +289,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(LockSelection)
+export default withStatusBar()(
+  connect(mapStateToProps, mapDispatchToProps)(LockSelection)
+)
 
 const style = StyleSheet.create({
   pinSelectionContainer: {

@@ -9,6 +9,17 @@ import {
   Dimensions,
   Animated,
 } from 'react-native'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import type { ReactNavigation } from '../../common/type-common'
+import type { Store } from '../../store/type-store'
+import type {
+  ClaimOfferProps,
+  ClaimOfferPayload,
+  ClaimOfferAttributeListProps,
+  ClaimOfferState,
+} from '../../claim-offer/type-claim-offer'
 
 import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
@@ -16,14 +27,10 @@ import { ModalButtons } from '../../components/connection-details/modal-buttons'
 import { ModalButton } from '../../components/connection-details/modal-button'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import { measurements } from '../../../app/common/styles/measurements'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import {
   getConnectionLogoUrl,
   getConnectionTheme,
 } from '../../store/store-selector'
-import type { ReactNavigation } from '../../common/type-common'
-import type { Store } from '../../store/type-store'
 import {
   claimOfferShown,
   acceptClaimOffer,
@@ -33,12 +40,9 @@ import {
   resetClaimRequestStatus,
 } from '../../claim-offer/claim-offer-store'
 import { updateStatusBarTheme } from '../../../app/store/connections-store'
-import type {
-  ClaimOfferProps,
-  ClaimOfferPayload,
-  ClaimOfferAttributeListProps,
-  ClaimOfferState,
-} from '../../claim-offer/type-claim-offer'
+import { withStatusBar } from '../../components/status-bar/status-bar'
+import { black } from '../../common/styles'
+
 let ScreenHeight = Dimensions.get('window').height
 let ScreenWidth = Dimensions.get('window').width
 
@@ -241,7 +245,10 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClaimOfferModal)
+export default withStatusBar({ color: black })(
+  connect(mapStateToProps, mapDispatchToProps)(ClaimOfferModal)
+)
+
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: '#f2f2f2',

@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`user settings screen navigation optioons should match snapshot when navigatioon state index is 0 1`] = `
+exports[`user settings screen navigation options should match snapshot when navigation state index is 0 1`] = `
 Object {
   "swipeEnabled": true,
   "tabBarVisible": true,
 }
 `;
 
-exports[`user settings screen navigation optioons should match snapshot when navigatioon state index is 1 1`] = `
+exports[`user settings screen navigation options should match snapshot when navigation state index is 1 1`] = `
 Object {
   "swipeEnabled": false,
   "tabBarVisible": false,
@@ -113,6 +113,167 @@ exports[`user settings screen should render properly and snapshot should match f
                   testID={undefined}
                 />
               </View>
+            </View>
+          </View>
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            collapsable={undefined}
+            hasTVPreferredFocus={undefined}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID="home-sovrintoken-amount"
+            tvParallaxProperties={undefined}
+          >
+            <View
+              center={true}
+              row={true}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <View
+                accessibilityLabel="home-sovrintoken-id-label"
+                accessible={true}
+                clearBg={true}
+                small={true}
+                src={1}
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                  }
+                }
+                testID="home-sovrintoken-id-label"
+              >
+                <View
+                  style={Object {}}
+                >
+                  <Image
+                    accessibilityLabel="home-sovrintoken-id-label"
+                    accessible={true}
+                    resizeMode="contain"
+                    source={1}
+                    style={
+                      Array [
+                        Object {
+                          "height": 20,
+                          "width": 20,
+                        },
+                        null,
+                      ]
+                    }
+                    testID="home-sovrintoken-id-label"
+                  />
+                </View>
+              </View>
+              <Text
+                accessible={true}
+                allowFontScaling={false}
+                ellipsizeMode="tail"
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 17,
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    Object {
+                      "backgroundColor": "#333333",
+                      "color": "#ffffff",
+                    },
+                    Object {
+                      "fontWeight": "600",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    Object {
+                      "color": "#505050",
+                      "paddingHorizontal": 8,
+                    },
+                    Object {
+                      "fontSize": 23.771428571428572,
+                    },
+                  ]
+                }
+              />
+            </View>
+            <View
+              style={Object {}}
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={false}
+                ellipsizeMode="tail"
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 17,
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    Object {
+                      "backgroundColor": "#333333",
+                      "color": "#ffffff",
+                    },
+                    null,
+                    null,
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    Object {
+                      "color": "#4A4A4A",
+                    },
+                    Object {
+                      "fontSize": 11,
+                      "paddingBottom": 5,
+                      "paddingTop": 5,
+                      "textAlign": "center",
+                    },
+                  ]
+                }
+              >
+                TOKENS
+              </Text>
             </View>
           </View>
         </View>
@@ -1710,6 +1871,167 @@ exports[`user settings screen should render properly and snapshot should match i
                   testID={undefined}
                 />
               </View>
+            </View>
+          </View>
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            collapsable={undefined}
+            hasTVPreferredFocus={undefined}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+            testID="home-sovrintoken-amount"
+            tvParallaxProperties={undefined}
+          >
+            <View
+              center={true}
+              row={true}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <View
+                accessibilityLabel="home-sovrintoken-id-label"
+                accessible={true}
+                clearBg={true}
+                small={true}
+                src={1}
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                  }
+                }
+                testID="home-sovrintoken-id-label"
+              >
+                <View
+                  style={Object {}}
+                >
+                  <Image
+                    accessibilityLabel="home-sovrintoken-id-label"
+                    accessible={true}
+                    resizeMode="contain"
+                    source={1}
+                    style={
+                      Array [
+                        Object {
+                          "height": 20,
+                          "width": 20,
+                        },
+                        null,
+                      ]
+                    }
+                    testID="home-sovrintoken-id-label"
+                  />
+                </View>
+              </View>
+              <Text
+                accessible={true}
+                allowFontScaling={false}
+                ellipsizeMode="tail"
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 17,
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    Object {
+                      "backgroundColor": "#333333",
+                      "color": "#ffffff",
+                    },
+                    Object {
+                      "fontWeight": "600",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    Object {
+                      "color": "#505050",
+                      "paddingHorizontal": 8,
+                    },
+                    Object {
+                      "fontSize": 23.771428571428572,
+                    },
+                  ]
+                }
+              />
+            </View>
+            <View
+              style={Object {}}
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={false}
+                ellipsizeMode="tail"
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 17,
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    Object {
+                      "backgroundColor": "#333333",
+                      "color": "#ffffff",
+                    },
+                    null,
+                    null,
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    Object {
+                      "color": "#4A4A4A",
+                    },
+                    Object {
+                      "fontSize": 11,
+                      "paddingBottom": 5,
+                      "paddingTop": 5,
+                      "textAlign": "center",
+                    },
+                  ]
+                }
+              >
+                TOKENS
+              </Text>
             </View>
           </View>
         </View>

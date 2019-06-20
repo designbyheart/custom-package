@@ -10,13 +10,20 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import type {
+  ClaimOfferProps,
+  ClaimOfferPayload,
+  ClaimOfferAttributeListProps,
+  ClaimOfferState,
+} from '../../claim-offer/type-claim-offer'
+
 import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
 import { ModalButtons } from '../../components/connection-details/modal-buttons'
 import { ModalButton } from '../../components/connection-details/modal-button'
 import ModalContentProof from './modal-content-proof'
 import { measurements } from '../../../app/common/styles/measurements'
-
 import {
   claimOfferShown,
   acceptClaimOffer,
@@ -25,15 +32,12 @@ import {
   claimOfferShowStart,
   resetClaimRequestStatus,
 } from '../../claim-offer/claim-offer-store'
+import { withStatusBar } from '../../components/status-bar/status-bar'
+import { black } from '../../common/styles'
 
-import type {
-  ClaimOfferProps,
-  ClaimOfferPayload,
-  ClaimOfferAttributeListProps,
-  ClaimOfferState,
-} from '../../claim-offer/type-claim-offer'
 let ScreenHeight = Dimensions.get('window').height
 let ScreenWidth = Dimensions.get('window').width
+
 // TODO: Fix the <any, {}> to be the correct types for props and state
 class Modal extends PureComponent<any, any> {
   constructor(props: any) {
@@ -261,7 +265,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(null, mapDispatchToProps)(Modal)
+export default withStatusBar({ color: black })(
+  connect(null, mapDispatchToProps)(Modal)
+)
 
 const styles = StyleSheet.create({
   touchable: {

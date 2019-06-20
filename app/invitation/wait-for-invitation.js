@@ -3,8 +3,9 @@ import React, { PureComponent } from 'react'
 import { View, Image, StyleSheet } from 'react-native'
 import { Container, CustomView, CustomText, Loader } from '../components'
 import { OFFSET_3X, OFFSET_4X } from '../common/styles'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
-export default class WaitForInvitation extends PureComponent<void, void> {
+class WaitForInvitation extends PureComponent<void, void> {
   render() {
     return (
       <Container center style={[styles.expiredTokenContainer]}>
@@ -13,6 +14,8 @@ export default class WaitForInvitation extends PureComponent<void, void> {
     )
   }
 }
+
+export default withStatusBar()(WaitForInvitation)
 
 const styles = StyleSheet.create({
   expiredTokenContainer: {

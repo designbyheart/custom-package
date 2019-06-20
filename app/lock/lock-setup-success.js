@@ -3,6 +3,10 @@ import React, { PureComponent } from 'react'
 import { StyleSheet, InteractionManager } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import type { Store } from '../store/type-store'
+import type { LockSetupSuccessProps, LockSetupSuccessState } from './type-lock'
+
 import {
   Container,
   CustomText,
@@ -12,10 +16,9 @@ import {
 } from '../components'
 import { settingsTabRoute, homeTabRoute, menuTabRoute } from '../common'
 import { unlockApp, clearPendingRedirect } from './lock-store'
-import type { Store } from '../store/type-store'
 import { OFFSET_1X, OFFSET_2X, OFFSET_4X, color } from '../common/styles'
 import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
-import type { LockSetupSuccessProps, LockSetupSuccessState } from './type-lock'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class LockSetupSuccess extends PureComponent<
   LockSetupSuccessProps,
@@ -139,7 +142,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(LockSetupSuccess)
+export default withStatusBar()(
+  connect(mapStateToProps, mapDispatchToProps)(LockSetupSuccess)
+)
 
 const style = StyleSheet.create({
   successContainer: {

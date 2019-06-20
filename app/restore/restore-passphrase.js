@@ -15,6 +15,7 @@ import {
   RESTORE_CLOSE_BUTTON_TEST_ID,
 } from './type-restore'
 import styles from '../backup/styles'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const backImage = require('../images/icon_backArrow_white.png')
 const closeImage = require('../images/iconClose.png')
@@ -88,6 +89,8 @@ const mapDispatchToProps = dispatch =>
 
 export default createStackNavigator({
   [restorePassphraseRoute]: {
-    screen: connect(mapStateToProps, mapDispatchToProps)(RestorePassphrase),
+    screen: withStatusBar({ color: color.bg.twelfth.color })(
+      connect(mapStateToProps, mapDispatchToProps)(RestorePassphrase)
+    ),
   },
 })

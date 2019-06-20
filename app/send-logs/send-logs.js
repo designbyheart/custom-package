@@ -47,6 +47,7 @@ import {
   ENCRYPT_LOG_FILE,
 } from '../send-logs/type-send-logs'
 import store from '../store'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const width = Dimensions.get('window').width //full width
 const height = Dimensions.get('window').height //full height
@@ -204,7 +205,7 @@ const mapStateToProps = (state: Store) => {
 
 export const SendLogsStack = createStackNavigator({
   [sendLogsRoute]: {
-    screen: connect(mapStateToProps)(SendLogs),
+    screen: withStatusBar()(connect(mapStateToProps)(SendLogs)),
   },
 })
 

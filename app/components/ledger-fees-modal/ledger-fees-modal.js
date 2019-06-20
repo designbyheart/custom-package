@@ -44,7 +44,6 @@ export type LedgerFeesModalProps = {
   getLedgerFees: GetLedgerFeesFn,
   resetLedgerFees: ResetLedgerFeesFn,
   ledgerFees: LedgerFees,
-  isVisible: boolean,
   walletBalance: string,
   // Adding React.Node type as return type failing something entirely
   // different in flow definition, it seems like we need to properly fix fot React types
@@ -69,22 +68,11 @@ export class LedgerFeesModalComponent extends PureComponent<
     if (
       this.props.ledgerFees.status !== prevProps.ledgerFees.status &&
       this.props.ledgerFees.status === STORE_STATUS.SUCCESS &&
-      this.props.ledgerFees.data.transfer === '0' &&
-      this.props.isVisible === true
+      this.props.ledgerFees.data.transfer === '0'
     ) {
       // if we got the fees successfully and it is zero, then auto close pop up
       // with Yes as action after user has read success text after 2 seconds
       setTimeout(this.props.onYes, 2000)
-    }
-
-    if (this.props.isVisible !== prevProps.isVisible) {
-      if (this.props.isVisible === false) {
-        this.props.resetLedgerFees()
-      }
-
-      if (this.props.isVisible === true) {
-        this.props.getLedgerFees()
-      }
     }
   }
 
@@ -95,7 +83,6 @@ export class LedgerFeesModalComponent extends PureComponent<
   render() {
     const {
       transferAmount = null,
-      isVisible,
       ledgerFees,
       onNo,
       onYes,

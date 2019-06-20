@@ -17,6 +17,7 @@ import { tertiaryHeaderStyles } from '../components/layout/header-styles'
 import { lockAuthorizationHomeRoute } from '../common'
 import { createStackNavigator } from 'react-navigation'
 import type { ReactNavigation } from '../common/type-common'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const styles = StyleSheet.create({
   headerLeft: {
@@ -73,6 +74,6 @@ export class LockAuthorization extends PureComponent<
 
 export default createStackNavigator({
   [lockAuthorizationHomeRoute]: {
-    screen: LockAuthorization,
+    screen: withStatusBar()(LockAuthorization),
   },
 })

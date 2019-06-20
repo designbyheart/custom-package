@@ -44,8 +44,6 @@ import type { HomeProps, HomeState } from './type-home'
 import { connectionHistRoute } from '../common/route-constants'
 import {
   FEEDBACK_TEST_ID,
-  SOVRINTOKEN_TEST_ID,
-  SOVRINTOKEN_AMOUNT_TEST_ID,
   HOW_IT_WORKS,
   ON_COMPUTER,
   GO_TO_FABER,
@@ -63,6 +61,7 @@ import { externalStyles } from './styles'
 import { NewConnectionInstructions } from './new-connection-instructions'
 import { getEnvironmentName } from '../store/config-store'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const { width, height } = Dimensions.get('window')
 export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
@@ -259,7 +258,9 @@ const mapDispatchToProps = dispatch => {
 
 export default createStackNavigator({
   [homeRoute]: {
-    screen: connect(mapStateToProps, mapDispatchToProps)(DashboardScreen),
+    screen: withStatusBar()(
+      connect(mapStateToProps, mapDispatchToProps)(DashboardScreen)
+    ),
   },
 })
 

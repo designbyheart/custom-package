@@ -67,11 +67,11 @@ import debounce from 'lodash.debounce'
 import { getUnseenMessages } from '../store/store-selector'
 import { goToUIScreen } from '../push-notification/push-notification-store'
 import Color from 'color'
-import { getStatusBarStyle } from '../components/custom-header/custom-header'
 import {
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
 } from '../question/type-question'
+import { memoizeStatusBarStyle } from '../components/status-bar/status-bar'
 
 const statusMsg = {
   ['PENDING']: 'Pending',
@@ -377,7 +377,7 @@ export class ConnectionHistory extends Component<
         <Container fifth>
           <StatusBar
             backgroundColor={this.props.activeConnectionThemePrimary}
-            barStyle={getStatusBarStyle(
+            barStyle={memoizeStatusBarStyle(
               this.props.activeConnectionThemePrimary
             )}
           />

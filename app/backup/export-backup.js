@@ -37,6 +37,7 @@ import {
 } from './backup-constants'
 import { BACKUP_STORE_STATUS } from './type-backup'
 import { getBackupStatus, getBackupWalletPath } from '../store/store-selector'
+import { withStatusBar } from '../components/status-bar/status-bar'
 
 const transparentBands = require('../images/transparentBands.png')
 const backImage = require('../images/icon_backArrow_white.png')
@@ -228,6 +229,8 @@ const mapStateToProps = (state: Store) => {
 
 export default createStackNavigator({
   [exportBackupFileRoute]: {
-    screen: connect(mapStateToProps, mapDispatchToProps)(ExportBackupFile),
+    screen: withStatusBar({ color: color.bg.thirteenth.color })(
+      connect(mapStateToProps, mapDispatchToProps)(ExportBackupFile)
+    ),
   },
 })
