@@ -7,10 +7,7 @@ import {
   PROOF_REQUEST_AUTO_FILL,
 } from '../app/proof-request/type-proof-request'
 import { INVITATION_RECEIVED } from '../app/invitation/type-invitation'
-import {
-  NEW_CONNECTION_SUCCESS,
-  saveNewConnection,
-} from '../app/store/connections-store'
+import { saveNewConnectionSuccess } from '../app/store/new-connection-success'
 import {
   CLAIM_OFFER_ACCEPTED,
   CLAIM_OFFER_STATUS,
@@ -22,7 +19,6 @@ import {
   sendClaimRequestSuccess,
 } from '../app/claim-offer/claim-offer-store'
 import { claimReceived, claimStorageSuccess } from '../app/claim/claim-store'
-import { saveNewConnectionSuccess } from '../app/store/connections-store'
 import {
   proofRequestReceived,
   proofRequestAutoFill,
@@ -214,6 +210,7 @@ export const originalProofRequestData = {
   },
   requested_predicates: {},
 }
+
 export const originalProofRequestDataWithSpaces = {
   nonce: '123432421212',
   name: 'proof_req_1',
@@ -905,11 +902,24 @@ export const homeAddressPreparedProofWithMissingAttribute = {
   predicates: {},
 }
 
-export function getNavigation(params?: NavigationParams) {
+// Fix `any` return. This is not important here because of following reasons
+// 1. any is considered a return type inside mock data, this is not used in our app
+// 2. getNavigation is only used for tests
+// 3. Tests always define params that are needed and provide mock implementation
+//     for the part that those tests need.
+// 4. Even if we miss a prop in getNavigation, then also tests will fail
+//     and we will know what prop to add. Since it is a compile time operation
+//     it is very east to identify and get early feedback
+export function getNavigation(params?: any): any {
   return {
     // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
     navigate: jest.fn(),
     state: {
+      key: 'somekey',
+      routeName: 'someRouteName',
+      path: '/someRouteName',
+      index: 1,
+      routes: [],
       params: params || {},
     },
     // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
@@ -924,6 +934,31 @@ export function getNavigation(params?: NavigationParams) {
     push: jest.fn(),
     // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
     getParam: jest.fn((paramName, defaultValue) => defaultValue),
+    // $FlowFixMe
+    dismiss: jest.fn(),
+    // $FlowFixMe
+    openDrawer: jest.fn(),
+    // $FlowFixMe
+    closeDrawer: jest.fn(),
+    // $FlowFixMe
+    toggleDrawer: jest.fn(),
+    // $FlowFixMe
+    addListener: jest.fn(),
+    // $FlowFixMe
+    replace: jest.fn(),
+    // $FlowFixMe
+    pop: jest.fn(),
+    // $FlowFixMe
+    popToTop: jest.fn(),
+    // $FlowFixMe
+    dangerouslyGetParent: jest.fn(),
+    // $FlowFixMe
+    reset: jest.fn(),
+    key: 'somekey',
+    routeName: 'someRouteName',
+    path: '/someRouteName',
+    index: 1,
+    routes: [],
   }
 }
 
@@ -978,6 +1013,20 @@ export function getStore(store?: Store) {
           timeStamp: 1557756720914,
         },
         smsPendingInvitation: {},
+        eula: {
+          isEulaAccept: true,
+        },
+        invitation: {},
+        pushNotification: {
+          isAllowed: true,
+          notification: undefined,
+          pushToken: undefined,
+          isPristine: true,
+          isFetching: false,
+          error: undefined,
+          pendingFetchAdditionalDataKey: undefined,
+          navigateRoute: undefined,
+        },
         ...(store || {}),
         claim: {
           [uid]: {

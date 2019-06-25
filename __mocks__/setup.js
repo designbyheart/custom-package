@@ -1,9 +1,14 @@
 import React from 'react'
 import { NativeModules } from 'react-native'
 import fetch from './fetch-mock'
-import mockCamera from './camera-mock'
 import mockModal from './modal-mock'
 import mockView from './view-mock'
+import mockCamera from './react-native-camera'
+
+NativeModules.BlobModule = {
+  ...NativeModules.BlobModule,
+  addNetworkingHandler: jest.fn(),
+}
 
 // mock Math.random for <Loader />
 const mockMath = Object.create(global.Math)
@@ -84,10 +89,6 @@ jest.mock('react-native-animatable', () => ({
   View: 'Animatable.View',
 }))
 
-jest.mock('react-native-camera', () => {
-  return { RNCamera: mockCamera }
-})
-
 jest.mock('Dimensions', () => ({
   get: jest.fn(() => ({
     width: 320,
@@ -97,6 +98,7 @@ jest.mock('Dimensions', () => ({
 
 jest.mock('UIManager', () => ({
   configureNextLayoutAnimation: jest.fn(),
+  getViewManagerConfig: jest.fn(),
 }))
 
 jest.mock('react-native-touch-id', () => {
@@ -129,7 +131,7 @@ jest.mock('Modal', () => mockModal)
 
 jest.mock('react-native-modal', () => mockModal)
 
-jest.mock('react-native-fetch-blob', () => ({
+jest.mock('rn-fetch-blob', () => ({
   fetch: jest.fn((type, url) => Promise.resolve()),
   fs: {
     dirs: {
@@ -210,7 +212,7 @@ jest.mock('react-native-branch', () => {
 
     // don't need any type checks for mocks, because they are not used
     // for type checking in code
-    subscribe(cb: any) {},
+    subscribe(cb) {},
   }
 })
 
@@ -279,12 +281,42 @@ jest.mock('BackHandler', () => ({
   removeEventListener: jest.fn(),
 }))
 
-jest.mock('react-native-gesture-handler', () => ({
-  State: {
-    END: 'END',
-  },
-  PanGestureHandler: mockView,
-}))
+jest.mock('react-native-gesture-handler', () => {
+  const View = require('react-native/Libraries/Components/View/View')
+
+  return {
+    Swipeable: View,
+    DrawerLayout: View,
+    State: {
+      END: 'END',
+    },
+    ScrollView: View,
+    Slider: View,
+    Switch: View,
+    TextInput: View,
+    ToolbarAndroid: View,
+    ViewPagerAndroid: View,
+    DrawerLayoutAndroid: View,
+    WebView: View,
+    NativeViewGestureHandler: View,
+    TapGestureHandler: View,
+    FlingGestureHandler: View,
+    ForceTouchGestureHandler: View,
+    LongPressGestureHandler: View,
+    PanGestureHandler: View,
+    PinchGestureHandler: View,
+    RotationGestureHandler: View,
+    /* Buttons */
+    RawButton: View,
+    BaseButton: View,
+    RectButton: View,
+    BorderlessButton: View,
+    /* Other */
+    FlatList: View,
+    gestureHandlerRootHOC: jest.fn(),
+    Directions: {},
+  }
+})
 
 jest.mock('react-native-snackbar', () => ({
   show: jest.fn(),

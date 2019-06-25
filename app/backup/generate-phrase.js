@@ -119,7 +119,7 @@ export class GenerateRecoveryPhrase extends PureComponent<
     })
   }
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: (
       <CustomHeader
         flatHeader

@@ -1,4 +1,8 @@
 // @flow
+import type {
+  NavigationScreenProp,
+  NavigationLeafRoute,
+} from 'react-navigation'
 import type { ReactNavigation } from '../common/type-common'
 import type { CustomError } from '../common/type-common'
 import type { IsValid } from '../components/input-control/type-input-control'
@@ -38,6 +42,20 @@ export const ERROR_BACKUP_WALLET_SHARE = {
   message: 'Error while sharing zipped backup',
 }
 
+export type WalletTabSendDetailNavigation = {
+  navigation: NavigationScreenProp<{|
+    ...NavigationLeafRoute,
+    params: {|
+      isValid: boolean,
+      onSendTokens: () => void,
+      navigate: $PropertyType<
+        $PropertyType<ReactNavigation, 'navigation'>,
+        'navigate'
+      >,
+    |},
+  |}>,
+}
+
 export type WalletTabSendDetailsProps = {
   tokenAmount: string,
   tokenSentStatus: $Keys<typeof STORE_STATUS>,
@@ -45,7 +63,7 @@ export type WalletTabSendDetailsProps = {
     tokenAmount: string,
     recipientAddress: string
   ) => SendTokensAction,
-} & ReactNavigation
+} & WalletTabSendDetailNavigation
 
 export type BackupWalletAction = {
   type: typeof BACKUP_WALLET,

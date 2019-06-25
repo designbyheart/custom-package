@@ -10,6 +10,7 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -44,9 +45,7 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
       >
         <View
           absolute="TopRight"
-          accessibilityComponentType={undefined}
           accessibilityLabel="claim-offer-icon-close-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           clearBg={true}
           hitSlop={
@@ -65,8 +64,6 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
             ]
           }
           medium={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -215,9 +212,7 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -259,9 +254,7 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
           Test Issuer is offering you
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -382,9 +375,7 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -432,9 +423,7 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -508,9 +497,7 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -558,9 +545,7 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -598,7 +583,6 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -613,6 +597,7 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -670,31 +655,17 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="claim-offer-footer-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -733,9 +704,6 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -802,15 +770,9 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -820,18 +782,12 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="claim-offer-footer-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -874,9 +830,6 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -935,6 +888,7 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -969,9 +923,7 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
       >
         <View
           absolute="TopRight"
-          accessibilityComponentType={undefined}
           accessibilityLabel="claim-offer-icon-close-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           clearBg={true}
           hitSlop={
@@ -990,8 +942,6 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
             ]
           }
           medium={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1140,9 +1090,7 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -1184,9 +1132,7 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
           Test Issuer is offering you
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -1307,9 +1253,7 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -1357,9 +1301,7 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -1433,9 +1375,7 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -1483,9 +1423,7 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -1523,7 +1461,6 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -1538,6 +1475,7 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -1595,31 +1533,17 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="claim-offer-footer-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -1658,9 +1582,6 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -1727,15 +1648,9 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -1745,18 +1660,12 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="claim-offer-footer-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -1799,9 +1708,6 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -1860,6 +1766,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -1894,9 +1801,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
       >
         <View
           absolute="TopRight"
-          accessibilityComponentType={undefined}
           accessibilityLabel="claim-offer-icon-close-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           clearBg={true}
           hitSlop={
@@ -1915,8 +1820,6 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
             ]
           }
           medium={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -2065,9 +1968,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -2109,9 +2010,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
           Test Issuer is offering you
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -2232,9 +2131,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -2282,9 +2179,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -2358,9 +2253,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -2408,9 +2301,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -2448,7 +2339,6 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -2463,6 +2353,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -2520,31 +2411,17 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="claim-offer-footer-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -2583,9 +2460,6 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -2652,15 +2526,9 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -2670,18 +2538,12 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="claim-offer-footer-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -2724,9 +2586,6 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -2871,7 +2730,6 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
           accessibilityLabel="claim-offer-payment-failure-modal-payment-failure-modal-modal-title"
           accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -2914,7 +2772,6 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
           accessibilityLabel="claim-offer-payment-failure-modal-payment-failure-modal-modal-content"
           accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -2986,31 +2843,17 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
             }
           >
             <View
-              accessibilityComponentType={undefined}
               accessibilityLabel="claim-offer-payment-failure-modal-payment-failure-modal-modal-cancel"
-              accessibilityTraits={undefined}
               accessible={true}
-              hasTVPreferredFocus={undefined}
-              hitSlop={undefined}
               isTVSelectable={true}
-              nativeID={undefined}
-              onLayout={undefined}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
               onResponderTerminate={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                  },
-                  undefined,
-                ]
-              }
+              style={null}
               testID="claim-offer-payment-failure-modal-payment-failure-modal-modal-cancel"
-              tvParallaxProperties={undefined}
             >
               <View
                 pointerEvents="box-only"
@@ -3047,9 +2890,6 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
                 }
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Array [
                       Object {},
@@ -3114,31 +2954,17 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
             }
           >
             <View
-              accessibilityComponentType={undefined}
               accessibilityLabel="claim-offer-payment-failure-modal-payment-failure-modal-modal-retry"
-              accessibilityTraits={undefined}
               accessible={true}
-              hasTVPreferredFocus={undefined}
-              hitSlop={undefined}
               isTVSelectable={true}
-              nativeID={undefined}
-              onLayout={undefined}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
               onResponderTerminate={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                  },
-                  undefined,
-                ]
-              }
+              style={null}
               testID="claim-offer-payment-failure-modal-payment-failure-modal-modal-retry"
-              tvParallaxProperties={undefined}
             >
               <View
                 pointerEvents="box-only"
@@ -3175,9 +3001,6 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
                 }
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Array [
                       Object {},
@@ -3234,6 +3057,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -3268,9 +3092,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
       >
         <View
           absolute="TopRight"
-          accessibilityComponentType={undefined}
           accessibilityLabel="claim-offer-icon-close-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           clearBg={true}
           hitSlop={
@@ -3289,8 +3111,6 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
             ]
           }
           medium={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -3439,9 +3259,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -3483,9 +3301,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
           Test Issuer is offering you
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -3537,9 +3353,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
           }
         >
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -3579,9 +3393,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
             PAY
           </Text>
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -3697,9 +3509,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -3847,9 +3657,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -3897,9 +3705,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -3973,9 +3779,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -4023,9 +3827,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -4063,7 +3865,6 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -4078,6 +3879,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -4135,31 +3937,17 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="claim-offer-footer-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -4198,9 +3986,6 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -4267,15 +4052,9 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -4285,18 +4064,12 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="claim-offer-footer-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -4339,9 +4112,6 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -4400,6 +4170,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -4434,9 +4205,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
       >
         <View
           absolute="TopRight"
-          accessibilityComponentType={undefined}
           accessibilityLabel="claim-offer-icon-close-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           clearBg={true}
           hitSlop={
@@ -4455,8 +4224,6 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
             ]
           }
           medium={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -4605,9 +4372,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -4649,9 +4414,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
           Test Issuer is offering you
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -4703,9 +4466,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
           }
         >
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -4745,9 +4506,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
             PAY
           </Text>
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -4863,9 +4622,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -5013,9 +4770,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -5063,9 +4818,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -5139,9 +4892,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -5189,9 +4940,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -5229,7 +4978,6 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -5244,6 +4992,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -5301,31 +5050,17 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="claim-offer-footer-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -5364,9 +5099,6 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -5433,15 +5165,9 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -5451,18 +5177,12 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="claim-offer-footer-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -5505,9 +5225,6 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -5647,9 +5364,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
           </View>
         </View>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -5705,31 +5420,15 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "backgroundColor": "transparent",
-              },
-              undefined,
-            ]
-          }
-          testID={undefined}
-          tvParallaxProperties={undefined}
+          style={null}
         >
           <View
             pointerEvents="box-only"
@@ -5766,9 +5465,6 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -5824,6 +5520,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -5858,9 +5555,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
       >
         <View
           absolute="TopRight"
-          accessibilityComponentType={undefined}
           accessibilityLabel="claim-offer-icon-close-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           clearBg={true}
           hitSlop={
@@ -5879,8 +5574,6 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
             ]
           }
           medium={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -6029,9 +5722,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -6073,9 +5764,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
           Test Issuer is offering you
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -6127,9 +5816,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
           }
         >
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -6169,9 +5856,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
             PAY
           </Text>
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -6287,9 +5972,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -6437,9 +6120,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -6487,9 +6168,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -6563,9 +6242,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -6613,9 +6290,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
               }
             >
               <Text
-                accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -6653,7 +6328,6 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -6668,6 +6342,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -6725,31 +6400,17 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="claim-offer-footer-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -6788,9 +6449,6 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -6857,15 +6515,9 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="claim-offer-footer-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -6875,18 +6527,12 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="claim-offer-footer-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -6929,9 +6575,6 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -7076,7 +6719,6 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
           accessibilityLabel="ledger-fees-modal-title"
           accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -7119,7 +6761,6 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
           accessibilityLabel="ledger-fees-modal-title"
           accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -7162,7 +6803,6 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
           accessibilityLabel="ledger-fees-modal-content"
           accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -7203,7 +6843,6 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
             accessibilityLabel="ledger-fees-modal-content"
             accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -7277,31 +6916,17 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
             }
           >
             <View
-              accessibilityComponentType={undefined}
               accessibilityLabel="ledger-fees-modal-No"
-              accessibilityTraits={undefined}
               accessible={true}
-              hasTVPreferredFocus={undefined}
-              hitSlop={undefined}
               isTVSelectable={true}
-              nativeID={undefined}
-              onLayout={undefined}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
               onResponderTerminate={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                  },
-                  undefined,
-                ]
-              }
+              style={null}
               testID="ledger-fees-modal-No"
-              tvParallaxProperties={undefined}
             >
               <View
                 pointerEvents="box-only"
@@ -7338,9 +6963,6 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
                 }
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Array [
                       Object {},
@@ -7405,31 +7027,17 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
             }
           >
             <View
-              accessibilityComponentType={undefined}
               accessibilityLabel="ledger-fees-modal-Yes"
-              accessibilityTraits={undefined}
               accessible={true}
-              hasTVPreferredFocus={undefined}
-              hitSlop={undefined}
               isTVSelectable={true}
-              nativeID={undefined}
-              onLayout={undefined}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
               onResponderTerminate={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                  },
-                  undefined,
-                ]
-              }
+              style={null}
               testID="ledger-fees-modal-Yes"
-              tvParallaxProperties={undefined}
             >
               <View
                 pointerEvents="box-only"
@@ -7466,9 +7074,6 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
                 }
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Array [
                       Object {},

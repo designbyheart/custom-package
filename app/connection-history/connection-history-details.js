@@ -54,6 +54,8 @@ export class ConnectionHistoryDetails extends PureComponent<
         },
       },
     },
+  }: {
+    navigation: any,
   }) => ({
     headerLeft: (
       <CustomView>

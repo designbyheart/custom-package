@@ -4,11 +4,7 @@ import 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import { CLAIM_OFFER_STATUS } from '../../claim-offer/type-claim-offer'
-import {
-  claimOfferRoute,
-  homeTabRoute,
-  authenticationRoute,
-} from '../../common'
+import { claimOfferRoute, homeTabRoute } from '../../common'
 import {
   MESSAGE_TYPE,
   PUSH_NOTIFICATION_SENT_CODE,
@@ -20,6 +16,7 @@ import {
   myPairWiseConnectionDetails,
   vcxSerializedConnection,
 } from '../../../__mocks__/static-data'
+import { SERVER_ENVIRONMENT } from '../../store/type-config-store'
 
 function props(claimOfferStatus, noConnections) {
   let connectionsData = {
@@ -57,6 +54,9 @@ function props(claimOfferStatus, noConnections) {
     pushNotificationReceived: jest.fn(),
     authenticationRequestReceived: jest.fn(),
     unSeenMessages: {},
+    environmentName: SERVER_ENVIRONMENT.PROD,
+    history: getStore().getState().history,
+    onNewConnectionSeen: jest.fn(),
   }
 }
 

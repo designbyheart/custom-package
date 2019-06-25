@@ -30,10 +30,10 @@ import type {
   WalletSendPaymentData,
   WalletTabSendDetailsProps,
   WalletTabSendDetailsState,
+  WalletTabSendDetailNavigation,
 } from './type-wallet'
 import { formatNumbers } from '../components/text'
 import { receiveTabRoute } from '../common'
-import { walletAddresses } from '../../__mocks__/static-data'
 import {
   SEND_TOKENS_TO_PAYMENT_ADDRESS,
   FOR_SEND_DETAILS_TEST_ID,
@@ -54,7 +54,9 @@ export class WalletTabSendDetails extends Component<
   WalletTabSendDetailsProps,
   WalletTabSendDetailsState
 > {
-  static navigationOptions = ({ navigation, screenProps }) => ({
+  static navigationOptions = ({
+    navigation,
+  }: WalletTabSendDetailNavigation) => ({
     header: (
       <CustomHeader flatHeader backgroundColor={whiteSmokeSecondary}>
         <Icon
@@ -104,6 +106,8 @@ export class WalletTabSendDetails extends Component<
   componentDidUpdate(prevProps: WalletTabSendDetailsProps) {
     if (this.props.tokenSentStatus !== prevProps.tokenSentStatus) {
       if (this.props.tokenSentStatus === STORE_STATUS.SUCCESS) {
+        const { navigation } = this.props
+        const { params } = navigation.state
         /*
           So, we have one operation to go back to tabs stack, and then another one to change tab to receiveTabRoute.
 
@@ -112,9 +116,8 @@ export class WalletTabSendDetails extends Component<
 
           For this to work, we are also passing navigator of tabs via state params and then navigating tabs stack as well.
         */
-        this.props.navigation.goBack(null)
-        this.props.navigation.state &&
-          this.props.navigation.state.params.navigate(receiveTabRoute)
+        navigation.goBack(null)
+        params && params.navigate && params.navigate(receiveTabRoute)
       } else if (this.props.tokenSentStatus === STORE_STATUS.ERROR) {
         this.setState({
           credentialOfferModalStatus:

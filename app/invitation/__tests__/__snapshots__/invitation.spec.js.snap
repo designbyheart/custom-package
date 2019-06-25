@@ -72,7 +72,6 @@ exports[`<Invitation /> should match snapshot 1`] = `
                 accessibilityLabel="invitation-text-container-title"
                 accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -115,7 +114,6 @@ exports[`<Invitation /> should match snapshot 1`] = `
                 accessibilityLabel="invitation-text-container-message"
                 accessible={true}
                 allowFontScaling={false}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {
@@ -200,13 +198,7 @@ exports[`<Invitation /> should match snapshot 1`] = `
                 vCenter={true}
               >
                 <View
-                  accessibilityComponentType={undefined}
-                  accessibilityLabel={undefined}
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hitSlop={undefined}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -214,8 +206,6 @@ exports[`<Invitation /> should match snapshot 1`] = `
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
                   pointerEvents="box-only"
-                  style={undefined}
-                  testID={undefined}
                 >
                   <View
                     accessibilityLabel="invitation-text-avatars-invitee"
@@ -237,15 +227,7 @@ exports[`<Invitation /> should match snapshot 1`] = `
                     testID="invitation-text-avatars-invitee"
                   >
                     <Image
-                      accessibilityComponentType={undefined}
-                      accessibilityLabel={undefined}
-                      accessibilityTraits={undefined}
                       accessible={true}
-                      hitSlop={undefined}
-                      nativeID={undefined}
-                      onError={undefined}
-                      onLayout={undefined}
-                      onLoad={undefined}
                       onResponderGrant={[Function]}
                       onResponderMove={[Function]}
                       onResponderRelease={[Function]}
@@ -264,7 +246,6 @@ exports[`<Invitation /> should match snapshot 1`] = `
                           },
                         ]
                       }
-                      testID={undefined}
                     />
                   </View>
                 </View>
@@ -298,15 +279,7 @@ exports[`<Invitation /> should match snapshot 1`] = `
                   testID="invitation-text-avatars-inviter"
                 >
                   <Image
-                    accessibilityComponentType={undefined}
-                    accessibilityLabel={undefined}
-                    accessibilityTraits={undefined}
                     accessible={true}
-                    hitSlop={undefined}
-                    nativeID={undefined}
-                    onError={undefined}
-                    onLayout={undefined}
-                    onLoad={undefined}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
                     onResponderRelease={[Function]}
@@ -329,7 +302,6 @@ exports[`<Invitation /> should match snapshot 1`] = `
                         },
                       ]
                     }
-                    testID={undefined}
                   />
                 </View>
               </View>
@@ -339,6 +311,7 @@ exports[`<Invitation /> should match snapshot 1`] = `
       </View>
     </View>
     <RCTSafeAreaView
+      emulateUnlessSupported={true}
       style={
         Object {
           "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -396,31 +369,17 @@ exports[`<Invitation /> should match snapshot 1`] = `
                   }
                 >
                   <View
-                    accessibilityComponentType={undefined}
                     accessibilityLabel="invitation-deny"
-                    accessibilityTraits={undefined}
                     accessible={true}
-                    hasTVPreferredFocus={undefined}
-                    hitSlop={undefined}
                     isTVSelectable={true}
-                    nativeID={undefined}
-                    onLayout={undefined}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
                     onResponderRelease={[Function]}
                     onResponderTerminate={[Function]}
                     onResponderTerminationRequest={[Function]}
                     onStartShouldSetResponder={[Function]}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                        },
-                        undefined,
-                      ]
-                    }
+                    style={null}
                     testID="invitation-deny"
-                    tvParallaxProperties={undefined}
                   >
                     <View
                       pointerEvents="box-only"
@@ -459,9 +418,6 @@ exports[`<Invitation /> should match snapshot 1`] = `
                       }
                     >
                       <Text
-                        accessible={true}
-                        allowFontScaling={true}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {},
@@ -528,15 +484,9 @@ exports[`<Invitation /> should match snapshot 1`] = `
                   }
                 >
                   <View
-                    accessibilityComponentType={undefined}
                     accessibilityLabel="invitation-accept"
-                    accessibilityTraits={undefined}
                     accessible={true}
-                    hasTVPreferredFocus={undefined}
-                    hitSlop={undefined}
                     isTVSelectable={true}
-                    nativeID={undefined}
-                    onLayout={undefined}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
                     onResponderRelease={[Function]}
@@ -546,18 +496,12 @@ exports[`<Invitation /> should match snapshot 1`] = `
                     style={
                       Array [
                         Object {
-                          "backgroundColor": "transparent",
+                          "borderLeftColor": "#ffffff",
+                          "borderLeftWidth": 0.4,
                         },
-                        Array [
-                          Object {
-                            "borderLeftColor": "#ffffff",
-                            "borderLeftWidth": 0.4,
-                          },
-                        ],
                       ]
                     }
                     testID="invitation-accept"
-                    tvParallaxProperties={undefined}
                   >
                     <View
                       pointerEvents="box-only"
@@ -600,9 +544,6 @@ exports[`<Invitation /> should match snapshot 1`] = `
                       }
                     >
                       <Text
-                        accessible={true}
-                        allowFontScaling={true}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {},
@@ -687,7 +628,6 @@ exports[`<Invitation /> should show "Connecting..." while sending invitation res
     }
   >
     <Image
-      collapsable={undefined}
       source={1}
       style={
         Object {
@@ -703,9 +643,7 @@ exports[`<Invitation /> should show "Connecting..." while sending invitation res
       }
     />
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {

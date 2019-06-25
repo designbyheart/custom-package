@@ -23,7 +23,6 @@ exports[`send logs screen should render properly and snapshot should match 1`] =
     }
   >
     <Image
-      collapsable={undefined}
       source={1}
       style={
         Object {
@@ -39,9 +38,7 @@ exports[`send logs screen should render properly and snapshot should match 1`] =
       }
     />
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {

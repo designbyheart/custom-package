@@ -2,6 +2,7 @@
 
 exports[`<QuestionActions /> when more than two responses are present match snapshot if in error status 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={Object {}}
 >
@@ -42,15 +43,9 @@ exports[`<QuestionActions /> when more than two responses are present match snap
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-cancel"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -60,21 +55,15 @@ exports[`<QuestionActions /> when more than two responses are present match snap
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#A5A5A5",
-                },
-              ],
+              Object {
+                "borderColor": "#A5A5A5",
+              },
             ]
           }
           testID="question-action-cancel"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -118,9 +107,6 @@ exports[`<QuestionActions /> when more than two responses are present match snap
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -189,15 +175,9 @@ exports[`<QuestionActions /> when more than two responses are present match snap
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-submit"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -207,21 +187,15 @@ exports[`<QuestionActions /> when more than two responses are present match snap
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
+              Object {
+                "borderColor": "#01C8A1",
+              },
             ]
           }
           testID="question-action-submit"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -265,9 +239,6 @@ exports[`<QuestionActions /> when more than two responses are present match snap
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -318,6 +289,7 @@ exports[`<QuestionActions /> when more than two responses are present match snap
 
 exports[`<QuestionActions /> when more than two responses are present match snapshot if in success status 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={Object {}}
 >
@@ -357,15 +329,9 @@ exports[`<QuestionActions /> when more than two responses are present match snap
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-submit"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -375,21 +341,15 @@ exports[`<QuestionActions /> when more than two responses are present match snap
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
+              Object {
+                "borderColor": "#01C8A1",
+              },
             ]
           }
           testID="question-action-submit"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -433,9 +393,6 @@ exports[`<QuestionActions /> when more than two responses are present match snap
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -486,6 +443,7 @@ exports[`<QuestionActions /> when more than two responses are present match snap
 
 exports[`<QuestionActions /> when more than two responses are present render Ignore and Submit button 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={Object {}}
 >
@@ -526,15 +484,9 @@ exports[`<QuestionActions /> when more than two responses are present render Ign
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-cancel"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -544,21 +496,15 @@ exports[`<QuestionActions /> when more than two responses are present render Ign
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#A5A5A5",
-                },
-              ],
+              Object {
+                "borderColor": "#A5A5A5",
+              },
             ]
           }
           testID="question-action-cancel"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -602,9 +548,6 @@ exports[`<QuestionActions /> when more than two responses are present render Ign
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -673,15 +616,9 @@ exports[`<QuestionActions /> when more than two responses are present render Ign
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-submit"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -691,21 +628,15 @@ exports[`<QuestionActions /> when more than two responses are present render Ign
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
+              Object {
+                "borderColor": "#01C8A1",
+              },
             ]
           }
           testID="question-action-submit"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -758,9 +689,6 @@ exports[`<QuestionActions /> when more than two responses are present render Ign
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -811,6 +739,7 @@ exports[`<QuestionActions /> when more than two responses are present render Ign
 
 exports[`<QuestionActions /> when one response is present match snapshot if in error status 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={Object {}}
 >
@@ -851,15 +780,9 @@ exports[`<QuestionActions /> when one response is present match snapshot if in e
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-cancel"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -869,21 +792,15 @@ exports[`<QuestionActions /> when one response is present match snapshot if in e
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#A5A5A5",
-                },
-              ],
+              Object {
+                "borderColor": "#A5A5A5",
+              },
             ]
           }
           testID="question-action-cancel"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -927,9 +844,6 @@ exports[`<QuestionActions /> when one response is present match snapshot if in e
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -998,15 +912,9 @@ exports[`<QuestionActions /> when one response is present match snapshot if in e
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-submit"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1016,21 +924,15 @@ exports[`<QuestionActions /> when one response is present match snapshot if in e
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
+              Object {
+                "borderColor": "#01C8A1",
+              },
             ]
           }
           testID="question-action-submit"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -1074,9 +976,6 @@ exports[`<QuestionActions /> when one response is present match snapshot if in e
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -1127,6 +1026,7 @@ exports[`<QuestionActions /> when one response is present match snapshot if in e
 
 exports[`<QuestionActions /> when one response is present match snapshot if in success status 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={Object {}}
 >
@@ -1166,15 +1066,9 @@ exports[`<QuestionActions /> when one response is present match snapshot if in s
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-submit"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1184,21 +1078,15 @@ exports[`<QuestionActions /> when one response is present match snapshot if in s
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
+              Object {
+                "borderColor": "#01C8A1",
+              },
             ]
           }
           testID="question-action-submit"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -1242,9 +1130,6 @@ exports[`<QuestionActions /> when one response is present match snapshot if in s
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -1295,6 +1180,7 @@ exports[`<QuestionActions /> when one response is present match snapshot if in s
 
 exports[`<QuestionActions /> when one response is present render Ignore and response button 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={Object {}}
 >
@@ -1335,15 +1221,9 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-cancel"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1353,21 +1233,15 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#A5A5A5",
-                },
-              ],
+              Object {
+                "borderColor": "#A5A5A5",
+              },
             ]
           }
           testID="question-action-cancel"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -1411,9 +1285,6 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -1485,15 +1356,9 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
           }
         >
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="akdfakjfkjdaadkgak-submit"
-            accessibilityTraits={undefined}
             accessible={true}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1503,21 +1368,15 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
             style={
               Array [
                 Object {
-                  "backgroundColor": "transparent",
+                  "borderRadius": 5,
+                  "borderWidth": 1,
                 },
-                Array [
-                  Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
-                  },
-                  Object {
-                    "borderColor": "#01C8A1",
-                  },
-                ],
+                Object {
+                  "borderColor": "#01C8A1",
+                },
               ]
             }
             testID="akdfakjfkjdaadkgak-submit"
-            tvParallaxProperties={undefined}
           >
             <View
               pointerEvents="box-only"
@@ -1561,9 +1420,6 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
               }
             >
               <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {},
@@ -1615,6 +1471,7 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
 
 exports[`<QuestionActions /> when two responses are present match snapshot if in error status 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={Object {}}
 >
@@ -1655,15 +1512,9 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-cancel"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1673,21 +1524,15 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#A5A5A5",
-                },
-              ],
+              Object {
+                "borderColor": "#A5A5A5",
+              },
             ]
           }
           testID="question-action-cancel"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -1731,9 +1576,6 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -1802,15 +1644,9 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-submit"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1820,21 +1656,15 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
+              Object {
+                "borderColor": "#01C8A1",
+              },
             ]
           }
           testID="question-action-submit"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -1878,9 +1708,6 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -1931,6 +1758,7 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
 
 exports[`<QuestionActions /> when two responses are present match snapshot if in success status 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={Object {}}
 >
@@ -1970,15 +1798,9 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="question-action-submit"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1988,21 +1810,15 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
           style={
             Array [
               Object {
-                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 1,
               },
-              Array [
-                Object {
-                  "borderRadius": 5,
-                  "borderWidth": 1,
-                },
-                Object {
-                  "borderColor": "#01C8A1",
-                },
-              ],
+              Object {
+                "borderColor": "#01C8A1",
+              },
             ]
           }
           testID="question-action-submit"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -2046,9 +1862,6 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -2099,6 +1912,7 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
 
 exports[`<QuestionActions /> when two responses are present render both response buttons and no ignore button 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={Object {}}
 >
@@ -2145,15 +1959,9 @@ exports[`<QuestionActions /> when two responses are present render both response
           }
         >
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="hyjjjjuifhjkiutyojoh-submit"
-            accessibilityTraits={undefined}
             accessible={true}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -2163,21 +1971,15 @@ exports[`<QuestionActions /> when two responses are present render both response
             style={
               Array [
                 Object {
-                  "backgroundColor": "transparent",
+                  "borderRadius": 5,
+                  "borderWidth": 1,
                 },
-                Array [
-                  Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
-                  },
-                  Object {
-                    "borderColor": "#A5A5A5",
-                  },
-                ],
+                Object {
+                  "borderColor": "#A5A5A5",
+                },
               ]
             }
             testID="hyjjjjuifhjkiutyojoh-submit"
-            tvParallaxProperties={undefined}
           >
             <View
               pointerEvents="box-only"
@@ -2221,9 +2023,6 @@ exports[`<QuestionActions /> when two responses are present render both response
               }
             >
               <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {},
@@ -2292,15 +2091,9 @@ exports[`<QuestionActions /> when two responses are present render both response
           }
         >
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="akdfakjfkjdaadkgak-submit"
-            accessibilityTraits={undefined}
             accessible={true}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -2310,21 +2103,15 @@ exports[`<QuestionActions /> when two responses are present render both response
             style={
               Array [
                 Object {
-                  "backgroundColor": "transparent",
+                  "borderRadius": 5,
+                  "borderWidth": 1,
                 },
-                Array [
-                  Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
-                  },
-                  Object {
-                    "borderColor": "#01C8A1",
-                  },
-                ],
+                Object {
+                  "borderColor": "#01C8A1",
+                },
               ]
             }
             testID="akdfakjfkjdaadkgak-submit"
-            tvParallaxProperties={undefined}
           >
             <View
               pointerEvents="box-only"
@@ -2368,9 +2155,6 @@ exports[`<QuestionActions /> when two responses are present render both response
               }
             >
               <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
                 style={
                   Array [
                     Object {},

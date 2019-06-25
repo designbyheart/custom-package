@@ -184,10 +184,12 @@ export class ConnectionHistory extends Component<
     // check if connection history updated with new params
     const oldShowSnack = prevProps.navigation.getParam(
       'showExistingConnectionSnack',
+      // $FlowFixMe not fixing flow errors in this file because it is not used anymore
       false
     )
     const newShowSnack = this.props.navigation.getParam(
       'showExistingConnectionSnack',
+      // $FlowFixMe not fixing flow errors in this file because it is not used anymore
       false
     )
     if (oldShowSnack !== newShowSnack && newShowSnack === true) {
@@ -198,6 +200,7 @@ export class ConnectionHistory extends Component<
   showSnackBar = () => {
     const showExistingConnectionSnack = this.props.navigation.getParam(
       'showExistingConnectionSnack',
+      // $FlowFixMe not fixing flow errors in this file because it is not used anymore
       false
     )
     if (showExistingConnectionSnack) {
@@ -214,9 +217,11 @@ export class ConnectionHistory extends Component<
 
       const backRedirectRoute = this.props.navigation.getParam(
         'backRedirectRoute',
+        // $FlowFixMe not fixing flow errors in this file because it is not used anymore
         null
       )
       if (backRedirectRoute) {
+        // $FlowFixMe not fixing flow errors in this file because it is not used anymore
         navigation.navigate(backRedirectRoute)
       } else {
         navigation.goBack(null)
@@ -302,9 +307,13 @@ export class ConnectionHistory extends Component<
     const { width } = Dimensions.get('window')
     if (this.props.navigation.state) {
       const {
+        // $FlowFixMe not fixing flow errors in this file because it is not used anymore
         senderName,
+        // $FlowFixMe not fixing flow errors in this file because it is not used anymore
         image,
+        // $FlowFixMe not fixing flow errors in this file because it is not used anymore
         senderDID,
+        // $FlowFixMe not fixing flow errors in this file because it is not used anymore
         identifier,
       } = this.props.navigation.state.params
       const { activeConnectionThemePrimary, connectionHistory } = this.props
@@ -314,6 +323,7 @@ export class ConnectionHistory extends Component<
         : require('../images/cb_evernym.png')
 
       const historySenderDIDs = Object.keys(connectionHistory)
+
       const historyList = historySenderDIDs.map((sdid, i) => {
         const historyItems = connectionHistory[sdid].map((h, i) => {
           const itemProps = {
@@ -339,8 +349,11 @@ export class ConnectionHistory extends Component<
               this.handleRedirectionScreens(
                 h,
                 activeConnectionThemePrimary,
+                // $FlowFixMe not fixing flow errors in this file because it is not used anymore
                 senderName,
+                // $FlowFixMe not fixing flow errors in this file because it is not used anymore
                 image,
+                // $FlowFixMe not fixing flow errors in this file because it is not used anymore
                 senderDID
               )
             },
@@ -386,12 +399,15 @@ export class ConnectionHistory extends Component<
               { backgroundColor: this.props.activeConnectionThemePrimary },
             ]}
           >
-            <ClaimProofHeader
-              message={senderName}
+            {/** Commenting because there are flow errors,
+                  and we don't need to fix flow errors in this file
+                  because it is not used anymore */}
+            {/* <ClaimProofHeader
+              message={senderName || ''}
               onClose={this.closeDebounce}
               logoUrl={image}
               testID={testID}
-              containerStyle={{ backgroundColor: 'transparent' }}
+              containerStyle={[{ backgroundColor: 'transparent' }]}
               textContainerStyle={[
                 styles.textContainerStyle,
                 { backgroundColor: 'transparent' },
@@ -443,13 +459,15 @@ export class ConnectionHistory extends Component<
                   }}
                 />
               </CustomView>
-            </ClaimProofHeader>
+            </ClaimProofHeader> */}
           </CustomView>
           <ScrollView>
             <List containerStyle={styles.listContainer}>{historyList}</List>
           </ScrollView>
         </Container>
       )
+    } else {
+      return null
     }
   }
 }
@@ -457,7 +475,8 @@ export class ConnectionHistory extends Component<
 const mapStateToProps = (state: Store, props: ReactNavigation) => {
   let connectionHistory: ConnectionHistoryEvent[] =
     state.history.data && props.navigation.state
-      ? state.history.data[props.navigation.state.params.senderDID]
+      ? // $FlowFixMe not fixing flow errors in this file because it is not used anymore
+        state.history.data[props.navigation.state.params.senderDID]
       : []
 
   if (connectionHistory) {
@@ -491,6 +510,7 @@ const mapStateToProps = (state: Store, props: ReactNavigation) => {
 
   const themeForLogo = getConnectionTheme(
     state,
+    // $FlowFixMe not fixing flow errors in this file because it is not used anymore
     props.navigation.state ? props.navigation.state.params.image : ''
   )
 

@@ -19,9 +19,7 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
     }
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -73,9 +71,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
       style={Object {}}
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
         hitSlop={
           Object {
@@ -85,8 +80,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
             "top": 20,
           }
         }
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -99,12 +92,9 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
             "flexDirection": "row",
           }
         }
-        testID={undefined}
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-0-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -115,8 +105,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -137,9 +125,7 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
           testID="pin-code-digit-0-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-1-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -150,8 +136,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -172,9 +156,7 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
           testID="pin-code-digit-1-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-2-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -185,8 +167,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -207,9 +187,7 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
           testID="pin-code-digit-2-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-3-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -220,8 +198,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -242,9 +218,7 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
           testID="pin-code-digit-3-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-4-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -255,8 +229,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -277,9 +249,7 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
           testID="pin-code-digit-4-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-5-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -290,8 +260,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -358,9 +326,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
     }
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -412,9 +378,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
       style={Object {}}
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
         hitSlop={
           Object {
@@ -424,8 +387,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
             "top": 20,
           }
         }
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -438,12 +399,9 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
             "flexDirection": "row",
           }
         }
-        testID={undefined}
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-0-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -454,8 +412,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -476,9 +432,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
           testID="pin-code-digit-0-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-1-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -489,8 +443,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -511,9 +463,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
           testID="pin-code-digit-1-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-2-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -524,8 +474,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -546,9 +494,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
           testID="pin-code-digit-2-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-3-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -559,8 +505,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -581,9 +525,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
           testID="pin-code-digit-3-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-4-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -594,8 +536,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -616,9 +556,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
           testID="pin-code-digit-4-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-5-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -629,8 +567,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -697,9 +633,7 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
     }
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -751,9 +685,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
       style={Object {}}
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
         hitSlop={
           Object {
@@ -763,8 +694,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
             "top": 20,
           }
         }
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -777,12 +706,9 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
             "flexDirection": "row",
           }
         }
-        testID={undefined}
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-0-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -793,8 +719,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -815,9 +739,7 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
           testID="pin-code-digit-0-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-1-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -828,8 +750,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -850,9 +770,7 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
           testID="pin-code-digit-1-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-2-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -863,8 +781,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -885,9 +801,7 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
           testID="pin-code-digit-2-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-3-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -898,8 +812,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -920,9 +832,7 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
           testID="pin-code-digit-3-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-4-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -933,8 +843,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -955,9 +863,7 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
           testID="pin-code-digit-4-touchable"
         />
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="pin-code-digit-5-touchable"
-          accessibilityTraits={undefined}
           accessible={false}
           center={true}
           hitSlop={
@@ -968,8 +874,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}

@@ -237,7 +237,7 @@ export class LockSelection extends PureComponent<LockSelectionProps, *> {
             <CustomView tertiary>
               {Platform.OS === 'ios' ? (
                 <Switch
-                  onTintColor={mantis}
+                  trackColor={{ true: mantis }}
                   onValueChange={this.onDevModeChange}
                   value={this.state.devMode}
                 />

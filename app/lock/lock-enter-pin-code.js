@@ -3,6 +3,11 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createStackNavigator } from 'react-navigation'
+
+import type { ReactNavigation } from '../common/type-common'
+import type { Store } from '../store/type-store'
+import type { LockEnterPinProps, LockEnterPinState } from './type-lock'
+
 import { safeGet, safeSet } from '../services/storage'
 import LockEnter from './lock-enter'
 import {
@@ -11,9 +16,6 @@ import {
   homeRoute,
   lockSelectionRoute,
 } from '../common'
-import type { ReactNavigation } from '../common/type-common'
-import type { Store } from '../store/type-store'
-import type { LockEnterPinProps, LockEnterPinState } from './type-lock'
 import { clearPendingRedirect } from './lock-store'
 import {
   ENTER_PASS_CODE_MESSAGE,
@@ -39,7 +41,7 @@ export class LockEnterPin extends PureComponent<
   keyboardListener = null
   keyboardShowListener = null
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header:
       navigation.state.params &&
       navigation.state.params.fromScreen === 'recovery' ? (
@@ -92,9 +94,10 @@ export class LockEnterPin extends PureComponent<
       // if we reach at this screen from settings page
       // then user is trying to enable/disable touch id
       if (this.props.existingPin) {
-        this.props.navigation.push(lockPinSetupRoute, {
-          existingPin: true,
-        })
+        this.props.navigation.push &&
+          this.props.navigation.push(lockPinSetupRoute, {
+            existingPin: true,
+          })
       }
     }
   }
@@ -144,7 +147,7 @@ export class LockEnterPin extends PureComponent<
       props.pendingRedirection.map(pendingRedirection => {
         props.navigation.navigate(
           pendingRedirection.routeName,
-          pendingRedirection.params
+          pendingRedirection.params || {}
         )
       })
       props.clearPendingRedirect()

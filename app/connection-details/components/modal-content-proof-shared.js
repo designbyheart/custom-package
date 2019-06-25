@@ -17,6 +17,7 @@ import type {
   ClaimOfferPayload,
   ClaimOfferAttributeListProps,
   ClaimOfferState,
+  ClaimProofNavigation,
 } from '../../claim-offer/type-claim-offer'
 
 import { CustomListProofRequest } from '../../components'
@@ -183,7 +184,7 @@ class ProofRequestModal extends React.Component<any, any> {
   }
 }
 
-const mapStateToProps = (state: Store, props: ReactNavigation) => {
+const mapStateToProps = (state: Store, props: ClaimProofNavigation) => {
   const { proofRequest } = state
   const { uid } = props.navigation.state.params
   const proofRequestData = proofRequest[uid] || {}

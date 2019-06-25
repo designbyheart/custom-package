@@ -40,7 +40,7 @@ export class LockSetupSuccess extends PureComponent<
       this.props.pendingRedirection.map(pendingRedirection => {
         this.props.navigation.navigate(
           pendingRedirection.routeName,
-          pendingRedirection.params
+          pendingRedirection.params || {}
         )
       })
       this.props.clearPendingRedirect()

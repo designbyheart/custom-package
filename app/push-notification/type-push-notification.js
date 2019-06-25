@@ -80,10 +80,10 @@ export type PushNotificationStore = {
   isPristine: boolean,
   isFetching: boolean,
   error: ?CustomError,
-  pendingFetchAdditionalDataKey?: ?{
+  pendingFetchAdditionalDataKey: ?{
     [string]: boolean,
   },
-  navigateRoute?: ?{
+  navigateRoute: ?{
     routeName: string,
     params: GenericObject,
   },
@@ -219,15 +219,6 @@ export type UiType = {
 }
 
 export type RedirectToRelevantScreen = DownloadedNotification & UiType
-
-export type ClaimProofNavigation = {
-  goBack: () => void,
-  state: {
-    params: {
-      uid: string,
-    },
-  },
-}
 
 export type PushNotificationProps = {
   fetchAdditionalData: NotificationPayload => void,

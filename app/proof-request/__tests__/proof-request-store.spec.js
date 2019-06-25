@@ -1,6 +1,6 @@
 // @flow
 import { put, call, select } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
+import delay from '@redux-saga/delay-p'
 import proofRequestStore, {
   proofRequestReceived,
   ignoreProofRequest,

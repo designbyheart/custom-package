@@ -5,4 +5,5 @@ export type AppStatusState = {
 
 export type AppStatusProps = {
   getUnacknowledgedMessages: () => void,
+  restoreStatus: string,
 }

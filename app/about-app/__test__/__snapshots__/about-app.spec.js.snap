@@ -36,9 +36,7 @@ exports[`user about app screen should render properly and snapshot should match 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -87,9 +85,7 @@ exports[`user about app screen should render properly and snapshot should match 
       verticalSpace={true}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -146,9 +142,7 @@ exports[`user about app screen should render properly and snapshot should match 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -195,9 +189,7 @@ exports[`user about app screen should render properly and snapshot should match 
       verticalSpace={true}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -244,15 +236,8 @@ exports[`user about app screen should render properly and snapshot should match 
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -263,24 +248,17 @@ exports[`user about app screen should render properly and snapshot should match 
         Array [
           Object {
             "backgroundColor": "transparent",
+            "borderBottomColor": "#bbb",
+            "borderBottomWidth": 1,
+            "paddingBottom": 10,
+            "paddingRight": 10,
+            "paddingTop": 10,
           },
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderBottomColor": "#bbb",
-              "borderBottomWidth": 1,
-              "paddingBottom": 10,
-              "paddingRight": 10,
-              "paddingTop": 10,
-            },
-            undefined,
-            false,
-            false,
-          ],
+          undefined,
+          false,
+          false,
         ]
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <View
         style={
@@ -302,17 +280,13 @@ exports[`user about app screen should render properly and snapshot should match 
             }
           }
         >
-          <View
-            style={undefined}
-          >
+          <View>
             <View>
               <View
                 style={Object {}}
               >
                 <Text
-                  accessible={true}
                   allowFontScaling={false}
-                  ellipsizeMode="tail"
                   style={
                     Array [
                       Object {
@@ -346,23 +320,13 @@ exports[`user about app screen should render properly and snapshot should match 
               </View>
             </View>
           </View>
-          <View
-            style={undefined}
-          >
+          <View>
             <View />
           </View>
         </View>
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -376,11 +340,8 @@ exports[`user about app screen should render properly and snapshot should match 
               "opacity": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <View
-            onPress={undefined}
             style={
               Array [
                 false,
@@ -397,9 +358,7 @@ exports[`user about app screen should render properly and snapshot should match 
             underlayColor="white"
           >
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -427,15 +386,8 @@ exports[`user about app screen should render properly and snapshot should match 
       </View>
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -446,24 +398,17 @@ exports[`user about app screen should render properly and snapshot should match 
         Array [
           Object {
             "backgroundColor": "transparent",
+            "borderBottomColor": "#bbb",
+            "borderBottomWidth": 1,
+            "paddingBottom": 10,
+            "paddingRight": 10,
+            "paddingTop": 10,
           },
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderBottomColor": "#bbb",
-              "borderBottomWidth": 1,
-              "paddingBottom": 10,
-              "paddingRight": 10,
-              "paddingTop": 10,
-            },
-            undefined,
-            false,
-            false,
-          ],
+          undefined,
+          false,
+          false,
         ]
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <View
         style={
@@ -485,17 +430,13 @@ exports[`user about app screen should render properly and snapshot should match 
             }
           }
         >
-          <View
-            style={undefined}
-          >
+          <View>
             <View>
               <View
                 style={Object {}}
               >
                 <Text
-                  accessible={true}
                   allowFontScaling={false}
-                  ellipsizeMode="tail"
                   style={
                     Array [
                       Object {
@@ -529,23 +470,13 @@ exports[`user about app screen should render properly and snapshot should match 
               </View>
             </View>
           </View>
-          <View
-            style={undefined}
-          >
+          <View>
             <View />
           </View>
         </View>
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -559,11 +490,8 @@ exports[`user about app screen should render properly and snapshot should match 
               "opacity": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <View
-            onPress={undefined}
             style={
               Array [
                 false,
@@ -580,9 +508,7 @@ exports[`user about app screen should render properly and snapshot should match 
             underlayColor="white"
           >
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {

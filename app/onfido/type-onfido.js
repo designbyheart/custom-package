@@ -1,6 +1,10 @@
 // @flow
 
-import type { CustomError, ReactNavigation } from '../common/type-common'
+import type { CustomError } from '../common/type-common'
+import type {
+  NavigationScreenProp,
+  NavigationLeafRoute,
+} from 'react-navigation'
 
 export const onfidoProcessStatus = {
   IDLE: 'IDLE',
@@ -28,13 +32,22 @@ export const onfidoConnectionStatus = {
 }
 export type OnfidoConnectionStatus = $Keys<typeof onfidoConnectionStatus>
 
+export type OnfidoNavigation = {
+  navigation: NavigationScreenProp<{|
+    ...NavigationLeafRoute,
+    params: {|
+      title: string,
+    |},
+  |}>,
+}
+
 export type OnfidoProps = {
   status: OnfidoProcessStatus,
   error: ?CustomError,
   connectionStatus: OnfidoConnectionStatus,
   launchOnfidoSDK: () => LaunchOnfidoSDKAction,
   resetOnfidoStatues: () => ResetOnfidoStatuesAction,
-} & ReactNavigation
+} & OnfidoNavigation
 
 export type OnfidoStore = {
   status: OnfidoProcessStatus,
@@ -48,6 +61,7 @@ export const UPDATE_ONFIDO_PROCESS_STATUS = 'UPDATE_ONFIDO_PROCESS_STATUS'
 export type UpdateOnfidoProcessStatusAction = {
   type: typeof UPDATE_ONFIDO_PROCESS_STATUS,
   status: OnfidoProcessStatus,
+  error?: ?CustomError,
 }
 
 export const LAUNCH_ONFIDO_SDK = 'LAUNCH_ONFIDO_SDK'

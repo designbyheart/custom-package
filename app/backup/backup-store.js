@@ -10,7 +10,7 @@ import {
   take,
   race,
 } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
+import delay from '@redux-saga/delay-p'
 import { zip } from 'react-native-zip-archive'
 import {
   GENERATE_RECOVERY_PHRASE_SUCCESS,
@@ -51,7 +51,7 @@ import type {
   GenerateBackupFileLoadingAction,
   PrepareBackupStatus,
 } from './type-backup'
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 import { Platform } from 'react-native'
 import Share from 'react-native-share'
 import type { Saga } from 'redux-saga'

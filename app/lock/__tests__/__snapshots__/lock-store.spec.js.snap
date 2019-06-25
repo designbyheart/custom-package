@@ -12,6 +12,7 @@ Object {
       "routeName": "home",
     },
   ],
+  "pendingRedirectionParams": Object {},
   "showDevMode": false,
 }
 `;
@@ -24,6 +25,7 @@ Object {
   "isLockEnabled": "false",
   "isTouchIdEnabled": false,
   "pendingRedirection": null,
+  "pendingRedirectionParams": Object {},
   "showDevMode": false,
 }
 `;
@@ -36,6 +38,7 @@ Object {
   "isLockEnabled": "false",
   "isTouchIdEnabled": false,
   "pendingRedirection": null,
+  "pendingRedirectionParams": Object {},
   "showDevMode": false,
 }
 `;
@@ -48,6 +51,7 @@ Object {
   "isLockEnabled": "false",
   "isTouchIdEnabled": false,
   "pendingRedirection": null,
+  "pendingRedirectionParams": Object {},
   "showDevMode": false,
 }
 `;

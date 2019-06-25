@@ -32,6 +32,12 @@ exports[`<LockFingerprintSetup /> should show Your phone doesn’t support biome
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -65,6 +71,16 @@ exports[`<LockFingerprintSetup /> should show biometrics exceed alert if authent
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -84,6 +100,12 @@ exports[`<LockFingerprintSetup /> should show biometrics exceed alert in ios 1`]
         "cancelable": false,
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -125,6 +147,12 @@ exports[`<LockFingerprintSetup /> should show enable biometrics alert in ios 1`]
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -144,6 +172,12 @@ exports[`<LockFingerprintSetup /> should show use Passcode Alert  1`] = `
         "cancelable": false,
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
   ],
 }
 `;

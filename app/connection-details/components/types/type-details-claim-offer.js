@@ -6,10 +6,10 @@ import type {
 } from '../../../common/type-common'
 import type {
   AdditionalDataPayload,
-  ClaimProofNavigation,
   Attribute,
   NotificationPayloadInfo,
 } from '../../../push-notification/type-push-notification'
+import type { ClaimProofNavigation } from '../../../claim-offer/type-claim-offer'
 
 export const CLAIM_OFFER_STATUS = {
   IDLE: 'IDLE',

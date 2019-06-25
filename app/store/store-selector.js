@@ -16,7 +16,7 @@ import type {
   QuestionStoreMessage,
 } from '../question/type-question'
 import type { ConnectionStore } from './type-connection-store'
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 import { Platform } from 'react-native'
 import { whiteSmoke } from '../common/styles/constant'
 import memoize from 'lodash.memoize'
@@ -256,7 +256,8 @@ export const getUserAvatarSource = (name: ?string) => {
   return undefined
 }
 
-export const getUserAvatarName = (state: Store) => state.user.avatarName
+export const getUserAvatarName = (state: Store): ?string =>
+  state.user.avatarName
 
 export const getThemes = (state: Store) => state.connections.connectionThemes
 
@@ -300,8 +301,10 @@ export const getAllConnectionsPairwiseDid = (state: Store) => {
   const connections = getAllConnection(state)
 
   if (connections) {
-    return Object.keys(connections).map(
-      userDID => connections[userDID].myPairwiseDid
+    return (
+      Object.keys(connections).map <
+      string >
+      (userDID => connections[userDID].myPairwiseDid)
     )
   }
   return null

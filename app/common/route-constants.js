@@ -1,8 +1,6 @@
 // @flow
 export const splashScreenRoute = 'SplashScreenHide'
 export const homeRoute = 'Home'
-export const authenticationRoute = 'Authentication'
-export const connectionRoute = 'Connection'
 export const settingsRoute = 'Settings'
 export const settingsScreen = 'SettingsStack'
 export const expiredTokenRoute = 'ExpiredToken'

@@ -37,7 +37,6 @@ exports[`<ProofModal /> should match snapshot when proof sent fail 1`] = `
           accessibilityLabel="send-proof-message"
           accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -89,7 +88,6 @@ exports[`<ProofModal /> should match snapshot when proof sent fail 1`] = `
           }
         >
           <Image
-            collapsable={undefined}
             source={1}
             style={
               Object {
@@ -105,9 +103,7 @@ exports[`<ProofModal /> should match snapshot when proof sent fail 1`] = `
             }
           />
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -194,7 +190,6 @@ exports[`<ProofModal /> should match snapshot when proof sent success 1`] = `
           accessibilityLabel="send-proof-message"
           accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -246,7 +241,6 @@ exports[`<ProofModal /> should match snapshot when proof sent success 1`] = `
           }
         >
           <Image
-            collapsable={undefined}
             source={1}
             style={
               Object {
@@ -262,9 +256,7 @@ exports[`<ProofModal /> should match snapshot when proof sent success 1`] = `
             }
           />
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -351,7 +343,6 @@ exports[`<ProofModal /> should match snapshot when sending proof 1`] = `
           accessibilityLabel="send-proof-message"
           accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -403,7 +394,6 @@ exports[`<ProofModal /> should match snapshot when sending proof 1`] = `
           }
         >
           <Image
-            collapsable={undefined}
             source={1}
             style={
               Object {
@@ -419,9 +409,7 @@ exports[`<ProofModal /> should match snapshot when sending proof 1`] = `
             }
           />
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {

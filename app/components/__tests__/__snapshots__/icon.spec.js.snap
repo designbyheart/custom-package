@@ -21,6 +21,7 @@ exports[`<Icon /> should match snapshot 1`] = `
     Object {
       "alignItems": "center",
       "backgroundColor": "transparent",
+      "fontSize": 15,
       "justifyContent": "center",
     }
   }

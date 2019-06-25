@@ -1,6 +1,6 @@
 // @flow
 
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 import {
   put,
   takeLatest,
@@ -59,7 +59,7 @@ import {
   WALLET_ADDRESSES_FETCH_START,
   ERROR_SENDING_TOKENS_WITH_FEES,
 } from './type-wallet'
-import { NEW_CONNECTION_SUCCESS } from '../store/connections-store'
+import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import type { AgencyPoolConfig } from '../store/type-config-store'
 import { VCX_INIT_SUCCESS } from '../store/type-config-store'
 import type {

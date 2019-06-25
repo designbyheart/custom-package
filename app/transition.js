@@ -1,7 +1,7 @@
 // @flow
 
 import { Easing, Animated, Dimensions } from 'react-native'
-import { NavigationTransitionProps } from 'react-navigation'
+import type { NavigationTransitionProps } from 'react-navigation'
 
 import { checkIfAnimationToUse } from './bridge/react-native-cxs/RNCxs'
 

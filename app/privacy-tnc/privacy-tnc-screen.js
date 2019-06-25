@@ -30,7 +30,7 @@ import {
   localPrivacyPolicySource,
 } from '../common/privacyTNC-constants'
 import { LoaderGif } from '../components/loader-gif/loader-gif'
-import type { CustomError } from '../common/type-common'
+import type { CustomError, ReactNavigation } from '../common/type-common'
 import { localEulaSource } from '../eula/type-eula'
 
 const styles = StyleSheet.create({
@@ -48,7 +48,7 @@ export class PrivacyTNC extends PureComponent<
     TNC: { url: TermsAndConditionUrl, title: TermsAndConditionsTitle },
   }
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }: *) => ({
     header: (
       <CustomHeader
         flatHeader
@@ -65,7 +65,7 @@ export class PrivacyTNC extends PureComponent<
         }
         centerComponent={
           <CustomText bg="tertiary" tertiary transparentBg semiBold>
-            {navigation.state.params.title}
+            {navigation.state.params && navigation.state.params.title}
           </CustomText>
         }
       />
@@ -82,7 +82,8 @@ export class PrivacyTNC extends PureComponent<
   }
 
   render() {
-    let webViewUri = this.props.navigation.state.params.url
+    let webViewUri =
+      this.props.navigation.getParam('url') || PrivacyTNC.INFO_TYPE.PRIVACY.url
     const isTNC = webViewUri === PrivacyTNC.INFO_TYPE.TNC.url
 
     if (this.state.error) {
@@ -100,5 +101,3 @@ export class PrivacyTNC extends PureComponent<
     )
   }
 }
-
-export default PrivacyTNC

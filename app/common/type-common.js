@@ -1,14 +1,17 @@
 // @flow
 
 import type { Element } from 'react'
-import type { NavigationScreenProp } from 'react-navigation'
+import type {
+  NavigationScreenProp,
+  NavigationStateRoute,
+} from 'react-navigation'
 
 export type CustomError = {
   code: string,
   message: string,
 }
 
-export const INITIAL_TEST_ACTION: 'INITIAL_TEST_ACTION' = 'INITIAL_TEST_ACTION'
+export const INITIAL_TEST_ACTION = 'INITIAL_TEST_ACTION'
 
 export type InitialTestAction = {
   type: typeof INITIAL_TEST_ACTION,
@@ -21,7 +24,7 @@ export const initialTestAction = () => ({
 export type NavigationParams = {
   [string]: any,
 }
-export type NavigationRoute = NavigationLeafRoute
+export type NavigationRoute = NavigationLeafRoute & NavigationState
 export type NavigationState = {
   index: number,
   routes: Array<NavigationRoute>,
@@ -34,7 +37,9 @@ export type NavigationLeafRoute = {|
   params?: NavigationParams,
 |}
 
-export type ReactNavigation = NavigationScreenProp
+export type ReactNavigation = {
+  navigation: NavigationScreenProp<NavigationStateRoute>,
+}
 
 export type GenericObject = {
   [string]: any,
@@ -116,3 +121,9 @@ export type ComponentStatus = {
   loading: boolean,
   idle: boolean,
 }
+
+export type Styles =
+  | number
+  | Array<GenericObject | number>
+  | GenericObject
+  | Object

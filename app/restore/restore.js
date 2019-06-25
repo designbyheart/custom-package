@@ -18,7 +18,7 @@ import {
   restoreRoute,
 } from '../common'
 import { DocumentPicker } from 'react-native-document-picker'
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 import { updateStatusBarTheme } from '../store/connections-store'
 import type { RestoreProps } from './type-restore'
 

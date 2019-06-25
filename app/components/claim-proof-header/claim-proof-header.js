@@ -31,21 +31,22 @@ export class ClaimProofHeaderNotch extends PureComponent<
 > {
   render() {
     const {
-      containerStyle = empty,
+      containerStyle = [],
       titleStyle = [],
     }: ClaimProofHeaderNotchProps = this.props
     return (
       <View style={styles.headerNotchContainer}>
-        <View style={[styles.trapezoid, containerStyle]}>
+        <View style={[styles.trapezoid, ...containerStyle]}>
           <CustomText h7 center style={[styles.sovrinText, titleStyle]}>
             SOVRIN TOKENS
           </CustomText>
         </View>
-        <View style={[containerStyle, styles.triangle]} />
+        <View style={[...containerStyle, styles.triangle]} />
       </View>
     )
   }
 }
+
 export default class ClaimProofHeader extends PureComponent<
   ClaimProofHeaderProps,
   void
@@ -56,7 +57,7 @@ export default class ClaimProofHeader extends PureComponent<
       title,
       logoUrl,
       testID,
-      containerStyle = empty,
+      containerStyle = [],
       textContainerStyle = [],
       messageStyle = [],
       titleStyle = [],
@@ -66,7 +67,11 @@ export default class ClaimProofHeader extends PureComponent<
       <CustomSafeAreaView>
         <CustomView
           fifth
-          style={[styles.header, containerStyle, { marginBottom: -OFFSET_1X }]}
+          style={[
+            styles.header,
+            ...containerStyle,
+            { marginBottom: -OFFSET_1X },
+          ]}
         >
           {this.props.children}
           <CustomView fifth center style={[styles.message, textContainerStyle]}>

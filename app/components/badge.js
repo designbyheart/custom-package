@@ -32,12 +32,7 @@ const Badge = ({ count, secondary, badgeStyle, shadow, onPress }: *) => {
   return (
     <CustomView clearBg style={[badgeStyle, style]}>
       <TouchableWithoutFeedback onPress={onPress}>
-        <Image
-          resizeMode="contain"
-          source={ribbon}
-          style={styles.image}
-          onPress={onPress}
-        />
+        <Image resizeMode="contain" source={ribbon} style={styles.image} />
       </TouchableWithoutFeedback>
       <BadgeLabel center secondary={secondary} text={count} style={empty} />
     </CustomView>

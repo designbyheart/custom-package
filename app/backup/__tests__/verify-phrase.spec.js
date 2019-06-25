@@ -8,6 +8,15 @@ import { settingsRoute } from '../../common'
 
 describe('<VerifyRecoveryPhrase />', () => {
   const recoveryPassphrase = 'hello some passphrase'
+
+  beforeEach(() => {
+    jest.useFakeTimers()
+  })
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers()
+  })
+
   const navigation = {
     navigate: jest.fn(),
     goBack: jest.fn(),

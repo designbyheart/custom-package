@@ -67,14 +67,13 @@ import {
 import type { Store } from '../store/type-store'
 import type { SettingsProps, SettingsState } from './type-settings'
 import { tertiaryHeaderStyles } from '../components/layout/header-styles'
-import type { ImageSource } from '../common/type-common'
+import type { ImageSource, ReactNavigation } from '../common/type-common'
 import { selectUserAvatar } from '../store/user/user-store'
 import { Apptentive } from 'apptentive-react-native'
 //import WalletBackupSuccessModal from '../backup/wallet-backup-success-modal'
 import AboutApp from '../about-app/about-app'
 import Onfido from '../onfido/onfido'
-import PrivacyTNC from '../privacy-tnc/privacy-tnc-screen'
-import Banner from '../components/banner/banner'
+import { PrivacyTNC } from '../privacy-tnc/privacy-tnc-screen'
 import { WalletBalance } from '../wallet/wallet-balance'
 import { size } from '../components/icon'
 import { isBiggerThanShortDevice } from '../common/styles/constant'
@@ -174,26 +173,28 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     walletBackupModalVisible: false,
     disableTouchIdSwitch: false,
   }
+
   onChangePinClick = () => {
-    if (this.props.navigation.isFocused()) {
-      this.props.navigation.push(lockEnterPinRoute, {
-        existingPin: true,
-      })
+    const { navigation } = this.props
+    if (navigation.isFocused()) {
+      navigation.push &&
+        navigation.push(lockEnterPinRoute, {
+          existingPin: true,
+        })
     }
   }
 
   onChangeTouchId = (switchState: boolean) => {
-    // when the navigation from settings is done by touching the Switch, then the touch id enables with wierd behaviour
+    const { navigation } = this.props
+    // when the navigation from settings is done by touching the Switch, then the touch id enables with weird behaviour
     // reason for the behaviour: the onChangeTouchId function is being invoked twice making to navigate twice.
     // solution: the if condition will check for the current state of the switch and compares with the actual state of the switch
     // this confirms to make the onChangeTouchId function to invoke only once at all the times
-    if (
-      this.props.touchIdActive !== switchState &&
-      this.props.navigation.isFocused()
-    ) {
-      this.props.navigation.push(lockTouchIdSetupRoute, {
-        fromSettings: true,
-      })
+    if (this.props.touchIdActive !== switchState && navigation.isFocused()) {
+      navigation.push &&
+        navigation.push(lockTouchIdSetupRoute, {
+          fromSettings: true,
+        })
     }
   }
 
@@ -340,7 +341,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
       Platform.OS === 'ios' ? (
         <Switch
           disabled={this.state.disableTouchIdSwitch}
-          onTintColor={mantis}
+          trackColor={{ true: mantis }}
           onValueChange={this.onChangeTouchId}
           value={this.props.touchIdActive}
         />
@@ -467,7 +468,7 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ selectUserAvatar }, dispatch)
 
-export const SettingStack = createStackNavigator({
+export const SettingStack: any = createStackNavigator({
   [settingsRoute]: {
     screen: withStatusBar()(
       connect(mapStateToProps, mapDispatchToProps)(Settings)
@@ -484,7 +485,7 @@ export const SettingStack = createStackNavigator({
   },
 })
 
-SettingStack.navigationOptions = ({ navigation }) => {
+SettingStack.navigationOptions = ({ navigation }: ReactNavigation) => {
   let tabBarVisible = true
   let swipeEnabled = true
   if (navigation.state.index > 0) {

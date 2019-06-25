@@ -65,6 +65,7 @@ cleancache: ## Cleans the npm packaging cache
 	@watchman watch-del-all
 	@rm -rf ${TMPDIR}/react-*
 	@rm -rf ${TMPDIR}/metro-bundler-cache-*
+	@rm -rf ${TMPDIR}/haste-map-react-native-packager-*
 	@npm cache verify
 	@yarn install --pure-lockfile
 	@npm cache clean --force
@@ -73,6 +74,9 @@ cleancache: ## Cleans the npm packaging cache
 	@kill -9 `lsof -t -i :8081`
 	@rm npm.start.reset-cache.log
 	@echo "The npm reset-cache command was executed!"
+cleanderived: ## Cleans Xcode DerivedDara
+	@rm -rf ~/Library/Developer/Xcode/DerivedData/*
+	@rm -rf ~/Library/Developer/Xcode/Archives/*
 
 post-install:
 	@./node_modules/.bin/remotedev-debugger --hostname localhost --port 5678 --injectserver

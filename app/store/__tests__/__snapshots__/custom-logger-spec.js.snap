@@ -105,11 +105,15 @@ Object {
     "isLoading": true,
     "tokens": "****",
   },
+  "eula": Object {
+    "isEulaAccept": true,
+  },
   "history": Object {
     "data": "****",
     "isLoading": true,
     "newBadge": Object {},
   },
+  "invitation": Object {},
   "ledger": Object {
     "fees": Object {
       "data": Object {
@@ -140,6 +144,16 @@ Object {
   },
   "proof": "****",
   "proofRequest": "****",
+  "pushNotification": Object {
+    "error": undefined,
+    "isAllowed": true,
+    "isFetching": false,
+    "isPristine": true,
+    "navigateRoute": undefined,
+    "notification": undefined,
+    "pendingFetchAdditionalDataKey": undefined,
+    "pushToken": undefined,
+  },
   "question": Object {
     "data": "****",
     "storageStatus": "RESTORE_SUCCESS",

@@ -19,9 +19,7 @@ exports[`<WalletTabHistory /> should render no history view properly and match t
     }
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -99,8 +97,6 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
             />
           }
           disabled={false}
-          onLongPress={undefined}
-          onPress={undefined}
           style={
             Array [
               Object {
@@ -179,14 +175,10 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                 }
               }
             >
-              <View
-                style={undefined}
-              >
+              <View>
                 <View />
               </View>
-              <View
-                style={undefined}
-              >
+              <View>
                 <View>
                   <View
                     columnBottom={true}
@@ -211,9 +203,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -251,9 +241,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -288,9 +276,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                         </Text>
                       </View>
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {
@@ -333,9 +319,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                       }
                     >
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {
@@ -371,9 +355,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                         -
                       </Text>
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {
@@ -431,8 +413,6 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
             />
           }
           disabled={false}
-          onLongPress={undefined}
-          onPress={undefined}
           style={
             Array [
               Object {
@@ -511,14 +491,10 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                 }
               }
             >
-              <View
-                style={undefined}
-              >
+              <View>
                 <View />
               </View>
-              <View
-                style={undefined}
-              >
+              <View>
                 <View>
                   <View
                     columnBottom={true}
@@ -543,9 +519,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -583,9 +557,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -620,9 +592,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                         </Text>
                       </View>
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {
@@ -665,9 +635,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                       }
                     >
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {
@@ -703,9 +671,7 @@ exports[`<WalletTabHistory /> should render properly and match the snapshot 1`] 
                         +
                       </Text>
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {

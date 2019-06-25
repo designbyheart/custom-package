@@ -18,9 +18,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
     tertiary={true}
   >
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-input-boxes-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -31,8 +29,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -54,7 +50,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
         accessibilityLabel="pass-code-input-text"
         accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -106,9 +101,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
         style={Object {}}
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
           hitSlop={
             Object {
@@ -118,8 +110,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -132,12 +122,9 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
               "flexDirection": "row",
             }
           }
-          testID={undefined}
         >
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-0-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -148,8 +135,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -170,9 +155,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             testID="pin-code-digit-0-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-1-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -183,8 +166,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -205,9 +186,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             testID="pin-code-digit-1-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-2-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -218,8 +197,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -240,9 +217,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             testID="pin-code-digit-2-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-3-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -253,8 +228,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -275,9 +248,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             testID="pin-code-digit-3-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-4-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -288,8 +259,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -310,9 +279,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             testID="pin-code-digit-4-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-5-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -323,8 +290,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -391,9 +356,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
     tertiary={true}
   >
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-input-boxes-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -404,8 +367,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -427,7 +388,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
         accessibilityLabel="pass-code-input-text"
         accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -479,9 +439,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
         style={Object {}}
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
           hitSlop={
             Object {
@@ -491,8 +448,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -505,12 +460,9 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
               "flexDirection": "row",
             }
           }
-          testID={undefined}
         >
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-0-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -521,8 +473,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -543,9 +493,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             testID="pin-code-digit-0-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-1-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -556,8 +504,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -578,9 +524,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             testID="pin-code-digit-1-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-2-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -591,8 +535,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -613,9 +555,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             testID="pin-code-digit-2-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-3-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -626,8 +566,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -648,9 +586,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             testID="pin-code-digit-3-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-4-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -661,8 +597,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -683,9 +617,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             testID="pin-code-digit-4-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-5-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -696,8 +628,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -764,9 +694,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
     tertiary={true}
   >
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-input-boxes-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -777,8 +705,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -800,7 +726,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
         accessibilityLabel="pass-code-input-text"
         accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -852,9 +777,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
         style={Object {}}
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
           hitSlop={
             Object {
@@ -864,8 +786,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -878,12 +798,9 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
               "flexDirection": "row",
             }
           }
-          testID={undefined}
         >
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-0-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -894,8 +811,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -916,9 +831,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             testID="pin-code-digit-0-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-1-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -929,8 +842,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -951,9 +862,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             testID="pin-code-digit-1-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-2-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -964,8 +873,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -986,9 +893,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             testID="pin-code-digit-2-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-3-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -999,8 +904,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1021,9 +924,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             testID="pin-code-digit-3-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-4-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -1034,8 +935,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1056,9 +955,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             testID="pin-code-digit-4-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-5-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -1069,8 +966,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1137,9 +1032,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
     tertiary={true}
   >
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-input-boxes-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -1150,8 +1043,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1173,7 +1064,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
         accessibilityLabel="pass-code-input-text"
         accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -1225,9 +1115,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
         style={Object {}}
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
           hitSlop={
             Object {
@@ -1237,8 +1124,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1251,12 +1136,9 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
               "flexDirection": "row",
             }
           }
-          testID={undefined}
         >
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-0-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -1267,8 +1149,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1289,9 +1169,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             testID="pin-code-digit-0-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-1-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -1302,8 +1180,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1324,9 +1200,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             testID="pin-code-digit-1-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-2-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -1337,8 +1211,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1359,9 +1231,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             testID="pin-code-digit-2-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-3-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -1372,8 +1242,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1394,9 +1262,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             testID="pin-code-digit-3-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-4-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -1407,8 +1273,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1429,9 +1293,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             testID="pin-code-digit-4-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-5-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -1442,8 +1304,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}

@@ -12,7 +12,7 @@ import { Container } from '../components'
 import VectorIcon from '../components/vector-icon/vector-icon'
 
 export class Offline extends PureComponent<OfflineProps> {
-  connectivityChecker: number
+  connectivityChecker: IntervalID
 
   componentDidMount() {
     NetInfo.isConnected.addEventListener(

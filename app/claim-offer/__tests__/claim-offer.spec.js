@@ -15,23 +15,21 @@ import {
   paidClaimOffer,
   claimOffer,
   senderLogoUrl1,
+  getNavigation,
 } from '../../../__mocks__/static-data'
 
-let navigation = {
-  goBack: jest.fn(),
-  state: {
-    params: {
-      uid: 'asd123',
-    },
-  },
-}
+const paramsUid = 'asd123'
+let navigation = getNavigation({
+  uid: paramsUid,
+})
+
 const props = {
   claimOfferShown: jest.fn(),
   acceptClaimOffer: jest.fn(),
   claimOfferIgnored: jest.fn(),
   claimOfferRejected: jest.fn(),
   navigation: navigation,
-  uid: navigation.state.params.uid,
+  uid: paramsUid,
   isValid: true,
   logoUrl: senderLogoUrl1,
   claimThemeSecondary: color.bg.secondary.color,

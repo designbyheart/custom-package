@@ -6,9 +6,12 @@ import { color } from '../common/styles/constant'
 import { restorePassphraseRoute, restoreWaitRoute } from '../common'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { submitPassphrase } from './restore-store'
+
 import type { RestorePassphraseProps } from './type-restore'
 import type { Store } from '../store/type-store'
+import type { ReactNavigation } from '../common/type-common'
+
+import { submitPassphrase } from './restore-store'
 import { CustomView, Icon, CustomHeader } from '../components'
 import {
   RESTORE_BACK_BUTTON_TEST_ID,
@@ -21,7 +24,7 @@ const backImage = require('../images/icon_backArrow_white.png')
 const closeImage = require('../images/iconClose.png')
 
 export class RestorePassphrase extends Component<RestorePassphraseProps, void> {
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: (
       <CustomHeader flatHeader backgroundColor={color.bg.twelfth.color}>
         <CustomView style={[styles.headerSpacer]}>

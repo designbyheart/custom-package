@@ -59,9 +59,7 @@ exports[`<LockSetupSuccess /> should display Loading while fetching the invitati
       </View>
     </View>
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -98,9 +96,7 @@ exports[`<LockSetupSuccess /> should display Loading while fetching the invitati
       Loading please wait...
     </Text>
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -165,31 +161,17 @@ exports[`<LockSetupSuccess /> should display Loading while fetching the invitati
       }
     >
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="close-button"
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            undefined,
-          ]
-        }
+        style={null}
         testID="close-button"
-        tvParallaxProperties={undefined}
       >
         <View
           pointerEvents="box-only"
@@ -237,9 +219,6 @@ exports[`<LockSetupSuccess /> should display Loading while fetching the invitati
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},
@@ -342,9 +321,7 @@ exports[`<LockSetupSuccess /> should render Lock setup success Screen 1`] = `
       </View>
     </View>
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -381,9 +358,7 @@ exports[`<LockSetupSuccess /> should render Lock setup success Screen 1`] = `
       Your connect.me app is now secured
     </Text>
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -448,31 +423,17 @@ exports[`<LockSetupSuccess /> should render Lock setup success Screen 1`] = `
       }
     >
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="close-button"
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            undefined,
-          ]
-        }
+        style={null}
         testID="close-button"
-        tvParallaxProperties={undefined}
       >
         <View
           pointerEvents="box-only"
@@ -511,9 +472,6 @@ exports[`<LockSetupSuccess /> should render Lock setup success Screen 1`] = `
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},

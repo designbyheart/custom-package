@@ -3,6 +3,13 @@
 import React, { PureComponent } from 'react'
 import { Image, Dimensions } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
+
+import type {
+  BackupCompleteProps,
+  BackupCompleteState,
+  ReactNavigationBackup,
+} from './type-backup'
+
 import {
   Container,
   CustomView,
@@ -17,7 +24,6 @@ import {
   isBiggerThanShortDevice,
 } from '../common/styles'
 import { color } from '../common/styles/constant'
-import type { BackupCompleteProps, BackupCompleteState } from './type-backup'
 import {
   BACKUP_COMPLETE_CLOSE_TEST_ID,
   BACKUP_COMPLETE_SUBMIT_BUTTON,
@@ -38,7 +44,9 @@ export class BackupComplete extends PureComponent<BackupCompleteProps, void> {
     return navigate(state.params.initialRoute)
   }
 
-  static navigationOptions = ({ navigation: { navigate, state } }) => ({
+  static navigationOptions = ({
+    navigation: { navigate, state: { params } },
+  }: ReactNavigationBackup) => ({
     header: (
       <CustomHeader
         backgroundColor={color.bg.fourteenth.color}
@@ -50,7 +58,7 @@ export class BackupComplete extends PureComponent<BackupCompleteProps, void> {
         <CustomView style={[styles.headerSpacer]}>
           <Icon
             medium
-            onPress={() => navigate(state.params.initialRoute)}
+            onPress={() => navigate(params.initialRoute)}
             testID={BACKUP_COMPLETE_CLOSE_TEST_ID}
             iconStyle={[styles.headerIcon]}
             src={closeImage}

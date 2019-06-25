@@ -19,6 +19,7 @@ import type {
   ClaimOfferPayload,
   ClaimOfferAttributeListProps,
   ClaimOfferState,
+  ClaimProofNavigation,
 } from '../../claim-offer/type-claim-offer'
 
 import { ModalHeader } from './modal-header'
@@ -206,12 +207,13 @@ class ClaimOfferModal extends React.Component<any, any> {
     )
   }
 }
-const mapStateToProps = (state: Store, props: ReactNavigation) => {
+
+const mapStateToProps = (
+  state: Store,
+  { navigation: { state: { params } } }: ClaimProofNavigation
+) => {
   const { claimOffer } = state
-  const { uid } =
-    props.navigation.state && props.navigation.state.params
-      ? props.navigation.state.params
-      : { uid: '' }
+  const { uid } = params || { uid: '' }
   const claimOfferData = claimOffer[uid]
   const logoUrl = getConnectionLogoUrl(state, claimOfferData.remotePairwiseDID)
   const themeForLogo = getConnectionTheme(state, logoUrl)
@@ -230,6 +232,7 @@ const mapStateToProps = (state: Store, props: ReactNavigation) => {
     logoUrl,
   }
 }
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {

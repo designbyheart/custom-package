@@ -126,6 +126,28 @@ your environment for the Makefile are:
 - [ ] Remove passing newConnection while saving new connection
 - [ ] Save whole payload in connection instead of choosing selected props in connection store
 
+# How To Upgrade to next version of React Native
+- Follow the instructions here -- https://github.com/pvinis/rn-diff-purge
+- OR follow the instructions here -- https://github.com/react-native-community/rn-diff-purge
+  - Determine the two versions: current_version -- next_version.
+  This web page will help determine the versions: https://react-native-community.github.io/rn-diff-purge/
+  - Example: current_version-> 0.57.8 and next_version-> 0.58.0
+  - Go to this page to see the differences:
+  https://github.com/react-native-community/rn-diff-purge/compare/release/current_version..release/next_version
+  - Example: https://github.com/react-native-community/rn-diff-purge/compare/release/0.57.8..release/0.58.0
+  - Now you can manually make the changes to go from one version to the next by modifying your source code
+  - If you want to try to use a patching tool to apply the changes in an automated fashion then use the next few steps
+  - Get the patch to go from the current_version to the next_version at this web page:
+  https://raw.githubusercontent.com/react-native-community/rn-diff-purge/diffs/diffs/current_version..next_version.diff
+  - Example: https://raw.githubusercontent.com/react-native-community/rn-diff-purge/diffs/diffs/0.57.8..0.58.0.diff
+  - Save the diff to a file on your local hard drive
+  - Apply the patch with a tool that is used to apply patches
+- Once you have the changes applied for the next version then clean and rebuild the source code
+  to make sure the build works correctly and make any changes as necessary.
+- Then completely test the mobile app by launching the app on iOS and Android and testing
+  each of the features of the mobile app.
+
+
 # Frequently Encountered Problems (FEP)
 
 ## Unit test

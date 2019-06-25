@@ -32,7 +32,7 @@ import type {
   RestoreSubmitPassphrase,
   RestoreStore,
 } from './type-restore'
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 import { getRestoreStatus, getRestoreFileName } from '../store/store-selector'
 import { pinHash as generateKey } from '../lock/pin-hash'
 import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'

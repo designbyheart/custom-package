@@ -3,11 +3,7 @@
 exports[`<WalletBalance /> should render WalletBalance 1`] = `
 <View>
   <View>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-    >
+    <Text>
       1000
     </Text>
   </View>

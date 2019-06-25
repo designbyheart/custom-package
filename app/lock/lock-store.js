@@ -81,6 +81,7 @@ const initialState: LockStore = {
     code: null,
     message: null,
   },
+  pendingRedirectionParams: {},
 }
 
 export function addPendingRedirection(

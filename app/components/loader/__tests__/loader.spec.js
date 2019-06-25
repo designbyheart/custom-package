@@ -5,6 +5,14 @@ import renderer from 'react-test-renderer'
 import Loader from '../loader'
 
 describe('<Loader />', () => {
+  beforeEach(() => {
+    jest.useFakeTimers()
+  })
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers()
+  })
+
   it('should render properly and match the snapshot', () => {
     const component = renderer.create(<Loader delay={0} message="test" />)
     const tree = component.toJSON()

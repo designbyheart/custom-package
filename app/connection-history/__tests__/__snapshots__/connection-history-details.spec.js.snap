@@ -12,6 +12,7 @@ exports[`<ConnectionHistoryDetails /> should ConnectionHistoryDetails render pro
   <RCTScrollView>
     <View>
       <RCTSafeAreaView
+        emulateUnlessSupported={true}
         fifth={true}
         safeArea={true}
         style={
@@ -94,7 +95,6 @@ exports[`<ConnectionHistoryDetails /> should ConnectionHistoryDetails render pro
                       accessibilityLabel="custom-list-label-0"
                       accessible={true}
                       allowFontScaling={false}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {
@@ -144,7 +144,6 @@ exports[`<ConnectionHistoryDetails /> should ConnectionHistoryDetails render pro
                       accessibilityLabel="custom-list-data-0"
                       accessible={true}
                       allowFontScaling={false}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {
@@ -217,7 +216,6 @@ exports[`<ConnectionHistoryDetails /> should ConnectionHistoryDetails render pro
             </View>
             <View
               onLayout={[Function]}
-              style={null}
             >
               <View
                 style={

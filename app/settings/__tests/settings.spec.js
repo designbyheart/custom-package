@@ -33,6 +33,8 @@ describe('user settings screen', () => {
       selectUserAvatar: jest.fn(),
       touchIdActive: false,
       navigationOptions: jest.fn(),
+      walletBalance: '190009',
+      lastSuccessfulBackup: store.getState().backup.lastSuccessfulBackup,
     }
   }
 
@@ -152,7 +154,7 @@ describe('user settings screen', () => {
     const componentInstance = wrapper.root.findByType(Settings).instance
     componentInstance.onBackup()
     expect(navigation.navigate).toHaveBeenCalledWith(genRecoveryPhraseRoute, {
-      initialRoute: settingsRoute,
+      initialRoute: 'someRouteName',
     })
   })
 

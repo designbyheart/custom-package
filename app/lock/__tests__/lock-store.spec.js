@@ -50,6 +50,7 @@ const initialState: LockStore = {
   isLockEnabled: 'false',
   isTouchIdEnabled: false,
   inRecovery: 'false',
+  pendingRedirectionParams: {},
 }
 
 describe('LockStore', () => {

@@ -19,7 +19,13 @@ function props() {
 describe('<Wallet />', () => {
   const store = getStore()
 
-  jest.useFakeTimers()
+  beforeEach(() => {
+    jest.useFakeTimers()
+  })
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers()
+  })
 
   it('should render Wallet', () => {
     const walletProps = props()

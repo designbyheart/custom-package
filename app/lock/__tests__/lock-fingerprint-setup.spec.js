@@ -20,7 +20,7 @@ import { getNavigation } from '../../../__mocks__/static-data'
 import { TouchId } from '../../components/touch-id/touch-id'
 import * as RNCxs from '../../bridge/react-native-cxs/RNCxs'
 import { Alert, Platform } from 'react-native'
-import { delay } from 'redux-saga'
+import delay from '@redux-saga/delay-p'
 
 describe('<LockFingerprintSetup />', () => {
   const getProps = () => ({

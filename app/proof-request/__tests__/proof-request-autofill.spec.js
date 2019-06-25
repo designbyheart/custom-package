@@ -66,6 +66,15 @@ describe('<ProofRequest />', () => {
           userSelfAttestedAttributes={userSelfAttestedAttributes}
           userAvatarSource={undefined}
           proofRequestShowStart={proofRequestShowStart}
+          colorBackground={
+            store.getState().connections.connectionThemes.default.primary
+          }
+          secondColorBackground={
+            store.getState().connections.connectionThemes.default.secondary
+          }
+          errorProofSendData={null}
+          hideModal={jest.fn()}
+          newConnectionSeen={jest.fn()}
         />
       </Provider>
     )

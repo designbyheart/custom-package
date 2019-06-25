@@ -1,5 +1,5 @@
 //@flow
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 import uniqueId from 'react-native-unique-id'
 import _flatten from 'lodash.flatten'
 import _merge from 'lodash.merge'
@@ -24,10 +24,8 @@ import {
   DELETE_CONNECTION_FAILURE,
   DELETE_CONNECTION,
 } from './type-connection-store'
-import {
-  NEW_CONNECTION_SUCCESS,
-  HYDRATE_CONNECTIONS,
-} from './connections-store'
+import { NEW_CONNECTION_SUCCESS } from './new-connection-success'
+import { HYDRATE_CONNECTIONS } from './connections-store'
 import {
   CLAIM_OFFER_RECEIVED,
   SEND_CLAIM_REQUEST,
@@ -95,10 +93,10 @@ export const CUSTOM_LOG_UTILS = {
 
 export const customLogger = {
   recordBuffer: [],
-  vcxLogFile: null,
+  vcxLogFile: undefined,
   encryptedLogFile: null,
   initOnlyOnce: false,
-  logLevel: null,
+  logLevel: 'debug',
   alsoLogToConsole: process.env.NODE_ENV !== 'test' && __DEV__,
   MAX_ALLOWED_FILE_BYTES: 10000000,
   log: function(...allArgs: any[]) {
@@ -277,7 +275,7 @@ export const customLogger = {
   addRecordToBuffer: function(record: any) {
     if (this.recordBuffer.length <= 0 && !this.initOnlyOnce) {
       // This logic MUST ensure that this.init() is only invoked ONCE
-      this.init()
+      this.init('debug')
     }
     this.recordBuffer.push(record)
   },

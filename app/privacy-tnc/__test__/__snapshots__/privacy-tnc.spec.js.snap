@@ -7,10 +7,7 @@ exports[`Privacy and TNC screen should render properly and snapshot should match
   renderLoading={[Function]}
   source={
     Object {
-      "uri": Object {
-        "title": "Privacy Policy",
-        "url": "https://www.connect.me/privacy.html",
-      },
+      "uri": "https://www.connect.me/privacy.html",
     }
   }
   startInLoadingState={true}

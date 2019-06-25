@@ -11,6 +11,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -33,9 +34,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
     >
       <View
         absolute="TopRight"
-        accessibilityComponentType={undefined}
         accessibilityLabel="proof-request-icon-close-touchable"
-        accessibilityTraits={undefined}
         accessible={false}
         clearBg={true}
         hitSlop={
@@ -46,8 +45,6 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
             "top": 30,
           }
         }
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -138,13 +135,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
           vCenter={true}
         >
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hitSlop={undefined}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -152,8 +143,6 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             pointerEvents="box-only"
-            style={undefined}
-            testID={undefined}
           >
             <View
               accessibilityLabel="proof-request-verifier-logo"
@@ -357,9 +346,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -394,9 +381,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
           sender1 would like you to share:
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -448,7 +433,6 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
       ItemSeparatorComponent={[Function]}
       ListFooterComponent={[Function]}
       automaticallyAdjustContentInsets={false}
-      contentContainerStyle={undefined}
       contentInset={
         Object {
           "bottom": 0,
@@ -585,7 +569,6 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -645,9 +628,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -694,9 +675,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -841,7 +820,6 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -901,9 +879,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -950,9 +926,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -1037,7 +1011,6 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -1052,6 +1025,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -1109,31 +1083,17 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="proof-request-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -1172,9 +1132,6 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -1241,15 +1198,9 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -1259,18 +1210,12 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="proof-request-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -1313,9 +1258,6 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -1397,7 +1339,6 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
             accessibilityLabel="send-proof-message"
             accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -1449,7 +1390,6 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
             }
           >
             <Image
-              collapsable={undefined}
               source={1}
               style={
                 Object {
@@ -1465,9 +1405,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
               }
             />
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -1529,6 +1467,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -1551,9 +1490,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
     >
       <View
         absolute="TopRight"
-        accessibilityComponentType={undefined}
         accessibilityLabel="proof-request-icon-close-touchable"
-        accessibilityTraits={undefined}
         accessible={false}
         clearBg={true}
         hitSlop={
@@ -1564,8 +1501,6 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
             "top": 30,
           }
         }
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -1656,13 +1591,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
           vCenter={true}
         >
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hitSlop={undefined}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1670,8 +1599,6 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             pointerEvents="box-only"
-            style={undefined}
-            testID={undefined}
           >
             <View
               accessibilityLabel="proof-request-verifier-logo"
@@ -1875,9 +1802,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -1912,9 +1837,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
           sender1 would like you to share:
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -1966,7 +1889,6 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
       ItemSeparatorComponent={[Function]}
       ListFooterComponent={[Function]}
       automaticallyAdjustContentInsets={false}
-      contentContainerStyle={undefined}
       contentInset={
         Object {
           "bottom": 0,
@@ -2103,7 +2025,6 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -2163,9 +2084,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -2212,9 +2131,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -2359,7 +2276,6 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -2419,9 +2335,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -2468,9 +2382,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -2555,7 +2467,6 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -2570,6 +2481,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -2627,31 +2539,17 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="proof-request-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -2690,9 +2588,6 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -2759,15 +2654,9 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -2777,18 +2666,12 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="proof-request-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -2831,9 +2714,6 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -2915,7 +2795,6 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
             accessibilityLabel="send-proof-message"
             accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -2967,7 +2846,6 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
             }
           >
             <Image
-              collapsable={undefined}
               source={1}
               style={
                 Object {
@@ -2983,9 +2861,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
               }
             />
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -3047,6 +2923,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -3069,9 +2946,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
     >
       <View
         absolute="TopRight"
-        accessibilityComponentType={undefined}
         accessibilityLabel="proof-request-icon-close-touchable"
-        accessibilityTraits={undefined}
         accessible={false}
         clearBg={true}
         hitSlop={
@@ -3082,8 +2957,6 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
             "top": 30,
           }
         }
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -3174,13 +3047,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
           vCenter={true}
         >
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hitSlop={undefined}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -3188,8 +3055,6 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             pointerEvents="box-only"
-            style={undefined}
-            testID={undefined}
           >
             <View
               accessibilityLabel="proof-request-verifier-logo"
@@ -3393,9 +3258,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -3430,9 +3293,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
           sender1 would like you to share:
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -3484,7 +3345,6 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
       ItemSeparatorComponent={[Function]}
       ListFooterComponent={[Function]}
       automaticallyAdjustContentInsets={false}
-      contentContainerStyle={undefined}
       contentInset={
         Object {
           "bottom": 0,
@@ -3621,7 +3481,6 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -3681,9 +3540,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -3730,9 +3587,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -3877,7 +3732,6 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -3937,9 +3791,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -3986,9 +3838,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -4073,7 +3923,6 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -4088,6 +3937,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -4145,31 +3995,17 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="proof-request-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -4208,9 +4044,6 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -4277,15 +4110,9 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -4295,18 +4122,12 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="proof-request-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -4349,9 +4170,6 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -4433,7 +4251,6 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
             accessibilityLabel="send-proof-message"
             accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -4485,7 +4302,6 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
             }
           >
             <Image
-              collapsable={undefined}
               source={1}
               style={
                 Object {
@@ -4501,9 +4317,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
               }
             />
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -4565,6 +4379,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -4587,9 +4402,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
     >
       <View
         absolute="TopRight"
-        accessibilityComponentType={undefined}
         accessibilityLabel="proof-request-icon-close-touchable"
-        accessibilityTraits={undefined}
         accessible={false}
         clearBg={true}
         hitSlop={
@@ -4600,8 +4413,6 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
             "top": 30,
           }
         }
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -4692,13 +4503,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
           vCenter={true}
         >
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hitSlop={undefined}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -4706,8 +4511,6 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             pointerEvents="box-only"
-            style={undefined}
-            testID={undefined}
           >
             <View
               accessibilityLabel="proof-request-verifier-logo"
@@ -4911,9 +4714,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -4948,9 +4749,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
           sender1 would like you to share:
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -5002,7 +4801,6 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
       ItemSeparatorComponent={[Function]}
       ListFooterComponent={[Function]}
       automaticallyAdjustContentInsets={false}
-      contentContainerStyle={undefined}
       contentInset={
         Object {
           "bottom": 0,
@@ -5139,7 +4937,6 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -5199,9 +4996,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -5248,9 +5043,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -5395,7 +5188,6 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -5455,9 +5247,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -5504,9 +5294,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -5591,7 +5379,6 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -5606,6 +5393,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -5663,31 +5451,17 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="proof-request-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -5726,9 +5500,6 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -5795,15 +5566,9 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -5813,18 +5578,12 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="proof-request-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -5867,9 +5626,6 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -5951,7 +5707,6 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
             accessibilityLabel="send-proof-message"
             accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -6003,7 +5758,6 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
             }
           >
             <Image
-              collapsable={undefined}
               source={1}
               style={
                 Object {
@@ -6019,9 +5773,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
               }
             />
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -6083,6 +5835,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -6105,9 +5858,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
     >
       <View
         absolute="TopRight"
-        accessibilityComponentType={undefined}
         accessibilityLabel="proof-request-icon-close-touchable"
-        accessibilityTraits={undefined}
         accessible={false}
         clearBg={true}
         hitSlop={
@@ -6118,8 +5869,6 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
             "top": 30,
           }
         }
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -6210,13 +5959,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
           vCenter={true}
         >
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hitSlop={undefined}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -6224,8 +5967,6 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             pointerEvents="box-only"
-            style={undefined}
-            testID={undefined}
           >
             <View
               accessibilityLabel="proof-request-verifier-logo"
@@ -6429,9 +6170,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -6466,9 +6205,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
           sender1 would like you to share:
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -6520,7 +6257,6 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
       ItemSeparatorComponent={[Function]}
       ListFooterComponent={[Function]}
       automaticallyAdjustContentInsets={false}
-      contentContainerStyle={undefined}
       contentInset={
         Object {
           "bottom": 0,
@@ -6659,7 +6395,6 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -6719,9 +6454,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -6768,9 +6501,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -6915,7 +6646,6 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -6975,9 +6705,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -7024,9 +6752,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -7111,7 +6837,6 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -7126,6 +6851,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -7183,31 +6909,17 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="proof-request-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -7246,9 +6958,6 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -7315,15 +7024,9 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -7333,18 +7036,12 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="proof-request-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -7396,9 +7093,6 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -7480,7 +7174,6 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
             accessibilityLabel="send-proof-message"
             accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -7532,7 +7225,6 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
             }
           >
             <Image
-              collapsable={undefined}
               source={1}
               style={
                 Object {
@@ -7548,9 +7240,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
               }
             />
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -7612,6 +7302,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
   }
 >
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={Object {}}
   >
     <View
@@ -7634,9 +7325,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
     >
       <View
         absolute="TopRight"
-        accessibilityComponentType={undefined}
         accessibilityLabel="proof-request-icon-close-touchable"
-        accessibilityTraits={undefined}
         accessible={false}
         clearBg={true}
         hitSlop={
@@ -7647,8 +7336,6 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
             "top": 30,
           }
         }
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -7739,13 +7426,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
           vCenter={true}
         >
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hitSlop={undefined}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -7753,8 +7434,6 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             pointerEvents="box-only"
-            style={undefined}
-            testID={undefined}
           >
             <View
               accessibilityLabel="proof-request-verifier-logo"
@@ -7958,9 +7637,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -7995,9 +7672,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
           sender1 would like you to share:
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -8049,7 +7724,6 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
       ItemSeparatorComponent={[Function]}
       ListFooterComponent={[Function]}
       automaticallyAdjustContentInsets={false}
-      contentContainerStyle={undefined}
       contentInset={
         Object {
           "bottom": 0,
@@ -8186,7 +7860,6 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -8246,9 +7919,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -8295,9 +7966,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -8442,7 +8111,6 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
               showsHorizontalScrollIndicator={false}
               showsPagination={false}
               showsVerticalScrollIndicator={false}
-              style={undefined}
             >
               <View>
                 <View
@@ -8502,9 +8170,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -8551,9 +8217,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
                           }
                         >
                           <Text
-                            accessible={true}
                             allowFontScaling={false}
-                            ellipsizeMode="tail"
                             style={
                               Array [
                                 Object {
@@ -8638,7 +8302,6 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
         </View>
         <View
           onLayout={[Function]}
-          style={null}
         >
           <View
             style={
@@ -8653,6 +8316,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
     </RCTScrollView>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -8710,31 +8374,17 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="proof-request-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -8773,9 +8423,6 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -8842,15 +8489,9 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -8860,18 +8501,12 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="proof-request-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -8914,9 +8549,6 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -8998,7 +8630,6 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
             accessibilityLabel="send-proof-message"
             accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -9050,7 +8681,6 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
             }
           >
             <Image
-              collapsable={undefined}
               source={1}
               style={
                 Object {
@@ -9066,9 +8696,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
               }
             />
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -9169,6 +8797,12 @@ exports[`<ProofRequest /> should show Error generating proof alert if generate p
       },
     ],
   ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
 }
 `;
 
@@ -9192,6 +8826,12 @@ exports[`<ProofRequest /> should show Error generating proof alert if there is P
         "cancelable": false,
       },
     ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
   ],
 }
 `;
@@ -9217,9 +8857,7 @@ exports[`<ProofRequest /> should show Invalid proof request message if there is 
     }
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -9250,6 +8888,7 @@ exports[`<ProofRequest /> should show Invalid proof request message if there is 
     </Text>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -9307,31 +8946,17 @@ exports[`<ProofRequest /> should show Invalid proof request message if there is 
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="proof-request-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -9370,9 +8995,6 @@ exports[`<ProofRequest /> should show Invalid proof request message if there is 
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -9439,15 +9061,9 @@ exports[`<ProofRequest /> should show Invalid proof request message if there is 
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="proof-request-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -9457,18 +9073,12 @@ exports[`<ProofRequest /> should show Invalid proof request message if there is 
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="proof-request-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -9511,9 +9121,6 @@ exports[`<ProofRequest /> should show Invalid proof request message if there is 
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -9569,6 +9176,12 @@ exports[`<ProofRequest /> should show missing attributes alert 1`] = `
       "Missing information",
       "You don't have all the attributes sender1 is asking you to share with them. Manually fill in the missing attributes and tap Generate.",
     ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
   ],
 }
 `;

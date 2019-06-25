@@ -28,11 +28,18 @@ export class QuestionActions extends React.Component<
   render() {
     const testID = 'question-action'
     const { question, selectedResponse } = this.props
+
+    if (!question) {
+      return null
+    }
+
     const { valid_responses: responses } = question.payload
     let cancelButtonTitle = TEXT_IGNORE
     let submitButtonTitle = TEXT_SUBMIT
 
-    const { error, success, idle } = getScreenStatus(question.status)
+    const { error, success, idle } = getScreenStatus(
+      question ? question.status : undefined
+    )
     if (error) {
       cancelButtonTitle = TEXT_CANCEL
       submitButtonTitle = TEXT_TRY_AGAIN
@@ -212,7 +219,7 @@ export type QuestionActionProps = {
   onSubmit: () => void,
   onCancel: () => void,
   onSelectResponseAndSubmit: (response: QuestionResponse) => void,
-  question: QuestionStoreMessage,
+  question?: QuestionStoreMessage,
 }
 
 type QuestionResponseButtonsProps = {

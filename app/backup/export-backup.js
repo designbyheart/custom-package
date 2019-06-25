@@ -25,7 +25,10 @@ import {
   isBiggerThanVeryShortDevice,
 } from '../common/styles'
 import { color } from '../common/styles/constant'
-import type { ExportBackupFileProps } from './type-backup'
+import type {
+  ExportBackupFileProps,
+  ReactNavigationBackup,
+} from './type-backup'
 import styles from './styles'
 import { exportBackup } from './backup-store'
 import type { Store } from '../store/type-store'
@@ -111,7 +114,9 @@ export class ExportBackupFile extends PureComponent<
     )
   }
 
-  static navigationOptions = ({ navigation: { goBack, navigate, state } }) => ({
+  static navigationOptions = ({
+    navigation: { goBack, navigate, state },
+  }: ReactNavigationBackup) => ({
     header: (
       <CustomHeader
         flatHeader

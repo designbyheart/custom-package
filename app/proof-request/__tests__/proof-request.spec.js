@@ -69,8 +69,17 @@ describe('<ProofRequest />', () => {
     userSelfAttestedAttributes: jest.fn(),
     userAvatarSource: undefined,
     proofRequestShowStart: jest.fn(),
+    colorBackground: store.getState().connections.connectionThemes.default
+      .primary,
+    secondColorBackground: store.getState().connections.connectionThemes.default
+      .secondary,
+    errorProofSendData: null,
+    hideModal: jest.fn(),
+    newConnectionSeen: jest.fn(),
   })
+
   beforeEach(() => {
+    jest.useFakeTimers()
     props = getProps()
     wrapper = renderer.create(
       <Provider store={store}>
@@ -79,6 +88,10 @@ describe('<ProofRequest />', () => {
     )
     tree = wrapper.toJSON()
     componentInstance = wrapper.root.findByType(ProofRequest).instance
+  })
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers()
   })
 
   it('should call proofRequestShown on componentDidMount', () => {
@@ -140,7 +153,6 @@ describe('<ProofRequest />', () => {
   })
 
   it('should show Error generating proof alert if generate proof error occurs', async () => {
-    jest.useFakeTimers()
     const alertSpy = jest.spyOn(Alert, 'alert')
     wrapper.update(
       <Provider store={store}>
@@ -166,7 +178,6 @@ describe('<ProofRequest />', () => {
     alertSpy.mockRestore()
   })
   it('should show Error generating proof alert if there is Proof Send Data error', async () => {
-    jest.useFakeTimers()
     const alertSpy = jest.spyOn(Alert, 'alert')
     wrapper.update(
       <Provider store={store}>

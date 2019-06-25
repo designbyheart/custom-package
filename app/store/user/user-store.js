@@ -1,7 +1,7 @@
 // @flow
 import { put, takeLatest, call, all, select, take } from 'redux-saga/effects'
 import type { Saga } from 'redux-saga'
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 import ImagePicker from 'react-native-image-crop-picker'
 
 import {
@@ -164,15 +164,15 @@ export function* saveUserSelectedAvatarSaga(
   const { name, extension } = getImageInfo(imagePath)
   try {
     const appDirectory = RNFetchBlob.fs.dirs.DocumentDir
-    const existingAvatarName = yield select(getUserAvatarName)
-    const userAvatarPath = `${appDirectory}/${existingAvatarName}`
+    const existingAvatarName: ?string = yield select(getUserAvatarName)
+    const userAvatarPath = `${appDirectory}/${existingAvatarName || ''}`
     const alreadyExist = yield call(RNFetchBlob.fs.exists, userAvatarPath)
 
     const imageId = uuid()
     const avatarName = `${imageId}.${extension}`
     const newImagePath = `${appDirectory}/${avatarName}`
 
-    if (alreadyExist) {
+    if (alreadyExist && existingAvatarName) {
       yield call(RNFetchBlob.fs.unlink, userAvatarPath)
     }
 

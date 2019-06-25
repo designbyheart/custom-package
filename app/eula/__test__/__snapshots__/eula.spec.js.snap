@@ -22,6 +22,7 @@ exports[`Eula screen should render properly and snapshot should match 1`] = `
     startInLoadingState={true}
   />
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -79,31 +80,17 @@ exports[`Eula screen should render properly and snapshot should match 1`] = `
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="eula-deny"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
                   onResponderTerminate={[Function]}
                   onResponderTerminationRequest={[Function]}
                   onStartShouldSetResponder={[Function]}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                      },
-                      undefined,
-                    ]
-                  }
+                  style={null}
                   testID="eula-deny"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -142,9 +129,6 @@ exports[`Eula screen should render properly and snapshot should match 1`] = `
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},
@@ -211,15 +195,9 @@ exports[`Eula screen should render properly and snapshot should match 1`] = `
                 }
               >
                 <View
-                  accessibilityComponentType={undefined}
                   accessibilityLabel="eula-accept"
-                  accessibilityTraits={undefined}
                   accessible={true}
-                  hasTVPreferredFocus={undefined}
-                  hitSlop={undefined}
                   isTVSelectable={true}
-                  nativeID={undefined}
-                  onLayout={undefined}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -229,18 +207,12 @@ exports[`Eula screen should render properly and snapshot should match 1`] = `
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
+                        "borderLeftColor": "#ffffff",
+                        "borderLeftWidth": 0.4,
                       },
-                      Array [
-                        Object {
-                          "borderLeftColor": "#ffffff",
-                          "borderLeftWidth": 0.4,
-                        },
-                      ],
                     ]
                   }
                   testID="eula-accept"
-                  tvParallaxProperties={undefined}
                 >
                   <View
                     pointerEvents="box-only"
@@ -283,9 +255,6 @@ exports[`Eula screen should render properly and snapshot should match 1`] = `
                     }
                   >
                     <Text
-                      accessible={true}
-                      allowFontScaling={true}
-                      ellipsizeMode="tail"
                       style={
                         Array [
                           Object {},

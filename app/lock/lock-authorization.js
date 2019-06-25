@@ -8,15 +8,18 @@
  */
 import React, { PureComponent } from 'react'
 import { StyleSheet } from 'react-native'
+import type {
+  LockAuthorizationProps,
+  LockAuthorizationNavigation,
+} from './type-lock'
+
 import LockEnter from './lock-enter'
-import type { LockAuthorizationProps } from './type-lock'
 import { Icon } from '../components'
 import { CustomView, CustomHeader } from '../components'
 import { OFFSET_2X, color } from '../common/styles'
 import { tertiaryHeaderStyles } from '../components/layout/header-styles'
 import { lockAuthorizationHomeRoute } from '../common'
 import { createStackNavigator } from 'react-navigation'
-import type { ReactNavigation } from '../common/type-common'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
 const styles = StyleSheet.create({
@@ -29,7 +32,7 @@ export class LockAuthorization extends PureComponent<
   LockAuthorizationProps,
   void
 > {
-  static navigationOptions = ({ navigation }: ReactNavigation) => ({
+  static navigationOptions = ({ navigation }: LockAuthorizationNavigation) => ({
     header: (
       <CustomHeader flatHeader backgroundColor={color.bg.tertiary.color}>
         <CustomView>
@@ -41,9 +44,8 @@ export class LockAuthorization extends PureComponent<
             resizeMode="contain"
             onPress={() => {
               navigation.goBack(null)
-              if (navigation.state && navigation.state.params.onAvoid) {
-                navigation.state.params.onAvoid()
-              }
+              const { params } = navigation.state
+              params && params.onAvoid && params.onAvoid()
             }}
           />
         </CustomView>
@@ -52,18 +54,20 @@ export class LockAuthorization extends PureComponent<
   })
 
   onSuccess = () => {
-    this.props.navigation.goBack(null)
+    const { navigation } = this.props
+    navigation.goBack(null)
     setTimeout(() => {
-      this.props.navigation.state &&
-        this.props.navigation.state.params.onSuccess()
+      const { params } = navigation.state
+      params && params.onSuccess && params.onSuccess()
     })
   }
 
   onClose = () => {
-    this.props.navigation.goBack(null)
+    const { navigation } = this.props
+    navigation.goBack(null)
     setTimeout(() => {
-      this.props.navigation.state &&
-        this.props.navigation.state.params.onAvoid()
+      const { params } = navigation.state
+      params && params.onAvoid && params.onAvoid()
     })
   }
 

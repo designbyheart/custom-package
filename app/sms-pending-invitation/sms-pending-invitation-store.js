@@ -100,7 +100,7 @@ export const convertSmsPayloadToInvitation = (
 
 export function* callSmsPendingInvitationRequest(
   action: SMSPendingInvitationRequestAction
-): Generator<*, *, *> {
+): any {
   // we wait to download SMS invitation till we know that we are safe
   // because user can still change the environment and point to something else
   // to download sms invitation from updated environment
@@ -172,9 +172,12 @@ export function* callSmsPendingInvitationRequest(
 
     // get pending invitation
     // TODO:KS Handle error for this API, all business logic and API related
-    const pendingInvitationPayload = yield call(invitationDetailsRequest, {
-      url: invitationLink.url,
-    })
+    const pendingInvitationPayload: SMSPendingInvitationPayload = yield call(
+      invitationDetailsRequest,
+      {
+        url: invitationLink.url,
+      }
+    )
 
     if (
       !schemaValidator.validate(

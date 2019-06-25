@@ -6,6 +6,10 @@ import type {
   StorageStatus,
   GenericObject,
 } from '../common/type-common'
+import type {
+  NavigationScreenProp,
+  NavigationLeafRoute,
+} from 'react-navigation'
 
 export type QuestionScreenProps = {
   updateQuestionStatus: (
@@ -104,6 +108,15 @@ export type QuestionRequest = {
 export type ExternalLink = {
   text?: string,
   src: string,
+}
+
+export type QuestionScreenNavigation = {
+  navigation: NavigationScreenProp<{|
+    ...NavigationLeafRoute,
+    params: {|
+      uid: string,
+    |},
+  |}>,
 }
 
 export const QUESTION_STATUS = {

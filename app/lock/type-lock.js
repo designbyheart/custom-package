@@ -1,5 +1,10 @@
 // @flow
 import type { CustomError, ReactNavigation } from '../common/type-common'
+import type {
+  NavigationScreenProp,
+  NavigationLeafRoute,
+} from 'react-navigation'
+
 import { SWITCH_ERROR_ALERTS } from '../store/type-config-store'
 
 export const LOCK_TYPE = {
@@ -127,6 +132,7 @@ export type LockStore = {
   showDevMode: boolean,
   inRecovery: string,
   biometricsAvaliable?: string,
+  pendingRedirectionParams?: {},
 }
 
 export type LockSelectionProps = {
@@ -226,10 +232,16 @@ export type LockEnterProps = {
   enableCustomKeyboard?: boolean,
 }
 
-export type LockAuthorizationProps = {
-  onSuccess: () => void,
-  onFail: () => void,
-} & ReactNavigation
+export type LockAuthorizationNavigation = {
+  navigation: NavigationScreenProp<{|
+    ...NavigationLeafRoute,
+    params: {|
+      onSuccess?: () => void,
+      onAvoid?: () => void,
+    |},
+  |}>,
+}
+export type LockAuthorizationProps = {} & LockAuthorizationNavigation
 
 export type LockFingerprintSetupProps = {
   touchIdActive: boolean,

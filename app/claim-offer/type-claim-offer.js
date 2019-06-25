@@ -1,12 +1,15 @@
 // @flow
 import type {
+  NavigationScreenProp,
+  NavigationLeafRoute,
+} from 'react-navigation'
+import type {
   CustomError,
   ResetAction,
   NotificationPayload,
 } from '../common/type-common'
 import type {
   AdditionalDataPayload,
-  ClaimProofNavigation,
   Attribute,
   NotificationPayloadInfo,
 } from '../push-notification/type-push-notification'
@@ -224,6 +227,15 @@ export type ClaimOfferStore = {
   +vcxSerializedClaimOffers: SerializedClaimOffers,
 }
 
+export type ClaimProofNavigation = {
+  navigation: NavigationScreenProp<{|
+    ...NavigationLeafRoute,
+    params: {|
+      uid: string,
+    |},
+  |}>,
+}
+
 export type ClaimOfferProps = {
   claimOfferShown: (uid: string) => void,
   acceptClaimOffer: (uid: string) => void,
@@ -232,14 +244,13 @@ export type ClaimOfferProps = {
   updateStatusBarTheme: (color?: string) => void,
   claimOfferShowStart: (uid: string) => ClaimOfferShowStartAction,
   resetClaimRequestStatus: (uid: string) => ResetClaimRequestStatusAction,
-  navigation: ClaimProofNavigation,
   uid: string,
   claimOfferData: ClaimOfferPayload,
   isValid: boolean,
   logoUrl?: string,
   claimThemePrimary: string,
   claimThemeSecondary: string,
-}
+} & ClaimProofNavigation
 
 export type ClaimOfferState = {
   disableAcceptButton?: boolean,

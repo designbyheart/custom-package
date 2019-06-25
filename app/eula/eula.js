@@ -1,6 +1,6 @@
 // @flow
 
-// this is page displays, a webview with of our terms and conditions
+// this page displays a webview with our terms and conditions
 // you should get the url value and title from constants
 // on click accept take user to lock selection screen
 
@@ -9,6 +9,11 @@ import { WebView, Alert, View } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import type { EulaScreenState } from './type-eula'
+import type { CustomError, ReactNavigation } from '../common/type-common'
+import type { Store } from '../store/type-store'
+
 import { tertiaryHeaderStyles } from '../components/layout/header-styles'
 import {
   CustomText,
@@ -18,12 +23,9 @@ import {
 } from '../components'
 import { eulaRoute, restoreRoute } from '../common'
 import { eulaAccept } from './eula-store'
-import type { Store } from '../store/type-store'
 import { EULA_URL, localEulaSource } from './type-eula'
 import { color } from '../common/styles/constant'
 import { LoaderGif } from '../components/loader-gif/loader-gif'
-import type { EulaScreenState } from './type-eula'
-import type { CustomError } from '../common/type-common'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class EulaScreen extends PureComponent<*, EulaScreenState> {
@@ -31,7 +33,7 @@ export class EulaScreen extends PureComponent<*, EulaScreenState> {
     error: null,
   }
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: (
       <CustomHeader
         backgroundColor={color.bg.tertiary.color}

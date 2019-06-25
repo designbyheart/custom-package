@@ -22,7 +22,7 @@ import {
 import { updateStatusBarTheme } from '../store/connections-store'
 import { generateBackupFile } from '../backup/backup-store'
 import { backupErrorRoute, exportBackupFileRoute } from '../common'
-import type { BackupErrorProps } from './type-backup'
+import type { BackupErrorProps, ReactNavigationBackup } from './type-backup'
 import headerStyles from './styles'
 import {
   BACKUP_ERROR_BACK_TEST_ID,
@@ -32,8 +32,11 @@ import { withStatusBar } from '../components/status-bar/status-bar'
 
 const backImage = require('../images/icon_backArrow_white.png')
 const closeImage = require('../images/iconClose.png')
+
 export class BackupErrorScreen extends PureComponent<BackupErrorProps, void> {
-  static navigationOptions = ({ navigation: { goBack, navigate, state } }) => ({
+  static navigationOptions = ({
+    navigation: { goBack, navigate, state },
+  }: ReactNavigationBackup) => ({
     header: (
       <CustomHeader backgroundColor={venetianRed} largeHeader flatHeader>
         <CustomView style={[headerStyles.headerSpacer]}>

@@ -4,6 +4,10 @@ import React, { PureComponent } from 'react'
 import { Image, StyleSheet } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import { scale } from 'react-native-size-matters'
+
+import type { WalletProps } from './type-wallet'
+import type { ReactNavigation } from '../common/type-common'
+
 import {
   Container,
   CustomView,
@@ -19,7 +23,6 @@ import {
 } from '../common/styles/constant'
 import WalletBalance from './wallet-balance'
 import WalletTabs from './wallet-tabs'
-import type { WalletProps } from './type-wallet'
 import styles from './styles'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
@@ -69,7 +72,7 @@ const sovrinTokenIconSize = (balanceLength: number) =>
   balanceLength > 14 && isSmallWidthDevice ? { small: true } : { medium: true }
 
 export class Wallet extends PureComponent<WalletProps, void> {
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }: ReactNavigation) => ({
     // Makes it so that headerTitle is centered Android
     header: (
       <CustomHeader

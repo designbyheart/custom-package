@@ -73,6 +73,7 @@ describe('<QuestionScreen />', () => {
     const { component, props } = setup({
       status: QUESTION_STATUS.SEEN,
     })
+    component.getInstance().onResponseSelect(0)
     const submitButton = component.root.findByProps({ title: TEXT_SUBMIT })
     submitButton.props.onPress()
     expect(props.sendAnswerToQuestion).toHaveBeenCalledTimes(1)

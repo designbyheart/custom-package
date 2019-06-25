@@ -5,7 +5,7 @@ import type { LoadingIndicatorProps } from './type-loader'
 import { DARK } from './type-loader'
 import { color } from '../../common/styles/constant'
 
-export default class LoadingIndicator extends PureComponent<
+export class LoadingIndicator extends PureComponent<
   LoadingIndicatorProps,
   void
 > {

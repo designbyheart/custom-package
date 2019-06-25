@@ -38,14 +38,16 @@ export class LockEnterFingerprint extends PureComponent<
     }
   }
 
-  onAuthenticationSuccess = (pendingRedirection: Array<PendingRedirection>) => {
+  onAuthenticationSuccess = (
+    pendingRedirection: ?Array<PendingRedirection>
+  ) => {
     //this method will be called in fingerprint authentication screen
     //or any where in app if there is a invitation received.
     if (pendingRedirection) {
       pendingRedirection.map(pendingRedirection => {
         this.props.navigation.navigate(
           pendingRedirection.routeName,
-          pendingRedirection.params
+          pendingRedirection.params || {}
         )
       })
       this.props.clearPendingRedirect()

@@ -1,5 +1,9 @@
 // @flow
 
+import type {
+  NavigationScreenProp,
+  NavigationLeafRoute,
+} from 'react-navigation'
 import type { Item } from '../components/custom-list/type-custom-list'
 import type {
   ReactNavigation,
@@ -45,7 +49,7 @@ import {
   PROOF_REQUEST_REJECTED,
   SEND_PROOF_SUCCESS,
 } from './components/types/type-details-proof-request'
-import { NEW_CONNECTION_SUCCESS } from '../store/connections-store'
+import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import { PROOF_SUCCESS } from './components/types/type-details-proof'
 import {
   QUESTION_RECEIVED,
@@ -106,7 +110,7 @@ export const EventTypeToEventStatusMap = {
 
 export type ConnectionHistoryEvent = {
   action: string,
-  data: Array<Item> | GenericObject,
+  data: any,
   id: string,
   name: string,
   status: string, // HistoryEventStatus
@@ -243,6 +247,19 @@ export type ConnectionHistoryState = {
   newMessageLine?: boolean,
 }
 
+export type ConnectionHistoryNavigation = {
+  navigation: NavigationScreenProp<{|
+    ...NavigationLeafRoute,
+    params: {|
+      showExistingConnectionSnack: boolean,
+      senderName: string,
+      image: string,
+      senderDID: string,
+      identifier: string,
+    |},
+  |}>,
+}
+
 export type ConnectionHistoryProps = {
   claimMap: ?ClaimMap,
   activeConnectionThemePrimary: string,
@@ -257,6 +274,6 @@ export type ConnectionHistoryProps = {
     string,
     $PropertyType<ReactNavigation, 'navigation'>
   ) => void,
-} & ReactNavigation
+} & ConnectionHistoryNavigation
 
 export const CONNECTION_ALREADY_EXIST = 'Connection already exists.'

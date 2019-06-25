@@ -11,6 +11,7 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
   }
 >
   <View
+    accessibilityIgnoresInvertColors={true}
     style={
       Object {
         "height": "100%",
@@ -67,9 +68,7 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
           }
         />
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -108,9 +107,7 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
           You now have a digital wallet!
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -148,9 +145,7 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
           Want to see how it works?
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -185,8 +180,174 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
             ]
           }
         >
-          We see you are not on the live network. Get with an Evernym team member to help you use Connect.Me!
+          We have setup an optional tutorial site for you to go through using this Connect.Me app. To start this process, go to
+           
+          <Text
+            allowFontScaling={false}
+            onPress={[Function]}
+            style={
+              Array [
+                Object {
+                  "fontSize": 15,
+                },
+                Object {
+                  "fontFamily": "Lato",
+                },
+                Object {
+                  "backgroundColor": "#333333",
+                  "color": "#ffffff",
+                },
+                null,
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Object {
+                  "color": "#EB9B2D",
+                },
+              ]
+            }
+          >
+            try.connect.me
+          </Text>
+           
+          in a desktop browser, or click the button below!
         </Text>
+        <View
+          center={true}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "marginTop": "2%",
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "marginLeft": 15,
+                  "marginRight": 15,
+                },
+                undefined,
+                Object {
+                  "marginLeft": 0,
+                  "marginRight": 0,
+                },
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "#86B93B",
+                    "borderRadius": 5,
+                    "marginHorizontal": "6%",
+                  },
+                ]
+              }
+            >
+              <View
+                pointerEvents="box-only"
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#9E9E9E",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "padding": 19,
+                    },
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Object {
+                      "backgroundColor": "#ffffff",
+                    },
+                    undefined,
+                    Object {
+                      "padding": 12,
+                    },
+                    undefined,
+                    undefined,
+                    undefined,
+                    Array [
+                      null,
+                      Object {
+                        "backgroundColor": "#86B93B",
+                        "borderRadius": 5,
+                        "marginHorizontal": "6%",
+                      },
+                    ],
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {},
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      Array [
+                        Object {
+                          "color": "white",
+                          "fontSize": 16,
+                        },
+                        Object {
+                          "color": "#ffffff",
+                        },
+                        Object {
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "fontSize": 18,
+                        },
+                        undefined,
+                        Object {
+                          "fontWeight": "600",
+                        },
+                        undefined,
+                        undefined,
+                      ],
+                    ]
+                  }
+                >
+                  Start Tutorial
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
       </View>
     </View>
   </View>
@@ -261,6 +422,7 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
   }
 >
   <View
+    accessibilityIgnoresInvertColors={true}
     style={
       Object {
         "height": "100%",
@@ -317,9 +479,7 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
           }
         />
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -358,9 +518,7 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
           You now have a digital wallet!
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -398,9 +556,7 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
           Want to see how it works?
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -435,8 +591,174 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
             ]
           }
         >
-          We see you are not on the live network. Get with an Evernym team member to help you use Connect.Me!
+          We have setup an optional tutorial site for you to go through using this Connect.Me app. To start this process, go to
+           
+          <Text
+            allowFontScaling={false}
+            onPress={[Function]}
+            style={
+              Array [
+                Object {
+                  "fontSize": 15,
+                },
+                Object {
+                  "fontFamily": "Lato",
+                },
+                Object {
+                  "backgroundColor": "#333333",
+                  "color": "#ffffff",
+                },
+                null,
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Object {
+                  "color": "#EB9B2D",
+                },
+              ]
+            }
+          >
+            try.connect.me
+          </Text>
+           
+          in a desktop browser, or click the button below!
         </Text>
+        <View
+          center={true}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "marginTop": "2%",
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "marginLeft": 15,
+                  "marginRight": 15,
+                },
+                undefined,
+                Object {
+                  "marginLeft": 0,
+                  "marginRight": 0,
+                },
+                undefined,
+              ]
+            }
+          >
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "#86B93B",
+                    "borderRadius": 5,
+                    "marginHorizontal": "6%",
+                  },
+                ]
+              }
+            >
+              <View
+                pointerEvents="box-only"
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "backgroundColor": "#9E9E9E",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "padding": 19,
+                    },
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    Object {
+                      "backgroundColor": "#ffffff",
+                    },
+                    undefined,
+                    Object {
+                      "padding": 12,
+                    },
+                    undefined,
+                    undefined,
+                    undefined,
+                    Array [
+                      null,
+                      Object {
+                        "backgroundColor": "#86B93B",
+                        "borderRadius": 5,
+                        "marginHorizontal": "6%",
+                      },
+                    ],
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {},
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      undefined,
+                      Array [
+                        Object {
+                          "color": "white",
+                          "fontSize": 16,
+                        },
+                        Object {
+                          "color": "#ffffff",
+                        },
+                        Object {
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "fontSize": 18,
+                        },
+                        undefined,
+                        Object {
+                          "fontWeight": "600",
+                        },
+                        undefined,
+                        undefined,
+                      ],
+                    ]
+                  }
+                >
+                  Start Tutorial
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
       </View>
     </View>
   </View>

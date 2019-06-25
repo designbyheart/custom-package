@@ -4,6 +4,10 @@ import { StyleSheet, Keyboard, Platform } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import type { LockPinSetupState, LockPinCodeSetupProps } from './type-lock'
+import type { ReactNavigation } from '../common/type-common'
+
 import {
   Container,
   CustomText,
@@ -28,7 +32,6 @@ import {
   OFFSET_7X,
 } from '../common/styles'
 import { setPinAction, enableTouchIdAction } from './lock-store'
-import type { LockPinSetupState, LockPinCodeSetupProps } from './type-lock'
 import { PIN_SETUP_STATE } from './type-lock'
 import { tertiaryHeaderStyles } from '../components/layout/header-styles'
 import { withStatusBar } from '../components/status-bar/status-bar'
@@ -70,7 +73,7 @@ export class LockPinSetup extends PureComponent<
   keyboardDidHideListener = null
   keyboardDidShowListener = null
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: (
       <CustomHeader
         flatHeader

@@ -11,6 +11,7 @@ import {
 import type { ConnectionCardProps } from './type-connection-card'
 import { styles } from './styles'
 import { mediumGray } from '../../common/styles/constant'
+
 class ConnectionCard extends Component<ConnectionCardProps, void> {
   pad = (dateOrMonth: number) => {
     return dateOrMonth < 10 ? '0' + dateOrMonth : dateOrMonth

@@ -10,7 +10,7 @@ import type { GenericObject } from '../../common/type-common'
 export const CustomSafeAreaView = (props: GenericObject) => {
   const { primary, secondary, tertiary, quaternary, fifth } = props
   const passedStyle = props.style || []
-  const styles = StyleSheet.flatten([
+  const styles: any = StyleSheet.flatten([
     primary ? style.primaryBg : null,
     secondary ? style.secondaryBg : null,
     tertiary ? style.tertiaryBg : null,

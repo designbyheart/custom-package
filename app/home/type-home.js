@@ -4,50 +4,18 @@ import type {
   ConnectionStore,
   Connection,
 } from '../store/type-connection-store'
+import type { ConnectionHistoryStore } from '../connection-history/type-connection-history'
 
 export type NewConnectionInstructionsProps = {
   usingProductionNetwork: boolean,
 }
-
-export type ConnectionCardProps = {
-  onPress: Function,
-  onNewConnectionSeen: Function,
-  identifier: string,
-  image: string,
-  status: string,
-  senderName: string,
-  date: string,
-  type: string,
-  credentialName: string,
-  newBadge: boolean,
-  senderDID: string,
-} & ReactNavigation
-
-export type BubbleState = {
-  failed: boolean,
-}
-
-export type BubblesProps = {
-  connections: Array<Connection>,
-  height: number,
-  unSeenMessages: {
-    [string]: [string],
-  },
-} & ReactNavigation
 
 export type HomeProps = {
   connections: ConnectionStore,
   unSeenMessages: {
     [string]: [string],
   },
+  environmentName: string,
+  history: ConnectionHistoryStore,
+  onNewConnectionSeen: (senderDid: string) => void,
 } & ReactNavigation
-
-export type HomeState = {
-  // Don't have react-native Animated API type definition
-  scrollY: any,
-}
-
-export type ConnectionBubblesState = {
-  disableTaps: boolean,
-  interactionsDone: boolean,
-}
