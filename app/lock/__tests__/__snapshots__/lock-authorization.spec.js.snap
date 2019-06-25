@@ -18,9 +18,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
     tertiary={true}
   >
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-input-boxes-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -31,8 +29,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -54,7 +50,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
         accessibilityLabel="pass-code-input-text"
         accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -106,9 +101,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
         style={Object {}}
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
           hitSlop={
             Object {
@@ -118,8 +110,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
               "top": 20,
             }
           }
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -132,12 +122,9 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
               "flexDirection": "row",
             }
           }
-          testID={undefined}
         >
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-0-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -148,8 +135,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -170,9 +155,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             testID="pin-code-digit-0-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-1-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -183,8 +166,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -205,9 +186,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             testID="pin-code-digit-1-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-2-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -218,8 +197,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -240,9 +217,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             testID="pin-code-digit-2-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-3-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -253,8 +228,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -275,9 +248,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             testID="pin-code-digit-3-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-4-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -288,8 +259,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -310,9 +279,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             testID="pin-code-digit-4-touchable"
           />
           <View
-            accessibilityComponentType={undefined}
             accessibilityLabel="pin-code-digit-5-touchable"
-            accessibilityTraits={undefined}
             accessible={false}
             center={true}
             hitSlop={
@@ -323,8 +290,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}

@@ -27,6 +27,7 @@ import type {
   QuestionResponse,
   QuestionScreenState,
   QuestionStoreMessage,
+  QuestionScreenNavigation,
 } from './type-question'
 import type { Store } from '../store/type-store'
 import type {
@@ -76,6 +77,7 @@ import { QuestionActions } from './components/question-screen-actions'
 import { checkIfAnimationToUse } from '../bridge/react-native-cxs/RNCxs'
 import { QuestionExternalLinks } from './components/question-external-links'
 import { withStatusBar } from '../components/status-bar/status-bar'
+import { customLogger } from '../store/custom-logger'
 
 const { height } = Dimensions.get('window')
 
@@ -91,7 +93,7 @@ export class Question extends PureComponent<
       UIManager.setLayoutAnimationEnabledExperimental(true)
   }
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }: { navigation: any }) => ({
     header: null,
   })
 
@@ -106,7 +108,7 @@ export class Question extends PureComponent<
       question && question.payload
     )
     const { success, error, loading, idle }: ComponentStatus = getScreenStatus(
-      question.status
+      question ? question.status : undefined
     )
     const transform = this._getTransform(this._translateY)
     const opacity = this._getOpacity(this._translateY)
@@ -169,7 +171,7 @@ export class Question extends PureComponent<
               )}
               {error && <QuestionError />}
               {/*
-                We need to show action buttons all the time except when screen 
+                We need to show action buttons all the time except when screen
                 is in loading state
               */}
               {!loading && (
@@ -237,10 +239,21 @@ export class Question extends PureComponent<
       // without any lag to user input and navigation
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     }
-    this.props.sendAnswerToQuestion(
-      this.props.question.payload.uid,
+
+    if (
+      this.props.question &&
+      this.props.question.payload.uid &&
       this.state.response
-    )
+    ) {
+      this.props.sendAnswerToQuestion(
+        this.props.question.payload.uid,
+        this.state.response
+      )
+    } else {
+      customLogger.log(
+        'called onSubmit for question response without either uid or selecting response'
+      )
+    }
   }
 
   onSelectResponseAndSubmit = (response: QuestionResponse) => {
@@ -345,11 +358,15 @@ function QuestionSenderDetail(props: {
 }
 
 function QuestionDetails(props: {
-  question: QuestionStoreMessage,
+  question?: QuestionStoreMessage,
   selectedResponse: ?QuestionResponse,
   onResponseSelect: (responseIndex: number) => void,
 }) {
   const { question, selectedResponse, onResponseSelect } = props
+  if (!question) {
+    return null
+  }
+
   const isSingleResponse = question.payload.valid_responses.length === 1
 
   return (
@@ -523,8 +540,11 @@ function QuestionScreenText(props) {
   )
 }
 
-const mapStateToProps = (state: Store, { navigation }: ReactNavigation) => {
-  const uid: string | null = navigation.getParam('uid', null)
+const mapStateToProps = (
+  state: Store,
+  { navigation }: QuestionScreenNavigation
+) => {
+  const uid: ?string = navigation.getParam('uid') || null
   if (!uid) {
     return {}
   }

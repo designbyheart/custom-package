@@ -32,16 +32,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -54,13 +46,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
           "paddingLeft": 15,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="22"
         bbWidth="24"
+        height="22"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -68,9 +59,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 22,
@@ -80,20 +72,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
         }
         vbHeight={22}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -104,18 +94,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -128,10 +110,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
     <View
@@ -175,9 +205,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
         />
       </View>
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Object {
             "color": "#505050",
@@ -194,16 +221,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -218,13 +237,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
           "width": 40,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="24"
         bbWidth="24"
+        height="24"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -232,9 +250,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 24,
@@ -244,20 +263,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
         }
         vbHeight={24}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -268,18 +285,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -292,15 +301,62 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
   </View>
   <View
-    collapsable={undefined}
     style={
       Object {
         "elevation": 16,
@@ -331,16 +387,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        collapsable={undefined}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -356,8 +404,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             "width": "100%",
           }
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       />
       <View
         style={
@@ -412,9 +458,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -455,9 +498,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -472,16 +512,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
           </Text>
         </View>
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -496,13 +528,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
               "opacity": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="24"
             bbWidth="24"
+            height="24"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -510,9 +541,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 24,
@@ -522,20 +554,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             }
             vbHeight={24}
             vbWidth={24}
+            width="24"
           >
-            <RNSVGPath
-              d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.13725490196078433,
-                  0.4196078431372549,
-                  0.6823529411764706,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -546,18 +576,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -570,15 +592,60 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+                fill={
+                  Array [
+                    0,
+                    4280511406,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#236BAE",
@@ -607,16 +674,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -633,13 +692,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
               "width": 40,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="12"
             bbWidth="12"
+            height="12"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -647,9 +705,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 12,
@@ -659,20 +718,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             }
             vbHeight={12}
             vbWidth={12}
+            width="12"
           >
-            <RNSVGPath
-              d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -683,18 +740,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -707,10 +756,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+                fill={
+                  Array [
+                    0,
+                    4286019447,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
         </View>
       </View>
@@ -737,6 +834,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
         }
       />
       <RCTSafeAreaView
+        emulateUnlessSupported={true}
         style={
           Object {
             "flex": 1,
@@ -758,9 +856,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -774,9 +869,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             2018-01-10T04:32:43+05:30 | 2018-01-10T04:32:43+05:30
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#505050",
@@ -793,8 +885,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             New Credential Offer
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
             ellipsizeMode="tail"
             numberOfLines={1}
             style={
@@ -824,16 +914,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             }
           >
             <View
-              accessibilityComponentType={undefined}
-              accessibilityLabel={undefined}
-              accessibilityTraits={undefined}
               accessible={true}
-              collapsable={undefined}
-              hasTVPreferredFocus={undefined}
-              hitSlop={undefined}
               isTVSelectable={true}
-              nativeID={undefined}
-              onLayout={undefined}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
@@ -850,13 +932,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
                   "paddingRight": 26,
                 }
               }
-              testID={undefined}
-              tvParallaxProperties={undefined}
             >
               <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
                 style={
                   Object {
                     "color": "white",
@@ -938,16 +1015,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -960,13 +1029,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
           "paddingLeft": 15,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="22"
         bbWidth="24"
+        height="22"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -974,9 +1042,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 22,
@@ -986,20 +1055,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
         }
         vbHeight={22}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -1010,18 +1077,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -1034,10 +1093,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
     <View
@@ -1081,9 +1188,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
         />
       </View>
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Object {
             "color": "#505050",
@@ -1100,16 +1204,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1124,13 +1220,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
           "width": 40,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="24"
         bbWidth="24"
+        height="24"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -1138,9 +1233,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 24,
@@ -1150,20 +1246,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
         }
         vbHeight={24}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -1174,18 +1268,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -1198,15 +1284,62 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
   </View>
   <View
-    collapsable={undefined}
     style={
       Object {
         "elevation": 16,
@@ -1237,16 +1370,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        collapsable={undefined}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -1262,8 +1387,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             "width": "100%",
           }
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       />
       <View
         style={
@@ -1318,9 +1441,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -1361,9 +1481,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -1378,16 +1495,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
           </Text>
         </View>
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1402,13 +1511,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
               "opacity": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="24"
             bbWidth="24"
+            height="24"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -1416,9 +1524,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 24,
@@ -1428,20 +1537,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             }
             vbHeight={24}
             vbWidth={24}
+            width="24"
           >
-            <RNSVGPath
-              d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.13725490196078433,
-                  0.4196078431372549,
-                  0.6823529411764706,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -1452,18 +1559,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -1476,15 +1575,60 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+                fill={
+                  Array [
+                    0,
+                    4280511406,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#236BAE",
@@ -1513,16 +1657,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1539,13 +1675,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
               "width": 40,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="12"
             bbWidth="12"
+            height="12"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -1553,9 +1688,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 12,
@@ -1565,20 +1701,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             }
             vbHeight={12}
             vbWidth={12}
+            width="12"
           >
-            <RNSVGPath
-              d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -1589,18 +1723,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -1613,10 +1739,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+                fill={
+                  Array [
+                    0,
+                    4286019447,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
         </View>
       </View>
@@ -1643,6 +1817,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
         }
       />
       <RCTSafeAreaView
+        emulateUnlessSupported={true}
         style={
           Object {
             "flex": 1,
@@ -1664,9 +1839,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -1680,9 +1852,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             2018-01-10T04:32:43+05:30 | 2018-01-10T04:32:43+05:30
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#505050",
@@ -1699,8 +1868,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             Added Connection
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
             ellipsizeMode="tail"
             numberOfLines={1}
             style={
@@ -1730,16 +1897,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             }
           >
             <View
-              accessibilityComponentType={undefined}
-              accessibilityLabel={undefined}
-              accessibilityTraits={undefined}
               accessible={true}
-              collapsable={undefined}
-              hasTVPreferredFocus={undefined}
-              hitSlop={undefined}
               isTVSelectable={true}
-              nativeID={undefined}
-              onLayout={undefined}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
@@ -1756,13 +1915,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
                   "paddingRight": 26,
                 }
               }
-              testID={undefined}
-              tvParallaxProperties={undefined}
             >
               <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
                 style={
                   Object {
                     "color": "white",
@@ -1844,16 +1998,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1866,13 +2012,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
           "paddingLeft": 15,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="22"
         bbWidth="24"
+        height="22"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -1880,9 +2025,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 22,
@@ -1892,20 +2038,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
         }
         vbHeight={22}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -1916,18 +2060,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -1940,10 +2076,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
     <View
@@ -1987,9 +2171,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
         />
       </View>
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Object {
             "color": "#505050",
@@ -2006,16 +2187,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -2030,13 +2203,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
           "width": 40,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="24"
         bbWidth="24"
+        height="24"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -2044,9 +2216,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 24,
@@ -2056,20 +2229,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
         }
         vbHeight={24}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -2080,18 +2251,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -2104,15 +2267,62 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
   </View>
   <View
-    collapsable={undefined}
     style={
       Object {
         "elevation": 16,
@@ -2143,16 +2353,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        collapsable={undefined}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -2168,8 +2370,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
             "width": "100%",
           }
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       />
       <View
         style={
@@ -2224,9 +2424,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -2267,9 +2464,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -2284,16 +2478,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
           </Text>
         </View>
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -2308,13 +2494,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
               "opacity": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="24"
             bbWidth="24"
+            height="24"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -2322,9 +2507,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 24,
@@ -2334,20 +2520,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
             }
             vbHeight={24}
             vbWidth={24}
+            width="24"
           >
-            <RNSVGPath
-              d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.13725490196078433,
-                  0.4196078431372549,
-                  0.6823529411764706,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -2358,18 +2542,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -2382,15 +2558,60 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+                fill={
+                  Array [
+                    0,
+                    4280511406,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#236BAE",
@@ -2419,16 +2640,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -2445,13 +2658,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
               "width": 40,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="12"
             bbWidth="12"
+            height="12"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -2459,9 +2671,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 12,
@@ -2471,20 +2684,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
             }
             vbHeight={12}
             vbWidth={12}
+            width="12"
           >
-            <RNSVGPath
-              d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -2495,18 +2706,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -2519,10 +2722,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+                fill={
+                  Array [
+                    0,
+                    4286019447,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
         </View>
       </View>
@@ -2549,6 +2800,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
         }
       />
       <RCTSafeAreaView
+        emulateUnlessSupported={true}
         style={
           Object {
             "flex": 1,
@@ -2569,9 +2821,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -2636,9 +2885,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
               }
             >
               <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
                 style={
                   Object {
                     "color": "#505050",
@@ -2654,9 +2900,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
                 Enterprise name
               </Text>
               <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
                 style={
                   Object {
                     "color": "#777",
@@ -2729,16 +2972,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -2751,13 +2986,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
           "paddingLeft": 15,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="22"
         bbWidth="24"
+        height="22"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -2765,9 +2999,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 22,
@@ -2777,20 +3012,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
         }
         vbHeight={22}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -2801,18 +3034,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -2825,10 +3050,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
     <View
@@ -2872,9 +3145,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
         />
       </View>
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Object {
             "color": "#505050",
@@ -2891,16 +3161,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -2915,13 +3177,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
           "width": 40,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="24"
         bbWidth="24"
+        height="24"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -2929,9 +3190,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 24,
@@ -2941,20 +3203,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
         }
         vbHeight={24}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -2965,18 +3225,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -2989,15 +3241,62 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
   </View>
   <View
-    collapsable={undefined}
     style={
       Object {
         "elevation": 16,
@@ -3028,16 +3327,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        collapsable={undefined}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -3053,8 +3344,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             "width": "100%",
           }
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       />
       <View
         style={
@@ -3109,9 +3398,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -3152,9 +3438,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -3169,16 +3452,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
           </Text>
         </View>
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -3193,13 +3468,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
               "opacity": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="24"
             bbWidth="24"
+            height="24"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -3207,9 +3481,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 24,
@@ -3219,20 +3494,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             }
             vbHeight={24}
             vbWidth={24}
+            width="24"
           >
-            <RNSVGPath
-              d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.13725490196078433,
-                  0.4196078431372549,
-                  0.6823529411764706,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -3243,18 +3516,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -3267,15 +3532,60 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+                fill={
+                  Array [
+                    0,
+                    4280511406,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#236BAE",
@@ -3304,16 +3614,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -3330,13 +3632,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
               "width": 40,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="12"
             bbWidth="12"
+            height="12"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -3344,9 +3645,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 12,
@@ -3356,20 +3658,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             }
             vbHeight={12}
             vbWidth={12}
+            width="12"
           >
-            <RNSVGPath
-              d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -3380,18 +3680,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -3404,10 +3696,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+                fill={
+                  Array [
+                    0,
+                    4286019447,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
         </View>
       </View>
@@ -3434,6 +3774,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
         }
       />
       <RCTSafeAreaView
+        emulateUnlessSupported={true}
         style={
           Object {
             "flex": 1,
@@ -3455,9 +3796,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -3471,9 +3809,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             2018-01-10T04:32:43+05:30 | 2018-01-10T04:32:43+05:30
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#505050",
@@ -3490,8 +3825,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             bob wants you to share the following:
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
             ellipsizeMode="tail"
             numberOfLines={1}
             style={
@@ -3521,16 +3854,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             }
           >
             <View
-              accessibilityComponentType={undefined}
-              accessibilityLabel={undefined}
-              accessibilityTraits={undefined}
               accessible={true}
-              collapsable={undefined}
-              hasTVPreferredFocus={undefined}
-              hitSlop={undefined}
               isTVSelectable={true}
-              nativeID={undefined}
-              onLayout={undefined}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
@@ -3547,13 +3872,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
                   "paddingRight": 26,
                 }
               }
-              testID={undefined}
-              tvParallaxProperties={undefined}
             >
               <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
                 style={
                   Object {
                     "color": "white",
@@ -3635,16 +3955,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -3657,13 +3969,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
           "paddingLeft": 15,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="22"
         bbWidth="24"
+        height="22"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -3671,9 +3982,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 22,
@@ -3683,20 +3995,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
         }
         vbHeight={22}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -3707,18 +4017,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -3731,10 +4033,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
     <View
@@ -3778,9 +4128,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
         />
       </View>
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Object {
             "color": "#505050",
@@ -3797,16 +4144,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -3821,13 +4160,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
           "width": 40,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="24"
         bbWidth="24"
+        height="24"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -3835,9 +4173,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 24,
@@ -3847,20 +4186,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
         }
         vbHeight={24}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -3871,18 +4208,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -3895,15 +4224,62 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
   </View>
   <View
-    collapsable={undefined}
     style={
       Object {
         "elevation": 16,
@@ -3934,16 +4310,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        collapsable={undefined}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -3959,8 +4327,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
             "width": "100%",
           }
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       />
       <View
         style={
@@ -4015,9 +4381,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -4058,9 +4421,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -4075,16 +4435,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
           </Text>
         </View>
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -4099,13 +4451,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
               "opacity": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="24"
             bbWidth="24"
+            height="24"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -4113,9 +4464,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 24,
@@ -4125,20 +4477,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
             }
             vbHeight={24}
             vbWidth={24}
+            width="24"
           >
-            <RNSVGPath
-              d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.13725490196078433,
-                  0.4196078431372549,
-                  0.6823529411764706,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -4149,18 +4499,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -4173,15 +4515,60 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+                fill={
+                  Array [
+                    0,
+                    4280511406,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#236BAE",
@@ -4210,16 +4597,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -4236,13 +4615,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
               "width": 40,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="12"
             bbWidth="12"
+            height="12"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -4250,9 +4628,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 12,
@@ -4262,20 +4641,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
             }
             vbHeight={12}
             vbWidth={12}
+            width="12"
           >
-            <RNSVGPath
-              d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -4286,18 +4663,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -4310,10 +4679,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+                fill={
+                  Array [
+                    0,
+                    4286019447,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
         </View>
       </View>
@@ -4340,6 +4757,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
         }
       />
       <RCTSafeAreaView
+        emulateUnlessSupported={true}
         style={
           Object {
             "flex": 1,
@@ -4361,9 +4779,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -4432,6 +4847,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                     align="xMidYMid"
                     bbHeight="33"
                     bbWidth="22"
+                    height="33"
                     meetOrSlice={0}
                     minX={0}
                     minY={0}
@@ -4439,9 +4855,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                       Array [
                         Object {
                           "backgroundColor": "transparent",
+                          "borderWidth": 0,
                         },
                         undefined,
-                        false,
+                        null,
                         Object {
                           "flex": 0,
                           "height": 33,
@@ -4451,20 +4868,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                     }
                     vbHeight={33}
                     vbWidth={22}
+                    width="22"
                   >
-                    <RNSVGPath
-                      d="M6.875 21.2004V28.4852L10.9705 25.2123L15.125 28.4852V21.2004C13.8512 21.7161 12.4587 22 11 22C9.54126 22 8.14884 21.7161 6.875 21.2004ZM4.12496 19.5874C1.61021 17.5714 0 14.4738 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11C22 14.5008 20.3646 17.6197 17.8161 19.6343L17.816 32.527L10.9705 28.4315L4.125 32.527L4.12496 19.5874ZM11 19.25C15.5563 19.25 19.25 15.5563 19.25 11C19.25 6.44365 15.5563 2.75 11 2.75C6.44365 2.75 2.75 6.44365 2.75 11C2.75 15.5563 6.44365 19.25 11 19.25ZM16.2142 7.8418C16.2443 7.89785 16.2594 7.93988 16.2594 7.9679C16.2594 7.99593 16.2443 8.03796 16.2142 8.09401L10.5972 14.8196C10.5069 14.9036 10.4393 14.9457 10.3941 14.9457C10.3189 14.9457 10.2438 14.9106 10.1686 14.8406L6.98779 11.9822L6.92012 11.9192C6.89004 11.8631 6.875 11.8211 6.875 11.7931C6.875 11.779 6.89004 11.744 6.92012 11.688L6.96523 11.6459C7.38633 11.2256 7.71719 10.9033 7.95781 10.6791C8.04804 10.5951 8.1082 10.553 8.13828 10.553C8.19844 10.553 8.27363 10.5951 8.36387 10.6791L10.1686 12.3185L14.6803 6.91704C14.7104 6.88901 14.7555 6.875 14.8156 6.875C14.8608 6.875 14.9134 6.88901 14.9736 6.91704L16.2142 7.8418Z"
+                    <RNSVGGroup
                       fill={
                         Array [
                           0,
-                          0.3137254901960784,
-                          0.3137254901960784,
-                          0.3137254901960784,
-                          1,
+                          4278190080,
                         ]
                       }
                       fillOpacity={1}
-                      fillRule={0}
+                      fillRule={1}
+                      font={Object {}}
                       matrix={
                         Array [
                           1,
@@ -4475,18 +4890,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                           0,
                         ]
                       }
-                      onLayout={undefined}
                       opacity={1}
                       originX={0}
                       originY={0}
-                      propList={
-                        Array [
-                          "stroke",
-                          "strokeWidth",
-                          "fill",
-                          "fillRule",
-                        ]
-                      }
+                      propList={Array []}
                       rotation={0}
                       scaleX={1}
                       scaleY={1}
@@ -4499,10 +4906,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                       strokeLinejoin={0}
                       strokeMiterlimit={4}
                       strokeOpacity={1}
-                      strokeWidth="1"
+                      strokeWidth={1}
+                      vectorEffect={0}
                       x={0}
                       y={0}
-                    />
+                    >
+                      <RNSVGPath
+                        d="M6.875 21.2004V28.4852L10.9705 25.2123L15.125 28.4852V21.2004C13.8512 21.7161 12.4587 22 11 22C9.54126 22 8.14884 21.7161 6.875 21.2004ZM4.12496 19.5874C1.61021 17.5714 0 14.4738 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11C22 14.5008 20.3646 17.6197 17.8161 19.6343L17.816 32.527L10.9705 28.4315L4.125 32.527L4.12496 19.5874ZM11 19.25C15.5563 19.25 19.25 15.5563 19.25 11C19.25 6.44365 15.5563 2.75 11 2.75C6.44365 2.75 2.75 6.44365 2.75 11C2.75 15.5563 6.44365 19.25 11 19.25ZM16.2142 7.8418C16.2443 7.89785 16.2594 7.93988 16.2594 7.9679C16.2594 7.99593 16.2443 8.03796 16.2142 8.09401L10.5972 14.8196C10.5069 14.9036 10.4393 14.9457 10.3941 14.9457C10.3189 14.9457 10.2438 14.9106 10.1686 14.8406L6.98779 11.9822L6.92012 11.9192C6.89004 11.8631 6.875 11.8211 6.875 11.7931C6.875 11.779 6.89004 11.744 6.92012 11.688L6.96523 11.6459C7.38633 11.2256 7.71719 10.9033 7.95781 10.6791C8.04804 10.5951 8.1082 10.553 8.13828 10.553C8.19844 10.553 8.27363 10.5951 8.36387 10.6791L10.1686 12.3185L14.6803 6.91704C14.7104 6.88901 14.7555 6.875 14.8156 6.875C14.8608 6.875 14.9134 6.88901 14.9736 6.91704L16.2142 7.8418Z"
+                        fill={
+                          Array [
+                            0,
+                            4283453520,
+                          ]
+                        }
+                        fillOpacity={1}
+                        fillRule={0}
+                        matrix={
+                          Array [
+                            1,
+                            0,
+                            0,
+                            1,
+                            0,
+                            0,
+                          ]
+                        }
+                        opacity={1}
+                        originX={0}
+                        originY={0}
+                        propList={
+                          Array [
+                            "fill",
+                            "fillRule",
+                          ]
+                        }
+                        rotation={0}
+                        scaleX={1}
+                        scaleY={1}
+                        skewX={0}
+                        skewY={0}
+                        stroke={null}
+                        strokeDasharray={null}
+                        strokeDashoffset={null}
+                        strokeLinecap={0}
+                        strokeLinejoin={0}
+                        strokeMiterlimit={4}
+                        strokeOpacity={1}
+                        strokeWidth={1}
+                        vectorEffect={0}
+                        x={0}
+                        y={0}
+                      />
+                    </RNSVGGroup>
                   </RNSVGSvgView>
                 </View>
               </View>
@@ -4521,9 +4976,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                   }
                 >
                   <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
                     style={
                       Object {
                         "color": "#505050",
@@ -4548,9 +5000,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                   }
                 >
                   <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
                     style={
                       Object {
                         "color": "#777777",
@@ -4566,9 +5015,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                     ACCEPTED CREDENTIAL
                   </Text>
                   <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
                     style={
                       Object {
                         "color": "#505050",
@@ -5719,9 +6165,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                 }
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Object {
                       "color": "#505050",
@@ -5735,9 +6178,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                   1
                 </Text>
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Object {
                       "color": "#505050",
@@ -5752,16 +6192,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                 </Text>
               </View>
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -5779,13 +6211,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                     "paddingRight": 25,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Array [
                       Object {
@@ -5871,16 +6298,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -5893,13 +6312,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
           "paddingLeft": 15,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="22"
         bbWidth="24"
+        height="22"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -5907,9 +6325,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 22,
@@ -5919,20 +6338,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
         }
         vbHeight={22}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -5943,18 +6360,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -5967,10 +6376,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M24 10.1765C24 9.62418 23.5523 9.17647 23 9.17647H5.79765L11.878 2.65449C12.2454 2.2605 12.2346 1.64636 11.8537 1.26547L11.2953 0.707107C10.9048 0.316583 10.2717 0.316582 9.88113 0.707107L0.707107 9.88113C0.316582 10.2717 0.316583 10.9048 0.707107 11.2953L9.88113 20.4694C10.2717 20.8599 10.9048 20.8599 11.2953 20.4694L11.8537 19.911C12.2346 19.5301 12.2454 18.916 11.878 18.522L5.79765 12H23C23.5523 12 24 11.5523 24 11V10.1765Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
     <View
@@ -6014,9 +6471,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
         />
       </View>
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Object {
             "color": "#505050",
@@ -6033,16 +6487,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -6057,13 +6503,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
           "width": 40,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <RNSVGSvgView
         align="xMidYMid"
         bbHeight="24"
         bbWidth="24"
+        height="24"
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -6071,9 +6516,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
           Array [
             Object {
               "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
             undefined,
-            false,
+            null,
             Object {
               "flex": 0,
               "height": 24,
@@ -6083,20 +6529,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
         }
         vbHeight={24}
         vbWidth={24}
+        width="24"
       >
-        <RNSVGPath
-          d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+        <RNSVGGroup
           fill={
             Array [
               0,
-              0.4666666666666667,
-              0.4666666666666667,
-              0.4666666666666667,
-              1,
+              4278190080,
             ]
           }
           fillOpacity={1}
-          fillRule={0}
+          fillRule={1}
+          font={Object {}}
           matrix={
             Array [
               1,
@@ -6107,18 +6551,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
               0,
             ]
           }
-          onLayout={undefined}
           opacity={1}
           originX={0}
           originY={0}
-          propList={
-            Array [
-              "stroke",
-              "strokeWidth",
-              "fill",
-              "fillRule",
-            ]
-          }
+          propList={Array []}
           rotation={0}
           scaleX={1}
           scaleY={1}
@@ -6131,15 +6567,62 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
           strokeLinejoin={0}
           strokeMiterlimit={4}
           strokeOpacity={1}
-          strokeWidth="1"
+          strokeWidth={1}
+          vectorEffect={0}
           x={0}
           y={0}
-        />
+        >
+          <RNSVGPath
+            d="M10 2H14V6H10V2ZM10 10H14V14H10V10ZM10 18H14V22H10V18Z"
+            fill={
+              Array [
+                0,
+                4286019447,
+              ]
+            }
+            fillOpacity={1}
+            fillRule={0}
+            matrix={
+              Array [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+              ]
+            }
+            opacity={1}
+            originX={0}
+            originY={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+            rotation={0}
+            scaleX={1}
+            scaleY={1}
+            skewX={0}
+            skewY={0}
+            stroke={null}
+            strokeDasharray={null}
+            strokeDashoffset={null}
+            strokeLinecap={0}
+            strokeLinejoin={0}
+            strokeMiterlimit={4}
+            strokeOpacity={1}
+            strokeWidth={1}
+            vectorEffect={0}
+            x={0}
+            y={0}
+          />
+        </RNSVGGroup>
       </RNSVGSvgView>
     </View>
   </View>
   <View
-    collapsable={undefined}
     style={
       Object {
         "elevation": 16,
@@ -6170,16 +6653,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        collapsable={undefined}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -6195,8 +6670,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
             "width": "100%",
           }
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       />
       <View
         style={
@@ -6251,9 +6724,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -6294,9 +6764,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
             }
           />
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -6311,16 +6778,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
           </Text>
         </View>
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -6335,13 +6794,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
               "opacity": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="24"
             bbWidth="24"
+            height="24"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -6349,9 +6807,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 24,
@@ -6361,20 +6820,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
             }
             vbHeight={24}
             vbWidth={24}
+            width="24"
           >
-            <RNSVGPath
-              d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.13725490196078433,
-                  0.4196078431372549,
-                  0.6823529411764706,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -6385,18 +6842,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -6409,15 +6858,60 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M15.6667 0L17 1.33333H21.6667V4H3V1.33333H7.66667L9 0H15.6667ZM12.3333 12.7867L15.1599 9.96L17.0399 11.84L14.2133 14.6667L17.0399 17.4933L15.1599 19.3733L12.3333 16.5467L9.50661 19.3733L7.62661 17.4933L10.4533 14.6667L7.61328 11.84L9.49328 9.96L12.3333 12.7867ZM4.33333 21.3333C4.33333 22.8 5.53333 24 7 24H17.6667C19.1333 24 20.3333 22.8 20.3333 21.3333V5.33333H4.33333V21.3333ZM17.6667 8H7V21.3333H17.6667V8Z"
+                fill={
+                  Array [
+                    0,
+                    4280511406,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#236BAE",
@@ -6446,16 +6940,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -6472,13 +6958,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
               "width": 40,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <RNSVGSvgView
             align="xMidYMid"
             bbHeight="12"
             bbWidth="12"
+            height="12"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -6486,9 +6971,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderWidth": 0,
                 },
                 undefined,
-                false,
+                null,
                 Object {
                   "flex": 0,
                   "height": 12,
@@ -6498,20 +6984,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
             }
             vbHeight={12}
             vbWidth={12}
+            width="12"
           >
-            <RNSVGPath
-              d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+            <RNSVGGroup
               fill={
                 Array [
                   0,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  0.4666666666666667,
-                  1,
+                  4278190080,
                 ]
               }
               fillOpacity={1}
-              fillRule={0}
+              fillRule={1}
+              font={Object {}}
               matrix={
                 Array [
                   1,
@@ -6522,18 +7006,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                   0,
                 ]
               }
-              onLayout={undefined}
               opacity={1}
               originX={0}
               originY={0}
-              propList={
-                Array [
-                  "stroke",
-                  "strokeWidth",
-                  "fill",
-                  "fillRule",
-                ]
-              }
+              propList={Array []}
               rotation={0}
               scaleX={1}
               scaleY={1}
@@ -6546,10 +7022,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
               strokeLinejoin={0}
               strokeMiterlimit={4}
               strokeOpacity={1}
-              strokeWidth="1"
+              strokeWidth={1}
+              vectorEffect={0}
               x={0}
               y={0}
-            />
+            >
+              <RNSVGPath
+                d="M12 1.20857L10.7914 0L6 4.79143L1.20857 0L0 1.20857L4.79143 6L0 10.7914L1.20857 12L6 7.20857L10.7914 12L12 10.7914L7.20857 6L12 1.20857Z"
+                fill={
+                  Array [
+                    0,
+                    4286019447,
+                  ]
+                }
+                fillOpacity={1}
+                fillRule={0}
+                matrix={
+                  Array [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                  ]
+                }
+                opacity={1}
+                originX={0}
+                originY={0}
+                propList={
+                  Array [
+                    "fill",
+                    "fillRule",
+                  ]
+                }
+                rotation={0}
+                scaleX={1}
+                scaleY={1}
+                skewX={0}
+                skewY={0}
+                stroke={null}
+                strokeDasharray={null}
+                strokeDashoffset={null}
+                strokeLinecap={0}
+                strokeLinejoin={0}
+                strokeMiterlimit={4}
+                strokeOpacity={1}
+                strokeWidth={1}
+                vectorEffect={0}
+                x={0}
+                y={0}
+              />
+            </RNSVGGroup>
           </RNSVGSvgView>
         </View>
       </View>
@@ -6576,6 +7100,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
         }
       />
       <RCTSafeAreaView
+        emulateUnlessSupported={true}
         style={
           Object {
             "flex": 1,
@@ -6597,9 +7122,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#777",
@@ -6668,6 +7190,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                     align="xMidYMid"
                     bbHeight="33"
                     bbWidth="22"
+                    height="33"
                     meetOrSlice={0}
                     minX={0}
                     minY={0}
@@ -6675,9 +7198,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                       Array [
                         Object {
                           "backgroundColor": "transparent",
+                          "borderWidth": 0,
                         },
                         undefined,
-                        false,
+                        null,
                         Object {
                           "flex": 0,
                           "height": 33,
@@ -6687,20 +7211,18 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                     }
                     vbHeight={33}
                     vbWidth={22}
+                    width="22"
                   >
-                    <RNSVGPath
-                      d="M6.875 21.2004V28.4852L10.9705 25.2123L15.125 28.4852V21.2004C13.8512 21.7161 12.4587 22 11 22C9.54126 22 8.14884 21.7161 6.875 21.2004ZM4.12496 19.5874C1.61021 17.5714 0 14.4738 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11C22 14.5008 20.3646 17.6197 17.8161 19.6343L17.816 32.527L10.9705 28.4315L4.125 32.527L4.12496 19.5874ZM11 19.25C15.5563 19.25 19.25 15.5563 19.25 11C19.25 6.44365 15.5563 2.75 11 2.75C6.44365 2.75 2.75 6.44365 2.75 11C2.75 15.5563 6.44365 19.25 11 19.25ZM16.2142 7.8418C16.2443 7.89785 16.2594 7.93988 16.2594 7.9679C16.2594 7.99593 16.2443 8.03796 16.2142 8.09401L10.5972 14.8196C10.5069 14.9036 10.4393 14.9457 10.3941 14.9457C10.3189 14.9457 10.2438 14.9106 10.1686 14.8406L6.98779 11.9822L6.92012 11.9192C6.89004 11.8631 6.875 11.8211 6.875 11.7931C6.875 11.779 6.89004 11.744 6.92012 11.688L6.96523 11.6459C7.38633 11.2256 7.71719 10.9033 7.95781 10.6791C8.04804 10.5951 8.1082 10.553 8.13828 10.553C8.19844 10.553 8.27363 10.5951 8.36387 10.6791L10.1686 12.3185L14.6803 6.91704C14.7104 6.88901 14.7555 6.875 14.8156 6.875C14.8608 6.875 14.9134 6.88901 14.9736 6.91704L16.2142 7.8418Z"
+                    <RNSVGGroup
                       fill={
                         Array [
                           0,
-                          0.3137254901960784,
-                          0.3137254901960784,
-                          0.3137254901960784,
-                          1,
+                          4278190080,
                         ]
                       }
                       fillOpacity={1}
-                      fillRule={0}
+                      fillRule={1}
+                      font={Object {}}
                       matrix={
                         Array [
                           1,
@@ -6711,18 +7233,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                           0,
                         ]
                       }
-                      onLayout={undefined}
                       opacity={1}
                       originX={0}
                       originY={0}
-                      propList={
-                        Array [
-                          "stroke",
-                          "strokeWidth",
-                          "fill",
-                          "fillRule",
-                        ]
-                      }
+                      propList={Array []}
                       rotation={0}
                       scaleX={1}
                       scaleY={1}
@@ -6735,10 +7249,58 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                       strokeLinejoin={0}
                       strokeMiterlimit={4}
                       strokeOpacity={1}
-                      strokeWidth="1"
+                      strokeWidth={1}
+                      vectorEffect={0}
                       x={0}
                       y={0}
-                    />
+                    >
+                      <RNSVGPath
+                        d="M6.875 21.2004V28.4852L10.9705 25.2123L15.125 28.4852V21.2004C13.8512 21.7161 12.4587 22 11 22C9.54126 22 8.14884 21.7161 6.875 21.2004ZM4.12496 19.5874C1.61021 17.5714 0 14.4738 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11C22 14.5008 20.3646 17.6197 17.8161 19.6343L17.816 32.527L10.9705 28.4315L4.125 32.527L4.12496 19.5874ZM11 19.25C15.5563 19.25 19.25 15.5563 19.25 11C19.25 6.44365 15.5563 2.75 11 2.75C6.44365 2.75 2.75 6.44365 2.75 11C2.75 15.5563 6.44365 19.25 11 19.25ZM16.2142 7.8418C16.2443 7.89785 16.2594 7.93988 16.2594 7.9679C16.2594 7.99593 16.2443 8.03796 16.2142 8.09401L10.5972 14.8196C10.5069 14.9036 10.4393 14.9457 10.3941 14.9457C10.3189 14.9457 10.2438 14.9106 10.1686 14.8406L6.98779 11.9822L6.92012 11.9192C6.89004 11.8631 6.875 11.8211 6.875 11.7931C6.875 11.779 6.89004 11.744 6.92012 11.688L6.96523 11.6459C7.38633 11.2256 7.71719 10.9033 7.95781 10.6791C8.04804 10.5951 8.1082 10.553 8.13828 10.553C8.19844 10.553 8.27363 10.5951 8.36387 10.6791L10.1686 12.3185L14.6803 6.91704C14.7104 6.88901 14.7555 6.875 14.8156 6.875C14.8608 6.875 14.9134 6.88901 14.9736 6.91704L16.2142 7.8418Z"
+                        fill={
+                          Array [
+                            0,
+                            4283453520,
+                          ]
+                        }
+                        fillOpacity={1}
+                        fillRule={0}
+                        matrix={
+                          Array [
+                            1,
+                            0,
+                            0,
+                            1,
+                            0,
+                            0,
+                          ]
+                        }
+                        opacity={1}
+                        originX={0}
+                        originY={0}
+                        propList={
+                          Array [
+                            "fill",
+                            "fillRule",
+                          ]
+                        }
+                        rotation={0}
+                        scaleX={1}
+                        scaleY={1}
+                        skewX={0}
+                        skewY={0}
+                        stroke={null}
+                        strokeDasharray={null}
+                        strokeDashoffset={null}
+                        strokeLinecap={0}
+                        strokeLinejoin={0}
+                        strokeMiterlimit={4}
+                        strokeOpacity={1}
+                        strokeWidth={1}
+                        vectorEffect={0}
+                        x={0}
+                        y={0}
+                      />
+                    </RNSVGGroup>
                   </RNSVGSvgView>
                 </View>
               </View>
@@ -6757,9 +7319,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                   }
                 >
                   <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
                     style={
                       Object {
                         "color": "#505050",
@@ -6784,9 +7343,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                   }
                 >
                   <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
                     style={
                       Object {
                         "color": "#777777",
@@ -6802,9 +7358,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                     SHARED
                   </Text>
                   <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
                     style={
                       Object {
                         "color": "#505050",
@@ -7955,9 +8508,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                 }
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Object {
                       "color": "#505050",
@@ -7971,9 +8521,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                   1
                 </Text>
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Object {
                       "color": "#505050",
@@ -7988,16 +8535,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                 </Text>
               </View>
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -8015,13 +8554,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                     "paddingRight": 25,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Array [
                       Object {

@@ -33,7 +33,11 @@ import {
 } from './common'
 import { NavigationActions } from 'react-navigation'
 import type { AppProps } from './type-app'
-import type { NavigationState, NavigationParams } from './common/type-common'
+import type {
+  NavigationState,
+  NavigationParams,
+  NavigationRoute,
+} from './common/type-common'
 import { exitAppAndroid } from './bridge/react-native-cxs/RNCxs'
 import AppStatus from './app-status/app-status'
 import { setupFeedback } from './feedback'
@@ -152,7 +156,8 @@ export class ConnectMeApp extends PureComponent<AppProps, void> {
 
   // gets the current screen from navigation state
   getCurrentRoute = (navigationState: NavigationState) => {
-    const route = navigationState.routes[navigationState.index]
+    const route: NavigationRoute = navigationState.routes[navigationState.index]
+
     // dive into nested navigators
     if (route.routes) {
       return this.getCurrentRoute(route)

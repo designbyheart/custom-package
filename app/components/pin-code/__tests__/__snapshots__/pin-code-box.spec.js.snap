@@ -5,9 +5,6 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
   style={Object {}}
 >
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
     hitSlop={
       Object {
@@ -17,8 +14,6 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
         "top": 20,
       }
     }
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -31,12 +26,9 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
         "flexDirection": "row",
       }
     }
-    testID={undefined}
   >
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-0-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -47,8 +39,6 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -69,9 +59,7 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
       testID="pin-code-digit-0-touchable"
     />
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-1-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -82,8 +70,6 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -104,9 +90,7 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
       testID="pin-code-digit-1-touchable"
     />
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-2-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -117,8 +101,6 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -139,9 +121,7 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
       testID="pin-code-digit-2-touchable"
     />
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-3-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -152,8 +132,6 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -174,9 +152,7 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
       testID="pin-code-digit-3-touchable"
     />
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-4-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -187,8 +163,6 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -209,9 +183,7 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
       testID="pin-code-digit-4-touchable"
     />
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-5-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -222,8 +194,6 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -274,9 +244,6 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
   style={Object {}}
 >
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
     hitSlop={
       Object {
@@ -286,8 +253,6 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
         "top": 20,
       }
     }
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -300,12 +265,9 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
         "flexDirection": "row",
       }
     }
-    testID={undefined}
   >
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-0-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -316,8 +278,6 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -349,9 +309,7 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
       />
     </View>
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-1-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -362,8 +320,6 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -395,9 +351,7 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
       />
     </View>
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-2-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -408,8 +362,6 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -430,9 +382,7 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
       testID="pin-code-digit-2-touchable"
     />
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-3-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -443,8 +393,6 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -465,9 +413,7 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
       testID="pin-code-digit-3-touchable"
     />
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-4-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -478,8 +424,6 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -500,9 +444,7 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
       testID="pin-code-digit-4-touchable"
     />
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="pin-code-digit-5-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -513,8 +455,6 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}

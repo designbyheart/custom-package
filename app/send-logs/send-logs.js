@@ -14,9 +14,12 @@ import {
   Alert,
   Dimensions,
 } from 'react-native'
+import { connect } from 'react-redux'
+
 import type { SendLogsProps } from './type-send-logs'
 import type { Store } from '../store/type-store'
-import { connect } from 'react-redux'
+import type { ReactNavigation } from '../common/type-common'
+
 import {
   Container,
   CustomView,
@@ -133,7 +136,7 @@ export class SendLogs extends PureComponent<SendLogsProps, void> {
     )
   }
 
-  static goBack(navigation: any) {
+  static goBack(navigation: $PropertyType<ReactNavigation, 'navigation'>) {
     //Alert.alert('NOT sending logs')
     navigation.goBack(null)
     setTimeout(() => {
@@ -144,13 +147,13 @@ export class SendLogs extends PureComponent<SendLogsProps, void> {
     }, 3000)
   }
 
-  static sendLogs(navigation: any) {
+  static sendLogs(navigation: $PropertyType<ReactNavigation, 'navigation'>) {
     //Alert.alert('sending logs from file: ' + String(customLogger.getVcxLogFile()))
     SendLogs.handleEmail()
     SendLogs.goBack(navigation)
   }
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: (
       <CustomHeader
         backgroundColor={color.bg.tertiary.color}

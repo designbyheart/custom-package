@@ -49,7 +49,6 @@ exports[`<ClaimRequestStatusModal /> should hideModal if continue is clicked 1`]
         accessibilityLabel="claim-request-message"
         accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -106,31 +105,15 @@ exports[`<ClaimRequestStatusModal /> should hideModal if continue is clicked 1`]
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            undefined,
-          ]
-        }
-        testID={undefined}
-        tvParallaxProperties={undefined}
+        style={null}
       >
         <View
           pointerEvents="box-only"
@@ -167,9 +150,6 @@ exports[`<ClaimRequestStatusModal /> should hideModal if continue is clicked 1`]
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},
@@ -263,7 +243,6 @@ exports[`<ClaimRequestStatusModal /> should match paid credential success, if se
         accessibilityLabel="claim-request-message"
         accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -320,31 +299,15 @@ exports[`<ClaimRequestStatusModal /> should match paid credential success, if se
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            undefined,
-          ]
-        }
-        testID={undefined}
-        tvParallaxProperties={undefined}
+        style={null}
       >
         <View
           pointerEvents="box-only"
@@ -381,9 +344,6 @@ exports[`<ClaimRequestStatusModal /> should match paid credential success, if se
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},
@@ -460,9 +420,7 @@ exports[`<ClaimRequestStatusModal /> should match snapshot when pending popOver 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -512,7 +470,6 @@ exports[`<ClaimRequestStatusModal /> should match snapshot when pending popOver 
         }
       >
         <Image
-          collapsable={undefined}
           source={1}
           style={
             Object {
@@ -528,9 +485,7 @@ exports[`<ClaimRequestStatusModal /> should match snapshot when pending popOver 
           }
         />
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -628,7 +583,6 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and accepting text,
         accessibilityLabel="claim-request-message"
         accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -685,31 +639,15 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and accepting text,
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            undefined,
-          ]
-        }
-        testID={undefined}
-        tvParallaxProperties={undefined}
+        style={null}
       >
         <View
           pointerEvents="box-only"
@@ -746,9 +684,6 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and accepting text,
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},
@@ -825,9 +760,7 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and only Paying tex
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -877,7 +810,6 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and only Paying tex
         }
       >
         <Image
-          collapsable={undefined}
           source={1}
           style={
             Object {
@@ -893,9 +825,7 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and only Paying tex
           }
         />
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -993,7 +923,6 @@ exports[`<ClaimRequestStatusModal /> should show check mark, token amount, if pa
         accessibilityLabel="claim-request-message"
         accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -1050,31 +979,15 @@ exports[`<ClaimRequestStatusModal /> should show check mark, token amount, if pa
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            undefined,
-          ]
-        }
-        testID={undefined}
-        tvParallaxProperties={undefined}
+        style={null}
       >
         <View
           pointerEvents="box-only"
@@ -1111,9 +1024,6 @@ exports[`<ClaimRequestStatusModal /> should show check mark, token amount, if pa
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},
@@ -1207,7 +1117,6 @@ exports[`<ClaimRequestStatusModal /> should show check mark, you accepted text, 
         accessibilityLabel="claim-request-message"
         accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -1264,31 +1173,15 @@ exports[`<ClaimRequestStatusModal /> should show check mark, you accepted text, 
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            undefined,
-          ]
-        }
-        testID={undefined}
-        tvParallaxProperties={undefined}
+        style={null}
       >
         <View
           pointerEvents="box-only"
@@ -1325,9 +1218,6 @@ exports[`<ClaimRequestStatusModal /> should show check mark, you accepted text, 
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},

@@ -85,7 +85,7 @@ import { STORAGE_KEY_USER_AVATAR_NAME } from './user/type-user-store'
 import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { hydrateProofRequestsSaga } from './../proof-request/proof-request-store'
 import { WALLET_KEY } from '../bridge/react-native-cxs/vcx-transformers'
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 import { Platform } from 'react-native'
 import { customLogger } from '../store/custom-logger'
 import {

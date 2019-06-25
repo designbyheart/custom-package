@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { WebView, Platform } from 'react-native'
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ImageResizer from 'react-native-image-resizer'
@@ -77,7 +77,7 @@ export class ImageColorPicker extends PureComponent<
         return
       }
 
-      const base64EncodedImage = await RNFetchBlob.fs.readFile(
+      const base64EncodedImage: any = await RNFetchBlob.fs.readFile(
         resizedImage.path,
         'base64'
       )

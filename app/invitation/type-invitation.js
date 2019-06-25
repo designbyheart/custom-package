@@ -15,6 +15,10 @@ import type {
   AgentKeyDelegationProof,
   InvitationSenderDetail,
 } from '../sms-pending-invitation/type-sms-pending-invitation'
+import type {
+  NavigationScreenProp,
+  NavigationLeafRoute,
+} from 'react-navigation'
 
 export type InvitationPayload = {
   senderEndpoint: string,
@@ -97,6 +101,15 @@ export type InvitationAction =
   | InitialTestAction
   | ResetAction
 
+export type InvitationNavigation = {
+  navigation: NavigationScreenProp<{|
+    ...NavigationLeafRoute,
+    params: {|
+      senderDID: string,
+      token: ?string,
+    |},
+  |}>,
+}
 export type InvitationProps = {
   invitation: ?Invitation,
   sendInvitationResponse: (data: InvitationResponseSendData) => void,
@@ -105,7 +118,7 @@ export type InvitationProps = {
   showErrorAlerts: boolean,
   smsToken: ?string,
   isSmsInvitationNotSeen: boolean,
-} & ReactNavigation
+} & InvitationNavigation
 
 export const ERROR_INVITATION_VCX_INIT = {
   code: 'INVITATION-001',

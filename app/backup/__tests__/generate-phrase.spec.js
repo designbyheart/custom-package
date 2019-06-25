@@ -9,6 +9,15 @@ import { BACKUP_STORE_STATUS } from '../type-backup'
 
 describe('<GenerateRecoveryPhrase />', () => {
   const recoveryPassphrase = 'hello some passphrase'
+
+  beforeEach(() => {
+    jest.useFakeTimers()
+  })
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers()
+  })
+
   const navigation = {
     navigate: jest.fn(),
     goBack: jest.fn(),

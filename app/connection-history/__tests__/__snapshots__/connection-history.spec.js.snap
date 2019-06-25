@@ -16,347 +16,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
       }
     }
-  >
-    <RCTSafeAreaView
-      style={Object {}}
-    >
-      <View
-        fifth={true}
-        style={
-          Object {
-            "backgroundColor": "transparent",
-            "marginBottom": -10,
-            "paddingTop": 30,
-            "shadowColor": "#777777",
-            "shadowOffset": Object {
-              "height": 20,
-              "width": 0,
-            },
-            "shadowOpacity": 0.2,
-            "shadowRadius": 10,
-            "zIndex": 4,
-          }
-        }
-      >
-        <View
-          fifth={true}
-          hCenter={true}
-          style={
-            Object {
-              "backgroundColor": "transparent",
-              "height": 90,
-              "justifyContent": "center",
-            }
-          }
-        >
-          <View
-            absolute="TopRight"
-            accessibilityComponentType={undefined}
-            accessibilityLabel="connection-history-icon-close-touchable"
-            accessibilityTraits={undefined}
-            accessible={false}
-            clearBg={true}
-            hitSlop={
-              Object {
-                "bottom": 30,
-                "left": 30,
-                "right": 30,
-                "top": 30,
-              }
-            }
-            iconStyle={
-              Array [
-                Object {
-                  "marginRight": 15,
-                },
-              ]
-            }
-            nativeID={undefined}
-            onLayout={undefined}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            small={true}
-            src={1}
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 2,
-              }
-            }
-            testID="connection-history-icon-close-touchable"
-          >
-            <View
-              style={Object {}}
-            >
-              <Image
-                accessibilityLabel="connection-history-icon-close"
-                accessible={true}
-                resizeMode="contain"
-                source={1}
-                style={
-                  Array [
-                    Object {
-                      "height": 20,
-                      "width": 20,
-                    },
-                    null,
-                    Object {
-                      "marginRight": 15,
-                    },
-                  ]
-                }
-                testID="connection-history-icon-close"
-              />
-            </View>
-          </View>
-          <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel="connection-history-issuer-logo-touchable"
-            accessibilityTraits={undefined}
-            accessible={false}
-            backgroundRoundWhite={true}
-            center={true}
-            clearBg={true}
-            extraLarge={true}
-            halo={true}
-            hitSlop={
-              Object {
-                "bottom": 20,
-                "left": 20,
-                "right": 20,
-                "top": 20,
-              }
-            }
-            iconStyle={
-              Array [
-                Object {
-                  "borderRadius": 40,
-                },
-              ]
-            }
-            nativeID={undefined}
-            onLayout={undefined}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            resizeMode="cover"
-            src={
-              Object {
-                "uri": "https://test.com/image.png",
-              }
-            }
-            style={
-              Object {
-                "alignItems": "center",
-                "alignSelf": "center",
-                "backgroundColor": "transparent",
-                "bottom": 0,
-                "justifyContent": "center",
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 1,
-              }
-            }
-            testID="connection-history-issuer-logo-touchable"
-          >
-            <View
-              center={true}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "rgba(0,0,0,0.07)",
-                  "borderRadius": 50,
-                  "height": 100,
-                  "justifyContent": "center",
-                  "width": 100,
-                }
-              }
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#ffffff",
-                    },
-                    Object {
-                      "borderRadius": 40,
-                    },
-                  ]
-                }
-              >
-                <Image
-                  accessibilityLabel="connection-history-issuer-logo"
-                  accessible={true}
-                  resizeMode="cover"
-                  source={
-                    Object {
-                      "uri": "https://test.com/image.png",
-                    }
-                  }
-                  style={
-                    Array [
-                      Object {
-                        "height": 80,
-                        "width": 80,
-                      },
-                      Object {
-                        "borderRadius": 40,
-                      },
-                      Object {
-                        "borderRadius": 40,
-                      },
-                    ]
-                  }
-                  testID="connection-history-issuer-logo"
-                />
-              </View>
-            </View>
-          </View>
-          <View
-            absolute="TopLeft"
-            accessibilityComponentType={undefined}
-            accessibilityLabel="connection-history-icon-delete-touchable"
-            accessibilityTraits={undefined}
-            accessible={false}
-            clearBg={true}
-            hitSlop={
-              Object {
-                "bottom": 30,
-                "left": 30,
-                "right": 30,
-                "top": 30,
-              }
-            }
-            iconStyle={
-              Array [
-                Object {
-                  "marginLeft": 15,
-                },
-              ]
-            }
-            nativeID={undefined}
-            onLayout={undefined}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            resizeMode="contain"
-            small={true}
-            src={1}
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "left": 0,
-                "position": "absolute",
-                "top": 0,
-                "zIndex": 2,
-              }
-            }
-            testID="connection-history-icon-delete-touchable"
-          >
-            <View
-              style={Object {}}
-            >
-              <Image
-                accessibilityLabel="connection-history-icon-delete"
-                accessible={true}
-                resizeMode="contain"
-                source={1}
-                style={
-                  Array [
-                    Object {
-                      "height": 20,
-                      "width": 20,
-                    },
-                    null,
-                    Object {
-                      "marginLeft": 15,
-                    },
-                  ]
-                }
-                testID="connection-history-icon-delete"
-              />
-            </View>
-          </View>
-        </View>
-        <View
-          center={true}
-          fifth={true}
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "justifyContent": "center",
-              "marginBottom": 15,
-              "marginHorizontal": 10,
-              "marginTop": 5,
-              "paddingBottom": 0,
-            }
-          }
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={false}
-            ellipsizeMode="tail"
-            style={
-              Array [
-                Object {
-                  "fontSize": 17,
-                },
-                Object {
-                  "fontFamily": "Lato",
-                },
-                Object {
-                  "backgroundColor": "#ffffff",
-                  "color": "#777777",
-                },
-                Object {
-                  "fontWeight": "600",
-                },
-                Object {
-                  "textAlign": "center",
-                },
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                Array [
-                  Object {
-                    "color": "#ffffff",
-                    "marginTop": 5,
-                  },
-                  Object {
-                    "backgroundColor": "transparent",
-                  },
-                ],
-              ]
-            }
-          >
-            Evernym
-          </Text>
-        </View>
-      </View>
-    </RCTSafeAreaView>
-  </View>
+  />
   <RCTScrollView>
     <View>
       <View
@@ -379,9 +39,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
           style={Object {}}
         >
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -435,8 +93,6 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
               </CustomView>
             }
             disabled={false}
-            onLongPress={undefined}
-            onPress={undefined}
             style={
               Array [
                 Object {
@@ -524,9 +180,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                   }
                 }
               >
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       style={Object {}}
@@ -535,9 +189,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -580,9 +232,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -624,9 +274,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                     </View>
                   </View>
                 </View>
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       row={true}
@@ -637,9 +285,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                       }
                     >
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {
@@ -682,9 +328,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
           style={Object {}}
         >
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -720,15 +364,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
             October 2017
           </Text>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -739,26 +376,19 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderBottomColor": "#bbb",
+                  "borderBottomWidth": 1,
+                  "paddingBottom": 10,
+                  "paddingRight": 10,
+                  "paddingTop": 10,
                 },
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderBottomColor": "#bbb",
-                    "borderBottomWidth": 1,
-                    "paddingBottom": 10,
-                    "paddingRight": 10,
-                    "paddingTop": 10,
-                  },
-                  Object {
-                    "borderBottomWidth": 1,
-                  },
-                  false,
-                  false,
-                ],
+                Object {
+                  "borderBottomWidth": 1,
+                },
+                false,
+                false,
               ]
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <View
               style={
@@ -828,9 +458,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                   }
                 }
               >
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       style={Object {}}
@@ -839,9 +467,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -884,9 +510,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -928,9 +552,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                     </View>
                   </View>
                 </View>
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       row={true}
@@ -941,9 +563,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                       }
                     >
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {
@@ -980,16 +600,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                 </View>
               </View>
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -1003,11 +615,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                     "opacity": 1,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <View
-                  onPress={undefined}
                   style={
                     Array [
                       false,
@@ -1024,9 +633,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                   underlayColor="white"
                 >
                   <Text
-                    accessible={true}
                     allowFontScaling={false}
-                    ellipsizeMode="tail"
                     style={
                       Array [
                         Object {
@@ -1058,9 +665,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
           style={Object {}}
         >
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -1096,15 +701,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
             November 2017
           </Text>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1115,26 +713,19 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderBottomColor": "#bbb",
+                  "borderBottomWidth": 1,
+                  "paddingBottom": 10,
+                  "paddingRight": 10,
+                  "paddingTop": 10,
                 },
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderBottomColor": "#bbb",
-                    "borderBottomWidth": 1,
-                    "paddingBottom": 10,
-                    "paddingRight": 10,
-                    "paddingTop": 10,
-                  },
-                  Object {
-                    "borderBottomWidth": 1,
-                  },
-                  false,
-                  false,
-                ],
+                Object {
+                  "borderBottomWidth": 1,
+                },
+                false,
+                false,
               ]
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <View
               style={
@@ -1204,9 +795,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                   }
                 }
               >
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       style={Object {}}
@@ -1215,9 +804,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -1260,9 +847,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -1304,9 +889,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                     </View>
                   </View>
                 </View>
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       row={true}
@@ -1317,9 +900,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                       }
                     >
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {
@@ -1390,9 +971,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
           style={Object {}}
         >
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -1428,15 +1007,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
             December 2017
           </Text>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1447,26 +1019,19 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderBottomColor": "#bbb",
+                  "borderBottomWidth": 1,
+                  "paddingBottom": 10,
+                  "paddingRight": 10,
+                  "paddingTop": 10,
                 },
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderBottomColor": "#bbb",
-                    "borderBottomWidth": 1,
-                    "paddingBottom": 10,
-                    "paddingRight": 10,
-                    "paddingTop": 10,
-                  },
-                  Object {
-                    "borderBottomWidth": 1,
-                  },
-                  false,
-                  false,
-                ],
+                Object {
+                  "borderBottomWidth": 1,
+                },
+                false,
+                false,
               ]
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <View
               style={
@@ -1536,9 +1101,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                   }
                 }
               >
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       style={Object {}}
@@ -1547,9 +1110,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -1592,9 +1153,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -1636,9 +1195,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                     </View>
                   </View>
                 </View>
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       row={true}
@@ -1649,9 +1206,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                       }
                     >
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {
@@ -1688,16 +1243,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                 </View>
               </View>
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -1711,11 +1258,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                     "opacity": 1,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <View
-                  onPress={undefined}
                   style={
                     Array [
                       false,
@@ -1732,9 +1276,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                   underlayColor="white"
                 >
                   <Text
-                    accessible={true}
                     allowFontScaling={false}
-                    ellipsizeMode="tail"
                     style={
                       Array [
                         Object {
@@ -1766,9 +1308,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
           style={Object {}}
         >
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -1804,15 +1344,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
             January 2017
           </Text>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1823,26 +1356,19 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderBottomColor": "#bbb",
+                  "borderBottomWidth": 1,
+                  "paddingBottom": 10,
+                  "paddingRight": 10,
+                  "paddingTop": 10,
                 },
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderBottomColor": "#bbb",
-                    "borderBottomWidth": 1,
-                    "paddingBottom": 10,
-                    "paddingRight": 10,
-                    "paddingTop": 10,
-                  },
-                  Object {
-                    "borderBottomWidth": 1,
-                  },
-                  false,
-                  false,
-                ],
+                Object {
+                  "borderBottomWidth": 1,
+                },
+                false,
+                false,
               ]
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <View
               style={
@@ -1912,9 +1438,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                   }
                 }
               >
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       style={Object {}}
@@ -1923,9 +1447,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -1968,9 +1490,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -2012,9 +1532,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                     </View>
                   </View>
                 </View>
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       row={true}
@@ -2025,9 +1543,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                       }
                     >
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {
@@ -2064,16 +1580,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                 </View>
               </View>
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -2087,11 +1595,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                     "opacity": 1,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <View
-                  onPress={undefined}
                   style={
                     Array [
                       false,
@@ -2108,9 +1613,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                   underlayColor="white"
                 >
                   <Text
-                    accessible={true}
                     allowFontScaling={false}
-                    ellipsizeMode="tail"
                     style={
                       Array [
                         Object {
@@ -2142,9 +1645,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
           style={Object {}}
         >
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -2180,15 +1681,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
             February 2017
           </Text>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -2199,26 +1693,19 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
               Array [
                 Object {
                   "backgroundColor": "transparent",
+                  "borderBottomColor": "#bbb",
+                  "borderBottomWidth": 1,
+                  "paddingBottom": 10,
+                  "paddingRight": 10,
+                  "paddingTop": 10,
                 },
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderBottomColor": "#bbb",
-                    "borderBottomWidth": 1,
-                    "paddingBottom": 10,
-                    "paddingRight": 10,
-                    "paddingTop": 10,
-                  },
-                  Object {
-                    "borderBottomWidth": 1,
-                  },
-                  false,
-                  false,
-                ],
+                Object {
+                  "borderBottomWidth": 1,
+                },
+                false,
+                false,
               ]
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <View
               style={
@@ -2288,9 +1775,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                   }
                 }
               >
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       style={Object {}}
@@ -2299,9 +1784,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -2344,9 +1827,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                         style={Object {}}
                       >
                         <Text
-                          accessible={true}
                           allowFontScaling={false}
-                          ellipsizeMode="tail"
                           style={
                             Array [
                               Object {
@@ -2388,9 +1869,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                     </View>
                   </View>
                 </View>
-                <View
-                  style={undefined}
-                >
+                <View>
                   <View>
                     <View
                       row={true}
@@ -2401,9 +1880,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                       }
                     >
                       <Text
-                        accessible={true}
                         allowFontScaling={false}
-                        ellipsizeMode="tail"
                         style={
                           Array [
                             Object {
@@ -2440,16 +1917,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                 </View>
               </View>
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -2463,11 +1932,8 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                     "opacity": 1,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <View
-                  onPress={undefined}
                   style={
                     Array [
                       false,
@@ -2484,9 +1950,7 @@ exports[`<ConnectionHistory /> should ConnectionHistory render properly 1`] = `
                   underlayColor="white"
                 >
                   <Text
-                    accessible={true}
                     allowFontScaling={false}
-                    ellipsizeMode="tail"
                     style={
                       Array [
                         Object {

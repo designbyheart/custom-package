@@ -10,8 +10,8 @@ import type {
   OnfidoProps,
   OnfidoProcessStatus,
   OnfidoConnectionStatus,
+  OnfidoNavigation,
 } from './type-onfido'
-import type { ReactNavigation } from '../common/type-common'
 
 import {
   Container,
@@ -44,7 +44,7 @@ import { connectionsTabRoute, connectionHistoryDetailsRoute } from '../common'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class Onfido extends PureComponent<OnfidoProps, void> {
-  static navigationOptions = ({ navigation }: ReactNavigation) => ({
+  static navigationOptions = ({ navigation }: OnfidoNavigation) => ({
     headerStyle: {
       backgroundColor: color.bg.tertiary.color,
       borderBottomWidth: 0,

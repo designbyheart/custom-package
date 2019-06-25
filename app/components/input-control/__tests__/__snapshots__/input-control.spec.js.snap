@@ -42,9 +42,7 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {

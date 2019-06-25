@@ -6,7 +6,6 @@ import { throwError } from 'redux-saga-test-plan/providers'
 
 import connectionReducer, {
   saveNewConnection,
-  saveNewConnectionSuccess,
   saveNewConnectionFailed,
   connectionMapper,
   deleteConnectionSuccess,
@@ -17,6 +16,7 @@ import connectionReducer, {
   removePersistedThemes,
   hydrateConnectionThemes,
 } from '../connections-store'
+import { saveNewConnectionSuccess } from '../new-connection-success'
 import { bubbleSize } from '../../common/styles'
 import {
   successConnectionData,

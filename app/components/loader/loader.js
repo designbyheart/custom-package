@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
-import LoadingIndicator from './loading-indicator'
+import { LoadingIndicator } from './loading-indicator'
 import type { LoaderProps, LoaderState } from './type-loader'
 import { DARK } from './type-loader'
 import { color, font, OFFSET_2X } from '../../common/styles'
@@ -21,7 +21,7 @@ const LONG_LOADING_MESSAGES = [
 ]
 
 export default class Loader extends Component<LoaderProps, LoaderState> {
-  timers: Array<number>
+  timers: Array<TimeoutID>
   interval: any
 
   static defaultProps = {
@@ -37,7 +37,8 @@ export default class Loader extends Component<LoaderProps, LoaderState> {
     super(props)
 
     const { delay, interval, timeout, message } = props
-    this.timers = []
+    const emptyArray: Array<TimeoutID> = []
+    this.timers = emptyArray
     this.interval = interval
 
     this.timers.push(

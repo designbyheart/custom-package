@@ -5,7 +5,7 @@ import { BackHandler, StatusBar, ToastAndroid } from 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import { ConnectMeApp } from './../app'
-import { delay } from 'redux-saga'
+import delay from '@redux-saga/delay-p'
 import { NativeModules } from 'react-native'
 import {
   aboutAppRoute,

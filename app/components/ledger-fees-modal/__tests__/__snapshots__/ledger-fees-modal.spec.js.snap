@@ -82,7 +82,6 @@ exports[`<LedgerFeesModalComponent /> show error if fetching fees failed, show r
       accessibilityLabel="ledger-fees-modal-content"
       accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -152,31 +151,17 @@ exports[`<LedgerFeesModalComponent /> show error if fetching fees failed, show r
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="ledger-fees-modal-Cancel"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "backgroundColor": "transparent",
-              },
-              undefined,
-            ]
-          }
+          style={null}
           testID="ledger-fees-modal-Cancel"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -213,9 +198,6 @@ exports[`<LedgerFeesModalComponent /> show error if fetching fees failed, show r
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -280,31 +262,17 @@ exports[`<LedgerFeesModalComponent /> show error if fetching fees failed, show r
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="ledger-fees-modal-Retry"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "backgroundColor": "transparent",
-              },
-              undefined,
-            ]
-          }
+          style={null}
           testID="ledger-fees-modal-Retry"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -341,9 +309,6 @@ exports[`<LedgerFeesModalComponent /> show error if fetching fees failed, show r
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -440,7 +405,6 @@ exports[`<LedgerFeesModalComponent /> show loader, loading text, no buttons, if 
         }
       >
         <Image
-          collapsable={undefined}
           source={1}
           style={
             Object {
@@ -461,7 +425,6 @@ exports[`<LedgerFeesModalComponent /> show loader, loading text, no buttons, if 
       accessibilityLabel="ledger-fees-modal-content"
       accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -584,7 +547,6 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
       accessibilityLabel="ledger-fees-modal-title"
       accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -627,7 +589,6 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
       accessibilityLabel="ledger-fees-modal-title"
       accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -670,7 +631,6 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
       accessibilityLabel="ledger-fees-modal-content"
       accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -741,31 +701,17 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="ledger-fees-modal-No"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "backgroundColor": "transparent",
-              },
-              undefined,
-            ]
-          }
+          style={null}
           testID="ledger-fees-modal-No"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -802,9 +748,6 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -869,31 +812,17 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="ledger-fees-modal-Yes"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "backgroundColor": "transparent",
-              },
-              undefined,
-            ]
-          }
+          style={null}
           testID="ledger-fees-modal-Yes"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -930,9 +859,6 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -1059,7 +985,6 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
       accessibilityLabel="ledger-fees-modal-title"
       accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -1102,7 +1027,6 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
       accessibilityLabel="ledger-fees-modal-title"
       accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -1145,7 +1069,6 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
       accessibilityLabel="ledger-fees-modal-content"
       accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -1186,7 +1109,6 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
         accessibilityLabel="ledger-fees-modal-content"
         accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -1261,31 +1183,17 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="ledger-fees-modal-No"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "backgroundColor": "transparent",
-              },
-              undefined,
-            ]
-          }
+          style={null}
           testID="ledger-fees-modal-No"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -1322,9 +1230,6 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -1389,31 +1294,17 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
         }
       >
         <View
-          accessibilityComponentType={undefined}
           accessibilityLabel="ledger-fees-modal-Yes"
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "backgroundColor": "transparent",
-              },
-              undefined,
-            ]
-          }
+          style={null}
           testID="ledger-fees-modal-Yes"
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -1450,9 +1341,6 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -1549,7 +1437,6 @@ exports[`<LedgerFeesModalComponent /> trigger getLedgerFees to start fetching le
         }
       >
         <Image
-          collapsable={undefined}
           source={1}
           style={
             Object {
@@ -1570,7 +1457,6 @@ exports[`<LedgerFeesModalComponent /> trigger getLedgerFees to start fetching le
       accessibilityLabel="ledger-fees-modal-content"
       accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {

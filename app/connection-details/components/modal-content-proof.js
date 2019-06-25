@@ -198,10 +198,8 @@ class ProofRequestAttributeList extends PureComponent<
                       blurOnSubmit={true}
                       clearButtonMode="always"
                       numberOfLines={3}
-                      name={adjustedLabel}
                       multiline={true}
                       maxLength={200}
-                      maxHeight={50}
                       placeholder={`Enter ${item.label}`}
                       returnKeyType="done"
                       testID={`${testID}-input-${adjustedLabel}`}
@@ -497,6 +495,7 @@ class ModalContentProof extends PureComponent<
     this.props.proofRequestShown(this.props.uid)
     this.props.getProof(this.props.uid)
   }
+
   onIgnore = () => {
     this.props.newConnectionSeen(this.props.remotePairwiseDID)
     this.props.ignoreProofRequest(this.props.uid)
@@ -511,6 +510,7 @@ class ModalContentProof extends PureComponent<
   onRetry = () => {
     this.props.updateAttributeClaim(this.props.uid, this.state.selectedClaims)
   }
+
   onSend = () => {
     if (
       this.state.generateProofClicked ||

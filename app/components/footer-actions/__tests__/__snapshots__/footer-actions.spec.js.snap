@@ -2,6 +2,7 @@
 
 exports[`<FooterActions /> match snapshot when hidePrimary is true 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   style={
     Object {
       "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -59,31 +60,17 @@ exports[`<FooterActions /> match snapshot when hidePrimary is true 1`] = `
               }
             >
               <View
-                accessibilityComponentType={undefined}
                 accessibilityLabel="test-deny"
-                accessibilityTraits={undefined}
                 accessible={true}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
                 onResponderTerminate={[Function]}
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                    },
-                    undefined,
-                  ]
-                }
+                style={null}
                 testID="test-deny"
-                tvParallaxProperties={undefined}
               >
                 <View
                   pointerEvents="box-only"
@@ -122,9 +109,6 @@ exports[`<FooterActions /> match snapshot when hidePrimary is true 1`] = `
                   }
                 >
                   <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
                     style={
                       Array [
                         Object {},
@@ -172,6 +156,7 @@ exports[`<FooterActions /> match snapshot when hidePrimary is true 1`] = `
 
 exports[`<FooterActions /> should match snapshot 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   style={
     Object {
       "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -229,31 +214,17 @@ exports[`<FooterActions /> should match snapshot 1`] = `
               }
             >
               <View
-                accessibilityComponentType={undefined}
                 accessibilityLabel="test-deny"
-                accessibilityTraits={undefined}
                 accessible={true}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
                 onResponderTerminate={[Function]}
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                    },
-                    undefined,
-                  ]
-                }
+                style={null}
                 testID="test-deny"
-                tvParallaxProperties={undefined}
               >
                 <View
                   pointerEvents="box-only"
@@ -292,9 +263,6 @@ exports[`<FooterActions /> should match snapshot 1`] = `
                   }
                 >
                   <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
                     style={
                       Array [
                         Object {},
@@ -361,15 +329,9 @@ exports[`<FooterActions /> should match snapshot 1`] = `
               }
             >
               <View
-                accessibilityComponentType={undefined}
                 accessibilityLabel="test-accept"
-                accessibilityTraits={undefined}
                 accessible={true}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -379,18 +341,12 @@ exports[`<FooterActions /> should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
-                      "backgroundColor": "transparent",
+                      "borderLeftColor": "#ffffff",
+                      "borderLeftWidth": 0.4,
                     },
-                    Array [
-                      Object {
-                        "borderLeftColor": "#ffffff",
-                        "borderLeftWidth": 0.4,
-                      },
-                    ],
                   ]
                 }
                 testID="test-accept"
-                tvParallaxProperties={undefined}
               >
                 <View
                   pointerEvents="box-only"
@@ -433,9 +389,6 @@ exports[`<FooterActions /> should match snapshot 1`] = `
                   }
                 >
                   <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
                     style={
                       Array [
                         Object {},

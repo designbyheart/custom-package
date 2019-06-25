@@ -10,6 +10,8 @@ export type SettingsProps = {
     status: string,
     encryptionKey: string,
   },
+  walletBalance: string,
+  lastSuccessfulBackup: string,
 } & ReactNavigation
 
 export type SettingsState = {

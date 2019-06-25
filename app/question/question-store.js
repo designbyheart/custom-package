@@ -234,7 +234,7 @@ export const questionReceived = (
 })
 
 export const sendAnswerToQuestion = (
-  uid: string,
+  uid?: string,
   answer: QuestionResponse
 ) => ({
   type: SEND_ANSWER_TO_QUESTION,
@@ -319,7 +319,7 @@ export function selectQuestionStoreData(state: Store) {
 }
 
 export function getScreenStatus(
-  questionStatus: QuestionStatus
+  questionStatus?: QuestionStatus
 ): ComponentStatus {
   const errorStates = [
     QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,

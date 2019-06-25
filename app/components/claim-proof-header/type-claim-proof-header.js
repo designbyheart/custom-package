@@ -8,7 +8,7 @@ export type ClaimProofHeaderProps = {
   title?: string,
   logoUrl: ?string,
   testID: string,
-  containerStyle?: GenericObject,
+  containerStyle?: Array<GenericObject | number>,
   textContainerStyle?: Array<GenericObject | number>,
   messageStyle?: Array<GenericObject | number>,
   titleStyle?: Array<GenericObject | number>,
@@ -16,6 +16,6 @@ export type ClaimProofHeaderProps = {
 }
 
 export type ClaimProofHeaderNotchProps = {
-  containerStyle?: GenericObject,
+  containerStyle?: any,
   titleStyle?: Array<GenericObject | number>,
 }

@@ -10,14 +10,7 @@ exports[`<Badge /> should render dark colored badge 1`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
-    onPress={[MockFunction]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -32,13 +25,9 @@ exports[`<Badge /> should render dark colored badge 1`] = `
         "width": 22,
       }
     }
-    testID={undefined}
   />
   <Text
-    accessible={true}
-    allowFontScaling={true}
     center={true}
-    ellipsizeMode="tail"
     secondary={false}
     style={
       Array [
@@ -73,14 +62,7 @@ exports[`<Badge /> should render light colored badge 1`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
-    onPress={[MockFunction]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -95,13 +77,9 @@ exports[`<Badge /> should render light colored badge 1`] = `
         "width": 22,
       }
     }
-    testID={undefined}
   />
   <Text
-    accessible={true}
-    allowFontScaling={true}
     center={true}
-    ellipsizeMode="tail"
     secondary={false}
     style={
       Array [

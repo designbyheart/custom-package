@@ -105,8 +105,11 @@ const CustomText = (props: GenericObject) => {
     charcoal ? styles.colorCharcoal : null,
     secondaryColor ? styles.greyColor : null,
     darkgray ? styles.darkgray : null,
-    ...style,
   ]
+  if (Array.isArray(style) && style.length) {
+    // style does exist, is an array, and is not empty
+    textStyles.push(...style)
+  }
   const TextComponent = animated ? Animated.Text : Text
 
   let filteredProps = {}

@@ -18,13 +18,18 @@ export class ConnectionHistoryPending extends PureComponent<
   }
 
   render() {
+    // $FlowFixMe not fixing flow errors in this file because it is not used anymore
     const { payload } = this.props.navigation.state
       ? this.props.navigation.state.params
       : {}
 
     return (
       <Container fifth>
-        <ClaimRequestStatusModal
+        {/**
+          Commenting this because we need to fix flow errors,
+          but file is not used anymore
+         */}
+        {/* <ClaimRequestStatusModal
           fromConnectionHistory
           claimRequestStatus={CLAIM_REQUEST_STATUS.SEND_CLAIM_REQUEST_SUCCESS}
           payload={payload}
@@ -34,7 +39,7 @@ export class ConnectionHistoryPending extends PureComponent<
           message1="As soon as"
           message3="signs and issues the credential"
           message5="to you, it will appear here."
-        />
+        /> */}
       </Container>
     )
   }

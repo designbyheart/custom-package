@@ -48,6 +48,9 @@ gradle.deps
 */fastlane/Preview.html
 */fastlane/screenshots
 
+# Bundle artifact
+*.jsbundle
+
 # BUCK
 buck-out/
 \.buckd/

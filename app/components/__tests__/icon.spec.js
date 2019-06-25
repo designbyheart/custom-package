@@ -11,12 +11,12 @@ describe('<Icon />', () => {
     const wrapper = renderer
       .create(
         <Icon
-          src={require('../../images/cbTest.png')}
+          src={require('../../images/about.png')}
           extraLarge
           testID="test-icon-test"
           halo
           resizeMode="cover"
-          style={{ fontSize: 15 }}
+          style={[{ fontSize: 15 }]}
           center
           iconStyle={[{ width: 90 }]}
         />

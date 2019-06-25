@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux'
 import type {
   VerifyRecoveryPhraseProps,
   VerifyRecoveryPhraseState,
+  ReactNavigationBackup,
 } from './type-backup'
 import type { Store } from '../store/type-store'
 
@@ -41,7 +42,9 @@ export class VerifyRecoveryPhrase extends Component<
     error: false,
   }
 
-  static navigationOptions = ({ navigation: { goBack, navigate, state } }) => ({
+  static navigationOptions = ({
+    navigation: { goBack, navigate, state },
+  }: ReactNavigationBackup) => ({
     header: (
       <CustomHeader
         backgroundColor={color.bg.twelfth.color}

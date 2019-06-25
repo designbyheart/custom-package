@@ -3,6 +3,7 @@
 exports[`RestoreWait screen should render properly and match the snapshot 1`] = `
 <RCTSafeAreaView
   center={true}
+  emulateUnlessSupported={true}
   fifth={true}
   safeArea={true}
   style={
@@ -94,9 +95,7 @@ exports[`RestoreWait screen should render properly and match the snapshot 1`] = 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {

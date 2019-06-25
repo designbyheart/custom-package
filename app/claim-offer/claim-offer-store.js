@@ -10,7 +10,7 @@ import {
   takeEvery,
   fork,
 } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
+import delay from '@redux-saga/delay-p'
 import { Platform } from 'react-native'
 import {
   CLAIM_OFFER_STATUS,

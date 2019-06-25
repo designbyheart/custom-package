@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent, Component } from 'react'
+import React, { PureComponent } from 'react'
 import {
   Animated,
   StyleSheet,
@@ -12,48 +12,19 @@ import {
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import { BlurView } from 'react-native-blur'
+
+import type { Store } from '../store/type-store'
+import type { HomeProps } from './type-home'
+import type { Connection } from '../store/type-connection-store'
+import type { ReactNavigation } from '../common/type-common'
+
 import { newConnectionSeen } from '../connection-history/connection-history-store'
-import {
-  Container,
-  CustomView,
-  Icon,
-  UserAvatar,
-  CustomText,
-  CustomHeader,
-  Loader,
-  PrimaryHeader,
-} from '../components'
+import { PrimaryHeader } from '../components'
 import { ConnectionCard } from './connection-card/connection-card'
 import { createStackNavigator } from 'react-navigation'
-import {
-  color,
-  barStyleDark,
-  OFFSET_3X,
-  OFFSET_2X,
-  isBiggerThanShortDevice,
-  isIphoneX,
-  isBiggerThanVeryShortDevice,
-  whiteSmokeSecondary,
-  responsiveHorizontalPadding,
-} from '../common/styles'
-import { primaryHeaderStyles } from '../components/layout/header-styles'
-import { homeRoute, walletRoute } from '../common'
+import { homeRoute } from '../common'
 import { getConnections } from '../store/connections-store'
-import type { Store } from '../store/type-store'
-import type { HomeProps, HomeState } from './type-home'
 import { connectionHistRoute } from '../common/route-constants'
-import {
-  FEEDBACK_TEST_ID,
-  HOW_IT_WORKS,
-  ON_COMPUTER,
-  GO_TO_FABER,
-  USE_TUTORIAL,
-} from './home-constants'
-import { Apptentive } from 'apptentive-react-native'
-import WalletBalance from '../wallet/wallet-balance'
-import type { Connection } from '../store/type-connection-store'
-import Banner from '../components/banner/banner'
-import { NavigationActions } from 'react-navigation'
 import { getUnseenMessages } from '../store/store-selector'
 import { scale } from 'react-native-size-matters'
 import { size } from './../components/icon'
@@ -62,10 +33,12 @@ import { NewConnectionInstructions } from './new-connection-instructions'
 import { getEnvironmentName } from '../store/config-store'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
+import { bindActionCreators } from 'redux'
 
 const { width, height } = Dimensions.get('window')
-export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
-  static navigationOptions = ({ navigation }) => ({
+
+export class DashboardScreen extends PureComponent<HomeProps> {
+  static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: <PrimaryHeader headline="Connections" />,
   })
 
@@ -208,7 +181,13 @@ export class DashboardScreen extends PureComponent<HomeProps, HomeState> {
         }
       })
       .sort((a, b) => {
+        if (!b.date) {
+          return 0
+        }
         let bTimestamp = new Date(b.date).getTime()
+        if (!a.date) {
+          return 0
+        }
         let aTimestamp = new Date(a.date).getTime()
         return bTimestamp - aTimestamp
       })
@@ -248,13 +227,13 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onNewConnectionSeen: senderDid => {
-      dispatch(newConnectionSeen(senderDid))
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      onNewConnectionSeen: newConnectionSeen,
     },
-  }
-}
+    dispatch
+  )
 
 export default createStackNavigator({
   [homeRoute]: {

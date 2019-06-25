@@ -189,13 +189,15 @@ Object {
   "call": Array [
     Object {
       "@@redux-saga/IO": true,
-      "CALL": Object {
+      "combinator": false,
+      "payload": Object {
         "args": Array [
           "STORAGE_KEY_THEMES",
         ],
         "context": null,
         "fn": "@@redux-saga-test-plan/json/function/getHydrationItem",
       },
+      "type": "CALL",
     },
   ],
 }
@@ -206,7 +208,8 @@ Object {
   "call": Array [
     Object {
       "@@redux-saga/IO": true,
-      "CALL": Object {
+      "combinator": false,
+      "payload": Object {
         "args": Array [
           "STORAGE_KEY_THEMES",
           "{\\"default\\":{\\"primary\\":\\"rgba(119, 119, 119, 1.0)\\",\\"secondary\\":\\"rgba(119, 119, 119, 0.6)\\"}}",
@@ -214,15 +217,18 @@ Object {
         "context": null,
         "fn": "@@redux-saga-test-plan/json/function/secureSet",
       },
+      "type": "CALL",
     },
   ],
   "select": Array [
     Object {
       "@@redux-saga/IO": true,
-      "SELECT": Object {
+      "combinator": false,
+      "payload": Object {
         "args": Array [],
         "selector": "@@redux-saga-test-plan/json/function/getThemes",
       },
+      "type": "SELECT",
     },
   ],
 }
@@ -233,13 +239,15 @@ Object {
   "call": Array [
     Object {
       "@@redux-saga/IO": true,
-      "CALL": Object {
+      "combinator": false,
+      "payload": Object {
         "args": Array [
           "STORAGE_KEY_THEMES",
         ],
         "context": null,
         "fn": "@@redux-saga-test-plan/json/function/secureDelete",
       },
+      "type": "CALL",
     },
   ],
 }

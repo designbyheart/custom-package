@@ -217,10 +217,8 @@ class ProofRequestAttributeList extends PureComponent<
                         blurOnSubmit={true}
                         clearButtonMode="always"
                         numberOfLines={3}
-                        name={adjustedLabel}
                         multiline={true}
                         maxLength={200}
-                        maxHeight={50}
                         placeholder={`Enter ${item.label}`}
                         returnKeyType="done"
                         testID={`${testID}-input-${adjustedLabel}`}
@@ -364,6 +362,7 @@ export class ProofRequest extends PureComponent<
   constructor(props: ProofRequestProps) {
     super(props)
     if (props.navigation.state) {
+      // $FlowFixMe Not fixing flow errors in this file, because we are not using it anymore
       props.proofRequestShowStart(props.navigation.state.params.uid)
     }
   }
@@ -403,6 +402,7 @@ export class ProofRequest extends PureComponent<
       this.setState({
         disableSendButton: true,
       })
+      // $FlowFixMe Not fixing flow errors in this file, because we are not using it anymore
       this.props.updateAttributeClaim(this.props.uid, this.state.selectedClaims)
     } else {
       // we need to change the text to send once we know that generate proof is clicked
@@ -424,6 +424,7 @@ export class ProofRequest extends PureComponent<
   }
 
   onRetry = () => {
+    // $FlowFixMe Not fixing flow errors in this file, because we are not using it anymore
     this.props.updateAttributeClaim(this.props.uid, this.state.selectedClaims)
   }
 
@@ -478,7 +479,9 @@ export class ProofRequest extends PureComponent<
     }
 
     if (
+      // $FlowFixMe Not fixing flow errors in this file, because we are not using it anymore
       this.props.errorProofSendData !== nextProps.errorProofSendData &&
+      // $FlowFixMe Not fixing flow errors in this file, because we are not using it anymore
       nextProps.errorProofSendData
     ) {
       setTimeout(() => {

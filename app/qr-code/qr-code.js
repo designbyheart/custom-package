@@ -108,7 +108,7 @@ export class QRCodeScannerScreen extends PureComponent<
     isCameraEnabled: false,
   }
 
-  permissionCheckIntervalId = 0
+  permissionCheckIntervalId: ?IntervalID = undefined
   checkPermission = false
 
   onRead = (qrCode: QrCode) => {
@@ -146,6 +146,7 @@ export class QRCodeScannerScreen extends PureComponent<
   checkExistingConnectionAndRedirect = (invitation: {
     payload: InvitationPayload,
   }) => {
+    const { navigation } = this.props
     // check if we got public DID in invitation
     // if we have public DID, then check if connection already exist
     // if connection exist, then redirect to connection history
@@ -169,13 +170,17 @@ export class QRCodeScannerScreen extends PureComponent<
         backRedirectRoute: homeTabRoute,
         showExistingConnectionSnack: true,
       }
-      this.props.navigation.navigate(connectionHistRoute, params)
+      navigation.navigate(connectionHistRoute, params)
 
       return
     }
 
     this.props.invitationReceived(invitation)
-    this.props.navigation.push(invitationRoute, {
+    // Apparently navigation.push can be null, and hence we are protecting
+    // against null fn call, so if push is not available, navigate is
+    // guaranteed to be available
+    const navigationFn = navigation.push || navigation.navigate
+    navigationFn(invitationRoute, {
       senderDID: invitation.payload.senderDID,
     })
   }
@@ -251,7 +256,8 @@ export class QRCodeScannerScreen extends PureComponent<
             .then(result => {
               if (result) {
                 this.checkCameraAuthorization()
-                clearInterval(this.permissionCheckIntervalId)
+                this.permissionCheckIntervalId &&
+                  clearInterval(this.permissionCheckIntervalId)
               } else {
                 if (!this.checkPermission) {
                   this.checkCameraAuthorization()

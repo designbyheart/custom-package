@@ -14,9 +14,6 @@ import pushNotification, {
 } from '../push-notification/push-notification-store'
 import connections, { watchConnection } from './connections-store'
 import config, { watchConfig, watchGetMessagesSaga } from './config-store'
-import authentication, {
-  watchAuthentication,
-} from '../authentication/authentication-store'
 import deepLink from '../deep-link/deep-link-store'
 import route from './route-store'
 import lock, {
@@ -61,7 +58,6 @@ const appReducer = combineReducers({
   config,
   connections,
   deepLink,
-  authentication,
   pushNotification,
   route,
   smsPendingInvitation,
@@ -104,7 +100,6 @@ sagaMiddleware.run(function*() {
   return yield all([
     watchConnection(),
     watchConfig(),
-    watchAuthentication(),
     watchLock(),
     watchSmsPendingInvitationSaga(),
     watchClaimOffer(),

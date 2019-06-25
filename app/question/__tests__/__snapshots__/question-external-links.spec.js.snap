@@ -12,16 +12,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -33,13 +25,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -79,16 +67,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -100,13 +80,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -146,16 +122,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -167,13 +135,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -213,16 +177,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -234,13 +190,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -280,16 +232,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -301,13 +245,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -347,16 +287,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -368,13 +300,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -414,16 +342,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -435,13 +355,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -481,16 +397,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -502,13 +410,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -548,16 +452,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -569,13 +465,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -615,16 +507,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -636,13 +520,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -682,16 +562,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -703,13 +575,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -749,16 +617,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -770,13 +630,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -816,16 +672,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -837,13 +685,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -883,16 +727,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -904,13 +740,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -950,16 +782,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -971,13 +795,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -1017,16 +837,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1038,13 +850,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -1084,16 +892,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1105,13 +905,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -1151,16 +947,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1172,13 +960,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -1218,16 +1002,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1239,13 +1015,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -1285,16 +1057,8 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1306,13 +1070,9 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -1359,16 +1119,8 @@ exports[`<QuestionExternalLinks /> should render links if links are passed 1`] =
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1380,13 +1132,9 @@ exports[`<QuestionExternalLinks /> should render links if links are passed 1`] =
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -1426,16 +1174,8 @@ exports[`<QuestionExternalLinks /> should render links if links are passed 1`] =
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1447,13 +1187,9 @@ exports[`<QuestionExternalLinks /> should render links if links are passed 1`] =
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={2}
         style={
           Array [
@@ -1499,9 +1235,7 @@ exports[`<QuestionExternalLinks /> should render validation error if wrong data 
   }
 >
   <Text
-    accessible={true}
     allowFontScaling={false}
-    ellipsizeMode="tail"
     style={
       Array [
         Object {

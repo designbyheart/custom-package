@@ -1,7 +1,6 @@
 // @flow
 import type { LockStore } from '../lock/type-lock'
 import type { SMSPendingInvitationStore } from '../sms-pending-invitation/type-sms-pending-invitation'
-import type { AuthenticationStore } from '../authentication/type-authentication'
 import type { ClaimOfferStore } from '../claim-offer/type-claim-offer'
 import type { ProofRequestStore } from '../proof-request/type-proof-request'
 import type { InvitationStore } from '../invitation/type-invitation'
@@ -21,17 +20,7 @@ import type { LedgerStore } from './ledger/type-ledger-store'
 import type { OfflineStore } from '../offline/type-offline'
 import type { OnfidoStore } from '../onfido/type-onfido'
 import type { QuestionStore } from '../question/type-question'
-
-export type PushNotificationStore = {
-  isAllowed: boolean,
-  notification: ?{
-    [string]: any,
-  },
-  pushToken: ?string,
-  pendingFetchAdditionalDataKey?: ?{
-    [string]: boolean,
-  },
-}
+import type { PushNotificationStore } from '../push-notification/type-push-notification'
 
 export type RouteStore = {
   currentScreen: string,
@@ -42,7 +31,6 @@ export type Store = {
   config: ConfigStore,
   connections: ConnectionStore,
   deepLink: DeepLinkStore,
-  authentication: AuthenticationStore,
   pushNotification: PushNotificationStore,
   route: RouteStore,
   user: UserStore,
@@ -64,5 +52,3 @@ export type Store = {
   onfido: OnfidoStore,
   question: QuestionStore,
 }
-
-export type { AuthenticationStore } from '../authentication/type-authentication'

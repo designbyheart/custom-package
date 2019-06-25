@@ -45,7 +45,7 @@ import {
   PROOF_REQUEST_REJECTED,
   SEND_PROOF_SUCCESS,
 } from '../proof-request/type-proof-request'
-import { NEW_CONNECTION_SUCCESS } from '../store/connections-store'
+import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import { PROOF_SUCCESS } from '../proof/type-proof'
 import {
   QUESTION_RECEIVED,

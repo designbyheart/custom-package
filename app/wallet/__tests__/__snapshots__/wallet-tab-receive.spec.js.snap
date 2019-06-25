@@ -27,9 +27,7 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
       >
         <View>
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -73,9 +71,7 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
             Your Sovrin token payment address is:
           </Text>
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {
@@ -130,6 +126,7 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
     </View>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     safeArea={true}
     style={
       Object {
@@ -156,15 +153,9 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
       }
     >
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="token-copy-to-clipboard-label"
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -174,20 +165,14 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
         style={
           Array [
             Object {
-              "backgroundColor": "transparent",
+              "backgroundColor": "rgba(237, 156, 46, 1)",
+              "borderRadius": 5,
+              "flex": -1,
+              "height": 43,
             },
-            Array [
-              Object {
-                "backgroundColor": "rgba(237, 156, 46, 1)",
-                "borderRadius": 5,
-                "flex": -1,
-                "height": 43,
-              },
-            ],
           ]
         }
         testID="token-copy-to-clipboard-label"
-        tvParallaxProperties={undefined}
       >
         <View
           pointerEvents="box-only"
@@ -230,9 +215,6 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},

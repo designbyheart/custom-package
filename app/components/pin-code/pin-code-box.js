@@ -4,11 +4,7 @@ import { TextInput, StyleSheet, Platform, Keyboard, Text } from 'react-native'
 import { PIN_SETUP_STATE } from '../../lock/type-lock'
 import PinCodeDigit from './pin-code-digit'
 import { CustomView, Keyboard as CustomKeyboard } from '../../components'
-import type {
-  PinCodeBoxProps,
-  PinCodeBoxState,
-  TextInputRef,
-} from './type-pin-code-box'
+import type { PinCodeBoxProps, PinCodeBoxState } from './type-pin-code-box'
 import { color } from '../../common/styles/constant'
 
 const keyboard = Platform.OS === 'ios' ? 'number-pad' : 'numeric'
@@ -33,7 +29,7 @@ export default class PinCodeBox extends PureComponent<
 
   customKeyboardRef = null
 
-  inputBox: ?TextInputRef = null
+  inputBox: ?TextInput = null
 
   pinCodeArray = [1, 2, 3, 4, 5, 6]
 

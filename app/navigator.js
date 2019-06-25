@@ -5,14 +5,10 @@ import {
   createStackNavigator,
   TabBarBottom,
   createTabNavigator,
-  NavigationTransitionProps,
-  TransitionConfig,
 } from 'react-navigation'
 import AboutApp from './about-app/about-app'
-import AuthenticationScreen from './authentication/authentication'
 import HomeScreen from './home/home'
-import ConnectionHome from './connection/connection'
-import SplashScreenView from './authentication/splash-screen'
+import SplashScreenView from './start-up/splash-screen'
 import Settings from './settings/settings'
 import ExpiredTokenScreen from './expired-token/expired-token'
 import QRCodeScanner from './qr-code/qr-code'
@@ -47,8 +43,6 @@ import ConnectionHistNavigator from './connection-details/connection-details-nav
 import {
   splashScreenRoute,
   homeRoute,
-  authenticationRoute,
-  connectionRoute,
   connectionHistoryRoute,
   expiredTokenRoute,
   lockEnterPinRoute,
@@ -283,13 +277,6 @@ const CardStack = createStackNavigator(
     },
     [homeRoute]: {
       screen: Tabs,
-    },
-    [authenticationRoute]: {
-      screen: AuthenticationScreen,
-    },
-
-    [connectionRoute]: {
-      screen: ConnectionHome,
     },
     [expiredTokenRoute]: {
       screen: ExpiredTokenScreen,

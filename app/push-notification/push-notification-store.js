@@ -97,7 +97,6 @@ import { PUSH_COM_METHOD } from '../common'
 import type { NavigationParams, GenericObject } from '../common/type-common'
 
 import { addPendingRedirection } from '../lock/lock-store'
-import { authenticationRequestReceived } from '../authentication/authentication-store'
 import { claimOfferReceived } from '../claim-offer/claim-offer-store'
 import { proofRequestReceived } from '../proof-request/proof-request-store'
 import {
@@ -329,16 +328,12 @@ export function* fetchAdditionalDataSaga(
     return
   }
 
-  const {
-    remotePairwiseDID,
-    remoteName,
-    ...connection
-  }: {
+  const connection: {
     remotePairwiseDID: string,
     remoteName: string,
   } & Connection = yield select(getRemotePairwiseDidAndName, forDID)
 
-  if (!remotePairwiseDID || !connection.vcxSerializedConnection) {
+  if (!connection.remotePairwiseDID || !connection.vcxSerializedConnection) {
     yield put(
       fetchAdditionalDataError({
         code: 'OCS-002',
@@ -436,6 +431,9 @@ export function* fetchAdditionalDataSaga(
       // we did not get any data or either push notification type is not supported
       return
     }
+
+    const remoteName = connection.remoteName
+    const remotePairwiseDID = connection.remotePairwiseDID
 
     yield put(
       pushNotificationReceived({

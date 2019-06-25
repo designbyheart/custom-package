@@ -21,14 +21,9 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
     }
   >
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-1"
-      accessibilityTraits={undefined}
       accessible={true}
       center={true}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -45,10 +40,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-1"
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",
@@ -64,14 +56,9 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-2"
-      accessibilityTraits={undefined}
       accessible={true}
       center={true}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -88,10 +75,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-2"
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",
@@ -107,14 +91,9 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-3"
-      accessibilityTraits={undefined}
       accessible={true}
       center={true}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -131,10 +110,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-3"
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",
@@ -161,14 +137,9 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
     }
   >
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-4"
-      accessibilityTraits={undefined}
       accessible={true}
       center={true}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -185,10 +156,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-4"
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",
@@ -204,14 +172,9 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-5"
-      accessibilityTraits={undefined}
       accessible={true}
       center={true}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -228,10 +191,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-5"
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",
@@ -247,14 +207,9 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-6"
-      accessibilityTraits={undefined}
       accessible={true}
       center={true}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -271,10 +226,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-6"
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",
@@ -301,14 +253,9 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
     }
   >
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-7"
-      accessibilityTraits={undefined}
       accessible={true}
       center={true}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -325,10 +272,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-7"
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",
@@ -344,14 +288,9 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-8"
-      accessibilityTraits={undefined}
       accessible={true}
       center={true}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -368,10 +307,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-8"
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",
@@ -387,14 +323,9 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-9"
-      accessibilityTraits={undefined}
       accessible={true}
       center={true}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -411,10 +342,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-9"
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",
@@ -441,14 +369,9 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
     }
   >
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-."
-      accessibilityTraits={undefined}
       accessible={true}
       center={true}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -465,10 +388,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-."
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",
@@ -484,14 +404,9 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-0"
-      accessibilityTraits={undefined}
       accessible={true}
       center={true}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -508,10 +423,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-0"
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",
@@ -527,9 +439,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       </Text>
     </View>
     <View
-      accessibilityComponentType={undefined}
       accessibilityLabel="wallet-keyboard-id-label-back-space-touchable"
-      accessibilityTraits={undefined}
       accessible={false}
       center={true}
       hitSlop={
@@ -540,8 +450,6 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
           "top": 20,
         }
       }
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -558,10 +466,7 @@ exports[`<Keyboard /> should render properly and match the snapshot 1`] = `
       testID="wallet-keyboard-id-label-back-space-touchable"
     >
       <Text
-        accessible={true}
         allowFontScaling={true}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         style={
           Object {
             "backgroundColor": "transparent",

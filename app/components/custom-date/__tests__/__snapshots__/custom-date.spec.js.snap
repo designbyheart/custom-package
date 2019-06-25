@@ -2,9 +2,7 @@
 
 exports[`<CustomDate /> should ConnectionHistoryDetails render properly 1`] = `
 <Text
-  accessible={true}
   allowFontScaling={false}
-  ellipsizeMode="tail"
   style={
     Array [
       Object {

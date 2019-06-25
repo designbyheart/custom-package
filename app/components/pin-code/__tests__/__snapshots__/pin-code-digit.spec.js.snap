@@ -2,9 +2,6 @@
 
 exports[`<PinCodeDigit /> when digit is entered 1`] = `
 <View
-  accessibilityComponentType={undefined}
-  accessibilityLabel={undefined}
-  accessibilityTraits={undefined}
   accessible={true}
   center={true}
   hitSlop={
@@ -15,8 +12,6 @@ exports[`<PinCodeDigit /> when digit is entered 1`] = `
       "top": 20,
     }
   }
-  nativeID={undefined}
-  onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
@@ -34,7 +29,6 @@ exports[`<PinCodeDigit /> when digit is entered 1`] = `
       "width": 38,
     }
   }
-  testID={undefined}
 >
   <Image
     resizeMode="contain"
@@ -51,9 +45,6 @@ exports[`<PinCodeDigit /> when digit is entered 1`] = `
 
 exports[`<PinCodeDigit /> when digit is not entered 1`] = `
 <View
-  accessibilityComponentType={undefined}
-  accessibilityLabel={undefined}
-  accessibilityTraits={undefined}
   accessible={true}
   center={true}
   hitSlop={
@@ -64,8 +55,6 @@ exports[`<PinCodeDigit /> when digit is not entered 1`] = `
       "top": 20,
     }
   }
-  nativeID={undefined}
-  onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
@@ -83,6 +72,5 @@ exports[`<PinCodeDigit /> when digit is not entered 1`] = `
       "width": 38,
     }
   }
-  testID={undefined}
 />
 `;

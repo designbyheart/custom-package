@@ -2,6 +2,7 @@
 
 exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={
     Object {
@@ -33,9 +34,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
       style={Object {}}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={1}
         style={
           Array [
@@ -84,9 +83,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -162,9 +159,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -215,9 +210,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -272,9 +265,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -331,15 +322,9 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
       }
     >
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="submit-recovery-passphrase"
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -349,29 +334,23 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
         style={
           Array [
             Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "elevation": 7,
-                "height": 43,
-                "marginBottom": 15,
-                "marginLeft": "2%",
-                "marginRight": "2%",
-                "shadowColor": "#777777",
-                "shadowOffset": Object {
-                  "height": 1,
-                  "width": 1,
-                },
-                "shadowOpacity": 0.3,
-                "shadowRadius": 5,
+              "borderRadius": 5,
+              "elevation": 7,
+              "height": 43,
+              "marginBottom": 15,
+              "marginLeft": "2%",
+              "marginRight": "2%",
+              "shadowColor": "#777777",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 1,
               },
-            ],
+              "shadowOpacity": 0.3,
+              "shadowRadius": 5,
+            },
           ]
         }
         testID="submit-recovery-passphrase"
-        tvParallaxProperties={undefined}
       >
         <View
           pointerEvents="box-only"
@@ -423,9 +402,6 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},
@@ -473,6 +449,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
 
 exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={
     Object {
@@ -504,9 +481,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
       style={Object {}}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={1}
         style={
           Array [
@@ -555,9 +530,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -633,9 +606,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -682,9 +653,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -739,9 +708,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -798,15 +765,9 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
       }
     >
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="submit-recovery-passphrase"
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -816,29 +777,23 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
         style={
           Array [
             Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "elevation": 7,
-                "height": 43,
-                "marginBottom": 15,
-                "marginLeft": "2%",
-                "marginRight": "2%",
-                "shadowColor": "#777777",
-                "shadowOffset": Object {
-                  "height": 1,
-                  "width": 1,
-                },
-                "shadowOpacity": 0.3,
-                "shadowRadius": 5,
+              "borderRadius": 5,
+              "elevation": 7,
+              "height": 43,
+              "marginBottom": 15,
+              "marginLeft": "2%",
+              "marginRight": "2%",
+              "shadowColor": "#777777",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 1,
               },
-            ],
+              "shadowOpacity": 0.3,
+              "shadowRadius": 5,
+            },
           ]
         }
         testID="submit-recovery-passphrase"
-        tvParallaxProperties={undefined}
       >
         <View
           pointerEvents="box-only"
@@ -899,9 +854,6 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},
@@ -949,6 +901,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
 
 exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   safeArea={true}
   style={
     Object {
@@ -980,9 +933,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
       style={Object {}}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         numberOfLines={1}
         style={
           Array [
@@ -1031,9 +982,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -1117,9 +1066,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -1174,9 +1121,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -1233,15 +1178,9 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
       }
     >
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="submit-recovery-passphrase"
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -1251,29 +1190,23 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
         style={
           Array [
             Object {
-              "backgroundColor": "transparent",
-            },
-            Array [
-              Object {
-                "borderRadius": 5,
-                "elevation": 7,
-                "height": 43,
-                "marginBottom": 15,
-                "marginLeft": "2%",
-                "marginRight": "2%",
-                "shadowColor": "#777777",
-                "shadowOffset": Object {
-                  "height": 1,
-                  "width": 1,
-                },
-                "shadowOpacity": 0.3,
-                "shadowRadius": 5,
+              "borderRadius": 5,
+              "elevation": 7,
+              "height": 43,
+              "marginBottom": 15,
+              "marginLeft": "2%",
+              "marginRight": "2%",
+              "shadowColor": "#777777",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 1,
               },
-            ],
+              "shadowOpacity": 0.3,
+              "shadowRadius": 5,
+            },
           ]
         }
         testID="submit-recovery-passphrase"
-        tvParallaxProperties={undefined}
       >
         <View
           pointerEvents="box-only"
@@ -1334,9 +1267,6 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},

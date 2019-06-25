@@ -3,7 +3,8 @@ import React, { PureComponent } from 'react'
 import { Image, TouchableWithoutFeedback, View, Platform } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
+import type { ImageSource } from '../../common/type-common'
 
 import { Icon } from '../index'
 

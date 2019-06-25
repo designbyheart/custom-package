@@ -26,6 +26,9 @@ import type {
   Connection,
   Connections,
   ConnectionThemes,
+  DeleteConnectionSuccessEventAction,
+  DeleteConnectionFailureEventAction,
+  DeleteConnectionEventAction,
 } from './type-connection-store'
 import {
   NEW_CONNECTION,
@@ -34,11 +37,6 @@ import {
   DELETE_CONNECTION,
   STORAGE_KEY_THEMES,
   HYDRATE_CONNECTION_THEMES,
-} from './type-connection-store'
-import type {
-  DeleteConnectionSuccessEventAction,
-  DeleteConnectionFailureEventAction,
-  DeleteConnectionEventAction,
 } from './type-connection-store'
 import {
   deleteConnection,
@@ -50,9 +48,12 @@ import { promptBackupBanner } from '../backup/backup-store'
 import { HYDRATED } from './type-config-store'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
+import {
+  NEW_CONNECTION_SUCCESS,
+  saveNewConnectionSuccess,
+} from './new-connection-success'
 
 const UPDATE_CONNECTION_THEME = 'UPDATE_CONNECTION_THEME'
-export const NEW_CONNECTION_SUCCESS = 'NEW_CONNECTION_SUCCESS'
 export const UPDATE_STATUS_BAR_THEME = 'UPDATE_STATUS_BAR_THEME'
 const NEW_CONNECTION_FAIL = 'NEW_CONNECTION_FAIL'
 export const HYDRATE_CONNECTIONS = 'HYDRATE_CONNECTIONS'
@@ -103,11 +104,6 @@ export const updateConnectionTheme = (
 
 export const saveNewConnection = (connection: GenericObject) => ({
   type: NEW_CONNECTION,
-  connection,
-})
-
-export const saveNewConnectionSuccess = (connection: GenericObject) => ({
-  type: NEW_CONNECTION_SUCCESS,
   connection,
 })
 
@@ -239,7 +235,7 @@ export const getConnections = (connectionsData: ?Connections) =>
 export const getConnection = (
   remoteConnectionId: string,
   connections: Connections
-) =>
+): Array<any> =>
   Object.values(connections).filter(function(c: any) {
     return c.remoteConnectionId === remoteConnectionId
   })

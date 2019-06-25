@@ -2,7 +2,6 @@
 
 exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
 <View
-  collapsable={undefined}
   style={
     Object {
       "backgroundColor": "rgba(0,0,0,0.7)",
@@ -21,7 +20,6 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
   }
 >
   <View
-    collapsable={undefined}
     style={
       Object {
         "alignItems": "center",
@@ -42,16 +40,8 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
     >
       <View>
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -65,8 +55,6 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
               "opacity": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <View
             style={
@@ -164,9 +152,6 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                 }
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Object {
                       "color": "#505050",
@@ -179,9 +164,6 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                   issuername
                 </Text>
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Object {
                       "color": "#777",
@@ -206,38 +188,34 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                 }
               >
                 <RNSVGSvgView
-                  bbHeight="34.5"
-                  bbWidth="23"
+                  bbHeight={34.5}
+                  bbWidth={23}
                   color="rgba(119, 119, 119, 1.0)"
                   fill="none"
+                  height={34.5}
                   style={
                     Array [
                       Object {
                         "backgroundColor": "transparent",
+                        "borderWidth": 0,
                       },
                       undefined,
-                      false,
+                      null,
                       Object {
                         "flex": 0,
-                        "height": 34.5,
+                        "height": 34,
                         "width": 23,
                       },
                     ]
                   }
+                  tintColor="rgba(119, 119, 119, 1.0)"
+                  width={23}
                 >
-                  <RNSVGPath
-                    d="M6.875 21.2v7.285l4.095-3.273 4.155 3.273V21.2c-1.274.516-2.666.8-4.125.8s-2.851-.284-4.125-.8zm-2.75-1.613A10.98 10.98 0 0 1 0 11C0 4.925 4.925 0 11 0s11 4.925 11 11c0 3.5-1.635 6.62-4.184 8.634v12.893l-6.845-4.096-6.846 4.096v-12.94zM11 19.25a8.25 8.25 0 1 0 0-16.5 8.25 8.25 0 0 0 0 16.5zm5.214-11.408c.03.056.045.098.045.126 0 .028-.015.07-.045.126l-5.617 6.726c-.09.084-.158.126-.203.126-.075 0-.15-.035-.225-.105l-3.181-2.859-.068-.063a.308.308 0 0 1-.045-.126c0-.014.015-.049.045-.105l.045-.042c.421-.42.752-.743.993-.967.09-.084.15-.126.18-.126.06 0 .136.042.226.126l1.805 1.64 4.511-5.402c.03-.028.075-.042.136-.042.045 0 .097.014.158.042l1.24.925z"
-                    fill={
-                      Array [
-                        0,
-                        0.4666666666666667,
-                        0.4666666666666667,
-                        0.4666666666666667,
-                        1,
-                      ]
-                    }
+                  <RNSVGGroup
+                    fill={null}
                     fillOpacity={1}
                     fillRule={1}
+                    font={Object {}}
                     matrix={
                       Array [
                         1,
@@ -248,7 +226,6 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                         0,
                       ]
                     }
-                    onLayout={undefined}
                     opacity={1}
                     originX={0}
                     originY={0}
@@ -269,10 +246,57 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                     strokeLinejoin={0}
                     strokeMiterlimit={4}
                     strokeOpacity={1}
-                    strokeWidth="1"
+                    strokeWidth={1}
+                    vectorEffect={0}
                     x={0}
                     y={0}
-                  />
+                  >
+                    <RNSVGPath
+                      d="M6.875 21.2v7.285l4.095-3.273 4.155 3.273V21.2c-1.274.516-2.666.8-4.125.8s-2.851-.284-4.125-.8zm-2.75-1.613A10.98 10.98 0 0 1 0 11C0 4.925 4.925 0 11 0s11 4.925 11 11c0 3.5-1.635 6.62-4.184 8.634v12.893l-6.845-4.096-6.846 4.096v-12.94zM11 19.25a8.25 8.25 0 1 0 0-16.5 8.25 8.25 0 0 0 0 16.5zm5.214-11.408c.03.056.045.098.045.126 0 .028-.015.07-.045.126l-5.617 6.726c-.09.084-.158.126-.203.126-.075 0-.15-.035-.225-.105l-3.181-2.859-.068-.063a.308.308 0 0 1-.045-.126c0-.014.015-.049.045-.105l.045-.042c.421-.42.752-.743.993-.967.09-.084.15-.126.18-.126.06 0 .136.042.226.126l1.805 1.64 4.511-5.402c.03-.028.075-.042.136-.042.045 0 .097.014.158.042l1.24.925z"
+                      fill={
+                        Array [
+                          0,
+                          4286019447,
+                        ]
+                      }
+                      fillOpacity={1}
+                      fillRule={1}
+                      matrix={
+                        Array [
+                          1,
+                          0,
+                          0,
+                          1,
+                          0,
+                          0,
+                        ]
+                      }
+                      opacity={1}
+                      originX={0}
+                      originY={0}
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
+                      rotation={0}
+                      scaleX={1}
+                      scaleY={1}
+                      skewX={0}
+                      skewY={0}
+                      stroke={null}
+                      strokeDasharray={null}
+                      strokeDashoffset={null}
+                      strokeLinecap={0}
+                      strokeLinejoin={0}
+                      strokeMiterlimit={4}
+                      strokeOpacity={1}
+                      strokeWidth={1}
+                      vectorEffect={0}
+                      x={0}
+                      y={0}
+                    />
+                  </RNSVGGroup>
                 </RNSVGSvgView>
               </View>
             </View>
@@ -297,9 +321,6 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                 }
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Object {
                       "color": "#505050",
@@ -355,16 +376,8 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
               }
             >
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -382,13 +395,8 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                     "paddingRight": 30,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Object {
                       "color": "#fff",
@@ -402,16 +410,8 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                 </Text>
               </View>
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                collapsable={undefined}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -430,8 +430,6 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                     "paddingRight": 30,
                   }
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <View
                   style={
@@ -441,9 +439,6 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                   }
                 >
                   <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
                     style={
                       Object {
                         "color": "#fff",

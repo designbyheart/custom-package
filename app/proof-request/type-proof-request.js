@@ -12,7 +12,6 @@ import type {
   NotificationPayload,
 } from '../common/type-common'
 import type {
-  ClaimProofNavigation,
   Attribute,
   NotificationPayloadInfo,
 } from '../push-notification/type-push-notification'
@@ -158,11 +157,17 @@ export type ProofRequestProps = {
   originalProofRequestData: ProofRequestData,
   remotePairwiseDID: string,
   name: string,
+  errorProofSendData: ?CustomError,
+  colorBackground: string,
+  secondColorBackground: string,
   ignoreProofRequest: (uid: string) => void,
   rejectProofRequest: (uid: string) => void,
   acceptProofRequest: (uid: string) => void,
   proofRequestShown: (uid: string) => void,
-  updateAttributeClaim: (requestedAttrsJson: RequestedAttrsJson) => void,
+  updateAttributeClaim: (
+    uid: string,
+    requestedAttrsJson: RequestedAttrsJson
+  ) => void,
   getProof: (uid: string) => void,
   uid: string,
   proofGenerationError?: ?CustomError,
@@ -174,6 +179,8 @@ export type ProofRequestProps = {
   ) => void,
   userAvatarSource: ?ImageSource,
   proofRequestShowStart: (uid: string) => ProofRequestShowStartAction,
+  newConnectionSeen: (senderDID: string) => void,
+  hideModal: () => void,
 } & ReactNavigation
 
 export type ProofRequestState = {

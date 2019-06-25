@@ -1,7 +1,7 @@
 // @flow
 import routeReducer, { handleRouteUpdate } from '../route-store'
-import { authenticationRoute } from '../../common/route-constants'
 import { initialTestAction } from '../../common/type-common'
+import { homeRoute } from '../../common'
 
 describe('route should update properly', () => {
   function setup() {
@@ -13,12 +13,9 @@ describe('route should update properly', () => {
   it('should update current screen route', () => {
     const { initialState } = setup()
     const expectedState = {
-      currentScreen: authenticationRoute,
+      currentScreen: homeRoute,
     }
-    const actualState = routeReducer(
-      initialState,
-      handleRouteUpdate(authenticationRoute)
-    )
+    const actualState = routeReducer(initialState, handleRouteUpdate(homeRoute))
     expect(actualState).toMatchObject(expectedState)
   })
 })

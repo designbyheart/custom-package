@@ -2,9 +2,7 @@
 
 exports[`<ConnectedUserAvatar /> should match snapshot when no user image is selected 1`] = `
 <View
-  accessibilityComponentType={undefined}
   accessibilityLabel="user-avatar-touchable"
-  accessibilityTraits={undefined}
   accessible={false}
   clearBg={true}
   extraLarge={true}
@@ -16,8 +14,6 @@ exports[`<ConnectedUserAvatar /> should match snapshot when no user image is sel
       "top": 20,
     }
   }
-  nativeID={undefined}
-  onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
@@ -61,9 +57,7 @@ exports[`<ConnectedUserAvatar /> should match snapshot when no user image is sel
 
 exports[`<ConnectedUserAvatar /> should match snapshot when user image is selected 1`] = `
 <View
-  accessibilityComponentType={undefined}
   accessibilityLabel="user-avatar-touchable"
-  accessibilityTraits={undefined}
   accessible={false}
   clearBg={true}
   extraLarge={true}
@@ -75,8 +69,6 @@ exports[`<ConnectedUserAvatar /> should match snapshot when user image is select
       "top": 20,
     }
   }
-  nativeID={undefined}
-  onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}

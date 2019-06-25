@@ -35,7 +35,9 @@ describe('<QuestionActions />', () => {
 
     it('should call onPress with response if response button is clicked ', () => {
       const { component, props } = oneResponseSetup()
-      const response = props.question.payload.valid_responses[0]
+      const response = props.question
+        ? props.question.payload.valid_responses[0]
+        : { text: 'No Question' }
       const responseButton = component.root.findByProps({
         title: response.text,
       })
@@ -84,15 +86,19 @@ describe('<QuestionActions />', () => {
     it('should call onPress with response for each button that is clicked', () => {
       const { component, props } = setup()
       const { question }: QuestionActionProps = props
-      props.question.payload.valid_responses.map(
-        (response: QuestionResponse) => {
-          const responseButton = component.root.findByProps({
-            title: response.text,
-          })
-          responseButton.props.onPress()
-          expect(props.onSelectResponseAndSubmit).toHaveBeenCalledWith(response)
-        }
-      )
+      if (props.question) {
+        props.question.payload.valid_responses.map(
+          (response: QuestionResponse) => {
+            const responseButton = component.root.findByProps({
+              title: response.text,
+            })
+            responseButton.props.onPress()
+            expect(props.onSelectResponseAndSubmit).toHaveBeenCalledWith(
+              response
+            )
+          }
+        )
+      }
     })
 
     it('match snapshot if in error status', () => {

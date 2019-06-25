@@ -97,8 +97,8 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.1.0'
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     // IMPORTANT: This is required to fix this issue: https://github.com/android-ndk/ndk/issues/700
     packagingOptions{
@@ -114,18 +114,18 @@ android {
 
     defaultConfig {
         applicationId "me.connect"
-        minSdkVersion 23
-        targetSdkVersion 26
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
         versionCode 907
-        versionName "1.0.16"
+        versionName "1.0.17"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
             incremental = false; //If you see any build issues, try uncommenting this line development phases. Do not commit this line uncommented
         }
          ndk {
-             abiFilters 'x86', 'armeabi-v7a'//, 'x86_64', 'armeabi',  'arm64-v8a' // <- only the supported ones
+             abiFilters 'x86', 'armeabi-v7a', 'arm64-v8a', 'x86_64' // <- only the supported ones
          }
 
         testBuildType System.getProperty('testBuildType', 'debug')
@@ -183,65 +183,75 @@ android {
 }
 
 configurations.all {
-   resolutionStrategy.force 'com.android.support:support-v4:27.1.1'
+   resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
 }
 
 dependencies {
-    compile project(':react-native-reanimated')
-    compile "com.facebook.fresco:animated-gif:1.3.0"
-    compile "com.facebook.fresco:animated-base-support:1.3.0"
-    compile project(':react-native-snackbar')
-    compile project(':react-native-gesture-handler')
-    compile project(':lottie-react-native')
-    compile project(':react-native-mail')
-    compile project(':react-native-shake')
-    compile project(':react-native-image-crop-picker')
+    implementation project(':react-native-reanimated')
+    implementation "com.facebook.fresco:animated-gif:1.3.0"
+    implementation "com.facebook.fresco:animated-base-support:1.3.0"
+    implementation project(':react-native-snackbar')
+    implementation project(':react-native-gesture-handler')
+    implementation project(':lottie-react-native')
+    implementation project(':react-native-mail')
+    implementation project(':react-native-shake')
+    implementation project(':react-native-image-crop-picker')
     // Already in this file -- compile project(':react-native-firebase')
-    compile project(':apptentive-react-native')
-    compile project(':react-native-keep-screen-on')
-    compile project(':react-native-svg')
-    compile project(':react-native-pbkdf2')
-    compile(project(":react-native-firebase")){
+    implementation project(':apptentive-react-native')
+    implementation project(':react-native-keep-screen-on')
+    implementation project(':react-native-svg')
+    implementation project(':react-native-pbkdf2')
+    implementation(project(":react-native-firebase")){
         exclude group: "com.google.android.gms" // very important
         exclude group: 'com.android.support', module: 'support-content'
     }
-    compile project(':react-native-zip-archive')
-    compile project(':react-native-randombytes')
-    compile project(':react-native-document-picker')
-    compile project(':react-native-sensitive-info')
+    implementation project(':react-native-zip-archive')
+    implementation project(':react-native-randombytes')
+    implementation project(':react-native-document-picker')
+    implementation project(':react-native-sensitive-info')
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-    compile project(':react-native-share')
-    compile project(':react-native-version-number')
-    compile project(':react-native-image-resizer')
-    compile 'com.google.firebase:firebase-messaging:11.8.0'
+    implementation project(':react-native-share')
+    implementation project(':react-native-version-number')
+    implementation project(':react-native-image-resizer')
+    implementation 'com.google.firebase:firebase-messaging:12.0.1'
+
+    // Don't need these
+    implementation "com.google.firebase:firebase-ads:12.0.1"
+    implementation "com.google.firebase:firebase-config:12.0.1"
+    implementation "com.google.firebase:firebase-crash:12.0.1"
+    implementation "com.google.firebase:firebase-database:12.0.1"
+    implementation "com.google.firebase:firebase-perf:12.0.1"
+    implementation "com.google.firebase:firebase-storage:12.0.1"
+    // END Don't need these
+
     implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
     // <-- Add this line if you wish to use badge on Android
     // If you are receiving Google Play API availability issues, add the following dependency
-    compile 'com.google.android.gms:play-services-base:11.8.0'
-    compile project(':react-native-touch-id')
-    compile project(':react-native-fetch-blob')
-    compile (project(':react-native-camera')) { exclude group: "com.google.android.gms" }
-    compile ("com.google.android.gms:play-services-vision:11.8.0") { force = true; }
-    compile project(':react-native-branch')
-    compile project(':react-native-splash-screen')
-    androidTestImplementation project(path: ':detox')
+    implementation 'com.google.android.gms:play-services-base:12.0.1'
+    implementation project(':react-native-touch-id')
+    implementation project(':rn-fetch-blob')
+    implementation (project(':react-native-camera')) { exclude group: "com.google.android.gms" }
+    implementation ("com.google.android.gms:play-services-vision:12.0.1") { force = true; }
+    implementation project(':react-native-branch')
+    implementation project(':react-native-splash-screen')
     androidTestImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support:support-annotations:27.1.1'
+    androidTestImplementation "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test:rules:1.0.1'
     implementation 'com.android.support:multidex:1.0.3'
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:27.1.1'
-    compile('com.facebook.react:react-native:0.51.0') { force = true }
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    implementation('com.facebook.react:react-native:0.58.6') { force = true }
     // From node_modules
-    compile project(':react-native-vector-icons')
-    compile 'com.android.support:palette-v7:27.1.1'
+    implementation project(':react-native-vector-icons')
+    implementation "com.android.support:palette-v7:${rootProject.ext.supportLibVersion}"
     // older stable libvcx aars
-    // compile 'com.evernym:vcx:1.0.0-29-11-2018T23-07@aar'
-    // compile 'com.evernym:vcx:1.0.0-25-01-2019T17-14@aar'
-    // compile 'com.evernym:vcx:0.2.35288886-baaa532@aar'
+    // implementation 'com.evernym:vcx:1.0.0-29-11-2018T23-07@aar'
+    // implementation 'com.evernym:vcx:1.0.0-25-01-2019T17-14@aar'
+    // implementation 'com.evernym:vcx:0.2.35288886-baaa532@aar'
+    // implementation 'com.evernym:vcx:0.2.39277498-fe8a908@aar'
     // current libvcx aar
-    compile 'com.evernym:vcx:0.3.45919919-ef94bb1@aar'
+    implementation 'com.evernym:vcx:0.3.45919919-ef94bb1@aar'
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.6.2'
     implementation 'net.sourceforge.streamsupport:android-retrostreams:1.6.2'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.59'
@@ -253,19 +263,19 @@ dependencies {
         transitive = true
     }
     //https://onfido.bintray.com/maven/com/onfido/sdk/capture/onfido-capture-sdk/
-    compile 'com.onfido.sdk.capture:onfido-capture-sdk:4.4.0'
+    implementation 'com.onfido.sdk.capture:onfido-capture-sdk:4.4.0'
     //necessary due to conflics of dependencies
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
 }
 configurations.all {
-   resolutionStrategy.force "com.android.support:appcompat-v7:27.1.1"
+   resolutionStrategy.force "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
 }
 
 // Run this once to be able to run the application with BUCK
 // puts all compile dependencies into folder libs for BUCK to use
 task copyDownloadableDepsToLibs(type: Copy) {
-    from configurations.compile
+    from configurations.implementation
     into 'libs'
 }
 

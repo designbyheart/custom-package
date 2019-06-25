@@ -92,8 +92,8 @@ export const CustomView = (props: GenericObject) => {
     imageShadow ? style.imageShadow : null,
     spaceAround ? style.spaceAround : null,
     shadowNoOffset ? style.shadowNoOffset : null,
-    ...absoluteStyles,
-    ...passedStyles,
+    ...[absoluteStyles],
+    ...[passedStyles],
   ])
   let filteredProps = { ...props }
   delete filteredProps.onLongPress

@@ -322,10 +322,12 @@ export class ClaimOffer extends PureComponent<
             logoUrl={logoUrl}
             testID={testID}
             payTokenValue={payTokenValue}
-            containerStyle={{
-              backgroundColor: claimThemePrimary,
-              borderBottomColor: claimThemePrimary,
-            }}
+            containerStyle={[
+              {
+                backgroundColor: claimThemePrimary,
+                borderBottomColor: claimThemePrimary,
+              },
+            ]}
             textContainerStyle={[headerStyles.clearBg]}
             messageStyle={[headerStyles.clearBg, styles.messageStyle]}
             titleStyle={[styles.titleStyles]}
@@ -405,6 +407,7 @@ const mapStateToProps = (state: Store, props: ReactNavigation) => {
     props.navigation.state && props.navigation.state.params
       ? props.navigation.state.params
       : { uid: '' }
+  // $FlowFixMe not fixing flow error because this file is not used anymore
   const claimOfferData = claimOffer[uid]
   const logoUrl = getConnectionLogoUrl(state, claimOfferData.remotePairwiseDID)
   const themeForLogo = getConnectionTheme(state, logoUrl)

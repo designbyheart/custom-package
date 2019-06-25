@@ -25,10 +25,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
       verticalSpace={true}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        collapsable={undefined}
-        ellipsizeMode="tail"
         numberOfLines={1}
         style={
           Object {
@@ -51,9 +48,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
       </Text>
     </View>
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -107,14 +102,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
       }
     >
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-1"
-        accessibilityTraits={undefined}
         accessible={true}
         center={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -131,10 +121,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-1"
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -150,14 +137,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         </Text>
       </View>
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-2"
-        accessibilityTraits={undefined}
         accessible={true}
         center={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -174,10 +156,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-2"
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -193,14 +172,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         </Text>
       </View>
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-3"
-        accessibilityTraits={undefined}
         accessible={true}
         center={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -217,10 +191,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-3"
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -247,14 +218,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
       }
     >
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-4"
-        accessibilityTraits={undefined}
         accessible={true}
         center={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -271,10 +237,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-4"
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -290,14 +253,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         </Text>
       </View>
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-5"
-        accessibilityTraits={undefined}
         accessible={true}
         center={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -314,10 +272,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-5"
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -333,14 +288,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         </Text>
       </View>
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-6"
-        accessibilityTraits={undefined}
         accessible={true}
         center={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -357,10 +307,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-6"
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -387,14 +334,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
       }
     >
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-7"
-        accessibilityTraits={undefined}
         accessible={true}
         center={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -411,10 +353,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-7"
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -430,14 +369,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         </Text>
       </View>
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-8"
-        accessibilityTraits={undefined}
         accessible={true}
         center={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -454,10 +388,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-8"
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -473,14 +404,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         </Text>
       </View>
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-9"
-        accessibilityTraits={undefined}
         accessible={true}
         center={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -497,10 +423,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-9"
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -527,14 +450,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
       }
     >
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-."
-        accessibilityTraits={undefined}
         accessible={true}
         center={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -551,10 +469,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-."
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -570,14 +485,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         </Text>
       </View>
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-0"
-        accessibilityTraits={undefined}
         accessible={true}
         center={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -594,10 +504,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-0"
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -613,9 +520,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         </Text>
       </View>
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-keyboard-id-label-back-space-touchable"
-        accessibilityTraits={undefined}
         accessible={false}
         center={true}
         hitSlop={
@@ -626,8 +531,6 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
             "top": 20,
           }
         }
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -644,10 +547,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         testID="wallet-keyboard-id-label-back-space-touchable"
       >
         <Text
-          accessible={true}
           allowFontScaling={true}
-          collapsable={undefined}
-          ellipsizeMode="tail"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -665,6 +565,7 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
     </View>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     safeArea={true}
     style={
       Object {
@@ -690,15 +591,9 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
       }
     >
       <View
-        accessibilityComponentType={undefined}
         accessibilityLabel="wallet-send-token-button"
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -708,20 +603,14 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
         style={
           Array [
             Object {
-              "backgroundColor": "transparent",
+              "backgroundColor": "rgba(237, 156, 46, 1)",
+              "borderRadius": 5,
+              "flex": -1,
+              "height": 43,
             },
-            Array [
-              Object {
-                "backgroundColor": "rgba(237, 156, 46, 1)",
-                "borderRadius": 5,
-                "flex": -1,
-                "height": 43,
-              },
-            ],
           ]
         }
         testID="wallet-send-token-button"
-        tvParallaxProperties={undefined}
       >
         <View
           pointerEvents="box-only"
@@ -773,9 +662,6 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},

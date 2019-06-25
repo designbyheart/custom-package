@@ -51,7 +51,7 @@ import { uuid } from '../services/uuid'
 import { INVITATION_RECEIVED } from '../invitation/type-invitation'
 import moment from 'moment'
 import type { NewConnectionAction } from '../store/type-connection-store'
-import { NEW_CONNECTION_SUCCESS } from '../store/connections-store'
+import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import type {
   SendClaimRequestSuccessAction,
   ClaimOfferPayload,

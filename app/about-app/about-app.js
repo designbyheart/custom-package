@@ -3,6 +3,13 @@ import React, { PureComponent } from 'react'
 import { StyleSheet, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { createStackNavigator } from 'react-navigation'
+import VersionNumber from 'react-native-version-number'
+import { ListItem } from 'react-native-elements'
+
+import type { AboutAppProps, AboutAppListItemProps } from './type-about-app'
+import type { Store } from '../store/type-store'
+import type { ReactNavigation } from '../common/type-common'
+
 import {
   Container,
   CustomText,
@@ -21,12 +28,7 @@ import {
 } from '../common/styles'
 import { tertiaryHeaderStyles } from '../components/layout/header-styles'
 import { aboutAppRoute, privacyTNCRoute } from '../common'
-import type { AboutAppProps, AboutAppListItemProps } from './type-about-app'
-import VersionNumber from 'react-native-version-number'
-import { ListItem } from 'react-native-elements'
-
-import PrivacyTNC from '../privacy-tnc/privacy-tnc-screen'
-import type { Store } from '../store/type-store'
+import { PrivacyTNC } from '../privacy-tnc/privacy-tnc-screen'
 import { getEnvironmentName } from '../store/config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
@@ -89,7 +91,7 @@ export class AboutApp extends PureComponent<AboutAppProps, void> {
     )
   }
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: (
       <CustomHeader
         backgroundColor={color.bg.tertiary.color}

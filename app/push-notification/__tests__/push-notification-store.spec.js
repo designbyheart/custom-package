@@ -35,6 +35,8 @@ describe('push notification store should work properly', () => {
     isPristine: true,
     isFetching: false,
     error: null,
+    pendingFetchAdditionalDataKey: null,
+    navigateRoute: null,
   }
 
   beforeAll(() => {

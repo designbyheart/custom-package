@@ -124,7 +124,7 @@ describe('Proof Store', () => {
     ).toMatchSnapshot()
   })
 
-  // TODO:KS Fix these tests before July 25
+  // TODO:KS Fix these tests before July 25 and remove the exclusion from .flowconfig
   xit('generate proof saga should generate proof', () => {
     const gen = generateProofSaga(getProof(uid))
     expect(gen.next().value).toEqual(select(getOriginalProofRequestData, uid))
@@ -175,7 +175,7 @@ describe('Proof Store', () => {
     expect(gen.next().done).toBe(true)
   })
 
-  // TODO:KS Fix this tests before July 25
+  // TODO:KS Fix this tests before July 25 and remove the exclusion from .flowconfig
   xit('generate proof saga should work fine with missing attributes', () => {
     const gen = generateProofSaga(getProof(uid))
     expect(gen.next().value).toEqual(select(getOriginalProofRequestData, uid))

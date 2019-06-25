@@ -3,6 +3,11 @@ import React, { PureComponent } from 'react'
 import { View, StatusBar, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import type { Store } from '../store/type-store'
+import type { ResponseTypes } from '../components/request/type-request'
+import type { InvitationProps, InvitationNavigation } from './type-invitation'
+
 import { captureError } from '../services/error/error-handler'
 import {
   Request,
@@ -16,10 +21,6 @@ import { homeRoute, noop } from '../common'
 import { OFFSET_1X } from '../common/styles'
 import { ResponseType } from '../components/request/type-request'
 import { sendInvitationResponse, invitationRejected } from './invitation-store'
-import type { Store } from '../store/type-store'
-import type { ResponseTypes } from '../components/request/type-request'
-import type { InvitationProps } from './type-invitation'
-import type { ReactNavigation } from '../common/type-common'
 import { smsPendingInvitationSeen } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { SMSPendingInvitationStatus } from '../sms-pending-invitation/type-sms-pending-invitation'
 import { NavigationActions } from 'react-navigation'
@@ -65,7 +66,7 @@ export class Invitation extends PureComponent<InvitationProps, void> {
           testID={'invitation'}
           navigation={navigation}
           showErrorAlerts={showErrorAlerts}
-          invitationError={invitation.error}
+          invitationError={invitation ? invitation.error : undefined}
           senderName={senderName}
         />
       </Container>
@@ -87,13 +88,20 @@ export class Invitation extends PureComponent<InvitationProps, void> {
   }
 
   handleError(currentProps: InvitationProps) {
-    const isDuplicateConnection =
-      currentProps.invitation.error.code === ERROR_ALREADY_EXIST.code
-    const errorMessage = isDuplicateConnection
-      ? `${currentProps.invitation.error.message}${
-          currentProps.invitation.payload.senderName
-        }`
-      : ERROR_INVITATION_RESPONSE_FAILED
+    if (!currentProps.invitation) {
+      return false
+    }
+
+    const { error, payload } = currentProps.invitation
+
+    const isDuplicateConnection = error
+      ? error.code === ERROR_ALREADY_EXIST.code
+      : false
+
+    const errorMessage =
+      isDuplicateConnection && error && payload
+        ? `${error.message}${payload.senderName}`
+        : ERROR_INVITATION_RESPONSE_FAILED
     const okAction = isDuplicateConnection
       ? this.onDuplicateConnectionError
       : noop
@@ -194,9 +202,13 @@ function isValidInvitation(
   }
 }
 
-const mapStateToProps = (state: Store, { navigation }: ReactNavigation) => {
-  const senderDID = navigation.state ? navigation.state.params.senderDID : ''
-  const smsToken = navigation.state ? navigation.state.params.token : null
+const mapStateToProps = (
+  state: Store,
+  { navigation }: InvitationNavigation
+) => {
+  const { params } = navigation.state
+  const senderDID = params ? params.senderDID : ''
+  const smsToken = params ? params.token : null
   const isSmsInvitationNotSeen =
     smsToken &&
     state.smsPendingInvitation[smsToken] &&

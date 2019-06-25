@@ -226,9 +226,9 @@ export function convertIndyPreparedProofToAttributes(
       })
     }
 
+    const attrs = preparedProof.self_attested_attrs
     const selfAttestedAttribute =
-      preparedProof.self_attested_attrs &&
-      preparedProof.self_attested_attrs[label.toLowerCase().trim()].data
+      attrs && attrs[label.toLowerCase().trim()].data
 
     return [
       {
@@ -319,9 +319,7 @@ export function convertSelectedCredentialAttributesToIndyProof(
   }, {})
 }
 
-export function* generateProofSaga(
-  action: GenerateProofAction
-): Generator<*, *, *> {
+export function* generateProofSaga(action: GenerateProofAction): any {
   try {
     const { uid } = action
     const proofRequestPayload: ProofRequestPayload = yield select(
@@ -329,8 +327,8 @@ export function* generateProofSaga(
       uid
     )
     const proofRequest = proofRequestPayload.originalProofRequestData
-    let proofHandle = proofRequestPayload.proofHandle
-    let matchingCredentialsJson: string | null = null
+    let proofHandle: number = proofRequestPayload.proofHandle
+    let matchingCredentialsJson: ?string = undefined
 
     try {
       matchingCredentialsJson = yield call(getMatchingCredentials, proofHandle)

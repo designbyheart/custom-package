@@ -5,16 +5,36 @@ exports[`<WalletTabs /> should render properly and match the snapshot 1`] = `
   screenProps={
     Object {
       "navigation": Object {
+        "addListener": [MockFunction],
+        "closeDrawer": [MockFunction],
+        "dangerouslyGetParent": [MockFunction],
+        "dismiss": [MockFunction],
         "dispatch": [MockFunction],
         "getParam": [MockFunction],
         "goBack": [MockFunction],
+        "index": 1,
         "isFocused": [MockFunction],
+        "key": "somekey",
         "navigate": [MockFunction],
+        "openDrawer": [MockFunction],
+        "path": "/someRouteName",
+        "pop": [MockFunction],
+        "popToTop": [MockFunction],
         "push": [MockFunction],
+        "replace": [MockFunction],
+        "reset": [MockFunction],
+        "routeName": "someRouteName",
+        "routes": Array [],
         "setParams": [MockFunction],
         "state": Object {
+          "index": 1,
+          "key": "somekey",
           "params": Object {},
+          "path": "/someRouteName",
+          "routeName": "someRouteName",
+          "routes": Array [],
         },
+        "toggleDrawer": [MockFunction],
       },
     }
   }

@@ -1,7 +1,7 @@
 // @flow
 import type { Middleware, MiddlewareAPI, Dispatch } from 'redux'
 import { INVITATION_RECEIVED } from '../invitation/type-invitation'
-import { NEW_CONNECTION_SUCCESS } from '../store/connections-store'
+import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import {
   SEND_CLAIM_REQUEST_SUCCESS,
   CLAIM_OFFER_RECEIVED,

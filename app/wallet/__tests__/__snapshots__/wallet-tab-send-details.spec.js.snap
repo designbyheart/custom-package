@@ -2,10 +2,9 @@
 
 exports[`<WalletTabSendDetails /> should render properly and match the snapshot 1`] = `
 <RCTSafeAreaView
-  accessibilityComponentType={undefined}
   accessibilityLabel="wallet-tab-send-details-touchable"
-  accessibilityTraits={undefined}
   accessible={false}
+  emulateUnlessSupported={true}
   fifth={true}
   hitSlop={
     Object {
@@ -15,8 +14,6 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
       "top": 20,
     }
   }
-  nativeID={undefined}
-  onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
@@ -73,9 +70,7 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -199,9 +194,7 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
         }
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -296,9 +289,7 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
     }
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -352,9 +343,7 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
     }
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -411,9 +400,7 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
       }
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -452,9 +439,7 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
         You are sending
          
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -504,9 +489,7 @@ exports[`<WalletTabSendDetails /> should render properly and match the snapshot 
     }
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {

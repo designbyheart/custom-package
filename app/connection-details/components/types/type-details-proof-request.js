@@ -12,7 +12,6 @@ import type {
   NotificationPayload,
 } from '../../../common/type-common'
 import type {
-  ClaimProofNavigation,
   Attribute,
   NotificationPayloadInfo,
 } from '../../../push-notification/type-push-notification'

@@ -1,6 +1,6 @@
 // @flow
 import { put, call, select, take } from 'redux-saga/effects'
-import RNFetchBlob from 'react-native-fetch-blob'
+import RNFetchBlob from 'rn-fetch-blob'
 
 import userReducer, {
   connectRegisterCreateAgentDone,

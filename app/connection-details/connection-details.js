@@ -39,11 +39,10 @@ import type {
   ConnectionHistoryProps,
   ConnectionHistoryState,
   ConnectionHistoryEvent,
+  ConnectionHistoryNavigation,
 } from './type-connection-details'
 
 import { CONNECTION_ALREADY_EXIST } from './type-connection-details'
-
-import type { ReactNavigation } from '../common/type-common'
 import { getConnection, getConnectionTheme } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
@@ -74,14 +73,10 @@ class ConnectionDetails extends Component<
       true
     }
     // check if connection history updated with new params
-    const oldShowSnack = prevProps.navigation.getParam(
-      'showExistingConnectionSnack',
-      false
-    )
-    const newShowSnack = this.props.navigation.getParam(
-      'showExistingConnectionSnack',
-      false
-    )
+    const oldShowSnack =
+      prevProps.navigation.getParam('showExistingConnectionSnack') || false
+    const newShowSnack =
+      this.props.navigation.getParam('showExistingConnectionSnack') || false
     if (oldShowSnack !== newShowSnack && newShowSnack === true) {
       this.showSnackBar()
     }
@@ -107,10 +102,8 @@ class ConnectionDetails extends Component<
   }
 
   showSnackBar = () => {
-    const showExistingConnectionSnack = this.props.navigation.getParam(
-      'showExistingConnectionSnack',
-      false
-    )
+    const showExistingConnectionSnack =
+      this.props.navigation.getParam('showExistingConnectionSnack') || false
     if (showExistingConnectionSnack) {
       Snackbar.show({
         title: CONNECTION_ALREADY_EXIST,
@@ -431,7 +424,7 @@ class ConnectionDetails extends Component<
   }
 }
 
-const mapStateToProps = (state: Store, props: ReactNavigation) => {
+const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
   let connectionHistory: ConnectionHistoryEvent[] =
     state.history.data && props.navigation.state
       ? state.history.data[props.navigation.state.params.senderDID]
