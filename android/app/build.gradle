@@ -89,7 +89,7 @@ apply from: "../../node_modules/react-native/react.gradle"
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
@@ -159,16 +159,14 @@ android {
             storeFile file('../keystores/debug.keystore')
         }
     }
-    // TODO:KS We might want to generate different APKs for separate ABIs
-    // but for now we are going to generate only one APK
-//    splits {
-//        abi {
-//            reset()
-//            enable enableSeparateBuildPerCPUArchitecture
-//            universalApk false  // If true, also generate a universal APK
-//            include "x86" , "armeabi-v7a", "arm", "arm64", "armv7"
-//        }
-//    }
+   splits {
+       abi {
+           reset()
+           enable enableSeparateBuildPerCPUArchitecture
+           universalApk false  // If true, also generate a universal APK
+           include "x86" , "armeabi-v7a", "arm64-v8a", "x86_64"
+       }
+   }
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
@@ -181,6 +179,31 @@ android {
     }
 
 }
+
+// Map for the version code that gives each ABI a value.
+// [ABI_NUMBER] is 10 - 10 for 'x86', 11 for 'armeabi-v7a', 12 for 'arm64-v8a', 13 for 'x86_64' - a two
+// digit number to represent the CPU architecture or Application Binary Interface
+ext.abiCodes = ['x86':'10', 'armeabi-v7a':'11', 'arm64-v8a':'12', 'x86_64':'13']
+android.applicationVariants.all { variant ->
+  variant.outputs.each { output ->
+    // Determines the ABI for this variant and returns the mapped value.
+    def endingAbiCode = project.ext.abiCodes.get(output.getFilter(OutputFile.ABI))
+
+    // Because abiCodes.get() returns null for ABIs that are not mapped by ext.abiCodes,
+    // the following code does not override the version code for universal APKs.
+    // However, because we want universal APKs to have the lowest version code,
+    // this outcome is desirable.
+    if (endingAbiCode != null) {
+
+      // Assigns the new version code to versionCodeOverride, which changes the version code
+      // for only the output APK, not for the variant itself. Skipping this step simply
+      // causes Gradle to use the value of variant.versionCode for the APK.
+      def nextVersionCode = variant.versionCode.toString() + endingAbiCode
+      output.versionCodeOverride = nextVersionCode.toInteger()
+    }
+  }
+}
+
 
 configurations.all {
    resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"

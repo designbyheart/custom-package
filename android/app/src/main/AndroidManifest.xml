@@ -1,8 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="me.connect"
-    android:versionCode="1"
-    android:versionName="1.0">
+    android:versionCode="90810"
+    android:versionName="1.0.19">
+
+    <!-- An APK that requires a higher API level must have a higher android:versionCode.
+         Our versionCode format is the BUILD_NUMBER followed by the ABI_NUMBER - [BUILD_NUMBER][ABI_NUMBER]
+         [BUILD_NUMBER] is 908 - a sequential number starting at 1 and going as high as is needed
+         [ABI_NUMBER] is 10 - 10 for 'x86', 11 for 'armeabi-v7a', 12 for 'arm64-v8a', 13 for 'x86_64' - a two
+         digit number to represent the CPU architecture or Application Binary Interface
+         So for example, 90810 means x86 build 908 AND 101011 would mean armeabi-v7a build 1010
+         The android:versionName is the version number shown to users in the Play Store. -->
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
