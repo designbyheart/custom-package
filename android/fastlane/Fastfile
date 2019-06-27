@@ -31,15 +31,21 @@ lane :alpha do
   remote_branch = git_branch
   remote_branch = remote_branch.split('/').last
 
+  puts "Current working directory is: " + Dir.pwd
   if remote_branch == "master"
     ENV["BUILD_NAME"] = "QA ConnectMe"
-    hockey(api_token: ENV["HOCKEY_APP_API_TOKEN"], bypass_cdn: true)
+    hockey(api_token: ENV["HOCKEY_APP_API_TOKEN"], bypass_cdn: true, apk: "app/build/outputs/apk/release/app-armeabi-v7a-release.apk")
+    hockey(api_token: ENV["HOCKEY_APP_API_TOKEN"], bypass_cdn: true, apk: "app/build/outputs/apk/release/app-arm64-v8a-release.apk")
+    hockey(api_token: ENV["HOCKEY_APP_API_TOKEN"], bypass_cdn: true, apk: "app/build/outputs/apk/release/app-x86-release.apk")
+    hockey(api_token: ENV["HOCKEY_APP_API_TOKEN"], bypass_cdn: true, apk: "app/build/outputs/apk/release/app-x86_64-release.apk")
   elsif remote_branch == "stable" || remote_branch == "stage"
     ENV["BUILD_NAME"] = "Stable ConnectMe"
-    hockey(api_token: ENV["HOCKEY_APP_STAGE_ANDROID_API_TOKEN"], bypass_cdn: true)
+    hockey(api_token: ENV["HOCKEY_APP_STAGE_ANDROID_API_TOKEN"], bypass_cdn: true, apk: "app/build/outputs/apk/release/app-armeabi-v7a-release.apk")
+    hockey(api_token: ENV["HOCKEY_APP_STAGE_ANDROID_API_TOKEN"], bypass_cdn: true, apk: "app/build/outputs/apk/release/app-arm64-v8a-release.apk")
+    hockey(api_token: ENV["HOCKEY_APP_STAGE_ANDROID_API_TOKEN"], bypass_cdn: true, apk: "app/build/outputs/apk/release/app-x86-release.apk")
+    hockey(api_token: ENV["HOCKEY_APP_STAGE_ANDROID_API_TOKEN"], bypass_cdn: true, apk: "app/build/outputs/apk/release/app-x86_64-release.apk")
   else
     ENV["BUILD_NAME"] = "Dev ConnectMe"
-    puts "Current working directory is: " + Dir.pwd
     hockey(api_token: ENV["HOCKEY_APP_DEV_API_TOKEN"], bypass_cdn: true, apk: "app/build/outputs/apk/release/app-armeabi-v7a-release.apk")
     hockey(api_token: ENV["HOCKEY_APP_DEV_API_TOKEN"], bypass_cdn: true, apk: "app/build/outputs/apk/release/app-arm64-v8a-release.apk")
     hockey(api_token: ENV["HOCKEY_APP_DEV_API_TOKEN"], bypass_cdn: true, apk: "app/build/outputs/apk/release/app-x86-release.apk")
