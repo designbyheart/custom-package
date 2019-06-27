@@ -156,11 +156,14 @@ platform :ios do
   ##### ----- PROJECT_VERSION_BUMP ----- #####
   private_lane :project_version_bump do
     buildNumber = increment_build_number(xcodeproj: "ConnectMe.xcodeproj")
+    versionNumber = increment_version_number(xcodeproj: "ConnectMe.xcodeproj")
     path = '../../android/app/build.gradle'
-    re = /versionCode\s+(\d+)/
-
+    reVersionCode = /versionCode\s+(\d+)/
+    reVersionName = /versionName\s+(\S+)/
+    puts 'new version number: ' + versionNumber
     androidBuildGradleFileContent = File.read(path)
-    androidBuildGradleFileContent[re, 1] = buildNumber.to_s
+    androidBuildGradleFileContent[reVersionCode, 1] = buildNumber.to_s
+    androidBuildGradleFileContent[reVersionName, 1] = '"' + versionNumber.to_s + '"'
     androidBuildGradleFile = File.new(path, 'w')
     androidBuildGradleFile.write(androidBuildGradleFileContent)
     androidBuildGradleFile.close
