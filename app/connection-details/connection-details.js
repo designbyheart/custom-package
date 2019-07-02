@@ -22,6 +22,7 @@ import { ConnectionRequestCard } from '../components/connection-details/connecti
 import { ConnectionPending } from '../components/connection-details/connection-pending'
 import Modal from './components/modal'
 import { updateStatusBarTheme } from '../../app/store/connections-store'
+import { newConnectionSeen } from '../../app/connection-history/connection-history-store'
 import { BlurView } from 'react-native-blur'
 import Snackbar from 'react-native-snackbar'
 
@@ -381,6 +382,7 @@ class ConnectionDetails extends Component<
       return (
         <View style={styles.container}>
           <ConnectionDetailsNav
+            newConnectionSeen={this.props.newConnectionSeen}
             navigation={this.props.navigation}
             moreOptionsOpen={this.moreOptionsOpen}
             colorBackground={activeConnectionThemePrimary}
@@ -427,7 +429,7 @@ class ConnectionDetails extends Component<
 const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
   let connectionHistory: ConnectionHistoryEvent[] =
     state.history.data && props.navigation.state
-      ? state.history.data[props.navigation.state.params.senderDID]
+      ? state.history.data[props.navigation.state.params.senderDID].data
       : []
   connectionHistory = connectionHistory.slice()
 
@@ -450,7 +452,7 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ updateStatusBarTheme }, dispatch)
+  bindActionCreators({ updateStatusBarTheme, newConnectionSeen }, dispatch)
 
 export default withStatusBar()(
   connect(mapStateToProps, mapDispatchToProps)(ConnectionDetails)

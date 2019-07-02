@@ -103,7 +103,7 @@ export const getPendingHistoryEvent = (
 ) => {
   const historyItems =
     state.history && state.history.data
-      ? state.history.data[claim.remotePairwiseDID]
+      ? state.history.data[claim.remotePairwiseDID].data
       : []
   return historyItems.filter(item => {
     return item.action === 'PENDING' && item.originalPayload.uid === claim.uid
@@ -117,7 +117,9 @@ export const getHistoryEvent = (
   type: string
 ) => {
   const historyItems =
-    state.history && state.history.data ? state.history.data[remoteDid] : []
+    state.history && state.history.data
+      ? state.history.data[remoteDid].data
+      : []
   return historyItems.filter(item => {
     return (
       item.originalPayload &&
@@ -135,7 +137,9 @@ export const getPendingHistory = (
   type: string
 ) => {
   const historyItems =
-    state.history && state.history.data ? state.history.data[remoteDid] : []
+    state.history && state.history.data
+      ? state.history.data[remoteDid].data
+      : []
   return historyItems.filter(item => {
     return (
       item.originalPayload &&
@@ -152,7 +156,9 @@ export const getClaimReceivedHistory = (
   type: string
 ) => {
   const historyItems =
-    state.history && state.history.data ? state.history.data[remoteDid] : []
+    state.history && state.history.data
+      ? state.history.data[remoteDid].data
+      : []
   return historyItems.filter(item => {
     return (
       item.originalPayload &&

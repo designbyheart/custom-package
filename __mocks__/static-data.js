@@ -1074,15 +1074,32 @@ export function getStore(store?: Store) {
         },
         history: {
           data: {
-            senderDID3: connectionHistory['September 2017'],
-            senderDID4: connectionHistory['October 2017'],
-            senderDID5: connectionHistory['November 2017'],
-            senderDID6: connectionHistory['December 2017'],
-            senderDID7: connectionHistory['January 2017'],
-            senderDID8: connectionHistory['February 2017'],
+            senderDID3: {
+              data: connectionHistory['September 2017'].data,
+              newBadge: connectionHistory['September 2017'].newBadge,
+            },
+            senderDID4: {
+              data: connectionHistory['October 2017'].data,
+              newBadge: connectionHistory['October 2017'].newBadge,
+            },
+            senderDID5: {
+              data: connectionHistory['November 2017'].data,
+              newBadge: connectionHistory['November 2017'].newBadge,
+            },
+            senderDID6: {
+              data: connectionHistory['December 2017'].data,
+              newBadge: connectionHistory['December 2017'].newBadge,
+            },
+            senderDID7: {
+              data: connectionHistory['January 2017'].data,
+              newBadge: connectionHistory['January 2017'].newBadge,
+            },
+            senderDID8: {
+              data: connectionHistory['February 2017'].data,
+              newBadge: connectionHistory['February 2017'].newBadge,
+            },
           },
           isLoading: true,
-          newBadge: {},
         },
         claimOffer: {
           vcxSerializedClaimOffers: {},
@@ -1286,147 +1303,165 @@ export const environmentSwitchQrCodeData = {
 }
 
 export const connectionHistory = {
-  'September 2017': [
-    {
-      id: '1',
-      type: 'INVITATION',
-      icon: require('../app/images/linked.png'),
-      action: 'CONNECTED',
-      timestamp: '2017-09-06T00:00:00+05:30',
-      data: [
-        {
-          label: 'Evernym',
-          data: '2017-09-06T00:00:00+05:30',
-        },
-      ],
-      name: 'Enterprise name',
-      status: 'INVITATION_RECEIVED',
-      remoteDid: 'remoteDid',
-      originalPayload: {},
-    },
-  ],
-  'October 2017': [
-    {
-      id: '1',
-      type: 'INVITATION',
-      icon: require('../app/images/linked.png'),
-      action: 'SHARED',
-      timestamp: '2017-09-06T00:00:00+05:30',
-      data: [
-        {
-          label: 'Evernym',
-          data: '2017-09-06T00:00:00+05:30',
-        },
-      ],
-      name: 'Enterprise name',
-      status: 'INVITATION_RECEIVED',
-      remoteDid: 'remoteDid',
-      originalPayload: {},
-    },
-  ],
-  'November 2017': [
-    {
-      id: '1',
-      type: 'INVITATION',
-      icon: require('../app/images/linked.png'),
-      action: 'PENDING',
-      timestamp: '2017-09-06T00:00:00+05:30',
-      data: [
-        {
-          label: 'Evernym',
-          data: '2017-09-06T00:00:00+05:30',
-        },
-      ],
-      name: 'Enterprise name',
-      status: 'INVITATION_RECEIVED',
-      remoteDid: 'remoteDid',
-      originalPayload: {},
-    },
-  ],
-  'December 2017': [
-    {
-      id: '1',
-      type: 'INVITATION',
-      icon: require('../app/images/linked.png'),
-      action: 'PROOF RECEIVED',
-      timestamp: '2017-09-06T00:00:00+05:30',
-      data: [
-        {
-          label: 'Evernym',
-          data: '2017-09-06T00:00:00+05:30',
-        },
-      ],
-      name: 'Enterprise name',
-      status: 'INVITATION_RECEIVED',
-      remoteDid: 'remoteDid',
-      originalPayload: {
-        payloadInfo: {
-          uid: 'uidProofReceived',
-        },
-        payload: {
-          requester: {
-            name: 'bob',
+  'September 2017': {
+    data: [
+      {
+        id: '1',
+        type: 'INVITATION',
+        icon: require('../app/images/linked.png'),
+        action: 'CONNECTED',
+        timestamp: '2017-09-06T00:00:00+05:30',
+        data: [
+          {
+            label: 'Evernym',
+            data: '2017-09-06T00:00:00+05:30',
+          },
+        ],
+        name: 'Enterprise name',
+        status: 'INVITATION_RECEIVED',
+        remoteDid: 'remoteDid',
+        originalPayload: {},
+      },
+    ],
+    newBadge: false,
+  },
+  'October 2017': {
+    data: [
+      {
+        id: '1',
+        type: 'INVITATION',
+        icon: require('../app/images/linked.png'),
+        action: 'SHARED',
+        timestamp: '2017-09-06T00:00:00+05:30',
+        data: [
+          {
+            label: 'Evernym',
+            data: '2017-09-06T00:00:00+05:30',
+          },
+        ],
+        name: 'Enterprise name',
+        status: 'INVITATION_RECEIVED',
+        remoteDid: 'remoteDid',
+        originalPayload: {},
+      },
+    ],
+    newBadge: false,
+  },
+  'November 2017': {
+    data: [
+      {
+        id: '1',
+        type: 'INVITATION',
+        icon: require('../app/images/linked.png'),
+        action: 'PENDING',
+        timestamp: '2017-09-06T00:00:00+05:30',
+        data: [
+          {
+            label: 'Evernym',
+            data: '2017-09-06T00:00:00+05:30',
+          },
+        ],
+        name: 'Enterprise name',
+        status: 'INVITATION_RECEIVED',
+        remoteDid: 'remoteDid',
+        originalPayload: {},
+      },
+    ],
+    newBadge: false,
+  },
+  'December 2017': {
+    data: [
+      {
+        id: '1',
+        type: 'INVITATION',
+        icon: require('../app/images/linked.png'),
+        action: 'PROOF RECEIVED',
+        timestamp: '2017-09-06T00:00:00+05:30',
+        data: [
+          {
+            label: 'Evernym',
+            data: '2017-09-06T00:00:00+05:30',
+          },
+        ],
+        name: 'Enterprise name',
+        status: 'INVITATION_RECEIVED',
+        remoteDid: 'remoteDid',
+        originalPayload: {
+          payloadInfo: {
+            uid: 'uidProofReceived',
+          },
+          payload: {
+            requester: {
+              name: 'bob',
+            },
           },
         },
       },
-    },
-  ],
-  'January 2017': [
-    {
-      id: '1',
-      type: 'INVITATION',
-      icon: require('../app/images/linked.png'),
-      action: 'RECEIVED',
-      timestamp: '2017-09-06T00:00:00+05:30',
-      data: [
-        {
-          label: 'Evernym',
-          data: '2017-09-06T00:00:00+05:30',
-        },
-      ],
-      name: 'Enterprise name',
-      status: 'INVITATION_RECEIVED',
-      remoteDid: 'remoteDid',
-      originalPayload: {
-        payloadInfo: {
-          uid: 'uidProofReceived',
-        },
-        payload: {
-          requester: {
-            name: 'bob',
+    ],
+    newBadge: false,
+  },
+  'January 2017': {
+    data: [
+      {
+        id: '1',
+        type: 'INVITATION',
+        icon: require('../app/images/linked.png'),
+        action: 'RECEIVED',
+        timestamp: '2017-09-06T00:00:00+05:30',
+        data: [
+          {
+            label: 'Evernym',
+            data: '2017-09-06T00:00:00+05:30',
+          },
+        ],
+        name: 'Enterprise name',
+        status: 'INVITATION_RECEIVED',
+        remoteDid: 'remoteDid',
+        originalPayload: {
+          payloadInfo: {
+            uid: 'uidProofReceived',
+          },
+          payload: {
+            requester: {
+              name: 'bob',
+            },
           },
         },
       },
-    },
-  ],
-  'February 2017': [
-    {
-      id: '1',
-      type: 'INVITATION',
-      icon: require('../app/images/linked.png'),
-      action: 'CLAIM OFFER RECEIVED',
-      timestamp: '2017-09-06T00:00:00+05:30',
-      data: [
-        {
-          label: 'Evernym',
-          data: '2017-09-06T00:00:00+05:30',
-        },
-      ],
-      name: 'Enterprise name',
-      status: 'INVITATION_RECEIVED',
-      remoteDid: 'remoteDid',
-      originalPayload: {
-        payloadInfo: {
-          uid: 'uidProofReceived',
-        },
-        payload: {
-          requester: {
-            name: 'bob',
+    ],
+    newBadge: false,
+  },
+  'February 2017': {
+    data: [
+      {
+        id: '1',
+        type: 'INVITATION',
+        icon: require('../app/images/linked.png'),
+        action: 'CLAIM OFFER RECEIVED',
+        timestamp: '2017-09-06T00:00:00+05:30',
+        data: [
+          {
+            label: 'Evernym',
+            data: '2017-09-06T00:00:00+05:30',
+          },
+        ],
+        name: 'Enterprise name',
+        status: 'INVITATION_RECEIVED',
+        remoteDid: 'remoteDid',
+        originalPayload: {
+          payloadInfo: {
+            uid: 'uidProofReceived',
+          },
+          payload: {
+            requester: {
+              name: 'bob',
+            },
           },
         },
       },
-    },
-  ],
+    ],
+    newBadge: false,
+  },
 }
 
 export const activeConnectionThemePrimary = `rgba(${

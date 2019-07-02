@@ -4,7 +4,6 @@ import {
   Animated,
   StyleSheet,
   Platform,
-  Dimensions,
   View,
   Text,
   FlatList,
@@ -34,8 +33,6 @@ import { getEnvironmentName } from '../store/config-store'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { bindActionCreators } from 'redux'
-
-const { width, height } = Dimensions.get('window')
 
 export class DashboardScreen extends PureComponent<HomeProps> {
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
@@ -134,49 +131,57 @@ export class DashboardScreen extends PureComponent<HomeProps> {
           date:
             history.data &&
             history.data[connection.senderDID] &&
-            history.data[connection.senderDID][
-              history.data[connection.senderDID].length - 1
+            history.data[connection.senderDID].data &&
+            history.data[connection.senderDID].data[
+              history.data[connection.senderDID].data.length - 1
             ] &&
-            history.data[connection.senderDID][
-              history.data[connection.senderDID].length - 1
+            history.data[connection.senderDID].data[
+              history.data[connection.senderDID].data.length - 1
             ].timestamp,
           status:
             history.data &&
             history.data[connection.senderDID] &&
-            history.data[connection.senderDID][
-              history.data[connection.senderDID].length - 1
+            history.data[connection.senderDID].data &&
+            history.data[connection.senderDID].data[
+              history.data[connection.senderDID].data.length - 1
             ] &&
-            history.data[connection.senderDID][
-              history.data[connection.senderDID].length - 1
+            history.data[connection.senderDID].data[
+              history.data[connection.senderDID].data.length - 1
             ].status,
           questionTitle:
             history.data &&
             history.data[connection.senderDID] &&
-            history.data[connection.senderDID][
-              history.data[connection.senderDID].length - 1
+            history.data[connection.senderDID].data &&
+            history.data[connection.senderDID].data[
+              history.data[connection.senderDID].data.length - 1
             ] &&
-            history.data[connection.senderDID][
-              history.data[connection.senderDID].length - 1
+            history.data[connection.senderDID].data[
+              history.data[connection.senderDID].data.length - 1
             ].name,
           credentialName:
             history.data &&
             history.data[connection.senderDID] &&
-            history.data[connection.senderDID][
-              history.data[connection.senderDID].length - 1
+            history.data[connection.senderDID].data &&
+            history.data[connection.senderDID].data[
+              history.data[connection.senderDID].data.length - 1
             ] &&
-            history.data[connection.senderDID][
-              history.data[connection.senderDID].length - 1
+            history.data[connection.senderDID].data[
+              history.data[connection.senderDID].data.length - 1
             ].name,
           type:
             history.data &&
             history.data[connection.senderDID] &&
-            history.data[connection.senderDID][
-              history.data[connection.senderDID].length - 1
+            history.data[connection.senderDID].data &&
+            history.data[connection.senderDID].data[
+              history.data[connection.senderDID].data.length - 1
             ] &&
-            history.data[connection.senderDID][
-              history.data[connection.senderDID].length - 1
+            history.data[connection.senderDID].data[
+              history.data[connection.senderDID].data.length - 1
             ].type,
-          newBadge: history.newBadge && history.newBadge[connection.senderDID],
+          newBadge:
+            history.data &&
+            history.data[connection.senderDID] &&
+            history.data[connection.senderDID].newBadge,
           senderDID: connection.senderDID,
         }
       })

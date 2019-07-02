@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
   Alert,
+  Platform,
 } from 'react-native'
 import { ModalButtons } from '../../components/connection-details/modal-buttons'
 import { connect } from 'react-redux'
@@ -234,13 +235,14 @@ class ProofRequestAttributeList extends PureComponent<
     const attributes: Array<Attribute> = this.props.list
     return (
       <KeyboardAwareFlatList
+        scrollEnabled
         enableOnAndroid
         style={styles.keyboardFlatList}
         data={attributes}
         keyExtractor={this.keyExtractor}
         renderItem={this.renderItem}
         extraData={this.props}
-        enableResetScrollToCoords={false}
+        extraScrollHeight={Platform.OS === 'ios' ? 170 : null}
         ItemSeparatorComponent={BorderSeparator}
         ListFooterComponent={BorderSeparator}
       />

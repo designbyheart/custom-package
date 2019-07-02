@@ -1,18 +1,18 @@
 // @flow
 
 import { Dimensions, Platform } from 'react-native'
-import { iPhoneXHeight } from './constant'
+import { iPhoneXHeight, isIphoneX } from './constant'
 
 const windowSize = Dimensions.get('window')
 const WINDOW_HEIGHT = windowSize.height
 
-const bottomNavBarHeight = 50
+const bottomNavBarHeight = isIphoneX ? 90 : 50
 let bottomBlurNavBarHeight
 let connectionDetailsNav
 
 switch (WINDOW_HEIGHT) {
   case iPhoneXHeight:
-    bottomBlurNavBarHeight = 83
+    bottomBlurNavBarHeight = 89
     connectionDetailsNav = 175
     break
   default:

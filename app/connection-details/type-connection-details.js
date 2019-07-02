@@ -156,7 +156,7 @@ export type ConnectionHistoryDetailsProps = {
 }
 
 export type ConnectionHistoryData = {
-  [string]: Array<ConnectionHistoryEvent>,
+  [string]: { data: Array<ConnectionHistoryEvent>, newBadge: boolean },
 }
 
 export const LOAD_HISTORY = 'LOAD_HISTORY'
@@ -261,6 +261,7 @@ export type ConnectionHistoryNavigation = {
 }
 
 export type ConnectionHistoryProps = {
+  newConnectionSeen: Function,
   claimMap: ?ClaimMap,
   activeConnectionThemePrimary: string,
   activeConnectionThemeSecondary: string,

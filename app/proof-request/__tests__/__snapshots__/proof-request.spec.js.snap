@@ -452,6 +452,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
       }
       disableVirtualization={false}
       enableAutomaticScroll={true}
+      enableOnAndroid={false}
       enableResetScrollToCoords={false}
       extraData={
         Object {
@@ -504,11 +505,13 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
       resetKeyboardSpace={[Function]}
       scrollEventThrottle={1}
       scrollForExtraHeightOnAndroid={[Function]}
+      scrollIntoView={[Function]}
       scrollToEnd={[Function]}
       scrollToFocusedInput={[Function]}
       scrollToPosition={[Function]}
       showsVerticalScrollIndicator={true}
       stickyHeaderIndices={Array []}
+      update={[Function]}
       updateCellsBatchingPeriod={50}
       viewIsInsideTabBar={false}
       viewabilityConfigCallbackPairs={Array []}
@@ -1908,6 +1911,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
       }
       disableVirtualization={false}
       enableAutomaticScroll={true}
+      enableOnAndroid={false}
       enableResetScrollToCoords={false}
       extraData={
         Object {
@@ -1960,11 +1964,13 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
       resetKeyboardSpace={[Function]}
       scrollEventThrottle={1}
       scrollForExtraHeightOnAndroid={[Function]}
+      scrollIntoView={[Function]}
       scrollToEnd={[Function]}
       scrollToFocusedInput={[Function]}
       scrollToPosition={[Function]}
       showsVerticalScrollIndicator={true}
       stickyHeaderIndices={Array []}
+      update={[Function]}
       updateCellsBatchingPeriod={50}
       viewIsInsideTabBar={false}
       viewabilityConfigCallbackPairs={Array []}
@@ -3364,6 +3370,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
       }
       disableVirtualization={false}
       enableAutomaticScroll={true}
+      enableOnAndroid={false}
       enableResetScrollToCoords={false}
       extraData={
         Object {
@@ -3416,11 +3423,13 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
       resetKeyboardSpace={[Function]}
       scrollEventThrottle={1}
       scrollForExtraHeightOnAndroid={[Function]}
+      scrollIntoView={[Function]}
       scrollToEnd={[Function]}
       scrollToFocusedInput={[Function]}
       scrollToPosition={[Function]}
       showsVerticalScrollIndicator={true}
       stickyHeaderIndices={Array []}
+      update={[Function]}
       updateCellsBatchingPeriod={50}
       viewIsInsideTabBar={false}
       viewabilityConfigCallbackPairs={Array []}
@@ -4820,6 +4829,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
       }
       disableVirtualization={false}
       enableAutomaticScroll={true}
+      enableOnAndroid={false}
       enableResetScrollToCoords={false}
       extraData={
         Object {
@@ -4872,11 +4882,13 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
       resetKeyboardSpace={[Function]}
       scrollEventThrottle={1}
       scrollForExtraHeightOnAndroid={[Function]}
+      scrollIntoView={[Function]}
       scrollToEnd={[Function]}
       scrollToFocusedInput={[Function]}
       scrollToPosition={[Function]}
       showsVerticalScrollIndicator={true}
       stickyHeaderIndices={Array []}
+      update={[Function]}
       updateCellsBatchingPeriod={50}
       viewIsInsideTabBar={false}
       viewabilityConfigCallbackPairs={Array []}
@@ -6276,6 +6288,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
       }
       disableVirtualization={false}
       enableAutomaticScroll={true}
+      enableOnAndroid={false}
       enableResetScrollToCoords={false}
       extraData={
         Object {
@@ -6330,11 +6343,13 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
       resetKeyboardSpace={[Function]}
       scrollEventThrottle={1}
       scrollForExtraHeightOnAndroid={[Function]}
+      scrollIntoView={[Function]}
       scrollToEnd={[Function]}
       scrollToFocusedInput={[Function]}
       scrollToPosition={[Function]}
       showsVerticalScrollIndicator={true}
       stickyHeaderIndices={Array []}
+      update={[Function]}
       updateCellsBatchingPeriod={50}
       viewIsInsideTabBar={false}
       viewabilityConfigCallbackPairs={Array []}
@@ -7743,6 +7758,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
       }
       disableVirtualization={false}
       enableAutomaticScroll={true}
+      enableOnAndroid={false}
       enableResetScrollToCoords={false}
       extraData={
         Object {
@@ -7795,11 +7811,13 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
       resetKeyboardSpace={[Function]}
       scrollEventThrottle={1}
       scrollForExtraHeightOnAndroid={[Function]}
+      scrollIntoView={[Function]}
       scrollToEnd={[Function]}
       scrollToFocusedInput={[Function]}
       scrollToPosition={[Function]}
       showsVerticalScrollIndicator={true}
       stickyHeaderIndices={Array []}
+      update={[Function]}
       updateCellsBatchingPeriod={50}
       viewIsInsideTabBar={false}
       viewabilityConfigCallbackPairs={Array []}

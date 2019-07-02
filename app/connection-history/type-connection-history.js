@@ -152,7 +152,7 @@ export type ConnectionHistoryDetailsProps = {
 }
 
 export type ConnectionHistoryData = {
-  [string]: Array<ConnectionHistoryEvent>,
+  [string]: { data: ConnectionHistoryEvent[], newBadge: boolean },
 }
 
 export const LOAD_HISTORY = 'LOAD_HISTORY'
@@ -229,7 +229,6 @@ export type ConnectionHistoryStore = {
   error?: ?CustomError,
   isLoading: boolean,
   data: ?ConnectionHistoryData,
-  newBadge: Object,
 }
 
 export const HISTORY_EVENT_STORAGE_KEY = 'HISTORY_EVENT_STORAGE_KEY'
@@ -243,7 +242,7 @@ export type ConnectionHistoryProps = {
   activeConnectionThemePrimary: string,
   activeConnectionThemeSecondary: string,
   connectionHistory: {
-    [string]: ConnectionHistoryEvent[],
+    [string]: { data: ConnectionHistoryEvent[], newBadge: boolean },
   },
   updateStatusBarTheme: (color?: string) => void,
   deleteConnectionAction: (senderDID: string) => void,

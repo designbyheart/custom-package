@@ -42,6 +42,8 @@ class ConnectionDetailsNav extends React.Component<any, void> {
 
   goBack = () => {
     const { navigation } = this.props
+    const { params } = this.props.navigation.state
+    this.props.newConnectionSeen(params.senderDID)
     const backRedirectRoute = this.props.navigation.getParam(
       'backRedirectRoute',
       null

@@ -9477,23 +9477,23 @@ react-native-image-resizer@^1.0.0:
   resolved "https://registry.yarnpkg.com/react-native-image-resizer/-/react-native-image-resizer-1.0.0.tgz#d47e14943c37938e287fbd639e4db7ceb7fd8917"
   integrity sha1-1H4UlDw3k44of71jnk23zrf9iRc=
 
-react-native-iphone-x-helper@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.2.tgz#7dbca530930f7c1ce8633cc8fd13ba94102992e1"
-  integrity sha512-5FYNC4kTi/YK86l+r8GQ0xgsSL2tleCQ5Yppu1+ARbnm2qGRmDoJTGSNsWBAWa8FP1ORyhMjxi18IlvSRKaI2g==
+react-native-iphone-x-helper@^1.0.3:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
+  integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
 
 react-native-keep-screen-on@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-keep-screen-on/-/react-native-keep-screen-on-1.2.0.tgz#8e243c2f8ab23e4ebee6ec5b880fd2f386c38df7"
   integrity sha512-YVcHdKQw4vK2hMesS5BJ/3ctGAtAwtfWtaKtUxItA4GOh6V/CCSCLq90doZbNfwfGv447VY4SWwncGXC3et+Dg==
 
-react-native-keyboard-aware-scroll-view@^0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.4.4.tgz#116d08975a84482e4ee64dd0b526a8f04138b0a7"
-  integrity sha512-wRQ9Ji1MNN7bMetkcoRvom5i2+8bH+s8QD/m2TEIZaSRlmsWxu4TKcWwYY+T4WABJn4l0UQM9c8QL0GWa6QTbQ==
+react-native-keyboard-aware-scroll-view@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.8.0.tgz#00bcaa38c91323913bb7a733059ad2bc4875f88c"
+  integrity sha512-gPfhgHQI/z7Cc5aeNOEmK0b250QkAeU6V+4oH8EC7mmFneEKn6MAIDjpoiwqt6bV+lFJPABXfx9MtrRmtCeJ/Q==
   dependencies:
-    prop-types "^15.6.0"
-    react-native-iphone-x-helper "^1.0.1"
+    prop-types "^15.6.2"
+    react-native-iphone-x-helper "^1.0.3"
 
 react-native-mail@^3.0.7:
   version "3.0.7"
