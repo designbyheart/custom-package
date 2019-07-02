@@ -47,6 +47,7 @@ exports[`<VerifyRecoveryPhrase /> should match snapshot 1`] = `
       }
     }
     enableAutomaticScroll={true}
+    enableOnAndroid={false}
     enableResetScrollToCoords={true}
     extraHeight={50}
     extraScrollHeight={0}
@@ -59,10 +60,12 @@ exports[`<VerifyRecoveryPhrase /> should match snapshot 1`] = `
     resetKeyboardSpace={[Function]}
     scrollEventThrottle={1}
     scrollForExtraHeightOnAndroid={[Function]}
+    scrollIntoView={[Function]}
     scrollToEnd={[Function]}
     scrollToFocusedInput={[Function]}
     scrollToPosition={[Function]}
     showsVerticalScrollIndicator={true}
+    update={[Function]}
     viewIsInsideTabBar={false}
   >
     <View>

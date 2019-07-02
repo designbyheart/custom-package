@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { StyleSheet, Animated, Easing, Platform } from 'react-native'
+import { View, StyleSheet, Animated, Easing, Platform } from 'react-native'
 import {
   createStackNavigator,
   TabBarBottom,
@@ -104,6 +104,7 @@ import {
   whiteTransparent,
   whiteSolid,
   cmGrey5,
+  isIphoneX,
 } from '../app/common/styles/constant'
 import {
   modalTransitionConfig,
@@ -122,16 +123,24 @@ const styles = StyleSheet.create({
     borderTopColor: cmGrey5,
     backgroundColor: Platform.OS === 'ios' ? whiteTransparent : whiteSolid,
     position: 'absolute',
-    paddingVertical: 3,
+    paddingVertical: isIphoneX ? 24 : 3,
     bottom: 0,
     width: '100%',
     height: measurements.bottomNavBarHeight,
     zIndex: 100,
   },
   tabBarTitle: {
+    marginTop: isIphoneX ? 24 : 0,
     marginBottom: -0.2,
     fontSize: font.size.XXXS,
     fontWeight: 'bold',
+  },
+  menuIconStyle: {
+    paddingTop: 10,
+  },
+  iPhoneXmenuIconStyle: {
+    height: 10,
+    justifyContent: 'flex-start',
   },
 })
 
@@ -236,12 +245,16 @@ const Tabs = createTabNavigator(
         },
         tabBarIcon: ({ focused }) => {
           return (
-            <CustomView style={[{ paddingTop: 10 }]}>
+            <View
+              style={
+                isIphoneX ? styles.iPhoneXmenuIconStyle : styles.menuIconStyle
+              }
+            >
               <SvgCustomIcon
                 name="Menu"
                 fill={focused ? color.actions.font.tenth : color.actions.sixth}
               />
-            </CustomView>
+            </View>
           )
         },
       },

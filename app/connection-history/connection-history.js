@@ -325,7 +325,7 @@ export class ConnectionHistory extends Component<
       const historySenderDIDs = Object.keys(connectionHistory)
 
       const historyList = historySenderDIDs.map((sdid, i) => {
-        const historyItems = connectionHistory[sdid].map((h, i) => {
+        const historyItems = connectionHistory[sdid].data.map((h, i) => {
           const itemProps = {
             avatar: this.getHistoryIcons(h.action, h.showBadge),
             key: h.id,
@@ -476,7 +476,7 @@ const mapStateToProps = (state: Store, props: ReactNavigation) => {
   let connectionHistory: ConnectionHistoryEvent[] =
     state.history.data && props.navigation.state
       ? // $FlowFixMe not fixing flow errors in this file because it is not used anymore
-        state.history.data[props.navigation.state.params.senderDID]
+        state.history.data[props.navigation.state.params.senderDID].data
       : []
 
   if (connectionHistory) {

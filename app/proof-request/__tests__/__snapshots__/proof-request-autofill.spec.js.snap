@@ -450,6 +450,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
       }
       disableVirtualization={false}
       enableAutomaticScroll={true}
+      enableOnAndroid={false}
       enableResetScrollToCoords={false}
       extraData={
         Object {
@@ -494,11 +495,13 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
       resetKeyboardSpace={[Function]}
       scrollEventThrottle={1}
       scrollForExtraHeightOnAndroid={[Function]}
+      scrollIntoView={[Function]}
       scrollToEnd={[Function]}
       scrollToFocusedInput={[Function]}
       scrollToPosition={[Function]}
       showsVerticalScrollIndicator={true}
       stickyHeaderIndices={Array []}
+      update={[Function]}
       updateCellsBatchingPeriod={50}
       viewIsInsideTabBar={false}
       viewabilityConfigCallbackPairs={Array []}

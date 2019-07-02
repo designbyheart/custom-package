@@ -111,7 +111,6 @@ Object {
   "history": Object {
     "data": "****",
     "isLoading": true,
-    "newBadge": Object {},
   },
   "invitation": Object {},
   "ledger": Object {

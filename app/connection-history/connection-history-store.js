@@ -105,7 +105,6 @@ const initialState = {
   error: null,
   isLoading: false,
   data: null,
-  newBadge: {},
 }
 
 export const newConnectionSeen = (senderDid: string) => ({
@@ -504,6 +503,10 @@ export function* watchRecordHistoryEvent(): any {
   yield takeEvery(RECORD_HISTORY_EVENT, persistHistory)
 }
 
+export function* watchNewConnectionSeen(): any {
+  yield takeEvery(NEW_CONNECTION_SEEN, persistHistory)
+}
+
 export function* persistHistory(action): any {
   // if we get action to record history event
   // that means our history store is updated with data
@@ -530,7 +533,11 @@ export function* watchHistoryEventOccurred(): any {
 }
 
 export function* watchConnectionHistory(): any {
-  yield all([watchHistoryEventOccurred(), watchRecordHistoryEvent()])
+  yield all([
+    watchHistoryEventOccurred(),
+    watchRecordHistoryEvent(),
+    watchNewConnectionSeen(),
+  ])
 }
 
 export default function connectionHistoryReducer(
@@ -566,21 +573,24 @@ export default function connectionHistoryReducer(
         ...state,
         data: {
           ...(state.data ? state.data : {}),
-          [remoteDid]: [
-            ...(state.data && state.data[remoteDid]
-              ? state.data[remoteDid]
-              : []),
-            action.historyEvent,
-          ],
+          [remoteDid]: {
+            data: [
+              ...(state.data && state.data[remoteDid]
+                ? state.data[remoteDid].data
+                : []),
+              action.historyEvent,
+            ],
+            newBadge: true,
+          },
         },
       }
     }
 
     case DELETE_HISTORY_EVENT: {
       const { remoteDid } = action.historyEvent
-      const filteredData =
-        state.data && state.data[remoteDid]
-          ? state.data[remoteDid].filter(item => {
+      const filteredDataArr =
+        state.data && state.data[remoteDid] && state.data[remoteDid].data
+          ? state.data[remoteDid].data.filter(item => {
               return item !== action.historyEvent
             })
           : []
@@ -588,7 +598,7 @@ export default function connectionHistoryReducer(
         ...state,
         data: {
           ...(state.data ? state.data : {}),
-          [remoteDid]: filteredData,
+          [remoteDid]: { data: filteredDataArr, newBadge: false },
         },
       }
     }
@@ -596,25 +606,16 @@ export default function connectionHistoryReducer(
     case NEW_CONNECTION_SEEN:
       return {
         ...state,
-        newBadge: {
-          [action.senderDid]: false,
-        },
-      }
-
-    case CLAIM_OFFER_RECEIVED:
-    case PROOF_REQUEST_RECEIVED:
-      return {
-        ...state,
-        newBadge: {
-          [action.payloadInfo.remotePairwiseDID]: true,
-        },
-      }
-
-    case QUESTION_RECEIVED:
-      return {
-        ...state,
-        newBadge: {
-          [action.question.remotePairwiseDID]: true,
+        data: {
+          ...(state.data ? state.data : {}),
+          [action.senderDid]: {
+            data: [
+              ...(state.data && state.data[action.senderDid]
+                ? state.data[action.senderDid].data
+                : []),
+            ],
+            newBadge: false,
+          },
         },
       }
 
