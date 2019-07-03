@@ -154,6 +154,7 @@ describe('user settings screen', () => {
     const componentInstance = wrapper.root.findByType(Settings).instance
     componentInstance.onBackup()
     expect(navigation.navigate).toHaveBeenCalledWith(genRecoveryPhraseRoute, {
+      hideBtn: true,
       initialRoute: 'someRouteName',
     })
   })

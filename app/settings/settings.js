@@ -11,8 +11,10 @@ import {
   FlatList,
   Image,
   Button,
-  TouchableOpacity,
+  View,
 } from 'react-native'
+import { measurements } from '../common/styles/measurements'
+import { BlurView } from 'react-native-blur'
 import { createStackNavigator } from 'react-navigation'
 import BackupWallet from './backup-wallet'
 import {
@@ -80,100 +82,27 @@ import { isBiggerThanShortDevice } from '../common/styles/constant'
 import { Dimensions } from 'react-native'
 import { scale } from 'react-native-size-matters'
 import { darkGray } from '../common/styles/constant'
-import { List, ListItem } from 'react-native-elements'
-import {
-  SOVRIN_TOKEN_AMOUNT_TEST_ID,
-  SOVRIN_TOKEN_TEST_ID,
-} from '../home/home-constants'
+import { List } from 'react-native-elements'
+
 import get from 'lodash.get'
-import SvgCustomIcon from '../components/svg-custom-icon'
 import { getWalletBalance } from '../store/store-selector'
 import CustomDate from '../components/custom-date/custom-date'
 import { matterhornSecondary } from '../common/styles/constant'
 import { tokenAmountSize } from '../home/home'
+
+import { SettingsHeader } from '../components/settings/settings-header'
+import SvgCustomIcon from '../components/svg-setting-icons'
+import { ListItemSettings } from '../components/settings/list-Item-settings'
 import { withStatusBar } from '../components/status-bar/status-bar'
+import { formatNumbers } from '../components/text'
 
 const { width, height } = Dimensions.get('window')
-
-const style = StyleSheet.create({
-  mainContainer: {
-    backgroundColor: lightDarkGray,
-  },
-  userAvatarContainer: {
-    paddingTop: '10%',
-    paddingBottom: 0,
-  },
-  listContainer: {
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    backgroundColor: lightDarkGray,
-    padding: 0,
-  },
-  listItemContainer: {
-    borderBottomWidth: 1,
-    borderTopWidth: 0,
-    borderBottomColor: gainsBoro,
-    minHeight: 64,
-    justifyContent: 'center',
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingRight: 0,
-  },
-  titleStyle: {
-    fontFamily: font.family,
-    fontSize: font.size.M1,
-    fontWeight: 'bold',
-    color: grey,
-  },
-  subtitleStyle: {
-    fontFamily: font.family,
-    fontSize: font.size.XXS,
-    color: grey,
-  },
-  avatarStyle: { backgroundColor: lightDarkGray, padding: 5 },
-  username: {
-    fontSize: font.size.ML1,
-    padding: '3%',
-  },
-  tokenText: {
-    fontSize: font.size.XXS,
-    paddingTop: 5,
-    paddingBottom: 5,
-    textAlign: 'center',
-  },
-  editIcon: {
-    width: EDIT_ICON_DIMENSIONS,
-    height: EDIT_ICON_DIMENSIONS,
-  },
-  labelImage: {
-    marginRight: OFFSET_1X,
-  },
-  floatTokenAmount: {
-    color: darkGray,
-    paddingHorizontal: 8,
-  },
-  backupTimeSubtitleStyle: {
-    marginLeft: 10,
-    color: grey,
-    fontFamily: font.family,
-  },
-  subtitleColor: {
-    color: grey,
-    fontFamily: font.family,
-  },
-  onfidoIcon: {
-    width: 24,
-    height: 24,
-    marginHorizontal: 10,
-  },
-})
 
 export class Settings extends PureComponent<SettingsProps, SettingsState> {
   state = {
     walletBackupModalVisible: false,
     disableTouchIdSwitch: false,
   }
-
   onChangePinClick = () => {
     const { navigation } = this.props
     if (navigation.isFocused()) {
@@ -197,13 +126,22 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         })
     }
   }
-
   onBackup = () => {
     const { navigation: { navigate, state, goBack } } = this.props
     // If no there is no route, then default to Settings
     const initialRoute = get(state, 'routeName', settingsRoute)
     navigate(genRecoveryPhraseRoute, {
       initialRoute,
+      hideBtn: true,
+    })
+  }
+  onRecoveryPhrase = () => {
+    const { navigation: { navigate, state, goBack } } = this.props
+    // If no there is no route, then default to Settings
+    const initialRoute = get(state, 'routeName', settingsRoute)
+    navigate(genRecoveryPhraseRoute, {
+      initialRoute,
+      hideBtn: false,
     })
   }
 
@@ -233,6 +171,9 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         }
       )
     }
+  }
+  openTokenScreen = () => {
+    this.props.navigation.navigate(walletRoute)
   }
 
   openFeedback = () => {
@@ -279,9 +220,14 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
 
   getLastBackupTime() {
     return this.props.lastSuccessfulBackup !== '' ? (
-      <CustomText transparentBg h7 bold style={[style.backupTimeSubtitleStyle]}>
+      <CustomText
+        transparentBg
+        h7
+        bold
+        style={[styles.backupTimeSubtitleStyle]}
+      >
         Last backup was{' '}
-        <CustomDate transparentBg h7 bold style={[style.subtitleColor]}>
+        <CustomDate transparentBg h7 bold style={[styles.subtitleColor]}>
           {this.props.lastSuccessfulBackup}
         </CustomDate>
       </CustomText>
@@ -292,50 +238,6 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
 
   render() {
     const { walletBalance } = this.props
-    const userAvatar = (
-      <CustomView center style={[style.userAvatarContainer]}>
-        <CustomView verticalSpace>
-          <UserAvatar testID={USER_AVATAR_TEST_ID} userCanChange>
-            {this.renderAvatarWithSource}
-          </UserAvatar>
-        </CustomView>
-        {/* DO not remove commented code, this is just to temporarily hide token related stuff */}
-        <TouchableOpacity
-          onPress={this.openTokenScreen}
-          testID={SOVRIN_TOKEN_AMOUNT_TEST_ID}
-        >
-          <CustomView row center>
-            <Icon
-              small
-              testID={SOVRIN_TOKEN_TEST_ID}
-              src={require('../images/sovrinTokenOrange.png')}
-            />
-            <CustomText
-              h5
-              demiBold
-              center
-              style={[
-                style.floatTokenAmount,
-                {
-                  fontSize: tokenAmountSize(
-                    walletBalance ? walletBalance.length : 0
-                  ),
-                },
-              ]}
-              transparentBg
-              formatNumber
-            >
-              {walletBalance}
-            </CustomText>
-          </CustomView>
-          <CustomView>
-            <CustomText transparentBg darkgray style={[style.tokenText]}>
-              TOKENS
-            </CustomText>
-          </CustomView>
-        </TouchableOpacity>
-      </CustomView>
-    )
 
     const toggleSwitch =
       Platform.OS === 'ios' ? (
@@ -363,96 +265,190 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
       )
 
     const settingsItemList = [
+      //{
+      //   id: 1,
+      //   title: 'Download A Backup',
+      //   // subtitle: this.getLastBackupTime(),
+      //   subtitle: 'Choise where to save a .zip backup file',
+      //   avatar: (
+      //     <View style={{ width: 40, alignItems: 'center' }}>
+      //       <SvgCustomIcon name="Backup" fill="#777" width="24" height="24" />
+      //     </View>
+      //   ),
+      //   // rightIcon: <SvgCustomIcon name="ListItemArrow" fill="#A5A5A5" width="8" height="10" />,
+      //   rightIcon: 'spinner',
+      //   onPress: this.onBackup,
+      // },
+      // {
+      //   id: 2,
+      //   title: 'Automatic Cloud Backups',
+      //   subtitle: 'Last backup: Just now',
+      //   avatar: (
+      //     <View style={{ width: 40, alignItems: 'center' }}>
+      //       <SvgCustomIcon
+      //         name="CloudBackup"
+      //         fill="#777"
+      //         width="32"
+      //         height="22"
+      //       />
+      //     </View>
+      //   ),
+      //   rightIcon: <Switch />,
+      //   onPress: null,
+      // },
       {
         id: 1,
         title: 'Backup Data',
         subtitle: this.getLastBackupTime(),
-        avatar: <SvgCustomIcon name="Backup" />,
-        rightIcon: '',
+        avatar: (
+          <View style={styles.avatarView}>
+            <SvgCustomIcon name="Backup" fill="#777" width="24" height="24" />
+          </View>
+        ),
+        rightIcon: (
+          <SvgCustomIcon
+            name="ListItemArrow"
+            fill="#A5A5A5"
+            width="8"
+            height="10"
+          />
+        ),
         onPress: this.onBackup,
       },
       {
         id: 2,
-        title: 'Biometrics',
-        subtitle: 'Use your finger or face to secure app',
-        avatar: <SvgCustomIcon name="Biometrics" />,
+        title: 'Secure With Biometrics',
+        subtitle: 'Unlock Connect.Me with your face or finger',
+        avatar: (
+          <View style={styles.avatarView}>
+            <SvgCustomIcon
+              name="Biometrics"
+              fill="#777"
+              width="24"
+              height="27"
+            />
+          </View>
+        ),
         rightIcon: toggleSwitch,
         onPress: this.onChangeTouchId,
       },
       {
         id: 3,
         title: 'Passcode',
-        subtitle: 'Change the code to unlock this app',
-        avatar: <SvgCustomIcon name="Passcode" />,
-        rightIcon: '',
+        subtitle: 'View/Change your Connect.Me passcode',
+        avatar: (
+          <View style={styles.avatarView}>
+            <SvgCustomIcon name="Passcode" fill="#777" width="32" height="19" />
+          </View>
+        ),
+        rightIcon: (
+          <SvgCustomIcon
+            name="ListItemArrow"
+            fill="#A5A5A5"
+            width="8"
+            height="10"
+          />
+        ),
         onPress: this.onChangePinClick,
       },
       {
         id: 4,
-        title: 'Chat With Us',
-        subtitle: 'Tell us what you think of Connect.Me',
-        avatar: <SvgCustomIcon name="Chat" />,
-        rightIcon: '',
-        onPress: this.openFeedback,
+        title: 'Recovery Phrase',
+        subtitle: 'View your Recovery Phrase',
+        avatar: (
+          <View style={styles.avatarView}>
+            <SvgCustomIcon name="Recovery" fill="#777" width="19" height="29" />
+          </View>
+        ),
+        rightIcon: (
+          <SvgCustomIcon
+            name="ListItemArrow"
+            fill="#A5A5A5"
+            width="8"
+            height="10"
+          />
+        ),
+        onPress: this.onRecoveryPhrase,
       },
       {
         id: 5,
-        title: 'About',
-        subtitle: 'Legal, Version, and Network Information',
-        avatar: <SvgCustomIcon name="About" />,
-        rightIcon: '',
-        onPress: this.openAboutApp,
+        title: 'Chat With Us',
+        subtitle: 'Tell us what you think of Connect.Me',
+        avatar: (
+          <View style={styles.avatarView}>
+            <SvgCustomIcon name="Chat" fill="#777" width="27" height="27" />
+          </View>
+        ),
+        rightIcon: (
+          <SvgCustomIcon
+            name="ListItemArrow"
+            fill="#A5A5A5"
+            width="8"
+            height="10"
+          />
+        ),
+        onPress: this.openFeedback,
       },
       {
         id: 6,
-        title: 'Get your ID verified by Onfido',
-        subtitle: '',
+        title: 'About',
+        subtitle: 'Legal, Version, and Network Information',
         avatar: (
-          <Image
-            style={style.onfidoIcon}
-            source={require('../images/onfido-logo.png')}
+          <View style={styles.avatarView}>
+            <SvgCustomIcon name="About" fill="#777" width="27" height="27" />
+          </View>
+        ),
+        rightIcon: (
+          <SvgCustomIcon
+            name="ListItemArrow"
+            fill="#A5A5A5"
+            width="8"
+            height="10"
           />
         ),
-        rightIcon: '',
+        onPress: this.openAboutApp,
+      },
+      {
+        id: 7,
+        title: 'Get your ID verified by Onfido',
+        subtitle: 'ONFIDO',
+        avatar: (
+          <View style={styles.avatarView}>
+            <Image
+              style={styles.onfidoIcon}
+              source={require('../images/onfido-logo.png')}
+            />
+          </View>
+        ),
+
+        rightIcon: (
+          <SvgCustomIcon
+            name="ListItemArrow"
+            fill="#A5A5A5"
+            width="8"
+            height="10"
+          />
+        ),
         onPress: this.openOnfido,
       },
     ]
-    return (
-      <Container style={[style.mainContainer]}>
-        <CustomView tertiary>
-          <ScrollView>
-            {userAvatar}
-            <List containerStyle={[style.mainContainer, style.listContainer]}>
-              {settingsItemList.map((item, index) => {
-                return (
-                  <ListItem
-                    containerStyle={[style.listItemContainer]}
-                    titleStyle={[style.titleStyle]}
-                    subtitleStyle={[style.subtitleStyle]}
-                    key={index}
-                    title={item.title}
-                    subtitle={item.subtitle}
-                    avatarStyle={[style.avatarStyle]}
-                    avatar={item.avatar}
-                    rightIcon={
-                      item.rightIcon !== ''
-                        ? item.rightIcon
-                        : { name: 'chevron-right' }
-                    }
-                    hideChevron={item.rightIcon === ''}
-                    onPress={item.onPress}
-                  />
-                )
-              })}
-            </List>
-          </ScrollView>
-        </CustomView>
-      </Container>
-    )
-  }
 
-  openTokenScreen = () => {
-    this.props.navigation.navigate(walletRoute)
+    return (
+      <View style={styles.container}>
+        <SettingsHeader
+          tokenScreen={() => this.openTokenScreen()}
+          balance={formatNumbers(walletBalance)}
+        />
+        <ListItemSettings list={settingsItemList} />
+        {Platform.OS === 'ios' ? (
+          <BlurView
+            style={styles.blurContainer}
+            blurType="light"
+            blurAmount={8}
+          />
+        ) : null}
+      </View>
+    )
   }
 }
 
@@ -499,3 +495,36 @@ SettingStack.navigationOptions = ({ navigation }: ReactNavigation) => {
 }
 
 export default SettingStack
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'stretch',
+    justifyContent: 'flex-start',
+    backgroundColor: '#fff',
+  },
+  blurContainer: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    height: measurements.bottomBlurNavBarHeight,
+  },
+  subtitleColor: {
+    color: grey,
+    fontFamily: font.family,
+  },
+  backupTimeSubtitleStyle: {
+    marginLeft: 10,
+    color: grey,
+    fontFamily: font.family,
+  },
+  onfidoIcon: {
+    width: 27,
+    height: 27,
+  },
+  avatarView: {
+    width: 40,
+    alignItems: 'center',
+  },
+})
