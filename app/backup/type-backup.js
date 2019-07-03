@@ -11,6 +11,7 @@ export type ReactNavigationBackup = {
       params: {
         recoveryPassphrase?: string,
         initialRoute: string,
+        hideBtn?: boolean,
       },
     },
   },

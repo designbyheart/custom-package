@@ -33,6 +33,7 @@ import {
   RECOVERY_PHRASE_CLOSE_TEST_ID,
   SUBMIT_RECOVERY_PHRASE_TEST_ID,
   SUBMIT_RECOVERY_PHRASE_BUTTON_TITLE,
+  SUBMIT_RECOVERY_GO_BACK,
 } from './backup-constants'
 import styles, { chatBubbleTextOffset } from './styles'
 import { getBackupPassphrase, getBackupStatus } from '../store/store-selector'
@@ -118,6 +119,10 @@ export class GenerateRecoveryPhrase extends PureComponent<
       initialRoute: state.params.initialRoute,
     })
   }
+  onRecoveryPhraseGoBack = () => {
+    const { navigation: { navigate, state, goBack } } = this.props
+    goBack(null)
+  }
 
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: (
@@ -176,6 +181,7 @@ export class GenerateRecoveryPhrase extends PureComponent<
 
   render() {
     const { recoveryPassphrase, recoveryStatus } = this.props
+    const { navigation: { navigate, state } } = this.props
     const disableButton =
       recoveryStatus === BACKUP_STORE_STATUS.GENERATE_PHRASE_FAILURE ||
       recoveryStatus === BACKUP_STORE_STATUS.GENERATE_PHRASE_LOADING ||
@@ -239,19 +245,32 @@ export class GenerateRecoveryPhrase extends PureComponent<
               Are you sure you wrote it down?
             </CustomText>
           </CustomView>
-          <CustomButton
-            disabled={disableButton}
-            large={isBiggerThanShortDevice ? true : false}
-            onPress={this.verifyRecoveryPhrase}
-            testID={SUBMIT_RECOVERY_PHRASE_TEST_ID}
-            style={[styles.submitButton]}
-            customColor={{
-              color: color.bg.eleventh.color,
-              fontWeight: '600',
-              fontSize: 18,
-            }}
-            title={SUBMIT_RECOVERY_PHRASE_BUTTON_TITLE}
-          />
+          {state.params.hideBtn ? (
+            <CustomButton
+              disabled={disableButton}
+              onPress={this.verifyRecoveryPhrase}
+              testID={SUBMIT_RECOVERY_PHRASE_TEST_ID}
+              style={[styles.submitButton]}
+              customColor={{
+                color: color.bg.eleventh.color,
+                fontWeight: '600',
+                fontSize: 18,
+              }}
+              title={SUBMIT_RECOVERY_PHRASE_BUTTON_TITLE}
+            />
+          ) : (
+            <CustomButton
+              onPress={this.onRecoveryPhraseGoBack}
+              testID={SUBMIT_RECOVERY_PHRASE_TEST_ID}
+              style={[styles.submitButton]}
+              customColor={{
+                color: color.bg.eleventh.color,
+                fontWeight: '600',
+                fontSize: 18,
+              }}
+              title={SUBMIT_RECOVERY_GO_BACK}
+            />
+          )}
         </CustomView>
       </Container>
     )
