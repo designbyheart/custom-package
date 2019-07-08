@@ -25,7 +25,7 @@ class SettingsHeader extends React.Component<any, any> {
             {this.renderAvatarWithSource}
           </UserAvatar>
           <Text style={style.userName}>Me</Text>
-          <View style={style.tokensWrapper}>
+          {/* <View style={style.tokensWrapper}>
             <TouchableOpacity onPress={this.props.tokenScreen}>
               <SvgSettingIcons
                 name="TokenIcon"
@@ -37,8 +37,8 @@ class SettingsHeader extends React.Component<any, any> {
             <TouchableOpacity onPress={this.props.tokenScreen}>
               <Text style={style.tokens}>{this.props.balance}</Text>
             </TouchableOpacity>
-          </View>
-          <Text style={style.tokensLabel}>TOKENS</Text>
+          </View> */}
+          {/* <Text style={style.tokensLabel}>TOKENS</Text> */}
         </SafeAreaView>
       </View>
     )

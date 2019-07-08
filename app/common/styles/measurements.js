@@ -23,9 +23,9 @@ function isIphoneXorAbove() {
   )
 }
 if (isIphoneXorAbove()) {
-  settingsHeader = 224
+  settingsHeader = 200
 } else {
-  settingsHeader = 192
+  settingsHeader = 180
 }
 
 switch (WINDOW_HEIGHT) {
