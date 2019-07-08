@@ -3,7 +3,7 @@ fastlane_version "2.27.0"
 default_platform :android
 platform :android do
   before_all do
-     ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
+     ENV["SLACK_URL"] = "https://hooks.slack.com/services/#{ENV["SLACK_CREDENTIAL"]}"
 end
 
 lane :alpha do
