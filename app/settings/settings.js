@@ -436,7 +436,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     return (
       <View style={styles.container}>
         <SettingsHeader
-          tokenScreen={() => this.openTokenScreen()}
+          // tokenScreen={() => this.openTokenScreen()}
           balance={formatNumbers(walletBalance)}
         />
         <ListItemSettings list={settingsItemList} />
