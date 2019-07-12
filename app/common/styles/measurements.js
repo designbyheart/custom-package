@@ -1,41 +1,20 @@
 // @flow
 
 import { Dimensions, Platform } from 'react-native'
-import { iPhoneXHeight, isIphoneX } from './constant'
+import { isIphoneX } from './constant'
 
-const windowSize = Dimensions.get('window')
+const windowSize = Dimensions.get('screen')
 const WINDOW_HEIGHT = windowSize.height
 
-const bottomNavBarHeight = isIphoneX ? 90 : 50
-let bottomBlurNavBarHeight
-let connectionDetailsNav
+let bottomNavBarHeight = isIphoneX ? 84 : 60
+let bottomBlurNavBarHeight = isIphoneX ? 83 : 59
+let connectionDetailsNav = 175
 let settingsHeader
 
-function isIphoneXorAbove() {
-  const dimen = Dimensions.get('window')
-  return (
-    Platform.OS === 'ios' &&
-    !Platform.isPad &&
-    !Platform.isTVOS &&
-    (dimen.height === 812 ||
-      dimen.width === 812 ||
-      (dimen.height === 896 || dimen.width === 896))
-  )
-}
-if (isIphoneXorAbove()) {
+if (isIphoneX) {
   settingsHeader = 200
 } else {
   settingsHeader = 180
-}
-
-switch (WINDOW_HEIGHT) {
-  case iPhoneXHeight:
-    bottomBlurNavBarHeight = 89
-    connectionDetailsNav = 175
-    break
-  default:
-    bottomBlurNavBarHeight = 49
-    connectionDetailsNav = 175
 }
 
 export const measurements = {

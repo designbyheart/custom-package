@@ -400,7 +400,7 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
         },
         Object {
           "bottom": 0,
-          "height": 49,
+          "height": 59,
           "left": 0,
           "position": "absolute",
           "width": "100%",
@@ -811,7 +811,7 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
         },
         Object {
           "bottom": 0,
-          "height": 49,
+          "height": 59,
           "left": 0,
           "position": "absolute",
           "width": "100%",
@@ -881,7 +881,7 @@ exports[`<DashboardScreen /> should render Home and show loader 1`] = `
         },
         Object {
           "bottom": 0,
-          "height": 49,
+          "height": 59,
           "left": 0,
           "position": "absolute",
           "width": "100%",

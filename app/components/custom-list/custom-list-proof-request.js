@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   keyboardFlatList: {
-    marginLeft: '5%',
-    marginRight: '5%',
+    paddingLeft: '5%',
+    paddingRight: '5%',
   },
 })

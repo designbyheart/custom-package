@@ -705,7 +705,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2f2f2',
   },
   keyboardFlatList: {
-    marginLeft: '5%',
-    marginRight: '5%',
+    paddingLeft: '5%',
+    paddingRight: '5%',
   },
 })

@@ -5330,7 +5330,7 @@ exports[`user settings screen should render properly and snapshot should match i
         },
         Object {
           "bottom": 0,
-          "height": 49,
+          "height": 59,
           "left": 0,
           "position": "absolute",
           "width": "100%",
