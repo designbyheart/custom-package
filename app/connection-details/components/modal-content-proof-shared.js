@@ -237,46 +237,11 @@ export default withStatusBar({ color: black })(
 )
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flex: 1,
-  },
-  scrollViewWrapper: {
-    flex: 1,
-    backgroundColor: '#f2f2f2',
-  },
-  wrapper: {
-    backgroundColor: '#f2f2f2',
-    width: '90%',
-    marginLeft: '5%',
-    paddingTop: 12,
-    position: 'relative',
-  },
-  title: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#a5a5a5',
-    width: '100%',
-    textAlign: 'left',
-    marginBottom: 2,
-    fontFamily: 'Lato',
-  },
-  content: {
-    fontSize: 17,
-    fontWeight: '400',
-    color: '#505050',
-    width: '100%',
-    textAlign: 'left',
-    fontFamily: 'Lato',
-    paddingBottom: 12,
-  },
   outerAnimatedWrapper: {
     backgroundColor: 'rgba(0,0,0,0.7)',
     width: ScreenWidth,
     height: ScreenHeight,
     position: 'absolute',
-    // top: this.state.moveModal,
-    // left: 0,
     zIndex: 999,
     elevation: 20,
   },

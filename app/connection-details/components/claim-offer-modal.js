@@ -270,8 +270,6 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
     height: ScreenHeight,
     position: 'absolute',
-    // top: this.state.moveModal,
-    // left: 0,
     zIndex: 999,
     elevation: 20,
   },

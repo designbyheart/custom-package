@@ -5,6 +5,7 @@ import {
   createStackNavigator,
   TabBarBottom,
   createTabNavigator,
+  SafeAreaView,
 } from 'react-navigation'
 import AboutApp from './about-app/about-app'
 import HomeScreen from './home/home'
@@ -123,24 +124,27 @@ const styles = StyleSheet.create({
     borderTopColor: cmGrey5,
     backgroundColor: Platform.OS === 'ios' ? whiteTransparent : whiteSolid,
     position: 'absolute',
-    paddingVertical: isIphoneX ? 24 : 3,
     bottom: 0,
-    width: '100%',
     height: measurements.bottomNavBarHeight,
+    width: '100%',
     zIndex: 100,
   },
+  icon: {
+    marginBottom: isIphoneX ? 5 : 2,
+  },
   tabBarTitle: {
-    marginTop: isIphoneX ? 24 : 0,
-    marginBottom: -0.2,
     fontSize: font.size.XXXS,
     fontWeight: 'bold',
+    marginBottom: isIphoneX ? 25 : 8,
   },
   menuIconStyle: {
     paddingTop: 10,
   },
-  iPhoneXmenuIconStyle: {
-    height: 10,
-    justifyContent: 'flex-start',
+  iphoneXMenuIconStyle: {
+    paddingTop: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
   },
 })
 
@@ -158,10 +162,12 @@ const Tabs = createTabNavigator(
         },
         tabBarIcon: ({ focused }) => {
           return (
-            <SvgCustomIcon
-              name="Connections"
-              fill={focused ? color.actions.font.tenth : color.actions.sixth}
-            />
+            <View style={styles.icon}>
+              <SvgCustomIcon
+                name="Connections"
+                fill={focused ? color.actions.font.tenth : color.actions.sixth}
+              />
+            </View>
           )
         },
       },
@@ -218,17 +224,23 @@ const Tabs = createTabNavigator(
         tabBarIcon: ({ focused }) => {
           if (focused) {
             return (
-              <SvgCustomIcon
-                name="ScanOn"
-                fill={focused ? color.actions.font.tenth : color.actions.sixth}
-              />
+              <View style={styles.icon}>
+                <SvgCustomIcon
+                  name="ScanOn"
+                  fill={
+                    focused ? color.actions.font.tenth : color.actions.sixth
+                  }
+                />
+              </View>
             )
           }
           return (
-            <SvgCustomIcon
-              name="Scan"
-              fill={focused ? color.actions.font.tenth : color.actions.sixth}
-            />
+            <View style={styles.icon}>
+              <SvgCustomIcon
+                name="Scan"
+                fill={focused ? color.actions.font.tenth : color.actions.sixth}
+              />
+            </View>
           )
         },
       },
@@ -247,7 +259,7 @@ const Tabs = createTabNavigator(
           return (
             <View
               style={
-                isIphoneX ? styles.iPhoneXmenuIconStyle : styles.menuIconStyle
+                isIphoneX ? styles.iphoneXMenuIconStyle : styles.menuIconStyle
               }
             >
               <SvgCustomIcon

@@ -291,7 +291,7 @@ export const inputBoxVerifyPassphraseHeight =
   height > SHORT_DEVICE || Platform.OS === 'ios' ? 137 : 40
 export const isBiggerThanShortDevice = height > SHORT_DEVICE
 export const isBiggerThanVeryShortDevice = height > VERY_SHORT_DEVICE
-export const isIphoneX = Platform.OS === 'ios' && height === 812
+export const isIphoneX = Platform.OS === 'ios' && height >= 812
 export const deviceHeight = height
 export const primaryHeaderHeight = height >= MEDIUM_DEVICE ? 120 : 100
 
