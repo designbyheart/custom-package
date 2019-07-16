@@ -229,6 +229,8 @@ platform :ios do
 
     if ENV["CI_PIPELINE_SOURCE"] == "merge_request"
       UI.important("Build is from Merge Request. Skipping push to origin")
+    elsif ENV["CI_BUILD_REF_SLUG"] != "master"
+      UI.important("Build is not on master branch. Skipping push to origin")
     else
       push_to_git_remote(
         remote: "origin",
