@@ -1,4 +1,5 @@
 // @flow
+import DeviceInfo from 'react-native-device-info'
 import { StyleSheet } from 'react-native'
 import { Dimensions, Platform } from 'react-native'
 
@@ -249,6 +250,8 @@ export const font = {
   family: 'Lato',
 }
 
+export const phoneModel = DeviceInfo.getModel()
+
 export const PADDING_HORIZONTAL = 15
 export const PADDING_VERTICAL = 8
 export const MARGIN_BOTTOM = 4
@@ -291,7 +294,16 @@ export const inputBoxVerifyPassphraseHeight =
   height > SHORT_DEVICE || Platform.OS === 'ios' ? 137 : 40
 export const isBiggerThanShortDevice = height > SHORT_DEVICE
 export const isBiggerThanVeryShortDevice = height > VERY_SHORT_DEVICE
-export const isIphoneX = Platform.OS === 'ios' && height >= 812
+export const isIphoneX =
+  Platform.OS === 'ios' &&
+  (phoneModel &&
+    (phoneModel.toLowerCase() === 'iphone x' ||
+      phoneModel.toLowerCase() === 'iphone xs'))
+export const isIphoneXR =
+  Platform.OS === 'ios' &&
+  (phoneModel &&
+    (phoneModel.toLowerCase() === 'iphone xr' ||
+      phoneModel.toLowerCase() === 'iphone xs max'))
 export const deviceHeight = height
 export const primaryHeaderHeight = height >= MEDIUM_DEVICE ? 120 : 100
 
