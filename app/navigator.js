@@ -7,6 +7,7 @@ import {
   createTabNavigator,
   SafeAreaView,
 } from 'react-navigation'
+import DeviceInfo from 'react-native-device-info'
 import AboutApp from './about-app/about-app'
 import HomeScreen from './home/home'
 import SplashScreenView from './start-up/splash-screen'
@@ -106,6 +107,7 @@ import {
   whiteSolid,
   cmGrey5,
   isIphoneX,
+  isIphoneXR,
 } from '../app/common/styles/constant'
 import {
   modalTransitionConfig,
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
   tabBarTitle: {
     fontSize: font.size.XXXS,
     fontWeight: 'bold',
-    marginBottom: isIphoneX ? 25 : 8,
+    marginBottom: isIphoneX ? 0 : isIphoneXR ? 25 : 8,
   },
   menuIconStyle: {
     paddingTop: 10,

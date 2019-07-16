@@ -1,6 +1,7 @@
 package me.connect;
 
 import android.app.Application;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.facebook.react.ReactApplication;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.azendoo.reactnativesnackbar.SnackbarPackage;
@@ -53,6 +54,7 @@ public class MainApplication extends Application implements ShareApplication, Re
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
+        new RNDeviceInfo(),
         new MainReactPackage(),
             new ReanimatedPackage(),
             new SnackbarPackage(),

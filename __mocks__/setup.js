@@ -232,6 +232,10 @@ jest.mock('react-native-image-crop-picker', () => ({
 
 jest.mock('react-native-share', () => {})
 
+jest.mock('react-native-device-info', () => ({
+  getModel: jest.fn(),
+}))
+
 // Add mock for RNIndy on NativeModules
 // we don't want to mock NativeModules the way we are doing for all above
 // because then we would have to mock everything else as well of NativeModules
