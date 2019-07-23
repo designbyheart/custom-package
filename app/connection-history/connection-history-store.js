@@ -135,7 +135,21 @@ export function* loadHistorySaga(): Generator<*, *, *> {
     )
 
     if (historyEvents) {
-      yield put(loadHistorySuccess(JSON.parse(historyEvents)))
+      oldHistory = JSON.parse(historyEvents)
+      oldHistoryKeys = Object.keys(oldHistory)
+      newHistory = {}
+
+      if (!oldHistory[oldHistoryKeys[0]].data) {
+        for (let i = 0; i < oldHistoryKeys.length; i++) {
+          newHistory[oldHistoryKeys[i]] = {
+            data: oldHistory[oldHistoryKeys[i]],
+            newBadge: false,
+          }
+        }
+        yield put(loadHistorySuccess(newHistory))
+      } else {
+        yield put(loadHistorySuccess(oldHistory))
+      }
     }
   } catch (e) {
     captureError(e)
