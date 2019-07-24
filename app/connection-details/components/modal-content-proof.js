@@ -664,6 +664,7 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     width: '85%',
+    paddingBottom: 10,
   },
   avatarWrapper: {
     marginTop: -15,

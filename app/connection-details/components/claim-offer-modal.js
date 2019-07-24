@@ -173,11 +173,7 @@ class ClaimOfferModal extends React.Component<any, any> {
             { transform: [{ translateY: this.state.moveModalHeight }] },
           ]}
         >
-          <ScrollView
-            onScrollEndDrag={this.handleScroll}
-            scrollEventThrottle={15}
-            bounces={false}
-          >
+          <View>
             <TouchableOpacity style={styles.touchable} onPress={this.hideModal}>
               <View style={styles.helperWrapper} />
             </TouchableOpacity>
@@ -201,7 +197,7 @@ class ClaimOfferModal extends React.Component<any, any> {
                 rightBtnText={'Accept'}
               />
             </View>
-          </ScrollView>
+          </View>
         </Animated.View>
       </Animated.View>
     )
