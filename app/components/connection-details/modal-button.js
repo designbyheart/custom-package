@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   },
   innerWrapper: {
     borderRadius: 5,
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'stretch',
     justifyContent: 'center',
