@@ -221,11 +221,7 @@ class Modal extends PureComponent<any, any> {
             { transform: [{ translateY: this.state.moveModal }] },
           ]}
         >
-          <ScrollView
-            onScrollEndDrag={this.handleScroll}
-            scrollEventThrottle={15}
-            bounces={false}
-          >
+          <View>
             <TouchableOpacity
               style={styles.touchable}
               onPress={this.props.hideModal}
@@ -245,7 +241,7 @@ class Modal extends PureComponent<any, any> {
               {this.renderModalContent(data)}
               {this.renderButtons(data)}
             </View>
-          </ScrollView>
+          </View>
         </Animated.View>
       </Animated.View>
     )
@@ -295,8 +291,6 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
     height: ScreenHeight,
     position: 'absolute',
-    // top: this.state.moveModal,
-    // left: 0,
     zIndex: 999,
     elevation: 20,
   },
