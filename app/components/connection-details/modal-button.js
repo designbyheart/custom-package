@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     paddingBottom: 45,
   },
   innerWrapper: {
+    width: '100%',
     borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'stretch',
