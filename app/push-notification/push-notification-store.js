@@ -97,6 +97,7 @@ import { PUSH_COM_METHOD } from '../common'
 import type { NavigationParams, GenericObject } from '../common/type-common'
 
 import { addPendingRedirection } from '../lock/lock-store'
+import { UNLOCK_APP } from '../lock/type-lock'
 import { claimOfferReceived } from '../claim-offer/claim-offer-store'
 import { proofRequestReceived } from '../proof-request/proof-request-store'
 import {
@@ -435,6 +436,16 @@ export function* fetchAdditionalDataSaga(
     const remoteName = connection.remoteName
     const remotePairwiseDID = connection.remotePairwiseDID
 
+    // NOTE: We need to wait for the app to be unlocked before
+    // dispatching the pushNotificationReceived action. Also, we
+    // delay for a few milliseconds after the app is unlocked to
+    // wait for the route updates to the home/dashboard screen
+    const isAppLocked: boolean = yield select(getIsAppLocked)
+    if (isAppLocked) {
+      yield take(UNLOCK_APP)
+    }
+    yield call(delay, 600)
+
     yield put(
       pushNotificationReceived({
         type,
@@ -573,27 +584,15 @@ function* redirectToRelevantScreen({
     if (!blackListedRoute[currentScreen])
       switch (uiType || type) {
         case 'CLAIM_OFFER_RECEIVED':
-          //TODO fix the scenario where claim-offer is not added to pending redirection when app is unlocked
-          //Redirect to claimOffer after 1 sec because after unlocking the app
-          //it redirects to home screen
-          //If we don't wait and redirect to claimOffer immediately , then
-          //sometimes claim offer screen disappears as home screen redirection will happen
-          //after it
-          // yield call(delay, 1000)
-          yield call(delay, 1000)
-
           yield handleRedirection(claimOfferRoute, {
             uid,
           })
-
           break
 
         case MESSAGE_TYPE.CLAIM_OFFER:
-          yield call(delay, 1000)
           yield handleRedirection(claimOfferRoute, {
             uid,
           })
-
           break
 
         case MESSAGE_TYPE.PROOF_REQUEST:
@@ -617,15 +616,17 @@ function* redirectToRelevantScreen({
 }
 
 function* handleRedirection(routeName: string, params: NavigationParams): any {
-  const isAppLocked = yield select(getIsAppLocked)
-  if (isAppLocked)
+  const isAppLocked: boolean = yield select(getIsAppLocked)
+  if (isAppLocked) {
     yield put(
       addPendingRedirection([
         { routeName: homeTabRoute },
         { routeName, params },
       ])
     )
-  else yield put(navigateToRoutePN(routeName, params))
+  } else {
+    yield put(navigateToRoutePN(routeName, params))
+  }
 }
 
 export const navigateToRoutePN = (
