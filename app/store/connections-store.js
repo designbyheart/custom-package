@@ -37,6 +37,10 @@ import {
   DELETE_CONNECTION,
   STORAGE_KEY_THEMES,
   HYDRATE_CONNECTION_THEMES,
+  UPDATE_CONNECTION_THEME,
+  UPDATE_STATUS_BAR_THEME,
+  NEW_CONNECTION_FAIL,
+  HYDRATE_CONNECTIONS,
 } from './type-connection-store'
 import {
   deleteConnection,
@@ -52,11 +56,6 @@ import {
   NEW_CONNECTION_SUCCESS,
   saveNewConnectionSuccess,
 } from './new-connection-success'
-
-const UPDATE_CONNECTION_THEME = 'UPDATE_CONNECTION_THEME'
-export const UPDATE_STATUS_BAR_THEME = 'UPDATE_STATUS_BAR_THEME'
-const NEW_CONNECTION_FAIL = 'NEW_CONNECTION_FAIL'
-export const HYDRATE_CONNECTIONS = 'HYDRATE_CONNECTIONS'
 
 const initialState: ConnectionStore = {
   data: {},

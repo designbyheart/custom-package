@@ -1,0 +1,614 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CloudBackup /> should match snapshot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "rgba(0, 0, 0, 0.8)",
+      "flex": 1,
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "transform": Array [
+          Object {
+            "translateY": 0,
+          },
+        ],
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        onGestureEvent={[Function]}
+        onHandlerStateChange={[Function]}
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <View
+            row={true}
+            style={
+              Object {
+                "backgroundColor": "transparent",
+                "flex": 1,
+                "flexDirection": "row",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              hitSlop={
+                Object {
+                  "bottom": 20,
+                  "left": 20,
+                  "right": 20,
+                  "top": 20,
+                }
+              }
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            />
+            <View
+              style={
+                Object {
+                  "justifyContent": "flex-end",
+                  "marginBottom": 8,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "backgroundColor": "#F2F2F2",
+                    "borderRadius": 6,
+                    "height": 6,
+                    "width": 51,
+                  }
+                }
+              />
+            </View>
+            <View
+              accessible={true}
+              hitSlop={
+                Object {
+                  "bottom": 20,
+                  "left": 20,
+                  "right": 20,
+                  "top": 20,
+                }
+              }
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#ffffff",
+          "borderTopLeftRadius": 8,
+          "borderTopRightRadius": 8,
+          "paddingBottom": 10,
+          "paddingLeft": "5%",
+          "paddingRight": "5%",
+        }
+      }
+    >
+      <View>
+        <View
+          center={true}
+          row={true}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "maxHeight": 90,
+              "minHeight": 64,
+            }
+          }
+        >
+          <View
+            style={Object {}}
+          >
+            <Image
+              resizeMode="cover"
+              source={1}
+              style={
+                Array [
+                  Object {
+                    "height": 32,
+                    "width": 32,
+                  },
+                ]
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "marginLeft": "5%",
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              numberOfLines={2}
+              style={
+                Array [
+                  Object {
+                    "fontSize": 17,
+                  },
+                  Object {
+                    "fontFamily": "Lato",
+                  },
+                  Object {},
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  Object {
+                    "color": "#505050",
+                  },
+                ]
+              }
+            >
+              Cloud Backup
+            </Text>
+          </View>
+        </View>
+        <View>
+          <View
+            center={true}
+            row={true}
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Image
+              resizeMode="cover"
+              source={1}
+              style={
+                Array [
+                  Object {
+                    "height": 54,
+                    "width": 80,
+                  },
+                ]
+              }
+            />
+          </View>
+          <View
+            center={true}
+            row={true}
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          />
+          <Text
+            allowFontScaling={false}
+            numberOfLines={2}
+            style={
+              Array [
+                undefined,
+                Object {
+                  "fontFamily": "Lato",
+                },
+                Object {},
+                Object {
+                  "fontWeight": "bold",
+                },
+                Object {
+                  "textAlign": "center",
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Object {
+                  "color": "#505050",
+                  "fontSize": 23,
+                  "marginVertical": 20,
+                },
+              ]
+            }
+          >
+            Enable Automatic Backups?
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                undefined,
+                Object {
+                  "fontFamily": "Lato",
+                },
+                Object {},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Object {
+                  "color": "#505050",
+                },
+              ]
+            }
+          >
+            When enabled, any changes to your Connect.Me app are automatically backed up to the Evernym Cloud. This makes recovery easier should you lose your phone.
+          </Text>
+          <View
+            style={
+              Object {
+                "marginTop": 10,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  undefined,
+                  Object {
+                    "fontFamily": "Lato",
+                  },
+                  Object {},
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  Object {
+                    "color": "#505050",
+                  },
+                ]
+              }
+            >
+              All Connect.Me backups are encrypted and anonymized before leaving your phone. You will still need your Recovery Phrase and a fresh install of Connect.Me to recover.
+            </Text>
+          </View>
+          <View
+            style={Object {}}
+          >
+            <View
+              row={true}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "flexWrap": "wrap",
+                  "justifyContent": "space-around",
+                  "marginVertical": "3%",
+                  "paddingBottom": 20,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "marginLeft": 15,
+                        "marginRight": 15,
+                      },
+                      undefined,
+                      Object {
+                        "marginLeft": 0,
+                        "marginRight": 0,
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  <View
+                    accessible={true}
+                    isTVSelectable={true}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Array [
+                        Object {
+                          "borderRadius": 5,
+                          "borderWidth": 1,
+                        },
+                        Object {
+                          "borderColor": "#A5A5A5",
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      pointerEvents="box-only"
+                      style={
+                        Array [
+                          Object {
+                            "alignItems": "center",
+                            "backgroundColor": "#9E9E9E",
+                            "flexDirection": "row",
+                            "justifyContent": "center",
+                            "padding": 19,
+                          },
+                          undefined,
+                          undefined,
+                          undefined,
+                          undefined,
+                          undefined,
+                          Object {
+                            "backgroundColor": "#ffffff",
+                          },
+                          undefined,
+                          Object {
+                            "padding": 12,
+                          },
+                          undefined,
+                          undefined,
+                          undefined,
+                          Array [
+                            null,
+                            Object {
+                              "borderRadius": 5,
+                              "borderWidth": 1,
+                            },
+                            Object {
+                              "borderColor": "#A5A5A5",
+                            },
+                          ],
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    >
+                      <Text
+                        style={
+                          Array [
+                            Object {},
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            Array [
+                              Object {
+                                "color": "white",
+                                "fontSize": 16,
+                              },
+                              Object {
+                                "color": "#777777",
+                              },
+                              Object {
+                                "fontSize": 14,
+                              },
+                              undefined,
+                              undefined,
+                              undefined,
+                              undefined,
+                              undefined,
+                            ],
+                          ]
+                        }
+                      >
+                        Just One Cloud Backup
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "marginTop": 10,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "marginLeft": 15,
+                          "marginRight": 15,
+                        },
+                        undefined,
+                        Object {
+                          "marginLeft": 0,
+                          "marginRight": 0,
+                        },
+                        undefined,
+                      ]
+                    }
+                  >
+                    <View
+                      accessible={true}
+                      isTVSelectable={true}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Array [
+                          Object {
+                            "borderRadius": 5,
+                            "borderWidth": 1,
+                          },
+                          Object {
+                            "backgroundColor": "#86B93B",
+                            "borderColor": "#86B93B",
+                          },
+                        ]
+                      }
+                    >
+                      <View
+                        pointerEvents="box-only"
+                        style={
+                          Array [
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#9E9E9E",
+                              "flexDirection": "row",
+                              "justifyContent": "center",
+                              "padding": 19,
+                            },
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            Object {
+                              "backgroundColor": "#777777",
+                            },
+                            undefined,
+                            Object {
+                              "padding": 12,
+                            },
+                            undefined,
+                            undefined,
+                            undefined,
+                            Array [
+                              null,
+                              Object {
+                                "borderRadius": 5,
+                                "borderWidth": 1,
+                              },
+                              Object {
+                                "backgroundColor": "#86B93B",
+                                "borderColor": "#86B93B",
+                              },
+                            ],
+                            undefined,
+                            undefined,
+                          ]
+                        }
+                      >
+                        <Text
+                          style={
+                            Array [
+                              Object {},
+                              undefined,
+                              undefined,
+                              undefined,
+                              undefined,
+                              undefined,
+                              undefined,
+                              undefined,
+                              undefined,
+                              undefined,
+                              Array [
+                                Object {
+                                  "color": "white",
+                                  "fontSize": 16,
+                                },
+                                Object {
+                                  "color": "#ffffff",
+                                },
+                                Object {
+                                  "fontSize": 14,
+                                },
+                                undefined,
+                                undefined,
+                                undefined,
+                                undefined,
+                                undefined,
+                              ],
+                            ]
+                          }
+                        >
+                          Enable Automatic Backups
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

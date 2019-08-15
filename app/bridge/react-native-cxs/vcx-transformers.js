@@ -1,6 +1,4 @@
 // @flow
-import { NativeModules, Platform } from 'react-native'
-import memoize from 'lodash.memoize'
 import type { AgencyPoolConfig } from '../../store/type-config-store'
 import type {
   VcxProvision,
@@ -19,35 +17,11 @@ import type { UserOneTimeInfo } from '../../store/user/type-user-store'
 import type { InvitationPayload } from '../../invitation/type-invitation'
 import type { MyPairwiseInfo } from '../../store/type-connection-store'
 import type { ClaimOfferPushPayload } from '../../push-notification/type-push-notification'
-import { secureSet, secureGet } from '../../services/storage'
 import { BigNumber } from 'bignumber.js'
 import type { LedgerFeesData } from '../../store/ledger/type-ledger-store'
-
-const { RNIndy } = NativeModules
+import { getWalletKey } from '../../services/storage'
 
 export const paymentHandle = 0
-
-export const WALLET_KEY = 'WALLET_KEY'
-export const getWalletKey = memoize(async function(): Promise<string> {
-  try {
-    let walletKey: string | null = await secureGet(WALLET_KEY)
-    if (walletKey) {
-      return walletKey
-    }
-
-    const lengthOfKey = 64
-    walletKey = await RNIndy.createWalletKey(lengthOfKey)
-    // createWalletKey sometimes returns with a whitespace character at the end so we need to trim it
-    walletKey = walletKey.trim()
-
-    await secureSet(WALLET_KEY, walletKey)
-
-    return walletKey
-  } catch (e) {
-    // not sure what to do if keychain/keystore fails
-    throw e
-  }
-})
 
 export async function convertAgencyConfigToVcxProvision(
   config: AgencyPoolConfig,

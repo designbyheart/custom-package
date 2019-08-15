@@ -7,11 +7,8 @@ import type {
   NavigationParams,
   ResetAction,
   NotificationPayload,
+  MatchingCredential,
 } from '../common/type-common'
-import type { PendingRedirection } from '../lock/type-lock'
-import type { Claim, ClaimVcx } from '../claim/type-claim'
-import type { AdditionalProofDataPayload } from '../proof-request/type-proof-request'
-import type { MatchingCredential } from '../proof/type-proof'
 
 export const PUSH_NOTIFICATION_PERMISSION = 'PUSH_NOTIFICATION_PERMISSION'
 export type PushNotificationPermissionAction = {
@@ -246,4 +243,9 @@ export const UPDATE_RELEVANT_PUSH_PAYLOAD_STORE =
 export type updatePayloadToRelevantStoreAction = {
   type: typeof UPDATE_RELEVANT_PUSH_PAYLOAD_STORE,
   notification: DownloadedNotification,
+}
+
+export type GetClaimVcxResult = {
+  claimUuid: string,
+  claim: ClaimPushPayload,
 }

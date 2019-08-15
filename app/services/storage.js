@@ -1,18 +1,15 @@
 // @flow
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage, NativeModules } from 'react-native'
+import memoize from 'lodash.memoize'
 import { call, select } from 'redux-saga/effects'
 import RNSensitiveInfo from 'react-native-sensitive-info'
-import {
-  setWalletItem,
-  getWalletItem,
-  deleteWalletItem,
-  updateWalletItem,
-  vcxShutdown,
-} from '../bridge/react-native-cxs/RNCxs'
 import { captureError } from './error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import { IN_RECOVERY } from '../lock/type-lock'
 import { noop } from '../common'
+import { WALLET_KEY } from '../common/secure-storage-constants'
+
+const { RNIndy } = NativeModules
 
 const storageName = {
   sharedPreferencesName: 'ConnectMeSharedPref',
@@ -119,3 +116,58 @@ export const getHydrationItem = async (key: string) => {
     return secureItem
   }
 }
+
+export async function setWalletItem(
+  key: string,
+  value: string
+): Promise<number> {
+  return await RNIndy.setWalletItem(key, value)
+}
+
+export async function getWalletItem(key: string): Promise<string> {
+  const response: string = await RNIndy.getWalletItem(key)
+  if (response) {
+    const itemValue = JSON.parse(response)
+    const { value } = itemValue
+
+    if (!value) {
+      throw new Error('cannot get value')
+    }
+
+    return value
+  } else {
+    return response
+  }
+}
+
+export async function deleteWalletItem(key: string): Promise<number> {
+  return await RNIndy.deleteWalletItem(key)
+}
+
+export async function updateWalletItem(
+  key: string,
+  data: string
+): Promise<number> {
+  return await RNIndy.updateWalletItem(key, data)
+}
+
+export const getWalletKey = memoize(async function(): Promise<string> {
+  try {
+    let walletKey: string | null = await secureGet(WALLET_KEY)
+    if (walletKey) {
+      return walletKey
+    }
+
+    const lengthOfKey = 64
+    walletKey = await RNIndy.createWalletKey(lengthOfKey)
+    // createWalletKey sometimes returns with a whitespace character at the end so we need to trim it
+    walletKey = walletKey.trim()
+
+    await secureSet(WALLET_KEY, walletKey)
+
+    return walletKey
+  } catch (e) {
+    // not sure what to do if keychain/keystore fails
+    throw e
+  }
+})

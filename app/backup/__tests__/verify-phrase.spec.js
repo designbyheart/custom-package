@@ -38,6 +38,10 @@ describe('<VerifyRecoveryPhrase />', () => {
             hash: 'hash',
           }}
           navigation={navigation}
+          hydrateCloudBackup={jest.fn()}
+          submitPassphrase={() => {}}
+          resetError={() => {}}
+          error={false}
         />
       )
       .toJSON()

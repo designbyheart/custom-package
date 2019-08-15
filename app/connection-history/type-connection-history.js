@@ -152,7 +152,10 @@ export type ConnectionHistoryDetailsProps = {
 }
 
 export type ConnectionHistoryData = {
-  [string]: { data: ConnectionHistoryEvent[], newBadge: boolean },
+  connections: {
+    [string]: { data: ConnectionHistoryEvent[], newBadge: boolean },
+  },
+  connectionsUpdated: boolean,
 }
 
 export const LOAD_HISTORY = 'LOAD_HISTORY'
@@ -207,6 +210,12 @@ export type DeleteHistoryEventAction = {
   historyEvent: ConnectionHistoryEvent,
 }
 
+export const SHOW_USER_BACKUP_ALERT = 'SHOW_USER_BACKUP_ALERT'
+export type ShowUserBackupAlertAction = {
+  type: typeof SHOW_USER_BACKUP_ALERT,
+  action: any,
+}
+
 export const ERROR_LOADING_HISTORY = {
   code: 'CN002',
   message: 'Error while loading connection history data',
@@ -224,6 +233,7 @@ export type ConnectionHistoryAction =
   | RecordHistoryEventAction
   | HistoryEventOccurredAction
   | DeleteHistoryEventAction
+  | ShowUserBackupAlertAction
 
 export type ConnectionHistoryStore = {
   error?: ?CustomError,

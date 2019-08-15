@@ -14,7 +14,7 @@ export class QuestionScreenHeader extends React.Component<
     return (
       <Container row style={[questionStyles.headerContainer]}>
         <ViewCloser {...this.props} />
-        <HeaderHandlebar />
+        {!this.props.hideHandlebar && <HeaderHandlebar />}
         <ViewCloser {...this.props} />
       </Container>
     )
@@ -34,4 +34,5 @@ export const HeaderHandlebar = () => (
 
 type QuestionScreenHeaderProps = {
   onCancel: () => void,
+  hideHandlebar?: boolean,
 }

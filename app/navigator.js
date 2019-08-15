@@ -37,9 +37,14 @@ import Wallet from './wallet/wallet'
 import GenerateRecoveryPhrase from './backup/generate-phrase'
 import VerifyRecoveryPhrase from './backup/verify-phrase'
 import ExportBackupFile from './backup/export-backup'
+import SelectRecoveryMethod from './backup/select-recovery-method'
+import CloudBackup from './backup/cloud-backup'
 import BackupComplete from './backup/backup-complete'
 import BackupErrorScreen from './backup/backup-error'
 import WalletTabs from './wallet/wallet-tabs'
+import SelectRestoreMethod from './restore/select-restore-method'
+import CloudRestoreModal from './cloud-restore/cloud-restore-modal'
+import CloudRestore from './cloud-restore/cloud-restore'
 import { Icon, CustomView } from './components'
 import ConnectionHistNavigator from './connection-details/connection-details-navigator'
 import {
@@ -71,6 +76,7 @@ import {
   genRecoveryPhraseRoute,
   verifyRecoveryPhraseRoute,
   exportBackupFileRoute,
+  selectRecoveryMethodRoute,
   backupCompleteRoute,
   restoreRoute,
   restoreWaitRoute,
@@ -85,6 +91,10 @@ import {
   connectionHistRoute,
   modalContentProofShared,
   modalScreenRoute,
+  cloudBackupRoute,
+  selectRestoreMethodRoute,
+  cloudRestoreRoute,
+  cloudRestoreModalRoute,
 } from './common/'
 import { color, font } from './common/styles'
 import WalletTabSendDetails from './wallet/wallet-tab-send-details'
@@ -344,6 +354,12 @@ const CardStack = createStackNavigator(
     [restoreRoute]: {
       screen: RestoreStartScreen,
     },
+    [selectRestoreMethodRoute]: {
+      screen: SelectRestoreMethod,
+    },
+    [cloudRestoreRoute]: {
+      screen: CloudRestore,
+    },
     [restorePassphraseRoute]: {
       screen: RestorePassphrase,
     },
@@ -354,6 +370,8 @@ const CardStack = createStackNavigator(
     [genRecoveryPhraseRoute]: { screen: GenerateRecoveryPhrase },
     [verifyRecoveryPhraseRoute]: { screen: VerifyRecoveryPhrase },
     [exportBackupFileRoute]: { screen: ExportBackupFile },
+    [selectRecoveryMethodRoute]: { screen: SelectRecoveryMethod },
+
     [backupCompleteRoute]: { screen: BackupComplete },
     [connectionHistRoute]: {
       screen: ConnectionHistNavigator,
@@ -388,6 +406,10 @@ const ConnectMeAppNavigator = createStackNavigator(
     [connectionHistoryRoute]: {
       screen: ConnectionHistoryNavigator,
     },
+    [cloudRestoreModalRoute]: {
+      screen: CloudRestoreModal,
+    },
+
     [walletRoute]: { screen: Wallet },
     [walletTabSendDetailsRoute]: {
       screen: WalletTabSendDetails,
@@ -395,6 +417,7 @@ const ConnectMeAppNavigator = createStackNavigator(
     [questionRoute]: {
       screen: QuestionScreen,
     },
+    [cloudBackupRoute]: { screen: CloudBackup },
   },
   {
     mode: 'modal',

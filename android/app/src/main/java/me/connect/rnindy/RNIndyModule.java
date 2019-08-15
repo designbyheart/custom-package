@@ -35,6 +35,7 @@ import com.evernym.sdk.vcx.token.TokenApi;
 import com.evernym.sdk.vcx.utils.UtilsApi;
 import com.evernym.sdk.vcx.vcx.AlreadyInitializedException;
 import com.evernym.sdk.vcx.vcx.VcxApi;
+import com.evernym.sdk.vcx.indy.IndyApi;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -497,7 +498,7 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
             logFile.readFully(fileBytes);
             logFile.close();
 
-            VcxApi.anonCrypt(key, fileBytes).exceptionally((t) -> {
+            IndyApi.anonCrypt(key, fileBytes).exceptionally((t) -> {
                 Log.e(TAG, "anonCrypt: ", t);
                 promise.reject("FutureException", "Error occurred while encrypting file: " + logFilePath + " :: " + t.getMessage());
                 return null;
@@ -839,6 +840,113 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void createWalletBackup(String sourceID, String backupKey, Promise promise) {
+        try {
+            WalletApi.createWalletBackup(sourceID, backupKey).exceptionally((t) -> {
+                Log.e(TAG, "createWalletBackup: ", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    }
+
+
+    @ReactMethod
+    public void backupWalletBackup(int walletBackupHandle, String path, Promise promise) {
+        try {
+            WalletApi.backupWalletBackup(walletBackupHandle, path).exceptionally((t) -> {
+                Log.e(TAG, "backupWalletBackup: ", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void updateWalletBackupState(int walletBackupHandle, Promise promise) {
+        try {
+            WalletApi.updateWalletBackupState(walletBackupHandle).exceptionally((t) -> {
+                Log.e(TAG, "updateWalletBackupState: ", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    }   
+
+    @ReactMethod
+    public void updateWalletBackupStateWithMessage(int walletBackupHandle, String message, Promise promise ) {
+        try {
+            WalletApi.updateWalletBackupStateWithMessage(walletBackupHandle, message ).exceptionally((t) -> {
+                Log.e(TAG, "updateWalletBackupStateWithMessage: ", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    } 
+
+    @ReactMethod
+    public void serializeBackupWallet(int walletBackupHandle, Promise promise) {
+        try {
+            WalletApi.serializeBackupWallet(walletBackupHandle).exceptionally((t) -> {
+                Log.e(TAG, "serializeBackupWallet: ", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    }  
+
+    @ReactMethod
+    public void deserializeBackupWallet(String message, Promise promise) {
+        try {
+            WalletApi.deserializeBackupWallet(message).exceptionally((t) -> {
+                Log.e(TAG, "deserializeBackupWallet: ", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    } 
+
+    @ReactMethod
+    public void restoreWallet(String config, Promise promise) {
+        try {
+            WalletApi.restoreWalletBackup(config).exceptionally((t) -> {
+                Log.e(TAG, "deserializeBackupWallet: ", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    }         
+        
+
+    @ReactMethod
     public void exitAppAndroid() {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
@@ -1002,6 +1110,22 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
       } catch (VcxException e) {
         promise.reject("VCXException", e.getMessage());
       }
+    }
+
+    @ReactMethod
+    public void vcxGetAgentMessages(String messageStatus, String uid_s, Promise promise) {
+        Log.d(TAG, "vcxGetAgentMessages() called with: messageStatus = [ " + messageStatus + "] , uid_s =[" + uid_s
+                );
+        try {
+            UtilsApi.vcxGetAgentMessages(messageStatus, uid_s).exceptionally((t) -> {
+                Log.d(TAG, "vcxGetAgentMessages: ", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> BridgeUtils.resolveIfValid(promise, result));
+
+        } catch (VcxException e) {
+            promise.reject("VCXException", e.getMessage());
+        }
     }
 
     @ReactMethod

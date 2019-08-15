@@ -39,9 +39,13 @@ import history, {
   watchConnectionHistory,
 } from '../connection-history/connection-history-store'
 import historyRecorder from '../connection-history/history-middleware'
+import automaticCloudBackup from '../backup/automatic-cloudbackup-middleware'
 import wallet, { watchWalletStore } from '../wallet/wallet-store'
 import eula, { watchEula } from '../eula/eula-store'
 import restore, { watchRestore } from '../restore/restore-store'
+import cloudRestore, {
+  watchCloudRestore,
+} from '../cloud-restore/cloud-restore-store'
 import backup, { watchBackup } from '../backup/backup-store'
 import sendlogs, { watchSendLogs } from '../send-logs/send-logs-store'
 import onfido, { watchOnfido } from '../onfido/onfido-store'
@@ -72,6 +76,7 @@ const appReducer = combineReducers({
   wallet,
   eula,
   restore,
+  cloudRestore,
   backup,
   sendlogs,
   ledger,
@@ -80,7 +85,7 @@ const appReducer = combineReducers({
   question,
 })
 
-let middlewares = [historyRecorder]
+let middlewares = [historyRecorder, automaticCloudBackup]
 
 // "Error", "Warning", "Info", "Debug", "Trace"
 customLogger.init('debug')
@@ -118,6 +123,7 @@ sagaMiddleware.run(function*() {
     watchSendLogs(),
     watchEula(),
     watchRestore(),
+    watchCloudRestore(),
     hydrate(),
     watchGetMessagesSaga(),
     watchPersistProofRequests(),

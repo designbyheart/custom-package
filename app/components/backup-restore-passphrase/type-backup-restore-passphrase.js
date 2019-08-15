@@ -6,5 +6,6 @@ export type BackupRestorePassphraseProps = {
   filename?: string,
   placeholder: string,
   errorState?: boolean,
+  isCloudRestoreAttempt?: boolean,
   onSubmit: () => any,
 }

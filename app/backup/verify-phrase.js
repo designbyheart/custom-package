@@ -14,7 +14,11 @@ import type {
 import type { Store } from '../store/type-store'
 
 import { CustomView, Icon, CustomHeader } from '../components'
-import { verifyRecoveryPhraseRoute, exportBackupFileRoute } from '../common'
+import {
+  verifyRecoveryPhraseRoute,
+  exportBackupFileRoute,
+  selectRecoveryMethodRoute,
+} from '../common'
 import { color } from '../common/styles/constant'
 import styles from './styles'
 import {
@@ -78,6 +82,12 @@ export class VerifyRecoveryPhrase extends Component<
   verifyRecoveryPhrase = async (event: any) => {
     const { recoveryPassphrase } = this.props
     const { initialRoute } = this.props.navigation.state.params
+    // TODO:JAMES - remove this is just here to avoid having to put in passphrase
+    // this.props.navigation.navigate(selectRecoveryMethodRoute, {
+    //   initialRoute,
+    // })
+    // return
+    //END REMOVE
 
     // IMPORTANT: Because of the way that event.nativeEvent works, the nativeEvent property
     // of event will be null if you invoke event.nativeEvent after the await calls below
@@ -90,7 +100,7 @@ export class VerifyRecoveryPhrase extends Component<
     )
 
     if (recoveryPassphrase.hash === hashedPassphrase) {
-      this.props.navigation.navigate(exportBackupFileRoute, {
+      this.props.navigation.navigate(selectRecoveryMethodRoute, {
         initialRoute,
       })
       this.setState({ error: false })

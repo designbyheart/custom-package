@@ -2,6 +2,11 @@
 import type { ReactNavigation } from '../common/type-common'
 import type { CustomError } from '../common/type-common'
 import type { IsValid } from '../components/input-control/type-input-control'
+import type {
+  RestoreStoreType,
+  SaveToAppDirectory,
+} from '../restore/type-restore'
+import type { RestoreCloudSubmitPassphraseAction } from '../cloud-restore/cloud-restore-type'
 
 export type ReactNavigationBackup = {
   navigation: {
@@ -12,10 +17,16 @@ export type ReactNavigationBackup = {
         recoveryPassphrase?: string,
         initialRoute: string,
         hideBtn?: boolean,
+        viewOnlyMode?: boolean,
       },
     },
   },
+  hydrateCloudBackup: (lastSuccessfulCloudBackup: string) => any,
 }
+
+export type SelectRecoveryMethodProps = {
+  hasVerifiedRecoveryPhrase: () => any,
+} & ReactNavigationBackup
 
 export type GenerateRecoveryPhraseProps = {
   generateRecoveryPhrase: () => void,
@@ -45,6 +56,9 @@ export type PassphraseErrorProps = {
 
 export type VerifyRecoveryPhraseProps = {
   recoveryPassphrase: Passphrase,
+  submitPassphrase: string => void,
+  resetError: () => void,
+  error: boolean,
 } & ReactNavigationBackup
 
 export type VerifyRecoveryPhraseState = {
@@ -73,6 +87,23 @@ export type BackupCompleteState = {
   recoveryPassphrase: string,
 }
 
+export type CloudBackupScreenProps = {
+  resetCloudBackupStatus: () => ResetCloudBackupStatusAction,
+  setAutoCloudBackupEnabled: (
+    autoCloudBackupEnabled: boolean
+  ) => SetAutoCloudBackupEnabledAction,
+  cloudBackupStatus: () => string,
+  cloudBackup: () => any,
+  restore: RestoreStoreType,
+  route: string,
+  saveFileToAppDirectory: SaveToAppDirectory => void,
+  updateStatusBarTheme: string => void,
+  error: string,
+  message: string,
+  connectionHistoryBackedUp: () => void,
+  isAutoBackupEnabled?: boolean,
+} & ReactNavigation
+
 export const PREPARE_BACK_IDLE = 'PREPARE_BACKUP_IDLE'
 export const PREPARE_BACKUP_LOADING = 'PREPARE_BACKUP_LOADING'
 export const PREPARE_BACKUP_SUCCESS = 'PREPARE_BACKUP_SUCCESS'
@@ -95,6 +126,13 @@ export const BACKUP_STORE_STATUS = {
   EXPORT_BACKUP_FAILURE: 'EXPORT_BACKUP_FAILURE',
   EXPORT_BACKUP_NO_SHARE: 'EXPORT_BACKUP_NO_SHARE',
   BACKUP_COMPLETE: 'BACKUP_COMPLETE',
+
+  // JY
+  CLOUD_BACKUP_LOADING: 'CLOUD_BACKUP_LOADING',
+  CLOUD_BACKUP_SUCCESS: 'CLOUD_BACKUP_SUCCESS',
+  CLOUD_BACKUP_FAILURE: 'CLOUD_BACKUP_FAILURE',
+  CLOUD_BACKUP_NO_SHARE: 'CLOUD_BACKUP_NO_SHARE',
+  CLOUD_BACKUP_COMPLETE: 'CLOUD_BACKUP_COMPLETE',
 }
 
 export type Passphrase = {
@@ -110,14 +148,21 @@ export type PrepareBackupStatus =
   | typeof PREPARE_BACKUP_FAILURE
 
 export type BackupStore = {
+  autoCloudBackupEnabled?: boolean,
+  cloudBackupError?: any,
+  cloudBackupStatus?: string,
+  prepareCloudBackupStatus?: string,
+  lastSuccessfulCloudBackup: string,
+  walletHandle?: number,
   passphrase: Passphrase,
   backupWalletPath: string,
   showBanner: boolean,
   lastSuccessfulBackup: string,
-  // TODO: fix flow type
   error: any,
   status: string,
   prepareBackupStatus: PrepareBackupStatus,
+  encryptedFileLocation?: string,
+  hasVerifiedRecoveryPhrase?: boolean,
 }
 
 export type StoreError = { error: ?CustomError }
@@ -160,9 +205,34 @@ export const EXPORT_BACKUP_FAILURE = 'EXPORT_BACKUP_FAILURE'
 export const EXPORT_BACKUP_NO_SHARE = 'EXPORT_BACKUP_NO_SHARE'
 export const BACKUP_COMPLETE = 'BACKUP_COMPLETE'
 export const HYDRATE_BACKUP = 'HYDRATE_BACKUP'
+export const HYDRATE_CLOUD_BACKUP = 'HYDRATE_CLOUD_BACKUP'
+export const HAS_VERIFIED_RECOVERY_PHRASE = 'HAS_VERIFIED_RECOVERY_PHRASE'
+
+export const HYDRATE_AUTO_CLOUD_BACKUP_ENABLED =
+  'HYDRATE_AUTO_CLOUD_BACKUP_ENABLED'
+export const HYDRATE_HAS_VERIFIED_RECOVERY_PHRASE =
+  'HYDRATE_HAS_VERIFIED_RECOVERY_PHRASE'
+
 export const HYDRATE_BACKUP_FAILURE = 'HYDRATE_BACKUP_FAILURE'
 export const PROMPT_WALLET_BACKUP_BANNER = 'PROMPT_WALLET_BACKUP_BANNER'
 export const WALLET_FILE_NAME = 'ConnectMe'
+
+// JY
+export const RESET_CLOUD_BACKUP_LOADING = 'RESET_CLOUD_BACKUP_LOADING'
+export const CLOUD_BACKUP_LOADING = 'CLOUD_BACKUP_LOADING'
+export const CLOUD_BACKUP_SUCCESS = 'CLOUD_BACKUP_SUCCESS'
+export const CLOUD_BACKUP_FAILURE = 'CLOUD_BACKUP_FAILURE'
+export const CLOUD_BACKUP_NO_SHARE = 'CLOUD_BACKUP_NO_SHARE'
+export const CLOUD_BACKUP_COMPLETE = 'CLOUD_BACKUP_COMPLETE'
+export const SET_AUTO_CLOUD_BACKUP_ENABLED = 'SET_AUTO_CLOUD_BACKUP_ENABLED'
+export const SET_WALLET_HANDLE = 'SET_WALLET_HANDLE'
+
+export const AUTO_CLOUD_BACKUP_ENABLED = 'autoCloudBackupEnabled' //for asyncstorage
+export const START_AUTOMATIC_CLOUD_BACKUP = 'START_AUTOMATIC_CLOUD_BACKUP'
+
+export type NavigateBackToSettingsType = {
+  navigateBackToSettings: () => void,
+}
 
 export type BackupStartAction = {
   type: typeof START_BACKUP,
@@ -270,6 +340,17 @@ export type PrepareBackupFailureAction = {
   status: $Keys<typeof BACKUP_STORE_STATUS>,
 }
 
+export type ResetCloudBackupStatusAction = {
+  type: typeof RESET_CLOUD_BACKUP_LOADING,
+  cloudBackupStatus: string,
+  error: any,
+}
+
+export type SetAutoCloudBackupEnabledAction = {
+  type: typeof SET_AUTO_CLOUD_BACKUP_ENABLED,
+  autoCloudBackupEnabled: boolean,
+}
+
 export type BackupStoreAction =
   | BackupStartAction
   | GenerateBackupFileLoadingAction
@@ -288,3 +369,5 @@ export type BackupStoreAction =
   | HydrateBackupFailAction
   | PrepareBackupSuccessAction
   | PrepareBackupFailureAction
+  | ResetCloudBackupStatusAction
+  | SetAutoCloudBackupEnabledAction

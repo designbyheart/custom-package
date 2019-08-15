@@ -36,7 +36,7 @@ describe('<SplashScreen />', () => {
     // TODO: We have to fix the problem in getStore function, we should be just able to pass an object and
     // TODO: it should deep extend default store state. We can't do these many calls for getStore and getState
     // TODO: for any property that we want to override
-    const initStore: Store = {
+    const initStore: any = {
       ...getStore().getState(),
       lock: { ...getLock(), isAppLocked: true },
     }

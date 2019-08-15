@@ -26,7 +26,10 @@ import {
   getIsAppLocked,
   getSerializedClaimOffer,
   getCurrentScreen,
+  getBackupWalletHandle,
   getAllConnectionsPairwiseDid,
+  getBackupWalletPath,
+  getEncryptedFileLocation,
 } from '../store/store-selector'
 import {
   PUSH_NOTIFICATION_PERMISSION,
@@ -70,6 +73,10 @@ import {
   getHandleBySerializedConnection,
   serializeClaimOffer,
   downloadMessages,
+  vcxGetAgentMessages,
+  updateWalletBackupStateWithMessage,
+  backupWalletBackup,
+  serializeBackupWallet,
 } from '../bridge/react-native-cxs/RNCxs'
 import {
   HYDRATED,
@@ -92,8 +99,13 @@ import type {
 } from '../proof-request/type-proof-request'
 import { saveSerializedClaimOffer } from '../claim-offer/claim-offer-store'
 import type { ClaimPushPayloadVcx } from '../claim/type-claim'
-import { safeGet, safeSet } from '../services/storage'
-import { PUSH_COM_METHOD } from '../common'
+import { safeGet, safeSet, secureGet } from '../services/storage'
+import {
+  PUSH_COM_METHOD,
+  PASSPHRASE_STORAGE_KEY,
+  PASSPHRASE_SALT_STORAGE_KEY,
+  LAST_SUCCESSFUL_CLOUD_BACKUP,
+} from '../common'
 import type { NavigationParams, GenericObject } from '../common/type-common'
 
 import { addPendingRedirection } from '../lock/lock-store'
@@ -128,6 +140,12 @@ import { questionReceived } from '../question/question-store'
 import { NavigationActions } from 'react-navigation'
 import type { SerializedClaimOffer } from './../claim-offer/type-claim-offer'
 import { customLogger } from '../store/custom-logger'
+import { SET_WALLET_HANDLE, WALLET_FILE_NAME } from '../backup/type-backup'
+import { getWords } from '../backup/secure-passphrase'
+import moment from 'moment'
+import { cloudBackupSuccess, cloudBackupFailure } from '../backup/backup-store'
+import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
+import RNFetchBlob from 'rn-fetch-blob'
 import type { QuestionPayload } from './../question/type-question'
 
 async function delay(ms): Promise<number> {
@@ -304,6 +322,7 @@ export function* fetchAdditionalDataSaga(
   action: FetchAdditionalDataAction
 ): Generator<*, *, *> {
   const { forDID, uid, type, senderLogoUrl } = action.notificationPayload
+
   if (forDID && uid) {
     const fetchDataAlreadyExists = yield select(
       getPendingFetchAdditionalDataKey
@@ -327,6 +346,99 @@ export function* fetchAdditionalDataSaga(
       })
     )
     return
+  }
+
+  // NOTE: CLOUD-BACKUP wait for push notification after createWalletBackup
+  if (type === MESSAGE_TYPE.WALLET_BACKUP_READY) {
+    try {
+      // NOTE: CLOUD-BACKUP-STEP-2 get message
+      const data = yield call(
+        vcxGetAgentMessages,
+        MESSAGE_RESPONSE_CODE.MESSAGE_PENDING,
+        uid
+      )
+
+      let message = data.substring(1, data.length - 1)
+
+      yield put(
+        pushNotificationReceived({
+          additionalData: message,
+          type,
+          uid,
+          remotePairwiseDID: 'NA',
+          forDID: 'NA',
+        })
+      )
+
+      // CLOUD-BACKUP-STEP-3
+      const walletHandle = yield select(getBackupWalletHandle)
+      const walletBackupState = yield call(
+        updateWalletBackupStateWithMessage,
+        walletHandle,
+        message
+      )
+
+      const { fs } = RNFetchBlob
+      const documentDirectory: string = fs.dirs.DocumentDir
+      const backupTimeStamp = moment().format('YYYY-MM-DD-HH-mm-ss')
+      let destinationZipPath: string = `${documentDirectory}/${WALLET_FILE_NAME}-${backupTimeStamp}.zip`
+
+      // NOTE: similar logic is shareBackupSaga, not sure if this is needed
+      // if (Platform.OS === 'android') {
+      //   destinationZipPath = `file://${destinationZipPath}`
+      // }
+
+      // NOTE: CLOUD-BACKUP-STEP-4
+      yield call(backupWalletBackup, walletHandle, destinationZipPath)
+      return
+    } catch (error) {
+      customLogger.error(`MESSAGE_TYPE.WALLET_BACKUP_READY: ${error}`)
+      yield put(cloudBackupFailure('error'))
+      return
+    }
+  }
+
+  // NOTE: CLOUD-BACKUP wait for push notification after backupWalletBackup
+  if (type === MESSAGE_TYPE.WALLET_BACKUP_ACK) {
+    try {
+      //  NOTE: CLOUD-BACKUP-STEP-5
+      const data = yield call(
+        vcxGetAgentMessages,
+        MESSAGE_RESPONSE_CODE.MESSAGE_PENDING,
+        uid
+      )
+
+      let message = data.substring(1, data.length - 1)
+      yield put(
+        pushNotificationReceived({
+          additionalData: message,
+          type,
+          uid,
+          remotePairwiseDID: 'NA',
+          forDID: 'NA',
+        })
+      )
+
+      // NOTE: CLOUD-BACKUP-STEP-6
+      const walletHandle = yield select(getBackupWalletHandle)
+      const walletBackupState = yield call(
+        updateWalletBackupStateWithMessage,
+        walletHandle,
+        message
+      )
+
+      // NOTE: CLOUD-BACKUP-STEP-7 serialization(NOT IMPLEMENTED)
+
+      const lastSuccessfulCloudBackup = moment().format()
+      yield put(connectionHistoryBackedUp())
+      safeSet(LAST_SUCCESSFUL_CLOUD_BACKUP, lastSuccessfulCloudBackup)
+      yield put(cloudBackupSuccess(lastSuccessfulCloudBackup))
+      return
+    } catch (error) {
+      customLogger.error(`MESSAGE_TYPE.WALLET_BACKUP_ACK: ${error}`)
+      yield put(cloudBackupFailure('error'))
+      return
+    }
   }
 
   const connection: {
@@ -427,6 +539,8 @@ export function* fetchAdditionalDataSaga(
         }
       }
     }
+
+    // do something with data, probably get the message here
 
     if (!additionalData) {
       // we did not get any data or either push notification type is not supported

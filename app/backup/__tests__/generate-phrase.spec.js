@@ -38,6 +38,7 @@ describe('<GenerateRecoveryPhrase />', () => {
           hash: 'hash',
         }}
         generateRecoveryPhrase={jest.fn()}
+        hydrateCloudBackup={jest.fn()}
         recoveryStatus={BACKUP_STORE_STATUS.GENERATE_PHRASE_SUCCESS}
         navigation={navigation}
       />
@@ -61,6 +62,7 @@ describe('<GenerateRecoveryPhrase />', () => {
           hash: 'hash',
         }}
         generateRecoveryPhrase={jest.fn()}
+        hydrateCloudBackup={jest.fn()}
         recoveryStatus={BACKUP_STORE_STATUS.GENERATE_PHRASE_LOADING}
         navigation={navigation}
       />
@@ -76,6 +78,7 @@ describe('<GenerateRecoveryPhrase />', () => {
           hash: 'hash',
         }}
         generateRecoveryPhrase={jest.fn()}
+        hydrateCloudBackup={jest.fn()}
         recoveryStatus={BACKUP_STORE_STATUS.GENERATE_PHRASE_FAILURE}
         navigation={navigation}
       />

@@ -7,6 +7,7 @@ import {
   safeMultiRemove,
   secureDelete,
   secureGet,
+  walletGet,
 } from '../services/storage'
 import { hydratePushTokenSaga } from '../push-notification/push-notification-store'
 import { hydrateEulaAccept } from '../eula/eula-store'
@@ -29,6 +30,8 @@ import {
   WALLET_HISTORY,
   PASSPHRASE_SALT_STORAGE_KEY,
   PASSPHRASE_STORAGE_KEY,
+  LAST_SUCCESSFUL_CLOUD_BACKUP,
+  WALLET_KEY,
 } from '../common'
 import { STORAGE_KEY_USER_ONE_TIME_INFO } from '../store/user/type-user-store'
 import { CLAIM_OFFERS } from '../claim-offer/type-claim-offer'
@@ -67,6 +70,7 @@ import {
   hydrated,
   hydrateSwitchedEnvironmentDetails,
   initialized,
+  vcxInitReset,
 } from './config-store'
 import { ensureVcxInitSuccess } from './route-store'
 import {
@@ -84,7 +88,6 @@ import {
 import { STORAGE_KEY_USER_AVATAR_NAME } from './user/type-user-store'
 import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { hydrateProofRequestsSaga } from './../proof-request/proof-request-store'
-import { WALLET_KEY } from '../bridge/react-native-cxs/vcx-transformers'
 import RNFetchBlob from 'rn-fetch-blob'
 import { Platform } from 'react-native'
 import { customLogger } from '../store/custom-logger'
@@ -94,6 +97,7 @@ import {
 } from '../onfido/onfido-store'
 import { hydrateQuestionSaga } from '../question/question-store'
 import { QUESTION_STORAGE_KEY } from '../question/type-question'
+import { AUTO_CLOUD_BACKUP_ENABLED } from '../backup/type-backup'
 
 export function* deleteDeviceSpecificData(): Generator<*, *, *> {
   try {
@@ -101,6 +105,8 @@ export function* deleteDeviceSpecificData(): Generator<*, *, *> {
       STORAGE_KEY_SHOW_BANNER,
       PUSH_COM_METHOD,
       LAST_SUCCESSFUL_BACKUP,
+      LAST_SUCCESSFUL_CLOUD_BACKUP,
+      AUTO_CLOUD_BACKUP_ENABLED,
       STORAGE_KEY_USER_AVATAR_NAME,
     ]
     yield call(safeMultiRemove, keysToDelete)
@@ -260,7 +266,6 @@ export function* hydrate(): any {
       yield put(initialized())
 
       if (inRecovery === 'true') {
-        // replace below line with wallet init saga
         yield call(simpleInit)
       }
 
@@ -280,15 +285,24 @@ export function* hydrate(): any {
       yield* loadHistorySaga()
       yield* hydrateQuestionSaga()
 
+      let pin = yield call(walletGet, PIN_HASH)
+      let passphrase = yield call(walletGet, PASSPHRASE_STORAGE_KEY)
+      let salt = yield call(walletGet, SALT)
+
       if (inRecovery === 'true') {
         // TODO: Move vcx shutdown logic inside ensureVcxInitSuccess
         yield call(vcxShutdown, false)
+        yield put(vcxInitReset())
       }
       yield put(hydrated())
+
       const vcxResult = yield* ensureVcxInitSuccess()
       if (vcxResult && vcxResult.fail) {
         throw new Error(JSON.stringify(vcxResult.fail.message))
       }
+      pin = yield call(walletGet, PIN_HASH)
+      passphrase = yield call(walletGet, PASSPHRASE_STORAGE_KEY)
+      salt = yield call(walletGet, SALT)
     } catch (e) {
       captureError(e)
       customLogger.error(`hydrateSaga: ${e}`)

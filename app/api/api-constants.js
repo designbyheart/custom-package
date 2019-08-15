@@ -32,6 +32,8 @@ export const MESSAGE_TYPE = {
   PROOF: 'proof',
   CLAIM: 'cred',
   QUESTION: 'Question',
+  WALLET_BACKUP_READY: 'WALLET_BACKUP_READY',
+  WALLET_BACKUP_ACK: 'WALLET_BACKUP_ACK',
 }
 
 export const PAYLOAD_TYPE = {

@@ -102,8 +102,8 @@ export const getPendingHistoryEvent = (
   claim: ClaimOfferPayload
 ) => {
   const historyItems =
-    state.history && state.history.data
-      ? state.history.data[claim.remotePairwiseDID].data
+    state.history && state.history.data && state.history.data.connections
+      ? state.history.data.connections[claim.remotePairwiseDID].data
       : []
   return historyItems.filter(item => {
     return item.action === 'PENDING' && item.originalPayload.uid === claim.uid
@@ -117,8 +117,8 @@ export const getHistoryEvent = (
   type: string
 ) => {
   const historyItems =
-    state.history && state.history.data
-      ? state.history.data[remoteDid].data
+    state.history && state.history.data && state.history.data.connections
+      ? state.history.data.connections[remoteDid].data
       : []
   return historyItems.filter(item => {
     return (
@@ -137,8 +137,8 @@ export const getPendingHistory = (
   type: string
 ) => {
   const historyItems =
-    state.history && state.history.data
-      ? state.history.data[remoteDid].data
+    state.history && state.history.data && state.history.data.connections
+      ? state.history.data.connections[remoteDid].data
       : []
   return historyItems.filter(item => {
     return (
@@ -156,8 +156,8 @@ export const getClaimReceivedHistory = (
   type: string
 ) => {
   const historyItems =
-    state.history && state.history.data
-      ? state.history.data[remoteDid].data
+    state.history && state.history.data && state.history.data.connections
+      ? state.history.data.connections[remoteDid].data
       : []
   return historyItems.filter(item => {
     return (
@@ -336,8 +336,27 @@ export const getBackupPassphrase = (state: Store) => state.backup.passphrase
 
 export const getBackupStatus = (state: Store) => state.backup.status
 
+export const getBackupWalletHandle = (state: Store) => state.backup.walletHandle
+
+export const getCloudBackupStatus = (state: Store) =>
+  state.backup.cloudBackupStatus
+
+export const getLastCloudBackup = (state: Store) =>
+  state.backup.lastSuccessfulCloudBackup
+
+export const getAutoCloudBackupEnabled = (state: Store) =>
+  state.backup.autoCloudBackupEnabled
+
+export const getHasVerifiedRecoveryPhrase = (state: Store) =>
+  state.backup.hasVerifiedRecoveryPhrase
+
+export const getLastBackup = (state: Store) => state.backup.lastSuccessfulBackup
+
 export const getBackupWalletPath = (state: Store) =>
   state.backup.backupWalletPath
+
+export const getEncryptedFileLocation = (state: Store) =>
+  state.backup.encryptedFileLocation
 
 export const getLogEncryptionStatus = (state: Store) =>
   state.sendlogs.encryptLogStatus
@@ -416,6 +435,8 @@ export const getSalt = (state: Store) => state.backup.passphrase.salt
 export const getHistory = (state: Store) => state.history.data
 export const getPendingFetchAdditionalDataKey = (state: Store) =>
   state.pushNotification.pendingFetchAdditionalDataKey
+export const getPushNotifactionNotification = (state: Store) =>
+  state.pushNotification.notification
 export const getProofData = (state: Store, proofRequestId: string) =>
   state.proof[proofRequestId].proofData
 

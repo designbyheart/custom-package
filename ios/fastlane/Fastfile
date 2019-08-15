@@ -37,7 +37,7 @@ platform :ios do
     reset_git_repo(force: true)
     cocoapods
 
-    project_version_bump
+    version_number = project_version_bump
 
     app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
 
@@ -71,7 +71,7 @@ platform :ios do
     end
 
     commit_and_push(
-        commit_message: "[ci skip] Build Version bump by Fastlane",
+        commit_message: "[ci skip] Build Version bump by Fastlane on GitLab. Build: #{version_number}",
         remote_branch: "#{remote_branch}"
     )
   end
@@ -98,7 +98,7 @@ platform :ios do
     )
 
     commit_and_push(
-        commit_message: "[ci skip] Build Version bump by Fastlane on Jenkins. Build: #{version_number}",
+        commit_message: "[ci skip] Build Version bump by Fastlane on GitLab. Build: #{version_number}",
         remote_branch: "#{remote_branch}"
     )
 
@@ -131,7 +131,7 @@ platform :ios do
     )
 
     commit_and_push(
-        commit_message: "[ci skip] Build Version bump by Fastlane on Jenkins. Build: #{version_number}",
+        commit_message: "[ci skip] Build Version bump by Fastlane on GitLab. Build: #{version_number}",
         remote_branch: "#{remote_branch}"
     )
 
@@ -155,7 +155,13 @@ platform :ios do
 
   ##### ----- PROJECT_VERSION_BUMP ----- #####
   private_lane :project_version_bump do
+    ci_job_id = ENV["CI_JOB_ID"]
+    puts 'gitlab CI build ID: ' + ci_job_id
+
     buildNumber = increment_build_number(xcodeproj: "ConnectMe.xcodeproj")
+    if ENV["CI_PIPELINE_SOURCE"] == "merge_request" || ENV["CI_BUILD_REF_SLUG"] != "master"
+      buildNumber = increment_build_number(build_number: ci_job_id, xcodeproj: "ConnectMe.xcodeproj")
+    end
     versionNumber = increment_version_number(xcodeproj: "ConnectMe.xcodeproj")
     path = '../../android/app/build.gradle'
     reVersionCode = /versionCode\s+(\d+)/
@@ -167,7 +173,7 @@ platform :ios do
     androidBuildGradleFile = File.new(path, 'w')
     androidBuildGradleFile.write(androidBuildGradleFileContent)
     androidBuildGradleFile.close
-    buildNumber.to_s
+    versionNumber.to_s + "-" + buildNumber.to_s
   end
 
   ##### ----- BUILD ----- #####

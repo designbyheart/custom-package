@@ -9,32 +9,38 @@ const { RNRandomBytes } = NativeModules
 const generateKey = (password: string, salt: string) =>
   PBKDF2.derivationKey(password, salt, 1000)
 
-export const generateSalt = async () => {
+export const generateSalt = async (isRealSalt: boolean) => {
   const numBytes = 32
   return new Promise(function(resolve, reject) {
-    RNRandomBytes.randomBytes(numBytes, (err: any, bytes: string) => {
-      if (err) {
-        reject(err)
-      } else {
-        if (Platform.OS === 'android') {
-          resolve(bytes.slice(0, -1))
+    if (isRealSalt) {
+      RNRandomBytes.randomBytes(numBytes, (err: any, bytes: string) => {
+        if (err) {
+          reject(err)
         } else {
-          resolve(bytes)
+          if (Platform.OS === 'android') {
+            resolve(bytes.slice(0, -1))
+          } else {
+            resolve(bytes)
+          }
         }
-      }
-    })
+      })
+    } else {
+      resolve('78df78sufud7du77w2uw7wus7wuw7s7aueuw778sdus7sduas7w7w')
+    }
   })
 }
 
 export async function pinHash(pin: string, salt: string) {
   try {
-    const key = await generateKey(pin, salt)
+    const fullkey = await generateKey(pin, salt)
+    const key = fullkey.substring(0, 16)
     if (__DEV__) {
       customLogger.log('pinHash: salt: ', salt)
+      customLogger.log('pinHash: fullkey: ', fullkey)
       customLogger.log('pinHash: key: ', key)
     }
     //TODO: This is hack due to android
-    return key.substring(0, 16)
+    return key
   } catch (e) {
     customLogger.error(`pinHash: ${e}`)
     captureError(new Error(`pinHash: ${e}`))

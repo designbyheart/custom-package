@@ -127,3 +127,22 @@ export type Styles =
   | Array<GenericObject | number>
   | GenericObject
   | Object
+
+export type RequestedAttrsJson = {
+  +[string]: [string, boolean],
+}
+
+export type MatchingCredential = {
+  cred_info: {
+    referent: string,
+    attrs: { [claimAttributeName: string]: string },
+    schema_id: string,
+    cred_def_id: string,
+    rev_reg_id?: string,
+    cred_rev_id?: string,
+  },
+  interval?: {
+    to?: number,
+    from?: number,
+  },
+}

@@ -21,6 +21,7 @@ import {
   LOAD_HISTORY_FAIL,
   RECORD_HISTORY_EVENT,
   DELETE_HISTORY_EVENT,
+  SHOW_USER_BACKUP_ALERT,
   ERROR_LOADING_HISTORY,
   HISTORY_EVENT_OCCURRED,
   EventTypeToEventStatusMap,
@@ -39,6 +40,7 @@ import type {
   HistoryEventOccurredAction,
   HistoryEventOccurredEventType,
   DeleteHistoryEventAction,
+  ShowUserBackupAlertAction,
 } from './type-connection-history'
 import type { Connection } from '../store/type-connection-store'
 import type {
@@ -91,6 +93,7 @@ import { RESET } from '../common/type-common'
 import {
   CLAIM_OFFER_RECEIVED,
   NEW_CONNECTION_SEEN,
+  CONNECTION_HISTORY_BACKED_UP,
 } from '../claim-offer/type-claim-offer'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
@@ -110,6 +113,10 @@ const initialState = {
 export const newConnectionSeen = (senderDid: string) => ({
   type: NEW_CONNECTION_SEEN,
   senderDid,
+})
+
+export const connectionHistoryBackedUp = () => ({
+  type: CONNECTION_HISTORY_BACKED_UP,
 })
 
 export const loadHistory = () => ({
@@ -139,13 +146,14 @@ export function* loadHistorySaga(): Generator<*, *, *> {
       oldHistoryKeys = Object.keys(oldHistory)
       newHistory = {}
 
-      if (!oldHistory[oldHistoryKeys[0]].data) {
+      if (!oldHistory.connections) {
         for (let i = 0; i < oldHistoryKeys.length; i++) {
-          newHistory[oldHistoryKeys[i]] = {
+          newHistory['connections'][oldHistoryKeys[i]] = {
             data: oldHistory[oldHistoryKeys[i]],
             newBadge: false,
           }
         }
+        newHistory['connectionsUpdated'] = false
         yield put(loadHistorySuccess(newHistory))
       } else {
         yield put(loadHistorySuccess(oldHistory))
@@ -377,6 +385,13 @@ export const recordHistoryEvent = (historyEvent: ConnectionHistoryEvent) => ({
   historyEvent,
 })
 
+export const showUserBackupAlert = (
+  action: any
+): ShowUserBackupAlertAction => ({
+  type: SHOW_USER_BACKUP_ALERT,
+  action,
+})
+
 export const deleteHistoryEvent = (
   historyEvent: ConnectionHistoryEvent
 ): DeleteHistoryEventAction => ({
@@ -521,6 +536,10 @@ export function* watchNewConnectionSeen(): any {
   yield takeEvery(NEW_CONNECTION_SEEN, persistHistory)
 }
 
+export function* watchConnectionHistoryBackedUp(): any {
+  yield takeEvery(CONNECTION_HISTORY_BACKED_UP, persistHistory)
+}
+
 export function* persistHistory(action): any {
   // if we get action to record history event
   // that means our history store is updated with data
@@ -551,6 +570,7 @@ export function* watchConnectionHistory(): any {
     watchHistoryEventOccurred(),
     watchRecordHistoryEvent(),
     watchNewConnectionSeen(),
+    watchConnectionHistoryBackedUp(),
   ])
 }
 
@@ -587,15 +607,23 @@ export default function connectionHistoryReducer(
         ...state,
         data: {
           ...(state.data ? state.data : {}),
-          [remoteDid]: {
-            data: [
-              ...(state.data && state.data[remoteDid]
-                ? state.data[remoteDid].data
-                : []),
-              action.historyEvent,
-            ],
-            newBadge: true,
+          connections: {
+            ...(state.data && state.data.connections
+              ? state.data.connections
+              : {}),
+            [remoteDid]: {
+              data: [
+                ...(state.data &&
+                state.data.connections &&
+                state.data.connections[remoteDid]
+                  ? state.data.connections[remoteDid].data
+                  : []),
+                action.historyEvent,
+              ],
+              newBadge: true,
+            },
           },
+          connectionsUpdated: true,
         },
       }
     }
@@ -603,8 +631,11 @@ export default function connectionHistoryReducer(
     case DELETE_HISTORY_EVENT: {
       const { remoteDid } = action.historyEvent
       const filteredDataArr =
-        state.data && state.data[remoteDid] && state.data[remoteDid].data
-          ? state.data[remoteDid].data.filter(item => {
+        state.data &&
+        state.data.connections &&
+        state.data.connections[remoteDid] &&
+        state.data.connections[remoteDid].data
+          ? state.data.connections[remoteDid].data.filter(item => {
               return item !== action.historyEvent
             })
           : []
@@ -612,7 +643,25 @@ export default function connectionHistoryReducer(
         ...state,
         data: {
           ...(state.data ? state.data : {}),
-          [remoteDid]: { data: filteredDataArr, newBadge: false },
+          connections: {
+            ...(state.data && state.data.connections
+              ? state.data.connections
+              : {}),
+            [remoteDid]: {
+              data: filteredDataArr,
+              newBadge: false,
+            },
+          },
+          connectionsUpdated: true,
+        },
+      }
+    }
+
+    case SHOW_USER_BACKUP_ALERT: {
+      return {
+        ...state,
+        data: {
+          connectionsUpdated: true,
         },
       }
     }
@@ -622,14 +671,30 @@ export default function connectionHistoryReducer(
         ...state,
         data: {
           ...(state.data ? state.data : {}),
-          [action.senderDid]: {
-            data: [
-              ...(state.data && state.data[action.senderDid]
-                ? state.data[action.senderDid].data
-                : []),
-            ],
-            newBadge: false,
+          connections: {
+            ...(state.data && state.data.connections
+              ? state.data.connections
+              : {}),
+            [action.senderDid]: {
+              data: [
+                ...(state.data &&
+                state.data.connections &&
+                state.data.connections[action.senderDid]
+                  ? state.data.connections[action.senderDid].data
+                  : []),
+              ],
+              newBadge: false,
+            },
           },
+        },
+      }
+
+    case CONNECTION_HISTORY_BACKED_UP:
+      return {
+        ...state,
+        data: {
+          ...(state.data ? state.data : {}),
+          connectionsUpdated: false,
         },
       }
 

@@ -175,6 +175,11 @@ export type NewConnectionSeenAction = {
   senderDid: string,
 }
 
+export const CONNECTION_HISTORY_BACKED_UP = 'CONNECTION_HISTORY_BACKED_UP'
+export type ConnectionHistoryBackedUpAction = {
+  type: typeof CONNECTION_HISTORY_BACKED_UP,
+}
+
 export type ClaimOfferAction =
   | ClaimOfferReceivedAction
   | ClaimOfferFailedAction

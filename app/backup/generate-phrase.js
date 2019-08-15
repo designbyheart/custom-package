@@ -17,7 +17,11 @@ import {
   Loader,
 } from '../components'
 import { isBiggerThanShortDevice } from '../common/styles'
-import { genRecoveryPhraseRoute, verifyRecoveryPhraseRoute } from '../common'
+import {
+  genRecoveryPhraseRoute,
+  verifyRecoveryPhraseRoute,
+  settingsRoute,
+} from '../common'
 import { color } from '../common/styles/constant'
 import type {
   GenerateRecoveryPhraseProps,
@@ -119,6 +123,10 @@ export class GenerateRecoveryPhrase extends PureComponent<
       initialRoute: state.params.initialRoute,
     })
   }
+  backToSettings = () => {
+    const { navigation: { navigate } } = this.props
+    navigate(settingsRoute)
+  }
   onRecoveryPhraseGoBack = () => {
     const { navigation: { navigate, state, goBack } } = this.props
     goBack(null)
@@ -136,7 +144,7 @@ export class GenerateRecoveryPhrase extends PureComponent<
         <CustomView style={[styles.headerSpacer]}>
           <Icon
             medium
-            onPress={() => navigation.goBack(null)}
+            onPress={() => navigation.navigate(settingsRoute)}
             testID={RECOVERY_PHRASE_CLOSE_TEST_ID}
             iconStyle={[styles.headerIcon]}
             src={closeImage}
@@ -180,6 +188,10 @@ export class GenerateRecoveryPhrase extends PureComponent<
   }
 
   render() {
+    // for viewRecover mode
+    const viewOnlyMode = this.props.navigation.state.params.viewOnlyMode
+      ? true
+      : false
     const { recoveryPassphrase, recoveryStatus } = this.props
     const { navigation: { navigate, state } } = this.props
     const disableButton =
@@ -197,7 +209,9 @@ export class GenerateRecoveryPhrase extends PureComponent<
               numberOfLines={1}
               style={[styles.genRecoveryText]}
             >
-              Recovery Phrase generated
+              {viewOnlyMode
+                ? 'Your Recovery Phrase'
+                : 'Recovery Phrase generated'}
             </CustomText>
           </CustomView>
           <CustomView center>
@@ -235,19 +249,38 @@ export class GenerateRecoveryPhrase extends PureComponent<
             </CustomText>
           </CustomView>
         </Container>
-        <CustomView>
-          <CustomView center>
-            <CustomText
-              transparentBg
-              center
-              style={[styles.genRecoverySmallMessage]}
-            >
-              Are you sure you wrote it down?
-            </CustomText>
+
+        {viewOnlyMode && (
+          <CustomView>
+            <CustomView center />
+            <CustomButton
+              large={isBiggerThanShortDevice ? true : false}
+              onPress={this.backToSettings}
+              testID={SUBMIT_RECOVERY_PHRASE_TEST_ID}
+              style={[styles.submitButton]}
+              customColor={{
+                color: color.bg.eleventh.color,
+                fontWeight: '600',
+                fontSize: 18,
+              }}
+              title={'Got It'}
+            />
           </CustomView>
-          {state.params.hideBtn ? (
+        )}
+        {!viewOnlyMode && (
+          <CustomView>
+            <CustomView center>
+              <CustomText
+                transparentBg
+                center
+                style={[styles.genRecoverySmallMessage]}
+              >
+                Are you sure you wrote it down?
+              </CustomText>
+            </CustomView>
             <CustomButton
               disabled={disableButton}
+              large={isBiggerThanShortDevice ? true : false}
               onPress={this.verifyRecoveryPhrase}
               testID={SUBMIT_RECOVERY_PHRASE_TEST_ID}
               style={[styles.submitButton]}
@@ -258,20 +291,8 @@ export class GenerateRecoveryPhrase extends PureComponent<
               }}
               title={SUBMIT_RECOVERY_PHRASE_BUTTON_TITLE}
             />
-          ) : (
-            <CustomButton
-              onPress={this.onRecoveryPhraseGoBack}
-              testID={SUBMIT_RECOVERY_PHRASE_TEST_ID}
-              style={[styles.submitButton]}
-              customColor={{
-                color: color.bg.eleventh.color,
-                fontWeight: '600',
-                fontSize: 18,
-              }}
-              title={SUBMIT_RECOVERY_GO_BACK}
-            />
-          )}
-        </CustomView>
+          </CustomView>
+        )}
       </Container>
     )
   }

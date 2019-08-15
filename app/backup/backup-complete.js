@@ -18,7 +18,7 @@ import {
   CustomButton,
   CustomHeader,
 } from '../components'
-import { backupCompleteRoute } from '../common'
+import { backupCompleteRoute, settingsRoute } from '../common'
 import {
   isBiggerThanVeryShortDevice,
   isBiggerThanShortDevice,
@@ -41,7 +41,7 @@ export class BackupComplete extends PureComponent<BackupCompleteProps, void> {
   backupComplete = () => {
     const { navigation: { navigate, state, goBack } } = this.props
 
-    return navigate(state.params.initialRoute)
+    return navigate(settingsRoute)
   }
 
   static navigationOptions = ({
@@ -58,7 +58,7 @@ export class BackupComplete extends PureComponent<BackupCompleteProps, void> {
         <CustomView style={[styles.headerSpacer]}>
           <Icon
             medium
-            onPress={() => navigate(params.initialRoute)}
+            onPress={() => navigate(settingsRoute)}
             testID={BACKUP_COMPLETE_CLOSE_TEST_ID}
             iconStyle={[styles.headerIcon]}
             src={closeImage}

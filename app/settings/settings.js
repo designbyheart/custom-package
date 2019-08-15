@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
 import {
+  ActivityIndicator,
   Alert,
   Text,
   Switch,
@@ -12,6 +13,7 @@ import {
   Image,
   Button,
   View,
+  TouchableOpacity,
 } from 'react-native'
 import { measurements } from '../common/styles/measurements'
 import { BlurView } from 'react-native-blur'
@@ -26,6 +28,7 @@ import {
 } from '../components'
 import { CustomList, CustomView, Container } from '../components/layout'
 import {
+  cloudBackupRoute,
   settingsRoute,
   lockEnterPinRoute,
   lockTouchIdSetupRoute,
@@ -34,6 +37,7 @@ import {
   privacyTNCRoute,
   genRecoveryPhraseRoute,
   walletRoute,
+  exportBackupFileRoute,
 } from '../common/route-constants'
 import ToggleSwitch from 'react-native-flip-toggle-button'
 import { connect } from 'react-redux'
@@ -44,6 +48,7 @@ import {
   OFFSET_1X,
   color,
   grey,
+  maroonRed,
   isIphoneX,
   responsiveHorizontalPadding,
   isBiggerThanVeryShortDevice,
@@ -66,11 +71,20 @@ import {
   ABOUT_APP_TEST_ID,
   ONFIDO_TEST_ID,
 } from './settings-constant'
+import {
+  SOVRIN_TOKEN_AMOUNT_TEST_ID,
+  SOVRIN_TOKEN_TEST_ID,
+} from '../home/home-constants'
 import type { Store } from '../store/type-store'
 import type { SettingsProps, SettingsState } from './type-settings'
 import { tertiaryHeaderStyles } from '../components/layout/header-styles'
 import type { ImageSource, ReactNavigation } from '../common/type-common'
 import { selectUserAvatar } from '../store/user/user-store'
+import {
+  setAutoCloudBackupEnabled,
+  exportBackup,
+  generateBackupFile,
+} from '../backup/backup-store'
 import { Apptentive } from 'apptentive-react-native'
 //import WalletBackupSuccessModal from '../backup/wallet-backup-success-modal'
 import AboutApp from '../about-app/about-app'
@@ -82,10 +96,14 @@ import { isBiggerThanShortDevice } from '../common/styles/constant'
 import { Dimensions } from 'react-native'
 import { scale } from 'react-native-size-matters'
 import { darkGray } from '../common/styles/constant'
-import { List } from 'react-native-elements'
+import { List, ListItem } from 'react-native-elements'
 
 import get from 'lodash.get'
-import { getWalletBalance } from '../store/store-selector'
+import {
+  getWalletBalance,
+  getAutoCloudBackupEnabled,
+  getHasVerifiedRecoveryPhrase,
+} from '../store/store-selector'
 import CustomDate from '../components/custom-date/custom-date'
 import { matterhornSecondary } from '../common/styles/constant'
 import { tokenAmountSize } from '../home/home'
@@ -94,9 +112,121 @@ import { SettingsHeader } from '../components/settings/settings-header'
 import SvgCustomIcon from '../components/svg-setting-icons'
 import { ListItemSettings } from '../components/settings/list-Item-settings'
 import { withStatusBar } from '../components/status-bar/status-bar'
-import { formatNumbers } from '../components/text'
+import moment from 'moment'
+import {
+  CLOUD_BACKUP_LOADING,
+  CLOUD_BACKUP_FAILURE,
+  AUTO_CLOUD_BACKUP_ENABLED,
+} from '../backup/type-backup'
+import { Loader } from '../components'
+import { safeSet, secureSet } from '../services/storage'
+import { addPendingRedirection } from '../lock/lock-store'
 
 const { width, height } = Dimensions.get('window')
+
+const style = StyleSheet.create({
+  mainContainer: {
+    backgroundColor: lightDarkGray,
+  },
+  userAvatarContainer: {
+    height: 200,
+    width: '100%',
+    position: 'absolute',
+    zIndex: 10000,
+    top: 0,
+    backgroundColor:
+      Platform.OS === 'ios' ? 'rgba(255, 255, 255, 0.8)' : '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: Platform.OS === 'android' ? 8 : 0,
+  },
+  userAvatarContainerBlur: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: 200,
+  },
+  listContainer: {
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    backgroundColor: lightDarkGray,
+    padding: 0,
+  },
+  listItemContainer: {
+    borderBottomWidth: 1,
+    borderTopWidth: 0,
+    borderBottomColor: gainsBoro,
+    minHeight: 64,
+    justifyContent: 'center',
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingRight: 0,
+    paddingRight: 10,
+  },
+  titleStyle: {
+    fontFamily: font.family,
+    fontSize: font.size.M1,
+    fontWeight: 'bold',
+    color: grey,
+  },
+  walletNotBackedUpTitleStyle: {
+    fontFamily: font.family,
+    fontSize: font.size.M1,
+    fontWeight: 'bold',
+    color: maroonRed,
+  },
+  subtitleStyle: {
+    fontFamily: font.family,
+    fontSize: font.size.XXS,
+    color: grey,
+  },
+  walletNotBackedUpSubtitleStyle: {
+    fontFamily: font.family,
+    fontSize: font.size.XXS,
+    color: maroonRed,
+  },
+  subtitleFail: {
+    color: maroonRed,
+  },
+  avatarStyle: { backgroundColor: lightDarkGray, padding: 5 },
+  username: {
+    fontSize: font.size.ML1,
+    padding: '3%',
+  },
+  tokenText: {
+    fontSize: font.size.XXS,
+    paddingTop: 5,
+    paddingBottom: 5,
+    textAlign: 'center',
+  },
+  editIcon: {
+    width: EDIT_ICON_DIMENSIONS,
+    height: EDIT_ICON_DIMENSIONS,
+  },
+  labelImage: {
+    marginRight: OFFSET_1X,
+  },
+  floatTokenAmount: {
+    color: darkGray,
+    paddingHorizontal: 8,
+  },
+  backupTimeSubtitleStyle: {
+    marginLeft: 10,
+    color: grey,
+    fontFamily: font.family,
+  },
+  subtitleColor: {
+    color: grey,
+    fontFamily: font.family,
+  },
+  onfidoIcon: {
+    width: 24,
+    height: 24,
+    marginHorizontal: 10,
+  },
+})
 
 export class Settings extends PureComponent<SettingsProps, SettingsState> {
   state = {
@@ -113,6 +243,20 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     }
   }
 
+  renderBlurForIos = () => {
+    const { userAvatarContainerBlur } = style
+
+    if (Platform.OS === 'ios') {
+      return (
+        <BlurView
+          style={userAvatarContainerBlur}
+          blurType="light"
+          blurAmount={8}
+        />
+      )
+    } else return null
+  }
+
   onChangeTouchId = (switchState: boolean) => {
     const { navigation } = this.props
     // when the navigation from settings is done by touching the Switch, then the touch id enables with weird behaviour
@@ -126,23 +270,59 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         })
     }
   }
-  onBackup = () => {
-    const { navigation: { navigate, state, goBack } } = this.props
-    // If no there is no route, then default to Settings
-    const initialRoute = get(state, 'routeName', settingsRoute)
-    navigate(genRecoveryPhraseRoute, {
-      initialRoute,
-      hideBtn: true,
-    })
+  toggleAutoCloudBackupEnabled = (switchState: boolean) => {
+    // popup modal to enable cloud back but no modal needed when setting automatic
+    // backup to false
+    if (switchState) {
+      this.props.navigation.navigate(cloudBackupRoute, {})
+    } else {
+      secureSet(AUTO_CLOUD_BACKUP_ENABLED, switchState.toString())
+      this.props.setAutoCloudBackupEnabled(switchState)
+    }
   }
-  onRecoveryPhrase = () => {
-    const { navigation: { navigate, state, goBack } } = this.props
+  formatBackupString = (date?: string) => {
+    const now = moment().valueOf()
+    var lastBackupDate = moment(date).valueOf()
+    let minutes = Math.floor((now - lastBackupDate) / 1000 / 60)
+
+    if (minutes >= 24 * 60) {
+      return moment(date).format('h:mm a, MMMM Do YYYY')
+    } else if (minutes >= 120) return `${Math.floor(minutes / 60)} hours ago`
+    else if (minutes >= 60) return 'an hour ago'
+    else if (minutes >= 5) return `${minutes} minutes ago`
+    else if (minutes >= 2) return 'a few minutes ago'
+    else return 'just now'
+  }
+
+  onBackup = () => {
+    const {
+      generateBackupFile,
+      hasVerifiedRecoveryPhrase,
+      navigation: { navigate, state, goBack },
+    } = this.props
     // If no there is no route, then default to Settings
     const initialRoute = get(state, 'routeName', settingsRoute)
-    navigate(genRecoveryPhraseRoute, {
-      initialRoute,
-      hideBtn: false,
-    })
+
+    //goto genRecoveryPhraseRoute if no cloudbackup or zip backup
+    if (!hasVerifiedRecoveryPhrase) {
+      navigate(genRecoveryPhraseRoute, {
+        initialRoute,
+      })
+    } else {
+      generateBackupFile()
+      navigate(exportBackupFileRoute, {
+        initialRoute,
+      })
+    }
+  }
+  viewRecoveryPhrase = () => {
+    this.props.addPendingRedirection([
+      { routeName: genRecoveryPhraseRoute, params: { viewOnlyMode: true } },
+    ])
+    const { navigation } = this.props
+    if (navigation.isFocused()) {
+      navigation.push && navigation.push(lockEnterPinRoute, {})
+    }
   }
 
   openAboutApp = () => {
@@ -217,27 +397,167 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
       })
     }
   }
+  getLastBackupTitle = () => {
+    return this.getLastBackupTime()
+  }
 
   getLastBackupTime() {
-    return this.props.lastSuccessfulBackup !== '' ? (
+    return this.props.connectionsUpdated === false ? (
       <CustomText
         transparentBg
         h7
         bold
         style={[styles.backupTimeSubtitleStyle]}
       >
-        Last backup was{' '}
-        <CustomDate transparentBg h7 bold style={[styles.subtitleColor]}>
-          {this.props.lastSuccessfulBackup}
-        </CustomDate>
+        Choose where to save a .zip backup file
       </CustomText>
     ) : (
-      'Please create backup now!'
+      'You have unsaved Connect.Me information'
+    )
+  }
+  getCloudBackupSubtitle = () => {
+    if (this.props.cloudBackupStatus === CLOUD_BACKUP_LOADING) {
+      return 'Backing up...'
+    } else if (this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE) {
+      return (
+        <CustomText
+          transparentBg
+          h7
+          bold
+          style={[style.backupTimeSubtitleStyle, style.subtitleFail]}
+        >
+          Backup failed. Tap to retry
+        </CustomText>
+      )
+    } else return this.getLastCloudBackupTime()
+  }
+  getLastCloudBackupTime() {
+    return this.props.lastSuccessfulCloudBackup !== '' ? (
+      <CustomText transparentBg h7 bold style={[style.backupTimeSubtitleStyle]}>
+        Last backup was{' '}
+        <CustomText transparentBg h7 bold style={[style.subtitleColor]}>
+          {this.formatBackupString(this.props.lastSuccessfulCloudBackup)}
+        </CustomText>
+      </CustomText>
+    ) : (
+      'Use your Anonymously sync with the Evernym Cloud'
     )
   }
 
+  onCloudBackupPressed = () => {
+    const { navigation: { navigate, state, goBack } } = this.props
+    navigate(cloudBackupRoute, {})
+  }
+
+  renderLastBackupText = () => {
+    if (this.props.lastSuccessfulBackup !== '') {
+      const lastSuccessfulBackup = this.formatBackupString(
+        this.props.lastSuccessfulBackup
+      )
+
+      if (this.props.lastSuccessfulCloudBackup !== '') {
+        const lastSuccessfulCloudBackup = this.formatBackupString(
+          this.props.lastSuccessfulCloudBackup
+        )
+
+        if (
+          moment(this.props.lastSuccessfulCloudBackup).isBefore(
+            this.props.lastSuccessfulBackup
+          )
+        ) {
+          return `Last Backup: ${lastSuccessfulBackup}`
+        } else {
+          return `Last Backup: ${lastSuccessfulCloudBackup}`
+        }
+      }
+      return `Last Backup: ${lastSuccessfulBackup}`
+    } else if (this.props.lastSuccessfulCloudBackup !== '') {
+      const lastSuccessfulCloudBackup = this.formatBackupString(
+        this.props.lastSuccessfulCloudBackup
+      )
+
+      if (this.props.lastSuccessfulBackup !== '') {
+        const lastSuccessfulBackup = this.formatBackupString(
+          this.props.lastSuccessfulBackup
+        )
+
+        if (
+          moment(this.props.lastSuccessfulBackup).isBefore(
+            this.props.lastSuccessfulCloudBackup
+          )
+        ) {
+          return `Last Backup: ${lastSuccessfulCloudBackup}`
+        } else {
+          return `Last Backup: ${lastSuccessfulBackup}`
+        }
+      }
+      return `Last Backup: ${lastSuccessfulCloudBackup}`
+    } else return 'Last Backup: Never'
+  }
+
+  renderBackupTitleText = () => {
+    if (this.props.connectionsUpdated === null) {
+      return 'Create a Backup'
+    } else if (this.props.connectionsUpdated) {
+      return this.renderLastBackupText()
+    } else if (this.props.connectionsUpdated === false) {
+      return 'Manual Backup'
+    }
+  }
+
   render() {
-    const { walletBalance } = this.props
+    const {
+      walletBalance,
+      lastSuccessfulCloudBackup,
+      lastSuccessfulBackup,
+      cloudBackupStatus,
+      hasVerifiedRecoveryPhrase,
+    } = this.props
+    const userAvatar = (
+      <CustomView center style={[style.userAvatarContainer]}>
+        {this.renderBlurForIos()}
+        <CustomView verticalSpace>
+          <UserAvatar testID={USER_AVATAR_TEST_ID} userCanChange>
+            {this.renderAvatarWithSource}
+          </UserAvatar>
+        </CustomView>
+        {/* DO not remove commented code, this is just to temporarily hide token related stuff */}
+        <TouchableOpacity
+          onPress={this.openTokenScreen}
+          testID={SOVRIN_TOKEN_AMOUNT_TEST_ID}
+        >
+          <CustomView row center>
+            <Icon
+              small
+              testID={SOVRIN_TOKEN_TEST_ID}
+              src={require('../images/sovrinTokenOrange.png')}
+            />
+            <CustomText
+              h5
+              demiBold
+              center
+              style={[
+                style.floatTokenAmount,
+                {
+                  fontSize: tokenAmountSize(
+                    walletBalance ? walletBalance.length : 0
+                  ),
+                },
+              ]}
+              transparentBg
+              formatNumber
+            >
+              {walletBalance}
+            </CustomText>
+          </CustomView>
+          <CustomView>
+            <CustomText transparentBg darkgray style={[style.tokenText]}>
+              TOKENS
+            </CustomText>
+          </CustomView>
+        </TouchableOpacity>
+      </CustomView>
+    )
 
     const toggleSwitch =
       Platform.OS === 'ios' ? (
@@ -251,6 +571,30 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         <ToggleSwitch
           onToggle={this.onChangeTouchId}
           value={this.props.touchIdActive}
+          buttonWidth={55}
+          buttonHeight={30}
+          buttonRadius={30}
+          sliderWidth={28}
+          sliderHeight={28}
+          sliderRadius={58}
+          buttonOnColor={mantis}
+          buttonOffColor={lightWhite}
+          sliderOnColor={white}
+          sliderOffColor={white}
+        />
+      )
+    const cloudToggleSwitch =
+      Platform.OS === 'ios' ? (
+        <Switch
+          disabled={this.state.disableTouchIdSwitch}
+          trackColor={{ true: mantis }}
+          onValueChange={this.toggleAutoCloudBackupEnabled}
+          value={this.props.autoCloudBackupEnabled}
+        />
+      ) : (
+        <ToggleSwitch
+          onToggle={this.toggleAutoCloudBackupEnabled}
+          value={this.props.autoCloudBackupEnabled}
           buttonWidth={55}
           buttonHeight={30}
           buttonRadius={30}
@@ -298,42 +642,47 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
       // },
       {
         id: 1,
-        title: 'Backup Data',
-        subtitle: this.getLastBackupTime(),
+        title: this.renderBackupTitleText(),
+        subtitle: this.getLastBackupTitle(),
         avatar: (
-          <View style={styles.avatarView}>
-            <SvgCustomIcon name="Backup" fill="#777" width="24" height="24" />
-          </View>
-        ),
-        rightIcon: (
           <SvgCustomIcon
-            name="ListItemArrow"
-            fill="#A5A5A5"
-            width="8"
-            height="10"
+            fill={
+              this.props.connectionsUpdated && !this.props.isAutoBackupEnabled
+                ? maroonRed
+                : '#777'
+            }
+            name="Backup"
           />
         ),
+        rightIcon: '',
         onPress: this.onBackup,
       },
       {
         id: 2,
-        title: 'Secure With Biometrics',
-        subtitle: 'Unlock Connect.Me with your face or finger',
-        avatar: (
-          <View style={styles.avatarView}>
-            <SvgCustomIcon
-              name="Biometrics"
-              fill="#777"
-              width="24"
-              height="27"
-            />
-          </View>
-        ),
+        title: 'Automatic Cloud Backups',
+        subtitle: this.getCloudBackupSubtitle(),
+        avatar: <SvgCustomIcon fill="#777" name="CloudBackup" />,
+        rightIcon:
+          cloudBackupStatus === CLOUD_BACKUP_LOADING ? (
+            <ActivityIndicator />
+          ) : (
+            cloudToggleSwitch
+          ),
+        onPress:
+          cloudBackupStatus === CLOUD_BACKUP_LOADING
+            ? () => {}
+            : this.onCloudBackupPressed,
+      },
+      {
+        id: 3,
+        title: 'Biometrics',
+        subtitle: 'Use your finger or face to secure app',
+        avatar: <SvgCustomIcon fill="#777" name="Biometrics" />,
         rightIcon: toggleSwitch,
         onPress: this.onChangeTouchId,
       },
       {
-        id: 3,
+        id: 4,
         title: 'Passcode',
         subtitle: 'View/Change your Connect.Me passcode',
         avatar: (
@@ -352,12 +701,17 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         onPress: this.onChangePinClick,
       },
       {
-        id: 4,
+        id: 5,
         title: 'Recovery Phrase',
         subtitle: 'View your Recovery Phrase',
         avatar: (
           <View style={styles.avatarView}>
-            <SvgCustomIcon name="Recovery" fill="#777" width="19" height="29" />
+            <SvgCustomIcon
+              name="ViewPassPhrase"
+              fill="#777"
+              width="27"
+              height="27"
+            />
           </View>
         ),
         rightIcon: (
@@ -368,10 +722,10 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
             height="10"
           />
         ),
-        onPress: this.onRecoveryPhrase,
+        onPress: this.viewRecoveryPhrase,
       },
       {
-        id: 5,
+        id: 6,
         title: 'Chat With Us',
         subtitle: 'Tell us what you think of Connect.Me',
         avatar: (
@@ -390,7 +744,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         onPress: this.openFeedback,
       },
       {
-        id: 6,
+        id: 7,
         title: 'About',
         subtitle: 'Legal, Version, and Network Information',
         avatar: (
@@ -409,7 +763,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         onPress: this.openAboutApp,
       },
       {
-        id: 7,
+        id: 8,
         title: 'Get your ID verified by Onfido',
         subtitle: 'ONFIDO',
         avatar: (
@@ -433,36 +787,100 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
       },
     ]
 
+    // NOTE calculating list height to fix bug with items not scrolling, 260 is harddcoded
+    // and is probably about the height of the header which is somehow not letting the list
+    // generate its height properly.
+    const listCount = hasVerifiedRecoveryPhrase
+      ? settingsItemList.length
+      : settingsItemList.length - 2
+    const listHeight = listCount * 64 + 260
     return (
-      <View style={styles.container}>
-        <SettingsHeader
-          // tokenScreen={() => this.openTokenScreen()}
-          balance={formatNumbers(walletBalance)}
-        />
-        <ListItemSettings list={settingsItemList} />
-        {Platform.OS === 'ios' ? (
-          <BlurView
-            style={styles.blurContainer}
-            blurType="light"
-            blurAmount={8}
-          />
-        ) : null}
-      </View>
+      <Container style={[style.mainContainer]}>
+        <CustomView tertiary>
+          {userAvatar}
+          <ScrollView>
+            <List
+              containerStyle={[
+                style.mainContainer,
+                style.listContainer,
+                {
+                  height: listHeight,
+                  paddingTop: 180,
+                  paddingBottom: measurements.bottomNavBarHeight,
+                },
+              ]}
+            >
+              {settingsItemList.map((item, index) => {
+                if ((index === 1 || index === 4) && !hasVerifiedRecoveryPhrase)
+                  return
+                return (
+                  <ListItem
+                    containerStyle={[style.listItemContainer]}
+                    titleStyle={[
+                      this.props.connectionsUpdated &&
+                      item.id === 1 &&
+                      !this.props.isAutoBackupEnabled
+                        ? style.walletNotBackedUpTitleStyle
+                        : style.titleStyle,
+                    ]}
+                    subtitleStyle={[
+                      this.props.connectionsUpdated &&
+                      item.id === 1 &&
+                      !this.props.isAutoBackupEnabled
+                        ? style.walletNotBackedUpSubtitleStyle
+                        : style.subtitleStyle,
+                    ]}
+                    key={index}
+                    title={item.title}
+                    subtitle={item.subtitle}
+                    avatarStyle={[style.avatarStyle]}
+                    avatar={item.avatar}
+                    rightIcon={
+                      item.rightIcon !== ''
+                        ? item.rightIcon
+                        : { name: 'chevron-right' }
+                    }
+                    hideChevron={item.rightIcon === ''}
+                    onPress={item.onPress}
+                  />
+                )
+              })}
+            </List>
+          </ScrollView>
+        </CustomView>
+      </Container>
     )
   }
 }
 
 const mapStateToProps = (state: Store) => ({
+  status: state.backup.status,
   touchIdActive: state.lock.isTouchIdEnabled,
   walletBackup: state.wallet.backup,
   currentScreen: state.route.currentScreen,
   timeStamp: state.route.timeStamp,
-  lastSuccessfulBackup: state.backup.lastSuccessfulBackup,
+  lastSuccessfulBackup: state.backup && state.backup.lastSuccessfulBackup,
+  lastSuccessfulCloudBackup:
+    state.backup && state.backup.lastSuccessfulCloudBackup,
+  autoCloudBackupEnabled: state.backup.autoCloudBackupEnabled,
+  cloudBackupStatus: state.backup.cloudBackupStatus,
+  connectionsUpdated:
+    state.history.data && state.history.data.connectionsUpdated,
   walletBalance: getWalletBalance(state),
+  hasVerifiedRecoveryPhrase: getHasVerifiedRecoveryPhrase(state),
 })
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ selectUserAvatar }, dispatch)
+  bindActionCreators(
+    {
+      selectUserAvatar,
+      setAutoCloudBackupEnabled,
+      exportBackup,
+      generateBackupFile,
+      addPendingRedirection,
+    },
+    dispatch
+  )
 
 export const SettingStack: any = createStackNavigator({
   [settingsRoute]: {

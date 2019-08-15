@@ -32,6 +32,13 @@ import type {
   RestoreSubmitPassphrase,
   RestoreStore,
 } from './type-restore'
+import {
+  LAST_SUCCESSFUL_BACKUP,
+  LAST_SUCCESSFUL_CLOUD_BACKUP,
+  PASSPHRASE_SALT_STORAGE_KEY,
+  PASSPHRASE_STORAGE_KEY,
+  WALLET_KEY,
+} from '../common/secure-storage-constants'
 import RNFetchBlob from 'rn-fetch-blob'
 import { getRestoreStatus, getRestoreFileName } from '../store/store-selector'
 import { pinHash as generateKey } from '../lock/pin-hash'
@@ -44,6 +51,8 @@ import { safeGet, safeSet } from '../services/storage'
 import { PIN_ENABLED_KEY, IN_RECOVERY } from '../lock/type-lock'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
+
+import { generateRecoveryPhraseSuccess } from '../backup/backup-store'
 
 export const saveFileToAppDirectory = (data: SaveToAppDirectory) => ({
   type: SAVE_FILE_TO_APP_DIRECTORY,
@@ -112,6 +121,7 @@ export function* restoreFileDecrypt(
     )
 
     yield call(decryptWalletFile, walletFilePath, hashedPassphrase)
+
     yield put(restoreStatus(RestoreStatus.FILE_DECRYPT_SUCCESS))
 
     // since we have decrypted file successfully, now we restore data from wallet

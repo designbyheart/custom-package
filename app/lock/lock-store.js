@@ -119,7 +119,7 @@ export const lockFail = (error: CustomError): LockFail => ({
 
 export function* setPin(action: SetPinAction): Generator<*, *, *> {
   try {
-    const salt: string = yield call(generateSalt)
+    const salt: string = yield call(generateSalt, true)
     const hashedPin: string = yield call(pinHash, action.pin.toString(), salt)
     yield call(secureSet, PIN_HASH, hashedPin)
     yield call(secureSet, SALT, salt)

@@ -428,8 +428,12 @@ class ConnectionDetails extends Component<
 
 const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
   let connectionHistory: ConnectionHistoryEvent[] =
-    state.history.data && props.navigation.state
-      ? state.history.data[props.navigation.state.params.senderDID].data
+    state.history &&
+    state.history.data &&
+    state.history.data.connections &&
+    props.navigation.state
+      ? state.history.data.connections[props.navigation.state.params.senderDID]
+          .data
       : []
   connectionHistory = connectionHistory.slice()
 
