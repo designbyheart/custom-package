@@ -23,8 +23,8 @@ import type {
   ClaimWithUuid,
   ClaimReceivedVcxAction,
   ClaimVcx,
-  GetClaimVcxResult,
 } from './type-claim'
+import type { GetClaimVcxResult } from '../push-notification/type-push-notification'
 import {
   CLAIM_RECEIVED,
   CLAIM_STORAGE_FAIL,

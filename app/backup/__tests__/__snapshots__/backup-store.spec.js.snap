@@ -8,6 +8,7 @@ Object {
     "message": "Error while backing up wallet",
   },
   "lastSuccessfulBackup": "",
+  "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
     "hash": "h",
     "phrase": "",
@@ -21,15 +22,22 @@ Object {
 
 exports[`store: backup-store:  action: EXPORT_BACKUP 1`] = `
 Object {
+  "autoCloudBackupEnabled": false,
   "backupWalletPath": "/Users/CoreSimulator/Devices/5F89AA14-B694-465F-82C3-838552AB4B85/data/Containers/Data/Application/4536A441-4B70-4A30-8DCC-5274E6781535/Documents/backup.zip",
+  "cloudBackupError": null,
+  "cloudBackupStatus": "",
+  "encryptedFileLocation": "",
   "error": null,
+  "hasVerifiedRecoveryPhrase": false,
   "lastSuccessfulBackup": "",
+  "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
     "hash": "h",
     "phrase": "",
     "salt": "s",
   },
   "prepareBackupStatus": "PREPARE_BACKUP_IDLE",
+  "prepareCloudBackupStatus": "PREPARE_BACKUP_IDLE",
   "showBanner": false,
   "status": "EXPORT_BACKUP_LOADING",
 }
@@ -37,15 +45,22 @@ Object {
 
 exports[`store: backup-store:  action: EXPORT_BACKUP_SUCCESS 1`] = `
 Object {
+  "autoCloudBackupEnabled": false,
   "backupWalletPath": "/Users/CoreSimulator/Devices/5F89AA14-B694-465F-82C3-838552AB4B85/data/Containers/Data/Application/4536A441-4B70-4A30-8DCC-5274E6781535/Documents/backup.zip",
+  "cloudBackupError": null,
+  "cloudBackupStatus": "",
+  "encryptedFileLocation": "",
   "error": null,
+  "hasVerifiedRecoveryPhrase": false,
   "lastSuccessfulBackup": "2018-06-27T18:27:35+05:30",
+  "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
     "hash": "h",
     "phrase": "",
     "salt": "s",
   },
   "prepareBackupStatus": "PREPARE_BACKUP_IDLE",
+  "prepareCloudBackupStatus": "PREPARE_BACKUP_IDLE",
   "showBanner": false,
   "status": "BACKUP_COMPLETE",
 }
@@ -53,15 +68,22 @@ Object {
 
 exports[`store: backup-store:  action: GENERATE_BACKUP_FILE 1`] = `
 Object {
+  "autoCloudBackupEnabled": false,
   "backupWalletPath": "",
+  "cloudBackupError": null,
+  "cloudBackupStatus": "",
+  "encryptedFileLocation": "",
   "error": null,
+  "hasVerifiedRecoveryPhrase": false,
   "lastSuccessfulBackup": "",
+  "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
     "hash": "b7a563bcbbeb892b",
     "phrase": "gander troubling deodorize justify twitter darkish confront politely",
     "salt": "s",
   },
   "prepareBackupStatus": "PREPARE_BACKUP_IDLE",
+  "prepareCloudBackupStatus": "PREPARE_BACKUP_IDLE",
   "showBanner": false,
   "status": "GENERATE_BACKUP_FILE_LOADING",
 }
@@ -69,15 +91,22 @@ Object {
 
 exports[`store: backup-store:  action: GENERATE_BACKUP_FILE_SUCCESS 1`] = `
 Object {
+  "autoCloudBackupEnabled": false,
   "backupWalletPath": "/Users/CoreSimulator/Devices/5F89AA14-B694-465F-82C3-838552AB4B85/data/Containers/Data/Application/4536A441-4B70-4A30-8DCC-5274E6781535/Documents/backup.zip",
+  "cloudBackupError": null,
+  "cloudBackupStatus": "",
+  "encryptedFileLocation": "",
   "error": null,
+  "hasVerifiedRecoveryPhrase": false,
   "lastSuccessfulBackup": "",
+  "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
     "hash": "h",
     "phrase": "",
     "salt": "s",
   },
   "prepareBackupStatus": "PREPARE_BACKUP_IDLE",
+  "prepareCloudBackupStatus": "PREPARE_BACKUP_IDLE",
   "showBanner": false,
   "status": "GENERATE_BACKUP_FILE_SUCCESS",
 }
@@ -88,6 +117,7 @@ Object {
   "backupWalletPath": "",
   "error": null,
   "lastSuccessfulBackup": "",
+  "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
     "hash": "h",
     "phrase": "",
@@ -101,15 +131,22 @@ Object {
 
 exports[`store: backup-store:  action: GENERATE_RECOVERY_PHRASE_SUCCESS 1`] = `
 Object {
+  "autoCloudBackupEnabled": false,
   "backupWalletPath": "",
+  "cloudBackupError": null,
+  "cloudBackupStatus": "",
+  "encryptedFileLocation": "",
   "error": undefined,
+  "hasVerifiedRecoveryPhrase": false,
   "lastSuccessfulBackup": "",
+  "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
     "hash": "b7a563bcbbeb892b",
     "phrase": "gander troubling deodorize justify twitter darkish confront politely",
     "salt": "s",
   },
   "prepareBackupStatus": "PREPARE_BACKUP_IDLE",
+  "prepareCloudBackupStatus": "PREPARE_BACKUP_IDLE",
   "showBanner": false,
   "status": "GENERATE_PHRASE_SUCCESS",
 }
@@ -120,6 +157,7 @@ Object {
   "backupWalletPath": "",
   "error": null,
   "lastSuccessfulBackup": "",
+  "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
     "hash": "h",
     "phrase": "",
@@ -136,6 +174,7 @@ Object {
   "backupWalletPath": "",
   "error": null,
   "lastSuccessfulBackup": "",
+  "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
     "hash": "h",
     "phrase": "",
@@ -152,6 +191,7 @@ Object {
   "backupWalletPath": "",
   "error": null,
   "lastSuccessfulBackup": "",
+  "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
     "hash": "h",
     "phrase": "",

@@ -25,7 +25,14 @@ export default class BackupRestorePassphrase extends PureComponent<
   void
 > {
   render() {
-    const { filename, testID, onSubmit, placeholder, errorState } = this.props
+    const {
+      isCloudRestoreAttempt,
+      filename,
+      testID,
+      onSubmit,
+      placeholder,
+      errorState,
+    } = this.props
     return (
       <Container
         testID={`${testID}-container`}
@@ -40,7 +47,7 @@ export default class BackupRestorePassphrase extends PureComponent<
         <KeyboardAwareScrollView extraHeight={50}>
           <Container testID={`${testID}-inputbox`}>
             <CustomView center>
-              {filename ? (
+              {filename || isCloudRestoreAttempt ? (
                 <CustomView center>
                   <Image
                     source={require('../../images/encryptedFileGreen.png')}
@@ -62,7 +69,7 @@ export default class BackupRestorePassphrase extends PureComponent<
                 h5
                 style={[styles.verifyMainText]}
               >
-                {filename
+                {filename || isCloudRestoreAttempt
                   ? 'Enter the Recovery Phrase you used to create this backup.'
                   : 'To verify that you have copied down your recovery phrase correctly, please enter it below.'}
               </CustomText>

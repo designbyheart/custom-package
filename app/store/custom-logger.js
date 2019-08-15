@@ -3,12 +3,8 @@ import RNFetchBlob from 'rn-fetch-blob'
 import uniqueId from 'react-native-unique-id'
 import _flatten from 'lodash.flatten'
 import _merge from 'lodash.merge'
+import { NativeModules } from 'react-native'
 
-import {
-  setVcxLogger,
-  writeToVcxLog,
-  encryptVcxLog,
-} from '../bridge/react-native-cxs/RNCxs'
 import type { Dispatch } from 'redux'
 import type { Store } from '../store/type-store'
 import { UPDATE_LOG_ISENCRYPTED } from '../send-logs/type-send-logs'
@@ -25,7 +21,7 @@ import {
   DELETE_CONNECTION,
 } from './type-connection-store'
 import { NEW_CONNECTION_SUCCESS } from './new-connection-success'
-import { HYDRATE_CONNECTIONS } from './connections-store'
+import { HYDRATE_CONNECTIONS } from './type-connection-store'
 import {
   CLAIM_OFFER_RECEIVED,
   SEND_CLAIM_REQUEST,
@@ -86,6 +82,37 @@ import {
   WALLET_ADDRESSES_REFRESHED,
   SEND_TOKENS,
 } from '../wallet/type-wallet'
+
+const { RNIndy } = NativeModules
+
+export async function setVcxLogger(
+  logLevel: string,
+  uniqueId: string,
+  MAX_ALLOWED_FILE_BYTES: number
+): Promise<string> {
+  return await RNIndy.setVcxLogger(logLevel, uniqueId, MAX_ALLOWED_FILE_BYTES)
+}
+
+export async function writeToVcxLog(
+  loggerName: string,
+  levelName: string,
+  logMessage: string,
+  logFilePath: string
+): Promise<void> {
+  return await RNIndy.writeToVcxLog(
+    loggerName,
+    levelName,
+    logMessage,
+    logFilePath
+  )
+}
+
+export async function encryptVcxLog(
+  logFilePath: string,
+  encryptionKey: string
+): Promise<string> {
+  return await RNIndy.encryptVcxLog(logFilePath, encryptionKey)
+}
 
 export const CUSTOM_LOG_UTILS = {
   encryptionKey: '',

@@ -396,8 +396,8 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
                   "shadowRadius": 5,
                 },
               ],
-              undefined,
-              undefined,
+              false,
+              false,
             ]
           }
         >
@@ -433,12 +433,12 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
                     "fontWeight": "600",
                   },
                   undefined,
-                  undefined,
+                  false,
                 ],
               ]
             }
           >
-            Done
+            Continue
           </Text>
         </View>
       </View>
@@ -839,8 +839,17 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
                   "shadowRadius": 5,
                 },
               ],
-              undefined,
-              undefined,
+              Object {
+                "backgroundColor": "#dadee0",
+              },
+              Array [
+                Object {
+                  "backgroundColor": "#ffffff",
+                },
+                Object {
+                  "opacity": 0.4,
+                },
+              ],
             ]
           }
         >
@@ -881,7 +890,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
               ]
             }
           >
-            Done
+            Continue
           </Text>
         </View>
       </View>
@@ -1243,8 +1252,17 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
                   "shadowRadius": 5,
                 },
               ],
-              undefined,
-              undefined,
+              Object {
+                "backgroundColor": "#dadee0",
+              },
+              Array [
+                Object {
+                  "backgroundColor": "#ffffff",
+                },
+                Object {
+                  "opacity": 0.4,
+                },
+              ],
             ]
           }
         >
@@ -1285,7 +1303,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
               ]
             }
           >
-            Done
+            Continue
           </Text>
         </View>
       </View>

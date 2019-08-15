@@ -35,7 +35,6 @@ import {
   convertVcxConnectionToCxsConnection,
   convertVcxCredentialOfferToCxsClaimOffer,
   paymentHandle,
-  getWalletKey,
   convertSovrinTokensToSovrinAtoms,
   convertSovrinAtomsToSovrinTokens,
   convertVcxLedgerFeesToLedgerFees,
@@ -46,6 +45,7 @@ import type { MyPairwiseInfo } from '../../store/type-connection-store'
 import type {
   ClaimOfferPushPayload,
   ClaimPushPayload,
+  GetClaimVcxResult,
 } from '../../push-notification/type-push-notification'
 import type {
   WalletHistoryEvent,
@@ -53,10 +53,9 @@ import type {
 } from '../../wallet/type-wallet'
 import type { GenericStringObject } from '../../common/type-common'
 import type { Passphrase } from '../../backup/type-backup'
-import type { GetClaimVcxResult } from '../../claim/type-claim'
 import uniqueId from 'react-native-unique-id'
 import { smallDeviceMemory, signDataResponseSchema } from './type-cxs'
-import { secureSet } from '../../services/storage'
+import { secureSet, getWalletKey } from '../../services/storage'
 import { __uniqueId } from '../../store/type-config-store'
 import type { LedgerFeesData } from '../../store/ledger/type-ledger-store'
 import { schemaValidator } from '../../services/schema-validator'
@@ -203,35 +202,6 @@ export async function createConnectionWithInvite(
   )
 
   return connectionHandle
-}
-
-export async function setVcxLogger(
-  logLevel: string,
-  uniqueId: string,
-  MAX_ALLOWED_FILE_BYTES: number
-): Promise<string> {
-  return await RNIndy.setVcxLogger(logLevel, uniqueId, MAX_ALLOWED_FILE_BYTES)
-}
-
-export async function writeToVcxLog(
-  loggerName: string,
-  levelName: string,
-  logMessage: string,
-  logFilePath: string
-): Promise<void> {
-  return await RNIndy.writeToVcxLog(
-    loggerName,
-    levelName,
-    logMessage,
-    logFilePath
-  )
-}
-
-export async function encryptVcxLog(
-  logFilePath: string,
-  encryptionKey: string
-): Promise<string> {
-  return await RNIndy.encryptVcxLog(logFilePath, encryptionKey)
 }
 
 export async function serializeConnection(
@@ -411,6 +381,23 @@ export async function decryptWalletFile(
   return importHandle
 }
 
+export async function restoreWallet(
+  walletPath: string,
+  decryptionKey: string
+): Promise<number> {
+  const { walletName } = await getWalletPoolName()
+  const wallet_key = await getWalletKey()
+  const config = JSON.stringify({
+    wallet_name: walletName,
+    wallet_key,
+    exported_wallet_path: walletPath,
+    backup_key: decryptionKey,
+  })
+  const importHandle: number = await RNIndy.restoreWallet(config)
+
+  return importHandle
+}
+
 export async function copyToPath(
   uri: string,
   destPath: string
@@ -456,38 +443,46 @@ export async function exportWallet(wallet: WalletPayload): Promise<number> {
   return exportHandle
 }
 
-export async function setWalletItem(
-  key: string,
-  value: string
+export async function createWalletBackup(
+  sourceID: string,
+  backupKey: string
 ): Promise<number> {
-  return await RNIndy.setWalletItem(key, value)
+  return await RNIndy.createWalletBackup(sourceID, backupKey)
 }
 
-export async function getWalletItem(key: string): Promise<string> {
-  const response: string = await RNIndy.getWalletItem(key)
-  if (response) {
-    const itemValue = JSON.parse(response)
-    const { value } = itemValue
-
-    if (!value) {
-      throw new Error('cannot get value')
-    }
-
-    return value
-  } else {
-    return response
-  }
-}
-
-export async function deleteWalletItem(key: string): Promise<number> {
-  return await RNIndy.deleteWalletItem(key)
-}
-
-export async function updateWalletItem(
-  key: string,
-  data: string
+export async function backupWalletBackup(
+  walletBackupHandle: number,
+  path: string
 ): Promise<number> {
-  return await RNIndy.updateWalletItem(key, data)
+  return await RNIndy.backupWalletBackup(walletBackupHandle, path)
+}
+
+export async function updateWalletBackupState(
+  walletBackupHandle: number
+): Promise<number> {
+  return await RNIndy.updateWalletBackupState(walletBackupHandle)
+}
+
+export async function updateWalletBackupStateWithMessage(
+  walletBackupHandle: number,
+  message: string
+): Promise<number> {
+  return await RNIndy.updateWalletBackupStateWithMessage(
+    walletBackupHandle,
+    message
+  )
+}
+
+export async function serializeBackupWallet(
+  walletBackupHandle: number
+): Promise<number> {
+  return await RNIndy.serializeBackupWallet(walletBackupHandle)
+}
+
+export async function deserializeBackupWallet(
+  message: string
+): Promise<number> {
+  return await RNIndy.deserializeBackupWallet(message)
 }
 
 export function exitAppAndroid() {
@@ -545,6 +540,13 @@ export async function downloadMessages(
   pwdids: string
 ): Promise<string> {
   return await RNIndy.downloadMessages(messageStatus, uid_s, pwdids)
+}
+
+export async function vcxGetAgentMessages(
+  messageStatus: string,
+  uid_s: ?string
+): Promise<string> {
+  return await RNIndy.vcxGetAgentMessages(messageStatus, uid_s)
 }
 
 export async function updateMessages(

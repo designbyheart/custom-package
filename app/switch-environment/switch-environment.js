@@ -13,7 +13,11 @@ import {
   OFFSET_6X,
   OFFSET_7X,
 } from '../common/styles'
-import { switchEnvironmentRoute, lockSelectionRoute } from '../common'
+import {
+  selectRestoreMethodRoute,
+  switchEnvironmentRoute,
+  lockSelectionRoute,
+} from '../common'
 import { changeEnvironment } from '../store/config-store'
 import { disableDevMode } from '../lock/lock-store'
 import type {
@@ -67,6 +71,25 @@ class SwitchEnvironment extends PureComponent<
       paymentMethod
     )
     this.props.navigation.goBack()
+  }
+
+  onSaveAndRestore = () => {
+    const {
+      agencyDID,
+      agencyVerificationKey,
+      agencyUrl,
+      poolConfig,
+      paymentMethod,
+    } = this.state
+
+    this.props.changeEnvironment(
+      agencyUrl,
+      agencyDID,
+      agencyVerificationKey,
+      poolConfig,
+      paymentMethod
+    )
+    this.props.navigation.navigate(selectRestoreMethodRoute)
   }
 
   onCancel = () => {
@@ -167,6 +190,12 @@ class SwitchEnvironment extends PureComponent<
               title="Prod"
               testID={`${testID}-PROD`}
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.PROD)}
+            />
+            <CustomButton
+              primary
+              title="Save and Restore"
+              testID={`${testID}-SAVEnRESTORE`}
+              onPress={() => this.onSaveAndRestore()}
             />
           </CustomView>
           <KeyboardAwareScrollView>

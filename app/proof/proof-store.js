@@ -23,7 +23,6 @@ import type {
   UserSelfAttestedAttributesAction,
   IndyRequestedProof,
   RequestedClaimsJson,
-  RequestedAttrsJson,
   VcxSelectedCredentials,
 } from './type-proof'
 import type {
@@ -47,7 +46,7 @@ import {
   ERROR_SEND_PROOF,
   CLEAR_ERROR_SEND_PROOF,
 } from './type-proof'
-import type { CustomError } from '../common/type-common'
+import type { CustomError, RequestedAttrsJson } from '../common/type-common'
 import {
   generateProof,
   getMatchingCredentials,

@@ -34,10 +34,23 @@ import {
   ERROR_GENERATE_BACKUP_FILE,
   ERROR_HYDRATING_BACKUP,
   HYDRATE_BACKUP,
+  HYDRATE_CLOUD_BACKUP,
+  HYDRATE_AUTO_CLOUD_BACKUP_ENABLED,
   HYDRATE_BACKUP_FAILURE,
   EXPORT_BACKUP_NO_SHARE,
   WALLET_FILE_NAME,
   PREPARE_BACK_IDLE,
+  RESET_CLOUD_BACKUP_LOADING,
+  CLOUD_BACKUP_LOADING,
+  CLOUD_BACKUP_COMPLETE,
+  CLOUD_BACKUP_SUCCESS,
+  CLOUD_BACKUP_FAILURE,
+  SET_AUTO_CLOUD_BACKUP_ENABLED,
+  AUTO_CLOUD_BACKUP_ENABLED,
+  SET_WALLET_HANDLE,
+  START_AUTOMATIC_CLOUD_BACKUP,
+  HAS_VERIFIED_RECOVERY_PHRASE,
+  HYDRATE_HAS_VERIFIED_RECOVERY_PHRASE,
 } from './type-backup'
 import type {
   PromptBackupBannerAction,
@@ -64,16 +77,27 @@ import {
   safeGet,
   walletSet,
   walletGet,
+  getHydrationItem,
 } from '../services/storage'
 import type { AgencyPoolConfig } from '../store/type-config-store'
 import type { CustomError } from '../common/type-common'
 import {
   LAST_SUCCESSFUL_BACKUP,
+  LAST_SUCCESSFUL_CLOUD_BACKUP,
   PASSPHRASE_SALT_STORAGE_KEY,
   PASSPHRASE_STORAGE_KEY,
+  WALLET_KEY,
 } from '../common/secure-storage-constants'
-import { WALLET_KEY } from '../bridge/react-native-cxs/vcx-transformers'
-import { encryptWallet } from '../bridge/react-native-cxs/RNCxs'
+import {
+  serializeBackupWallet,
+  deserializeBackupWallet,
+  encryptWallet,
+  createWalletBackup,
+  backupWalletBackup,
+  updateWalletBackupState,
+  updateWalletBackupStateWithMessage,
+  updatePushTokenVcx,
+} from '../bridge/react-native-cxs/RNCxs'
 import {
   getSalt,
   getConfig,
@@ -81,6 +105,9 @@ import {
   getBackupWalletPath,
   getVcxInitializationState,
   getPrepareBackupStatus,
+  getLastCloudBackup,
+  getLastBackup,
+  getPushNotifactionNotification,
 } from '../store/store-selector'
 import { STORAGE_KEY_SHOW_BANNER } from '../components/banner/banner-constants'
 import { getWords } from './secure-passphrase'
@@ -89,6 +116,10 @@ import { VCX_INIT_SUCCESS, __uniqueId } from '../store/type-config-store'
 import { pinHash as generateKey, generateSalt } from '../lock/pin-hash'
 import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
+import { pushNotificationPermissionAction } from '../push-notification/push-notification-store'
+import firebase from 'react-native-firebase'
+import { PUSH_NOTIFICATION_RECEIVED } from '../push-notification/type-push-notification'
+import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
 
 const initialState = {
   passphrase: { phrase: '', salt: 's', hash: 'h' },
@@ -98,6 +129,90 @@ const initialState = {
   lastSuccessfulBackup: '',
   backupWalletPath: '',
   prepareBackupStatus: PREPARE_BACK_IDLE,
+  cloudBackupStatus: '',
+  cloudBackupError: null,
+  lastSuccessfulCloudBackup: '',
+  prepareCloudBackupStatus: PREPARE_BACK_IDLE,
+  autoCloudBackupEnabled: false,
+  encryptedFileLocation: '',
+  hasVerifiedRecoveryPhrase: false,
+}
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+export function* cloudBackupSaga(
+  action: GenerateBackupFileLoadingAction
+): Generator<*, *, *> {
+  try {
+    // NOTE: Enable push notifactions
+    yield call(() => firebase.messaging().requestPermission())
+
+    yield put(pushNotificationPermissionAction(true))
+
+    let passphrase = yield call(secureGet, PASSPHRASE_STORAGE_KEY)
+    let passphraseSalt = yield call(secureGet, PASSPHRASE_SALT_STORAGE_KEY)
+    if (!passphrase) {
+      const words: string[] = yield call(getWords, 8, 5)
+      passphrase = words.join(' ')
+      passphraseSalt = yield call(generateSalt, false)
+    }
+
+    const hashedPassphrase = yield call(generateKey, passphrase, passphraseSalt)
+
+    yield put(prepareBackup())
+    // check status for prepare backup, with status of prepare backup
+    // we would know whether we have moved all of data inside wallet or not
+    // only when we are sure that we have moved data inside of wallet
+    // we will go ahead and get a backup of wallet
+    const prepareBackupStatus: PrepareBackupStatus = yield select(
+      getPrepareBackupStatus
+    )
+    if (prepareBackupStatus !== PREPARE_BACKUP_SUCCESS) {
+      // prepare backup can only be in 3 states, loading, success, failure
+      // if it is not success, then we check for failure
+      if (prepareBackupStatus === PREPARE_BACKUP_FAILURE) {
+        throw new Error('Failed to write data back to wallet')
+      }
+      // if status is neither success nor failure, then we wait for it to success
+
+      // we will wait for 1 minutes for data to go into wallet
+      // and then we will timeout
+      const { prepareBackupSuccess, timeout } = yield race({
+        prepareBackupSuccess: take(PREPARE_BACKUP_SUCCESS),
+        timeout: call(delay, 60000),
+      })
+      if (timeout) {
+        throw new Error('Could not write data back to wallet in 1 minutes')
+      }
+    }
+
+    // NOTE: CLOUD-BACKUP-STEP-1. createWalletBackup(sourceID: string)
+    const { walletHandle, walletHandleTimeout } = yield race({
+      walletHandle: yield call(
+        createWalletBackup,
+        'sourceID',
+        hashedPassphrase
+      ),
+      walletHandleTimeout: call(delay, 60000),
+    })
+    if (walletHandleTimeout) {
+      throw new Error('Could not download wallet in one minute')
+    }
+    yield put(setWalletHandle(walletHandle))
+
+    // NOTE: wait/timer for steps in pushNotifaction to complete
+    const { cloudBackupSuccess, timeout } = yield race({
+      cloudBackupSuccess: take(CLOUD_BACKUP_SUCCESS),
+      timeout: call(delay, 60000),
+    })
+    if (timeout) {
+      throw new Error('Could not download wallet in one minute')
+    }
+  } catch (error) {
+    yield put(cloudBackupFailure('Failed to create backup'))
+    return
+  }
 }
 
 export function* generateBackupSaga(
@@ -172,6 +287,8 @@ export function* generateBackupSaga(
     // create zip file of zip up directory contents to be used as backup
     const backupZipFile = yield call(zip, zipupDirectory, destinationZipPath)
     yield put(generateBackupFileSuccess(backupZipFile))
+
+    yield put(connectionHistoryBackedUp())
   } catch (e) {
     captureError(e)
     yield put(
@@ -310,7 +427,7 @@ export function* generateRecoveryPhraseSaga(
       if (!passphrase) {
         const words: string[] = yield call(getWords, 8, 5)
         passphrase = words.join(' ')
-        passphraseSalt = yield call(generateSalt)
+        passphraseSalt = yield call(generateSalt, false)
       }
       const hashedPassphrase = yield call(
         generateKey,
@@ -389,6 +506,13 @@ function* watchExportBackup(): any {
   yield takeLatest(EXPORT_BACKUP_LOADING, exportBackupSaga)
 }
 
+function* watchCloudBackup(): any {
+  yield takeLatest(
+    [CLOUD_BACKUP_LOADING, START_AUTOMATIC_CLOUD_BACKUP],
+    cloudBackupSaga
+  )
+}
+
 function* watchGenerateRecoveryPhrase(): any {
   yield takeLatest(GENERATE_RECOVERY_PHRASE_LOADING, generateRecoveryPhraseSaga)
 }
@@ -400,6 +524,7 @@ export function* watchBackup(): any {
     watchGenerateRecoveryPhrase(),
     watchExportBackup(),
     watchBackupBannerPrompt(),
+    watchCloudBackup(),
   ])
 }
 
@@ -416,7 +541,10 @@ export function* hydrateBackupSaga(): Generator<*, *, *> {
   // reason for not using "all" effect of redux-saga is that in all if one saga fails
   // then whole "all" effect is cancelled and other saga are not run to completion
   yield fork(hydrateLastSuccessfulBackupSaga)
+  yield fork(hydrateLastSuccessfulCloudBackupSaga)
+  yield fork(hydrateAutomaticCloudBackupEnabledSaga)
   yield fork(hydrateBackupBannerStatusSaga)
+  yield fork(hydrateHasVerifiedRecoveryPhraseSaga)
 }
 
 export function* hydrateLastSuccessfulBackupSaga(): Generator<*, *, *> {
@@ -424,6 +552,68 @@ export function* hydrateLastSuccessfulBackupSaga(): Generator<*, *, *> {
     let lastSuccessfulBackup = yield call(safeGet, LAST_SUCCESSFUL_BACKUP)
     if (lastSuccessfulBackup != null) {
       yield put(hydrateBackup(lastSuccessfulBackup))
+    }
+  } catch (e) {
+    captureError(e)
+    yield put(
+      hydrateBackupFail({
+        ...ERROR_HYDRATING_BACKUP,
+        message: `${ERROR_HYDRATING_BACKUP.message} ${e.message}`,
+      })
+    )
+  }
+}
+
+export function* hydrateLastSuccessfulCloudBackupSaga(): Generator<*, *, *> {
+  try {
+    let lastSuccessfulCloudBackup = yield call(
+      safeGet,
+      LAST_SUCCESSFUL_CLOUD_BACKUP
+    )
+    if (lastSuccessfulCloudBackup != null) {
+      yield put(hydrateCloudBackup(lastSuccessfulCloudBackup))
+    }
+  } catch (e) {
+    captureError(e)
+    yield put(
+      hydrateBackupFail({
+        ...ERROR_HYDRATING_BACKUP,
+        message: `${ERROR_HYDRATING_BACKUP.message} ${e.message}`,
+      })
+    )
+  }
+}
+
+export function* hydrateAutomaticCloudBackupEnabledSaga(): Generator<*, *, *> {
+  try {
+    let autoCloudBackupEnabled = yield call(
+      getHydrationItem,
+      AUTO_CLOUD_BACKUP_ENABLED
+    )
+    if (autoCloudBackupEnabled != null) {
+      yield put(hydrateAutoCloudBackupEnabled(autoCloudBackupEnabled == 'true'))
+    }
+  } catch (e) {
+    captureError(e)
+    yield put(
+      hydrateBackupFail({
+        ...ERROR_HYDRATING_BACKUP,
+        message: `${ERROR_HYDRATING_BACKUP.message} ${e.message}`,
+      })
+    )
+  }
+}
+
+export function* hydrateHasVerifiedRecoveryPhraseSaga(): Generator<*, *, *> {
+  try {
+    let hasVerifiedRecoveryPhrase = yield call(
+      getHydrationItem,
+      HAS_VERIFIED_RECOVERY_PHRASE
+    )
+    if (hasVerifiedRecoveryPhrase != null) {
+      yield put(
+        hydrateHasVerifiedRecoveryPhrase(hasVerifiedRecoveryPhrase == 'true')
+      )
     }
   } catch (e) {
     captureError(e)
@@ -467,6 +657,25 @@ export function* persistBackupBannerStatusSaga(
 export const hydrateBackup = (lastSuccessfulBackup: string) => ({
   type: HYDRATE_BACKUP,
   lastSuccessfulBackup,
+})
+
+export const hydrateCloudBackup = (lastSuccessfulCloudBackup: string) => ({
+  type: HYDRATE_CLOUD_BACKUP,
+  lastSuccessfulCloudBackup,
+})
+
+export const hydrateAutoCloudBackupEnabled = (
+  autoCloudBackupEnabled: boolean
+) => ({
+  type: HYDRATE_AUTO_CLOUD_BACKUP_ENABLED,
+  autoCloudBackupEnabled,
+})
+
+export const hydrateHasVerifiedRecoveryPhrase = (
+  hasVerifiedRecoveryPhrase: boolean
+) => ({
+  type: HYDRATE_HAS_VERIFIED_RECOVERY_PHRASE,
+  hasVerifiedRecoveryPhrase,
 })
 
 export const promptBackupBanner = (
@@ -518,6 +727,48 @@ export const exportBackupSuccess = (lastSuccessfulBackup: string) => ({
 export const exportBackupNoShare = () => ({
   type: EXPORT_BACKUP_NO_SHARE,
   status: BACKUP_STORE_STATUS.EXPORT_BACKUP_NO_SHARE,
+})
+
+export const resetCloudBackupStatus = () => ({
+  type: RESET_CLOUD_BACKUP_LOADING,
+  cloudBackupStatus: '',
+})
+
+export const cloudBackup = () => ({
+  type: CLOUD_BACKUP_LOADING,
+  cloudBackupStatus: BACKUP_STORE_STATUS.CLOUD_BACKUP_LOADING,
+})
+
+export const cloudBackupSuccess = (lastSuccessfulCloudBackup: string) => ({
+  type: CLOUD_BACKUP_SUCCESS,
+  cloudBackupStatus: CLOUD_BACKUP_COMPLETE,
+  lastSuccessfulCloudBackup,
+})
+
+export const cloudBackupFailure = (cloudBackupError: string) => ({
+  type: CLOUD_BACKUP_FAILURE,
+  cloudBackupStatus: CLOUD_BACKUP_FAILURE,
+  cloudBackupError,
+})
+
+export const startAutomaticCloudBackup = (action: any) => ({
+  type: START_AUTOMATIC_CLOUD_BACKUP,
+  cloudBackupStatus: BACKUP_STORE_STATUS.CLOUD_BACKUP_LOADING,
+  action,
+})
+
+export const setAutoCloudBackupEnabled = (autoCloudBackupEnabled: boolean) => ({
+  type: SET_AUTO_CLOUD_BACKUP_ENABLED,
+  autoCloudBackupEnabled,
+})
+
+export const setWalletHandle = (walletHandle: number) => ({
+  type: SET_WALLET_HANDLE,
+  walletHandle,
+})
+
+export const hasVerifiedRecoveryPhrase = () => ({
+  type: HAS_VERIFIED_RECOVERY_PHRASE,
 })
 
 export default function backupReducer(
@@ -602,6 +853,49 @@ export default function backupReducer(
         error: action.error,
       }
     }
+    case RESET_CLOUD_BACKUP_LOADING: {
+      return {
+        ...state,
+        cloudBackupStatus: action.cloudBackupStatus,
+        error: null,
+      }
+    }
+    case CLOUD_BACKUP_LOADING: {
+      return {
+        ...state,
+        cloudBackupStatus: action.cloudBackupStatus,
+        error: null,
+      }
+    }
+    case START_AUTOMATIC_CLOUD_BACKUP: {
+      return {
+        ...state,
+        cloudBackupStatus: action.cloudBackupStatus,
+        error: null,
+      }
+    }
+
+    case CLOUD_BACKUP_SUCCESS: {
+      return {
+        ...state,
+        error: null,
+        cloudBackupStatus: action.cloudBackupStatus,
+        lastSuccessfulCloudBackup: action.lastSuccessfulCloudBackup,
+      }
+    }
+    case SET_AUTO_CLOUD_BACKUP_ENABLED: {
+      return {
+        ...state,
+        autoCloudBackupEnabled: action.autoCloudBackupEnabled,
+      }
+    }
+    case CLOUD_BACKUP_FAILURE: {
+      return {
+        ...state,
+        cloudBackupStatus: action.cloudBackupStatus,
+        cloudBackupError: action.cloudBackupError,
+      }
+    }
     case PROMPT_WALLET_BACKUP_BANNER: {
       return {
         ...state,
@@ -614,11 +908,48 @@ export default function backupReducer(
         error: action.error,
       }
     }
+    case HAS_VERIFIED_RECOVERY_PHRASE: {
+      return {
+        ...state,
+        hasVerifiedRecoveryPhrase: true,
+      }
+    }
+
     case HYDRATE_BACKUP:
       return {
         ...initialState,
         lastSuccessfulBackup: action.lastSuccessfulBackup,
         showBanner: state.showBanner,
+        lastSuccessfulCloudBackup: state.lastSuccessfulCloudBackup,
+        autoCloudBackupEnabled: state.autoCloudBackupEnabled,
+        hasVerifiedRecoveryPhrase: state.hasVerifiedRecoveryPhrase,
+      }
+    case HYDRATE_CLOUD_BACKUP:
+      return {
+        ...initialState,
+        lastSuccessfulCloudBackup: action.lastSuccessfulCloudBackup,
+        lastSuccessfulBackup: state.lastSuccessfulBackup,
+        autoCloudBackupEnabled: state.autoCloudBackupEnabled,
+        hasVerifiedRecoveryPhrase: state.hasVerifiedRecoveryPhrase,
+        showBanner: state.showBanner,
+      }
+    case HYDRATE_AUTO_CLOUD_BACKUP_ENABLED:
+      return {
+        ...initialState,
+        autoCloudBackupEnabled: action.autoCloudBackupEnabled,
+        showBanner: state.showBanner,
+        lastSuccessfulCloudBackup: state.lastSuccessfulCloudBackup,
+        lastSuccessfulBackup: state.lastSuccessfulBackup,
+        hasVerifiedRecoveryPhrase: state.hasVerifiedRecoveryPhrase,
+      }
+    case HYDRATE_HAS_VERIFIED_RECOVERY_PHRASE:
+      return {
+        ...initialState,
+        autoCloudBackupEnabled: state.autoCloudBackupEnabled,
+        showBanner: state.showBanner,
+        lastSuccessfulCloudBackup: state.lastSuccessfulCloudBackup,
+        lastSuccessfulBackup: state.lastSuccessfulBackup,
+        hasVerifiedRecoveryPhrase: action.hasVerifiedRecoveryPhrase,
       }
     case HYDRATE_BACKUP_FAILURE:
       return {
@@ -631,6 +962,11 @@ export default function backupReducer(
       return {
         ...state,
         prepareBackupStatus: action.status,
+      }
+    case SET_WALLET_HANDLE:
+      return {
+        ...state,
+        walletHandle: action.walletHandle,
       }
     default:
       return state

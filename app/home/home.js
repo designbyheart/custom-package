@@ -114,74 +114,71 @@ export class DashboardScreen extends PureComponent<HomeProps> {
     // type casting from Array<mixed> to any and then to what we need
     // because flow Array<mixed> can't be directly type casted as of now
     const receivedConnections: Connection[] = (getConnections(data): any)
-    const connectionsCheck =
-      receivedConnections && receivedConnections.length > 0
     const connections = receivedConnections
       .map((connection, index) => {
-        let showBadge =
-          unSeenMessages[connection.senderDID] &&
-          unSeenMessages[connection.senderDID].length > 0
-            ? true
-            : false
-
         return {
           ...connection,
           index,
-          showBadge,
           date:
             history.data &&
-            history.data[connection.senderDID] &&
-            history.data[connection.senderDID].data &&
-            history.data[connection.senderDID].data[
-              history.data[connection.senderDID].data.length - 1
+            history.data.connections &&
+            history.data.connections[connection.senderDID] &&
+            history.data.connections[connection.senderDID].data &&
+            history.data.connections[connection.senderDID].data[
+              history.data.connections[connection.senderDID].data.length - 1
             ] &&
-            history.data[connection.senderDID].data[
-              history.data[connection.senderDID].data.length - 1
+            history.data.connections[connection.senderDID].data[
+              history.data.connections[connection.senderDID].data.length - 1
             ].timestamp,
           status:
             history.data &&
-            history.data[connection.senderDID] &&
-            history.data[connection.senderDID].data &&
-            history.data[connection.senderDID].data[
-              history.data[connection.senderDID].data.length - 1
+            history.data.connections &&
+            history.data.connections[connection.senderDID] &&
+            history.data.connections[connection.senderDID].data &&
+            history.data.connections[connection.senderDID].data[
+              history.data.connections[connection.senderDID].data.length - 1
             ] &&
-            history.data[connection.senderDID].data[
-              history.data[connection.senderDID].data.length - 1
+            history.data.connections[connection.senderDID].data[
+              history.data.connections[connection.senderDID].data.length - 1
             ].status,
           questionTitle:
             history.data &&
-            history.data[connection.senderDID] &&
-            history.data[connection.senderDID].data &&
-            history.data[connection.senderDID].data[
-              history.data[connection.senderDID].data.length - 1
+            history.data.connections &&
+            history.data.connections[connection.senderDID] &&
+            history.data.connections[connection.senderDID].data &&
+            history.data.connections[connection.senderDID].data[
+              history.data.connections[connection.senderDID].data.length - 1
             ] &&
-            history.data[connection.senderDID].data[
-              history.data[connection.senderDID].data.length - 1
+            history.data.connections[connection.senderDID].data[
+              history.data.connections[connection.senderDID].data.length - 1
             ].name,
           credentialName:
             history.data &&
-            history.data[connection.senderDID] &&
-            history.data[connection.senderDID].data &&
-            history.data[connection.senderDID].data[
-              history.data[connection.senderDID].data.length - 1
+            history.data.connections &&
+            history.data.connections[connection.senderDID] &&
+            history.data.connections[connection.senderDID].data &&
+            history.data.connections[connection.senderDID].data[
+              history.data.connections[connection.senderDID].data.length - 1
             ] &&
-            history.data[connection.senderDID].data[
-              history.data[connection.senderDID].data.length - 1
+            history.data.connections[connection.senderDID].data[
+              history.data.connections[connection.senderDID].data.length - 1
             ].name,
           type:
             history.data &&
-            history.data[connection.senderDID] &&
-            history.data[connection.senderDID].data &&
-            history.data[connection.senderDID].data[
-              history.data[connection.senderDID].data.length - 1
+            history.data.connections &&
+            history.data.connections[connection.senderDID] &&
+            history.data.connections[connection.senderDID].data &&
+            history.data.connections[connection.senderDID].data[
+              history.data.connections[connection.senderDID].data.length - 1
             ] &&
-            history.data[connection.senderDID].data[
-              history.data[connection.senderDID].data.length - 1
+            history.data.connections[connection.senderDID].data[
+              history.data.connections[connection.senderDID].data.length - 1
             ].type,
           newBadge:
             history.data &&
-            history.data[connection.senderDID] &&
-            history.data[connection.senderDID].newBadge,
+            history.data.connections &&
+            history.data.connections[connection.senderDID] &&
+            history.data.connections[connection.senderDID].newBadge,
           senderDID: connection.senderDID,
         }
       })

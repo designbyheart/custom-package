@@ -1,6 +1,5 @@
 // @flow
 import type { ReactNavigation, CustomError } from '../common/type-common'
-import type { Store } from '../store/type-store'
 
 export const SAVE_FILE_TO_APP_DIRECTORY: 'SAVE_FILE_TO_APP_DIRECTORY' =
   'SAVE_FILE_TO_APP_DIRECTORY'

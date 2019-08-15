@@ -6,7 +6,25 @@ import {
   isBiggerThanShortDevice,
   color,
   grey,
+  atlantis,
+  isBiggerThanVeryShortDevice,
+  cmRed,
 } from '../common/styles/constant'
+
+import {
+  blackTransparent,
+  OFFSET_2X,
+  cmGrey5,
+  OFFSET_3X,
+  OFFSET_1X,
+  cmGrey4,
+  font,
+  cmGrey1,
+  white,
+  cmGrey2,
+  caribbeanGreen,
+  darkGray2,
+} from '../common/styles'
 
 const { width, height } = Dimensions.get('window')
 const SPACE_FILLER = 50
@@ -165,6 +183,7 @@ const styles = StyleSheet.create({
     marginBottom: isBiggerThanShortDevice ? 20 : 10,
     width: '100%',
   },
+
   exportBackupTitle: {
     fontWeight: '600',
     lineHeight: isBiggerThanShortDevice ? 27 : 22,
@@ -198,6 +217,7 @@ const styles = StyleSheet.create({
   backupComplete: {
     backgroundColor: color.bg.fourteenth.color,
   },
+
   backupCompleteHeader: {
     width: '100%',
   },
@@ -230,6 +250,172 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     width: isBiggerThanShortDevice ? '100%' : '80%',
     marginBottom: isBiggerThanShortDevice ? 20 : 0,
+  },
+  selectContainer: {
+    maxHeight: isBiggerThanShortDevice ? 480 : 330,
+    // marginHorizontal:20,
+  },
+  selectRecoveryMethod: {
+    backgroundColor: color.bg.fifth.color,
+    paddingHorizontal: 20,
+  },
+  title1: {
+    fontWeight: '400',
+    lineHeight: isBiggerThanShortDevice ? 27 : 22,
+    fontSize: isBiggerThanShortDevice ? 27 : 20,
+    marginBottom: 10,
+    width: '100%',
+  },
+  title2: {
+    fontWeight: '400',
+    lineHeight: isBiggerThanShortDevice ? 27 : 22,
+    fontSize: 22,
+    marginBottom: 10,
+    width: '100%',
+    color: 'white',
+  },
+  backuptitle: {
+    fontWeight: '400',
+    lineHeight: isBiggerThanShortDevice ? 27 : 22,
+    fontSize: isBiggerThanShortDevice ? 27 : 20,
+    marginBottom: isBiggerThanShortDevice ? 40 : 10,
+    width: '100%',
+    color: '#505050',
+  },
+  selectMethod: {
+    padding: 20,
+    borderRadius: 4,
+  },
+})
+
+const QUESTION_SENDER_LOGO_DIMENSION = 32
+const questionScreenSpacing = '5%'
+
+export const questionStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  headerContainer: {
+    backgroundColor: 'transparent',
+  },
+  headerHandleContainer: {
+    justifyContent: 'flex-end',
+    marginBottom: 8,
+  },
+  headerHandlebar: {
+    width: 51,
+    height: 6,
+    borderRadius: 6,
+    backgroundColor: cmGrey5,
+  },
+  mainContainer: {
+    backgroundColor: blackTransparent,
+  },
+  screenContainer: {
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    paddingLeft: questionScreenSpacing,
+    paddingRight: questionScreenSpacing,
+    paddingBottom: 10,
+    backgroundColor: color.bg.tertiary.color,
+  },
+  questionSenderContainer: {
+    minHeight: 64,
+    maxHeight: 90,
+  },
+  questionSenderLogo: {
+    width: QUESTION_SENDER_LOGO_DIMENSION,
+    height: QUESTION_SENDER_LOGO_DIMENSION,
+  },
+  backupLogo: {
+    width: 80,
+    height: 54,
+  },
+  questionSenderName: {
+    marginLeft: questionScreenSpacing,
+  },
+  questionTitle: {
+    marginBottom: OFFSET_1X,
+  },
+  questionText: {
+    marginBottom: OFFSET_3X,
+  },
+  questionResponseRadio: {
+    borderWidth: 0,
+    backgroundColor: cmGrey4,
+  },
+  questionResponseRadioWrapper: {
+    marginLeft: '5%',
+  },
+  questionResponseRadioLabel: {
+    fontFamily: font.family,
+    fontSize: font.size.M,
+    color: cmGrey1,
+    fontWeight: 'bold',
+  },
+  questionResponseRadioLabelWrapper: {
+    marginLeft: 16,
+  },
+  questionRadioStyle: {
+    marginBottom: 16,
+  },
+  questionActionContainer: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    marginVertical: '3%',
+    paddingBottom: 20,
+  },
+  buttonSpacing: {
+    marginRight: '3%',
+  },
+  actionButton: {
+    borderRadius: 5,
+    borderWidth: 1,
+  },
+  cancelButton: {
+    borderColor: darkGray2,
+  },
+  submitButton: {
+    backgroundColor: atlantis,
+    borderColor: atlantis,
+  },
+  errorButton: {
+    backgroundColor: cmRed,
+    borderColor: cmRed,
+  },
+  feedbackIcon: {
+    width: 150,
+    height: 150,
+  },
+  responseButton: {
+    marginTop: OFFSET_1X,
+  },
+  questionLoaderContainer: {
+    marginVertical: 32,
+  },
+  questionErrorContainer: {
+    marginVertical: '10%',
+  },
+  questionSuccessContainer: {
+    marginVertical: '10%',
+  },
+  successErrorImg: {
+    width: 32,
+    height: 32,
+    alignSelf: 'center',
+    marginBottom: 16,
+  },
+  customViewHelperStyles: {
+    marginTop: 10,
+  },
+  dismissButton: {
+    marginTop: 50,
+  },
+  customTextHelperStyles: {
+    fontSize: 23,
+    color: color.bg.tertiary.font.seventh,
+    marginVertical: 20,
   },
 })
 

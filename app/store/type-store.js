@@ -20,6 +20,7 @@ import type { LedgerStore } from './ledger/type-ledger-store'
 import type { OfflineStore } from '../offline/type-offline'
 import type { OnfidoStore } from '../onfido/type-onfido'
 import type { QuestionStore } from '../question/type-question'
+import type { CloudRestoreStore } from '../cloud-restore/type-cloud-restore'
 import type { PushNotificationStore } from '../push-notification/type-push-notification'
 
 export type RouteStore = {
@@ -51,4 +52,5 @@ export type Store = {
   offline: OfflineStore,
   onfido: OnfidoStore,
   question: QuestionStore,
+  cloudRestore: CloudRestoreStore,
 }

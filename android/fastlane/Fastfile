@@ -7,18 +7,27 @@ platform :android do
 end
 
 lane :alpha do
+  ci_job_id = ENV["CI_JOB_ID"]
+  puts 'gitlab CI build ID: ' + ci_job_id
+
   path = '../app/build.gradle'
   reVersionCode = /versionCode\s+(\d+)/
   reVersionName = /versionName\s+(\S+)/
   androidBuildGradleFileContent = File.read(path)
   versionCode = (androidBuildGradleFileContent[reVersionCode, 1].to_i+1)
+  ci_build_ref_slug = ENV["CI_BUILD_REF_SLUG"]
+  if (ENV["CI_PIPELINE_SOURCE"] == "merge_request") || (ci_build_ref_slug && ci_build_ref_slug != "master")
+    versionCode = ci_job_id
+  end
   androidBuildGradleFileContent[reVersionCode, 1] = versionCode.to_s
   versionName = androidBuildGradleFileContent[reVersionName, 1]
   versionName = versionName.gsub!(/\A"|"\Z/, '')
   nameArray = versionName.split('.')
   versionNameMinorNumber = nameArray.pop().to_i+1
   versionName = nameArray.join('.')
-  androidBuildGradleFileContent[reVersionName, 1] = "\"" + versionName.to_s + "." + versionNameMinorNumber.to_s + "\""
+  newVersionName = "\"" + versionName.to_s + "." + versionNameMinorNumber.to_s + "\""
+  puts 'new version number: ' + newVersionName.to_s
+  androidBuildGradleFileContent[reVersionName, 1] = newVersionName
   androidBuildGradleFile = File.new(path, 'w')
   androidBuildGradleFile.write(androidBuildGradleFileContent)
   androidBuildGradleFile.close

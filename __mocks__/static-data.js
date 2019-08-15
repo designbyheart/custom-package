@@ -974,6 +974,7 @@ export function getStore(store?: Store) {
             '/Users/CoreSimulator/Devices/5F89AA14-B694-465F-82C3-838552AB4B85/data/Containers/Data/Application/4536A441-4B70-4A30-8DCC-5274E6781535/Documents/backup.zip',
           error: null,
           lastSuccessfulBackup: '2018-06-27T18:27:35+05:30',
+          lastSuccessfulCloudBackup: '2018-06-27T18:27:35+05:30',
           passphrase: {
             phrase:
               'gander troubling deodorize justify twitter darkish confront politely',
@@ -1074,30 +1075,33 @@ export function getStore(store?: Store) {
         },
         history: {
           data: {
-            senderDID3: {
-              data: connectionHistory['September 2017'].data,
-              newBadge: connectionHistory['September 2017'].newBadge,
+            connections: {
+              senderDID3: {
+                data: connectionHistory['September 2017'].data,
+                newBadge: connectionHistory['September 2017'].newBadge,
+              },
+              senderDID4: {
+                data: connectionHistory['October 2017'].data,
+                newBadge: connectionHistory['October 2017'].newBadge,
+              },
+              senderDID5: {
+                data: connectionHistory['November 2017'].data,
+                newBadge: connectionHistory['November 2017'].newBadge,
+              },
+              senderDID6: {
+                data: connectionHistory['December 2017'].data,
+                newBadge: connectionHistory['December 2017'].newBadge,
+              },
+              senderDID7: {
+                data: connectionHistory['January 2017'].data,
+                newBadge: connectionHistory['January 2017'].newBadge,
+              },
+              senderDID8: {
+                data: connectionHistory['February 2017'].data,
+                newBadge: connectionHistory['February 2017'].newBadge,
+              },
             },
-            senderDID4: {
-              data: connectionHistory['October 2017'].data,
-              newBadge: connectionHistory['October 2017'].newBadge,
-            },
-            senderDID5: {
-              data: connectionHistory['November 2017'].data,
-              newBadge: connectionHistory['November 2017'].newBadge,
-            },
-            senderDID6: {
-              data: connectionHistory['December 2017'].data,
-              newBadge: connectionHistory['December 2017'].newBadge,
-            },
-            senderDID7: {
-              data: connectionHistory['January 2017'].data,
-              newBadge: connectionHistory['January 2017'].newBadge,
-            },
-            senderDID8: {
-              data: connectionHistory['February 2017'].data,
-              newBadge: connectionHistory['February 2017'].newBadge,
-            },
+            connectionsUpdated: true,
           },
           isLoading: true,
         },

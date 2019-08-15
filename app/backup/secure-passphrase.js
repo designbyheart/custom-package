@@ -3,7 +3,6 @@ import { NativeModules } from 'react-native'
 const { RNRandomBytes } = NativeModules
 import diceware from './eff.js'
 const Buffer = require('buffer/').Buffer
-import { customLogger } from '../store/custom-logger'
 
 // See : https://www.reddit.com/r/crypto/comments/4xe21s/
 //
@@ -29,7 +28,6 @@ export const secureRandom = async (count: number = 6) => {
         } else {
           //let decoded = atob(bytes)
           const decoded = Buffer.from(bytes, 'base64')
-          //customLogger.log("decoded.byteLength: ", decoded.byteLength)
           resolve(decoded)
         }
       })

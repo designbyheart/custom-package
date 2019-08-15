@@ -33,6 +33,8 @@ export const PIN_HASH = 'PIN_HASH'
 export const SALT = 'SALT'
 export const PIN_ENABLED_KEY = 'APP_PIN_LOCK_ENABLED'
 export const IN_RECOVERY = 'IN_RECOVERY'
+export const IN_CLOUD_RECOVERY = 'IN_CLOUD_RECOVERY'
+
 export type InRecovery = {
   type: typeof IN_RECOVERY,
   inRecovery: string,

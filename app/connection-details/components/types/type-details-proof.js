@@ -6,6 +6,8 @@ import type {
   GenericStringObject,
   GenericObject,
   ResetAction,
+  RequestedAttrsJson,
+  MatchingCredential,
 } from '../../../common/type-common'
 import type {
   ProofRequestData,
@@ -58,10 +60,6 @@ export type RequestedClaimsJson = {
   self_attested_attributes: IndySelfAttested,
   requested_attrs: IndyRequestedAttributes,
   requested_predicates: GenericObject,
-}
-
-export type RequestedAttrsJson = {
-  +[string]: [string, boolean],
 }
 
 export const UPDATE_ATTRIBUTE_CLAIM = 'UPDATE_ATTRIBUTE_CLAIM'
@@ -136,21 +134,6 @@ export type UserSelfAttestedAttributesAction = {
   type: typeof USER_SELF_ATTESTED_ATTRIBUTES,
   selfAttestedAttributes: SelfAttestedAttributes,
   uid: string,
-}
-
-export type MatchingCredential = {
-  cred_info: {
-    referent: string,
-    attrs: { [claimAttributeName: string]: string },
-    schema_id: string,
-    cred_def_id: string,
-    rev_reg_id?: string,
-    cred_rev_id?: string,
-  },
-  interval?: {
-    to?: number,
-    from?: number,
-  },
 }
 
 export type IndyPreparedProof = {

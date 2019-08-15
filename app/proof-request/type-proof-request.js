@@ -10,12 +10,12 @@ import type {
   ResetAction,
   ImageSource,
   NotificationPayload,
+  RequestedAttrsJson,
 } from '../common/type-common'
 import type {
   Attribute,
   NotificationPayloadInfo,
 } from '../push-notification/type-push-notification'
-import type { Proof, RequestedAttrsJson } from '../proof/type-proof'
 import type { ClaimMap } from '../claim/type-claim'
 
 export type RequestedAttribute = {|

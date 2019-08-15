@@ -16,6 +16,7 @@ import {
   lockSelectionRoute,
   restorePassphraseRoute,
   restoreRoute,
+  selectRestoreMethodRoute,
 } from '../common'
 import { DocumentPicker } from 'react-native-document-picker'
 import RNFetchBlob from 'rn-fetch-blob'
@@ -30,21 +31,7 @@ import { customLogger } from '../store/custom-logger'
 
 export class RestoreStartScreen extends PureComponent<RestoreProps, void> {
   restoreBackup = () => {
-    DocumentPicker.show(
-      {
-        filetype: [
-          Platform.OS === 'android' ? 'application/zip' : 'public.zip-archive',
-        ],
-      },
-      (error, res) => {
-        if (res) {
-          this.props.saveFileToAppDirectory(res)
-        } else {
-          //TODO handle else
-          customLogger.log('err', error)
-        }
-      }
-    )
+    this.props.navigation.navigate(selectRestoreMethodRoute)
   }
 
   startFresh = () => {

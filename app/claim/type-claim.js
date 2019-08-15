@@ -7,7 +7,6 @@ import type {
   ResetAction,
   NotificationPayload,
 } from '../common/type-common'
-import type { ClaimPushPayload } from '../push-notification/type-push-notification'
 
 export type Claim = {
   messageId: string,
@@ -117,9 +116,4 @@ export type ClaimStore = {
 export const ERROR_CLAIM_HYDRATE_FAIL = {
   message: 'Failed to hydrate claim map',
   code: 'CL-001',
-}
-
-export type GetClaimVcxResult = {
-  claimUuid: string,
-  claim: ClaimPushPayload,
 }

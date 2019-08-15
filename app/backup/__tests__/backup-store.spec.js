@@ -25,6 +25,7 @@ describe('store: backup-store: ', () => {
       error: null,
       showBanner: false,
       lastSuccessfulBackup: '',
+      lastSuccessfulCloudBackup: '',
       backupWalletPath: '',
       prepareBackupStatus: BACKUP_STORE_STATUS.PREPARE_BACK_IDLE,
     }

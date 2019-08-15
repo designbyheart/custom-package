@@ -781,6 +781,137 @@ RCT_EXPORT_METHOD(updateWalletItem: (NSString *) key
   }];
 }
 
+RCT_EXPORT_METHOD(createWalletBackup: (NSString *) sourceID
+                             withKey: (NSString *) backupKey
+                          resolver: (RCTPromiseResolveBlock) resolve
+                          rejecter: (RCTPromiseRejectBlock) reject)
+{
+
+  [[[ConnectMeVcx alloc] init] createWalletBackup:sourceID
+                                  backupKey:backupKey
+                                  completion:^(NSError *error, NSInteger walletBackupHandle) {
+     if (error != nil && error.code != 0)
+     {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while creating wallet backup : %@ :: %ld",error.domain, (long)error.code], error);
+     } else {
+       resolve(@(walletBackupHandle));
+     }
+  }];
+}
+
+RCT_EXPORT_METHOD(backupWalletBackup: (NSInteger) walletBackupHandle
+                             path: (NSString *) path
+                          resolver: (RCTPromiseResolveBlock) resolve
+                          rejecter: (RCTPromiseRejectBlock) reject)
+{
+
+  [[[ConnectMeVcx alloc] init] backupWalletBackup: walletBackupHandle
+                                  path:path
+                                  completion:^(NSError *error) {
+     if (error != nil && error.code != 0)
+     {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while backing up wallet : %@ :: %ld",error.domain, (long)error.code], error);
+     } else {
+       resolve(@0);
+     }
+  }];
+}
+
+RCT_EXPORT_METHOD(updateWalletBackupState: (NSInteger) walletBackupHandle
+                          resolver: (RCTPromiseResolveBlock) resolve
+                          rejecter: (RCTPromiseRejectBlock) reject)
+{
+
+  [[[ConnectMeVcx alloc] init] updateWalletBackupState: walletBackupHandle
+                                  completion:^(NSError *error, NSInteger state) {
+     if (error != nil && error.code != 0)
+     {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while updating wallet backup state : %@ :: %ld",error.domain, (long)error.code], error);
+     } else {
+       NSNumber *val = [NSNumber numberWithInteger:state];
+       resolve(val);
+     }
+  }];
+}
+
+
+RCT_EXPORT_METHOD(updateWalletBackupStateWithMessage: (NSInteger) walletBackupHandle
+                             message: (NSString *) message
+                          resolver: (RCTPromiseResolveBlock) resolve
+                          rejecter: (RCTPromiseRejectBlock) reject)
+{
+
+  [[[ConnectMeVcx alloc] init] updateWalletBackupStateWithMessage: walletBackupHandle
+                                  message:message
+                                  completion:^(NSError *error, NSInteger state) {
+     if (error != nil && error.code != 0)
+     {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while updating wallet backup state with message: %@ :: %ld",error.domain, (long)error.code], error);
+     } else {
+       NSNumber *val = [NSNumber numberWithInteger:state];
+       resolve(val);
+     }
+  }];
+}
+
+RCT_EXPORT_METHOD(serializeBackupWallet: (NSInteger) walletBackupHandle
+                          resolver: (RCTPromiseResolveBlock) resolve
+                          rejecter: (RCTPromiseRejectBlock) reject)
+{
+
+  [[[ConnectMeVcx alloc] init] serializeBackupWallet: walletBackupHandle
+                                  completion:^(NSError *error,  NSString *data) {
+     if (error != nil && error.code != 0)
+     {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while serializing wallet backup : %@ :: %ld",error.domain, (long)error.code], error);
+     } else {
+       resolve(data);
+     }
+  }];
+}
+
+RCT_EXPORT_METHOD(restoreWallet: (NSString *) config
+                          resolver: (RCTPromiseResolveBlock) resolve
+                          rejecter: (RCTPromiseRejectBlock) reject)
+{
+
+  [[[ConnectMeVcx alloc] init] restoreWallet: config
+                                  completion:^(NSError *error) {
+     if (error != nil && error.code != 0)
+     {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while restoring Wallet : %@ :: %ld",error.domain, (long)error.code], error);
+     } else {
+       resolve(@0);
+     }
+  }];
+}
+
+
+
+RCT_EXPORT_METHOD(deserializeBackupWallet: (NSString *) message
+                          resolver: (RCTPromiseResolveBlock) resolve
+                          rejecter: (RCTPromiseRejectBlock) reject)
+{
+
+  [[[ConnectMeVcx alloc] init] deserializeBackupWallet: message
+                                  completion:^(NSError *error,  NSInteger walletBackupHandle) {
+     if (error != nil && error.code != 0)
+     {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while deserializing wallet backup : %@ :: %ld",error.domain, (long)error.code], error);
+     } else {
+       resolve(@(walletBackupHandle));
+     }
+  }];
+}
+
+
 RCT_EXPORT_METHOD(proofCreateWithMsgId: (NSString *)sourceId
                   withConnectionHandle: (NSInteger)connectionHandle
                   withMsgId: (NSString *)msgId
@@ -930,6 +1061,23 @@ RCT_EXPORT_METHOD(downloadMessages: (NSString *) messageStatus
     }
   }];
 }
+
+
+RCT_EXPORT_METHOD(vcxGetAgentMessages: (NSString *) messageStatus
+                             uid_s: (NSString *) uid_s
+                          resolver: (RCTPromiseResolveBlock) resolve
+                          rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] downloadAgentMessages: messageStatus uid_s:uid_s completion:^(NSError *error, NSString *messages) {
+    if (error != nil && error.code !=0) {
+      NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+      reject(indyErrorCode, @"Error occured while getting vcx agent messages", error);
+    } else{
+      resolve(messages);
+    }
+  }];
+}
+
  RCT_EXPORT_METHOD(updateMessages: (NSString *)messageStatus
                       pwdidsJson: (NSString *)pwdidsJson
                         resolver: (RCTPromiseResolveBlock) resolve

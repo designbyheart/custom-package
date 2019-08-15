@@ -2,6 +2,11 @@
 import type { InvitationPayload } from '../invitation/type-invitation'
 import type { CustomError } from '../common/type-common'
 
+export const UPDATE_CONNECTION_THEME = 'UPDATE_CONNECTION_THEME'
+export const UPDATE_STATUS_BAR_THEME = 'UPDATE_STATUS_BAR_THEME'
+export const NEW_CONNECTION_FAIL = 'NEW_CONNECTION_FAIL'
+export const HYDRATE_CONNECTIONS = 'HYDRATE_CONNECTIONS'
+
 export type MyPairwiseInfo = {
   myPairwiseDid: string,
   myPairwiseVerKey: string,

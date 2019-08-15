@@ -11,6 +11,7 @@ import {
   lockTouchIdSetupRoute,
   lockEnterPinRoute,
   genRecoveryPhraseRoute,
+  exportBackupFileRoute,
   aboutAppRoute,
   onfidoRoute,
 } from '../../common'
@@ -32,9 +33,17 @@ describe('user settings screen', () => {
       navigation: getNavigation(),
       selectUserAvatar: jest.fn(),
       touchIdActive: false,
+      jest,
+      hasVerifiedRecoveryPhrase: false,
       navigationOptions: jest.fn(),
       walletBalance: '190009',
       lastSuccessfulBackup: store.getState().backup.lastSuccessfulBackup,
+      lastSuccessfulCloudBackup: store.getState().backup
+        .lastSuccessfulCloudBackup,
+      generateBackupFile: jest.fn(),
+      setAutoCloudBackupEnabled: jest.fn(),
+      connectionHistoryBackedUp: jest.fn(),
+      addPendingRedirection: jest.fn(),
     }
   }
 
@@ -154,7 +163,6 @@ describe('user settings screen', () => {
     const componentInstance = wrapper.root.findByType(Settings).instance
     componentInstance.onBackup()
     expect(navigation.navigate).toHaveBeenCalledWith(genRecoveryPhraseRoute, {
-      hideBtn: true,
       initialRoute: 'someRouteName',
     })
   })

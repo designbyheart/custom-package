@@ -588,7 +588,6 @@ export function* initVcx(): Generator<*, *, *> {
     poolConfig,
     paymentMethod,
   }
-
   if (!userOneTimeInfo) {
     // app is hydrated, but we haven't got user one time info
     // so now we go ahead and create user one time info

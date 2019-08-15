@@ -19,6 +19,7 @@ describe('Restore screen', () => {
           },
         },
       },
+      hydrateCloudBackup: jest.fn(),
       generateBackupFile: jest.fn(),
       updateStatusBarTheme: jest.fn(),
     }
