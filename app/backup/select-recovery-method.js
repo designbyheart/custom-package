@@ -29,7 +29,7 @@ import styles from './styles'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { hasVerifiedRecoveryPhrase } from '../backup/backup-store'
-import { safeSet, secureSet } from '../services/storage'
+import { safeSet, secureSet, walletSet } from '../services/storage'
 import { HAS_VERIFIED_RECOVERY_PHRASE } from './type-backup'
 const closeImage = require('../images/icon-Close.png')
 const backup = require('../images/upload13x.png')
@@ -65,7 +65,7 @@ export class SelectRecoveryMethod extends PureComponent<
 
   componentDidMount() {
     this.props.hasVerifiedRecoveryPhrase()
-    secureSet(HAS_VERIFIED_RECOVERY_PHRASE, 'true')
+    walletSet(HAS_VERIFIED_RECOVERY_PHRASE, 'true')
   }
 
   backup = () => {

@@ -64,16 +64,6 @@ export class VerifyRecoveryPhrase extends Component<
             src={backImage}
           />
         </CustomView>
-
-        <CustomView style={[styles.headerSpacer]}>
-          <Icon
-            medium
-            onPress={() => navigate(state.params.initialRoute)}
-            testID={VERIFY_CLOSE_TEST_ID}
-            iconStyle={[styles.headerIcon]}
-            src={closeImage}
-          />
-        </CustomView>
       </CustomHeader>
     ),
     gesturesEnabled: false,
@@ -82,17 +72,10 @@ export class VerifyRecoveryPhrase extends Component<
   verifyRecoveryPhrase = async (event: any) => {
     const { recoveryPassphrase } = this.props
     const { initialRoute } = this.props.navigation.state.params
-    // TODO:JAMES - remove this is just here to avoid having to put in passphrase
-    // this.props.navigation.navigate(selectRecoveryMethodRoute, {
-    //   initialRoute,
-    // })
-    // return
-    //END REMOVE
 
     // IMPORTANT: Because of the way that event.nativeEvent works, the nativeEvent property
     // of event will be null if you invoke event.nativeEvent after the await calls below
     const passphraseFromUser = event.nativeEvent.text.trim()
-    //////////////////////////////////////////////////////////////////////////////////////////////
 
     const hashedPassphrase: string | null = await generateKey(
       passphraseFromUser,

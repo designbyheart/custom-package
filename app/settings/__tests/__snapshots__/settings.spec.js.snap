@@ -283,7 +283,7 @@ exports[`user settings screen should render properly and snapshot should match f
                   "padding": 0,
                 },
                 Object {
-                  "height": 644,
+                  "height": 540,
                   "paddingBottom": 60,
                   "paddingTop": 180,
                 },
@@ -2497,7 +2497,7 @@ exports[`user settings screen should render properly and snapshot should match i
                   "padding": 0,
                 },
                 Object {
-                  "height": 644,
+                  "height": 540,
                   "paddingBottom": 60,
                   "paddingTop": 180,
                 },

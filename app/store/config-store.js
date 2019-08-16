@@ -244,6 +244,7 @@ export const baseUrls = {
 
 export const cloudBackupEnvironments = [
   SERVER_ENVIRONMENT.PROD,
+  SERVER_ENVIRONMENT.DEMO,
   SERVER_ENVIRONMENT.STAGING,
 ]
 

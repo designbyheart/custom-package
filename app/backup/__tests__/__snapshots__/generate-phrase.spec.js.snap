@@ -336,7 +336,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
             Object {
               "borderRadius": 5,
               "elevation": 7,
-              "height": 43,
+              "height": 48,
               "marginBottom": 15,
               "marginLeft": "2%",
               "marginRight": "2%",
@@ -383,7 +383,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
                 Object {
                   "borderRadius": 5,
                   "elevation": 7,
-                  "height": 43,
+                  "height": 48,
                   "marginBottom": 15,
                   "marginLeft": "2%",
                   "marginRight": "2%",
@@ -779,7 +779,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
             Object {
               "borderRadius": 5,
               "elevation": 7,
-              "height": 43,
+              "height": 48,
               "marginBottom": 15,
               "marginLeft": "2%",
               "marginRight": "2%",
@@ -826,7 +826,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
                 Object {
                   "borderRadius": 5,
                   "elevation": 7,
-                  "height": 43,
+                  "height": 48,
                   "marginBottom": 15,
                   "marginLeft": "2%",
                   "marginRight": "2%",
@@ -1192,7 +1192,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
             Object {
               "borderRadius": 5,
               "elevation": 7,
-              "height": 43,
+              "height": 48,
               "marginBottom": 15,
               "marginLeft": "2%",
               "marginRight": "2%",
@@ -1239,7 +1239,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
                 Object {
                   "borderRadius": 5,
                   "elevation": 7,
-                  "height": 43,
+                  "height": 48,
                   "marginBottom": 15,
                   "marginLeft": "2%",
                   "marginRight": "2%",
