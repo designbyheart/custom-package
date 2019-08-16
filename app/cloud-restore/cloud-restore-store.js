@@ -31,7 +31,7 @@ import {
   simpleInit,
   vcxShutdown,
 } from '../bridge/react-native-cxs/RNCxs'
-import { getRestoreFileName } from '../store/store-selector'
+import { getRestoreFileName, getConfig } from '../store/store-selector'
 import RNFetchBlob from 'rn-fetch-blob'
 import {
   getWalletItem,
@@ -49,12 +49,54 @@ import { restoreStatus } from '../restore/restore-store'
 import { captureError } from '../services/error/error-handler'
 import { ensureVcxInitSuccess } from '../store/route-store'
 import { generateRecoveryPhraseSuccess } from '../backup/backup-store'
-import { vcxInitReset } from '../store/config-store'
+import {
+  vcxInitReset,
+  baseUrls,
+  changeEnvironment,
+  cloudBackupEnvironments,
+} from '../store/config-store'
+import type { ConfigStore } from '../store/type-config-store'
 
 export const errorRestore = (error: string) => ({
   type: ERROR_RESTORE,
   error,
 })
+
+function* findWalletInCloud(
+  key?: string,
+  walletFilePath: string,
+  hashedPassphrase: string
+) {
+  let foundWalletInCloud = -1
+  if (key) {
+    yield put(
+      changeEnvironment(
+        baseUrls[key].agencyUrl,
+        baseUrls[key].agencyDID,
+        baseUrls[key].agencyVerificationKey,
+        baseUrls[key].poolConfig,
+        baseUrls[key].paymentMethod
+      )
+    )
+  }
+
+  try {
+    // ensurevcxint
+    const vcxResult = yield* ensureVcxInitSuccess()
+    if (vcxResult && !vcxResult.fail) {
+      foundWalletInCloud = yield call(
+        restoreWallet,
+        walletFilePath,
+        hashedPassphrase
+      )
+    }
+  } catch (e) {}
+
+  yield call(vcxShutdown, false) //true
+  yield put(vcxInitReset())
+
+  return foundWalletInCloud
+}
 
 export function* cloudRestore(
   action: RestoreCloudSubmitPassphraseAction
@@ -72,18 +114,37 @@ export function* cloudRestore(
     const restoreDirectoryPath = `${fs.dirs.DocumentDir}/restoreDirectory`
     fs.mkdir(restoreDirectoryPath)
     let walletFilePath = `${restoreDirectoryPath}/${WALLET_FILE_NAME}.wallet`
-    // ensurevcxint
-    const vcxResult = yield* ensureVcxInitSuccess()
-    if (vcxResult && vcxResult.fail) {
-      throw new Error(JSON.stringify(vcxResult.fail.message))
-    }
 
     yield put(setCloudRestoreMessage('Downloading backup'))
-    yield call(restoreWallet, walletFilePath, hashedPassphrase)
-    yield put(setCloudRestoreMessage('Restoring wallet'))
+    // NOTE: Try the default selected agency first
+    const { agencyDID }: ConfigStore = yield select(getConfig)
+    let foundWalletInCloud = yield* findWalletInCloud(
+      undefined,
+      walletFilePath,
+      hashedPassphrase
+    )
 
-    yield call(vcxShutdown, false) //true
-    yield put(vcxInitReset())
+    // NOTE: If we could not find the wallet backup in the default selected agency then
+    // try to find it in the list of backup environments
+    if (foundWalletInCloud != 0) {
+      for (const key of cloudBackupEnvironments) {
+        if (agencyDID !== baseUrls[key].agencyDID) {
+          foundWalletInCloud = yield* findWalletInCloud(
+            key,
+            walletFilePath,
+            hashedPassphrase
+          )
+          if (foundWalletInCloud == 0) {
+            break
+          }
+        }
+      }
+    }
+
+    if (foundWalletInCloud != 0) {
+      throw new Error('Could not find the backup in the cloud!!!')
+    }
+    yield put(setCloudRestoreMessage('Restoring wallet'))
 
     // copied from restoreFileDecrypt
     yield put(restoreStatus(RestoreStatus.FILE_DECRYPT_SUCCESS))
