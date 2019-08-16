@@ -2268,23 +2268,6 @@ exports[`user settings screen should render properly and snapshot should match i
         }
       }
     >
-      <BlurView
-        blurAmount={8}
-        blurType="light"
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            Object {
-              "height": 200,
-              "position": "absolute",
-              "top": 0,
-              "width": "100%",
-            },
-          ]
-        }
-      />
       <View
         style={
           Object {
@@ -4420,6 +4403,40 @@ exports[`user settings screen should render properly and snapshot should match i
         </View>
       </View>
     </RCTScrollView>
+    <BlurView
+      blurAmount={8}
+      blurType="light"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "height": 200,
+            "position": "absolute",
+            "top": 0,
+            "width": "100%",
+          },
+        ]
+      }
+    />
+    <BlurView
+      blurAmount={8}
+      blurType="light"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "bottom": 0,
+            "height": 59,
+            "position": "absolute",
+            "width": "100%",
+          },
+        ]
+      }
+    />
   </View>
 </View>
 `;

@@ -148,6 +148,12 @@ const style = StyleSheet.create({
     width: '100%',
     height: 200,
   },
+  footerBlur: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: measurements.bottomBlurNavBarHeight,
+  },
   listContainer: {
     borderBottomWidth: 0,
     borderTopWidth: 0,
@@ -243,17 +249,9 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     }
   }
 
-  renderBlurForIos = () => {
-    const { userAvatarContainerBlur } = style
-
+  renderBlurForIos = (style: Object) => {
     if (Platform.OS === 'ios') {
-      return (
-        <BlurView
-          style={userAvatarContainerBlur}
-          blurType="light"
-          blurAmount={8}
-        />
-      )
+      return <BlurView style={style} blurType="light" blurAmount={8} />
     } else return null
   }
 
@@ -515,7 +513,6 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     } = this.props
     const userAvatar = (
       <CustomView center style={[style.userAvatarContainer]}>
-        {this.renderBlurForIos()}
         <CustomView verticalSpace>
           <UserAvatar testID={USER_AVATAR_TEST_ID} userCanChange>
             {this.renderAvatarWithSource}
@@ -847,6 +844,8 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
               })}
             </List>
           </ScrollView>
+          {this.renderBlurForIos(style.userAvatarContainerBlur)}
+          {this.renderBlurForIos(style.footerBlur)}
         </CustomView>
       </Container>
     )
@@ -920,13 +919,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'flex-start',
     backgroundColor: '#fff',
-  },
-  blurContainer: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    width: '100%',
-    height: measurements.bottomBlurNavBarHeight,
   },
   subtitleColor: {
     color: grey,
