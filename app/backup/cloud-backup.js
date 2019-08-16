@@ -69,7 +69,7 @@ import {
   CLOUD_BACKUP_FAILURE,
   AUTO_CLOUD_BACKUP_ENABLED,
 } from './type-backup'
-import { safeSet, secureSet } from '../services/storage'
+import { safeSet, secureSet, walletSet } from '../services/storage'
 
 const { height } = Dimensions.get('window')
 
@@ -93,8 +93,7 @@ export class CloudBackup extends PureComponent<CloudBackupScreenProps, void> {
   }
 
   startCloudBackup = (autoCloudBackupEnabled: boolean) => {
-    safeSet(AUTO_CLOUD_BACKUP_ENABLED, autoCloudBackupEnabled.toString())
-    secureSet(AUTO_CLOUD_BACKUP_ENABLED, autoCloudBackupEnabled.toString())
+    walletSet(AUTO_CLOUD_BACKUP_ENABLED, autoCloudBackupEnabled.toString())
     this.props.setAutoCloudBackupEnabled(autoCloudBackupEnabled)
     this.props.cloudBackup()
   }

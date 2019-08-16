@@ -9,24 +9,15 @@ import {
   NativeModules,
   Platform,
   ScrollView,
-  FlatList,
   Image,
-  Button,
   View,
   TouchableOpacity,
 } from 'react-native'
 import { measurements } from '../common/styles/measurements'
 import { BlurView } from 'react-native-blur'
 import { createStackNavigator } from 'react-navigation'
-import BackupWallet from './backup-wallet'
-import {
-  UserAvatar,
-  CustomText,
-  Icon,
-  Avatar,
-  CustomHeader,
-} from '../components'
-import { CustomList, CustomView, Container } from '../components/layout'
+import { UserAvatar, CustomText, Icon, Avatar } from '../components'
+import { CustomView, Container } from '../components/layout'
 import {
   cloudBackupRoute,
   settingsRoute,
@@ -49,10 +40,6 @@ import {
   color,
   grey,
   maroonRed,
-  isIphoneX,
-  responsiveHorizontalPadding,
-  isBiggerThanVeryShortDevice,
-  HAIRLINE_WIDTH,
   font,
   lightDarkGray,
   lightWhite,
@@ -77,7 +64,6 @@ import {
 } from '../home/home-constants'
 import type { Store } from '../store/type-store'
 import type { SettingsProps, SettingsState } from './type-settings'
-import { tertiaryHeaderStyles } from '../components/layout/header-styles'
 import type { ImageSource, ReactNavigation } from '../common/type-common'
 import { selectUserAvatar } from '../store/user/user-store'
 import {
@@ -86,15 +72,12 @@ import {
   generateBackupFile,
 } from '../backup/backup-store'
 import { Apptentive } from 'apptentive-react-native'
-//import WalletBackupSuccessModal from '../backup/wallet-backup-success-modal'
 import AboutApp from '../about-app/about-app'
 import Onfido from '../onfido/onfido'
 import { PrivacyTNC } from '../privacy-tnc/privacy-tnc-screen'
 import { WalletBalance } from '../wallet/wallet-balance'
 import { size } from '../components/icon'
-import { isBiggerThanShortDevice } from '../common/styles/constant'
 import { Dimensions } from 'react-native'
-import { scale } from 'react-native-size-matters'
 import { darkGray } from '../common/styles/constant'
 import { List, ListItem } from 'react-native-elements'
 
@@ -104,13 +87,9 @@ import {
   getAutoCloudBackupEnabled,
   getHasVerifiedRecoveryPhrase,
 } from '../store/store-selector'
-import CustomDate from '../components/custom-date/custom-date'
-import { matterhornSecondary } from '../common/styles/constant'
 import { tokenAmountSize } from '../home/home'
 
-import { SettingsHeader } from '../components/settings/settings-header'
 import SvgCustomIcon from '../components/svg-setting-icons'
-import { ListItemSettings } from '../components/settings/list-Item-settings'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import moment from 'moment'
 import {
@@ -118,11 +97,8 @@ import {
   CLOUD_BACKUP_FAILURE,
   AUTO_CLOUD_BACKUP_ENABLED,
 } from '../backup/type-backup'
-import { Loader } from '../components'
-import { safeSet, secureSet } from '../services/storage'
+import { secureSet, walletSet } from '../services/storage'
 import { addPendingRedirection } from '../lock/lock-store'
-
-const { width, height } = Dimensions.get('window')
 
 const style = StyleSheet.create({
   mainContainer: {
@@ -274,7 +250,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     if (switchState) {
       this.props.navigation.navigate(cloudBackupRoute, {})
     } else {
-      secureSet(AUTO_CLOUD_BACKUP_ENABLED, switchState.toString())
+      walletSet(AUTO_CLOUD_BACKUP_ENABLED, switchState.toString())
       this.props.setAutoCloudBackupEnabled(switchState)
     }
   }
@@ -784,13 +760,6 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
       },
     ]
 
-    // NOTE calculating list height to fix bug with items not scrolling, 260 is harddcoded
-    // and is probably about the height of the header which is somehow not letting the list
-    // generate its height properly.
-    const listCount = hasVerifiedRecoveryPhrase
-      ? settingsItemList.length
-      : settingsItemList.length - 2
-    const listHeight = listCount * 64 + 260
     return (
       <Container style={[style.mainContainer]}>
         <CustomView tertiary>
@@ -801,7 +770,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
                 style.mainContainer,
                 style.listContainer,
                 {
-                  height: listHeight,
+                  height: Dimensions.get('window').height,
                   paddingTop: 180,
                   paddingBottom: measurements.bottomNavBarHeight,
                 },

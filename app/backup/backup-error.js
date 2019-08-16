@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   customButton: {
     width: '100%',
-    height: isBiggerThanShortDevice ? 57 : 43,
+    height: isBiggerThanShortDevice ? 58 : 48,
     borderRadius: 5,
     marginTop: 10,
   },

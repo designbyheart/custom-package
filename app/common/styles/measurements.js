@@ -15,7 +15,7 @@ let settingsHeader
 
 if (isIphoneXR) {
   bottomNavBarHeight = 84
-  bottomBlurNavBarHeight = 64
+  bottomBlurNavBarHeight = 83
 } else if (isIphoneX) {
   bottomNavBarHeight = 60
   bottomBlurNavBarHeight = 59

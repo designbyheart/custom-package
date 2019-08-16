@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 0.3,
     elevation: 7,
-    height: isBiggerThanShortDevice ? 53 : 43,
+    height: isBiggerThanShortDevice ? 58 : 48,
   },
   backgroundImageVerify: {
     flex: 1,

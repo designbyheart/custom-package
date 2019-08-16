@@ -305,7 +305,12 @@ const resolvedPromise = () => Promise.resolve()
 export function* prepareBackupSaga(
   action: PrepareBackupLoadingAction
 ): Generator<*, *, *> {
-  const skipItems = [__uniqueId, WALLET_KEY]
+  const skipItems = [
+    __uniqueId,
+    WALLET_KEY,
+    HAS_VERIFIED_RECOVERY_PHRASE,
+    AUTO_CLOUD_BACKUP_ENABLED,
+  ]
 
   try {
     // get all items saved in secure storage
@@ -587,7 +592,7 @@ export function* hydrateLastSuccessfulCloudBackupSaga(): Generator<*, *, *> {
 export function* hydrateAutomaticCloudBackupEnabledSaga(): Generator<*, *, *> {
   try {
     let autoCloudBackupEnabled = yield call(
-      getHydrationItem,
+      walletGet,
       AUTO_CLOUD_BACKUP_ENABLED
     )
     if (autoCloudBackupEnabled != null) {
@@ -607,7 +612,7 @@ export function* hydrateAutomaticCloudBackupEnabledSaga(): Generator<*, *, *> {
 export function* hydrateHasVerifiedRecoveryPhraseSaga(): Generator<*, *, *> {
   try {
     let hasVerifiedRecoveryPhrase = yield call(
-      getHydrationItem,
+      walletGet,
       HAS_VERIFIED_RECOVERY_PHRASE
     )
     if (hasVerifiedRecoveryPhrase != null) {

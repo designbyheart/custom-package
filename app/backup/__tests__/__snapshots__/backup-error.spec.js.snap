@@ -163,7 +163,7 @@ exports[`Restore screen should render properly and match the snapshot 1`] = `
             Array [
               Object {
                 "borderRadius": 5,
-                "height": 43,
+                "height": 48,
                 "marginTop": 10,
                 "width": "100%",
               },
@@ -211,7 +211,7 @@ exports[`Restore screen should render properly and match the snapshot 1`] = `
                   null,
                   Object {
                     "borderRadius": 5,
-                    "height": 43,
+                    "height": 48,
                     "marginTop": 10,
                     "width": "100%",
                   },
