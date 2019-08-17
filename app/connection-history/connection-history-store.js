@@ -142,21 +142,34 @@ export function* loadHistorySaga(): Generator<*, *, *> {
     )
 
     if (historyEvents) {
-      oldHistory = JSON.parse(historyEvents)
+      oldHistory = JSON.parse(historyEvents) // IMPORTANT: This is history.data, not just history object.
       oldHistoryKeys = Object.keys(oldHistory)
-      newHistory = {}
+      newHistory = {
+        connections: { data: null, newBadge: false },
+        connectionsUpdated: false,
+      }
 
-      if (!oldHistory.connections) {
+      if ('connectionsUpdated' in oldHistory) {
+        yield put(loadHistorySuccess(oldHistory))
+      } else if ('newBadge' in oldHistory[oldHistoryKeys[0]]) {
+        newHistory = {
+          ...newHistory,
+          connections: oldHistory,
+        }
+        yield put(loadHistorySuccess(newHistory))
+      } else {
+        modifiedData = {}
         for (let i = 0; i < oldHistoryKeys.length; i++) {
-          newHistory['connections'][oldHistoryKeys[i]] = {
-            data: oldHistory[oldHistoryKeys[i]],
+          modifiedData[oldHistoryKeys[i]] = {
+            data: oldHistory[oldHistoryKeys[i]].data,
             newBadge: false,
           }
         }
-        newHistory['connectionsUpdated'] = false
+        newHistory = {
+          ...newHistory,
+          connections: modifiedData,
+        }
         yield put(loadHistorySuccess(newHistory))
-      } else {
-        yield put(loadHistorySuccess(oldHistory))
       }
     }
   } catch (e) {
