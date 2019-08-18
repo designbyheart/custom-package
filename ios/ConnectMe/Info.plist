@@ -109,6 +109,8 @@
 	<string>ConnectMe uses your microphone to support audio messages.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>ConnectMe uses motion.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>ConnectMe uses speech recognition.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>ConnectMe uses audio.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
