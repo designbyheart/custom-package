@@ -44,6 +44,8 @@ import {
   lightDarkGray,
   lightWhite,
   gainsBoro,
+  isIphoneX,
+  isIphoneXR,
 } from '../common/styles/constant'
 import {
   EDIT_ICON_DIMENSIONS,
@@ -101,11 +103,11 @@ import { secureSet, walletSet } from '../services/storage'
 import { addPendingRedirection } from '../lock/lock-store'
 
 const style = StyleSheet.create({
-  mainContainer: {
+  secondaryContainer: {
     backgroundColor: lightDarkGray,
   },
   userAvatarContainer: {
-    height: 200,
+    height: isIphoneXR || isIphoneX ? 180 : 116,
     width: '100%',
     position: 'absolute',
     zIndex: 10000,
@@ -122,7 +124,7 @@ const style = StyleSheet.create({
     position: 'absolute',
     top: 0,
     width: '100%',
-    height: 200,
+    height: isIphoneXR || isIphoneX ? 180 : 116,
   },
   footerBlur: {
     position: 'absolute',
@@ -470,7 +472,10 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   }
 
   renderBackupTitleText = () => {
-    if (this.props.connectionsUpdated === null) {
+    if (
+      !this.props.lastSuccessfulBackup &&
+      !this.props.lastSuccessfulCloudBackup
+    ) {
       return 'Create a Backup'
     } else if (this.props.connectionsUpdated) {
       return this.renderLastBackupText()
@@ -495,7 +500,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
           </UserAvatar>
         </CustomView>
         {/* DO not remove commented code, this is just to temporarily hide token related stuff */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={this.openTokenScreen}
           testID={SOVRIN_TOKEN_AMOUNT_TEST_ID}
         >
@@ -528,7 +533,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
               TOKENS
             </CustomText>
           </CustomView>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </CustomView>
     )
 
@@ -761,17 +766,17 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     ]
 
     return (
-      <Container style={[style.mainContainer]}>
-        <CustomView tertiary>
+      <Container>
+        <CustomView style={[style.secondaryContainer]} tertiary>
           {userAvatar}
           <ScrollView>
             <List
               containerStyle={[
-                style.mainContainer,
+                style.secondaryContainer,
                 style.listContainer,
                 {
                   height: Dimensions.get('window').height,
-                  paddingTop: 180,
+                  paddingTop: isIphoneXR || isIphoneX ? 160 : 96,
                   paddingBottom: measurements.bottomNavBarHeight,
                 },
               ]}

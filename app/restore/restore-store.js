@@ -41,13 +41,13 @@ import {
 } from '../common/secure-storage-constants'
 import RNFetchBlob from 'rn-fetch-blob'
 import { getRestoreStatus, getRestoreFileName } from '../store/store-selector'
-import { pinHash as generateKey } from '../lock/pin-hash'
+import { pinHash as generateKey, generateSalt } from '../lock/pin-hash'
 import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { Platform } from 'react-native'
 import type { Store } from '../store/type-store.js'
 import { hydrate, hydrateNonReduxData } from '../store/hydration-store'
 import { pushNotificationPermissionAction } from '../push-notification/push-notification-store'
-import { safeGet, safeSet } from '../services/storage'
+import { safeGet, safeSet, walletSet } from '../services/storage'
 import { PIN_ENABLED_KEY, IN_RECOVERY } from '../lock/type-lock'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
@@ -132,6 +132,16 @@ export function* restoreFileDecrypt(
     yield call(safeSet, PIN_ENABLED_KEY, 'true')
     yield call(safeSet, IN_RECOVERY, 'true')
     yield* hydrate()
+
+    const salt = yield call(generateSalt, false)
+    yield call(walletSet, PASSPHRASE_SALT_STORAGE_KEY, salt)
+    yield put(
+      generateRecoveryPhraseSuccess({
+        phrase: passphrase,
+        salt: salt,
+        hash: hashedPassphrase,
+      })
+    )
     // hydrate data in secure storage which is not put in store by hydrate saga
     yield fork(hydrateNonReduxData)
 
