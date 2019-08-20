@@ -117,6 +117,28 @@ export const getHydrationItem = async (key: string) => {
   }
 }
 
+export const getHydrationSafeItem = async (key: string) => {
+  let inRecovery: string = await safeGet(IN_RECOVERY)
+
+  if (inRecovery === 'true') {
+    const walletItem: string | null = await walletGet(key)
+
+    if (walletItem) {
+      // put items inside secure storage in background
+      // not using await syntax, because we want this in background
+      safeSet(key, walletItem)
+        .then(noop)
+        .catch(noop)
+    }
+
+    return walletItem
+  } else {
+    const safeItem = safeGet(key)
+
+    return safeItem
+  }
+}
+
 export async function setWalletItem(
   key: string,
   value: string

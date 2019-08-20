@@ -90,10 +90,20 @@ export class CloudBackup extends PureComponent<CloudBackupScreenProps, void> {
     if (this.props.isAutoBackupEnabled) {
       this.props.cloudBackup()
     }
+    // NOTE: might switxh to automatically start backing up and show QuestionLoader
+    // const {fromToggleAction, switchState} = this.props.navigation.state.params
+    // if (this.props.isAutoBackupEnabled && !fromToggleAction) {
+    //   this.props.cloudBackup()
+    // } else if(fromToggleAction && !switchState) {
+    //   walletSet(AUTO_CLOUD_BACKUP_ENABLED, 'false')
+    //   this.props.setAutoCloudBackupEnabled(false)
+    //   this.props.cloudBackup()
+    //}
   }
 
   startCloudBackup = (autoCloudBackupEnabled: boolean) => {
     walletSet(AUTO_CLOUD_BACKUP_ENABLED, autoCloudBackupEnabled.toString())
+    safeSet(AUTO_CLOUD_BACKUP_ENABLED, autoCloudBackupEnabled.toString())
     this.props.setAutoCloudBackupEnabled(autoCloudBackupEnabled)
     this.props.cloudBackup()
   }

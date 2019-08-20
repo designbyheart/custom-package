@@ -69,6 +69,7 @@ function* findWalletInCloud(
 ) {
   let foundWalletInCloud = -1
   if (key) {
+    yield put(setCloudRestoreMessage('Downloading backup'))
     yield put(
       changeEnvironment(
         baseUrls[key].agencyUrl,
@@ -115,7 +116,7 @@ export function* cloudRestore(
     fs.mkdir(restoreDirectoryPath)
     let walletFilePath = `${restoreDirectoryPath}/${WALLET_FILE_NAME}.wallet`
 
-    yield put(setCloudRestoreMessage('Downloading backup'))
+    yield put(setCloudRestoreMessage('Locating backup'))
     // NOTE: Try the default selected agency first
     const { agencyDID }: ConfigStore = yield select(getConfig)
     let foundWalletInCloud = yield* findWalletInCloud(
