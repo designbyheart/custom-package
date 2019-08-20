@@ -40,7 +40,7 @@ describe('user settings screen', () => {
       lastSuccessfulBackup: store.getState().backup.lastSuccessfulBackup,
       lastSuccessfulCloudBackup: store.getState().backup
         .lastSuccessfulCloudBackup,
-      generateBackupFile: jest.fn(),
+      generateRecoveryPhrase: jest.fn(),
       setAutoCloudBackupEnabled: jest.fn(),
       connectionHistoryBackedUp: jest.fn(),
       addPendingRedirection: jest.fn(),

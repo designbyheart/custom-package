@@ -63,7 +63,6 @@ import {
   CLOUD_BACKUP_LOADING,
   CLOUD_BACKUP_COMPLETE,
   CLOUD_BACKUP_FAILURE,
-  AUTO_CLOUD_BACKUP_ENABLED,
 } from '../backup/type-backup'
 import { safeSet } from '../services/storage'
 import { RestoreStatus } from '../restore/type-restore'

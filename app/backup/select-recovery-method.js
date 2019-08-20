@@ -66,6 +66,7 @@ export class SelectRecoveryMethod extends PureComponent<
   componentDidMount() {
     this.props.hasVerifiedRecoveryPhrase()
     walletSet(HAS_VERIFIED_RECOVERY_PHRASE, 'true')
+    safeSet(HAS_VERIFIED_RECOVERY_PHRASE, 'true')
   }
 
   backup = () => {
@@ -75,7 +76,9 @@ export class SelectRecoveryMethod extends PureComponent<
     })
   }
   cloudBackup = () => {
-    this.props.navigation.navigate(cloudBackupRoute)
+    this.props.navigation.navigate(cloudBackupRoute, {
+      fromToggleAction: false,
+    })
   }
   render() {
     return (

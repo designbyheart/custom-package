@@ -98,7 +98,8 @@ export class ExportBackupFile extends PureComponent<
   ExportImage = (status: string) => {
     if (
       status === BACKUP_STORE_STATUS.EXPORT_BACKUP_LOADING ||
-      status === BACKUP_STORE_STATUS.GENERATE_BACKUP_FILE_LOADING
+      status === BACKUP_STORE_STATUS.GENERATE_BACKUP_FILE_LOADING ||
+      status === BACKUP_STORE_STATUS.GENERATE_PHRASE_LOADING
     ) {
       return (
         <CustomView doubleVerticalSpace>
@@ -150,7 +151,8 @@ export class ExportBackupFile extends PureComponent<
   render() {
     const { backupPath, backupStatus } = this.props
     const disableButton =
-      backupStatus === BACKUP_STORE_STATUS.GENERATE_BACKUP_FILE_LOADING
+      backupStatus === BACKUP_STORE_STATUS.GENERATE_BACKUP_FILE_LOADING ||
+      backupStatus === BACKUP_STORE_STATUS.GENERATE_PHRASE_LOADING
         ? true
         : false
 

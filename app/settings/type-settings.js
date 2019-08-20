@@ -14,7 +14,7 @@ export type SettingsProps = {
   walletBalance: string,
   lastSuccessfulBackup: string,
   setAutoCloudBackupEnabled: (switchState: boolean) => any,
-  generateBackupFile: () => any | null,
+  generateRecoveryPhrase: () => any | null,
   lastSuccessfulCloudBackup?: string,
   cloudBackupStatus?: string,
   autoCloudBackupEnabled?: boolean,

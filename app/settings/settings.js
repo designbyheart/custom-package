@@ -46,6 +46,7 @@ import {
   gainsBoro,
   isIphoneX,
   isIphoneXR,
+  isiPhone5,
 } from '../common/styles/constant'
 import {
   EDIT_ICON_DIMENSIONS,
@@ -72,6 +73,7 @@ import {
   setAutoCloudBackupEnabled,
   exportBackup,
   generateBackupFile,
+  generateRecoveryPhrase,
 } from '../backup/backup-store'
 import { Apptentive } from 'apptentive-react-native'
 import AboutApp from '../about-app/about-app'
@@ -99,7 +101,7 @@ import {
   CLOUD_BACKUP_FAILURE,
   AUTO_CLOUD_BACKUP_ENABLED,
 } from '../backup/type-backup'
-import { secureSet, walletSet } from '../services/storage'
+import { secureSet, walletSet, safeSet } from '../services/storage'
 import { addPendingRedirection } from '../lock/lock-store'
 
 const style = StyleSheet.create({
@@ -142,7 +144,7 @@ const style = StyleSheet.create({
     borderBottomWidth: 1,
     borderTopWidth: 0,
     borderBottomColor: gainsBoro,
-    minHeight: 64,
+    minHeight: isiPhone5 ? 52 : 64,
     justifyContent: 'center',
     paddingTop: 0,
     paddingBottom: 0,
@@ -249,10 +251,12 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   toggleAutoCloudBackupEnabled = (switchState: boolean) => {
     // popup modal to enable cloud back but no modal needed when setting automatic
     // backup to false
+    // NOTE: might swtich to - this.props.navigation.navigate(cloudBackupRoute, {fromToggleAction: true, switchState})
     if (switchState) {
       this.props.navigation.navigate(cloudBackupRoute, {})
     } else {
       walletSet(AUTO_CLOUD_BACKUP_ENABLED, switchState.toString())
+      safeSet(AUTO_CLOUD_BACKUP_ENABLED, switchState.toString())
       this.props.setAutoCloudBackupEnabled(switchState)
     }
   }
@@ -272,7 +276,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
 
   onBackup = () => {
     const {
-      generateBackupFile,
+      generateRecoveryPhrase,
       hasVerifiedRecoveryPhrase,
       navigation: { navigate, state, goBack },
     } = this.props
@@ -285,7 +289,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         initialRoute,
       })
     } else {
-      generateBackupFile()
+      generateRecoveryPhrase()
       navigate(exportBackupFileRoute, {
         initialRoute,
       })
@@ -851,6 +855,7 @@ const mapDispatchToProps = dispatch =>
       exportBackup,
       generateBackupFile,
       addPendingRedirection,
+      generateRecoveryPhrase,
     },
     dispatch
   )

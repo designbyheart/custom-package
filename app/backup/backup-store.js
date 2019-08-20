@@ -51,6 +51,7 @@ import {
   START_AUTOMATIC_CLOUD_BACKUP,
   HAS_VERIFIED_RECOVERY_PHRASE,
   HYDRATE_HAS_VERIFIED_RECOVERY_PHRASE,
+  RESET_BACKUP_PATH,
 } from './type-backup'
 import type {
   PromptBackupBannerAction,
@@ -78,9 +79,11 @@ import {
   walletSet,
   walletGet,
   getHydrationItem,
+  getHydrationSafeItem,
 } from '../services/storage'
 import type { AgencyPoolConfig } from '../store/type-config-store'
 import type { CustomError } from '../common/type-common'
+import { PUSH_COM_METHOD } from '../common'
 import {
   LAST_SUCCESSFUL_BACKUP,
   LAST_SUCCESSFUL_CLOUD_BACKUP,
@@ -146,16 +149,21 @@ export function* cloudBackupSaga(
 ): Generator<*, *, *> {
   try {
     // NOTE: Enable push notifactions
-    yield call(() => firebase.messaging().requestPermission())
-
-    yield put(pushNotificationPermissionAction(true))
+    // NOTE: Only do these two lines if we do not already have a push token
+    const pushToken = yield call(safeGet, PUSH_COM_METHOD)
+    if (!pushToken) {
+      yield call(() => firebase.messaging().requestPermission())
+      yield put(pushNotificationPermissionAction(true))
+    }
 
     let passphrase = yield call(secureGet, PASSPHRASE_STORAGE_KEY)
-    let passphraseSalt = yield call(secureGet, PASSPHRASE_SALT_STORAGE_KEY)
+    let passphraseSalt = yield call(generateSalt, false)
+
+    // NOTE: check if this is needed it might not actual should ever excute
+    // becaue if it does it would mean a new passPhrase is getting generated
     if (!passphrase) {
       const words: string[] = yield call(getWords, 8, 5)
       passphrase = words.join(' ')
-      passphraseSalt = yield call(generateSalt, false)
     }
 
     const hashedPassphrase = yield call(generateKey, passphrase, passphraseSalt)
@@ -207,10 +215,10 @@ export function* cloudBackupSaga(
       timeout: call(delay, 60000),
     })
     if (timeout) {
-      throw new Error('Could not download wallet in one minute')
+      throw new Error('Timed out in push notifications')
     }
   } catch (error) {
-    yield put(cloudBackupFailure('Failed to create backup'))
+    yield put(cloudBackupFailure('Failed to create backup' + error.message))
     return
   }
 }
@@ -318,17 +326,19 @@ export function* prepareBackupSaga(
     // for Android secureGetAll returns an object
     // while for ios it returns an array of array
     if (Platform.OS === 'android') {
-      yield all(
-        Object.keys(secureStorage).map(key => {
-          if (skipItems.indexOf(key) === -1) {
-            return call(walletSet, key, secureStorage[key])
-          }
+      if (secureStorage && secureStorage.length > 0) {
+        yield all(
+          Object.keys(secureStorage).map(key => {
+            if (skipItems.indexOf(key) === -1) {
+              return call(walletSet, key, secureStorage[key])
+            }
 
-          return call(resolvedPromise)
-        })
-      )
+            return call(resolvedPromise)
+          })
+        )
+      }
     } else {
-      if (secureStorage.length > 0) {
+      if (secureStorage && secureStorage.length > 0) {
         yield all(
           secureStorage[0].map(item => {
             const { key, value } = item
@@ -425,6 +435,7 @@ export function* generateRecoveryPhraseSaga(
   // If it failed then we'll retry it a few times
   let retryCount = 0
   let lastInitException = new Error('')
+  yield put(resetBackupPath())
   while (retryCount < 4) {
     try {
       let passphrase = yield call(secureGet, PASSPHRASE_STORAGE_KEY)
@@ -448,6 +459,7 @@ export function* generateRecoveryPhraseSaga(
           hash: hashedPassphrase,
         })
       )
+
       yield put(generateBackupFile())
       break
     } catch (e) {
@@ -481,6 +493,10 @@ export const generateBackupFileSuccess = (backupWalletPath: string) => ({
   type: GENERATE_BACKUP_FILE_SUCCESS,
   status: BACKUP_STORE_STATUS.GENERATE_BACKUP_FILE_SUCCESS,
   backupWalletPath,
+})
+
+export const resetBackupPath = () => ({
+  type: RESET_BACKUP_PATH,
 })
 
 export const generateBackupFileFail = (error: CustomError) => ({
@@ -591,12 +607,16 @@ export function* hydrateLastSuccessfulCloudBackupSaga(): Generator<*, *, *> {
 
 export function* hydrateAutomaticCloudBackupEnabledSaga(): Generator<*, *, *> {
   try {
-    let autoCloudBackupEnabled = yield call(
-      walletGet,
+    const autoCloudBackupEnabled: string = yield call(
+      getHydrationSafeItem,
       AUTO_CLOUD_BACKUP_ENABLED
     )
-    if (autoCloudBackupEnabled != null) {
-      yield put(hydrateAutoCloudBackupEnabled(autoCloudBackupEnabled == 'true'))
+    if (autoCloudBackupEnabled) {
+      yield put(
+        hydrateAutoCloudBackupEnabled(autoCloudBackupEnabled === 'true')
+      )
+    } else {
+      yield put(hydrateAutoCloudBackupEnabled(false))
     }
   } catch (e) {
     captureError(e)
@@ -611,14 +631,16 @@ export function* hydrateAutomaticCloudBackupEnabledSaga(): Generator<*, *, *> {
 
 export function* hydrateHasVerifiedRecoveryPhraseSaga(): Generator<*, *, *> {
   try {
-    let hasVerifiedRecoveryPhrase = yield call(
-      walletGet,
+    const hasVerifiedRecoveryPhrase: string = yield call(
+      getHydrationSafeItem,
       HAS_VERIFIED_RECOVERY_PHRASE
     )
-    if (hasVerifiedRecoveryPhrase != null) {
+    if (hasVerifiedRecoveryPhrase) {
       yield put(
-        hydrateHasVerifiedRecoveryPhrase(hasVerifiedRecoveryPhrase == 'true')
+        hydrateHasVerifiedRecoveryPhrase(hasVerifiedRecoveryPhrase === 'true')
       )
+    } else {
+      yield put(hydrateHasVerifiedRecoveryPhrase(false))
     }
   } catch (e) {
     captureError(e)
@@ -820,6 +842,12 @@ export default function backupReducer(
         status: action.status,
         error: null,
         backupWalletPath: action.backupWalletPath,
+      }
+    }
+    case RESET_BACKUP_PATH: {
+      return {
+        ...state,
+        backupWalletPath: '',
       }
     }
     case GENERATE_BACKUP_FILE_FAILURE: {

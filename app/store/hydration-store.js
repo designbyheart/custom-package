@@ -97,7 +97,10 @@ import {
 } from '../onfido/onfido-store'
 import { hydrateQuestionSaga } from '../question/question-store'
 import { QUESTION_STORAGE_KEY } from '../question/type-question'
-import { AUTO_CLOUD_BACKUP_ENABLED } from '../backup/type-backup'
+import {
+  AUTO_CLOUD_BACKUP_ENABLED,
+  HAS_VERIFIED_RECOVERY_PHRASE,
+} from '../backup/type-backup'
 
 export function* deleteDeviceSpecificData(): Generator<*, *, *> {
   try {
@@ -139,6 +142,8 @@ function* deleteSecureStorageData(): Generator<*, *, *> {
       PIN_HASH,
       SALT,
       QUESTION_STORAGE_KEY,
+      AUTO_CLOUD_BACKUP_ENABLED,
+      HAS_VERIFIED_RECOVERY_PHRASE,
     ]
     const deleteOperations = []
     for (let index = 0; index < secureKeysToDelete.length; index++) {
