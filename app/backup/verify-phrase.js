@@ -73,12 +73,8 @@ export class VerifyRecoveryPhrase extends Component<
     const { recoveryPassphrase } = this.props
     const { initialRoute } = this.props.navigation.state.params
 
-    // IMPORTANT: Because of the way that event.nativeEvent works, the nativeEvent property
-    // of event will be null if you invoke event.nativeEvent after the await calls below
-    const passphraseFromUser = passphrase
-
     const hashedPassphrase: string | null = await generateKey(
-      passphraseFromUser,
+      passphrase,
       this.props.recoveryPassphrase.salt
     )
 
