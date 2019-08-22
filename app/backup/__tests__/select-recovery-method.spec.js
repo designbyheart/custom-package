@@ -32,6 +32,7 @@ describe('<SelectRecoveryMethod />', () => {
           navigation={navigation}
           hydrateCloudBackup={jest.fn()}
           hasVerifiedRecoveryPhrase={jest.fn()}
+          generateBackupFile={jest.fn()}
         />
       )
       .toJSON()

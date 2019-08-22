@@ -55,8 +55,8 @@ export class RestorePassphrase extends Component<RestorePassphraseProps, void> {
     gesturesEnabled: false,
   })
 
-  submitPhrase = (event: any) => {
-    this.props.submitPassphrase(event.nativeEvent.text)
+  submitPhrase = (passphrase: string) => {
+    this.props.submitPassphrase(passphrase)
     this.props.navigation.navigate(restoreWaitRoute)
   }
 

@@ -374,7 +374,7 @@ class ConnectionDetails extends Component<
         )
 
         if (this.state.newMessageLine) {
-          const slackLine = <NewMessageBreakLine />
+          const slackLine = <NewMessageBreakLine key={arrayUI.length}/>
           arrayUI.splice(1, 0, slackLine)
         }
       })

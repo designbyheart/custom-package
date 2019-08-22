@@ -2,8 +2,9 @@
 
 import React from 'react'
 import renderer from 'react-test-renderer'
+import { Provider } from 'react-redux'
 import { VerifyRecoveryPhrase } from '../verify-phrase'
-import { getNavigation } from '../../../__mocks__/static-data'
+import { getNavigation, getStore } from '../../../__mocks__/static-data'
 import { settingsRoute } from '../../common'
 
 describe('<VerifyRecoveryPhrase />', () => {
@@ -28,21 +29,25 @@ describe('<VerifyRecoveryPhrase />', () => {
     },
   }
 
+  const mockStoreData = getStore()
+
   it('should match snapshot', () => {
     const tree = renderer
       .create(
-        <VerifyRecoveryPhrase
-          recoveryPassphrase={{
-            phrase: recoveryPassphrase,
-            salt: 'salt',
-            hash: 'hash',
-          }}
-          navigation={navigation}
-          hydrateCloudBackup={jest.fn()}
-          submitPassphrase={() => {}}
-          resetError={() => {}}
-          error={false}
-        />
+        <Provider store={mockStoreData}>
+          <VerifyRecoveryPhrase
+            recoveryPassphrase={{
+              phrase: recoveryPassphrase,
+              salt: 'salt',
+              hash: 'hash',
+            }}
+            navigation={navigation}
+            hydrateCloudBackup={jest.fn()}
+            submitPassphrase={() => {}}
+            resetError={() => {}}
+            error={false}
+          />
+        </Provider>
       )
       .toJSON()
     expect(tree).toMatchSnapshot()

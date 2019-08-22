@@ -28,7 +28,10 @@ import { color } from '../common/styles/constant'
 import styles from './styles'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { hasVerifiedRecoveryPhrase } from '../backup/backup-store'
+import {
+  hasVerifiedRecoveryPhrase,
+  generateBackupFile,
+} from '../backup/backup-store'
 import { safeSet, secureSet, walletSet } from '../services/storage'
 import { HAS_VERIFIED_RECOVERY_PHRASE } from './type-backup'
 const closeImage = require('../images/icon-Close.png')
@@ -70,6 +73,7 @@ export class SelectRecoveryMethod extends PureComponent<
   }
 
   backup = () => {
+    this.props.generateBackupFile()
     const { initialRoute } = this.props.navigation.state.params
     this.props.navigation.navigate(exportBackupFileRoute, {
       initialRoute,
@@ -150,6 +154,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       hasVerifiedRecoveryPhrase,
+      generateBackupFile,
     },
     dispatch
   )

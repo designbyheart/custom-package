@@ -26,6 +26,7 @@ export type ReactNavigationBackup = {
 
 export type SelectRecoveryMethodProps = {
   hasVerifiedRecoveryPhrase: () => any,
+  generateBackupFile: () => void,
 } & ReactNavigationBackup
 
 export type GenerateRecoveryPhraseProps = {

@@ -7,5 +7,12 @@ export type BackupRestorePassphraseProps = {
   placeholder: string,
   errorState?: boolean,
   isCloudRestoreAttempt?: boolean,
-  onSubmit: () => any,
+  onSubmit: (passphrase: string) => any,
+  changeEnvironment: (
+    agencyUrl: string,
+    agencyDID: string,
+    agencyVerificationKey: string,
+    poolConfig: string,
+    paymentMethod: string
+  ) => void,
 }

@@ -227,6 +227,7 @@ export function* generateBackupSaga(
   action: GenerateBackupFileLoadingAction
 ): Generator<*, *, *> {
   // WALLET BACKUP ZIP FLOW
+  yield put(resetBackupPath())
   const recoveryPassphrase: Passphrase = yield select(getBackupPassphrase)
   const { fs } = RNFetchBlob
   try {
@@ -326,7 +327,7 @@ export function* prepareBackupSaga(
     // for Android secureGetAll returns an object
     // while for ios it returns an array of array
     if (Platform.OS === 'android') {
-      if (secureStorage && secureStorage.length > 0) {
+      if (secureStorage) {
         yield all(
           Object.keys(secureStorage).map(key => {
             if (skipItems.indexOf(key) === -1) {
@@ -435,7 +436,8 @@ export function* generateRecoveryPhraseSaga(
   // If it failed then we'll retry it a few times
   let retryCount = 0
   let lastInitException = new Error('')
-  yield put(resetBackupPath())
+  // QUESTION: Is the below line better to have here now that we know it is not causing the cloud restore to hang?
+  //yield put(resetBackupPath())
   while (retryCount < 4) {
     try {
       let passphrase = yield call(secureGet, PASSPHRASE_STORAGE_KEY)

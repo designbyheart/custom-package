@@ -1,5 +1,7 @@
 // @flow
 import React, { Component, PureComponent } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import {
   Image,
   Keyboard,
@@ -19,17 +21,35 @@ import {
 } from '../../common/styles/constant'
 import type { BackupRestorePassphraseProps } from './type-backup-restore-passphrase'
 import ErrorBanner from '../banner/banner-danger'
+import { baseUrls, changeEnvironment } from '../../store/config-store'
+import type { Store } from '../../store/type-store'
 
-export default class BackupRestorePassphrase extends PureComponent<
+export class BackupRestorePassphrase extends PureComponent<
   BackupRestorePassphraseProps,
   void
 > {
+  submitPhrase = (event: any) => {
+    let passphrase = event.nativeEvent.text.trim()
+    if (passphrase.startsWith('::')) {
+      const selectedEnv = passphrase.substring(2, passphrase.indexOf('::', 3))
+      passphrase = passphrase.substring(passphrase.indexOf('::', 3) + 2)
+
+      this.props.changeEnvironment(
+        baseUrls[selectedEnv].agencyUrl,
+        baseUrls[selectedEnv].agencyDID,
+        baseUrls[selectedEnv].agencyVerificationKey,
+        baseUrls[selectedEnv].poolConfig,
+        baseUrls[selectedEnv].paymentMethod
+      )
+    }
+    this.props.onSubmit(passphrase)
+  }
+
   render() {
     const {
       isCloudRestoreAttempt,
       filename,
       testID,
-      onSubmit,
       placeholder,
       errorState,
     } = this.props
@@ -88,7 +108,7 @@ export default class BackupRestorePassphrase extends PureComponent<
               accessible={true}
               accessibilityLabel={`${testID}-text-input`}
               autoFocus={true}
-              onSubmitEditing={onSubmit}
+              onSubmitEditing={this.submitPhrase}
               style={[styles.inputBox]}
               placeholder={placeholder}
               placeholderTextColor="white"
@@ -152,3 +172,19 @@ const styles = StyleSheet.create({
     height: dangerBannerHeight,
   },
 })
+
+const mapStateToProps = (state: Store) => {
+  return {}
+}
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      changeEnvironment,
+    },
+    dispatch
+  )
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  BackupRestorePassphrase
+)
