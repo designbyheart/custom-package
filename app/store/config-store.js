@@ -562,19 +562,21 @@ export function* ensureAppHydrated(): Generator<*, *, *> {
   }
 }
 
-export function* initVcx(): Generator<*, *, *> {
-  yield* ensureAppHydrated()
-  // Since we have added a feature flag, so we need to wait
-  // to know that user is going to enable the feature flag or not
-  // now problem is how do we know when to stop waiting
-  // so we are assuming that whenever user goes past lock-selection
-  // screen, that means now user can't enable feature flag
-  // because there is no way to enable that flag now
-  const currentScreen: string = yield select(getCurrentScreen)
-  if (UNSAFE_SCREENS_TO_DOWNLOAD_SMS.indexOf(currentScreen) > -1) {
-    // user is on screens where he has chance to change environment details
-    // so we wait for event which tells that we are safe
-    yield take(SAFE_TO_DOWNLOAD_SMS_INVITATION)
+export function* initVcx(findingWallet?: any): Generator<*, *, *> {
+  if (findingWallet !== true) {
+    yield* ensureAppHydrated()
+    // Since we have added a feature flag, so we need to wait
+    // to know that user is going to enable the feature flag or not
+    // now problem is how do we know when to stop waiting
+    // so we are assuming that whenever user goes past lock-selection
+    // screen, that means now user can't enable feature flag
+    // because there is no way to enable that flag now
+    const currentScreen: string = yield select(getCurrentScreen)
+    if (UNSAFE_SCREENS_TO_DOWNLOAD_SMS.indexOf(currentScreen) > -1) {
+      // user is on screens where he has chance to change environment details
+      // so we wait for event which tells that we are safe
+      yield take(SAFE_TO_DOWNLOAD_SMS_INVITATION)
+    }
   }
 
   // check if we already have user one time info
@@ -626,7 +628,9 @@ export function* initVcx(): Generator<*, *, *> {
         },
         getGenesisFileName(agencyUrl)
       )
-      yield put(vcxInitSuccess())
+      if (findingWallet !== true) {
+        yield put(vcxInitSuccess())
+      }
       break
     } catch (e) {
       captureError(e)
@@ -636,7 +640,9 @@ export function* initVcx(): Generator<*, *, *> {
   }
 
   if (retryCount > 3) {
-    yield put(vcxInitFail(ERROR_VCX_INIT_FAIL(lastInitException.message)))
+    if (findingWallet !== true) {
+      yield put(vcxInitFail(ERROR_VCX_INIT_FAIL(lastInitException.message)))
+    }
   }
 }
 

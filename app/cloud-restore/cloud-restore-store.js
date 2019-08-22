@@ -54,6 +54,7 @@ import {
   baseUrls,
   changeEnvironment,
   cloudBackupEnvironments,
+  initVcx,
 } from '../store/config-store'
 import type { ConfigStore } from '../store/type-config-store'
 
@@ -82,19 +83,15 @@ function* findWalletInCloud(
   }
 
   try {
-    // ensurevcxint
-    const vcxResult = yield* ensureVcxInitSuccess()
-    if (vcxResult && !vcxResult.fail) {
-      foundWalletInCloud = yield call(
-        restoreWallet,
-        walletFilePath,
-        hashedPassphrase
-      )
-    }
+    yield* initVcx(true)
+    foundWalletInCloud = yield call(
+      restoreWallet,
+      walletFilePath,
+      hashedPassphrase
+    )
   } catch (e) {}
 
   yield call(vcxShutdown, false) //true
-  yield put(vcxInitReset())
 
   return foundWalletInCloud
 }

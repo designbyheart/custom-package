@@ -2,6 +2,7 @@
 import 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
+import { Provider } from 'react-redux'
 import { RestorePassphrase } from '../restore-passphrase'
 import { getNavigation, getStore } from '../../../__mocks__/static-data'
 
@@ -19,9 +20,17 @@ describe('Restore Passphrase screen', () => {
     return { props }
   }
 
+  const mockStoreData = getStore()
+
   it('should render properly and match the snapshot', () => {
     const { props } = setup()
-    const tree = renderer.create(<RestorePassphrase {...props} />).toJSON()
+    const tree = renderer
+      .create(
+        <Provider store={mockStoreData}>
+          <RestorePassphrase {...props} />
+        </Provider>
+      )
+      .toJSON()
     expect(tree).toMatchSnapshot()
   })
 })

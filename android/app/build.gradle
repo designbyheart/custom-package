@@ -275,7 +275,7 @@ dependencies {
     // implementation 'com.evernym:vcx:0.2.35288886-baaa532@aar'
     // implementation 'com.evernym:vcx:0.2.39277498-fe8a908@aar'
     // current libvcx aar
-    implementation 'com.evernym:vcx:0.3.50192896-8f7de8df0@aar'
+    implementation 'com.evernym:vcx:0.3.50848970-3d13a54@aar'
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.6.2'
     implementation 'net.sourceforge.streamsupport:android-retrostreams:1.6.2'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.59'
