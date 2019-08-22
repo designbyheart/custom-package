@@ -73,6 +73,24 @@ class SwitchEnvironment extends PureComponent<
     this.props.navigation.goBack()
   }
 
+  onSaveAndRestore = () => {
+    const {
+      agencyDID,
+      agencyVerificationKey,
+      agencyUrl,
+      poolConfig,
+      paymentMethod,
+    } = this.state
+    this.props.changeEnvironment(
+      agencyUrl,
+      agencyDID,
+      agencyVerificationKey,
+      poolConfig,
+      paymentMethod
+    )
+    this.props.navigation.navigate(selectRestoreMethodRoute)
+  }
+
   onCancel = () => {
     this.props.navigation.goBack()
   }
@@ -171,6 +189,12 @@ class SwitchEnvironment extends PureComponent<
               title="Prod"
               testID={`${testID}-PROD`}
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.PROD)}
+            />
+            <CustomButton
+              primary
+              title="Save and Restore"
+              testID={`${testID}-SAVEnRESTORE`}
+              onPress={() => this.onSaveAndRestore()}
             />
           </CustomView>
           <KeyboardAwareScrollView>

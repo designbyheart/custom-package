@@ -83,12 +83,7 @@ export class CloudRestore extends Component<
   })
 
   verifyRecoveryPhrase = async (passphrase: string) => {
-    // IMPORTANT: Because of the way that event.nativeEvent works, the nativeEvent property
-    // of event will be null if you invoke event.nativeEvent after the await calls below
-    const passphraseFromUser = passphrase
-    //////////////////////////////////////////////////////////////////////////////////////////////
-
-    this.props.submitPassphrase(passphraseFromUser)
+    this.props.submitPassphrase(passphrase)
     this.props.navigation.navigate(cloudRestoreModalRoute)
     Keyboard.dismiss()
   }

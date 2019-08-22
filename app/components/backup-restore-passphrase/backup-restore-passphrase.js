@@ -29,10 +29,21 @@ export class BackupRestorePassphrase extends PureComponent<
   void
 > {
   submitPhrase = (event: any) => {
+    // IMPORTANT: Because of the way that event.nativeEvent works, the nativeEvent property
+    // of event will be null if you invoke event.nativeEvent after any await calls
     let passphrase = event.nativeEvent.text.trim()
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
     if (passphrase.startsWith('::')) {
-      const selectedEnv = passphrase.substring(2, passphrase.indexOf('::', 3))
-      passphrase = passphrase.substring(passphrase.indexOf('::', 3) + 2)
+      // NOTE: The reason for doing this is ONLY for dev/testing purposes.
+      // It allows us to prepend the string ::DEVTEAM2:: or ::QATEST1::
+      // to the front of the passphrase and switch to that environment to
+      // find the cloud backup. Our list of clouds to search for PROD is only
+      // PROD,DEMO,STAGING and so if you are using DEVTEAM2 or QATEST1 to
+      // test the mobile app then you cannot get access to your cloud backup.
+      const passphraseParts = passphrase.split('::')
+      const selectedEnv = passphraseParts[1]
+      passphrase = passphraseParts[2]
 
       this.props.changeEnvironment(
         baseUrls[selectedEnv].agencyUrl,
@@ -173,10 +184,6 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state: Store) => {
-  return {}
-}
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
@@ -185,6 +192,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  BackupRestorePassphrase
-)
+export default connect(null, mapDispatchToProps)(BackupRestorePassphrase)
