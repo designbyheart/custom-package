@@ -275,9 +275,6 @@ export function* hydrate(): any {
       }
 
       yield* hydrateSwitchedEnvironmentDetails()
-      // since we hydrated environment details, so now we can start downloading sms
-      yield put(safeToDownloadSmsInvitation())
-
       yield* hydratePushTokenSaga()
       yield* hydrateWalletStoreSaga()
       yield* hydrateConnectionSaga()
@@ -290,24 +287,23 @@ export function* hydrate(): any {
       yield* loadHistorySaga()
       yield* hydrateQuestionSaga()
 
-      let pin = yield call(walletGet, PIN_HASH)
-      let passphrase = yield call(walletGet, PASSPHRASE_STORAGE_KEY)
-      let salt = yield call(walletGet, SALT)
-
       if (inRecovery === 'true') {
         // TODO: Move vcx shutdown logic inside ensureVcxInitSuccess
         yield call(vcxShutdown, false)
-        yield put(vcxInitReset())
+        // NOTE: VERY IMPORTANT!! Do not invoke put vcxInitReset here
+        // as it will break the initVcx that is already underway
+        //yield put(vcxInitReset())
       }
       yield put(hydrated())
+
+      // NOTE: VERY IMPORTANT!! Do not put safeToDownloadSmsInvitation until after
+      // the call to vcxShutdown as this will mess up the inRecovery logic of items from the wallet
+      yield put(safeToDownloadSmsInvitation())
 
       const vcxResult = yield* ensureVcxInitSuccess()
       if (vcxResult && vcxResult.fail) {
         throw new Error(JSON.stringify(vcxResult.fail.message))
       }
-      pin = yield call(walletGet, PIN_HASH)
-      passphrase = yield call(walletGet, PASSPHRASE_STORAGE_KEY)
-      salt = yield call(walletGet, SALT)
     } catch (e) {
       captureError(e)
       customLogger.error(`hydrateSaga: ${e}`)
