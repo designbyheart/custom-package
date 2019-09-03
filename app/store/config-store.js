@@ -602,7 +602,9 @@ export function* initVcx(findingWallet?: any): Generator<*, *, *> {
     // so now we go ahead and create user one time info
     try {
       userOneTimeInfo = yield call(createOneTimeInfo, agencyConfig)
-      yield put(connectRegisterCreateAgentDone(userOneTimeInfo))
+      if (findingWallet !== true) {
+        yield put(connectRegisterCreateAgentDone(userOneTimeInfo))
+      }
     } catch (e) {
       captureError(e)
       yield call(vcxShutdown, false)
