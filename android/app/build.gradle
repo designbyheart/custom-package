@@ -212,7 +212,9 @@ configurations.all {
 dependencies {
     implementation project(':react-native-reanimated')
     implementation project(':react-native-device-info')
-    implementation "com.facebook.fresco:animated-gif:1.3.0"
+    // Watch for these: fresco:1.10.0 and animated-gif:1.10.0 when upgrading RN
+    implementation 'com.facebook.fresco:fresco:1.10.0'
+    implementation 'com.facebook.fresco:animated-gif:1.10.0'
     implementation "com.facebook.fresco:animated-base-support:1.3.0"
     implementation project(':react-native-snackbar')
     implementation project(':react-native-gesture-handler')
