@@ -96,6 +96,7 @@ export const convertSmsPayloadToInvitation = (
   targetName: pendingInvitation.targetName,
   senderAgencyDetail: pendingInvitation.senderAgencyDetail,
   senderDetail: pendingInvitation.senderDetail,
+  version: pendingInvitation.version,
 })
 
 export function* callSmsPendingInvitationRequest(

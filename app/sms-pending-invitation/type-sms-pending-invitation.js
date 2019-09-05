@@ -43,6 +43,7 @@ export type SMSPendingInvitationPayload = {
   senderDetail: InvitationSenderDetail,
   senderAgencyDetail: InvitationSenderAgencyDetail,
   targetName: string,
+  version?: string,
 }
 
 export type SMSPendingInvitation = {

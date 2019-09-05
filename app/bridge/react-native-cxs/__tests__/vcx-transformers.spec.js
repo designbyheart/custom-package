@@ -73,6 +73,19 @@ describe('transformer:VCX', () => {
     }
   })
 
+  it('convertInvitationToVcxConnectionCreate with version', () => {
+    const gen = getTestInvitationPayload()
+    const invitation = gen.next().value
+    if (invitation) {
+      expect(
+        convertInvitationToVcxConnectionCreate({
+          ...invitation.payload,
+          version: '2.0',
+        })
+      ).toMatchSnapshot()
+    }
+  })
+
   it('convertVcxCredentialOfferToCxsClaimOffer', () => {
     expect(
       convertVcxCredentialOfferToCxsClaimOffer(vcxClaimOffer)

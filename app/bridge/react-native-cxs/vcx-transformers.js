@@ -105,6 +105,7 @@ export function convertInvitationToVcxConnectionCreate(
       // hard coding this for now, because this field does not matter anywhere for processing
       // and it will always be message sent for the purpose of connection create
       statusMsg: 'message sent',
+      ...(invitation.version ? { version: invitation.version } : {}),
     },
   }
 }

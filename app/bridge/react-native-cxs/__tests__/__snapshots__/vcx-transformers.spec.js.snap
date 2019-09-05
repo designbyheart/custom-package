@@ -66,6 +66,35 @@ Object {
 }
 `;
 
+exports[`transformer:VCX convertInvitationToVcxConnectionCreate with version 1`] = `
+Object {
+  "invite_details": Object {
+    "connReqId": "requestId1",
+    "senderAgencyDetail": Object {
+      "DID": "senderDID1",
+      "endpoint": "endpoint",
+      "verKey": "senderVerificationKey1",
+    },
+    "senderDetail": Object {
+      "DID": "senderDID1",
+      "agentKeyDlgProof": Object {
+        "agentDID": "senderAgentDID1",
+        "agentDelegatedKey": "agentDelegatedKey",
+        "signature": "signature",
+      },
+      "logoUrl": "http://testissuer.com/logoUrl.png",
+      "name": "sender1",
+      "verKey": "senderVerificationKey1",
+    },
+    "statusCode": "MS-102",
+    "statusMsg": "message sent",
+    "targetName": "sender1",
+    "version": "2.0",
+  },
+  "source_id": "requestId1",
+}
+`;
+
 exports[`transformer:VCX convertVcxCredentialOfferToCxsClaimOffer 1`] = `
 Object {
   "claim": Object {
