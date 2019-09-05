@@ -420,7 +420,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         </CustomText>
       </CustomText>
     ) : (
-      'Use your Anonymously sync with the Evernym Cloud'
+      'Sync your app backup in the cloud.'
     )
   }
 

@@ -91,7 +91,11 @@ function* findWalletInCloud(
     )
   } catch (e) {}
 
-  yield call(vcxShutdown, false) //true
+  if (foundWalletInCloud != 0) {
+    yield call(vcxShutdown, true)
+  } else {
+    yield call(vcxShutdown, false)
+  }
 
   return foundWalletInCloud
 }
