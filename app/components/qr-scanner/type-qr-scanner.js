@@ -29,6 +29,7 @@ export type QrCode = {
     e: string,
   },
   t: string,
+  version?: string,
 }
 
 type ValuesType = <V>(v: V) => V

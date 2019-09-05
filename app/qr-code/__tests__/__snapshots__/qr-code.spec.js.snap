@@ -44,6 +44,7 @@ Object {
   "senderName": "ent-name",
   "senderVerificationKey": "74xeXSEac5QTWzQmh84JqzjuXc8yvXLzWKeiqyUnYokx",
   "targetName": "there",
+  "version": undefined,
 }
 `;
 

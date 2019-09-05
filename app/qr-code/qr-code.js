@@ -31,6 +31,7 @@ import {
   QR_CODE_SENDER_AGENCY_KEY,
   QR_CODE_SENDER_AGENCY_ENDPOINT,
   QR_CODE_SENDER_PUBLIC_DID,
+  QR_CODE_VERSION,
 } from '../api/api-constants'
 import {
   invitationRoute,
@@ -95,6 +96,7 @@ export function convertQrCodeToInvitation(qrCode: QrCode) {
     targetName: qrCode[QR_CODE_TARGET_NAME],
     senderDetail,
     senderAgencyDetail,
+    version: qrCode[QR_CODE_VERSION],
   }
 }
 

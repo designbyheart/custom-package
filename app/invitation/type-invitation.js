@@ -31,6 +31,7 @@ export type InvitationPayload = {
   targetName: string,
   senderDetail: InvitationSenderDetail,
   senderAgencyDetail: InvitationSenderAgencyDetail,
+  version?: string,
 }
 
 export type Invitation = {
