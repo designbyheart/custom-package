@@ -58,6 +58,7 @@ describe('<CloudBackup />', () => {
       message: 'message',
       restore: restoreStore,
       route: 'restoreWaitRoute',
+      cloudBackupStart: jest.fn(),
       saveFileToAppDirectory: jest.fn(),
       setAutoCloudBackupEnabled: jest.fn(),
       updateStatusBarTheme: jest.fn(),

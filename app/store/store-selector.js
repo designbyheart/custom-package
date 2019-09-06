@@ -341,6 +341,9 @@ export const getBackupWalletHandle = (state: Store) => state.backup.walletHandle
 export const getCloudBackupStatus = (state: Store) =>
   state.backup.cloudBackupStatus
 
+export const getCloudBackupPending = (state: Store) =>
+  state.backup.cloudBackupPending
+
 export const getLastCloudBackup = (state: Store) =>
   state.backup.lastSuccessfulCloudBackup
 

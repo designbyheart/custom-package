@@ -42,7 +42,7 @@ import {
 } from '../store/store-selector'
 import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
 import {
-  cloudBackup,
+  cloudBackupStart,
   resetCloudBackupStatus,
   setAutoCloudBackupEnabled,
 } from './backup-store'
@@ -88,16 +88,16 @@ export class CloudBackup extends PureComponent<CloudBackupScreenProps, void> {
 
     // NOTE: automatically start backing up and show QuestionLoader
     if (this.props.isAutoBackupEnabled) {
-      this.props.cloudBackup()
+      this.props.cloudBackupStart()
     }
     // NOTE: might switxh to automatically start backing up and show QuestionLoader
     // const {fromToggleAction, switchState} = this.props.navigation.state.params
     // if (this.props.isAutoBackupEnabled && !fromToggleAction) {
-    //   this.props.cloudBackup()
+    //   this.props.cloudBackupStart()
     // } else if(fromToggleAction && !switchState) {
     //   walletSet(AUTO_CLOUD_BACKUP_ENABLED, 'false')
     //   this.props.setAutoCloudBackupEnabled(false)
-    //   this.props.cloudBackup()
+    //   this.props.cloudBackupStart()
     //}
   }
 
@@ -105,7 +105,7 @@ export class CloudBackup extends PureComponent<CloudBackupScreenProps, void> {
     walletSet(AUTO_CLOUD_BACKUP_ENABLED, autoCloudBackupEnabled.toString())
     safeSet(AUTO_CLOUD_BACKUP_ENABLED, autoCloudBackupEnabled.toString())
     this.props.setAutoCloudBackupEnabled(autoCloudBackupEnabled)
-    this.props.cloudBackup()
+    this.props.cloudBackupStart()
   }
 
   static navigationOptions = ({ navigation }: { navigation: any }) => ({
@@ -382,7 +382,7 @@ function Success({ navigateBackToSettings }: NavigateBackToSettingsType) {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      cloudBackup,
+      cloudBackupStart,
       resetCloudBackupStatus,
       setAutoCloudBackupEnabled,
       connectionHistoryBackedUp,

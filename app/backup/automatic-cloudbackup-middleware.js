@@ -6,7 +6,11 @@ import {
 } from '../connection-history/type-connection-history'
 import { DELETE_CONNECTION_SUCCESS } from '../store/type-connection-store'
 import { WALLET_ADDRESSES_REFRESHED } from '../wallet/type-wallet'
-import { startAutomaticCloudBackup } from './backup-store'
+import {
+  startAutomaticCloudBackup,
+  setCloudBackupPending,
+} from './backup-store'
+import { BACKUP_STORE_STATUS } from './type-backup'
 import { showUserBackupAlert } from '../connection-history/connection-history-store'
 import { STORE_STATUS } from '../../app/common/type-common'
 
@@ -35,10 +39,28 @@ const automaticCloudBackup = (store: any) => (next: any) => (action: any) => {
           state.wallet.walletAddresses.status === STORE_STATUS.IN_PROGRESS &&
           nextAction.walletAddresses.status === STORE_STATUS.SUCCESS
         ) {
-          store.dispatch(startAutomaticCloudBackup(action))
+          if (
+            state.backup.cloudBackupStatus ===
+              BACKUP_STORE_STATUS.CLOUD_BACKUP_LOADING ||
+            state.backup.cloudBackupStatus ===
+              BACKUP_STORE_STATUS.CLOUD_BACKUP_WAITING
+          ) {
+            store.dispatch(setCloudBackupPending(true))
+          } else {
+            store.dispatch(startAutomaticCloudBackup(action))
+          }
         }
       } else {
-        store.dispatch(startAutomaticCloudBackup(action))
+        if (
+          state.backup.cloudBackupStatus ===
+            BACKUP_STORE_STATUS.CLOUD_BACKUP_LOADING ||
+          state.backup.cloudBackupStatus ===
+            BACKUP_STORE_STATUS.CLOUD_BACKUP_WAITING
+        ) {
+          store.dispatch(setCloudBackupPending(true))
+        } else {
+          store.dispatch(startAutomaticCloudBackup(action))
+        }
       }
     } else {
       if (action.type === WALLET_ADDRESSES_REFRESHED) {
