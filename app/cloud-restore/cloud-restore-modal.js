@@ -40,7 +40,7 @@ import {
 } from '../components'
 import { getCloudBackupStatus } from '../store/store-selector'
 import {
-  cloudBackup,
+  cloudBackupStart,
   resetCloudBackupStatus,
   setAutoCloudBackupEnabled,
 } from '../backup/backup-store'
@@ -195,7 +195,7 @@ export class CloudRestoreModal extends PureComponent<
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { cloudBackup, resetCloudBackupStatus, setAutoCloudBackupEnabled },
+    { cloudBackupStart, resetCloudBackupStatus, setAutoCloudBackupEnabled },
     dispatch
   )
 

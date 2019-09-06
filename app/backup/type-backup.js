@@ -94,7 +94,7 @@ export type CloudBackupScreenProps = {
     autoCloudBackupEnabled: boolean
   ) => SetAutoCloudBackupEnabledAction,
   cloudBackupStatus: () => string,
-  cloudBackup: () => any,
+  cloudBackupStart: () => any,
   restore: RestoreStoreType,
   route: string,
   saveFileToAppDirectory: SaveToAppDirectory => void,
@@ -129,7 +129,10 @@ export const BACKUP_STORE_STATUS = {
   BACKUP_COMPLETE: 'BACKUP_COMPLETE',
 
   // JY
+  CLOUD_BACKUP_IDLE: 'CLOUD_BACKUP_IDLE',
+  CLOUD_BACKUP_START: 'CLOUD_BACKUP_START',
   CLOUD_BACKUP_LOADING: 'CLOUD_BACKUP_LOADING',
+  CLOUD_BACKUP_WAITING: 'CLOUD_BACKUP_WAITING',
   CLOUD_BACKUP_SUCCESS: 'CLOUD_BACKUP_SUCCESS',
   CLOUD_BACKUP_FAILURE: 'CLOUD_BACKUP_FAILURE',
   CLOUD_BACKUP_NO_SHARE: 'CLOUD_BACKUP_NO_SHARE',
@@ -152,6 +155,7 @@ export type BackupStore = {
   autoCloudBackupEnabled?: boolean,
   cloudBackupError?: any,
   cloudBackupStatus?: string,
+  cloudBackupPending: boolean,
   prepareCloudBackupStatus?: string,
   lastSuccessfulCloudBackup: string,
   walletHandle?: number,
@@ -220,12 +224,16 @@ export const PROMPT_WALLET_BACKUP_BANNER = 'PROMPT_WALLET_BACKUP_BANNER'
 export const WALLET_FILE_NAME = 'ConnectMe'
 
 // JY
+export const CLOUD_BACKUP_IDLE = 'CLOUD_BACKUP_IDLE'
+export const CLOUD_BACKUP_START = 'CLOUD_BACKUP_START'
 export const RESET_CLOUD_BACKUP_LOADING = 'RESET_CLOUD_BACKUP_LOADING'
 export const CLOUD_BACKUP_LOADING = 'CLOUD_BACKUP_LOADING'
+export const CLOUD_BACKUP_WAITING = 'CLOUD_BACKUP_WAITING'
 export const CLOUD_BACKUP_SUCCESS = 'CLOUD_BACKUP_SUCCESS'
 export const CLOUD_BACKUP_FAILURE = 'CLOUD_BACKUP_FAILURE'
 export const CLOUD_BACKUP_NO_SHARE = 'CLOUD_BACKUP_NO_SHARE'
 export const CLOUD_BACKUP_COMPLETE = 'CLOUD_BACKUP_COMPLETE'
+export const SET_CLOUD_BACKUP_PENDING = 'SET_CLOUD_BACKUP_PENDING'
 export const SET_AUTO_CLOUD_BACKUP_ENABLED = 'SET_AUTO_CLOUD_BACKUP_ENABLED'
 export const SET_WALLET_HANDLE = 'SET_WALLET_HANDLE'
 

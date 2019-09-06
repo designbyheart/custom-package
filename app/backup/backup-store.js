@@ -41,7 +41,11 @@ import {
   WALLET_FILE_NAME,
   PREPARE_BACK_IDLE,
   RESET_CLOUD_BACKUP_LOADING,
+  CLOUD_BACKUP_IDLE,
+  CLOUD_BACKUP_START,
   CLOUD_BACKUP_LOADING,
+  SET_CLOUD_BACKUP_PENDING,
+  CLOUD_BACKUP_WAITING,
   CLOUD_BACKUP_COMPLETE,
   CLOUD_BACKUP_SUCCESS,
   CLOUD_BACKUP_FAILURE,
@@ -109,6 +113,8 @@ import {
   getVcxInitializationState,
   getPrepareBackupStatus,
   getLastCloudBackup,
+  getCloudBackupStatus,
+  getCloudBackupPending,
   getLastBackup,
   getPushNotifactionNotification,
 } from '../store/store-selector'
@@ -132,7 +138,8 @@ const initialState = {
   lastSuccessfulBackup: '',
   backupWalletPath: '',
   prepareBackupStatus: PREPARE_BACK_IDLE,
-  cloudBackupStatus: '',
+  cloudBackupStatus: CLOUD_BACKUP_IDLE,
+  cloudBackupPending: false,
   cloudBackupError: null,
   lastSuccessfulCloudBackup: '',
   prepareCloudBackupStatus: PREPARE_BACK_IDLE,
@@ -148,6 +155,8 @@ export function* cloudBackupSaga(
   action: GenerateBackupFileLoadingAction
 ): Generator<*, *, *> {
   try {
+    yield put(cloudBackupLoading())
+
     // NOTE: Enable push notifactions
     // NOTE: Only do these two lines if we do not already have a push token
     const pushToken = yield call(safeGet, PUSH_COM_METHOD)
@@ -216,6 +225,19 @@ export function* cloudBackupSaga(
     })
     if (timeout) {
       throw new Error('Timed out in push notifications')
+    }
+
+    const cloudBackupPending: boolean = yield select(getCloudBackupPending)
+    if (cloudBackupPending) {
+      // NOTE: Both calls to setCloudBackupPending are needed.
+      // They are not duplicate calls!!
+      yield put(setCloudBackupPending(false, CLOUD_BACKUP_WAITING))
+      // NOTE: We just finished doing a backup of the wallet
+      // and we are being requested to do another one, so, we
+      // are going to wait some time before we kick off the backup again
+      yield call(delay, 30000)
+      yield put(setCloudBackupPending(false, CLOUD_BACKUP_WAITING))
+      yield put(cloudBackupStart())
     }
   } catch (error) {
     yield put(cloudBackupFailure('Failed to create backup' + error.message))
@@ -531,7 +553,7 @@ function* watchExportBackup(): any {
 
 function* watchCloudBackup(): any {
   yield takeLatest(
-    [CLOUD_BACKUP_LOADING, START_AUTOMATIC_CLOUD_BACKUP],
+    [CLOUD_BACKUP_START, START_AUTOMATIC_CLOUD_BACKUP],
     cloudBackupSaga
   )
 }
@@ -760,12 +782,22 @@ export const exportBackupNoShare = () => ({
 
 export const resetCloudBackupStatus = () => ({
   type: RESET_CLOUD_BACKUP_LOADING,
-  cloudBackupStatus: '',
+  cloudBackupStatus: CLOUD_BACKUP_IDLE,
 })
 
-export const cloudBackup = () => ({
+export const cloudBackupLoading = () => ({
   type: CLOUD_BACKUP_LOADING,
   cloudBackupStatus: BACKUP_STORE_STATUS.CLOUD_BACKUP_LOADING,
+})
+
+export const setCloudBackupPending = (pending: boolean, status?: string) => ({
+  type: SET_CLOUD_BACKUP_PENDING,
+  cloudBackupPending: pending,
+  cloudBackupStatus: status,
+})
+
+export const cloudBackupStart = () => ({
+  type: CLOUD_BACKUP_START,
 })
 
 export const cloudBackupSuccess = (lastSuccessfulCloudBackup: string) => ({
@@ -782,7 +814,6 @@ export const cloudBackupFailure = (cloudBackupError: string) => ({
 
 export const startAutomaticCloudBackup = (action: any) => ({
   type: START_AUTOMATIC_CLOUD_BACKUP,
-  cloudBackupStatus: BACKUP_STORE_STATUS.CLOUD_BACKUP_LOADING,
   action,
 })
 
@@ -902,14 +933,15 @@ export default function backupReducer(
         error: null,
       }
     }
-    case START_AUTOMATIC_CLOUD_BACKUP: {
+    case SET_CLOUD_BACKUP_PENDING: {
       return {
         ...state,
-        cloudBackupStatus: action.cloudBackupStatus,
-        error: null,
+        cloudBackupPending: action.cloudBackupPending,
+        cloudBackupStatus: action.cloudBackupStatus
+          ? action.cloudBackupStatus
+          : state.cloudBackupStatus,
       }
     }
-
     case CLOUD_BACKUP_SUCCESS: {
       return {
         ...state,

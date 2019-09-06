@@ -975,6 +975,7 @@ export function getStore(store?: Store) {
           error: null,
           lastSuccessfulBackup: '2018-06-27T18:27:35+05:30',
           lastSuccessfulCloudBackup: '2018-06-27T18:27:35+05:30',
+          cloudBackupPending: false,
           passphrase: {
             phrase:
               'gander troubling deodorize justify twitter darkish confront politely',
