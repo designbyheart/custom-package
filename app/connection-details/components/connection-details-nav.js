@@ -23,7 +23,9 @@ class ConnectionDetailsNav extends React.Component<any, void> {
               resizeMode={'cover'}
             />
           </View>
-          <Text style={styles.headerTitle}>{params.senderName}</Text>
+          <Text numberOfLines={1} style={styles.headerTitle}>
+            {params.senderName}
+          </Text>
         </View>
         <TouchableOpacity
           style={styles.buttonMoreOptions}

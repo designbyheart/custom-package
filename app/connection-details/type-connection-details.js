@@ -237,6 +237,7 @@ export type ConnectionHistoryStore = {
 export const HISTORY_EVENT_STORAGE_KEY = 'HISTORY_EVENT_STORAGE_KEY'
 
 export type ConnectionHistoryState = {
+  hideMoreOptions: boolean,
   disableTaps: boolean,
   positionValue: any,
   moveMoreOptions: any,

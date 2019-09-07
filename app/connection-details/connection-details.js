@@ -57,6 +57,7 @@ class ConnectionDetails extends Component<
   scrollView: any = {}
 
   state = {
+    hideMoreOptions: true,
     moveMoreOptions: new Animated.Value(ScreenWidth),
     fadeInOut: new Animated.Value(0),
     moveModal: new Animated.Value(ScreenHeight),
@@ -130,14 +131,19 @@ class ConnectionDetails extends Component<
       toValue: ScreenWidth,
       duration: 1,
       useNativeDriver: true,
-    }).start()
+    }).start(() => {
+      this.setState({ hideMoreOptions: true })
+    })
   }
   moreOptionsOpen = () => {
-    Animated.timing(this.state.moveMoreOptions, {
-      toValue: 0,
-      duration: 1,
-      useNativeDriver: true,
-    }).start()
+    this.setState(
+      { hideMoreOptions: false },
+      Animated.timing(this.state.moveMoreOptions, {
+        toValue: 0,
+        duration: 1,
+        useNativeDriver: true,
+      }).start()
+    )
   }
 
   render() {
@@ -374,7 +380,7 @@ class ConnectionDetails extends Component<
         )
 
         if (this.state.newMessageLine) {
-          const slackLine = <NewMessageBreakLine key={arrayUI.length}/>
+          const slackLine = <NewMessageBreakLine key={arrayUI.length} />
           arrayUI.splice(1, 0, slackLine)
         }
       })
@@ -393,10 +399,12 @@ class ConnectionDetails extends Component<
               { transform: [{ translateX: this.state.moveMoreOptions }] },
             ]}
           >
-            <MoreOptions
-              navigation={this.props.navigation}
-              moreOptionsClose={this.moreOptionsClose}
-            />
+            {!this.state.hideMoreOptions && (
+              <MoreOptions
+                navigation={this.props.navigation}
+                moreOptionsClose={this.moreOptionsClose}
+              />
+            )}
           </Animated.View>
 
           <ScrollView

@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 12,
     elevation: 12,
+    maxWidth: '100%',
   },
   row: {
     flexDirection: 'row',
