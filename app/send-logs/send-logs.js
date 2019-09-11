@@ -13,6 +13,7 @@ import {
   TextInput,
   Alert,
   Dimensions,
+  PermissionsAndroid,
 } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -26,6 +27,7 @@ import {
   CustomHeader,
   Icon,
   CustomText,
+  CustomButton,
 } from '../components'
 import {
   color,
@@ -75,17 +77,67 @@ const styles = StyleSheet.create({
     height: height * 0.4,
     width: width * 0.8,
   },
+  buttonContainer: {
+    marginTop: 20,
+  },
+  startTutorialButton: {
+    borderRadius: 5,
+    backgroundColor: '#86B93B',
+    marginHorizontal: '6%',
+  },
 })
 
-export class SendLogs extends PureComponent<SendLogsProps, void> {
+export class SendLogs extends PureComponent<SendLogsProps, any> {
   constructor(props: SendLogsProps) {
     super(props)
   }
+  state = {
+    deniedPermission: false,
+  }
 
   componentDidMount() {
-    store.dispatch({
-      type: ENCRYPT_LOG_FILE,
-    })
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+      )
+        .then(granted => {
+          if (granted) {
+            store.dispatch({
+              type: ENCRYPT_LOG_FILE,
+            })
+            this.setState({ deniedPermission: false })
+          } else {
+            this.setState({ deniedPermission: true })
+          }
+        })
+        .catch(error => {
+          console.log('error', error)
+        })
+    } else {
+      store.dispatch({
+        type: ENCRYPT_LOG_FILE,
+      })
+      this.setState({ deniedPermission: false })
+    }
+  }
+
+  setPermission = () => {
+    this.setState({ deniedPermission: false })
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+    )
+      .then(granted => {
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          store.dispatch({
+            type: ENCRYPT_LOG_FILE,
+          })
+        } else {
+          this.setState({ deniedPermission: true })
+        }
+      })
+      .catch(error => {
+        console.log('error', error)
+      })
   }
 
   //static emailMessageBody = ''
@@ -153,42 +205,61 @@ export class SendLogs extends PureComponent<SendLogsProps, void> {
     SendLogs.goBack(navigation)
   }
 
-  static navigationOptions = ({ navigation }: ReactNavigation) => ({
-    header: (
-      <CustomHeader
-        backgroundColor={color.bg.tertiary.color}
-        outerContainerStyles={{ borderBottomWidth: 0 }}
-      >
-        <Icon
-          testID={'send-logs-close-icon'}
-          iconStyle={[styles.headerLeft]}
-          src={require('../images/icon_close.png')}
-          resizeMode="contain"
-          onPress={() => SendLogs.goBack(navigation)}
-          small
-        />
-        <Icon
-          testID={'send-logs-send-icon'}
-          iconStyle={[styles.headerRight]}
-          src={require('../images/iconRArrow.png')}
-          resizeMode="contain"
-          onPress={() => SendLogs.sendLogs(navigation)}
-          small
-        />
-        <CustomText bg="tertiary" tertiary transparentBg semiBold />
-        <CustomView />
-      </CustomHeader>
-    ),
-    swipeEnabled: false,
-  })
+  static navigationOptions = ({ navigation }: ReactNavigation) => {
+    const { params = {} } = navigation.state
+    return {
+      header: (
+        <CustomHeader
+          backgroundColor={color.bg.tertiary.color}
+          outerContainerStyles={{ borderBottomWidth: 0 }}
+        >
+          <Icon
+            testID={'send-logs-close-icon'}
+            iconStyle={[styles.headerLeft]}
+            src={require('../images/icon_close.png')}
+            resizeMode="contain"
+            onPress={() => SendLogs.goBack(navigation)}
+            small
+          />
+          <CustomView />
+        </CustomHeader>
+      ),
+      swipeEnabled: false,
+    }
+  }
 
   render() {
     return this.props.logIsEncrypted ? (
       <Container tertiary>
-        <CustomView center>
+        <CustomView pad center>
           <CustomText bg="secondary" secondary transparentBg semiBold>
-            Send error logs to cmsupport@evernym.com ?
+            Send error logs to cmsupport@evernym.com?
           </CustomText>
+        </CustomView>
+        <CustomView center style={[styles.buttonContainer]}>
+          <CustomButton
+            title="Send Logs"
+            style={[styles.startTutorialButton]}
+            customColor={buttonColor}
+            onPress={() => SendLogs.sendLogs(this.props.navigation)}
+          />
+        </CustomView>
+      </Container>
+    ) : this.state.deniedPermission ? (
+      <Container tertiary>
+        <CustomView pad center>
+          <CustomText bg="secondary" secondary transparentBg semiBold>
+            Connect.Me needs permission to write to the file system in order to
+            send logs.
+          </CustomText>
+        </CustomView>
+        <CustomView center style={[styles.buttonContainer]}>
+          <CustomButton
+            title="Enable Access"
+            style={[styles.startTutorialButton]}
+            customColor={buttonColor}
+            onPress={() => this.setPermission()}
+          />
         </CustomView>
       </Container>
     ) : (
@@ -213,3 +284,9 @@ export const SendLogsStack = createStackNavigator({
 })
 
 export default SendLogsStack
+
+const buttonColor = {
+  color: 'white',
+  fontWeight: '600',
+  fontSize: 18,
+}

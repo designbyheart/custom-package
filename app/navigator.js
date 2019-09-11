@@ -275,7 +275,7 @@ const Tabs = createTabNavigator(
               }
             >
               <SvgCustomIcon
-                name="Menu"
+                name="Settings"
                 fill={focused ? color.actions.font.tenth : color.actions.sixth}
               />
             </View>
