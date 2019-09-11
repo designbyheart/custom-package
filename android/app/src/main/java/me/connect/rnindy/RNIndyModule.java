@@ -472,7 +472,7 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
                     RNIndyStaticData.REQUEST_WRITE_EXTERNAL_STORAGE);
         }
     }
-
+    
     private static int getLogLevel(String levelName) {
         if("Error".equalsIgnoreCase(levelName)) {
             return 1;
@@ -537,15 +537,7 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
         //get the documents directory:
         Log.d(TAG, "Setting vcx logger to: " + RNIndyStaticData.LOG_FILE_PATH);
 
-        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            //RUNTIME PERMISSION Android M
-            if(PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(cw, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                requestPermission(reactContext.getCurrentActivity());
-            } else {
-                RNIndyStaticData.initLoggerFile(cw);
-            }
-        }
-
+        RNIndyStaticData.initLoggerFile(cw);
         promise.resolve(RNIndyStaticData.LOG_FILE_PATH);
 
     }

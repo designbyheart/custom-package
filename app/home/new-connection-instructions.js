@@ -56,27 +56,9 @@ export class NewConnectionInstructions extends PureComponent<
             {usingProductionNetwork && (
               <CustomText transparentBg size="h6" style={[styles.text]}>
                 We have setup an optional tutorial site for you to go through
-                using this Connect.Me app. To start this process, go to{' '}
-                <CustomText
-                  transparentBg
-                  size="h6"
-                  style={[styles.link]}
-                  onPress={this.openTryConnectMe}
-                >
-                  try.connect.me
-                </CustomText>{' '}
-                in a desktop browser, or click the button below!
+                using this Connect.Me app. To start this process, go to
+                try.connect.me in a desktop browser and click Start Tutorial.
               </CustomText>
-            )}
-            {usingProductionNetwork && (
-              <CustomView center style={[styles.buttonContainer]}>
-                <CustomButton
-                  title="Start Tutorial"
-                  style={[styles.startTutorialButton]}
-                  customColor={buttonColor}
-                  onPress={this.openTryConnectMe}
-                />
-              </CustomView>
             )}
             {!usingProductionNetwork && (
               <CustomText transparentBg size="h6" style={[styles.text]}>
