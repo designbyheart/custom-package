@@ -1,7 +1,14 @@
 // @flow
 import React from 'react'
 import SvgCustomIcon from '../../components/svg-custom-icon'
-import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from 'react-native'
 import { measurements } from '../../../app/common/styles/measurements'
 
 // TODO: Fix the <any, void> to be the correct types for props and state
@@ -12,32 +19,37 @@ class ConnectionDetailsNav extends React.Component<any, void> {
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.goBack} style={styles.buttonBack}>
-          <SvgCustomIcon name="Arrow" fill={'#777777'} width={24} height={22} />
-        </TouchableOpacity>
-        <View style={styles.iconAndName}>
-          <View style={styles.headerWrapper}>
-            <Image
-              style={styles.headerIcon}
-              source={{ uri: params.image }}
-              resizeMode={'cover'}
+        <View style={styles.buttonsWrapper}>
+          <TouchableOpacity onPress={this.goBack} style={styles.buttonBack}>
+            <SvgCustomIcon
+              name="ChevronLeft"
+              fill={'#777777'}
+              width={24}
+              height={36}
             />
+          </TouchableOpacity>
+          <View style={styles.iconAndNameWrapper}>
+            <View style={styles.headerImageWrapper}>
+              <Image
+                style={styles.headerIcon}
+                source={{ uri: params.image }}
+                resizeMode={'cover'}
+              />
+            </View>
+            <Text style={styles.headerTitle}>{params.senderName}</Text>
           </View>
-          <Text numberOfLines={1} style={styles.headerTitle}>
-            {params.senderName}
-          </Text>
+          <TouchableOpacity
+            style={styles.buttonMoreOptions}
+            onPress={this.props.moreOptionsOpen}
+          >
+            <SvgCustomIcon
+              name="ThreeDots"
+              fill={'#777777'}
+              width={24}
+              height={24}
+            />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.buttonMoreOptions}
-          onPress={this.props.moreOptionsOpen}
-        >
-          <SvgCustomIcon
-            name="ThreeDots"
-            fill={'#777777'}
-            width={24}
-            height={24}
-          />
-        </TouchableOpacity>
       </View>
     )
   }
@@ -64,45 +76,50 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: 0,
-    zIndex: 899,
+    zIndex: 999,
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    alignItems: 'flex-end',
     height: measurements.connectionDetailsNav,
-    paddingTop: 50,
     width: '100%',
-    shadowColor: '#000000',
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    marginBottom: 15,
-    elevation: 15,
+    backgroundColor:
+      Platform.OS === 'ios' ? 'rgba(255, 255, 255, 0.8)' : '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: Platform.OS === 'android' ? 8 : 0,
+  },
+  buttonsWrapper: {
+    height: 70,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   buttonBack: {
-    paddingLeft: 15,
+    marginTop: 5,
+    marginLeft: 15,
   },
-  iconAndName: {
-    flex: 1,
+  iconAndNameWrapper: {
     alignItems: 'center',
-    flexDirection: 'column',
-    height: '100%',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
-  headerWrapper: {
-    position: 'relative',
+  headerImageWrapper: {
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 64,
-    height: 64,
-    marginTop: -5,
-    borderRadius: 32,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 15,
   },
   headerIcon: {
-    flex: 1,
-    width: 64,
-    height: 64,
+    width: 40,
+    height: 40,
   },
   headerTitle: {
-    marginTop: 20,
     fontStyle: 'normal',
     fontWeight: '700',
     fontSize: 17,
@@ -111,16 +128,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Lato',
   },
   buttonMoreOptions: {
-    paddingRight: 15,
-    width: 40,
-    alignItems: 'flex-end',
-  },
-  backImage: {
-    width: 25,
-    height: 21.5,
-  },
-  optionImage: {
-    width: 4.5,
-    height: 21,
+    marginRight: 15,
   },
 })

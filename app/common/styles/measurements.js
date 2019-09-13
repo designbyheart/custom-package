@@ -5,13 +5,14 @@ import { isIphoneX, isIphoneXR } from './constant'
 
 const windowSize = Dimensions.get('screen')
 const WINDOW_HEIGHT = windowSize.height
-const connectionDetailsNav = 175
 
 const deviceModel = DeviceInfo.getModel()
 
 let bottomNavBarHeight
 let bottomBlurNavBarHeight
 let settingsHeader
+let connectionDetailsNav
+let connectionDetailsBlurNav
 
 if (isIphoneXR) {
   bottomNavBarHeight = 84
@@ -26,8 +27,12 @@ if (isIphoneXR) {
 
 if (isIphoneXR || isIphoneX) {
   settingsHeader = 200
+  connectionDetailsNav = 96
+  connectionDetailsBlurNav = 95
 } else {
   settingsHeader = 180
+  connectionDetailsNav = 72
+  connectionDetailsBlurNav = 71
 }
 
 export const measurements = {
@@ -35,5 +40,6 @@ export const measurements = {
   bottomNavBarHeight,
   bottomBlurNavBarHeight,
   connectionDetailsNav,
+  connectionDetailsBlurNav,
   settingsHeader,
 }

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import {
   Text,
   View,
@@ -46,11 +46,12 @@ import type {
 import { CONNECTION_ALREADY_EXIST } from './type-connection-details'
 import { getConnection, getConnectionTheme } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
+import { isIphoneX, isIphoneXR } from '../common/styles/constant'
 
 let ScreenHeight = Dimensions.get('window').height
 let ScreenWidth = Dimensions.get('window').width
 
-class ConnectionDetails extends Component<
+class ConnectionDetails extends PureComponent<
   ConnectionHistoryProps,
   ConnectionHistoryState
 > {
@@ -69,12 +70,6 @@ class ConnectionDetails extends Component<
   }
 
   componentDidUpdate(prevProps: ConnectionHistoryProps) {
-    if (Platform.OS === 'android') {
-      // TODO: Refactor this code sometime later so that this code executes
-      // only when this screen comes in focus and not on every component update
-      true
-    }
-    // check if connection history updated with new params
     const oldShowSnack =
       prevProps.navigation.getParam('showExistingConnectionSnack') || false
     const newShowSnack =
@@ -479,27 +474,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    // position: 'relative',
   },
   moreOptionsWrapper: {
     position: 'absolute',
     width: ScreenWidth,
     zIndex: 999,
     elevation: 16,
-    // top: 0,
     height: measurements.WINDOW_HEIGHT,
-    // right: this.state.moveMoreOptions,
   },
   helperWrapper: {
-    height: 170,
+    height: isIphoneX || isIphoneXR ? 91 : 67,
   },
   outerModalWrapper: {
     backgroundColor: 'rgba(0,0,0,0.7)',
     width: ScreenWidth,
     height: ScreenHeight,
     position: 'absolute',
-    // top: this.state.moveModal,
-    // left: 0,
     zIndex: 999,
     elevation: 20,
   },
@@ -507,21 +497,13 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    // paddingTop: this.state.moveModalHeight,
   },
   absoluteTop: {
     position: 'absolute',
     left: 0,
     top: 0,
     width: '100%',
-    height: measurements.connectionDetailsNav,
-  },
-  absoluteBottom: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    width: '100%',
-    height: 102,
+    height: measurements.connectionDetailsBlurNav,
   },
   scrollView: {
     flex: 1,
