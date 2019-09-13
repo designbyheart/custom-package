@@ -306,7 +306,7 @@ export const isIphoneXR =
     (phoneModel.toLowerCase() === 'iphone xr' ||
       phoneModel.toLowerCase() === 'iphone xs max'))
 export const deviceHeight = height
-export const primaryHeaderHeight = height >= MEDIUM_DEVICE ? 120 : 100
+export const primaryHeaderHeight = height >= MEDIUM_DEVICE ? 120 : 72
 
 export const verticalBreakpoint = {
   extraSmall: height <= 550,
