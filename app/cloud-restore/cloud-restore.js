@@ -83,12 +83,11 @@ export class CloudRestore extends Component<
   })
 
   verifyRecoveryPhrase = async (passphrase: string) => {
-    const cleanedPassphrase = passphrase
-      .replace(/\s\s+/g, ' ')
+    let cleanedPassphrase = passphrase
       .replace(/(\r\n|\n|\r)/gm, ' ')
+      .replace(/\s\s+/gm, ' ')
       .toLowerCase()
       .trim()
-    // console.log(JSON.stringify(cleanedPassphrase))
     this.props.submitPassphrase(cleanedPassphrase)
     this.props.navigation.navigate(cloudRestoreModalRoute)
     Keyboard.dismiss()
