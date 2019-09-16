@@ -388,6 +388,15 @@ export const svgIcons = {
     ),
     viewBox: '0 -7 20 25',
   },
+  ChevronLeft: {
+    svg: (
+      <Path
+        d="M20 2.50303L17.5596 0L4 14L17.5733 28L20 25.497L8.85347 14L20 2.50303Z"
+        fill="#777777"
+      />
+    ),
+    viewBox: '0 0 24 36',
+  },
   CheckmarkBadge: {
     svg: (
       <Path
