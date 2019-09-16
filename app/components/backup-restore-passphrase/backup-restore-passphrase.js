@@ -75,7 +75,11 @@ export class BackupRestorePassphrase extends PureComponent<
           source={require('../../images/transparentBands2.png')}
           style={[styles.backgroundImageVerify]}
         />
-        <KeyboardAwareScrollView extraHeight={50}>
+        <KeyboardAwareScrollView
+          enableOnAndroid={true}
+          extraHeight={50}
+          extraScrollHeight={100}
+        >
           <Container testID={`${testID}-inputbox`}>
             <CustomView center>
               {filename || isCloudRestoreAttempt ? (

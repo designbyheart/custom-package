@@ -210,7 +210,7 @@ const stylesRecovery = StyleSheet.create({
         marginTop: isBiggerThanShortDevice ? '14%' : '3%',
       },
       android: {
-        marginTop: isBiggerThanShortDevice ? '12%' : '8%',
+        marginTop: '8%',
       },
     }),
   },
