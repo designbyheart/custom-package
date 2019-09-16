@@ -68,7 +68,7 @@ exports[`<SelectRecoveryMethod /> should match snapshot 1`] = `
       Object {
         "flex": 1,
         "justifyContent": "space-between",
-        "maxHeight": 330,
+        "maxHeight": 310,
       }
     }
   >

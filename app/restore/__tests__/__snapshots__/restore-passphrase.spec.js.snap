@@ -47,10 +47,10 @@ exports[`Restore Passphrase screen should render properly and match the snapshot
       }
     }
     enableAutomaticScroll={true}
-    enableOnAndroid={false}
+    enableOnAndroid={true}
     enableResetScrollToCoords={true}
     extraHeight={50}
-    extraScrollHeight={0}
+    extraScrollHeight={100}
     getScrollResponder={[Function]}
     handleOnScroll={[Function]}
     keyboardDismissMode="interactive"
