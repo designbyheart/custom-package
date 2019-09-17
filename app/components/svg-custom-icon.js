@@ -314,7 +314,7 @@ export const svgIcons = {
         fill="rgba(119,119,119,1)"
       />
     ),
-    viewBox: '0 2 22 24',
+    viewBox: '0 0 24 24',
   },
   About: {
     svg: (
