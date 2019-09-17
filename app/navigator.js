@@ -269,13 +269,10 @@ const Tabs = createTabNavigator(
         },
         tabBarIcon: ({ focused }) => {
           return (
-            <View
-              style={
-                isIphoneX ? styles.iphoneXMenuIconStyle : styles.menuIconStyle
-              }
-            >
+            <View style={styles.icon}>
               <SvgCustomIcon
                 name="Settings"
+                height={29}
                 fill={focused ? color.actions.font.tenth : color.actions.sixth}
               />
             </View>
