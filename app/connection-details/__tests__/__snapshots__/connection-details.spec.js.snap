@@ -14,12 +14,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
   <View
     style={
       Object {
-        "alignItems": "flex-end",
         "backgroundColor": "rgba(255, 255, 255, 0.8)",
         "elevation": 0,
         "flexDirection": "row",
         "height": 72,
-        "justifyContent": "center",
         "position": "absolute",
         "shadowColor": "#000",
         "shadowOffset": Object {
@@ -37,11 +35,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
     <View
       style={
         Object {
-          "alignItems": "center",
+          "alignItems": "flex-end",
           "flexDirection": "row",
-          "height": 70,
-          "justifyContent": "space-between",
-          "width": "100%",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 7,
+          "width": "15%",
         }
       }
     >
@@ -56,8 +55,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginLeft": 15,
-            "marginTop": 5,
             "opacity": 1,
           }
         }
@@ -179,12 +176,25 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
           </RNSVGGroup>
         </RNSVGSvgView>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": "100%",
+          "width": "70%",
+        }
+      }
+    >
       <View
         style={
           Object {
-            "alignItems": "center",
+            "alignItems": "flex-end",
             "flexDirection": "row",
-            "justifyContent": "center",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 14,
+            "width": "13%",
           }
         }
       >
@@ -193,11 +203,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             Object {
               "alignItems": "center",
               "borderRadius": 20,
-              "height": 40,
+              "height": 32,
               "justifyContent": "center",
-              "marginRight": 15,
               "overflow": "hidden",
-              "width": 40,
+              "width": 32,
             }
           }
         >
@@ -210,13 +219,29 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             }
             style={
               Object {
-                "height": 40,
-                "width": 40,
+                "height": 32,
+                "width": 32,
               }
             }
           />
         </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "flexDirection": "row",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 20,
+            "paddingLeft": 10,
+            "width": "88%",
+          }
+        }
+      >
         <Text
+          ellipsizeMode="tail"
+          numberOfLines={1}
           style={
             Object {
               "color": "#505050",
@@ -231,6 +256,19 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
           jim
         </Text>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "flexDirection": "row",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 17,
+          "width": "15%",
+        }
+      }
+    >
       <View
         accessible={true}
         isTVSelectable={true}
@@ -242,7 +280,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginRight": 15,
             "opacity": 1,
           }
         }
@@ -566,12 +603,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
   <View
     style={
       Object {
-        "alignItems": "flex-end",
         "backgroundColor": "rgba(255, 255, 255, 0.8)",
         "elevation": 0,
         "flexDirection": "row",
         "height": 72,
-        "justifyContent": "center",
         "position": "absolute",
         "shadowColor": "#000",
         "shadowOffset": Object {
@@ -589,11 +624,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
     <View
       style={
         Object {
-          "alignItems": "center",
+          "alignItems": "flex-end",
           "flexDirection": "row",
-          "height": 70,
-          "justifyContent": "space-between",
-          "width": "100%",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 7,
+          "width": "15%",
         }
       }
     >
@@ -608,8 +644,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginLeft": 15,
-            "marginTop": 5,
             "opacity": 1,
           }
         }
@@ -731,12 +765,25 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
           </RNSVGGroup>
         </RNSVGSvgView>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": "100%",
+          "width": "70%",
+        }
+      }
+    >
       <View
         style={
           Object {
-            "alignItems": "center",
+            "alignItems": "flex-end",
             "flexDirection": "row",
-            "justifyContent": "center",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 14,
+            "width": "13%",
           }
         }
       >
@@ -745,11 +792,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             Object {
               "alignItems": "center",
               "borderRadius": 20,
-              "height": 40,
+              "height": 32,
               "justifyContent": "center",
-              "marginRight": 15,
               "overflow": "hidden",
-              "width": 40,
+              "width": 32,
             }
           }
         >
@@ -762,13 +808,29 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             }
             style={
               Object {
-                "height": 40,
-                "width": 40,
+                "height": 32,
+                "width": 32,
               }
             }
           />
         </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "flexDirection": "row",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 20,
+            "paddingLeft": 10,
+            "width": "88%",
+          }
+        }
+      >
         <Text
+          ellipsizeMode="tail"
+          numberOfLines={1}
           style={
             Object {
               "color": "#505050",
@@ -783,6 +845,19 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
           jim
         </Text>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "flexDirection": "row",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 17,
+          "width": "15%",
+        }
+      }
+    >
       <View
         accessible={true}
         isTVSelectable={true}
@@ -794,7 +869,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginRight": 15,
             "opacity": 1,
           }
         }
@@ -1118,12 +1192,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
   <View
     style={
       Object {
-        "alignItems": "flex-end",
         "backgroundColor": "rgba(255, 255, 255, 0.8)",
         "elevation": 0,
         "flexDirection": "row",
         "height": 72,
-        "justifyContent": "center",
         "position": "absolute",
         "shadowColor": "#000",
         "shadowOffset": Object {
@@ -1141,11 +1213,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
     <View
       style={
         Object {
-          "alignItems": "center",
+          "alignItems": "flex-end",
           "flexDirection": "row",
-          "height": 70,
-          "justifyContent": "space-between",
-          "width": "100%",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 7,
+          "width": "15%",
         }
       }
     >
@@ -1160,8 +1233,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginLeft": 15,
-            "marginTop": 5,
             "opacity": 1,
           }
         }
@@ -1283,12 +1354,25 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
           </RNSVGGroup>
         </RNSVGSvgView>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": "100%",
+          "width": "70%",
+        }
+      }
+    >
       <View
         style={
           Object {
-            "alignItems": "center",
+            "alignItems": "flex-end",
             "flexDirection": "row",
-            "justifyContent": "center",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 14,
+            "width": "13%",
           }
         }
       >
@@ -1297,11 +1381,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
             Object {
               "alignItems": "center",
               "borderRadius": 20,
-              "height": 40,
+              "height": 32,
               "justifyContent": "center",
-              "marginRight": 15,
               "overflow": "hidden",
-              "width": 40,
+              "width": 32,
             }
           }
         >
@@ -1314,13 +1397,29 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
             }
             style={
               Object {
-                "height": 40,
-                "width": 40,
+                "height": 32,
+                "width": 32,
               }
             }
           />
         </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "flexDirection": "row",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 20,
+            "paddingLeft": 10,
+            "width": "88%",
+          }
+        }
+      >
         <Text
+          ellipsizeMode="tail"
+          numberOfLines={1}
           style={
             Object {
               "color": "#505050",
@@ -1335,6 +1434,19 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
           jim
         </Text>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "flexDirection": "row",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 17,
+          "width": "15%",
+        }
+      }
+    >
       <View
         accessible={true}
         isTVSelectable={true}
@@ -1346,7 +1458,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginRight": 15,
             "opacity": 1,
           }
         }
@@ -1661,12 +1772,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
   <View
     style={
       Object {
-        "alignItems": "flex-end",
         "backgroundColor": "rgba(255, 255, 255, 0.8)",
         "elevation": 0,
         "flexDirection": "row",
         "height": 72,
-        "justifyContent": "center",
         "position": "absolute",
         "shadowColor": "#000",
         "shadowOffset": Object {
@@ -1684,11 +1793,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
     <View
       style={
         Object {
-          "alignItems": "center",
+          "alignItems": "flex-end",
           "flexDirection": "row",
-          "height": 70,
-          "justifyContent": "space-between",
-          "width": "100%",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 7,
+          "width": "15%",
         }
       }
     >
@@ -1703,8 +1813,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginLeft": 15,
-            "marginTop": 5,
             "opacity": 1,
           }
         }
@@ -1826,12 +1934,25 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
           </RNSVGGroup>
         </RNSVGSvgView>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": "100%",
+          "width": "70%",
+        }
+      }
+    >
       <View
         style={
           Object {
-            "alignItems": "center",
+            "alignItems": "flex-end",
             "flexDirection": "row",
-            "justifyContent": "center",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 14,
+            "width": "13%",
           }
         }
       >
@@ -1840,11 +1961,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             Object {
               "alignItems": "center",
               "borderRadius": 20,
-              "height": 40,
+              "height": 32,
               "justifyContent": "center",
-              "marginRight": 15,
               "overflow": "hidden",
-              "width": 40,
+              "width": 32,
             }
           }
         >
@@ -1857,13 +1977,29 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             }
             style={
               Object {
-                "height": 40,
-                "width": 40,
+                "height": 32,
+                "width": 32,
               }
             }
           />
         </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "flexDirection": "row",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 20,
+            "paddingLeft": 10,
+            "width": "88%",
+          }
+        }
+      >
         <Text
+          ellipsizeMode="tail"
+          numberOfLines={1}
           style={
             Object {
               "color": "#505050",
@@ -1878,6 +2014,19 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
           jim
         </Text>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "flexDirection": "row",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 17,
+          "width": "15%",
+        }
+      }
+    >
       <View
         accessible={true}
         isTVSelectable={true}
@@ -1889,7 +2038,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginRight": 15,
             "opacity": 1,
           }
         }
@@ -2213,12 +2361,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
   <View
     style={
       Object {
-        "alignItems": "flex-end",
         "backgroundColor": "rgba(255, 255, 255, 0.8)",
         "elevation": 0,
         "flexDirection": "row",
         "height": 72,
-        "justifyContent": "center",
         "position": "absolute",
         "shadowColor": "#000",
         "shadowOffset": Object {
@@ -2236,11 +2382,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
     <View
       style={
         Object {
-          "alignItems": "center",
+          "alignItems": "flex-end",
           "flexDirection": "row",
-          "height": 70,
-          "justifyContent": "space-between",
-          "width": "100%",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 7,
+          "width": "15%",
         }
       }
     >
@@ -2255,8 +2402,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginLeft": 15,
-            "marginTop": 5,
             "opacity": 1,
           }
         }
@@ -2378,12 +2523,25 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
           </RNSVGGroup>
         </RNSVGSvgView>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": "100%",
+          "width": "70%",
+        }
+      }
+    >
       <View
         style={
           Object {
-            "alignItems": "center",
+            "alignItems": "flex-end",
             "flexDirection": "row",
-            "justifyContent": "center",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 14,
+            "width": "13%",
           }
         }
       >
@@ -2392,11 +2550,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
             Object {
               "alignItems": "center",
               "borderRadius": 20,
-              "height": 40,
+              "height": 32,
               "justifyContent": "center",
-              "marginRight": 15,
               "overflow": "hidden",
-              "width": 40,
+              "width": 32,
             }
           }
         >
@@ -2409,13 +2566,29 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
             }
             style={
               Object {
-                "height": 40,
-                "width": 40,
+                "height": 32,
+                "width": 32,
               }
             }
           />
         </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "flexDirection": "row",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 20,
+            "paddingLeft": 10,
+            "width": "88%",
+          }
+        }
+      >
         <Text
+          ellipsizeMode="tail"
+          numberOfLines={1}
           style={
             Object {
               "color": "#505050",
@@ -2430,6 +2603,19 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
           jim
         </Text>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "flexDirection": "row",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 17,
+          "width": "15%",
+        }
+      }
+    >
       <View
         accessible={true}
         isTVSelectable={true}
@@ -2441,7 +2627,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginRight": 15,
             "opacity": 1,
           }
         }
@@ -4125,12 +4310,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
   <View
     style={
       Object {
-        "alignItems": "flex-end",
         "backgroundColor": "rgba(255, 255, 255, 0.8)",
         "elevation": 0,
         "flexDirection": "row",
         "height": 72,
-        "justifyContent": "center",
         "position": "absolute",
         "shadowColor": "#000",
         "shadowOffset": Object {
@@ -4148,11 +4331,12 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
     <View
       style={
         Object {
-          "alignItems": "center",
+          "alignItems": "flex-end",
           "flexDirection": "row",
-          "height": 70,
-          "justifyContent": "space-between",
-          "width": "100%",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 7,
+          "width": "15%",
         }
       }
     >
@@ -4167,8 +4351,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginLeft": 15,
-            "marginTop": 5,
             "opacity": 1,
           }
         }
@@ -4290,12 +4472,25 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
           </RNSVGGroup>
         </RNSVGSvgView>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "height": "100%",
+          "width": "70%",
+        }
+      }
+    >
       <View
         style={
           Object {
-            "alignItems": "center",
+            "alignItems": "flex-end",
             "flexDirection": "row",
-            "justifyContent": "center",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 14,
+            "width": "13%",
           }
         }
       >
@@ -4304,11 +4499,10 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
             Object {
               "alignItems": "center",
               "borderRadius": 20,
-              "height": 40,
+              "height": 32,
               "justifyContent": "center",
-              "marginRight": 15,
               "overflow": "hidden",
-              "width": 40,
+              "width": 32,
             }
           }
         >
@@ -4321,13 +4515,29 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
             }
             style={
               Object {
-                "height": 40,
-                "width": 40,
+                "height": 32,
+                "width": 32,
               }
             }
           />
         </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "flexDirection": "row",
+            "height": "100%",
+            "justifyContent": "flex-start",
+            "paddingBottom": 20,
+            "paddingLeft": 10,
+            "width": "88%",
+          }
+        }
+      >
         <Text
+          ellipsizeMode="tail"
+          numberOfLines={1}
           style={
             Object {
               "color": "#505050",
@@ -4342,6 +4552,19 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
           jim
         </Text>
       </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "flexDirection": "row",
+          "height": "100%",
+          "justifyContent": "center",
+          "paddingBottom": 17,
+          "width": "15%",
+        }
+      }
+    >
       <View
         accessible={true}
         isTVSelectable={true}
@@ -4353,7 +4576,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "marginRight": 15,
             "opacity": 1,
           }
         }
