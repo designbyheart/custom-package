@@ -537,7 +537,9 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
         //get the documents directory:
         Log.d(TAG, "Setting vcx logger to: " + RNIndyStaticData.LOG_FILE_PATH);
 
-        RNIndyStaticData.initLoggerFile(cw);
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            RNIndyStaticData.initLoggerFile(cw);
+        }
         promise.resolve(RNIndyStaticData.LOG_FILE_PATH);
 
     }

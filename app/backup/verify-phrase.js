@@ -70,11 +70,16 @@ export class VerifyRecoveryPhrase extends Component<
   })
 
   verifyRecoveryPhrase = async (passphrase: string) => {
+    const cleanedPassphrase = passphrase
+      .replace(/\s\s+/g, ' ')
+      .replace(/(\r\n|\n|\r)/gm, ' ')
+      .toLowerCase()
+      .trim()
     const { recoveryPassphrase } = this.props
     const { initialRoute } = this.props.navigation.state.params
 
     const hashedPassphrase: string | null = await generateKey(
-      passphrase,
+      cleanedPassphrase,
       this.props.recoveryPassphrase.salt
     )
 

@@ -9,6 +9,7 @@ import {
   atlantis,
   isBiggerThanVeryShortDevice,
   cmRed,
+  isBiggerThanMediumDevice,
 } from '../common/styles/constant'
 
 import {
@@ -252,7 +253,9 @@ const styles = StyleSheet.create({
     marginBottom: isBiggerThanShortDevice ? 20 : 0,
   },
   selectContainer: {
-    maxHeight: isBiggerThanShortDevice ? 480 : 330,
+    maxHeight: isBiggerThanMediumDevice
+      ? 460
+      : isBiggerThanShortDevice ? 400 : 310,
     // marginHorizontal:20,
   },
   selectRecoveryMethod: {
@@ -276,9 +279,11 @@ const styles = StyleSheet.create({
   },
   backuptitle: {
     fontWeight: '400',
-    lineHeight: isBiggerThanShortDevice ? 27 : 22,
-    fontSize: isBiggerThanShortDevice ? 27 : 20,
-    marginBottom: isBiggerThanShortDevice ? 40 : 10,
+    lineHeight: isBiggerThanMediumDevice ? 27 : 22,
+    fontSize: isBiggerThanMediumDevice ? 27 : 20,
+    marginBottom: isBiggerThanMediumDevice
+      ? 40
+      : isBiggerThanShortDevice ? 20 : 10,
     width: '100%',
     color: '#505050',
   },
