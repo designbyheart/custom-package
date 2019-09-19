@@ -94,7 +94,9 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>ConnectMe uses Apple Music.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>ConnectMe uses bluetooth.</string>
+	<string>ConnectMe uses bluetooth peripherals.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>ConnectMe uses bluetooth always.</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>ConnectMe uses the calendar.</string>
 	<key>NSCameraUsageDescription</key>
