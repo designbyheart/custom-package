@@ -31,7 +31,6 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1725322F2C664CF289317758 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC9D114DDD644860A23CCA8D /* Octicons.ttf */; };
 		1CB546CE3C7B4634B83B8B3A /* libRNSensitiveInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7231FE0734E346B8B6A3B2B7 /* libRNSensitiveInfo.a */; };
-		245BC507831F4EFE8F96E070 /* Lato-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E7C136EC20146D995AC728B /* Lato-Heavy.ttf */; };
 		2772C0BC1EF14F93009DE7B6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2772C0BB1EF14F93009DE7B6 /* GoogleService-Info.plist */; };
 		2776B0F1354D4CE79BD1A4C4 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47A962A206204795B77F3195 /* MaterialCommunityIcons.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -47,23 +46,16 @@
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* ConnectMeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ConnectMeTests.m */; };
 		36C1D67FE63A494B9967BC76 /* Lato-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E66F5DD5AA24050B2820530 /* Lato-Medium.ttf */; };
-		388E18CF52B34139B97237B4 /* Lato-HairlineItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 421F24F4215B408B9F7C24E1 /* Lato-HairlineItalic.ttf */; };
 		389EA055702747668D254668 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A494F6E6E44D65935E5B3F /* libRNFirebase.a */; };
-		4176D6384E1A4D5EB185AFDC /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 519C21AEDA294F1A971EAD12 /* Lato-Black.ttf */; };
 		436B89D422DDF41D00696402 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 436B89BB22DDF19200696402 /* libRNDeviceInfo.a */; };
 		437360F02230443C0055F701 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 437360EF223043FC0055F701 /* libRNCamera.a */; };
-		47C5DCD307E849C1BECBC078 /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AAE69EA05BD44F69D5B0E40 /* Lato-Hairline.ttf */; };
 		4B0AFC4C695A4198A3D2AB69 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0D23D481324711B3988D76 /* libz.tbd */; };
 		5363A41A65BA4F2AB2216D98 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DA3709E947742E9AD228F0E /* SimpleLineIcons.ttf */; };
 		54BA8C2137CF1AA379FEA3A7 /* Pods_ConnectMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFF3D049C07647904E929AAE /* Pods_ConnectMeTests.framework */; };
 		575A61EB095A4965A504BA73 /* Lato-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62308B27968E44338B98B26B /* Lato-SemiboldItalic.ttf */; };
-		59F4F33E508F430B9A42B31E /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 922C5E6A7C0143A6B6B78CD5 /* Lato-BlackItalic.ttf */; };
 		625B4D73617348FDB4B65C47 /* libKeepScreenOn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 520573046AC04CBCB6614538 /* libKeepScreenOn.a */; };
 		62BFBDD420D10F21009661B5 /* libRNVersionNumber.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D1CE45520AADE10009FA551 /* libRNVersionNumber.a */; };
-		64BA20F4C07843B4A91A4D1A /* Lato-HeavyItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D574DAA90D74CB795F753DF /* Lato-HeavyItalic.ttf */; };
-		6CF184F8178A4D7780ECBA70 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EBC83535D6244D318A899CC5 /* Lato-LightItalic.ttf */; };
 		6DCB3A1C5B944A298B038611 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 66ACA94543464AB6BC1138FE /* libRNFetchBlob.a */; };
-		71BA4DB4E6B9494F923B36AB /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E17F6315587487A80A77FCE /* Lato-ThinItalic.ttf */; };
 		7B5F63F567FB4A18933A93CA /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA7BA45366374CBDAB9927BD /* Feather.ttf */; };
 		7B99A1FF6C664D67B643D6BB /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3B85DC158DC404A9EDB867B /* FontAwesome.ttf */; };
 		806EAF09CBBA4B34B2E34B67 /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F42336402924E59927A5D19 /* libTouchID.a */; };
@@ -81,7 +73,6 @@
 		8EEECBD1217FC8D2004F9994 /* OnfidoSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EEECB95217FC8D2004F9994 /* OnfidoSDK.m */; };
 		8EEECBD3217FC919004F9994 /* OnfidoSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEECBD2217FC919004F9994 /* OnfidoSDK.swift */; };
 		91F5774B57B249D291E502DC /* libreact-native-branch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9427435001634D8E9FD0A12B /* libreact-native-branch.a */; };
-		944DD0B449D64AE19AF331C1 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B09965FBE6864F91A0D3FD4C /* Lato-Thin.ttf */; };
 		98AEC6BE3DD84ED598CD2DF6 /* libRNShakeEvent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC44773CE844F5DA23B83C5 /* libRNShakeEvent.a */; };
 		9A273D51F4DB427AA24DEE95 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FD2559F4CBF4E92A8E0C1B8 /* Lato-Italic.ttf */; };
 		9E3D2AA29C2F4863AFE8EA07 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70265A5794CF4C50A6EA0F51 /* Ionicons.ttf */; };
@@ -92,7 +83,6 @@
 		AB18AC9D61264E229FD3C17F /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39C3C77055764123A3B45857 /* libRNVectorIcons.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		C24256F452854483AFC47DF9 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F1C0EA51D004542A35973F1 /* MaterialIcons.ttf */; };
-		C869511A975941789D69AA79 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14412FD0B4DA4AA0A1E9C91B /* Lato-Light.ttf */; };
 		CBAF34C79DA848F495B816FB /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83E7F1AAAA7843A8B868498C /* Lato-BoldItalic.ttf */; };
 		D7CF24B6CF8648649CD3E93E /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB524C73BEE14C70A0C552CB /* Lato-Bold.ttf */; };
 		DD15A6EF2272539900B42F03 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD15A6DE2272535A00B42F03 /* libRNGestureHandler.a */; };
@@ -2448,24 +2438,14 @@
 				1250510E3CC94BADAAE4DEAA /* Zocial.ttf in Resources */,
 				2772C0BC1EF14F93009DE7B6 /* GoogleService-Info.plist in Resources */,
 				7B5F63F567FB4A18933A93CA /* Feather.ttf in Resources */,
-				4176D6384E1A4D5EB185AFDC /* Lato-Black.ttf in Resources */,
-				59F4F33E508F430B9A42B31E /* Lato-BlackItalic.ttf in Resources */,
 				D7CF24B6CF8648649CD3E93E /* Lato-Bold.ttf in Resources */,
 				CBAF34C79DA848F495B816FB /* Lato-BoldItalic.ttf in Resources */,
-				47C5DCD307E849C1BECBC078 /* Lato-Hairline.ttf in Resources */,
-				388E18CF52B34139B97237B4 /* Lato-HairlineItalic.ttf in Resources */,
-				245BC507831F4EFE8F96E070 /* Lato-Heavy.ttf in Resources */,
-				64BA20F4C07843B4A91A4D1A /* Lato-HeavyItalic.ttf in Resources */,
 				9A273D51F4DB427AA24DEE95 /* Lato-Italic.ttf in Resources */,
-				C869511A975941789D69AA79 /* Lato-Light.ttf in Resources */,
-				6CF184F8178A4D7780ECBA70 /* Lato-LightItalic.ttf in Resources */,
 				36C1D67FE63A494B9967BC76 /* Lato-Medium.ttf in Resources */,
 				F4231D8934B94C7795C3CCDF /* Lato-MediumItalic.ttf in Resources */,
 				A07C3C32C7314BFE821C0880 /* Lato-Regular.ttf in Resources */,
 				EC657F2C78CA4325A7F0D28A /* Lato-Semibold.ttf in Resources */,
 				575A61EB095A4965A504BA73 /* Lato-SemiboldItalic.ttf in Resources */,
-				944DD0B449D64AE19AF331C1 /* Lato-Thin.ttf in Resources */,
-				71BA4DB4E6B9494F923B36AB /* Lato-ThinItalic.ttf in Resources */,
 				DDD64CBE216D4A1000BE706A /* eula_ios.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
