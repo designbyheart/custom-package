@@ -8,7 +8,7 @@ import { color } from '../../common/styles'
 import {
   getStore,
   getNavigation,
-  connection,
+  mockConnection1,
   connectionHistory,
   activeConnectionThemePrimary,
   activeConnectionThemeSecondary,
@@ -26,7 +26,7 @@ describe('<ConnectionHistory />', () => {
       activeConnectionThemePrimary,
       activeConnectionThemeSecondary,
       connectionHistory,
-      connection,
+      connection: mockConnection1,
       claimMap: undefined,
       updateStatusBarTheme: () => {},
       deleteConnectionAction: jest.fn(),

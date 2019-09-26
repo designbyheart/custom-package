@@ -55,6 +55,10 @@ import {
   watchLedgerStore,
   ledgerStoreReducer as ledger,
 } from './ledger/ledger-store'
+import {
+  watchOpenIdConnectStore,
+  openIdConnectReducer,
+} from '../open-id-connect/open-id-connect-store'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -83,6 +87,7 @@ const appReducer = combineReducers({
   offline,
   onfido,
   question,
+  openIdConnect: openIdConnectReducer,
 })
 
 let middlewares = [historyRecorder, automaticCloudBackup]
@@ -132,6 +137,7 @@ sagaMiddleware.run(function*() {
     watchOffline(),
     watchOnfido(),
     watchQuestion(),
+    watchOpenIdConnectStore(),
   ])
 })
 

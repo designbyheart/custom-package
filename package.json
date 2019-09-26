@@ -17,7 +17,8 @@
     "test:e2e:android": "detox build --configuration android.emu.debug && detox test --configuration android.emu.debug",
     "pod:dev:install": "cd ios && CONNECTME_DEBUG=true pod install",
     "pod:install": "cd ios && pod install",
-    "build:ios": "mkdir -p -v ./ios/ConnectMe/RNbundle && pwd && which react-native && react-native bundle --entry-file='index.js' --bundle-output='./ios/ConnectMe/RNbundle/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios/ConnectMe/RNbundle'"
+    "build:ios": "mkdir -p -v ./ios/ConnectMe/RNbundle && pwd && which react-native && react-native bundle --entry-file='index.js' --bundle-output='./ios/ConnectMe/RNbundle/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios/ConnectMe/RNbundle'",
+    "reset:androidstudio": "rm android/.idea/modules.xml && cd android/ && ./gradlew clean && cd -"
   },
   "lint-staged": {
     "*.js": [
@@ -33,7 +34,7 @@
     "ajv": "^5.2.2",
     "apptentive-react-native": "5.3.1",
     "bignumber.js": "^7.2.1",
-    "buffer": "^5.1.0",
+    "buffer": "^4.9.1",
     "color": "^3.0.0",
     "hoist-non-react-statics": "1.2.0",
     "lodash.debounce": "^4.0.8",
@@ -47,6 +48,7 @@
     "lodash.uniqby": "^4.7.0",
     "lottie-react-native": "2.5.11",
     "moment": "^2.20.1",
+    "query-string": "^6.8.3",
     "react": "16.6.3",
     "react-native": "0.58.6",
     "react-native-animatable": "1.2.4",
@@ -92,7 +94,8 @@
     "redux-saga": "^1.0.2",
     "rn-fetch-blob": "0.10.15",
     "url": "0.11.0",
-    "url-parse": "^1.4.4"
+    "url-parse": "^1.4.4",
+    "validator": "^11.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.47",

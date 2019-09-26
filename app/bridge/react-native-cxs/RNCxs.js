@@ -619,11 +619,15 @@ export async function connectionSendMessage(
 
 export async function connectionSignData(
   connectionHandle: number,
-  data: string
+  data: string,
+  base64EncodingOption: string = 'NO_WRAP',
+  encodeBeforeSigning: boolean = true
 ): Promise<SignDataResponse> {
   const response: SignDataResponse = await RNIndy.connectionSignData(
     connectionHandle,
-    data
+    data,
+    base64EncodingOption,
+    encodeBeforeSigning
   )
 
   // external API data needs to be validated
@@ -652,4 +656,25 @@ export async function connectionVerifySignature(
   }
 
   return response
+}
+
+export async function toBase64FromUtf8(
+  data: string,
+  base64EncodingOption: string = 'NO_WRAP'
+) {
+  return RNIndy.toBase64FromUtf8(data, base64EncodingOption)
+}
+
+export async function toUtf8FromBase64(
+  data: string,
+  base64EncodingOption: string = 'NO_WRAP'
+) {
+  return RNIndy.toUtf8FromBase64(data, base64EncodingOption)
+}
+
+export async function generateThumbprint(
+  data: string,
+  base64EncodingOption: string = 'NO_WRAP'
+) {
+  return RNIndy.generateThumbprint(data, base64EncodingOption)
 }

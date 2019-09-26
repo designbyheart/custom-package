@@ -25,6 +25,7 @@
 #endif
 
 #import "vcx/vcx.h"
+#import <CommonCrypto/CommonHMAC.h>
 
 @implementation RNIndy
 
@@ -395,14 +396,20 @@ RCT_EXPORT_METHOD(connectionSendMessage: (NSInteger) connectionHandle
   }];
 }
 
+NSString* makeUrlSafe(NSString* base64Encoded) {
+  return [[base64Encoded stringByReplacingOccurrencesOfString:@"/" withString:@"_"] stringByReplacingOccurrencesOfString:@"+" withString:@"-"];
+}
 
 RCT_EXPORT_METHOD(connectionSignData: (NSInteger) connectionHandle
                   withData: (NSString *) data
+                  withBase64EncodingOption: (NSString *) base64EncodingOption
+                  withEncodeBeforeSigning: (BOOL) encode
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  // convert data to based64 encoded byte array
-  NSData *dataToSign = [[data dataUsingEncoding:NSUTF8StringEncoding] base64EncodedDataWithOptions:0];
+  NSData *dataToSign = encode == YES
+                        ? [[data dataUsingEncoding:NSUTF8StringEncoding] base64EncodedDataWithOptions:0]
+                        : [data dataUsingEncoding:NSUTF8StringEncoding];
   [[[ConnectMeVcx alloc] init] connectionSignData:connectionHandle
                                          withData:dataToSign
                                    withCompletion:^(NSError *error, NSData *signature_raw, vcx_u32_t signature_len)
@@ -411,13 +418,21 @@ RCT_EXPORT_METHOD(connectionSignData: (NSInteger) connectionHandle
       NSString *vcxErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
       reject(vcxErrorCode, @"Error occurred while signing data", error);
     } else {
+      NSString* signedData = [[NSString alloc] initWithData:dataToSign encoding:NSUTF8StringEncoding];
+      NSString* signature = [signature_raw base64EncodedStringWithOptions:0];
+      if ([[base64EncodingOption uppercaseString] isEqualToString:@"URL_SAFE"]) {
+        if (encode == YES) {
+          signedData = makeUrlSafe(signedData);
+        }
+        signature = makeUrlSafe(signature);
+      }
       // since we took the data from JS layer as simple string and
       // then converted that string to Base64 encoded byte[]
       // we need to pass same Base64 encoded byte[] back to JS layer, so that it can included in full message response
       // otherwise we would be doing this calculation again in JS layer which does not handle Buffer
       resolve(@{
-                @"data": [[data dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
-                @"signature": [signature_raw base64EncodedStringWithOptions:0]
+                @"data": signedData,
+                @"signature": signature
                 });
     }
   }];
@@ -449,6 +464,62 @@ RCT_EXPORT_METHOD(connectionVerifySignature: (NSInteger) connectionHandle
       }
     }
   }];
+}
+
+RCT_EXPORT_METHOD(toBase64FromUtf8: (NSString *)data
+                  withBase64EncodingOption: (NSString *) base64EncodingOption
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  NSString* base64Encoded = [[data dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
+  if (base64Encoded == nil) {
+    reject(@"10001", @"Error occurred while converting to base64 encoded string", nil);
+  } else {
+    if ([[base64EncodingOption uppercaseString] isEqualToString:@"URL_SAFE"]) {
+      base64Encoded = makeUrlSafe(base64Encoded);
+    }
+    resolve(base64Encoded);
+  }
+}
+
+RCT_EXPORT_METHOD(toUtf8FromBase64: (NSString *)data
+                  withBase64EncodingOption: (NSString *) base64EncodingOption
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  NSData* base64DecodedData = [[NSData alloc] initWithBase64EncodedString:data options:0];
+  NSString* utf8Encoded = [[NSString alloc] initWithData:base64DecodedData encoding:NSUTF8StringEncoding];
+  if (utf8Encoded == nil) {
+    reject(@"10002", @"Error occurred while converting to utf8 encoded string", nil);
+  } else {
+    if ([[base64EncodingOption uppercaseString] isEqualToString:@"URL_SAFE"]) {
+      utf8Encoded = makeUrlSafe(utf8Encoded);
+    }
+    resolve(utf8Encoded);
+  }
+}
+
+RCT_EXPORT_METHOD(generateThumbprint: (NSString *)data
+                  withBase64EncodingOption: (NSString *) base64EncodingOption
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  unsigned char hash[CC_SHA256_DIGEST_LENGTH];
+  NSData* dataBytes = [data dataUsingEncoding:NSUTF8StringEncoding];
+  if (CC_SHA256([dataBytes bytes], [dataBytes length], hash)) {
+    NSData* hashedData = [NSData dataWithBytes:hash length:CC_SHA256_DIGEST_LENGTH];
+    NSString* base64Encoded = [hashedData base64EncodedStringWithOptions:0];
+    if (base64Encoded == nil) {
+      reject(@"10004", @"Error occurred while converting hashed data to base64 string", nil);
+    } else {
+      if ([[base64EncodingOption uppercaseString] isEqualToString:@"URL_SAFE"]) {
+        base64Encoded = makeUrlSafe(base64Encoded);
+      }
+      resolve(base64Encoded);
+    }
+  } else {
+    reject(@"10003", @"Error occurred while hashing data", nil);
+  }
 }
 
 RCT_EXPORT_METHOD(credentialCreateWithMsgId: (NSString *) sourceId

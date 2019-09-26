@@ -38,8 +38,12 @@ import {
   qrCodeScannerTabRoute,
   homeTabRoute,
   connectionHistRoute,
+  openIdConnectRoute,
 } from '../common/'
-import type { QrCode } from '../components/qr-scanner/type-qr-scanner'
+import type {
+  QrCode,
+  OIDCAuthenticationRequest,
+} from '../components/qr-scanner/type-qr-scanner'
 import type { Store } from '../store/type-store'
 import type { InvitationPayload } from '../invitation/type-invitation'
 import type {
@@ -57,6 +61,10 @@ import { changeEnvironmentUrl } from '../store/config-store'
 import { captureError } from '../services/error/error-handler'
 import { getAllPublicDid } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
+import {
+  openIdConnectUpdateStatus,
+  OPEN_ID_CONNECT_STATE,
+} from '../open-id-connect/open-id-connect-actions'
 
 export function convertQrCodeToInvitation(qrCode: QrCode) {
   const qrSenderDetail = qrCode[QR_CODE_SENDER_DETAIL]
@@ -325,10 +333,23 @@ export class QRCodeScannerScreen extends PureComponent<
             onClose={this.onClose}
             onEnvironmentSwitchUrl={this.onEnvironmentSwitchUrl}
             onInvitationUrl={this.onInvitationUrl}
+            onOIDCAuthenticationRequest={this.onOIDCAuthenticationRequest}
           />
         ) : null}
       </Container>
     )
+  }
+
+  onOIDCAuthenticationRequest = (
+    oidcAuthenticationRequest: OIDCAuthenticationRequest
+  ) => {
+    this.props.openIdConnectUpdateStatus(
+      oidcAuthenticationRequest,
+      OPEN_ID_CONNECT_STATE.REQUEST_RECEIVED
+    )
+    this.props.navigation.navigate(openIdConnectRoute, {
+      oidcAuthenticationRequest,
+    })
   }
 }
 
@@ -342,6 +363,7 @@ const mapDispatchToProps = dispatch =>
     {
       invitationReceived,
       changeEnvironmentUrl,
+      openIdConnectUpdateStatus,
     },
     dispatch
   )

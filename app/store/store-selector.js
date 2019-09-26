@@ -462,3 +462,29 @@ export const getAllPublicDid = (connections: ConnectionStore) => {
     return acc
   }, {})
 }
+
+export const getConnectionByProp = (
+  state: Store,
+  property: string,
+  valueToMatch: any
+): Array<Connection> => {
+  const connections = getAllConnection(state)
+  if (connections) {
+    // Had to use `any` type here even though we know `Array<Connection>`
+    // will be returned, as of now Flow returns mixed type for
+    // all Object.{map,keys,values} operations and we can't do
+    // anything unless we specify $Exact type, which we can't define
+    // in this case, because for $Exact type, we should know each
+    // key in advance which is not the case here because we don't know DIDs
+    // with which we will make connections
+    const savedConnections: Array<any> = Object.values(connections)
+    return savedConnections.filter(
+      connection => connection[property] === valueToMatch
+    )
+  }
+
+  return []
+}
+
+export const getDIDFromFullyQualifiedDID = (did: string) =>
+  did.split(':').slice(-1)[0]

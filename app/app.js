@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react'
 import { Provider } from 'react-redux'
 import { AppRegistry, BackHandler, ToastAndroid, Platform } from 'react-native'
+
 import store from './store'
 import { ROUTE_UPDATE } from './store/route-store'
 import { getStatusBarTheme } from './store/store-selector'

@@ -95,6 +95,7 @@ import {
   selectRestoreMethodRoute,
   cloudRestoreRoute,
   cloudRestoreModalRoute,
+  openIdConnectRoute,
 } from './common/'
 import { color, font } from './common/styles'
 import WalletTabSendDetails from './wallet/wallet-tab-send-details'
@@ -124,6 +125,7 @@ import {
   cardTransitionConfig,
   getResponderDistance,
 } from './transition'
+import OpenIdConnectScreen from '../app/open-id-connect/open-id-connect-screen'
 
 if (__DEV__) {
   require('../tools/reactotron-config')
@@ -415,6 +417,7 @@ const ConnectMeAppNavigator = createStackNavigator(
       screen: QuestionScreen,
     },
     [cloudBackupRoute]: { screen: CloudBackup },
+    [openIdConnectRoute]: { screen: OpenIdConnectScreen },
   },
   {
     mode: 'modal',

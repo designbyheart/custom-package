@@ -2,7 +2,10 @@
   "flow.useNPMPackagedFlow": true,
   "javascript.validate.enable": false,
   "cSpell.words": [
-    "Onfido"
+    "OIDC",
+    "Onfido",
+    "connectme",
+    "jwks"
   ],
   "flow.useLSP": false,
   "flow.pathToFlow": "${workspaceFolder}/node_modules/.bin/flow",

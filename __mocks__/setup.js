@@ -40,6 +40,7 @@ jest.mock('react-navigation', () => ({
       return arguments
     },
   },
+  withNavigation: component => component,
 }))
 
 jest.mock('react-native-firebase', () => ({

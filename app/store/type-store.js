@@ -22,6 +22,7 @@ import type { OnfidoStore } from '../onfido/type-onfido'
 import type { QuestionStore } from '../question/type-question'
 import type { CloudRestoreStore } from '../cloud-restore/type-cloud-restore'
 import type { PushNotificationStore } from '../push-notification/type-push-notification'
+import type { OpenIdConnectStore } from '../open-id-connect/open-id-connect-actions'
 
 export type RouteStore = {
   currentScreen: string,
@@ -53,4 +54,5 @@ export type Store = {
   onfido: OnfidoStore,
   question: QuestionStore,
   cloudRestore: CloudRestoreStore,
+  openIdConnect: OpenIdConnectStore,
 }
