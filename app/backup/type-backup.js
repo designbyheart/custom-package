@@ -10,6 +10,8 @@ import type { RestoreCloudSubmitPassphraseAction } from '../cloud-restore/cloud-
 
 export type ReactNavigationBackup = {
   navigation: {
+    setParams: any,
+    getParam: any,
     navigate: (route: string, params?: any) => void,
     goBack: (route?: ?string) => void,
     state: {
@@ -59,6 +61,8 @@ export type VerifyRecoveryPhraseProps = {
   recoveryPassphrase: Passphrase,
   submitPassphrase: string => void,
   resetError: () => void,
+  status: string,
+  restoreStatus: string => void,
   error: boolean,
 } & ReactNavigationBackup
 

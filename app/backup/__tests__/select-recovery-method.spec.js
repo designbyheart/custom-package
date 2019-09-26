@@ -17,6 +17,8 @@ describe('<SelectRecoveryMethod />', () => {
   const navigation = {
     navigate: jest.fn(),
     goBack: jest.fn(),
+    getParam: jest.fn(),
+    setParams: jest.fn(),
 
     state: {
       params: {

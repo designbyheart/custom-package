@@ -21,6 +21,8 @@ describe('<VerifyRecoveryPhrase />', () => {
   const navigation = {
     navigate: jest.fn(),
     goBack: jest.fn(),
+    setParams: jest.fn(),
+    getParam: jest.fn(),
     state: {
       params: {
         recoveryPassphrase,
@@ -44,8 +46,10 @@ describe('<VerifyRecoveryPhrase />', () => {
             navigation={navigation}
             hydrateCloudBackup={jest.fn()}
             submitPassphrase={() => {}}
+            restoreStatus={() => {}}
             resetError={() => {}}
             error={false}
+            status="none"
           />
         </Provider>
       )

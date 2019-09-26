@@ -21,6 +21,8 @@ describe('<GenerateRecoveryPhrase />', () => {
   const navigation = {
     navigate: jest.fn(),
     goBack: jest.fn(),
+    setParams: jest.fn(),
+    getParam: jest.fn(),
     state: {
       params: {
         recoveryPassphrase,
