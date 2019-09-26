@@ -5,7 +5,6 @@ import { Dimensions, Keyboard } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
 import type {
   VerifyRecoveryPhraseProps,
   VerifyRecoveryPhraseState,
@@ -33,9 +32,11 @@ import { PASSPHRASE_SALT_STORAGE_KEY } from '../common/secure-storage-constants'
 import { pinHash as generateKey } from '../lock/pin-hash'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import EnterPassphrase from '../components/backup-restore-passphrase/backup-restore-passphrase'
-import { getBackupPassphrase } from '../store/store-selector'
+import { getBackupPassphrase, getRestoreStatus } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { submitPassphrase, resetError } from './cloud-restore-store'
+import { RestoreStatus } from '../restore/type-restore'
+import { restoreStatus } from '../restore/restore-store'
 
 const transparentBands = require('../images/transparentBands2.png')
 const backImage = require('../images/icon_backArrow_white.png')
@@ -49,8 +50,21 @@ export class CloudRestore extends Component<
     error: false,
   }
 
+  componentDidMount = () => {
+    this.props.navigation.setParams({
+      navigateBack: () => this.navigateBack(this.props.navigation.navigate),
+    })
+    this.props.restoreStatus(RestoreStatus.PASSPHRASE_PAGE_LOADED)
+  }
+
+  navigateBack = (navigate: any) => {
+    if (this.props.status === RestoreStatus.PASSPHRASE_PAGE_LOADED) {
+      this.props.restoreStatus(RestoreStatus.none)
+    }
+    navigate(selectRestoreMethodRoute)
+  }
   static navigationOptions = ({
-    navigation: { goBack, navigate, state },
+    navigation: { getParam },
   }: ReactNavigationBackup) => ({
     header: (
       <CustomHeader
@@ -61,7 +75,7 @@ export class CloudRestore extends Component<
         <CustomView style={[styles.headerSpacer]}>
           <Icon
             medium
-            onPress={() => navigate(selectRestoreMethodRoute)}
+            onPress={() => getParam('navigateBack')}
             testID={VERIFY_BACK_TEST_ID}
             iconStyle={[styles.headerBackIcon]}
             src={backImage}
@@ -71,7 +85,7 @@ export class CloudRestore extends Component<
         <CustomView style={[styles.headerSpacer]}>
           <Icon
             medium
-            onPress={() => navigate(selectRestoreMethodRoute)}
+            onPress={() => getParam('navigateBack')}
             testID={VERIFY_CLOSE_TEST_ID}
             iconStyle={[styles.headerIcon]}
             src={closeImage}
@@ -117,11 +131,12 @@ const mapStateToProps = (state: Store) => {
   return {
     recoveryPassphrase: getBackupPassphrase(state),
     error: state.cloudRestore.error,
+    status: getRestoreStatus(state),
   }
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ submitPassphrase, resetError }, dispatch)
+  bindActionCreators({ submitPassphrase, restoreStatus, resetError }, dispatch)
 
 export default createStackNavigator({
   [cloudRestoreRoute]: {

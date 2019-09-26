@@ -10,6 +10,8 @@ describe('Restore screen', () => {
     return {
       store: getStore(),
       navigation: {
+        setParams: jest.fn(),
+        getParam: jest.fn(),
         navigate: jest.fn(),
         goBack: jest.fn(),
         state: {
