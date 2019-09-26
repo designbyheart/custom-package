@@ -9,14 +9,29 @@ import type {
 export type CustomError = {
   code: string,
   message: string,
+  // some of the time we can display different error to user
+  // than what we got in error message
+  // because error message can contain some exception as well
+  // which we don't want to show to user
+  displayMessage?: string,
+  // Each error can also have a type which tells if we retry the action
+  // that this error can be resolved by retry
+  // For example: if server returned any error above 500
+  // then we can retry with exponential backoff, and server might respond
+  // with success
+  // However, if server responds with 4XX, then the problem was on client
+  // and it might not be possible to repeat the same action because
+  // ConnectMe will create request second time as well
+  // Or there might be some error that are related to signing or encryption
+  // which even if we retry won't be resolved
+  isResolvableByRetry?: boolean,
 }
+export const GENERIC_ERROR_MESSAGE = 'Error occurred'
 
 export const INITIAL_TEST_ACTION = 'INITIAL_TEST_ACTION'
-
 export type InitialTestAction = {
   type: typeof INITIAL_TEST_ACTION,
 }
-
 export const initialTestAction = () => ({
   type: INITIAL_TEST_ACTION,
 })
@@ -145,4 +160,10 @@ export type MatchingCredential = {
     to?: number,
     from?: number,
   },
+}
+
+export type Dispatch = (action: { type: string }) => any
+
+export type ReduxConnect = {
+  dispatch: Dispatch,
 }

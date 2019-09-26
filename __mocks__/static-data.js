@@ -1477,19 +1477,21 @@ export const activeConnectionThemeSecondary = `rgba(${
   color.actions.button.secondary.rgba
 })`
 
+export const mockConnection1 = {
+  ...successConnectionData.newConnection,
+  vcxSerializedConnection: '',
+  identifier: '4ej819kkjywdppuje79',
+  name: 'Test Connection1',
+  senderName: 'senderName',
+  senderDID: 'senderDID',
+  remoteConnectionId: '70075yyojywdppuje79',
+  size: 100,
+  logoUrl: 'https://logourl.com/logo.png',
+  publicDID: null,
+}
+
 export const connections = {
-  ['4ej819kkjywdppuje79']: {
-    ...successConnectionData.newConnection,
-    vcxSerializedConnection: '',
-    identifier: '4ej819kkjywdppuje79',
-    name: 'Test Connection1',
-    senderName: 'senderName',
-    senderDID: 'senderDID',
-    remoteConnectionId: '70075yyojywdppuje79',
-    size: 100,
-    logoUrl: 'https://logourl.com/logo.png',
-    publicDID: null,
-  },
+  ['4ej819kkjywdppuje79']: mockConnection1,
   ['3nj819kkjywdppuje86']: {
     ...successConnectionData.newConnection,
     vcxSerializedConnection: '',
@@ -1514,17 +1516,6 @@ export const connections = {
     logoUrl: 'https://logourl.com/logo.png',
     publicDID: null,
   },
-}
-
-export const connection = {
-  identifier: '90ij8167kkjywdppujer60',
-  name: 'Test Connection4',
-  senderName: 'senderName',
-  senderDID: 'senderDID',
-  remoteConnectionId: '70075yyojywdppuje79',
-  size: 100,
-  logoUrl: 'https://logourl.com/logo.png',
-  publicDID: null,
 }
 
 export const getClaimFormat = {

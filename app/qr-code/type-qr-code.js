@@ -5,6 +5,8 @@ import type {
 } from '../invitation/type-invitation'
 import type { ReactNavigation } from '../common/type-common'
 import type { Connection } from '../store/type-connection-store'
+import type { OIDCAuthenticationRequest } from '../components/qr-scanner/type-qr-scanner'
+import type { OpenIdConnectState } from '../open-id-connect/open-id-connect-actions'
 
 export type QRCodeScannerScreenState = {
   isCameraAuthorized: boolean,
@@ -19,6 +21,10 @@ export type QRCodeScannerScreenProps = {
     data: InvitationReceivedActionData
   ) => InvitationReceivedAction,
   changeEnvironmentUrl: (url: string) => void,
+  openIdConnectUpdateStatus: (
+    OIDCAuthenticationRequest,
+    OpenIdConnectState
+  ) => void,
 } & ReactNavigation
 
 export const MESSAGE_NO_CAMERA_PERMISSION = 'No Camera permission'

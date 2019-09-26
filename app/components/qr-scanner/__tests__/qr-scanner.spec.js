@@ -19,6 +19,7 @@ describe('<QRScanner />', () => {
     onRead: jest.fn(),
     onEnvironmentSwitchUrl: jest.fn(),
     onInvitationUrl: jest.fn(),
+    onOIDCAuthenticationRequest: jest.fn(),
   })
 
   function setup() {

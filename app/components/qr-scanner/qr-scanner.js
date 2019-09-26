@@ -2,6 +2,15 @@
 import React, { PureComponent } from 'react'
 import { Vibration, StyleSheet, View, Dimensions, Platform } from 'react-native'
 import { RNCamera } from 'react-native-camera'
+
+import type {
+  QrScannerProps,
+  QrScannerState,
+  CameraMarkerProps,
+  CornerBoxProps,
+} from './type-qr-scanner'
+import type { SMSPendingInvitationPayload } from '../../sms-pending-invitation/type-sms-pending-invitation'
+
 import { CustomView, Container, CustomText, Icon } from '../../components/'
 import {
   color,
@@ -16,18 +25,17 @@ import {
   BOTTOM_LEFT,
   TOP_RIGHT,
   TOP_LEFT,
-} from './type-qr-scanner'
-import type {
-  QrScannerProps,
-  QrScannerState,
-  CameraMarkerProps,
-  CornerBoxProps,
+  QR_CODE_TYPES,
 } from './type-qr-scanner'
 import { isValidUrlQrCode } from './qr-url-validator'
 import { isValidInvitationUrl } from './qr-invitation-url-validator'
 import { invitationDetailsRequest } from '../../api/api'
 import { convertSmsPayloadToInvitation } from '../../sms-pending-invitation/sms-pending-invitation-store'
-import type { SMSPendingInvitationPayload } from '../../sms-pending-invitation/type-sms-pending-invitation'
+import {
+  isValidOIDCQrCode,
+  fetchValidateJWT,
+} from './qr-code-types/qr-code-oidc'
+import { uuid } from '../../services/uuid'
 
 export default class QRScanner extends PureComponent<
   QrScannerProps,
@@ -114,35 +122,68 @@ export default class QRScanner extends PureComponent<
           this.onSuccessRead(nextState)
           this.props.onEnvironmentSwitchUrl(urlQrCode)
         } else {
-          // now check if we get invitation url in qr-code
-          const urlInvitationQrCode = isValidInvitationUrl(event.data)
-          if (urlInvitationQrCode && typeof urlInvitationQrCode === 'object') {
-            nextState.scanStatus = SCAN_STATUS.DOWNLOADING_INVITATION
+          // check if we get OIDC based authentication qr-code
+          const oidcAuthenticationQrCode = isValidOIDCQrCode(event.data)
+          if (
+            oidcAuthenticationQrCode &&
+            oidcAuthenticationQrCode.type === QR_CODE_TYPES.OIDC
+          ) {
+            nextState.scanStatus = SCAN_STATUS.DOWNLOADING_AUTHENTICATION_JWT
             this.setState(nextState)
-            try {
-              const invitationData: SMSPendingInvitationPayload = await invitationDetailsRequest(
-                {
-                  url: urlInvitationQrCode.url,
-                }
-              )
-              const invitationPayload = convertSmsPayloadToInvitation(
-                invitationData
-              )
+            const [jwtAuthenticationRequest, error] = await fetchValidateJWT(
+              oidcAuthenticationQrCode
+            )
+            if (error !== null || jwtAuthenticationRequest === null) {
+              // if we get error while validating JWT request
+              // then show error on QR scanner and resume re-scanning of QR code
+              // after certain amount of time to let user read error
+              // and also so that qr code reader does not keep reading qr code
+              // and keep checking status in every sub millisecond
+              nextState.scanStatus = error || SCAN_STATUS.FAIL
+              this.setState(nextState, this.delayedReactivate)
+            } else {
               nextState.scanStatus = SCAN_STATUS.SUCCESS
               this.onSuccessRead(nextState)
-              this.props.onInvitationUrl(invitationPayload)
-            } catch (e) {
-              // set status that no invitation data was found at the url
-              nextState.scanStatus = SCAN_STATUS.NO_INVITATION_DATA
-              // re-activate scanning after setting fail status
-              this.setState(nextState, this.delayedReactivate)
+              this.props.onOIDCAuthenticationRequest({
+                oidcAuthenticationQrCode,
+                jwtAuthenticationRequest,
+                id: uuid(),
+              })
             }
           } else {
-            // qr code read failed
-            nextState.scanStatus = SCAN_STATUS.FAIL
-            // if qr code read failed, we reactivate qr code scan after delay
-            // so that user can see that QR code scan failed
-            this.setState(nextState, this.delayedReactivate)
+            // now check if we get invitation url in qr-code
+            const urlInvitationQrCode = isValidInvitationUrl(event.data)
+            if (
+              urlInvitationQrCode &&
+              typeof urlInvitationQrCode === 'object'
+            ) {
+              nextState.scanStatus = SCAN_STATUS.DOWNLOADING_INVITATION
+              this.setState(nextState)
+              try {
+                const invitationData: SMSPendingInvitationPayload = await invitationDetailsRequest(
+                  {
+                    url: urlInvitationQrCode.url,
+                  }
+                )
+                const invitationPayload = convertSmsPayloadToInvitation(
+                  invitationData
+                )
+                nextState.scanStatus = SCAN_STATUS.SUCCESS
+                this.onSuccessRead(nextState)
+                this.props.onInvitationUrl(invitationPayload)
+              } catch (e) {
+                // set status that no invitation data was found at the url
+                nextState.scanStatus = SCAN_STATUS.NO_INVITATION_DATA
+                // re-activate scanning after setting fail status
+                this.setState(nextState, this.delayedReactivate)
+              }
+            } else {
+              // qr code read failed
+              nextState.scanStatus = SCAN_STATUS.FAIL
+              // if qr code read failed, we reactivate qr code scan after delay
+              // so that user can see that QR code scan failed
+              this.setState(nextState, this.delayedReactivate)
+            }
           }
         }
       }
@@ -224,14 +265,11 @@ export class CameraMarker extends PureComponent<CameraMarkerProps, void> {
 export class CornerBox extends PureComponent<CornerBoxProps, void> {
   render() {
     const { status } = this.props
-    const borderStyle =
-      status === SCAN_STATUS.SUCCESS ||
-      status === SCAN_STATUS.DOWNLOADING_INVITATION
-        ? cameraMarkerStyles.borderSuccess
-        : status === SCAN_STATUS.FAIL ||
-          status === SCAN_STATUS.NO_INVITATION_DATA
-          ? cameraMarkerStyles.borderFail
-          : cameraMarkerStyles.border
+    const borderStyle = SUCCESS_STYLE_STATES.includes(status)
+      ? cameraMarkerStyles.borderSuccess
+      : FAILURE_STYLE_STATES.includes(status)
+        ? cameraMarkerStyles.borderFail
+        : cameraMarkerStyles.border
 
     return (
       <CustomView
@@ -246,6 +284,24 @@ export class CornerBox extends PureComponent<CornerBoxProps, void> {
     )
   }
 }
+
+const SUCCESS_STYLE_STATES = [
+  SCAN_STATUS.SUCCESS,
+  SCAN_STATUS.DOWNLOADING_INVITATION,
+  SCAN_STATUS.DOWNLOADING_AUTHENTICATION_JWT,
+]
+const FAILURE_STYLE_STATES = [
+  SCAN_STATUS.FAIL,
+  SCAN_STATUS.NO_INVITATION_DATA,
+  SCAN_STATUS.NO_AUTHENTICATION_REQUEST,
+  SCAN_STATUS.AUTH_REQUEST_DOWNLOAD_FAILED,
+  SCAN_STATUS.AUTH_REQUEST_INVALID_HEADER_DECODE_ERROR,
+  SCAN_STATUS.AUTH_REQUEST_INVALID_HEADER_SCHEMA,
+  SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_DECODE_ERROR,
+  SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_SCHEMA,
+  SCAN_STATUS.AUTH_REQUEST_INVALID_SIGNATURE,
+  SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_SCHEMA_AND_SEND_FAIL,
+]
 
 const markerSize = 250
 const cornerBoxSize = 70
@@ -307,22 +363,31 @@ const cameraStyle = StyleSheet.create({
   },
 })
 
+const idleStyle = {
+  color: color.actions.none,
+}
+const failStyle = {
+  color: color.actions.dangerous,
+}
+const successStyle = {
+  color: color.actions.tertiary,
+}
+
 const scanStatusStyle = StyleSheet.create({
-  [SCAN_STATUS.SCANNING]: {
-    color: color.actions.none,
-  },
-  [SCAN_STATUS.SUCCESS]: {
-    color: color.actions.tertiary,
-  },
-  [SCAN_STATUS.FAIL]: {
-    color: color.actions.dangerous,
-  },
-  [SCAN_STATUS.DOWNLOADING_INVITATION]: {
-    color: color.actions.tertiary,
-  },
-  [SCAN_STATUS.NO_INVITATION_DATA]: {
-    color: color.actions.dangerous,
-  },
+  [SCAN_STATUS.SCANNING]: idleStyle,
+  [SCAN_STATUS.SUCCESS]: successStyle,
+  [SCAN_STATUS.FAIL]: failStyle,
+  [SCAN_STATUS.DOWNLOADING_INVITATION]: successStyle,
+  [SCAN_STATUS.NO_INVITATION_DATA]: failStyle,
+  [SCAN_STATUS.DOWNLOADING_AUTHENTICATION_JWT]: successStyle,
+  [SCAN_STATUS.NO_AUTHENTICATION_REQUEST]: failStyle,
+  [SCAN_STATUS.AUTH_REQUEST_DOWNLOAD_FAILED]: failStyle,
+  [SCAN_STATUS.AUTH_REQUEST_INVALID_HEADER_DECODE_ERROR]: failStyle,
+  [SCAN_STATUS.AUTH_REQUEST_INVALID_HEADER_SCHEMA]: failStyle,
+  [SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_DECODE_ERROR]: failStyle,
+  [SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_SCHEMA]: failStyle,
+  [SCAN_STATUS.AUTH_REQUEST_INVALID_SIGNATURE]: failStyle,
+  [SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_SCHEMA_AND_SEND_FAIL]: failStyle,
   scanStatusOffset: {
     marginVertical: OFFSET_3X,
   },

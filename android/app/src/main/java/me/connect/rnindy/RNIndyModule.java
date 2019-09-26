@@ -53,7 +53,10 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
@@ -249,9 +252,10 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void connectionSignData(int connectionHandle, String data, Promise promise) {
+    public void connectionSignData(int connectionHandle, String data, String base64EncodingOption, boolean encode, Promise promise) {
         try {
-            byte[] dataToSign = Base64.encode(data.getBytes(), Base64.NO_WRAP);
+            int base64EncodeOption = base64EncodingOption.equalsIgnoreCase("NO_WRAP") ? Base64.NO_WRAP : Base64.URL_SAFE;
+            byte[] dataToSign = encode ? Base64.encode(data.getBytes(), base64EncodeOption) : data.getBytes();
             ConnectionApi.connectionSignData(connectionHandle, dataToSign, dataToSign.length).exceptionally((t) -> {
                 Log.e(TAG, "connectionSignData", t);
                 promise.reject("FutureException", t.getMessage());
@@ -268,7 +272,7 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
                         // otherwise we would be doing this calculation again in JS layer which does not handle Buffer
                         WritableMap signResponse = Arguments.createMap();
                         signResponse.putString("data", new String(dataToSign));
-                        signResponse.putString("signature", Base64.encodeToString(result, Base64.NO_WRAP));
+                        signResponse.putString("signature", Base64.encodeToString(result, base64EncodeOption));
                         promise.resolve(signResponse);
                     } else {
                         promise.reject("NULL-VALUE", "Null value was received as result from wrapper");
@@ -304,6 +308,44 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
                 BridgeUtils.resolveIfValid(promise, result);
             });
         } catch(VcxException e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void toBase64FromUtf8(String data, String base64EncodingOption, Promise promise) {
+        try {
+            int base64EncodeOption = base64EncodingOption.equalsIgnoreCase("NO_WRAP") ? Base64.NO_WRAP : Base64.URL_SAFE;
+            promise.resolve(Base64.encodeToString(data.getBytes(), base64EncodeOption));
+        } catch(Exception e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void toUtf8FromBase64(String data, String base64EncodingOption, Promise promise) {
+        try {
+            int base64EncodeOption = base64EncodingOption.equalsIgnoreCase("NO_WRAP") ? Base64.NO_WRAP : Base64.URL_SAFE;
+            String decodedUtf8 = new String(Base64.decode(data, base64EncodeOption));
+            promise.resolve(decodedUtf8);
+        } catch(Exception e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void generateThumbprint(String data, String base64EncodingOption, Promise promise) {
+        try {
+            MessageDigest hash = MessageDigest.getInstance("SHA-256");
+            hash.update(data.getBytes(StandardCharsets.UTF_8));
+            int base64EncodeOption = base64EncodingOption.equalsIgnoreCase("NO_WRAP") ? Base64.NO_WRAP : Base64.URL_SAFE;
+            byte[] digest = hash.digest();
+            String base64EncodedThumbprint = Base64.encodeToString(digest, base64EncodeOption);
+            promise.resolve(base64EncodedThumbprint);
+        } catch (Exception e) {
             e.printStackTrace();
             promise.reject(e);
         }
