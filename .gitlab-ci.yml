@@ -1,7 +1,6 @@
 ---
 stages:
   - test
-  - sync
   - build
 
 yarn-test:
@@ -18,26 +17,6 @@ yarn-test:
     - yarn lint
     - yarn test
 
-# This stage is temporary until the android builds are converted to run internally
-sync:
-  stage: sync
-  image: gitlab.corp.evernym.com:4567/dev/containers/ssh-git:latest
-  tags:
-    - docker
-  only:
-    refs:
-      - master@dev/connectme/ConnectMe
-  except:
-    variables:
-      - $CI_COMMIT_MESSAGE =~ /[[Cc][Ii]\s[Ss][Kk][Ii][Pp]]/
-  script:
-    - mkdir -p ~/.ssh
-    - ssh-keyscan -4H github.com > ~/.ssh/known_hosts
-    - eval $(ssh-agent -s)
-    - echo "$GITHUB_DEPLOY_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    - git checkout master && git pull origin master
-    - git remote add github git@github.com:evernym/ConnectMe.git
-    - git push github master
 
 ### - iOS - ###
 .build-ios:
@@ -141,3 +120,21 @@ build-android-merge-request:
   only:
     refs:
       - merge_requests
+
+build-android-master:
+  extends: .build-android
+  only:
+    refs:
+      - master@dev/connectme/ConnectMe
+
+build-android-stage:
+  extends: .build-android
+  only:
+    refs:
+      - stage@dev/connectme/ConnectMe
+
+build-android-stable:
+  extends: .build-android
+  only:
+    refs:
+      - stable@dev/connectme/ConnectMe
