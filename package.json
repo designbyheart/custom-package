@@ -18,7 +18,7 @@
     "pod:dev:install": "cd ios && CONNECTME_DEBUG=true pod install",
     "pod:install": "cd ios && pod install",
     "build:ios": "mkdir -p -v ./ios/ConnectMe/RNbundle && pwd && which react-native && react-native bundle --entry-file='index.js' --bundle-output='./ios/ConnectMe/RNbundle/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios/ConnectMe/RNbundle'",
-    "reset:androidstudio": "rm android/.idea/modules.xml && cd android/ && ./gradlew clean && cd -"
+    "reset:androidstudio": "rm -f android/.idea/modules.xml && cd android/ && ./gradlew clean && cd -"
   },
   "lint-staged": {
     "*.js": [
@@ -34,7 +34,6 @@
     "ajv": "^5.2.2",
     "apptentive-react-native": "5.3.1",
     "bignumber.js": "^7.2.1",
-    "buffer": "^4.9.1",
     "color": "^3.0.0",
     "hoist-non-react-statics": "1.2.0",
     "lodash.debounce": "^4.0.8",
@@ -69,7 +68,7 @@
     "react-native-modal": "6.2.0",
     "react-native-pbkdf2": "https://github.com/SolidStateGroup/react-native-pbkdf2",
     "react-native-permissions": "1.1.1",
-    "react-native-randombytes": "^3.2.0",
+    "react-native-randombytes": "3.5.3",
     "react-native-reanimated": "^1.0.1",
     "react-native-sensitive-info": "5.2.0",
     "react-native-shake": "^3.2.4",

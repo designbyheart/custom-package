@@ -2,7 +2,55 @@
 import { NativeModules } from 'react-native'
 const { RNRandomBytes } = NativeModules
 import diceware from './eff.js'
-const Buffer = require('buffer/').Buffer
+
+export const base64Chars =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+export const Base64 = {
+  btoa: (input: string = '') => {
+    let str = input
+    let output = ''
+
+    for (
+      let block = 0, charCode, i = 0, map = base64Chars;
+      str.charAt(i | 0) || ((map = '='), i % 1);
+      output += map.charAt(63 & (block >> (8 - (i % 1) * 8)))
+    ) {
+      charCode = str.charCodeAt((i += 3 / 4))
+
+      if (charCode > 0xff) {
+        throw new Error(
+          "'btoa' failed: The string to be encoded contains characters outside of the Latin1 range."
+        )
+      }
+
+      block = (block << 8) | charCode
+    }
+
+    return output
+  },
+
+  atob: (input: string = '') => {
+    let str = input.replace(/=+$/, '')
+    let output = ''
+
+    if (str.length % 4 == 1) {
+      throw new Error(
+        "'atob' failed: The string to be decoded is not correctly encoded."
+      )
+    }
+    for (
+      let bc = 0, bs = 0, buffer, i = 0;
+      (buffer = str.charAt(i++));
+      ~buffer && ((bs = bc % 4 ? bs * 64 + buffer : buffer), bc++ % 4)
+        ? (output += String.fromCharCode(255 & (bs >> ((-2 * bc) & 6))))
+        : 0
+    ) {
+      buffer = base64Chars.indexOf(buffer)
+    }
+
+    return output
+  },
+}
 
 // See : https://www.reddit.com/r/crypto/comments/4xe21s/
 //
@@ -20,14 +68,13 @@ export const secureRandom = async (count: number = 6) => {
   let result
   const numBytes = 64
 
-  const randomBytes = () => {
+  const secureRandomBytes = () => {
     return new Promise(function(resolve, reject) {
       RNRandomBytes.randomBytes(numBytes, (err: any, bytes: string) => {
         if (err) {
           reject(err)
         } else {
-          //let decoded = atob(bytes)
-          const decoded = Buffer.from(bytes, 'base64')
+          let decoded = Base64.atob(bytes)
           resolve(decoded)
         }
       })
@@ -35,13 +82,13 @@ export const secureRandom = async (count: number = 6) => {
   }
 
   let randIndex = numBytes
-  let randVals = []
+  let randVals = ''
   do {
     if (randIndex >= numBytes) {
-      randVals = await randomBytes()
+      randVals = await secureRandomBytes()
       randIndex = 0
     }
-    const randVal = randVals[randIndex++] //.charCodeAt(0)
+    const randVal = randVals.charCodeAt(randIndex++)
     result = randVal & 0x7fffffff
   } while (result >= skip)
 

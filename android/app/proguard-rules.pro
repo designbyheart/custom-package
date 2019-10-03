@@ -72,3 +72,6 @@
 # branch
 -dontwarn io.branch.**
 
+# for firebase
+-keep class io.invertase.firebase.** { *; }
+-dontwarn io.invertase.firebase.**
