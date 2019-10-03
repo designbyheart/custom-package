@@ -21,6 +21,30 @@ import type { NotificationPayload } from '../common/type-common'
 import { customLogger } from '../store/custom-logger'
 import { getUnacknowledgedMessages } from '../store/config-store'
 
+export const remoteMessageParser = (message: RemoteMessage) => {
+  const {
+    data: {
+      forDID,
+      uid,
+      type,
+      remotePairwiseDID,
+      pushNotifMsgText,
+      pushNotifMsgTitle,
+      senderLogoUrl,
+    },
+  } = message
+
+  return {
+    forDID,
+    uid,
+    type,
+    remotePairwiseDID,
+    senderLogoUrl,
+    pushNotifMsgText,
+    pushNotifMsgTitle,
+  }
+}
+
 export class PushNotification extends PureComponent<
   PushNotificationProps,
   void
@@ -44,30 +68,6 @@ export class PushNotification extends PureComponent<
       type,
       remotePairwiseDID,
       senderLogoUrl,
-    }
-  }
-
-  remoteMessageParser(message: RemoteMessage) {
-    const {
-      data: {
-        forDID,
-        uid,
-        type,
-        remotePairwiseDID,
-        pushNotifMsgText,
-        pushNotifMsgTitle,
-        senderLogoUrl,
-      },
-    } = message
-
-    return {
-      forDID,
-      uid,
-      type,
-      remotePairwiseDID,
-      senderLogoUrl,
-      pushNotifMsgText,
-      pushNotifMsgTitle,
     }
   }
 
@@ -113,7 +113,7 @@ export class PushNotification extends PureComponent<
         // https://rnfirebase.io/docs/v5.x.x/messaging/upstream-messages
         //console.log('Remote message: ', message)
         //this.props.getUnacknowledgedMessages()
-        this.onPushNotificationReceived(this.remoteMessageParser(message))
+        this.onPushNotificationReceived(remoteMessageParser(message))
       })
 
     try {

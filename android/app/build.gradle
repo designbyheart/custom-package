@@ -124,9 +124,6 @@ android {
             targetCompatibility JavaVersion.VERSION_1_8
             incremental = false; //If you see any build issues, try uncommenting this line development phases. Do not commit this line uncommented
         }
-         ndk {
-             abiFilters 'x86', 'armeabi-v7a', 'arm64-v8a', 'x86_64' // <- only the supported ones
-         }
 
         testBuildType System.getProperty('testBuildType', 'debug')
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -236,15 +233,6 @@ dependencies {
     implementation project(':react-native-image-resizer')
     implementation 'com.google.firebase:firebase-messaging:12.0.1'
 
-    // Don't need these
-    implementation "com.google.firebase:firebase-ads:12.0.1"
-    implementation "com.google.firebase:firebase-config:12.0.1"
-    implementation "com.google.firebase:firebase-crash:12.0.1"
-    implementation "com.google.firebase:firebase-database:12.0.1"
-    implementation "com.google.firebase:firebase-perf:12.0.1"
-    implementation "com.google.firebase:firebase-storage:12.0.1"
-    // END Don't need these
-
     implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
     // <-- Add this line if you wish to use badge on Android
     // If you are receiving Google Play API availability issues, add the following dependency
@@ -271,8 +259,11 @@ dependencies {
     // implementation 'com.evernym:vcx:1.0.0-25-01-2019T17-14@aar'
     // implementation 'com.evernym:vcx:0.2.35288886-baaa532@aar'
     // implementation 'com.evernym:vcx:0.2.39277498-fe8a908@aar'
+    // implementation 'com.evernym:vcx:0.3.50848970-3d13a54@aar'
+    // android custom logging ENABLED -- 0.4.53980513-bd81815
+    // android custom logging DISABLED -- 0.4.54375765-111929a
     // current libvcx aar
-    implementation 'com.evernym:vcx:0.4.54375765-111929a@aar'
+    implementation 'com.evernym:vcx:0.4.53980513-bd81815@aar'
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.6.2'
     implementation 'net.sourceforge.streamsupport:android-retrostreams:1.6.2'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.59'
