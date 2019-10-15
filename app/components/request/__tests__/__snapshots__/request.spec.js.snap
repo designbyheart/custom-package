@@ -2,11 +2,14 @@
 
 exports[`<Request /> should match snapshot 1`] = `
 <View
+  accessibilityLabel="request-container"
+  accessible={true}
   style={
     Object {
       "flex": 1,
     }
   }
+  testID="request-container"
 >
   <View
     fifth={true}

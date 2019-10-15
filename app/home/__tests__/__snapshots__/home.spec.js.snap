@@ -9,6 +9,7 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
       "width": "100%",
     }
   }
+  testID="home-container"
 >
   <View
     accessibilityIgnoresInvertColors={true}
@@ -254,6 +255,7 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
       "width": "100%",
     }
   }
+  testID="home-container"
 >
   <View
     accessibilityIgnoresInvertColors={true}
@@ -499,6 +501,7 @@ exports[`<DashboardScreen /> should render Home and show loader 1`] = `
       "width": "100%",
     }
   }
+  testID="home-container"
 >
   <RCTScrollView
     contentContainerStyle={

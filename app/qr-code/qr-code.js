@@ -324,7 +324,7 @@ export class QRCodeScannerScreen extends PureComponent<
       //Till the time camera authorization is checked
       //empty black screen will be returned
       //so that it doesn't look odd
-      <Container dark collapsable={true}>
+      <Container dark collapsable={true} testID="qr-code-tab-container">
         {this.state.isCameraAuthorized &&
         this.state.isCameraEnabled &&
         this.props.currentScreen === qrCodeScannerTabRoute ? (

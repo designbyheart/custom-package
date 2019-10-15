@@ -113,7 +113,7 @@ export class Request extends PureComponent<RequestProps, RequestState> {
     const { title, message, senderLogoUrl, testID }: RequestProps = this.props
 
     return (
-      <Container>
+      <Container testID="request-container">
         <Container fifth>
           <RequestDetail
             title={title}

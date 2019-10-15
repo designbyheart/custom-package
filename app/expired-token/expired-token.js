@@ -21,7 +21,7 @@ class ExpiredToken extends PureComponent<ReactNavigation, void> {
 
   render() {
     return (
-      <Container fifth>
+      <Container fifth testID="expired-token-container">
         <Container center>
           <CustomView vCenter>
             <Image

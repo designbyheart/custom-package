@@ -196,7 +196,7 @@ export class DashboardScreen extends PureComponent<HomeProps> {
 
     const hasNoConnection = hydrated ? connections.length === 0 : false
     return (
-      <View style={container}>
+      <View style={container} testID="home-container">
         {hasNoConnection && (
           <NewConnectionInstructions
             usingProductionNetwork={environmentName === SERVER_ENVIRONMENT.PROD}

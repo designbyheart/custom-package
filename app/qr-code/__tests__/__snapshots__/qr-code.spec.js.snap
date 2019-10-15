@@ -2,6 +2,8 @@
 
 exports[`<QRScannerScreen /> match snapshot when camera is not authorized 1`] = `
 <View
+  accessibilityLabel="qr-code-tab-container"
+  accessible={true}
   collapsable={true}
   dark={true}
   style={
@@ -10,6 +12,7 @@ exports[`<QRScannerScreen /> match snapshot when camera is not authorized 1`] = 
       "flex": 1,
     }
   }
+  testID="qr-code-tab-container"
 />
 `;
 
@@ -50,6 +53,8 @@ Object {
 
 exports[`<QRScannerScreen /> should match snapshot 1`] = `
 <View
+  accessibilityLabel="qr-code-tab-container"
+  accessible={true}
   collapsable={true}
   dark={true}
   style={
@@ -58,6 +63,7 @@ exports[`<QRScannerScreen /> should match snapshot 1`] = `
       "flex": 1,
     }
   }
+  testID="qr-code-tab-container"
 >
   <View
     style={
