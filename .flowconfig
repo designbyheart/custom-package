@@ -32,6 +32,7 @@
 .*/node_modules/react-native-gesture-handler/.*
 ; Although this library has definition, but they are not correct. So, we have defined our own type
 .*/node_modules/react-native-image-resizer/.*
+.*/node_modules/child-process-async/.*
 
 ; Ignore polyfills
 .*/Libraries/polyfills/.*

@@ -23,3 +23,7 @@ it('test error condition', async () => {
   // make some assertions
 })
 ```
+
+### Error encountered: `Invariant Violation: Native module cannot be null.`
+
+We are missing the mocks for native module. Open `<rootDir>/__mocks__/setup.js` and create a mock for native module which is throwing error. You can check which native module is throwing error from call stack printed in terminal

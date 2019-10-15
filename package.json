@@ -12,13 +12,26 @@
     "postmerge": "yarnhook",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios",
     "coverage": "npm test -- --coverage",
-    "test:e2e": "detox test -c ios.sim.release",
-    "test:e2e:build": "detox build",
-    "test:e2e:android": "detox build --configuration android.emu.debug && detox test --configuration android.emu.debug",
     "pod:dev:install": "cd ios && CONNECTME_DEBUG=true pod install",
     "pod:install": "cd ios && pod install",
     "build:ios": "mkdir -p -v ./ios/ConnectMe/RNbundle && pwd && which react-native && react-native bundle --entry-file='index.js' --bundle-output='./ios/ConnectMe/RNbundle/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios/ConnectMe/RNbundle'",
-    "reset:androidstudio": "rm -f android/.idea/modules.xml && cd android/ && ./gradlew clean && cd -"
+    "reset:androidstudio": "rm -f android/.idea/modules.xml && cd android/ && ./gradlew clean && cd -",
+    "test:e2e:android": "detox build --configuration android.emu.debug && detox test --configuration android.emu.debug",
+    "e2e:iphone7": "cross-env SIMULATOR=IPHONE7 detox test -c ios.sim7.release",
+    "e2e:iphone7:update": "cross-env SIMULATOR=IPHONE7 UPDATE=YES detox test -c ios.sim7.release",
+    "e2e:iphone7:debug": "cross-env SIMULATOR=IPHONE7 detox test -c ios.sim7.debug",
+    "e2e:iphone7:debug:update": "cross-env SIMULATOR=IPHONE7 UPDATE=YES detox test -c ios.sim7.debug",
+    "e2e:iphonex": "cross-env SIMULATOR=IPHONEX detox test -c ios.simX.release",
+    "e2e:iphonex:update": "cross-env SIMULATOR=IPHONEX UPDATE=YES detox test -c ios.simX.release",
+    "e2e:iphonex:debug": "cross-env SIMULATOR=IPHONEX detox test -c ios.simX.debug",
+    "e2e:iphonex:debug:update": "cross-env SIMULATOR=IPHONEX UPDATE=YES detox test -c ios.simX.debug",
+    "e2e:iphone5s": "cross-env SIMULATOR=IPHONE5S detox test -c ios.sim5s.release",
+    "e2e:iphone5s:update": "cross-env SIMULATOR=IPHONE5S UPDATE=YES detox test -c ios.sim5s.release",
+    "e2e:iphone5s:debug": "cross-env SIMULATOR=IPHONE5S detox test -c ios.sim5s.debug",
+    "e2e:iphone5s:debug:update": "cross-env SIMULATOR=IPHONE5S UPDATE=YES detox test -c ios.sim5s.debug",
+    "e2e:iphoneXSMax:debug": "cross-env ",
+    "e2e:build": "detox build",
+    "e2e:android:debug": "detox build --configuration android.emu.debug && detox test --configuration android.emu.debug"
   },
   "lint-staged": {
     "*.js": [
@@ -100,12 +113,16 @@
     "@babel/core": "^7.0.0-beta.47",
     "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@babel/plugin-proposal-decorators": "^7.3.0",
+    "axios": "^0.18.0",
     "babel-core": "^7.0.0-beta.47",
     "babel-eslint": "^8.2.3",
     "babel-jest": "24.7.1",
     "babel-plugin-jest-hoist": "22.4.4",
     "babel-preset-react-native": "^5",
+    "chalk": "^2.3.2",
     "child-process-async": "^1.0.1",
+    "cross-env": "^5.1.4",
+    "detox": "^14.4.1",
     "eslint": "^3.19.0",
     "eslint-plugin-flowtype": "^2.47.1",
     "eslint-plugin-import": "^2.16.0",
@@ -114,13 +131,17 @@
     "flow-annotation-check": "^1.8.1",
     "flow-bin": "0.86.0",
     "flow-typed": "2.5.1",
+    "fs-extra": "^5.0.0",
     "glow": "^1.2.2",
+    "gm": "^1.23.1",
     "husky": "^0.13.3",
+    "imap-simple": "^4.0.0",
     "jest": "24.7.1",
     "lint-staged": "^3.4.1",
     "metro-react-native-babel-preset": "0.51.1",
     "node-fetch": "next",
     "prettier": "1.10.2",
+    "ramda": "^0.25.0",
     "react-devtools": "^3.6.0",
     "react-test-renderer": "^16.6.3",
     "reactotron-react-native": "1.14.0",
@@ -157,11 +178,41 @@
   },
   "detox": {
     "configurations": {
-      "ios.sim.release": {
+      "ios.sim7.release": {
         "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ConnectMe.app",
         "build": "xcodebuild -workspace ios/ConnectMe.xcworkspace -scheme ConnectMe -configuration release -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
-        "name": "iPhone 7"
+        "name": "iPhone XS Max"
+      },
+      "ios.sim7.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ConnectMe.app",
+        "build": "xcodebuild -workspace ios/ConnectMe.xcworkspace -scheme ConnectMe -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone XS Max"
+      },
+      "ios.simX.release": {
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ConnectMe.app",
+        "build": "xcodebuild -workspace ios/ConnectMe.xcworkspace -scheme ConnectMe -configuration release -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone X"
+      },
+      "ios.simX.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ConnectMe.app",
+        "build": "xcodebuild -workspace ios/ConnectMe.xcworkspace -scheme ConnectMe -configuration debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone X"
+      },
+      "ios.sim5s.release": {
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ConnectMe.app",
+        "build": "xcodebuild -workspace ios/ConnectMe.xcworkspace -scheme ConnectMe -configuration release -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone 5s"
+      },
+      "ios.sim5s.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ConnectMe.app",
+        "build": "xcodebuild -workspace ios/ConnectMe.xcworkspace -scheme ConnectMe -configuration debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone 5s"
       },
       "android.emu.debug": {
         "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
