@@ -171,6 +171,7 @@ function getProps(extraProps: ?GenericObject = {}) {
       mockQuestionReceivedState.data[mockQuestionPayload.uid],
       extraProps
     ),
+    useIgnoreButton: true,
   }
 }
 

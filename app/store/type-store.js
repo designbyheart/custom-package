@@ -1,4 +1,5 @@
 // @flow
+
 import type { LockStore } from '../lock/type-lock'
 import type { SMSPendingInvitationStore } from '../sms-pending-invitation/type-sms-pending-invitation'
 import type { ClaimOfferStore } from '../claim-offer/type-claim-offer'
@@ -22,6 +23,7 @@ import type { OnfidoStore } from '../onfido/type-onfido'
 import type { QuestionStore } from '../question/type-question'
 import type { CloudRestoreStore } from '../cloud-restore/type-cloud-restore'
 import type { PushNotificationStore } from '../push-notification/type-push-notification'
+import type { TxnAuthorAgreementStore } from '../txn-author-agreement/type-txn-author-agreement'
 import type { OpenIdConnectStore } from '../open-id-connect/open-id-connect-actions'
 
 export type RouteStore = {
@@ -53,6 +55,7 @@ export type Store = {
   offline: OfflineStore,
   onfido: OnfidoStore,
   question: QuestionStore,
+  txnAuthorAgreement: TxnAuthorAgreementStore,
   cloudRestore: CloudRestoreStore,
   openIdConnect: OpenIdConnectStore,
 }

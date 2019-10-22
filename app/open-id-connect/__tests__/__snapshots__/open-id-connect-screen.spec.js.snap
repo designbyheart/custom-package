@@ -1399,6 +1399,9 @@ exports[`<OpenIdConnectScreen /> should match in success state 1`] = `
         Object {
           "marginTop": "5%",
         },
+        Object {
+          "marginTop": "5%",
+        },
       ]
     }
   >

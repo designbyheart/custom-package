@@ -60,7 +60,7 @@ import {
 } from '../components/layout/header-styles'
 import { QuestionScreenHeader } from './components/question-screen-header'
 import {
-  questionStyles,
+  questionStyles as defaultQuestionStyles,
   questionActionButtonDefaultProps,
   disabledStyle,
 } from './question-screen-style'
@@ -87,6 +87,10 @@ export class Question extends PureComponent<
 > {
   _translateY = new Animated.Value(0)
 
+  static defaultProps = {
+    useIgnoreButton: true,
+  }
+
   constructor(props: QuestionScreenProps) {
     super(props)
     UIManager.setLayoutAnimationEnabledExperimental &&
@@ -103,6 +107,11 @@ export class Question extends PureComponent<
 
   render() {
     const { question } = this.props
+
+    let questionStyles = this.props.questionStyles
+    if (!questionStyles) {
+      questionStyles = defaultQuestionStyles
+    }
 
     const validationError: null | CustomError = getQuestionValidity(
       question && question.payload
@@ -153,6 +162,7 @@ export class Question extends PureComponent<
               <QuestionSenderDetail
                 source={this.props.senderLogoUrl}
                 senderName={this.props.senderName}
+                questionStyles={questionStyles}
               />
               {/*
                 if component status is idle (user hasn't taken any action yet),
@@ -163,13 +173,17 @@ export class Question extends PureComponent<
                   question={question}
                   selectedResponse={this.state.response}
                   onResponseSelect={this.onResponseSelect}
+                  questionStyles={questionStyles}
                 />
               )}
-              {loading && <QuestionLoader />}
+              {loading && <QuestionLoader questionStyles={questionStyles} />}
               {success && (
-                <QuestionSuccess afterSuccessShown={this.afterSuccessShown} />
+                <QuestionSuccess
+                  afterSuccessShown={this.afterSuccessShown}
+                  questionStyles={questionStyles}
+                />
               )}
-              {error && <QuestionError />}
+              {error && <QuestionError questionStyles={questionStyles} />}
               {/*
                 We need to show action buttons all the time except when screen
                 is in loading state
@@ -181,6 +195,7 @@ export class Question extends PureComponent<
                   onCancel={this.onCancel}
                   onSelectResponseAndSubmit={this.onSelectResponseAndSubmit}
                   question={this.props.question}
+                  useIgnoreButton={this.props.useIgnoreButton}
                 />
               )}
             </Animated.View>
@@ -338,17 +353,22 @@ export class Question extends PureComponent<
 function QuestionSenderDetail(props: {
   source: number | { uri: string },
   senderName: string,
+  questionStyles: any,
 }) {
   return (
-    <CustomView row style={[questionStyles.questionSenderContainer]} center>
+    <CustomView
+      row
+      style={[props.questionStyles.questionSenderContainer]}
+      center
+    >
       <CustomView>
         <Image
-          style={[questionStyles.questionSenderLogo]}
+          style={[props.questionStyles.questionSenderLogo]}
           source={props.source}
           resizeMode="cover"
         />
       </CustomView>
-      <Container style={[questionStyles.questionSenderName]}>
+      <Container style={[props.questionStyles.questionSenderName]}>
         <QuestionScreenText size="h5" numberOfLines={2}>
           {props.senderName}
         </QuestionScreenText>
@@ -361,8 +381,9 @@ function QuestionDetails(props: {
   question?: QuestionStoreMessage,
   selectedResponse: ?QuestionResponse,
   onResponseSelect: (responseIndex: number) => void,
+  questionStyles: any,
 }) {
-  const { question, selectedResponse, onResponseSelect } = props
+  const { question, selectedResponse, onResponseSelect, questionStyles } = props
   if (!question) {
     return null
   }
@@ -371,7 +392,10 @@ function QuestionDetails(props: {
 
   return (
     <CustomView>
-      <QuestionTitle title={question.payload.messageTitle} />
+      <QuestionTitle
+        title={question.payload.messageTitle}
+        questionStyles={questionStyles}
+      />
       <ScrollView
         style={[
           isSingleResponse
@@ -379,11 +403,15 @@ function QuestionDetails(props: {
             : questionStyles.questionResponsesContainer,
         ]}
       >
-        <QuestionText text={question.payload.messageText} />
+        <QuestionText
+          text={question.payload.messageText}
+          questionStyles={questionStyles}
+        />
         <QuestionResponses
           responses={question.payload.valid_responses}
           selectedResponse={selectedResponse}
           onResponseSelect={onResponseSelect}
+          questionStyles={questionStyles}
         />
         <QuestionExternalLinks externalLinks={question.payload.externalLinks} />
       </ScrollView>
@@ -391,9 +419,9 @@ function QuestionDetails(props: {
   )
 }
 
-function QuestionTitle(props: { title: string }) {
+function QuestionTitle(props: { title: string, questionStyles: any }) {
   return (
-    <CustomView style={[questionStyles.questionTitle]}>
+    <CustomView style={[props.questionStyles.questionTitle]}>
       <QuestionScreenText size="h3b" numberOfLines={2}>
         {props.title}
       </QuestionScreenText>
@@ -401,7 +429,7 @@ function QuestionTitle(props: { title: string }) {
   )
 }
 
-function QuestionText(props: { text: ?string }) {
+function QuestionText(props: { text: ?string, questionStyles: any }) {
   if (!props.text) {
     return null
   }
@@ -410,7 +438,7 @@ function QuestionText(props: { text: ?string }) {
     <QuestionScreenText
       bold={false}
       size="h5"
-      style={[questionStyles.questionText]}
+      style={[props.questionStyles.questionText]}
     >
       {props.text}
     </QuestionScreenText>
@@ -421,8 +449,9 @@ function QuestionResponses(props: {
   responses: ?Array<QuestionResponse>,
   selectedResponse: ?QuestionResponse,
   onResponseSelect: (responseIndex: number) => void,
+  questionStyles: any,
 }) {
-  const { responses = [], selectedResponse } = props
+  const { responses = [], selectedResponse, questionStyles } = props
   if (!responses || responses.length < 3) {
     return null
   }
@@ -471,7 +500,8 @@ function QuestionResponses(props: {
   )
 }
 
-function QuestionError() {
+function QuestionError(props: { questionStyles: any }) {
+  const { questionStyles } = props
   return (
     <CustomView
       bg="tertiary"
@@ -493,7 +523,11 @@ function QuestionError() {
   )
 }
 
-function QuestionSuccess(props: { afterSuccessShown: () => void }) {
+function QuestionSuccess(props: {
+  afterSuccessShown: () => void,
+  questionStyles: any,
+}) {
+  const { questionStyles } = props
   return (
     <CustomView
       bg="tertiary"
@@ -516,7 +550,8 @@ function QuestionSuccess(props: { afterSuccessShown: () => void }) {
   )
 }
 
-function QuestionLoader() {
+function QuestionLoader(props: { questionStyles: any }) {
+  const { questionStyles } = props
   return (
     <CustomView bg="tertiary" style={[questionStyles.questionLoaderContainer]}>
       <Loader type="dark" showMessage={true} message={'Sending...'} />

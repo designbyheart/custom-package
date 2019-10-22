@@ -5,11 +5,18 @@ import { StyleSheet } from 'react-native'
 
 import { CustomView } from '../../layout/custom-view'
 import Loader from '../../loader/loader'
+import type { Styles } from '../../../common/type-common'
 
-export function BottomUpSliderLoader() {
+export function BottomUpSliderLoader({
+  message = 'Sending...',
+  style,
+}: {
+  message?: string,
+  style?: Styles,
+}) {
   return (
-    <CustomView bg="tertiary" center style={[styles.loaderContainer]}>
-      <Loader type="dark" showMessage={true} message={'Sending...'} />
+    <CustomView bg="tertiary" center style={[styles.loaderContainer, style]}>
+      <Loader type="dark" showMessage={true} message={message} />
     </CustomView>
   )
 }

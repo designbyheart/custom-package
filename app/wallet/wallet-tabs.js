@@ -3,14 +3,6 @@ import React, { PureComponent } from 'react'
 import { Dimensions } from 'react-native'
 import { TabBarTop, createTabNavigator } from 'react-navigation'
 import { CustomView } from '../components'
-import {
-  RECEIVE_TAB,
-  SEND_TAB,
-  HISTORY_TAB,
-  RECEIVE_TAB_TEST_ID,
-  SEND_TAB_TEST_ID,
-  HISTORY_TAB_TEST_ID,
-} from './wallet-constants'
 import { color, font } from '../common/styles/constant'
 import { receiveTabRoute, sendTabRoute, historyTabRoute } from '../common'
 import WalletSendAmount from './wallet-send-amount'
@@ -34,27 +26,9 @@ const Tabs = createTabNavigator(
   {
     [receiveTabRoute]: {
       screen: WalletTabReceive,
-      navigationOptions: {
-        tabBarLabel: RECEIVE_TAB,
-        tabBarTestIDProps: {
-          testID: RECEIVE_TAB_TEST_ID,
-          accessible: true,
-          accessibleLabel: RECEIVE_TAB_TEST_ID,
-          accessibilityLabel: RECEIVE_TAB_TEST_ID,
-        },
-      },
     },
     [sendTabRoute]: {
       screen: WalletSendAmount,
-      navigationOptions: {
-        tabBarLabel: SEND_TAB,
-        tabBarTestIDProps: {
-          testID: SEND_TAB_TEST_ID,
-          accessible: true,
-          accessibleLabel: SEND_TAB_TEST_ID,
-          accessibilityLabel: SEND_TAB_TEST_ID,
-        },
-      },
     },
     // [historyTabRoute]: {
     //   screen: WalletTabHistory,
@@ -73,7 +47,7 @@ const Tabs = createTabNavigator(
     animationEnabled: true,
     backBehavior: 'none',
     swipeEnabled: true,
-    lazy: true,
+    lazy: false,
     initialRouteName: receiveTabRoute,
     order: [receiveTabRoute, sendTabRoute],
     initialLayout: {

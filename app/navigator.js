@@ -17,6 +17,7 @@ import QRCodeScanner from './qr-code/qr-code'
 import LockSelectionScreen from './lock/lock-selection'
 import SendLogsScreen from './send-logs/send-logs'
 import QuestionScreen from './question/question-screen'
+import TxnAuthorAgreementScreen from './txn-author-agreement/txn-author-agreement-screen'
 import LockEnterPinScreen from './lock/lock-enter-pin-code'
 import LockTouchIdSetupScreen from './lock/lock-fingerprint-setup'
 import LockPinCodeSetupScreen from './lock/lock-pin-code-setup'
@@ -84,6 +85,7 @@ import {
   backupErrorRoute,
   sendLogsRoute,
   questionRoute,
+  txnAuthorAgreementRoute,
   connectionsTabRoute,
   credentialsTabRoute,
   discoverTabRoute,
@@ -415,6 +417,9 @@ const ConnectMeAppNavigator = createStackNavigator(
     },
     [questionRoute]: {
       screen: QuestionScreen,
+    },
+    [txnAuthorAgreementRoute]: {
+      screen: TxnAuthorAgreementScreen,
     },
     [cloudBackupRoute]: { screen: CloudBackup },
     [openIdConnectRoute]: { screen: OpenIdConnectScreen },

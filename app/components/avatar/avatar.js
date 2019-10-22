@@ -8,6 +8,7 @@ import type { AvatarProps } from './type-avatar'
 
 const empty = []
 
+// TODO: add a prop size instead of using large, medium and small as different prop.
 export class Avatar extends PureComponent<AvatarProps, void> {
   onPressDebounce = debounce(
     event => {

@@ -10,7 +10,7 @@ import { CustomView } from '../../layout/custom-view'
 import { BottomUpSliderText } from './bottom-up-slider-screen-text'
 
 export function BottomUpSliderError(props: {
-  afterErrorShown: () => void,
+  afterErrorShown?: () => void,
   errorText: string,
   textStyles?: Array<Object | number>,
   errorIconStyles?: Array<Object | number>,

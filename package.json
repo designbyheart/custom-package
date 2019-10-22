@@ -99,7 +99,7 @@
     "react-native-vector-icons": "4.5.0",
     "react-native-version-number": "^0.3.3",
     "react-native-zip-archive": "3.0.1",
-    "react-navigation": "2.11.2",
+    "react-navigation": "2.18.3",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",

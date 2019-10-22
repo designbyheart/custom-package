@@ -1274,4 +1274,52 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
       constants.put("totalMemory", memInfo.totalMem);
       return constants;
     }
+
+    @ReactMethod
+    public void getTxnAuthorAgreement(Promise promise) {
+        try {
+            // IndyApi.getTxnAuthorAgreement(submitterDid, data).exceptionally((e) -> {
+            UtilsApi.getLedgerAuthorAgreement().exceptionally((e) -> {
+                Log.e(TAG, "getTxnAuthorAgreement: ", e);
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("getTxnAuthorAgreement Exception", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    @ReactMethod
+    public void getAcceptanceMechanisms(String submitterDid, int timestamp, String version, Promise promise) {
+        Long longtimestamp= new Long(timestamp);
+        try {
+            IndyApi.getAcceptanceMechanisms(submitterDid, longtimestamp, version).exceptionally((e) -> {
+                Log.e(TAG, "getAcceptanceMechanisms: ", e);
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("getAcceptanceMechanisms Exception", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @ReactMethod
+    public void appendTxnAuthorAgreement(String requestJson, String text, String version, String taaDigest, String mechanism, int timestamp, Promise promise) {
+        Long longtimestamp= new Long(timestamp);
+        try {
+            IndyApi.appendTxnAuthorAgreement(requestJson, text, version, taaDigest, mechanism, longtimestamp).exceptionally((e) -> {
+                Log.e(TAG, "appendTxnAuthorAgreement: ", e);
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("appendTxnAuthorAgreement Exception", e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

@@ -674,6 +674,7 @@ export default function connectionHistoryReducer(
       return {
         ...state,
         data: {
+          ...(state.data ? state.data : {}),
           connectionsUpdated: true,
         },
       }

@@ -177,6 +177,14 @@ Object {
     "encryptLogStatus": false,
   },
   "smsPendingInvitation": Object {},
+  "txnAuthorAgreement": Object {
+    "haveAlreadySignedAgreement": false,
+    "status": "IDLE",
+    "taaAcceptedVersion": "",
+    "text": "",
+    "thereIsANewAgreement": false,
+    "version": "",
+  },
   "user": Object {
     "avatarName": "user-avatar.jpeg",
     "error": null,
