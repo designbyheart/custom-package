@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: color.bg.eighth.color,
   },
+  signTaaButton: {
+    marginTop: 20,
+    marginBottom: 6,
+    marginHorizontal: '5%',
+  },
   alignItemsCenter: {
     marginBottom: 6,
     marginHorizontal: '5%',
@@ -30,6 +35,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignContent: 'center',
     justifyContent: 'space-around',
+  },
+  horizontalSpacing: {
+    flexDirection: 'column',
+    alignContent: 'center',
+    marginTop: 6,
+    marginLeft: 6,
+    marginRight: 6,
   },
 })
 

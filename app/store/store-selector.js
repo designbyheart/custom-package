@@ -366,6 +366,9 @@ export const getLogEncryptionStatus = (state: Store) =>
 
 export const getBackupShowBanner = (state: Store) => state.backup.showBanner
 
+export const getTaaAcceptedVersion = (state: Store) =>
+  state.txnAuthorAgreement.taaAcceptedVersion
+
 const addUidsWithStatusToConnections = (
   events: ProofRequestStore | ClaimOfferStore | QuestionStoreData,
   filterStatus,
@@ -462,7 +465,14 @@ export const getAllPublicDid = (connections: ConnectionStore) => {
     return acc
   }, {})
 }
+export const getAllTxnAuthorAgreement = (state: Store) =>
+  state.txnAuthorAgreement
 
+export const getAlreadySignedAgreement = (state: Store) =>
+  state.txnAuthorAgreement.haveAlreadySignedAgreement
+
+export const getThereIsANewAgreement = (state: Store) =>
+  state.txnAuthorAgreement.thereIsANewAgreement
 export const getConnectionByProp = (
   state: Store,
   property: string,

@@ -344,9 +344,10 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     header: null,
   }
 
-  renderAvatarWithSource = (avatarSource: number | ImageSource) => (
-    <Avatar medium round src={avatarSource} />
-  )
+  renderAvatarWithSource = (avatarSource: number | ImageSource) => {
+    let medium = isIphoneXR || isIphoneX
+    return <Avatar medium={medium} small={!medium} round src={avatarSource} />
+  }
 
   hideWalletPopupModal = () => {
     this.setState({
@@ -504,7 +505,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
           </UserAvatar>
         </CustomView>
         {/* DO not remove commented code, this is just to temporarily hide token related stuff */}
-        {/* <TouchableOpacity
+        <TouchableOpacity
           onPress={this.openTokenScreen}
           testID={SOVRIN_TOKEN_AMOUNT_TEST_ID}
         >
@@ -537,7 +538,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
               TOKENS
             </CustomText>
           </CustomView>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </CustomView>
     )
 

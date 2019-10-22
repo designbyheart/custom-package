@@ -21,7 +21,10 @@ import {
 const QUESTION_SENDER_LOGO_DIMENSION = 32
 const questionScreenSpacing = '5%'
 
-export const questionStyles = StyleSheet.create({
+export const getQuestionStylesObject = (
+  questionSenderLogoBorderRadius: number,
+  questionSenderLogoBorderWidth: number
+) => ({
   container: {
     flex: 1,
   },
@@ -55,8 +58,8 @@ export const questionStyles = StyleSheet.create({
   questionSenderLogo: {
     width: QUESTION_SENDER_LOGO_DIMENSION,
     height: QUESTION_SENDER_LOGO_DIMENSION,
-    borderRadius: QUESTION_SENDER_LOGO_DIMENSION / 2,
-    borderWidth: 1,
+    borderRadius: questionSenderLogoBorderRadius,
+    borderWidth: questionSenderLogoBorderWidth,
   },
   questionSenderName: {
     marginLeft: questionScreenSpacing,
@@ -129,6 +132,10 @@ export const questionStyles = StyleSheet.create({
     marginVertical: '10%',
   },
 })
+
+export const questionStyles = StyleSheet.create(
+  getQuestionStylesObject(QUESTION_SENDER_LOGO_DIMENSION / 2, 1)
+)
 
 export const questionActionButtonDefaultProps = {
   fontSize: font.size.M,

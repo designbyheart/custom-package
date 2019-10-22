@@ -1190,6 +1190,14 @@ export function getStore(store?: Store) {
             },
           },
         },
+        txnAuthorAgreement: {
+          haveAlreadySignedAgreement: false,
+          thereIsANewAgreement: false,
+          status: 'IDLE',
+          text: '',
+          taaAcceptedVersion: '',
+          version: '',
+        },
       }
     },
     dispatch() {

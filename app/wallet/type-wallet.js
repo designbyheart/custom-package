@@ -2,6 +2,7 @@
 import type {
   NavigationScreenProp,
   NavigationLeafRoute,
+  NavigationRoute,
 } from 'react-navigation'
 import type { ReactNavigation } from '../common/type-common'
 import type { CustomError } from '../common/type-common'
@@ -40,6 +41,18 @@ export const ERROR_BACKUP_WALLET = {
 export const ERROR_BACKUP_WALLET_SHARE = {
   code: 'WB-002',
   message: 'Error while sharing zipped backup',
+}
+
+export type WalletSendAmountNavigation = {
+  navigation: NavigationScreenProp<{|
+    ...NavigationLeafRoute,
+    params: {|
+      onTabPress: ({
+        navigation: NavigationScreenProp<NavigationRoute>,
+        defaultHandler: () => void,
+      }) => void,
+    |},
+  |}>,
 }
 
 export type WalletTabSendDetailNavigation = {
@@ -88,8 +101,11 @@ export type WalletSendAmountState = {
 export type WalletSendAmountProps = {
   screenProps: ReactNavigation,
   selectTokenAmount: (tokenAmount: string) => {},
+  checkTxnAuthorAgreement: () => {},
   walletBalance: string,
   paymentStatus: $Keys<typeof STORE_STATUS>,
+  alreadySignedAgreement: boolean,
+  thereIsANewAgreement: boolean,
 } & ReactNavigation
 
 export type WalletProps = {} & ReactNavigation

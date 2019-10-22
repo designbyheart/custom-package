@@ -25,9 +25,13 @@ export class QuestionActions extends React.Component<
   QuestionActionProps,
   void
 > {
+  static defaultProps = {
+    useIgnoreButton: true,
+  }
+
   render() {
     const testID = 'question-action'
-    const { question, selectedResponse } = this.props
+    const { question, selectedResponse, useIgnoreButton } = this.props
 
     if (!question) {
       return null
@@ -57,9 +61,9 @@ export class QuestionActions extends React.Component<
     // If there is one response, then we need to render that one response
     // as a button, and add another button of our own that would be Ignore button
     // Also, if user is not in success state, then also we need to show Ignore button
-    const shouldRenderIgnoreButton = idle
-      ? responses.length === 1 || responses.length > 2
-      : !success
+    const shouldRenderIgnoreButton = useIgnoreButton
+      ? idle ? responses.length === 1 || responses.length > 2 : !success
+      : false
     // If there are more than two responses, then we need to render
     // our own buttons (submit and cancel)
     const shouldRenderSubmitButton = idle ? responses.length > 2 : true
@@ -72,6 +76,7 @@ export class QuestionActions extends React.Component<
       <QuestionResponseButtons
         responses={responses}
         onPress={this.props.onSelectResponseAndSubmit}
+        useIgnoreButton={useIgnoreButton}
       />
     )
 
@@ -119,7 +124,7 @@ export class QuestionActions extends React.Component<
 }
 
 function QuestionResponseButtons(props: QuestionResponseButtonsProps) {
-  const { responses, onPress } = props
+  const { responses, onPress, useIgnoreButton } = props
 
   if (responses.length === 0 || responses.length > 2) {
     return null
@@ -148,6 +153,7 @@ function QuestionResponseButtons(props: QuestionResponseButtonsProps) {
       onPress={onPress}
       isPrimaryResponse={index === lastItemIndex}
       isSingleResponse={isSingleResponse}
+      useIgnoreButton={useIgnoreButton}
     />
   ))
 }
@@ -156,8 +162,17 @@ class QuestionResponseButton extends React.PureComponent<
   QuestionResponseButtonProps,
   void
 > {
+  static defaultProps = {
+    useIgnoreButton: true,
+  }
+
   render() {
-    const { response, isPrimaryResponse, isSingleResponse } = this.props
+    const {
+      response,
+      isPrimaryResponse,
+      isSingleResponse,
+      useIgnoreButton,
+    } = this.props
 
     // We need to show only one line of text on action buttons
     // Normally, we should have used react-native's numberOfLines prop
@@ -169,9 +184,10 @@ class QuestionResponseButton extends React.PureComponent<
     // then we need to show half text limit on button, because in single response
     // buttons are placed side by side and has less width
     // TODO: Upgrade react-native-elements and use numberOfLines prop
-    const buttonText = isSingleResponse
-      ? ellipsis(response.text, Math.floor(getResponseButtonsTextLimit() / 2))
-      : ellipsis(response.text, getResponseButtonsTextLimit())
+    const buttonText =
+      isSingleResponse && useIgnoreButton
+        ? ellipsis(response.text, Math.floor(getResponseButtonsTextLimit() / 2))
+        : ellipsis(response.text, getResponseButtonsTextLimit())
 
     return (
       <CustomView
@@ -220,11 +236,13 @@ export type QuestionActionProps = {
   onCancel: () => void,
   onSelectResponseAndSubmit: (response: QuestionResponse) => void,
   question?: QuestionStoreMessage,
+  useIgnoreButton: boolean,
 }
 
 type QuestionResponseButtonsProps = {
   responses: Array<QuestionResponse>,
   onPress: (response: QuestionResponse) => void,
+  useIgnoreButton: boolean,
 }
 
 type QuestionResponseButtonProps = {
@@ -232,4 +250,5 @@ type QuestionResponseButtonProps = {
   onPress: (response: QuestionResponse) => void,
   isPrimaryResponse: boolean,
   isSingleResponse: boolean,
+  useIgnoreButton: boolean,
 }

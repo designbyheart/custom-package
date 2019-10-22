@@ -23,6 +23,7 @@ import {
   TEXT_OK,
   TEXT_SUBMIT,
 } from '../type-question'
+import { questionStyles } from '../question-screen-style'
 
 describe('<QuestionScreen />', () => {
   it('should match idle state snapshot', () => {
@@ -116,6 +117,8 @@ describe('<QuestionScreen />', () => {
       navigation: {
         ...getNavigation(),
       },
+      questionStyles,
+      useIgnoreButton: true,
     }
   }
 

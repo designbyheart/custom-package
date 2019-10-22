@@ -101,6 +101,7 @@ import {
   AUTO_CLOUD_BACKUP_ENABLED,
   HAS_VERIFIED_RECOVERY_PHRASE,
 } from '../backup/type-backup'
+import { hydrateTxnAuthorAgreementSaga } from '../txn-author-agreement/txn-author-agreement-store'
 
 export function* deleteDeviceSpecificData(): Generator<*, *, *> {
   try {
@@ -286,6 +287,7 @@ export function* hydrate(): any {
       yield* hydrateClaimOffersSaga()
       yield* loadHistorySaga()
       yield* hydrateQuestionSaga()
+      yield* hydrateTxnAuthorAgreementSaga()
 
       if (inRecovery === 'true') {
         // TODO: Move vcx shutdown logic inside ensureVcxInitSuccess

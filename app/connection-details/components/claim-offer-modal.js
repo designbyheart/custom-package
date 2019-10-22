@@ -31,6 +31,8 @@ import { measurements } from '../../../app/common/styles/measurements'
 import {
   getConnectionLogoUrl,
   getConnectionTheme,
+  getThereIsANewAgreement,
+  getAlreadySignedAgreement,
 } from '../../store/store-selector'
 import {
   claimOfferShown,
@@ -43,6 +45,7 @@ import {
 import { updateStatusBarTheme } from '../../../app/store/connections-store'
 import { withStatusBar } from '../../components/status-bar/status-bar'
 import { black } from '../../common/styles'
+import { txnAuthorAgreementRoute } from '../../common'
 
 let ScreenHeight = Dimensions.get('window').height
 let ScreenWidth = Dimensions.get('window').width
@@ -61,6 +64,19 @@ class ClaimOfferModal extends React.Component<any, any> {
 
   static defaultProps = {
     runAnimation: true,
+  }
+
+  componentDidMount = () => {
+    if (
+      (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
+      parseFloat(this.props.claimPrice) > 0
+    ) {
+      this.props.navigation.navigate(txnAuthorAgreementRoute)
+    }
+  }
+
+  agree = () => {
+    this.props.navigation.navigate(txnAuthorAgreementRoute)
   }
 
   onIgnore = () => {
@@ -150,6 +166,9 @@ class ClaimOfferModal extends React.Component<any, any> {
 
     const testID = 'claim-offer'
     let acceptButtonText = payTokenValue ? 'Accept & Pay' : 'Accept'
+    const hasNotAcceptedTAA =
+      (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
+      parseFloat(this.props.claimPrice) > 0
 
     return (
       <Animated.View
@@ -180,22 +199,41 @@ class ClaimOfferModal extends React.Component<any, any> {
             <View style={styles.modalWrapper}>
               <ModalHeader
                 institutialName={claimOfferData.issuer.name}
-                credentialName={claimOfferData.data.name}
-                credentialText={'is offering to issue you'}
+                credentialName={
+                  hasNotAcceptedTAA
+                    ? 'Please sign the Transaction Author Agreement before continuing'
+                    : claimOfferData.data.name
+                }
+                credentialText={
+                  hasNotAcceptedTAA
+                    ? 'is offering a paid credential'
+                    : 'is offering to issue you'
+                }
                 imageUrl={this.props.logoUrl}
                 colorBackground={this.props.claimThemePrimary}
               />
               <ModalContent
                 content={this.props.claimOfferData.data.revealedAttributes}
               />
-              <ModalButtons
-                onPress={() => this.onAccept()}
-                onIgnore={() => this.onIgnore()}
-                colorBackground={this.props.claimThemePrimary}
-                secondColorBackground={this.props.claimThemeSecondary}
-                leftBtnText={'Ignore'}
-                rightBtnText={'Accept'}
-              />
+              {hasNotAcceptedTAA ? (
+                <ModalButtons
+                  onPress={() => this.agree()}
+                  onIgnore={() => this.onIgnore()}
+                  colorBackground={this.props.claimThemePrimary}
+                  secondColorBackground={this.props.claimThemeSecondary}
+                  leftBtnText={'Close'}
+                  rightBtnText={'Read and Sign TAA'}
+                />
+              ) : (
+                <ModalButtons
+                  onPress={() => this.onAccept()}
+                  onIgnore={() => this.onIgnore()}
+                  colorBackground={this.props.claimThemePrimary}
+                  secondColorBackground={this.props.claimThemeSecondary}
+                  leftBtnText={'Ignore'}
+                  rightBtnText={'Accept'}
+                />
+              )}
             </View>
           </View>
         </Animated.View>
@@ -219,13 +257,21 @@ const mapStateToProps = (
     claimOfferData.issuer &&
     claimOfferData.data.revealedAttributes
 
+  // NOTE:
+  const claimPrice = claimOfferData.payTokenValue
+    ? claimOfferData.payTokenValue
+    : '0'
+
   return {
+    thereIsANewAgreement: getThereIsANewAgreement(state),
+    alreadySignedAgreement: getAlreadySignedAgreement(state),
     claimThemePrimary: themeForLogo.primary,
     claimThemeSecondary: themeForLogo.secondary,
     uid,
     claimOfferData,
     isValid,
     logoUrl,
+    claimPrice,
   }
 }
 

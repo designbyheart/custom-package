@@ -678,3 +678,48 @@ export async function generateThumbprint(
 ) {
   return RNIndy.generateThumbprint(data, base64EncodingOption)
 }
+export async function getTxnAuthorAgreement(): Promise<string> {
+  return RNIndy.getTxnAuthorAgreement()
+}
+
+export async function setActiveTxnAuthorAgreementMeta(
+  text: string,
+  version: string,
+  hash: string,
+  accMechType: string,
+  timeOfAcceptance: number
+): Promise<string> {
+  return RNIndy.setActiveTxnAuthorAgreementMeta(
+    text,
+    version,
+    hash,
+    accMechType,
+    timeOfAcceptance
+  )
+}
+
+export async function getAcceptanceMechanisms(
+  submitterDid: ?string,
+  timestamp: number,
+  version: ?string
+): Promise<string> {
+  return RNIndy.getAcceptanceMechanisms(submitterDid, timestamp, version)
+}
+
+export async function appendTxnAuthorAgreement(
+  requestJson: string,
+  text: string,
+  version: string,
+  taaDigest: string,
+  mechanism: string,
+  timestamp: number
+): Promise<string> {
+  return RNIndy.appendTxnAuthorAgreement(
+    requestJson,
+    text,
+    version,
+    taaDigest,
+    mechanism,
+    timestamp
+  )
+}

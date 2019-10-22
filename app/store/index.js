@@ -34,6 +34,9 @@ import proofRequest, {
 import invitation, { watchInvitation } from '../invitation/invitation-store'
 import claim, { watchClaim } from '../claim/claim-store'
 import question, { watchQuestion } from '../question/question-store'
+import txnAuthorAgreement, {
+  watchTxnAuthorAgreement,
+} from '../txn-author-agreement/txn-author-agreement-store'
 import proof, { watchProof } from '../proof/proof-store'
 import history, {
   watchConnectionHistory,
@@ -87,6 +90,7 @@ const appReducer = combineReducers({
   offline,
   onfido,
   question,
+  txnAuthorAgreement,
   openIdConnect: openIdConnectReducer,
 })
 
@@ -137,6 +141,7 @@ sagaMiddleware.run(function*() {
     watchOffline(),
     watchOnfido(),
     watchQuestion(),
+    watchTxnAuthorAgreement(),
     watchOpenIdConnectStore(),
   ])
 })

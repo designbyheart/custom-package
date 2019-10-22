@@ -16,15 +16,37 @@ import type {
 } from './type-wallet'
 import { walletTabSendDetailsRoute } from '../common/route-constants'
 import { selectTokenAmount } from './wallet-store'
-import { getWalletBalance } from '../store/store-selector'
+import {
+  getWalletBalance,
+  getAlreadySignedAgreement,
+  getThereIsANewAgreement,
+} from '../store/store-selector'
 import type { Store } from '../store/type-store'
 import { STORE_STATUS } from './type-wallet'
+import type { WalletSendAmountNavigation } from './type-wallet'
 import { conversionFactorLength } from '../bridge/react-native-cxs/vcx-transformers'
+import { txnAuthorAgreementRoute } from '../common/route-constants'
+import type { ReactNavigation } from '../common/type-common'
+import { receiveTabRoute, sendTabRoute, historyTabRoute } from '../common'
+import { SEND_TAB, SEND_TAB_TEST_ID } from './wallet-constants'
 
 class WalletSendAmount extends PureComponent<
   WalletSendAmountProps,
   WalletSendAmountState
 > {
+  static navigationOptions = (navEvent: any) => ({
+    tabBarLabel: SEND_TAB,
+    tabBarTestIDProps: {
+      testID: SEND_TAB_TEST_ID,
+      accessible: true,
+      accessibleLabel: SEND_TAB_TEST_ID,
+      accessibilityLabel: SEND_TAB_TEST_ID,
+    },
+    tabBarOnPress: onPressEvent => {
+      navEvent.navigation.state.params.onTabPress(onPressEvent, navEvent)
+    },
+  })
+
   _shake: any
   _tokenKeyboard: null | Keyboard
   state = {
@@ -85,53 +107,76 @@ class WalletSendAmount extends PureComponent<
     }
     const isSendDisabled = text.length < 1 || text === '0'
 
-    return (
-      <Container tertiary style={[styles.verticalSpacing]}>
-        <CustomView>
+    if (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) {
+      return (
+        <Container tertiary style={[styles.horizontalSpacing]}>
           <CustomView verticalSpace>
-            <CustomText
-              animated
-              formatNumber
-              transparentBg
-              center
-              style={[
-                animatedStyle,
-                {
-                  fontSize,
-                  color: color.bg.seventh.font.fifth,
-                  height: deviceHeight < MEDIUM_DEVICE ? 70 : 90,
-                  lineHeight: deviceHeight < MEDIUM_DEVICE ? 75 : 80,
-                },
-              ]}
-              numberOfLines={1}
-            >
-              {text || 0}
+            <CustomText h6 tertiary demibold transparentBg>
+              Please first accept the Transaction Author Agreement (TAA)!
+            </CustomText>
+            <CustomView style={[styles.signTaaButton]}>
+              <CustomButton
+                disabled={false}
+                customColor={{ backgroundColor: color.bg.eighth.color }}
+                onPress={this.handleTabPress}
+                testID="show-txn-author-agreement"
+                style={[styles.ctaButton]}
+                primary
+                title="Read and Sign TAA"
+              />
+            </CustomView>
+          </CustomView>
+        </Container>
+      )
+    } else {
+      return (
+        <Container tertiary style={[styles.verticalSpacing]}>
+          <CustomView>
+            <CustomView verticalSpace>
+              <CustomText
+                animated
+                formatNumber
+                transparentBg
+                center
+                style={[
+                  animatedStyle,
+                  {
+                    fontSize,
+                    color: color.bg.seventh.font.fifth,
+                    height: deviceHeight < MEDIUM_DEVICE ? 70 : 90,
+                    lineHeight: deviceHeight < MEDIUM_DEVICE ? 75 : 80,
+                  },
+                ]}
+                numberOfLines={1}
+              >
+                {text || 0}
+              </CustomText>
+            </CustomView>
+            <CustomText h6 center tertiary demibold uppercase transparentBg>
+              sovrin tokens
             </CustomText>
           </CustomView>
-          <CustomText h6 center tertiary demibold uppercase transparentBg>
-            sovrin tokens
-          </CustomText>
-        </CustomView>
-        <Keyboard
-          color={color.bg.seventh.font.fifth}
-          onPress={this.changeText}
-          maxValue={this.props.walletBalance}
-          ref={this.saveTokenKeyboardRef}
-          afterDecimalSeparatorMaxLength={conversionFactorLength}
-        />
-        <CustomView safeArea style={[styles.alignItemsCenter]}>
-          <CustomButton
-            disabled={isSendDisabled}
-            customColor={{ backgroundColor: color.bg.eighth.color }}
-            onPress={this.sendTokenAmount}
-            testID={SEND_TOKEN_BUTTON}
-            style={[styles.ctaButton]}
-            primary
-            title="Select Recipient"
+          <Keyboard
+            color={color.bg.seventh.font.fifth}
+            onPress={this.changeText}
+            maxValue={this.props.walletBalance}
+            ref={this.saveTokenKeyboardRef}
+            afterDecimalSeparatorMaxLength={conversionFactorLength}
           />
-        </CustomView>
-      </Container>
-    )
+          <CustomView safeArea style={[styles.alignItemsCenter]}>
+            <CustomButton
+              disabled={isSendDisabled}
+              customColor={{ backgroundColor: color.bg.eighth.color }}
+              onPress={this.sendTokenAmount}
+              testID={SEND_TOKEN_BUTTON}
+              style={[styles.ctaButton]}
+              primary
+              title="Select Recipient"
+            />
+          </CustomView>
+        </Container>
+      )
+    }
   }
 
   componentDidUpdate(prevProps: WalletSendAmountProps) {
@@ -144,10 +189,24 @@ class WalletSendAmount extends PureComponent<
       this._tokenKeyboard && this._tokenKeyboard.clear()
     }
   }
+
+  componentDidMount() {
+    this.props.navigation.setParams({
+      onTabPress: this.handleTabPress,
+    })
+  }
+
+  handleTabPress = (onPressEvent, navEvent) => {
+    if (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) {
+      this.props.screenProps.navigation.navigate(txnAuthorAgreementRoute)
+    }
+  }
 }
 
 const mapStateToProps = (state: Store) => {
   return {
+    thereIsANewAgreement: getThereIsANewAgreement(state),
+    alreadySignedAgreement: getAlreadySignedAgreement(state),
     walletBalance: getWalletBalance(state),
     paymentStatus: state.wallet.payment.status,
   }
