@@ -9,7 +9,8 @@
 - Fill Pull request template properly while raising the PR
 
 ## Process
-- PR template is made for submitting PR
+- PR template is filled for submitting PR
+- Before merging PR, merge commit description should be filled PR template
 - PR is `squashed and merged`
 - Tests are run before each push
 - Files are automatically formatted by prettier before committing

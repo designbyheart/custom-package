@@ -4,6 +4,7 @@ import uniqueId from 'react-native-unique-id'
 import _flatten from 'lodash.flatten'
 import _merge from 'lodash.merge'
 import { NativeModules } from 'react-native'
+import { detox } from 'react-native-dotenv'
 
 import type { Dispatch } from 'redux'
 import type { Store } from '../store/type-store'
@@ -135,7 +136,7 @@ export const customLogger = {
   },
   error: function(...allArgs: any[]) {
     this.addRecord({ levelName: 'error', args: allArgs })
-    if (this.alsoLogToConsole) {
+    if (this.alsoLogToConsole && detox !== 'yes') {
       console.error.apply(null, allArgs)
     }
   },

@@ -21,20 +21,20 @@ App to connect Sovrin with 3rd party authentication
 - `yarn pod:dev:install`
 - `yarn react-native run-ios`
 
-## Run ios on device
-- Do not use XCode automatic code signing
+## Run on ios device
+- DO NOT use XCode automatic code signing
 - `cd ios/fastlane`
 - `sudo gem install bundle`
 - `bundle install`
 - Make sure you get added to the connectme-callcenter-certs repo so that the following command is successful --
 git clone 'git@github.com:evernym/connectme-callcenter-certs.git' '/var/folders/dt/sk594jpn40d0097bpg17gwc40000gn/T/d20180705-10510-lw9oue'
-- To get the development release certificates do `bundle exec fastlane match development`. DO NOT use `--force` with this command.
+- To get the development certificates do `bundle exec fastlane match development`. DO NOT use `--force` with this command.
 - You'll be prompted to enter 2 passwords. Slack a contributor for credentials
 - Open Xcode, select your device and run
 
-## Run on Android simulator
+## Run on Android simulator/device
 - Make sure a simulator is already created. Otherwise create one from Android studio
-- `cd android/keystores && keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000`
+- One time command: `cd android/keystores && keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000`
 - `yarn react-native run-android`
 
 ## Run functional automated test
@@ -43,8 +43,8 @@ git clone 'git@github.com:evernym/connectme-callcenter-certs.git' '/var/folders/
 
 # To Read
 
-- [Coding guidelines](https://github.com/evernym/ConnectMe/blob/master/docs/CODING_GUIDELINES.md)
-- [Contributing guidelines](https://github.com/evernym/ConnectMe/blob/master/docs/CONTRIBUTING_GUIDELINES.MD)
+- [Coding guidelines](./docs/CODING_GUIDELINES.md)
+- [Contributing guidelines](./docs/CONTRIBUTING_GUIDELINES.MD)
 - [Build release](./docs/RELEASE_BUILDS.md)
 - [Test recipes](./docs/TEST_RECIPES.md)
 

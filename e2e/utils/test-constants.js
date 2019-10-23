@@ -6,11 +6,9 @@ export const ANDROID = 'android'
 
 // Don't access via static import, use getDeviceType
 let DEVICE_TYPE = IOS
-
 export function setDeviceType(platform: string) {
   DEVICE_TYPE = platform
 }
-
 export const getDeviceType = () => DEVICE_TYPE
 
 // common
@@ -80,6 +78,10 @@ export const SETTINGS_CHAT = 'settings-chat-id-label-touchable'
 
 // switch environment screen
 export const SWITCH_ENVIRONMENT_DEV_BUTTON = 'switch-environment-dev'
+export const SWITCH_ENVIRONMENT_QA_TEST1_BUTTON = 'switch-environment-qatest1'
+export const SWITCH_ENVIRONMENT_DEV_TEAM1_BUTTON = 'switch-environment-devteam1'
+export const APP_ENVIRONMENT = `switch-environment-${process.env.environment ||
+  'qatest1'}`
 export const SWITCH_ENVIRONMENT_SAVE_BUTTON = 'switch-environment-footer-accept'
 
 // screenshot names

@@ -37,7 +37,7 @@ exports[`user settings screen should render properly and snapshot should match f
           "alignItems": "center",
           "backgroundColor": "rgba(255, 255, 255, 0.8)",
           "elevation": 0,
-          "height": 116,
+          "height": 156,
           "justifyContent": "center",
           "position": "absolute",
           "shadowColor": "#000",
@@ -284,7 +284,7 @@ exports[`user settings screen should render properly and snapshot should match f
                 Object {
                   "height": 540,
                   "paddingBottom": 60,
-                  "paddingTop": 96,
+                  "paddingTop": 136,
                 },
               ],
             ]
@@ -2250,7 +2250,7 @@ exports[`user settings screen should render properly and snapshot should match i
           "alignItems": "center",
           "backgroundColor": "rgba(255, 255, 255, 0.8)",
           "elevation": 0,
-          "height": 116,
+          "height": 156,
           "justifyContent": "center",
           "position": "absolute",
           "shadowColor": "#000",
@@ -2497,7 +2497,7 @@ exports[`user settings screen should render properly and snapshot should match i
                 Object {
                   "height": 540,
                   "paddingBottom": 60,
-                  "paddingTop": 96,
+                  "paddingTop": 136,
                 },
               ],
             ]
@@ -4410,7 +4410,7 @@ exports[`user settings screen should render properly and snapshot should match i
             "backgroundColor": "transparent",
           },
           Object {
-            "height": 116,
+            "height": 156,
             "position": "absolute",
             "top": 0,
             "width": "100%",

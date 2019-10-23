@@ -4,7 +4,7 @@
 - [ ] Feature/Change request
 
 ## Link for jira ticket
-[CO-](http://evernym.atlassian.net/browse/CO-)
+[CM-](http://evernym.atlassian.net/browse/CM-)
 
 ## In case of Bug
 
@@ -25,6 +25,8 @@
 
 ## Checklist
 
-- [ ] I have created new screen, and I have checked the header of new screen on Android. I have also set the status bar color in app.js
-- [ ] I have checked the back button functionality required for the screens in Android. I have added the routeNames that are need to be handled for the back button in app.js
+### Did you create a new screen? If yes, then complete following checklist before raising a Pull Request
+
+- [ ] I have used `withStatusBar` HOC to fix status bar on Android. Also, I have passed color to `withStatusBar` HOC
+- [ ] I have checked the hardware back button functionality required for the screens in Android. I have added the routeNames that are need to be handled for the back button in app.js
 - [ ] I have checked the back behaviour by swiping left or swiping down on screens and they behave as expected. Back behaviour of these screens has been approved by product team

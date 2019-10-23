@@ -7,33 +7,44 @@ import chalk from 'chalk'
 import { flatten, compose, values, filter, prop, tap, head } from 'ramda'
 import { getDeviceType, ANDROID } from './test-constants'
 
+const iPhone7 = 'iPhone7'.toLowerCase()
+const iPhoneX = 'iPhoneX'.toLowerCase()
+const iPhone5s = 'iPhone5s'.toLowerCase()
+const iPhoneXSMax = 'iPhoneXSMax'.toLowerCase()
+
 const SIZE = {
-  iphonex: {
+  [iPhoneX]: {
     width: 1125,
     height: 2436,
     cropHeight: 90,
   },
-  iphone7: {
+  [iPhone7]: {
     width: 750,
     height: 1334,
     cropHeight: 40,
   },
-  iphone5s: {
+  [iPhone5s]: {
     width: 640,
     height: 1136,
     cropHeight: 40,
   },
+  [iPhoneXSMax]: {
+    width: 1242,
+    height: 2688,
+    cropHeight: 110,
+  },
 }
 
 const SIMULATOR_NAME_MAP = {
-  iphone7: 'iPhone 7',
-  iphonex: 'iPhone X',
-  iphone5s: 'iPhone 5s',
+  [iPhone7]: 'iPhone 7',
+  [iPhoneX]: 'iPhone X',
+  [iPhone5s]: 'iPhone 5s',
+  [iPhoneXSMax]: 'iPhone XS Max',
 }
 
 const COMPARE_ERROR_TOLERANCE = 0.0001
-const defaultSimulator = 'iphone7'
-const baseDirectory = '__e2e__'
+const defaultSimulator = iPhone7
+const baseDirectory = 'e2e/screenshots'
 const { SIMULATOR = defaultSimulator, UPDATE } = process.env
 const simulator = SIMULATOR ? SIMULATOR.toLowerCase() : defaultSimulator
 let bootedDeviceId = 'booted'
@@ -68,15 +79,15 @@ export const storeBootedDeviceId = async () => {
   )(list)
 }
 
-export function getNewScreenshotPath(name: string) {
+function getNewScreenshotPath(name: string) {
   return `${baseDirectory}/tmp/${simulator}/${name}`
 }
 
-export function getExistingScreenshotPath(name: string) {
+function getExistingScreenshotPath(name: string) {
   return `${baseDirectory}/screenshots/${simulator}/${name}`
 }
 
-export function getDiffPath(name: string) {
+function getDiffPath(name: string) {
   return `${baseDirectory}/diff/${simulator}/${name}`
 }
 
@@ -88,7 +99,7 @@ const areSame = async (image1: string, image2: string, diffImagePath: string) =>
 
 // removes header of simulator that contains date and battery icon
 // which messes up our screenshot comparison
-export async function removeHeader(image: string) {
+async function removeHeader(image: string) {
   return new Promise((resolve, reject) => {
     const { width, height, cropHeight } = SIZE[simulator]
     gm(image)
