@@ -266,7 +266,7 @@ const Tabs = createTabNavigator(
       navigationOptions: {
         title: TAB_MENU_TITLE,
         tabBarTestIDProps: {
-          testID: 'tab-bar-qrcode-icon',
+          testID: 'tab-bar-settings-icon',
           accessible: true,
           accessibilityRole: 'button',
           accessibilityLabel: `Go to ${TAB_MENU_TITLE}`,

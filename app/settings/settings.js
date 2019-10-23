@@ -104,12 +104,34 @@ import {
 import { secureSet, walletSet, safeSet } from '../services/storage'
 import { addPendingRedirection } from '../lock/lock-store'
 
+// Use this variable to show/hide token amount
+// if we just comment out code, then we need to adjust other styles as well
+const hideTokenScreen = false
+
+// Hate to put below logic for height and padding calculations here.
+// Ideally, these things should automatically adjusted by flex
+// but, when we redesigned settings view, we used View with absolute
+// positioning. In absolute positioning, we gave explicit height as well
+// and since we gave explicit heights, then we need to adjust other
+// elements to give padding similar to height, so other elements can be
+// positioned fine as well.
+// And now we have to show token balance in settings view, so we need to
+// take token height as well into consideration for height and padding
+let headerHeight = 116
+if (isIphoneXR || isIphoneX) {
+  headerHeight = 180
+}
+if (!hideTokenScreen) {
+  headerHeight += 40
+}
+let listTopPadding = headerHeight - 20
+
 const style = StyleSheet.create({
   secondaryContainer: {
     backgroundColor: lightDarkGray,
   },
   userAvatarContainer: {
-    height: isIphoneXR || isIphoneX ? 180 : 116,
+    height: headerHeight,
     width: '100%',
     position: 'absolute',
     zIndex: 10000,
@@ -126,7 +148,7 @@ const style = StyleSheet.create({
     position: 'absolute',
     top: 0,
     width: '100%',
-    height: isIphoneXR || isIphoneX ? 180 : 116,
+    height: headerHeight,
   },
   footerBlur: {
     position: 'absolute',
@@ -504,41 +526,42 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
             {this.renderAvatarWithSource}
           </UserAvatar>
         </CustomView>
-        {/* DO not remove commented code, this is just to temporarily hide token related stuff */}
-        <TouchableOpacity
-          onPress={this.openTokenScreen}
-          testID={SOVRIN_TOKEN_AMOUNT_TEST_ID}
-        >
-          <CustomView row center>
-            <Icon
-              small
-              testID={SOVRIN_TOKEN_TEST_ID}
-              src={require('../images/sovrinTokenOrange.png')}
-            />
-            <CustomText
-              h5
-              demiBold
-              center
-              style={[
-                style.floatTokenAmount,
-                {
-                  fontSize: tokenAmountSize(
-                    walletBalance ? walletBalance.length : 0
-                  ),
-                },
-              ]}
-              transparentBg
-              formatNumber
-            >
-              {walletBalance}
-            </CustomText>
-          </CustomView>
-          <CustomView>
-            <CustomText transparentBg darkgray style={[style.tokenText]}>
-              TOKENS
-            </CustomText>
-          </CustomView>
-        </TouchableOpacity>
+        {!hideTokenScreen && (
+          <TouchableOpacity
+            onPress={this.openTokenScreen}
+            testID={SOVRIN_TOKEN_AMOUNT_TEST_ID}
+          >
+            <CustomView row center>
+              <Icon
+                small
+                testID={SOVRIN_TOKEN_TEST_ID}
+                src={require('../images/sovrinTokenOrange.png')}
+              />
+              <CustomText
+                h5
+                demiBold
+                center
+                style={[
+                  style.floatTokenAmount,
+                  {
+                    fontSize: tokenAmountSize(
+                      walletBalance ? walletBalance.length : 0
+                    ),
+                  },
+                ]}
+                transparentBg
+                formatNumber
+              >
+                {walletBalance}
+              </CustomText>
+            </CustomView>
+            <CustomView>
+              <CustomText transparentBg darkgray style={[style.tokenText]}>
+                TOKENS
+              </CustomText>
+            </CustomView>
+          </TouchableOpacity>
+        )}
       </CustomView>
     )
 
@@ -781,7 +804,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
                 style.listContainer,
                 {
                   height: Dimensions.get('window').height,
-                  paddingTop: isIphoneXR || isIphoneX ? 160 : 96,
+                  paddingTop: listTopPadding,
                   paddingBottom: measurements.bottomNavBarHeight,
                 },
               ]}

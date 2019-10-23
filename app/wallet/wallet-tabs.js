@@ -2,6 +2,9 @@
 import React, { PureComponent } from 'react'
 import { Dimensions } from 'react-native'
 import { TabBarTop, createTabNavigator } from 'react-navigation'
+
+import type { WalletTabsProps } from './type-wallet'
+
 import { CustomView } from '../components'
 import { color, font } from '../common/styles/constant'
 import { receiveTabRoute, sendTabRoute, historyTabRoute } from '../common'
@@ -9,7 +12,7 @@ import WalletSendAmount from './wallet-send-amount'
 import styles from './styles'
 import WalletTabReceive from './wallet-tab-receive'
 import WalletTabHistory from './wallet-tab-history'
-import type { WalletTabsProps } from './type-wallet'
+import { HISTORY_TAB, HISTORY_TAB_TEST_ID } from './wallet-constants'
 
 const { width } = Dimensions.get('window')
 
@@ -30,18 +33,18 @@ const Tabs = createTabNavigator(
     [sendTabRoute]: {
       screen: WalletSendAmount,
     },
-    // [historyTabRoute]: {
-    //   screen: WalletTabHistory,
-    //   navigationOptions: {
-    //     tabBarLabel: HISTORY_TAB,
-    //     tabBarTestIDProps: {
-    //       testID: HISTORY_TAB_TEST_ID,
-    //       accessible: true,
-    //       accessibleLabel: HISTORY_TAB_TEST_ID,
-    //       accessibilityLabel: HISTORY_TAB_TEST_ID,
-    //     },
-    //   },
-    // },
+    [historyTabRoute]: {
+      screen: WalletTabHistory,
+      navigationOptions: {
+        tabBarLabel: HISTORY_TAB,
+        tabBarTestIDProps: {
+          testID: HISTORY_TAB_TEST_ID,
+          accessible: true,
+          accessibleLabel: HISTORY_TAB_TEST_ID,
+          accessibilityLabel: HISTORY_TAB_TEST_ID,
+        },
+      },
+    },
   },
   {
     animationEnabled: true,
@@ -49,7 +52,7 @@ const Tabs = createTabNavigator(
     swipeEnabled: true,
     lazy: false,
     initialRouteName: receiveTabRoute,
-    order: [receiveTabRoute, sendTabRoute],
+    order: [receiveTabRoute, sendTabRoute, historyTabRoute],
     initialLayout: {
       height: 52,
       width,

@@ -2,6 +2,7 @@
   "flow.useNPMPackagedFlow": true,
   "javascript.validate.enable": false,
   "cSpell.words": [
+    "IPHONEXSMAX",
     "OIDC",
     "Onfido",
     "connectme",
@@ -9,5 +10,6 @@
   ],
   "flow.useLSP": false,
   "flow.pathToFlow": "${workspaceFolder}/node_modules/.bin/flow",
-  "flow.useBundledFlow": false
+  "flow.useBundledFlow": false,
+  "gitlab.instanceUrl": "https://gitlab.corp.evernym.com"
 }

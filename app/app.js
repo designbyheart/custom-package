@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react'
 import { Provider } from 'react-redux'
 import { AppRegistry, BackHandler, ToastAndroid, Platform } from 'react-native'
+import { detox } from 'react-native-dotenv'
 
 import store from './store'
 import { ROUTE_UPDATE } from './store/route-store'
@@ -44,6 +45,13 @@ import AppStatus from './app-status/app-status'
 import { setupFeedback } from './feedback'
 import RNShake from 'react-native-shake'
 import Offline from './offline/offline'
+
+if (detox === 'yes') {
+  // we are disabling flow check only because this line will come into effect
+  // only in detox tests, for all other builds we will not come inside this IF
+  // $FlowFixMe
+  console.disableYellowBox = true
+}
 
 const backButtonDisableRoutes = [
   lockEnterPinRoute,

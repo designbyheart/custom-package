@@ -153,13 +153,13 @@ class SwitchEnvironment extends PureComponent<
             <CustomButton
               primary
               title="QATest1"
-              testID={`${testID}-QATest1`}
+              testID={`${testID}-qatest1`}
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.QATEST1)}
             />
             <CustomButton
               primary
               title="DEV-RC"
-              testID={`${testID}-DEV-RC`}
+              testID={`${testID}-devrc`}
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.DEVRC)}
             />
           </CustomView>
@@ -167,19 +167,19 @@ class SwitchEnvironment extends PureComponent<
             <CustomButton
               primary
               title="DevTeam1"
-              testID={`${testID}-DevTeam1`}
+              testID={`${testID}-devteam1`}
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.DEVTEAM1)}
             />
             <CustomButton
               primary
               title="DevTeam2"
-              testID={`${testID}-DevTeam2`}
+              testID={`${testID}-devteam2`}
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.DEVTEAM2)}
             />
             <CustomButton
               primary
               title="DevTeam3"
-              testID={`${testID}-DevTeam3`}
+              testID={`${testID}-devteam3`}
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.DEVTEAM3)}
             />
           </CustomView>
@@ -187,7 +187,7 @@ class SwitchEnvironment extends PureComponent<
             <CustomButton
               primary
               title="Prod"
-              testID={`${testID}-PROD`}
+              testID={`${testID}-prod`}
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.PROD)}
             />
             <CustomButton
