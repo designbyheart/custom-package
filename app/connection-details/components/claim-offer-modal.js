@@ -1,5 +1,5 @@
 // @flow
-import React, { Fragment } from 'react'
+import React from 'react'
 import {
   View,
   TouchableOpacity,
@@ -12,7 +12,6 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import type { ReactNavigation } from '../../common/type-common'
 import CredentialPriceInfo from '../../components/labels/credential-price-info'
 import type { Store } from '../../store/type-store'
 import type {
@@ -28,13 +27,11 @@ import type {
 import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
 import { ModalButtons } from '../../components/buttons/modal-buttons'
-import { ModalButton } from '../../components/connection-details/modal-button'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import { measurements } from '../../../app/common/styles/measurements'
 import { LedgerFees } from '../../ledger/components/ledger-fees/ledger-fees'
 import PaymentTransactionInfo from '../../claim-offer/components/payment-transaction-info'
 import CredentialCostInfo from '../../claim-offer/components/credential-cost-info'
-import { CLAIM_REQUEST_STATUS } from '../../claim-offer/type-claim-offer'
 
 import {
   getConnectionLogoUrl,
@@ -59,13 +56,9 @@ import {
   cardBorder,
 } from '../../common/styles'
 import { txnAuthorAgreementRoute, restoreWaitRoute } from '../../common'
-import { customLogger } from '../../store/custom-logger'
 
 let ScreenHeight = Dimensions.get('window').height
 let ScreenWidth = Dimensions.get('window').width
-
-// TODO: switch it to enum instead of string
-type LedgerFeesStatus = string
 
 class ClaimOfferModal extends React.Component<any, any> {
   constructor(props: any) {
@@ -218,11 +211,6 @@ class ClaimOfferModal extends React.Component<any, any> {
     const hasNotAcceptedTAA =
       (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
       parseFloat(this.props.claimPrice) > 0
-    const emptyFeesData = {
-      fees: '',
-      total: '',
-      currentTokenBalance: '',
-    }
 
     return (
       <Animated.View style={[styles.outerAnimatedWrapper]}>
@@ -265,15 +253,11 @@ class ClaimOfferModal extends React.Component<any, any> {
                   />
                 )}
 
-              {shouldShowTransactionInfo &&
-                hasNotAcceptedTAA === false && (
-                  <LedgerFees
-                    onStateChange={(state, data) =>
-                      this.updateState(state, data)
-                    }
-                    transferAmount={payTokenValue}
-                  />
-                )}
+              {this.loadFees(
+                payTokenValue,
+                shouldShowTransactionInfo && hasNotAcceptedTAA === false
+              )}
+
               {shouldShowTransactionInfo === false &&
                 hasNotAcceptedTAA === false && (
                   <ModalButtons
@@ -292,6 +276,27 @@ class ClaimOfferModal extends React.Component<any, any> {
           </View>
         </Animated.View>
       </Animated.View>
+    )
+  }
+
+  loadFees = (payTokenValue, shouldLoadFees) => {
+    const { isAcceptedClaim } = this.state
+    if (payTokenValue === null && shouldLoadFees) {
+      if (!isAcceptedClaim) {
+        this.setState({ isAcceptedClaim: true })
+        this.onConfirmAndPay(true)
+      }
+      return null
+    }
+    return (
+      shouldLoadFees && (
+        <LedgerFees
+          onStateChange={(state, data) => {
+            this.updateState(state, data)
+          }}
+          transferAmount={payTokenValue}
+        />
+      )
     )
   }
 
@@ -397,8 +402,11 @@ class ClaimOfferModal extends React.Component<any, any> {
     )
   }
 
-  onConfirmAndPay = () => {
-    this.setState(() => this.props.acceptClaimOffer(this.props.uid))
+  onConfirmAndPay = (shouldHideModal = false) => {
+    this.props.acceptClaimOffer(this.props.uid)
+    if (shouldHideModal) {
+      this.hideModal()
+    }
   }
 }
 
