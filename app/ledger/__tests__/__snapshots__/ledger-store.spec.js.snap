@@ -4,6 +4,7 @@ exports[`ledgerStore action: GET_LEDGER_FEES 1`] = `
 Object {
   "fees": Object {
     "data": Object {
+      "refreshTime": "2018-01-10T04:32:43+05:30",
       "transfer": "0",
     },
     "error": null,
@@ -16,6 +17,7 @@ exports[`ledgerStore action: GET_LEDGER_FEES_FAIL 1`] = `
 Object {
   "fees": Object {
     "data": Object {
+      "refreshTime": "2018-01-10T04:32:43+05:30",
       "transfer": "0",
     },
     "error": Object {
@@ -31,6 +33,7 @@ exports[`ledgerStore action: GET_LEDGER_FEES_SUCCESS 1`] = `
 Object {
   "fees": Object {
     "data": Object {
+      "refreshTime": "2018-01-10T04:32:43+05:30",
       "transfer": "0.00001",
     },
     "error": null,
@@ -43,6 +46,7 @@ exports[`ledgerStore action: RESET_LEDGER_FEES 1`] = `
 Object {
   "fees": Object {
     "data": Object {
+      "refreshTime": "2018-01-10T04:32:43+05:30",
       "transfer": "0",
     },
     "error": null,

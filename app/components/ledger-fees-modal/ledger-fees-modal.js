@@ -6,15 +6,12 @@ import { bindActionCreators } from 'redux'
 import Modal from 'react-native-modal'
 import { BigNumber } from 'bignumber.js'
 import type { Store } from '../../store/type-store'
-import {
-  getLedgerFees,
-  resetLedgerFees,
-} from '../../store/ledger/type-ledger-store'
+import { getLedgerFees, resetLedgerFees } from '../../ledger/type-ledger-store'
 import type {
   GetLedgerFeesFn,
   LedgerFees,
   ResetLedgerFeesFn,
-} from '../../store/ledger/type-ledger-store'
+} from '../../ledger/type-ledger-store'
 import { formatNumbers } from '../text'
 import { STORE_STATUS } from '../../common/type-common'
 import type { StoreStatus } from '../../common/type-common'
@@ -282,13 +279,13 @@ const getLedgerFeesModalStatus = (
         if (walletBalanceAmount.isEqualTo(transferAmount)) {
           // if amount that we want to transfer is equal to wallet balance
           // and there is a fees that we have to pay
-          // there can be two scenarios
+          // there can be three scenarios
           // 1. transferFees is greater than transferAmount
           // 2. transferFees is equal to transferAmount
           // 3. transferFees is less than transferAmount
 
           // for scenario 1, we can't transfer amount
-          2 // because fees is more than what we have in wallet, also user is trying
+          // because fees is more than what we have in wallet, also user is trying
           // to transfer same amount, but this transaction cannot be done
           if (transferAmount.minus(feesAmount).isLessThanOrEqualTo(0)) {
             return LedgerFeesModalStatus.TRANSFER_NOT_POSSIBLE_WITH_FEES

@@ -1,8 +1,11 @@
 // @flow
+
+import moment from 'moment'
 import { STORE_STATUS } from '../../app/common/type-common'
 
 export const transferFees = {
   transfer: '0.00001',
+  refreshTime: moment().format(),
 }
 
 export const ledgerStoreWithTransferFees = {

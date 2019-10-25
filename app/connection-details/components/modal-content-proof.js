@@ -9,7 +9,7 @@ import {
   Alert,
   Platform,
 } from 'react-native'
-import { ModalButtons } from '../../components/connection-details/modal-buttons'
+import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {

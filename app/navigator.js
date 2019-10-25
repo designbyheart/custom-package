@@ -72,6 +72,7 @@ import {
   waitForInvitationRoute,
   walletRoute,
   aboutAppRoute,
+  designStyleGuideRoute,
   walletTabSendDetailsRoute,
   eulaRoute,
   genRecoveryPhraseRoute,

@@ -169,6 +169,9 @@ jest.mock('moment', () =>
 
       return '2018-01-10T04:32:43+05:30'
     },
+    year(year: number) {
+      return this
+    },
   }))
 )
 

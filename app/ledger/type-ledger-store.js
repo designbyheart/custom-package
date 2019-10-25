@@ -4,7 +4,7 @@ import type {
   StoreStatus,
   StoreError,
   CustomError,
-} from '../../common/type-common'
+} from '../common/type-common'
 
 export type LedgerStore = {
   +fees: LedgerFees,
@@ -17,10 +17,13 @@ export type LedgerAction =
   | ResetLedgerFeesAction
 
 export type LedgerFees = {
-  data: LedgerFeesData,
+  data: LedgerFeesData & RefreshTime,
 } & StoreError &
   StoreStatus
 
+export type RefreshTime = {
+  +refreshTime: string,
+}
 export type LedgerFeesData = {
   +transfer: string,
 }

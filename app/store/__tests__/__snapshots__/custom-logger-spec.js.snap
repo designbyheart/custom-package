@@ -118,6 +118,7 @@ Object {
   "ledger": Object {
     "fees": Object {
       "data": Object {
+        "refreshTime": "2018-01-10T04:32:43+05:30",
         "transfer": "0.00001",
       },
       "error": null,

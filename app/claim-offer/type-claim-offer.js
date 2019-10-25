@@ -1,4 +1,5 @@
 // @flow
+import * as React from 'react'
 import type {
   NavigationScreenProp,
   NavigationLeafRoute,
@@ -262,6 +263,11 @@ export type ClaimOfferState = {
   credentialOfferModalStatus?: CredentialOfferModalStatus,
 }
 
+export type ClaimPaidOfferState = {
+  offerStatus: string,
+  shouldShowTransactionInfo: boolean,
+}
+
 export type ClaimRequestStatusModalProps = {
   claimRequestStatus: ClaimRequestStatus,
   payload: ClaimOfferPayload,
@@ -377,3 +383,17 @@ export type ClaimRequestStatus = $Keys<typeof CLAIM_REQUEST_STATUS>
 export type CredentialOfferModalStatus = $Keys<
   typeof CREDENTIAL_OFFER_MODAL_STATUS
 >
+
+export type TokenFeesData = {
+  fees: string,
+  total: string,
+  currentTokenBalance: string,
+}
+
+export type PaymentTransactionInfoProps = {
+  status: string,
+  feesData?: TokenFeesData,
+  backgroundColor: string,
+  shouldShow: boolean,
+  children: React.Node,
+}

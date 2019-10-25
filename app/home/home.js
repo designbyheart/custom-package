@@ -1,13 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
-import {
-  Animated,
-  StyleSheet,
-  Platform,
-  View,
-  Text,
-  FlatList,
-} from 'react-native'
+import { Animated, StyleSheet, Platform, View, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import { BlurView } from 'react-native-blur'
