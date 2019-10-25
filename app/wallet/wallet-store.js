@@ -9,6 +9,7 @@ import {
   select,
   takeEvery,
   take,
+  takeLeading,
 } from 'redux-saga/effects'
 import { Platform } from 'react-native'
 import Share from 'react-native-share'
@@ -101,7 +102,7 @@ import {
 } from '../store/store-selector'
 import { WALLET_ENCRYPTION_KEY } from '../common/secure-storage-constants'
 import { ensureVcxInitSuccess } from '../store/route-store'
-import type { LedgerFeesData } from '../store/ledger/type-ledger-store'
+import type { LedgerFeesData } from '../ledger/type-ledger-store'
 import { BigNumber } from 'bignumber.js'
 import { captureError } from '../services/error/error-handler'
 
@@ -304,19 +305,19 @@ export function* watchWalletStore(): any {
 }
 
 function* watchRefreshWalletBalance(): any {
-  yield takeLatest(REFRESH_WALLET_BALANCE, refreshWalletBalanceSaga)
+  yield takeLeading(REFRESH_WALLET_BALANCE, refreshWalletBalanceSaga)
 }
 
 function* watchRefreshWalletAddresses(): any {
-  yield takeLatest(REFRESH_WALLET_ADDRESSES, refreshWalletAddressesSaga)
+  yield takeLeading(REFRESH_WALLET_ADDRESSES, refreshWalletAddressesSaga)
 }
 
 function* watchRefreshWalletHistory(): any {
-  yield takeLatest(REFRESH_WALLET_HISTORY, refreshWalletHistorySaga)
+  yield takeLeading(REFRESH_WALLET_HISTORY, refreshWalletHistorySaga)
 }
 
 function* watchSendTokens(): any {
-  yield takeLatest(SEND_TOKENS, sendTokensSaga)
+  yield takeEvery(SEND_TOKENS, sendTokensSaga)
 }
 
 export function* getAmountToTransfer(

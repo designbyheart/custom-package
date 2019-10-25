@@ -57,7 +57,7 @@ import { hydrate } from './hydration-store'
 import {
   watchLedgerStore,
   ledgerStoreReducer as ledger,
-} from './ledger/ledger-store'
+} from '../ledger/ledger-store'
 import {
   watchOpenIdConnectStore,
   openIdConnectReducer,

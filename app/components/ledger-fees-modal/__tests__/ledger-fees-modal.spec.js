@@ -3,6 +3,8 @@
 import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
+import moment from 'moment'
+
 import { STORE_STATUS } from '../../../common/type-common'
 import type { GenericObject } from '../../../common/type-common'
 import {
@@ -11,13 +13,14 @@ import {
   LedgerFeesDescriptionText,
 } from '../ledger-fees-modal'
 import type { LedgerFeesModalProps } from '../ledger-fees-modal'
-import { ERROR_GET_LEDGER_FEES } from '../../../store/ledger/type-ledger-store'
-import type { LedgerFees } from '../../../store/ledger/type-ledger-store'
+import { ERROR_GET_LEDGER_FEES } from '../../../ledger/type-ledger-store'
+import type { LedgerFees } from '../../../ledger/type-ledger-store'
 
 describe('<LedgerFeesModalComponent />', () => {
   const ledgerFees: LedgerFees = {
     data: {
       transfer: '0',
+      refreshTime: moment().format(),
     },
     status: STORE_STATUS.IDLE,
     error: null,

@@ -96,7 +96,7 @@ import type {
   ClaimStorageSuccessAction,
   ClaimStorageFailAction,
 } from '../claim/type-claim'
-import type { LedgerFeesData } from '../store/ledger/type-ledger-store'
+import type { LedgerFeesData } from '../ledger/type-ledger-store'
 import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
 

@@ -18,7 +18,7 @@ import type { InvitationPayload } from '../../invitation/type-invitation'
 import type { MyPairwiseInfo } from '../../store/type-connection-store'
 import type { ClaimOfferPushPayload } from '../../push-notification/type-push-notification'
 import { BigNumber } from 'bignumber.js'
-import type { LedgerFeesData } from '../../store/ledger/type-ledger-store'
+import type { LedgerFeesData } from '../../ledger/type-ledger-store'
 import { getWalletKey } from '../../services/storage'
 
 export const paymentHandle = 0

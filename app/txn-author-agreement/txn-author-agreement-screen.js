@@ -47,7 +47,7 @@ import type { TxnAuthorAgreementScreenNavigation } from './type-txn-author-agree
 import { getQuestionStylesObject } from '../question/question-screen-style'
 import { ModalHeader } from '../connection-details/components/modal-header'
 import { measurements } from '../common/styles/measurements'
-import { ModalButtons } from '../components/connection-details/modal-buttons'
+import { ModalButtons } from '../components/buttons/modal-buttons'
 import type { TxnAuthorAgreementScreenProps } from './type-txn-author-agreement'
 const questionStylesObject = getQuestionStylesObject(0, 0)
 const sovrinLogo = require('../images/iconTokenOrange.png')

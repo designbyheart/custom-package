@@ -57,7 +57,7 @@ import uniqueId from 'react-native-unique-id'
 import { smallDeviceMemory, signDataResponseSchema } from './type-cxs'
 import { secureSet, getWalletKey } from '../../services/storage'
 import { __uniqueId } from '../../store/type-config-store'
-import type { LedgerFeesData } from '../../store/ledger/type-ledger-store'
+import type { LedgerFeesData } from '../../ledger/type-ledger-store'
 import { schemaValidator } from '../../services/schema-validator'
 
 const { RNIndy } = NativeModules

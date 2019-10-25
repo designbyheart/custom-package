@@ -1,4 +1,7 @@
 // @flow
+
+import merge from 'lodash.merge'
+
 import type { NavigationParams } from '../app/common/type-common'
 import type { Store } from '../app/store/type-store'
 import { CHECK_PIN_IDLE } from '../app/lock/type-lock'
@@ -912,7 +915,6 @@ export const homeAddressPreparedProofWithMissingAttribute = {
 //     it is very east to identify and get early feedback
 export function getNavigation(params?: any): any {
   return {
-    // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
     navigate: jest.fn(),
     state: {
       key: 'somekey',
@@ -922,37 +924,21 @@ export function getNavigation(params?: any): any {
       routes: [],
       params: params || {},
     },
-    // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
     goBack: jest.fn(),
-    // $FlowFixMe
     dispatch: jest.fn(),
-    // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
     setParams: jest.fn(),
-    // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
     isFocused: jest.fn().mockReturnValue(true),
-    // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
     push: jest.fn(),
-    // $FlowFixMe Don't know why this is failing, may be we upgrade to flow 0.63
     getParam: jest.fn((paramName, defaultValue) => defaultValue),
-    // $FlowFixMe
     dismiss: jest.fn(),
-    // $FlowFixMe
     openDrawer: jest.fn(),
-    // $FlowFixMe
     closeDrawer: jest.fn(),
-    // $FlowFixMe
     toggleDrawer: jest.fn(),
-    // $FlowFixMe
     addListener: jest.fn(),
-    // $FlowFixMe
     replace: jest.fn(),
-    // $FlowFixMe
     pop: jest.fn(),
-    // $FlowFixMe
     popToTop: jest.fn(),
-    // $FlowFixMe
     dangerouslyGetParent: jest.fn(),
-    // $FlowFixMe
     reset: jest.fn(),
     key: 'somekey',
     routeName: 'someRouteName',
@@ -963,251 +949,250 @@ export function getNavigation(params?: any): any {
 }
 
 // TODO:  we should be just able to pass an object and
-// TODO: it should deep extend default store state.if we dont deep extend We have to make many calls for getStore and getState
+// TODO: it should deep extend default store state.if we don't deep extend We have to make many calls for getStore and getState
 // TODO: for any property that we want to override
-export function getStore(store?: Store) {
+export function getStore(store?: Object = {}) {
   return {
     getState() {
-      return {
-        backup: {
-          backupWalletPath:
-            '/Users/CoreSimulator/Devices/5F89AA14-B694-465F-82C3-838552AB4B85/data/Containers/Data/Application/4536A441-4B70-4A30-8DCC-5274E6781535/Documents/backup.zip',
-          error: null,
-          lastSuccessfulBackup: '2018-06-27T18:27:35+05:30',
-          lastSuccessfulCloudBackup: '2018-06-27T18:27:35+05:30',
-          cloudBackupPending: false,
-          passphrase: {
-            phrase:
-              'gander troubling deodorize justify twitter darkish confront politely',
-            salt: 's',
-            hash: 'b7a563bcbbeb892b',
-          },
-          showBanner: true,
-          status: 'BACKUP_COMPLETE',
-          prepareBackupStatus: PREPARE_BACKUP_SUCCESS,
-        },
-        config: configStoreNotHydratedInstalledVcxInit,
-        deepLink: {
-          error: undefined,
-          isLoading: true,
-          tokens: {},
-        },
-        lock: {
-          checkPinStatus: CHECK_PIN_IDLE,
-          pendingRedirection: undefined,
-          isAppLocked: false,
-          isLockEnabled: 'true',
-          isTouchIdEnabled: true,
-          showDevMode: false,
-          inRecovery: 'false',
-        },
-        connections: {
-          connectionThemes: {
-            default: {
-              primary: `rgba(${color.actions.button.primary.rgba})`,
-              secondary: `rgba(${color.actions.button.secondary.rgba})`,
+      return merge(
+        {},
+        {
+          backup: {
+            backupWalletPath:
+              '/Users/CoreSimulator/Devices/5F89AA14-B694-465F-82C3-838552AB4B85/data/Containers/Data/Application/4536A441-4B70-4A30-8DCC-5274E6781535/Documents/backup.zip',
+            error: null,
+            lastSuccessfulBackup: '2018-06-27T18:27:35+05:30',
+            lastSuccessfulCloudBackup: '2018-06-27T18:27:35+05:30',
+            cloudBackupPending: false,
+            passphrase: {
+              phrase:
+                'gander troubling deodorize justify twitter darkish confront politely',
+              salt: 's',
+              hash: 'b7a563bcbbeb892b',
             },
+            showBanner: true,
+            status: 'BACKUP_COMPLETE',
+            prepareBackupStatus: PREPARE_BACKUP_SUCCESS,
           },
-          data: undefined,
-        },
-        route: {
-          currentScreen: qrCodeScannerTabRoute,
-          timeStamp: 1557756720914,
-        },
-        smsPendingInvitation: {},
-        eula: {
-          isEulaAccept: true,
-        },
-        invitation: {},
-        pushNotification: {
-          isAllowed: true,
-          notification: undefined,
-          pushToken: undefined,
-          isPristine: true,
-          isFetching: false,
-          error: undefined,
-          pendingFetchAdditionalDataKey: undefined,
-          navigateRoute: undefined,
-        },
-        ...(store || {}),
-        claim: {
-          [uid]: {
-            claim,
+          config: configStoreNotHydratedInstalledVcxInit,
+          deepLink: {
+            error: undefined,
+            isLoading: true,
+            tokens: {},
           },
-          claimMap: claimMap,
-        },
-        user: {
-          isFetching: false,
-          error: null,
-          userOneTimeInfo,
-          avatarName: userAvatarImageName,
-        },
-        wallet: {
-          walletBalance,
-          walletAddresses,
-          walletHistory,
-          backup,
-          payment,
-        },
-        restore: {
-          status: 'none',
-          error: null,
-          restoreFile: {
-            fileName: 'backup.zip',
-            fileSize: 22,
-            type: 'application/zip',
-            uri:
-              'file://data/Containers/Data/Application/021D78D1-044B-4874-BE8D-EC71781CA978/tmp/com.evernym.connectme.callcenter-Inbox/backup.zip',
+          lock: {
+            checkPinStatus: CHECK_PIN_IDLE,
+            pendingRedirection: undefined,
+            isAppLocked: false,
+            isLockEnabled: 'true',
+            isTouchIdEnabled: true,
+            showDevMode: false,
+            inRecovery: 'false',
           },
-        },
-        ledger: ledgerStoreWithTransferFees,
-        offline: {
-          offline: false,
-        },
-        sendlogs: {
-          encryptLogStatus: false,
-        },
-        onfido: {
-          status: onfidoProcessStatus.IDLE,
-          applicantId: null,
-          error: null,
-          onfidoDid: null,
-          onfidoConnectionStatus: onfidoConnectionStatus.IDLE,
-        },
-        history: {
-          data: {
-            connections: {
-              senderDID3: {
-                data: connectionHistory['September 2017'].data,
-                newBadge: connectionHistory['September 2017'].newBadge,
-              },
-              senderDID4: {
-                data: connectionHistory['October 2017'].data,
-                newBadge: connectionHistory['October 2017'].newBadge,
-              },
-              senderDID5: {
-                data: connectionHistory['November 2017'].data,
-                newBadge: connectionHistory['November 2017'].newBadge,
-              },
-              senderDID6: {
-                data: connectionHistory['December 2017'].data,
-                newBadge: connectionHistory['December 2017'].newBadge,
-              },
-              senderDID7: {
-                data: connectionHistory['January 2017'].data,
-                newBadge: connectionHistory['January 2017'].newBadge,
-              },
-              senderDID8: {
-                data: connectionHistory['February 2017'].data,
-                newBadge: connectionHistory['February 2017'].newBadge,
+          connections: {
+            connectionThemes: {
+              default: {
+                primary: `rgba(${color.actions.button.primary.rgba})`,
+                secondary: `rgba(${color.actions.button.secondary.rgba})`,
               },
             },
-            connectionsUpdated: true,
+            data: undefined,
           },
-          isLoading: true,
-        },
-        claimOffer: {
-          vcxSerializedClaimOffers: {},
-          claimOfferUid: {
+          route: {
+            currentScreen: qrCodeScannerTabRoute,
+            timeStamp: 1557756720914,
+          },
+          smsPendingInvitation: {},
+          eula: {
+            isEulaAccept: true,
+          },
+          invitation: {},
+          pushNotification: {
+            isAllowed: true,
+            notification: undefined,
+            pushToken: undefined,
+            isPristine: true,
+            isFetching: false,
+            error: undefined,
+            pendingFetchAdditionalDataKey: undefined,
+            navigateRoute: undefined,
+          },
+          claim: {
+            [uid]: {
+              claim,
+            },
+            claimMap: claimMap,
+          },
+          user: {
+            isFetching: false,
+            error: null,
+            userOneTimeInfo,
+            avatarName: userAvatarImageName,
+          },
+          wallet: {
+            walletBalance,
+            walletAddresses,
+            walletHistory,
+            backup,
+            payment,
+          },
+          restore: {
+            status: 'none',
+            error: null,
+            restoreFile: {
+              fileName: 'backup.zip',
+              fileSize: 22,
+              type: 'application/zip',
+              uri:
+                'file://data/Containers/Data/Application/021D78D1-044B-4874-BE8D-EC71781CA978/tmp/com.evernym.connectme.callcenter-Inbox/backup.zip',
+            },
+          },
+          ledger: ledgerStoreWithTransferFees,
+          offline: {
+            offline: false,
+          },
+          sendlogs: {
+            encryptLogStatus: false,
+          },
+          onfido: {
+            status: onfidoProcessStatus.IDLE,
+            applicantId: null,
+            error: null,
+            onfidoDid: null,
+            onfidoConnectionStatus: onfidoConnectionStatus.IDLE,
+          },
+          history: {
             data: {
-              name: 'dataname',
-              revealedAttributes: [],
-              version: 'version',
-              claimDefinitionSchemaSequenceNumber: 34,
+              connections: {
+                senderDID3: {
+                  data: connectionHistory['September 2017'].data,
+                  newBadge: connectionHistory['September 2017'].newBadge,
+                },
+                senderDID4: {
+                  data: connectionHistory['October 2017'].data,
+                  newBadge: connectionHistory['October 2017'].newBadge,
+                },
+                senderDID5: {
+                  data: connectionHistory['November 2017'].data,
+                  newBadge: connectionHistory['November 2017'].newBadge,
+                },
+                senderDID6: {
+                  data: connectionHistory['December 2017'].data,
+                  newBadge: connectionHistory['December 2017'].newBadge,
+                },
+                senderDID7: {
+                  data: connectionHistory['January 2017'].data,
+                  newBadge: connectionHistory['January 2017'].newBadge,
+                },
+                senderDID8: {
+                  data: connectionHistory['February 2017'].data,
+                  newBadge: connectionHistory['February 2017'].newBadge,
+                },
+              },
+              connectionsUpdated: true,
             },
-            issuer: {
-              name: 'issuername',
-              did: 'adsfasdfadf',
-            },
-            uid: 'claimOfferUid',
-            status: CLAIM_OFFER_STATUS.RECEIVED,
-            remotePairwiseDID: 'claimOffer.remotePairwiseDID',
-            claimRequestStatus: CLAIM_REQUEST_STATUS.SENDING_CLAIM_REQUEST,
+            isLoading: true,
           },
-        },
-        proofRequest: {
-          uidProofReceived: {
-            data: {
-              requestedAttributes: [],
-              version: 'proofRequestVersion',
-              name: 'proofRequestName',
+          claimOffer: {
+            vcxSerializedClaimOffers: {},
+            claimOfferUid: {
+              data: {
+                name: 'dataname',
+                revealedAttributes: [],
+                version: 'version',
+                claimDefinitionSchemaSequenceNumber: 34,
+              },
+              issuer: {
+                name: 'issuername',
+                did: 'adsfasdfadf',
+              },
+              uid: 'claimOfferUid',
+              status: CLAIM_OFFER_STATUS.RECEIVED,
+              remotePairwiseDID: 'claimOffer.remotePairwiseDID',
+              claimRequestStatus: CLAIM_REQUEST_STATUS.SENDING_CLAIM_REQUEST,
             },
-            uid: 'uidProofReceived',
-            status: PROOF_REQUEST_STATUS.RECEIVED,
-            remotePairwiseDID: 'remotePairwiseDID',
-            proofStatus: PROOF_STATUS.SEND_PROOF_SUCCESS,
+          },
+          proofRequest: {
+            uidProofReceived: {
+              data: {
+                requestedAttributes: [],
+                version: 'proofRequestVersion',
+                name: 'proofRequestName',
+              },
+              uid: 'uidProofReceived',
+              status: PROOF_REQUEST_STATUS.RECEIVED,
+              remotePairwiseDID: 'remotePairwiseDID',
+              proofStatus: PROOF_STATUS.SEND_PROOF_SUCCESS,
+              requester: {
+                name: 'uidProofReceived.requester.name',
+              },
+              proofHandle: 1235890,
+              originalProofRequestData: {
+                version: 'asdf',
+                nonce: 'dsfsdf',
+                name: 'asdfasdf',
+                requested_attributes: {},
+              },
+            },
             requester: {
-              name: 'uidProofReceived.requester.name',
-            },
-            proofHandle: 1235890,
-            originalProofRequestData: {
-              version: 'asdf',
-              nonce: 'dsfsdf',
-              name: 'asdfasdf',
-              requested_attributes: {},
-            },
-          },
-          requester: {
-            uid: 'requesterUID',
-            status: PROOF_REQUEST_STATUS.RECEIVED,
-            remotePairwiseDID: 'remotePairwiseDID',
-            proofStatus: PROOF_STATUS.SEND_PROOF_SUCCESS,
-            requester: {
-              name: 'requester.name',
-            },
-            proofHandle: 12340987,
-            originalProofRequestData: {
-              version: 'asdf',
-              nonce: 'dsfsdf',
-              name: 'asdfasdf',
-              requested_attributes: {},
-            },
-            data: {
-              name: 'dataname',
-              version: 'dataversion',
-              requestedAttributes: [],
-            },
-          },
-        },
-        question: {
-          data: {},
-          storageStatus: STORAGE_STATUS.RESTORE_SUCCESS,
-        },
-        proof: {
-          uidProofReceived: {
-            proof: {
-              requested_proof: {
-                unrevealed_attrs: {},
-                self_attested_attrs: {},
-                revealed_attrs: {},
-                predicates: {},
+              uid: 'requesterUID',
+              status: PROOF_REQUEST_STATUS.RECEIVED,
+              remotePairwiseDID: 'remotePairwiseDID',
+              proofStatus: PROOF_STATUS.SEND_PROOF_SUCCESS,
+              requester: {
+                name: 'requester.name',
               },
-              proofs: {},
-              aggregated_proof: {
-                c_list: [],
-                c_hash: 'proofC_Hash',
+              proofHandle: 12340987,
+              originalProofRequestData: {
+                version: 'asdf',
+                nonce: 'dsfsdf',
+                name: 'asdfasdf',
+                requested_attributes: {},
+              },
+              data: {
+                name: 'dataname',
+                version: 'dataversion',
+                requestedAttributes: [],
               },
             },
           },
+          question: {
+            data: {},
+            storageStatus: STORAGE_STATUS.RESTORE_SUCCESS,
+          },
+          proof: {
+            uidProofReceived: {
+              proof: {
+                requested_proof: {
+                  unrevealed_attrs: {},
+                  self_attested_attrs: {},
+                  revealed_attrs: {},
+                  predicates: {},
+                },
+                proofs: {},
+                aggregated_proof: {
+                  c_list: [],
+                  c_hash: 'proofC_Hash',
+                },
+              },
+            },
+          },
+          txnAuthorAgreement: {
+            haveAlreadySignedAgreement: false,
+            thereIsANewAgreement: false,
+            status: 'IDLE',
+            text: '',
+            taaAcceptedVersion: '',
+            version: '',
+          },
         },
-        txnAuthorAgreement: {
-          haveAlreadySignedAgreement: false,
-          thereIsANewAgreement: false,
-          status: 'IDLE',
-          text: '',
-          taaAcceptedVersion: '',
-          version: '',
-        },
-      }
+        store
+      )
     },
-    dispatch() {
-      // $FlowFixMe Don't why this is failing, may be we upgrade to flow 0.63
-      return jest.fn()
-    },
-    subscribe() {
-      // $FlowFixMe Don't why this is failing, may be we upgrade to flow 0.63
-      return jest.fn()
-    },
+    // $FlowFixMe Don't why this is failing, may be we upgrade to flow 0.63
+    dispatch: jest.fn(),
+    // $FlowFixMe Don't why this is failing, may be we upgrade to flow 0.63
+    subscribe: jest.fn(),
   }
 }
 

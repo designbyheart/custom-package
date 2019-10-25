@@ -2,12 +2,18 @@
 import React from 'react'
 import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import debounce from 'lodash.debounce'
+import { scale } from 'react-native-size-matters'
+import CredentialPriceInfo from '../labels/credential-price-info'
+import { shadeColor } from '../../utilities/color'
+import { lightGray, whiteSolid } from '../../common/styles/constant'
+import { CustomText } from '../../components'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
 class ModalButtons extends React.Component<any, {}> {
   constructor(props: any) {
     super(props)
   }
+
   debounceButtonPress = debounce(
     event => {
       if (this.props.onPress) {
@@ -19,9 +25,19 @@ class ModalButtons extends React.Component<any, {}> {
   )
 
   render() {
-    const { onIgnore, onPress, disableAccept = false } = this.props
+    const {
+      onIgnore,
+      onPress,
+      disableAccept = false,
+      colorBackground,
+      secondColorBackground,
+      leftBtnText,
+      rightBtnText,
+      containerStyles,
+      children,
+    } = this.props
 
-    let themeType = this.props.colorBackground
+    let themeType = colorBackground
     if (disableAccept) {
       const colorsWithoutOpacity = this.props.colorBackground.split(',', 3)
       colorsWithoutOpacity.push('0.4)')
@@ -29,26 +45,34 @@ class ModalButtons extends React.Component<any, {}> {
     }
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, containerStyles]}>
+        {children}
         <View style={styles.innerWrapper}>
-          <TouchableOpacity
-            style={[
-              styles.buttonIgnore,
-              { backgroundColor: this.props.secondColorBackground },
-            ]}
-            onPress={this.props.onIgnore}
-          >
-            <Text style={styles.ignore}>{this.props.leftBtnText}</Text>
-          </TouchableOpacity>
+          {leftBtnText && (
+            <TouchableOpacity
+              style={[
+                styles.buttonIgnore,
+                {
+                  backgroundColor:
+                    secondColorBackground || shadeColor(colorBackground, 60),
+                },
+              ]}
+              onPress={onIgnore}
+            >
+              <CustomText h4 transparentBg thick style={styles.ignore}>
+                {leftBtnText}
+              </CustomText>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             style={[styles.buttonAccept, { backgroundColor: themeType }]}
             disabled={disableAccept}
-            onPress={() => {
-              this.debounceButtonPress()
-            }}
+            onPress={this.debounceButtonPress}
           >
             <View style={{ opacity: disableAccept ? 0.4 : 1 }}>
-              <Text style={styles.accept}>{this.props.rightBtnText}</Text>
+              <CustomText h4 transparentBg thick center>
+                {rightBtnText}
+              </CustomText>
             </View>
           </TouchableOpacity>
         </View>
@@ -61,10 +85,12 @@ export { ModalButtons }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: 'transparent',
     width: '100%',
+    maxWidth: '100%',
     padding: 15,
     paddingBottom: 45,
+    flexDirection: 'column',
   },
   innerWrapper: {
     borderRadius: 5,
@@ -80,13 +106,15 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#194779',
+    backgroundColor: lightGray,
   },
   ignore: {
     fontSize: 17,
+    fontSize: scale(17),
     fontWeight: '700',
     color: '#fff',
     fontFamily: 'Lato',
+    color: whiteSolid,
   },
   buttonAccept: {
     flex: 1,
@@ -98,8 +126,10 @@ const styles = StyleSheet.create({
   },
   accept: {
     fontSize: 17,
+    fontSize: scale(17),
     fontWeight: '700',
     color: '#fff',
+    color: whiteSolid,
     fontFamily: 'Lato',
   },
 })

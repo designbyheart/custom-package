@@ -200,16 +200,6 @@ describe('<Invitation />', () => {
     expect(smsPendingInvitationSeen).not.toHaveBeenCalledWith(smsToken)
   })
 
-  xit('should close modal and redirect to Home on Continue', () => {
-    instance.onSuccessModalContinue()
-
-    expect(instance.state.isSuccessModalVisible).toBe(false)
-    jest.runAllTimers()
-    expect(navigation.navigate).toHaveBeenCalled()
-    const redirectScreen = navigation.navigate.mock.calls[0][0]
-    expect(redirectScreen).toBe(homeRoute)
-  })
-
   it('should return a empty container when invitation is null', () => {
     invitation = null
     navigation = {

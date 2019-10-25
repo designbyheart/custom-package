@@ -35,6 +35,7 @@ describe('user settings screen', () => {
       touchIdActive: false,
       jest,
       hasVerifiedRecoveryPhrase: false,
+      autoCloudBackupEnabled: false,
       navigationOptions: jest.fn(),
       walletBalance: '190009',
       lastSuccessfulBackup: store.getState().backup.lastSuccessfulBackup,

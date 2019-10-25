@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { Fragment } from 'react'
 import {
   View,
   TouchableOpacity,
@@ -13,21 +13,29 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import type { ReactNavigation } from '../../common/type-common'
+import CredentialPriceInfo from '../../components/labels/credential-price-info'
 import type { Store } from '../../store/type-store'
 import type {
   ClaimOfferProps,
   ClaimOfferPayload,
   ClaimOfferAttributeListProps,
   ClaimOfferState,
+  ClaimPaidOfferState,
   ClaimProofNavigation,
+  TokenFeesData,
 } from '../../claim-offer/type-claim-offer'
 
 import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
-import { ModalButtons } from '../../components/connection-details/modal-buttons'
+import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { ModalButton } from '../../components/connection-details/modal-button'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import { measurements } from '../../../app/common/styles/measurements'
+import { LedgerFees } from '../../ledger/components/ledger-fees/ledger-fees'
+import PaymentTransactionInfo from '../../claim-offer/components/payment-transaction-info'
+import CredentialCostInfo from '../../claim-offer/components/credential-cost-info'
+import { CLAIM_REQUEST_STATUS } from '../../claim-offer/type-claim-offer'
+
 import {
   getConnectionLogoUrl,
   getConnectionTheme,
@@ -44,11 +52,20 @@ import {
 } from '../../claim-offer/claim-offer-store'
 import { updateStatusBarTheme } from '../../../app/store/connections-store'
 import { withStatusBar } from '../../components/status-bar/status-bar'
-import { black } from '../../common/styles'
-import { txnAuthorAgreementRoute } from '../../common'
+import {
+  black,
+  mediumGray,
+  matterhornSecondary,
+  cardBorder,
+} from '../../common/styles'
+import { txnAuthorAgreementRoute, restoreWaitRoute } from '../../common'
+import { customLogger } from '../../store/custom-logger'
 
 let ScreenHeight = Dimensions.get('window').height
 let ScreenWidth = Dimensions.get('window').width
+
+// TODO: switch it to enum instead of string
+type LedgerFeesStatus = string
 
 class ClaimOfferModal extends React.Component<any, any> {
   constructor(props: any) {
@@ -59,6 +76,10 @@ class ClaimOfferModal extends React.Component<any, any> {
       moveModal: new Animated.Value(ScreenHeight),
       moveModalHeight: new Animated.Value(ScreenHeight),
       positionValue: new Animated.Value(0),
+      offerStatus: 'IDLE',
+      shouldShowTransactionInfo: false,
+      restartTransaction: false,
+      isAcceptedClaim: false,
     }
   }
 
@@ -84,22 +105,41 @@ class ClaimOfferModal extends React.Component<any, any> {
     this.hideModal()
     this.setState(() => this.props.claimOfferIgnored(this.props.uid))
   }
+
   onClose = () => {
     this.hideModal()
   }
 
-  onAccept = () => {
-    this.props.newConnectionSeen(this.props.claimOfferData.issuer.did)
-    this.hideModal()
+  onAccept = (accepted: boolean) => {
+    const { shouldShowTransactionInfo } = this.state
 
-    this.setState(() => this.props.acceptClaimOffer(this.props.uid))
+    this.props.newConnectionSeen(this.props.claimOfferData.issuer.did)
+
+    if (shouldShowTransactionInfo === false) {
+      if (typeof accepted === 'boolean' && accepted) {
+        this.onConfirmAndPay()
+        return
+      }
+      this.setState({ shouldShowTransactionInfo: true })
+      return
+    }
+
+    if (accepted) {
+      this.props.acceptClaimOffer(this.props.uid)
+    }
   }
+
+  onTryAgain = () => {
+    this.setState({ restartTransaction: true })
+  }
+
   handleScroll = (event: any) => {
     if (event.nativeEvent.contentOffset.y < -100) {
       this.props.updatePosition(event.nativeEvent.contentOffset.y)
       this.hideModal()
     }
   }
+
   updatePosition = value => {
     Animated.timing(this.state.positionValue, {
       toValue: value,
@@ -115,6 +155,7 @@ class ClaimOfferModal extends React.Component<any, any> {
       useNativeDriver: true,
     }).start()
   }
+
   moreOptionsOpen = () => {
     Animated.timing(this.state.moveMoreOptions, {
       toValue: 0,
@@ -122,6 +163,7 @@ class ClaimOfferModal extends React.Component<any, any> {
       useNativeDriver: true,
     }).start()
   }
+
   showModal = () => {
     if (this.props.runAnimation) {
       Animated.parallel([
@@ -143,6 +185,7 @@ class ClaimOfferModal extends React.Component<any, any> {
       ]).start()
     }
   }
+
   hideModal = () => {
     this.props.navigation.goBack(null)
   }
@@ -164,34 +207,26 @@ class ClaimOfferModal extends React.Component<any, any> {
       payTokenValue,
     }: ClaimOfferPayload = claimOfferData
 
+    const {
+      offerStatus,
+      shouldShowTransactionInfo,
+      restartTransaction,
+    } = this.state
+
     const testID = 'claim-offer'
     let acceptButtonText = payTokenValue ? 'Accept & Pay' : 'Accept'
     const hasNotAcceptedTAA =
       (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
       parseFloat(this.props.claimPrice) > 0
+    const emptyFeesData = {
+      fees: '',
+      total: '',
+      currentTokenBalance: '',
+    }
 
     return (
-      <Animated.View
-        style={[
-          styles.outerAnimatedWrapper,
-          {
-            transform: [{ translateY: this.state.moveModal }],
-            opacity: this.state.fadeInOut,
-          },
-        ]}
-      >
-        <Animated.View
-          style={{
-            width: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transform: [{ translateY: this.state.moveModalHeight }],
-          }}
-          style={[
-            styles.innerAnimatedWrapper,
-            { transform: [{ translateY: this.state.moveModalHeight }] },
-          ]}
-        >
+      <Animated.View style={[styles.outerAnimatedWrapper]}>
+        <Animated.View style={[styles.innerAnimatedWrapper]}>
           <View>
             <TouchableOpacity style={styles.touchable} onPress={this.hideModal}>
               <View style={styles.helperWrapper} />
@@ -212,33 +247,158 @@ class ClaimOfferModal extends React.Component<any, any> {
                 imageUrl={this.props.logoUrl}
                 colorBackground={this.props.claimThemePrimary}
               />
-              <ModalContent
-                content={this.props.claimOfferData.data.revealedAttributes}
-              />
-              {hasNotAcceptedTAA ? (
-                <ModalButtons
-                  onPress={() => this.agree()}
-                  onIgnore={() => this.onIgnore()}
-                  colorBackground={this.props.claimThemePrimary}
-                  secondColorBackground={this.props.claimThemeSecondary}
-                  leftBtnText={'Close'}
-                  rightBtnText={'Read and Sign TAA'}
-                />
-              ) : (
-                <ModalButtons
-                  onPress={() => this.onAccept()}
-                  onIgnore={() => this.onIgnore()}
-                  colorBackground={this.props.claimThemePrimary}
-                  secondColorBackground={this.props.claimThemeSecondary}
-                  leftBtnText={'Ignore'}
-                  rightBtnText={'Accept'}
+              {shouldShowTransactionInfo === false && (
+                <ModalContent
+                  content={this.props.claimOfferData.data.revealedAttributes}
                 />
               )}
+
+              {hasNotAcceptedTAA &&
+                shouldShowTransactionInfo === false && (
+                  <ModalButtons
+                    onPress={this.agree}
+                    onIgnore={this.onIgnore}
+                    colorBackground={this.props.claimThemePrimary}
+                    secondColorBackground={this.props.claimThemeSecondary}
+                    leftBtnText={'Close'}
+                    rightBtnText={'Read and Sign TAA'}
+                  />
+                )}
+
+              {shouldShowTransactionInfo &&
+                hasNotAcceptedTAA === false && (
+                  <LedgerFees
+                    onStateChange={(state, data) =>
+                      this.updateState(state, data)
+                    }
+                    transferAmount={payTokenValue}
+                  />
+                )}
+              {shouldShowTransactionInfo === false &&
+                hasNotAcceptedTAA === false && (
+                  <ModalButtons
+                    onPress={this.onAccept}
+                    onIgnore={this.onIgnore}
+                    colorBackground={this.props.claimThemePrimary}
+                    secondColorBackground={this.props.claimThemeSecondary}
+                    leftBtnText={'Ignore'}
+                    rightBtnText={acceptButtonText}
+                    payTokenValue={payTokenValue}
+                  >
+                    <CredentialPriceInfo price={payTokenValue || ''} />
+                  </ModalButtons>
+                )}
             </View>
           </View>
         </Animated.View>
       </Animated.View>
     )
+  }
+
+  updateState = (status: string, feesData?: TokenFeesData) => {
+    let shouldShowTransactionInfo = false
+    const feesDataSet = feesData || {
+      fees: '0',
+      total: '',
+      currentTokenBalance: '',
+    }
+
+    const claimStatus =
+      this.props.claimOfferData && this.props.claimOfferData.status
+    const claimRequestStatus = this.props.claimOfferData.claimRequestStatus
+
+    switch (status) {
+      case 'ZERO_FEES':
+      case 'TRANSFER':
+        shouldShowTransactionInfo = true
+        if (claimStatus !== 'ACCEPTED' && claimRequestStatus === 'NONE') {
+          this.onAccept(true)
+        }
+        break
+
+      case 'POSSIBLE':
+        const { claimOfferData } = this.props
+        const { payTokenValue }: ClaimOfferPayload = claimOfferData
+        return (
+          status && (
+            <CredentialCostInfo
+              feesData={feesDataSet}
+              payTokenValue={payTokenValue || '0'}
+              backgroundColor={this.props.claimThemePrimary}
+              onConfirmAndPay={this.onConfirmAndPay}
+              onCancel={this.onClose}
+            />
+          )
+        )
+
+      default:
+        shouldShowTransactionInfo = true
+        break
+    }
+
+    switch (claimRequestStatus) {
+      case 'INSUFFICIENT_BALANCE':
+        status = 'INSUFFICIENT_BALANCE'
+        break
+      case 'SEND_CLAIM_REQUEST_SUCCESS':
+        status = 'SUCCESS'
+        break
+      case 'SENDING_PAID_CREDENTIAL_REQUEST':
+        status = 'SENDING_PAID_CREDENTIAL_REQUEST'
+        break
+
+      default:
+        break
+    }
+
+    return (
+      status && (
+        <View>
+          <PaymentTransactionInfo
+            status={status}
+            feesData={feesData}
+            shouldShow={shouldShowTransactionInfo}
+            backgroundColor={this.props.claimThemePrimary}
+          >
+            {this.renderFeesActionButtons(status)}
+          </PaymentTransactionInfo>
+        </View>
+      )
+    )
+  }
+  renderFeesActionButtons = status => {
+    let mainButtonAction = this.onAccept
+    let rightBtnText = 'Close'
+
+    switch (status) {
+      case 'ERROR':
+        rightBtnText = 'Try again'
+        mainButtonAction = this.onTryAgain
+        break
+
+      case 'IN_PROGRESS':
+      case 'SENDING_PAID_CREDENTIAL_REQUEST':
+        return null
+      case 'SUCCESS':
+      case 'NOT_POSSIBLE':
+      case 'INSUFFICIENT_BALANCE':
+        mainButtonAction = this.onClose
+        break
+      default:
+        break
+    }
+    return (
+      <ModalButtons
+        onPress={mainButtonAction}
+        colorBackground={this.props.claimThemePrimary}
+        secondColorBackground={this.props.claimThemeSecondary}
+        rightBtnText={rightBtnText}
+      />
+    )
+  }
+
+  onConfirmAndPay = () => {
+    this.setState(() => this.props.acceptClaimOffer(this.props.uid))
   }
 }
 
@@ -296,7 +456,7 @@ export default withStatusBar({ color: black })(
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: cardBorder,
     width: '90%',
     marginLeft: '5%',
     paddingTop: 12,
@@ -338,7 +498,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#a5a5a5',
+    color: mediumGray,
     width: '100%',
     textAlign: 'left',
     marginBottom: 2,
@@ -347,7 +507,7 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 17,
     fontWeight: '400',
-    color: '#505050',
+    color: matterhornSecondary,
     width: '100%',
     textAlign: 'left',
     fontFamily: 'Lato',

@@ -22,7 +22,7 @@ import type {
 
 import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
-import { ModalButtons } from '../../components/connection-details/modal-buttons'
+import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { ModalButton } from '../../components/connection-details/modal-button'
 import { measurements } from '../../../app/common/styles/measurements'
 import { connect } from 'react-redux'

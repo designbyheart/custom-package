@@ -24,6 +24,7 @@ import {
   lockEnterPinRoute,
   lockTouchIdSetupRoute,
   aboutAppRoute,
+  designStyleGuideRoute,
   onfidoRoute,
   privacyTNCRoute,
   genRecoveryPhraseRoute,
@@ -77,6 +78,7 @@ import {
 } from '../backup/backup-store'
 import { Apptentive } from 'apptentive-react-native'
 import AboutApp from '../about-app/about-app'
+import DesignStyleguide from '../design-styleguide/design-styleguide'
 import Onfido from '../onfido/onfido'
 import { PrivacyTNC } from '../privacy-tnc/privacy-tnc-screen'
 import { WalletBalance } from '../wallet/wallet-balance'
@@ -354,6 +356,11 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
       )
     }
   }
+
+  openStyleguide = () => {
+    this.props.navigation.navigate(designStyleGuideRoute, {})
+  }
+
   openTokenScreen = () => {
     this.props.navigation.navigate(walletRoute)
   }
@@ -791,6 +798,26 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         ),
         onPress: this.openOnfido,
       },
+      __DEV__ && {
+        id: 9,
+        title: 'Design styleguide',
+        subtitle: 'Development only',
+        avatar: (
+          <View style={styles.avatarView}>
+            <SvgCustomIcon name="About" fill="#777" width="27" height="27" />
+          </View>
+        ),
+
+        rightIcon: (
+          <SvgCustomIcon
+            name="ListItemArrow"
+            fill="#A5A5A5"
+            width="8"
+            height="10"
+          />
+        ),
+        onPress: this.openStyleguide,
+      },
     ]
 
     return (
@@ -830,17 +857,17 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
                         : style.subtitleStyle,
                     ]}
                     key={index}
-                    title={item.title}
-                    subtitle={item.subtitle}
+                    title={item && item.title}
+                    subtitle={item && item.subtitle}
                     avatarStyle={[style.avatarStyle]}
-                    avatar={item.avatar}
+                    avatar={item && item.avatar}
                     rightIcon={
                       item.rightIcon !== ''
                         ? item.rightIcon
                         : { name: 'chevron-right' }
                     }
-                    hideChevron={item.rightIcon === ''}
-                    onPress={item.onPress}
+                    hideChevron={item && item.rightIcon === ''}
+                    onPress={item && item.onPress}
                   />
                 )
               })}
@@ -892,6 +919,9 @@ export const SettingStack: any = createStackNavigator({
   },
   [aboutAppRoute]: {
     screen: AboutApp,
+  },
+  [designStyleGuideRoute]: {
+    screen: DesignStyleguide,
   },
   [onfidoRoute]: {
     screen: Onfido,

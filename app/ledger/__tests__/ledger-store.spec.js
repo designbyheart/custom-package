@@ -1,5 +1,9 @@
 // @flow
 
+import { expectSaga } from 'redux-saga-test-plan'
+import * as matchers from 'redux-saga-test-plan/matchers'
+import { throwError } from 'redux-saga-test-plan/providers'
+
 import { ledgerStoreReducer, getLedgerFeesSaga } from '../ledger-store'
 import {
   getLedgerFees,
@@ -8,12 +12,9 @@ import {
   getLedgerFeesFail,
   resetLedgerFees,
 } from '../type-ledger-store'
-import { transferFees } from '../../../../__mocks__/data/ledger-store-mock-data'
-import { configStoreHydratedInstalledVcxInitSuccess } from '../../../../__mocks__/data/config-store-mock-data'
-import { expectSaga } from 'redux-saga-test-plan'
-import * as matchers from 'redux-saga-test-plan/matchers'
-import { throwError } from 'redux-saga-test-plan/providers'
-import { getLedgerFees as getLedgerFeesApi } from '../../../bridge/react-native-cxs/RNCxs'
+import { transferFees } from '../../../__mocks__/data/ledger-store-mock-data'
+import { configStoreHydratedInstalledVcxInitSuccess } from '../../../__mocks__/data/config-store-mock-data'
+import { getLedgerFees as getLedgerFeesApi } from '../../bridge/react-native-cxs/RNCxs'
 
 describe('ledgerStore', () => {
   it('action: GET_LEDGER_FEES', () => {
