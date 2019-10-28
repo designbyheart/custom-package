@@ -134,7 +134,8 @@ export function* hydrateTxnAuthorAgreementSaga(): Generator<*, *, *> {
       TAA_ACCEPTED_VERSION
     )
     if (fetchedTaaAcceptedVersion) {
-      // if there is a version we need to check if it is the current version on the ledger here?
+      // if there is a version we need to check if it is the current version on the ledger
+      yield put(checkTxnAuthorAgreement())
       const taaAcceptedVersion: string = fetchedTaaAcceptedVersion
       yield put(hydrateTxnAuthorAgreement(taaAcceptedVersion))
     }
