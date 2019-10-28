@@ -267,7 +267,11 @@ class ClaimOfferModal extends React.Component<any, any> {
                     secondColorBackground={this.props.claimThemeSecondary}
                     leftBtnText={'Ignore'}
                     rightBtnText={acceptButtonText}
-                    payTokenValue={payTokenValue}
+                    primaryActionValue={true}
+                    buttonsWrapperStyles={{
+                      borderTopLeftRadius: 0,
+                      borderTopRightRadius: 0,
+                    }}
                   >
                     <CredentialPriceInfo price={payTokenValue || ''} />
                   </ModalButtons>

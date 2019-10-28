@@ -20,7 +20,7 @@ const CredentialPriceInfo = ({ price }: { price: string }) => {
         { flexDirection: isBigNumberPrice ? 'column' : 'row' },
       ]}
     >
-      <CustomText style={styles.text} transparentBg>
+      <CustomText transparentBg style={[styles.text]}>
         This Credential Costs
       </CustomText>
       <View
@@ -51,28 +51,29 @@ const styles = StyleSheet.create({
   priceContainer: {
     backgroundColor: orange,
     maxWidth: '100%',
-    padding: 10,
-    paddingTop: 12,
     justifyContent: 'space-between',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    paddingTop: 5,
   },
   text: {
     fontSize: scale(15),
     color: whiteSolid,
-    paddingTop: 3,
-    paddingBottom: 5,
+    padding: 15,
+    paddingBottom: 8,
+    paddingTop: 5,
   },
   icon: {
     marginRight: 5,
     resizeMode: 'contain',
     height: 25,
+    marginTop: 6,
   },
   largeText: {
-    paddingTop: 0,
-    paddingBottom: 0,
     fontSize: scale(17),
     marginLeft: 5,
     textAlign: 'right',
+    paddingLeft: 5,
+    paddingTop: 4,
   },
 })

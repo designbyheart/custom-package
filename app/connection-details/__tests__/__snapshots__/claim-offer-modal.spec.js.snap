@@ -356,14 +356,20 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
           <View />
           <View
             style={
-              Object {
-                "alignItems": "stretch",
-                "borderRadius": 5,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "overflow": "hidden",
-                "width": "100%",
-              }
+              Array [
+                Object {
+                  "alignItems": "stretch",
+                  "borderRadius": 5,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "width": "100%",
+                },
+                Object {
+                  "borderTopLeftRadius": 0,
+                  "borderTopRightRadius": 0,
+                },
+              ]
             }
           >
             <View
@@ -380,10 +386,11 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                   "alignItems": "center",
                   "backgroundColor": "rgba(119, 119, 119, 0.6)",
                   "justifyContent": "center",
+                  "minWidth": "35%",
                   "opacity": 1,
                   "padding": 17.5,
-                  "paddingLeft": 30,
-                  "paddingRight": 30,
+                  "paddingLeft": 10,
+                  "paddingRight": 10,
                 }
               }
             >
@@ -439,8 +446,8 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                   "justifyContent": "center",
                   "opacity": 1,
                   "padding": 17.5,
-                  "paddingLeft": 30,
-                  "paddingRight": 30,
+                  "paddingLeft": 10,
+                  "paddingRight": 10,
                 }
               }
             >

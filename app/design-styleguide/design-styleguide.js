@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ModalButtons } from '../components/buttons/modal-buttons'
+import CredentialPriceInfo from '../components/labels/credential-price-info'
 import { buttonGreen } from '../common/styles/constant'
 import { CustomText } from '../components'
 
@@ -18,8 +19,14 @@ class DesignStyleguide extends Component<void, void> {
             payTokenValue={0}
             colorBackground={buttonGreen}
             leftBtnText={'Ignore'}
-            rightBtnText={'Accept'}
-          />
+            rightBtnText={'Read and Sign TAA'}
+            buttonsWrapperStyles={{
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+            }}
+          >
+            <CredentialPriceInfo price={'0.000043'} />
+          </ModalButtons>
         </View>
       </View>
     )
