@@ -16,8 +16,13 @@ class ModalButtons extends React.Component<any, {}> {
 
   debounceButtonPress = debounce(
     event => {
-      if (this.props.onPress) {
-        this.props.onPress(event)
+      const { primaryActionValue, onPress } = this.props
+      if (primaryActionValue) {
+        onPress(primaryActionValue)
+        return
+      }
+      if (onPress) {
+        onPress(event)
       }
     },
     600,
@@ -35,6 +40,7 @@ class ModalButtons extends React.Component<any, {}> {
       rightBtnText,
       containerStyles,
       children,
+      buttonsWrapperStyles,
     } = this.props
 
     let themeType = colorBackground
@@ -47,7 +53,7 @@ class ModalButtons extends React.Component<any, {}> {
     return (
       <View style={[styles.container, containerStyles]}>
         {children}
-        <View style={styles.innerWrapper}>
+        <View style={[styles.innerWrapper, buttonsWrapperStyles]}>
           {leftBtnText && (
             <TouchableOpacity
               style={[
@@ -102,11 +108,12 @@ const styles = StyleSheet.create({
   },
   buttonIgnore: {
     padding: 17.5,
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingLeft: 10,
+    paddingRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: lightGray,
+    minWidth: '35%',
   },
   ignore: {
     fontSize: 17,
@@ -119,8 +126,8 @@ const styles = StyleSheet.create({
   buttonAccept: {
     flex: 1,
     padding: 17.5,
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingLeft: 10,
+    paddingRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },

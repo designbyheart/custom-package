@@ -102,7 +102,7 @@ export class TxnAuthorAgreement extends Component<
           <BottomUpSliderError
             errorText={errorText}
             textStyles={[styles.errorText]}
-            containerStyles={[styles.errorTextContainer]}
+            containerStyles={[styles.errorTextContainer, styles.errorText]}
           />
           <ModalButtons
             onPress={
@@ -261,10 +261,17 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     maxHeight: measurements.WINDOW_HEIGHT * 0.8,
   },
-  errorText: {},
+  errorText: {
+    maxWidth: '90%',
+    marginLeft: '5%',
+  },
   errorTextContainer: {
     minHeight: 180,
     backgroundColor: '#f2f2f2',
+  },
+  errorTextStyles: {
+    maxWidth: '90%',
+    marginLeft: '5%',
   },
   extraHeight: {
     minHeight: 180,
