@@ -139,7 +139,9 @@ export class Question extends PureComponent<
               onHandlerStateChange={this._onHandlerStateChange}
             >
               <Animated.View style={[questionStyles.container]}>
-                <QuestionScreenHeader onCancel={this.onCancel} />
+                <QuestionScreenHeader
+                  onCancel={!loading && !success ? this.onCancel : this.noop}
+                />
               </Animated.View>
             </PanGestureHandler>
           </Container>
@@ -188,16 +190,17 @@ export class Question extends PureComponent<
                 We need to show action buttons all the time except when screen
                 is in loading state
               */}
-              {!loading && (
-                <QuestionActions
-                  selectedResponse={this.state.response}
-                  onSubmit={this.onSubmit}
-                  onCancel={this.onCancel}
-                  onSelectResponseAndSubmit={this.onSelectResponseAndSubmit}
-                  question={this.props.question}
-                  useIgnoreButton={this.props.useIgnoreButton}
-                />
-              )}
+              {!loading &&
+                !success && (
+                  <QuestionActions
+                    selectedResponse={this.state.response}
+                    onSubmit={this.onSubmit}
+                    onCancel={this.onCancel}
+                    onSelectResponseAndSubmit={this.onSelectResponseAndSubmit}
+                    question={this.props.question}
+                    useIgnoreButton={this.props.useIgnoreButton}
+                  />
+                )}
             </Animated.View>
           )}
         </Animated.View>
@@ -289,6 +292,10 @@ export class Question extends PureComponent<
     this.isCloseTriggered = true
   }
 
+  noop = () => {
+    // this function is supposed to do nothing
+  }
+
   _onPanGestureEvent = Animated.event(
     [
       {
@@ -346,7 +353,7 @@ export class Question extends PureComponent<
 
   afterSuccessShown = () => {
     // auto close after success is shown to user
-    setTimeout(this.onCancel, 100)
+    this.onCancel()
   }
 }
 
@@ -541,6 +548,7 @@ function QuestionSuccess(props: {
           loop={false}
           style={questionStyles.feedbackIcon}
           onAnimationFinish={props.afterSuccessShown}
+          speed={1.5}
         />
       </CustomView>
       <QuestionScreenText size="h4" bold={false}>

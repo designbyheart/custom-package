@@ -24,6 +24,7 @@ import {
   TEXT_SUBMIT,
 } from '../type-question'
 import { questionStyles } from '../question-screen-style'
+import { QuestionScreenHeader } from '../components/question-screen-header'
 
 describe('<QuestionScreen />', () => {
   it('should match idle state snapshot', () => {
@@ -61,12 +62,37 @@ describe('<QuestionScreen />', () => {
     expect(props.navigation.goBack).toHaveBeenCalledTimes(1)
   })
 
-  it('should goBack if submit button is pressed and user is already in success state', () => {
+  it('should not goBack if header is tapped when in loading state', () => {
+    const { component, props } = setup({
+      status: QUESTION_STATUS.SEND_ANSWER_IN_PROGRESS,
+    })
+    const headerWithHandle = component.root.findByType(QuestionScreenHeader)
+    headerWithHandle.props.onCancel()
+    expect(props.navigation.goBack).not.toHaveBeenCalled()
+  })
+
+  it('should not goBack if header is tapped when in success state', () => {
     const { component, props } = setup({
       status: QUESTION_STATUS.SEND_ANSWER_SUCCESS_TILL_CLOUD_AGENT,
     })
-    const okButton = component.root.findByProps({ title: TEXT_OK })
-    okButton.props.onPress()
+    const headerWithHandle = component.root.findByType(QuestionScreenHeader)
+    headerWithHandle.props.onCancel()
+    expect(props.navigation.goBack).not.toHaveBeenCalled()
+  })
+
+  it('should goBack if header is tapped when in error state', () => {
+    const { component, props } = setup({
+      status: QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
+    })
+    const headerWithHandle = component.root.findByType(QuestionScreenHeader)
+    headerWithHandle.props.onCancel()
+    expect(props.navigation.goBack).toHaveBeenCalledTimes(1)
+  })
+
+  it('should goBack if header is tapped when in idle state', () => {
+    const { component, props } = setup()
+    const headerWithHandle = component.root.findByType(QuestionScreenHeader)
+    headerWithHandle.props.onCancel()
     expect(props.navigation.goBack).toHaveBeenCalledTimes(1)
   })
 
