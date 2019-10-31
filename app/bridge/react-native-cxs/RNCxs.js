@@ -563,7 +563,7 @@ export async function getWalletTokenInfo(): Promise<WalletTokenInfo> {
 }
 
 export async function createPaymentAddress(seed: ?string) {
-  return RNIndy.createPaymentAddress(seed)
+  return await RNIndy.createPaymentAddress(seed)
 }
 
 export async function getLedgerFees(): Promise<LedgerFeesData> {
