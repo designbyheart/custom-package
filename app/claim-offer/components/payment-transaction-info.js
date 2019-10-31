@@ -42,14 +42,20 @@ class PaymentTransactionInfo extends PureComponent<
         <View style={styles.content}>
           {(status === 'IN_PROGRESS' ||
             status === 'SENDING_PAID_CREDENTIAL_REQUEST') && (
-            // TODO: We need to decide which loader we are going to use
             <ActivityIndicator
               size="large"
               color={mediumGray}
               hidesWhenStopped
+              style={{ marginBottom: 10 }}
             />
           )}
-          <CustomText style={styles.statusText} multiline>
+          <CustomText
+            primary
+            multiline
+            transparentBg
+            center
+            style={styles.statusText}
+          >
             {statusMessages[status]}
           </CustomText>
           {status !== 'IN_PROGRESS' &&
@@ -84,12 +90,14 @@ const styles = StyleSheet.create({
     marginLeft: '10%',
     flex: 1,
     maxWidth: '80%',
+    alignItems: 'center',
   },
   statusText: {
     color: mediumGray,
     textAlign: 'center',
     marginTop: 40,
     fontSize: scale(15),
+    backgroundColor: 'red',
   },
   iconContainer: {
     width: '100%',

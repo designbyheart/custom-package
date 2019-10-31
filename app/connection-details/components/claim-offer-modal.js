@@ -105,6 +105,12 @@ class ClaimOfferModal extends React.Component<any, any> {
 
   onAccept = (accepted: boolean) => {
     const { shouldShowTransactionInfo } = this.state
+    const { claimOfferData } = this.props
+    const { payTokenValue }: ClaimOfferPayload = claimOfferData
+    if (!payTokenValue) {
+      this.onConfirmAndPay()
+      return
+    }
 
     this.props.newConnectionSeen(this.props.claimOfferData.issuer.did)
 
@@ -204,6 +210,7 @@ class ClaimOfferModal extends React.Component<any, any> {
       offerStatus,
       shouldShowTransactionInfo,
       restartTransaction,
+      isAcceptedClaim,
     } = this.state
 
     const testID = 'claim-offer'
@@ -259,6 +266,7 @@ class ClaimOfferModal extends React.Component<any, any> {
               )}
 
               {shouldShowTransactionInfo === false &&
+                isAcceptedClaim === false &&
                 hasNotAcceptedTAA === false && (
                   <ModalButtons
                     onPress={this.onAccept}
@@ -276,6 +284,7 @@ class ClaimOfferModal extends React.Component<any, any> {
                     <CredentialPriceInfo price={payTokenValue || ''} />
                   </ModalButtons>
                 )}
+              {this.tokenTransactionStatus(claimRequestStatus)}
             </View>
           </View>
         </Animated.View>
@@ -301,6 +310,46 @@ class ClaimOfferModal extends React.Component<any, any> {
           transferAmount={payTokenValue}
         />
       )
+    )
+  }
+
+  tokenTransactionStatus = status => {
+    const { isAcceptedClaim } = this.state
+
+    switch (status) {
+      case 'SEND_CLAIM_REQUEST_SUCCESS':
+      case 'CLAIM_REQUEST_SUCCESS':
+        status = 'SUCCESS'
+        break
+
+      case 'INSUFFICIENT_BALANCE':
+        status = 'INSUFFICIENT_BALANCE'
+        break
+
+      case 'SENDING_PAID_CREDENTIAL_REQUEST':
+      case 'SENDING_CLAIM_REQUEST':
+        status = 'SENDING_PAID_CREDENTIAL_REQUEST'
+        break
+
+      case 'NONE':
+        return null
+
+      default:
+        if (!isAcceptedClaim) {
+          return null
+        }
+    }
+
+    return (
+      <View>
+        <PaymentTransactionInfo
+          status={status}
+          shouldShow
+          backgroundColor={this.props.claimThemePrimary}
+        >
+          {this.renderFeesActionButtons(status)}
+        </PaymentTransactionInfo>
+      </View>
     )
   }
 
@@ -345,21 +394,6 @@ class ClaimOfferModal extends React.Component<any, any> {
         break
     }
 
-    switch (claimRequestStatus) {
-      case 'INSUFFICIENT_BALANCE':
-        status = 'INSUFFICIENT_BALANCE'
-        break
-      case 'SEND_CLAIM_REQUEST_SUCCESS':
-        status = 'SUCCESS'
-        break
-      case 'SENDING_PAID_CREDENTIAL_REQUEST':
-        status = 'SENDING_PAID_CREDENTIAL_REQUEST'
-        break
-
-      default:
-        break
-    }
-
     return (
       status && (
         <View>
@@ -387,10 +421,13 @@ class ClaimOfferModal extends React.Component<any, any> {
 
       case 'IN_PROGRESS':
       case 'SENDING_PAID_CREDENTIAL_REQUEST':
+      case 'SENDING_CLAIM_REQUEST':
         return null
       case 'SUCCESS':
       case 'NOT_POSSIBLE':
       case 'INSUFFICIENT_BALANCE':
+      case 'SEND_CLAIM_REQUEST_SUCCESS':
+      case 'CLAIM_REQUEST_SUCCESS':
         mainButtonAction = this.onClose
         break
       default:
@@ -407,6 +444,7 @@ class ClaimOfferModal extends React.Component<any, any> {
   }
 
   onConfirmAndPay = (shouldHideModal = false) => {
+    this.setState({ isAcceptedClaim: true })
     this.props.acceptClaimOffer(this.props.uid)
     if (shouldHideModal) {
       this.hideModal()

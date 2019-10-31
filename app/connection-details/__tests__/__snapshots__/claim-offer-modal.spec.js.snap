@@ -498,6 +498,78 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
             </View>
           </View>
         </View>
+        <View>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#f2f2f2",
+                "flex": 1,
+                "justifyContent": "flex-start",
+                "maxWidth": "100%",
+                "paddingTop": 20,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flex": 1,
+                  "marginLeft": "10%",
+                  "maxWidth": "80%",
+                }
+              }
+            >
+              <ActivityIndicator
+                animating={true}
+                color="#a5a5a5"
+                hidesWhenStopped={true}
+                size="large"
+                style={
+                  Object {
+                    "marginBottom": 10,
+                  }
+                }
+              />
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 17,
+                    },
+                    Object {
+                      "fontFamily": "Lato",
+                    },
+                    Object {
+                      "backgroundColor": "#333333",
+                      "color": "#ffffff",
+                    },
+                    null,
+                    Object {
+                      "textAlign": "center",
+                    },
+                    Object {
+                      "backgroundColor": "transparent",
+                    },
+                    null,
+                    null,
+                    null,
+                    Object {
+                      "color": "#333333",
+                    },
+                    null,
+                    null,
+                    null,
+                    null,
+                  ]
+                }
+              >
+                Sending payment request...
+              </Text>
+            </View>
+          </View>
+        </View>
       </View>
     </View>
   </View>
