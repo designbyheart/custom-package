@@ -108,7 +108,7 @@ class ClaimOfferModal extends React.Component<any, any> {
     const { claimOfferData } = this.props
     const { payTokenValue }: ClaimOfferPayload = claimOfferData
     if (!payTokenValue) {
-      this.onConfirmAndPay()
+      this.onConfirmAndPay(true)
       return
     }
 
