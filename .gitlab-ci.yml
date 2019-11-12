@@ -62,8 +62,6 @@ build-ios-merge-request:
 build-ios-master:
   extends: .build-ios
   # Variable expansion doesn't work in `variables` section. Do it here instead.
-  before_script:
-    - export HOCKEYAPP_TOKEN="${HOCKEYAPP_TOKEN_MASTER}"
   variables:
     DEVELOPER_DIR: '/Applications/Xcode.app/Contents/Developer/'
     # this gets passed to the anchor
@@ -74,8 +72,6 @@ build-ios-master:
 
 build-ios-stage:
   extends: .build-ios
-  before_script:
-    - export HOCKEYAPP_TOKEN="${HOCKEYAPP_TOKEN_STAGE}"
   variables:
     BUILD_TYPE: 'ConnectMe Stage Build'
     DEVELOPER_DIR: '/Applications/Xcode.app/Contents/Developer/'
@@ -86,8 +82,6 @@ build-ios-stage:
 
 build-ios-stable:
   extends: .build-ios
-  before_script:
-    - export HOCKEYAPP_TOKEN="${HOCKEYAPP_TOKEN_STABLE}"
   variables:
     DEVELOPER_DIR: '/Applications/Xcode.app/Contents/Developer/'
     FASTLANE_COMMAND: 'bundle exec fastlane cd --disable_runner_upgrades --verbose'
