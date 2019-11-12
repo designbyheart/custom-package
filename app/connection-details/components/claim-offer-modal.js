@@ -11,8 +11,8 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { BigNumber } from 'bignumber.js'
 
-import CredentialPriceInfo from '../../components/labels/credential-price-info'
 import type { Store } from '../../store/type-store'
 import type {
   ClaimOfferProps,
@@ -24,6 +24,7 @@ import type {
   TokenFeesData,
 } from '../../claim-offer/type-claim-offer'
 
+import CredentialPriceInfo from '../../components/labels/credential-price-info'
 import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
 import { ModalButtons } from '../../components/buttons/modal-buttons'
@@ -32,7 +33,6 @@ import { measurements } from '../../../app/common/styles/measurements'
 import { LedgerFees } from '../../ledger/components/ledger-fees/ledger-fees'
 import PaymentTransactionInfo from '../../claim-offer/components/payment-transaction-info'
 import CredentialCostInfo from '../../claim-offer/components/credential-cost-info'
-
 import {
   getConnectionLogoUrl,
   getConnectionTheme,
@@ -47,7 +47,6 @@ import {
   claimOfferShowStart,
   resetClaimRequestStatus,
 } from '../../claim-offer/claim-offer-store'
-import { updateStatusBarTheme } from '../../../app/store/connections-store'
 import { withStatusBar } from '../../components/status-bar/status-bar'
 import {
   black,
@@ -56,168 +55,55 @@ import {
   cardBorder,
 } from '../../common/styles'
 import { txnAuthorAgreementRoute, restoreWaitRoute } from '../../common'
+import {
+  CLAIM_OFFER_STATUS,
+  CLAIM_REQUEST_STATUS,
+} from '../../claim-offer/type-claim-offer'
 
 let ScreenHeight = Dimensions.get('window').height
 let ScreenWidth = Dimensions.get('window').width
 
-class ClaimOfferModal extends React.Component<any, any> {
-  constructor(props: any) {
+class ClaimOfferModal extends React.Component<any, *> {
+  constructor(props) {
     super(props)
-    this.state = {
-      moveMoreOptions: new Animated.Value(ScreenWidth),
-      fadeInOut: new Animated.Value(0),
-      moveModal: new Animated.Value(ScreenHeight),
-      moveModalHeight: new Animated.Value(ScreenHeight),
-      positionValue: new Animated.Value(0),
-      offerStatus: 'IDLE',
-      shouldShowTransactionInfo: false,
-      restartTransaction: false,
-      isAcceptedClaim: false,
+    if (props.uid) {
+      props.claimOfferShowStart(props.uid)
     }
   }
 
-  static defaultProps = {
-    runAnimation: true,
-  }
-
-  componentDidMount = () => {
-    if (
-      (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
-      parseFloat(this.props.claimPrice) > 0
-    ) {
-      this.props.navigation.navigate(txnAuthorAgreementRoute)
-    }
-  }
-
-  agree = () => {
-    this.props.navigation.navigate(txnAuthorAgreementRoute)
-  }
-
-  onIgnore = () => {
-    this.props.newConnectionSeen(this.props.claimOfferData.issuer.did)
-    this.hideModal()
-    this.setState(() => this.props.claimOfferIgnored(this.props.uid))
-  }
-
-  onClose = () => {
-    this.hideModal()
-  }
-
-  onAccept = (accepted: boolean) => {
-    const { shouldShowTransactionInfo } = this.state
-    const { claimOfferData } = this.props
-    const { payTokenValue }: ClaimOfferPayload = claimOfferData
-    if (!payTokenValue) {
-      this.onConfirmAndPay(true)
-      return
-    }
-
-    this.props.newConnectionSeen(this.props.claimOfferData.issuer.did)
-
-    if (shouldShowTransactionInfo === false) {
-      if (typeof accepted === 'boolean' && accepted) {
-        this.onConfirmAndPay()
-        return
-      }
-      this.setState({ shouldShowTransactionInfo: true })
-      return
-    }
-
-    if (accepted) {
-      this.props.acceptClaimOffer(this.props.uid)
-    }
-  }
-
-  onTryAgain = () => {
-    this.setState({ restartTransaction: true })
-  }
-
-  handleScroll = (event: any) => {
-    if (event.nativeEvent.contentOffset.y < -100) {
-      this.props.updatePosition(event.nativeEvent.contentOffset.y)
-      this.hideModal()
-    }
-  }
-
-  updatePosition = value => {
-    Animated.timing(this.state.positionValue, {
-      toValue: value,
-      duration: 1,
-      useNativeDriver: true,
-    }).start()
-  }
-
-  moreOptionsClose = () => {
-    Animated.timing(this.state.moveMoreOptions, {
-      toValue: ScreenWidth,
-      duration: 1,
-      useNativeDriver: true,
-    }).start()
-  }
-
-  moreOptionsOpen = () => {
-    Animated.timing(this.state.moveMoreOptions, {
-      toValue: 0,
-      duration: 1,
-      useNativeDriver: true,
-    }).start()
-  }
-
-  showModal = () => {
-    if (this.props.runAnimation) {
-      Animated.parallel([
-        Animated.timing(this.state.moveModal, {
-          toValue: 0,
-          duration: 1,
-          useNativeDriver: true,
-        }),
-        Animated.timing(this.state.fadeInOut, {
-          toValue: 1,
-          duration: 200,
-          useNativeDriver: true,
-        }),
-        Animated.timing(this.state.moveModalHeight, {
-          toValue: 0,
-          duration: 400,
-          useNativeDriver: true,
-        }),
-      ]).start()
-    }
-  }
-
-  hideModal = () => {
-    this.props.navigation.goBack(null)
+  state = {
+    shouldShowTransactionInfo: false,
   }
 
   render() {
-    this.showModal()
-
     const {
       claimOfferData,
       isValid,
       logoUrl,
       claimThemePrimary,
       claimThemeSecondary,
+      claimPrice,
     } = this.props
     const {
+      status,
       claimRequestStatus,
       issuer,
       data,
       payTokenValue,
     }: ClaimOfferPayload = claimOfferData
+    const { shouldShowTransactionInfo } = this.state
 
-    const {
-      offerStatus,
-      shouldShowTransactionInfo,
-      restartTransaction,
-      isAcceptedClaim,
-    } = this.state
+    // We need to check if user has accepted cred offer
+    // if not a paid cred, then by clicking accept
+    // if paid cred, then by confirm & pay button
+    // as soon as user accepts the cred offer, redux state will change
+    const isClaimOfferAccepted = status === CLAIM_OFFER_STATUS.ACCEPTED
 
     const testID = 'claim-offer'
     let acceptButtonText = payTokenValue ? 'Accept & Pay' : 'Accept'
     const hasNotAcceptedTAA =
       (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
-      parseFloat(this.props.claimPrice) > 0
+      new BigNumber(claimPrice).isGreaterThan(0)
 
     return (
       <Animated.View style={[styles.outerAnimatedWrapper]}>
@@ -242,32 +128,82 @@ class ClaimOfferModal extends React.Component<any, any> {
                 imageUrl={this.props.logoUrl}
                 colorBackground={this.props.claimThemePrimary}
               />
+
+              {
+                // if we don't show ledger txn fees, then show credential data
+                // i.e. user has not taken any action on credential modal
+                // it doesn't matter whether TAA is accepted or not
+                // show credential data without needing to consider TAA status
+              }
               {shouldShowTransactionInfo === false && (
                 <ModalContent
                   content={this.props.claimOfferData.data.revealedAttributes}
                 />
               )}
 
-              {hasNotAcceptedTAA &&
-                shouldShowTransactionInfo === false && (
-                  <ModalButtons
-                    onPress={this.agree}
-                    onIgnore={this.onIgnore}
-                    colorBackground={this.props.claimThemePrimary}
-                    secondColorBackground={this.props.claimThemeSecondary}
-                    leftBtnText={'Close'}
-                    rightBtnText={'Read and Sign TAA'}
+              {
+                // if this is a paid cred and user has clicked 'Agree & Pay'
+                // and if user has not already accepted cred offer
+                // we are not considering TAA status here because
+                // shouldShowTransactionInfo state is only set
+                // after TAA is accepted
+                // so if shouldShowTransactionInfo == true, then TAA is also set
+              }
+              {shouldShowTransactionInfo &&
+                !isClaimOfferAccepted && (
+                  <LedgerFees
+                    render={this.renderLedgerFeesPhases}
+                    onStateChange={this.updateState}
+                    transferAmount={this.props.claimPrice}
                   />
                 )}
 
-              {this.loadFees(
-                payTokenValue,
-                shouldShowTransactionInfo && hasNotAcceptedTAA === false
+              {
+                // Above code block was dealing with ledger fees is user
+                // has not yet accepted cred offer
+                // But if user has accepted cred offer, and this cred offer
+                // is a paid cred offer
+                // then we need to show user the status of payment as well
+                // so, will keep modal open till user sees success payment
+              }
+              {shouldShowTransactionInfo &&
+                isClaimOfferAccepted && (
+                  <PaymentTransactionInfo
+                    claimThemePrimary={this.props.claimThemePrimary}
+                    claimThemeSecondary={this.props.claimThemeSecondary}
+                    onConfirmAndPay={this.onConfirmAndPay}
+                    onCancel={this.onIgnore}
+                    credentialPrice={this.props.claimPrice}
+                    claimRequestStatus={claimRequestStatus}
+                    onSuccess={this.onPaymentSuccess}
+                    onRetry={this.onConfirmAndPay}
+                  />
+                )}
+
+              {
+                // if user has not accepted TAA
+                // then no matter what is the state of cred offer
+                // always show TAA accept button to user
+              }
+              {hasNotAcceptedTAA && (
+                <ModalButtons
+                  onPress={this.agree}
+                  onIgnore={this.onIgnore}
+                  colorBackground={this.props.claimThemePrimary}
+                  secondColorBackground={this.props.claimThemeSecondary}
+                  leftBtnText={'Close'}
+                  rightBtnText={'Read and Sign TAA'}
+                />
               )}
 
-              {shouldShowTransactionInfo === false &&
-                isAcceptedClaim === false &&
-                hasNotAcceptedTAA === false && (
+              {
+                // if user accepted TAA
+                // and user has not yet taken any action on cred offer
+                // then show Accept, Ignore buttons
+              }
+              {hasNotAcceptedTAA === false &&
+                shouldShowTransactionInfo === false &&
+                !isClaimOfferAccepted && (
                   <ModalButtons
                     onPress={this.onAccept}
                     onIgnore={this.onIgnore}
@@ -275,7 +211,6 @@ class ClaimOfferModal extends React.Component<any, any> {
                     secondColorBackground={this.props.claimThemeSecondary}
                     leftBtnText={'Ignore'}
                     rightBtnText={acceptButtonText}
-                    primaryActionValue={true}
                     buttonsWrapperStyles={{
                       borderTopLeftRadius: 0,
                       borderTopRightRadius: 0,
@@ -284,7 +219,6 @@ class ClaimOfferModal extends React.Component<any, any> {
                     <CredentialPriceInfo price={payTokenValue || ''} />
                   </ModalButtons>
                 )}
-              {this.tokenTransactionStatus(claimRequestStatus)}
             </View>
           </View>
         </Animated.View>
@@ -292,163 +226,97 @@ class ClaimOfferModal extends React.Component<any, any> {
     )
   }
 
-  loadFees = (payTokenValue, shouldLoadFees) => {
-    const { isAcceptedClaim } = this.state
-    if (payTokenValue === null && shouldLoadFees) {
-      if (!isAcceptedClaim) {
-        this.setState({ isAcceptedClaim: true })
-        this.onConfirmAndPay(true)
-      }
-      return null
+  renderLedgerFeesPhases = (txnFeesStatus, feesData, retry) => (
+    <PaymentTransactionInfo
+      claimThemePrimary={this.props.claimThemePrimary}
+      claimThemeSecondary={this.props.claimThemeSecondary}
+      onConfirmAndPay={this.onConfirmAndPay}
+      onCancel={this.onIgnore}
+      credentialPrice={this.props.claimPrice}
+      txnFeesStatus={txnFeesStatus}
+      onRetry={retry}
+      feesData={feesData}
+    />
+  )
+
+  componentDidMount = () => {
+    this.props.newConnectionSeen(this.props.claimOfferData.issuer.did)
+    if (
+      (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
+      new BigNumber(this.props.claimPrice).isGreaterThan(0)
+    ) {
+      this.props.navigation.navigate(txnAuthorAgreementRoute)
     }
-    return (
-      shouldLoadFees && (
-        <LedgerFees
-          onStateChange={(state, data) => {
-            this.updateState(state, data)
-          }}
-          transferAmount={payTokenValue}
-        />
-      )
-    )
   }
 
-  tokenTransactionStatus = status => {
-    const { isAcceptedClaim } = this.state
+  componentWillUnmount() {
+    // if modal is being closed, and status of claim request is error
+    // then we need to reset status for next time
+    const errorStates = [
+      CLAIM_REQUEST_STATUS.CLAIM_REQUEST_FAIL,
+      CLAIM_REQUEST_STATUS.SEND_CLAIM_REQUEST_FAIL,
+      CLAIM_REQUEST_STATUS.INSUFFICIENT_BALANCE,
+      CLAIM_REQUEST_STATUS.PAID_CREDENTIAL_REQUEST_FAIL,
+    ]
+    if (errorStates.includes(this.props.claimOfferData.claimRequestStatus)) {
+      this.props.resetClaimRequestStatus(this.props.uid)
+    }
+  }
 
-    switch (status) {
-      case 'SEND_CLAIM_REQUEST_SUCCESS':
-      case 'CLAIM_REQUEST_SUCCESS':
-        status = 'SUCCESS'
-        break
+  agree = () => {
+    this.props.navigation.navigate(txnAuthorAgreementRoute)
+  }
 
-      case 'INSUFFICIENT_BALANCE':
-        status = 'INSUFFICIENT_BALANCE'
-        break
+  onIgnore = () => {
+    this.props.claimOfferIgnored(this.props.uid)
+    this.hideModal()
+  }
 
-      case 'SENDING_PAID_CREDENTIAL_REQUEST':
-      case 'SENDING_CLAIM_REQUEST':
-        status = 'SENDING_PAID_CREDENTIAL_REQUEST'
-        break
+  onClose = () => {
+    this.hideModal()
+  }
 
-      case 'NONE':
-        return null
-
-      default:
-        if (!isAcceptedClaim) {
-          return null
-        }
+  onAccept = () => {
+    // if not a paid cred, then just accept claim offer, and close modal
+    const { payTokenValue }: ClaimOfferPayload = this.props.claimOfferData
+    if (!payTokenValue) {
+      this.onConfirmAndPay(true)
+      return
     }
 
-    return (
-      <View>
-        <PaymentTransactionInfo
-          status={status}
-          shouldShow
-          backgroundColor={this.props.claimThemePrimary}
-        >
-          {this.renderFeesActionButtons(status)}
-        </PaymentTransactionInfo>
-      </View>
-    )
+    // if paid cred, then start loading ledger txn fees
+    const { shouldShowTransactionInfo } = this.state
+    if (shouldShowTransactionInfo === false) {
+      this.setState({ shouldShowTransactionInfo: true })
+    }
+  }
+
+  hideModal = () => {
+    this.props.navigation.goBack(null)
   }
 
   updateState = (status: string, feesData?: TokenFeesData) => {
-    let shouldShowTransactionInfo = false
-    const feesDataSet = feesData || {
-      fees: '0',
-      total: '',
-      currentTokenBalance: '',
-    }
-
-    const claimStatus =
+    const claimOfferStatus =
       this.props.claimOfferData && this.props.claimOfferData.status
     const claimRequestStatus = this.props.claimOfferData.claimRequestStatus
-
-    switch (status) {
-      case 'ZERO_FEES':
-      case 'TRANSFER':
-        shouldShowTransactionInfo = true
-        if (claimStatus !== 'ACCEPTED' && claimRequestStatus === 'NONE') {
-          this.onAccept(true)
-        }
-        break
-
-      case 'POSSIBLE':
-        const { claimOfferData } = this.props
-        const { payTokenValue }: ClaimOfferPayload = claimOfferData
-        return (
-          status && (
-            <CredentialCostInfo
-              feesData={feesDataSet}
-              payTokenValue={payTokenValue || '0'}
-              backgroundColor={this.props.claimThemePrimary}
-              onConfirmAndPay={this.onConfirmAndPay}
-              onCancel={this.onClose}
-            />
-          )
-        )
-
-      default:
-        shouldShowTransactionInfo = true
-        break
+    if (
+      status === 'ZERO_FEES' &&
+      claimOfferStatus !== 'ACCEPTED' &&
+      claimRequestStatus === 'NONE'
+    ) {
+      setTimeout(this.onConfirmAndPay, 2000)
     }
-
-    return (
-      status && (
-        <View>
-          <PaymentTransactionInfo
-            status={status}
-            feesData={feesData}
-            shouldShow={shouldShowTransactionInfo}
-            backgroundColor={this.props.claimThemePrimary}
-          >
-            {this.renderFeesActionButtons(status)}
-          </PaymentTransactionInfo>
-        </View>
-      )
-    )
-  }
-  renderFeesActionButtons = status => {
-    let mainButtonAction = this.onAccept
-    let rightBtnText = 'Close'
-
-    switch (status) {
-      case 'ERROR':
-        rightBtnText = 'Try again'
-        mainButtonAction = this.onTryAgain
-        break
-
-      case 'IN_PROGRESS':
-      case 'SENDING_PAID_CREDENTIAL_REQUEST':
-      case 'SENDING_CLAIM_REQUEST':
-        return null
-      case 'SUCCESS':
-      case 'NOT_POSSIBLE':
-      case 'INSUFFICIENT_BALANCE':
-      case 'SEND_CLAIM_REQUEST_SUCCESS':
-      case 'CLAIM_REQUEST_SUCCESS':
-        mainButtonAction = this.onClose
-        break
-      default:
-        break
-    }
-    return (
-      <ModalButtons
-        onPress={mainButtonAction}
-        colorBackground={this.props.claimThemePrimary}
-        secondColorBackground={this.props.claimThemeSecondary}
-        rightBtnText={rightBtnText}
-      />
-    )
   }
 
   onConfirmAndPay = (shouldHideModal = false) => {
-    this.setState({ isAcceptedClaim: true })
     this.props.acceptClaimOffer(this.props.uid)
-    if (shouldHideModal) {
+    if (shouldHideModal === true) {
       this.hideModal()
     }
+  }
+
+  onPaymentSuccess = () => {
+    this.onClose()
   }
 }
 
@@ -492,7 +360,6 @@ const mapDispatchToProps = dispatch =>
       acceptClaimOffer,
       claimOfferRejected,
       claimOfferIgnored,
-      updateStatusBarTheme,
       claimOfferShowStart,
       resetClaimRequestStatus,
       newConnectionSeen,

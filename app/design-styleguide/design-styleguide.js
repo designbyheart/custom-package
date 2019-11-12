@@ -1,17 +1,20 @@
 // @flow
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import { ModalButtons } from '../components/buttons/modal-buttons'
 import CredentialPriceInfo from '../components/labels/credential-price-info'
 import { buttonGreen } from '../common/styles/constant'
 import { CustomText } from '../components'
+import Loader from '../components/loader/loader'
+import { Error } from '../components/error/error'
+import { Success } from '../components/success/success'
 
 class DesignStyleguide extends Component<void, void> {
   render() {
     return (
       <View>
-        <View>
-          <CustomText style={styles.title}>Modal Buttons</CustomText>
+        <ScrollView>
+          <CustomText style={[styles.title]}>Modal Buttons</CustomText>
           <ModalButtons
             onIgnore={() => {}}
             onPress={() => {}}
@@ -27,7 +30,16 @@ class DesignStyleguide extends Component<void, void> {
           >
             <CredentialPriceInfo price={'0.000043'} />
           </ModalButtons>
-        </View>
+
+          <CustomText style={[styles.title]}>Loader</CustomText>
+          <Loader message="Custom loader message..." />
+
+          <CustomText style={[styles.title]}>Error</CustomText>
+          <Error errorText="Some error text" />
+
+          <CustomText style={[styles.title]}>Success</CustomText>
+          <Success successText="Some error text" afterSuccessShown={() => {}} />
+        </ScrollView>
       </View>
     )
   }

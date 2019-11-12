@@ -64,6 +64,8 @@ describe('<LedgerFees />', () => {
     expect(wrapper.toJSON()).toMatchSnapshot()
   })
 
+  // TODO:KS Add tests which check functionality for render method as well
+
   function getText(text: string) {
     return (
       <View>

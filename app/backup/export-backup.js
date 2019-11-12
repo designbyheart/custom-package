@@ -103,7 +103,7 @@ export class ExportBackupFile extends PureComponent<
     ) {
       return (
         <CustomView doubleVerticalSpace>
-          <Loader showMessage={false} type="light" size={40} />
+          <Loader showMessage={false} type="light" />
         </CustomView>
       )
     }

@@ -2,9 +2,10 @@
 import React from 'react'
 import { View, StyleSheet, FlatList } from 'react-native'
 import { scale } from 'react-native-size-matters'
+import { BigNumber } from 'bignumber.js'
 
 import {
-  mediumGray,
+  grey,
   cardBorder,
   whisper,
   yellowSea,
@@ -31,6 +32,7 @@ const CredentialCostInfo = (props: CredentialCostInfoProps) => {
     onCancel,
     onConfirmAndPay,
   } = props
+  const credentialCost = new BigNumber(payTokenValue || 0).toFixed(8)
   const costsData = [
     {
       label: 'Transaction Fee',
@@ -40,19 +42,33 @@ const CredentialCostInfo = (props: CredentialCostInfoProps) => {
     {
       label: 'Credential Cost',
       key: 'payTokenValue',
-      value: payTokenValue || 0,
+      value: credentialCost,
     },
     { label: 'Total', key: 'total', value: feesData.total || 0 },
   ]
 
   const renderCostCell = ({ item, index }) => {
     const { totalLabel, totalValue, labelText, valueText } = styles
+    let totalLabelStyles = [totalLabel]
+    let totalValueStyles = [totalValue]
+    if (index === 2 && item.value && item.value.length >= 12) {
+      totalLabelStyles.push({ fontSize: scale(17) })
+      totalValueStyles.push({ fontSize: scale(19) })
+    }
+
     return (
       <View style={styles.cell} key={item.label}>
-        <CustomText style={[labelText, index === 2 && totalLabel]}>
+        <CustomText
+          bg={false}
+          style={[labelText, index === 2 && totalLabelStyles]}
+        >
           {item && item.label}
         </CustomText>
-        <CustomText style={[valueText, index === 2 && totalValue]}>
+        <CustomText
+          bg={false}
+          formatNumber
+          style={[valueText, index === 2 && totalValueStyles]}
+        >
           {item && item.value}
         </CustomText>
       </View>
@@ -75,7 +91,7 @@ const CredentialCostInfo = (props: CredentialCostInfoProps) => {
 
   return (
     <View style={styles.costContainer}>
-      <CustomText style={styles.noteMessage}>
+      <CustomText bg={false} style={[styles.noteMessage]}>
         Please confirm. Once tokens are transferred, it cannot be undone.
       </CustomText>
       <FlatList
@@ -109,17 +125,12 @@ const textStyle = {
 const styles = StyleSheet.create({
   costContainer: { flex: 1, backgroundColor: cardBorder },
   costTable: {
-    maxWidth: '90%',
-    marginLeft: '5%',
     height: 'auto',
   },
   noteMessage: {
-    padding: 20,
-    color: mediumGray,
+    color: grey,
     textAlign: 'center',
     fontSize: scale(15),
-    maxWidth: '90%',
-    marginLeft: '5%',
     marginTop: 15,
     marginBottom: 5,
   },

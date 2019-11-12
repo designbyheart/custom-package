@@ -46,7 +46,11 @@ export function* getLedgerFeesSaga(): Generator<*, *, *> {
     yield put(getLedgerFeesSuccess(fees))
   } catch (e) {
     captureError(e)
-    yield put(getLedgerFeesFail(ERROR_GET_LEDGER_FEES(e.message)))
+    yield put(
+      getLedgerFeesFail(
+        ERROR_GET_LEDGER_FEES(e ? e.message : 'No error passed')
+      )
+    )
   }
 }
 

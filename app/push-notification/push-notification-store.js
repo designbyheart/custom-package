@@ -97,8 +97,10 @@ import type {
   ProofRequestPushPayload,
   AdditionalProofDataPayload,
 } from '../proof-request/type-proof-request'
-import { saveSerializedClaimOffer } from '../claim-offer/claim-offer-store'
 import type { ClaimPushPayloadVcx } from '../claim/type-claim'
+import type { Claim } from '../claim/type-claim'
+import type { QuestionPayload } from './../question/type-question'
+import { saveSerializedClaimOffer } from '../claim-offer/claim-offer-store'
 import { safeGet, safeSet, secureGet } from '../services/storage'
 import {
   PUSH_COM_METHOD,
@@ -134,7 +136,6 @@ import {
   lockAuthorizationHomeRoute,
   questionRoute,
 } from '../common'
-import type { Claim } from '../claim/type-claim'
 import { claimReceivedVcx } from '../claim/claim-store'
 import { questionReceived } from '../question/question-store'
 import { NavigationActions } from 'react-navigation'
@@ -146,7 +147,7 @@ import moment from 'moment'
 import { cloudBackupSuccess, cloudBackupFailure } from '../backup/backup-store'
 import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
 import RNFetchBlob from 'rn-fetch-blob'
-import type { QuestionPayload } from './../question/type-question'
+import { convertSovrinAtomsToSovrinTokens } from '../bridge/react-native-cxs/vcx-transformers'
 
 async function delay(ms): Promise<number> {
   return new Promise(res => setTimeout(res, ms))
@@ -242,7 +243,9 @@ export function convertClaimOfferPushPayloadToAppClaimOffer(
       revealedAttributes,
       claimDefinitionSchemaSequenceNumber: pushPayload.schema_seq_no,
     },
-    payTokenValue: pushPayload.price,
+    payTokenValue: pushPayload.price
+      ? convertSovrinAtomsToSovrinTokens(pushPayload.price)
+      : pushPayload.price,
   }
 }
 

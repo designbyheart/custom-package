@@ -5,15 +5,16 @@ This component is created using render props concept. [See more details about re
 ```js
 <LedgerFees
   renderPhases={{
-    IN_PROGRESS: () => <Loader message="Fetching transaction fees...">,
+    IN_PROGRESS: () => <Loader message="Fetching transaction fees..." />,
     ERROR: () => <Error message="" />,
-    ZERO_FEES: (data?: LedgerFeesData) => <ZeroFees />,
-    TRANSFER_EQUAL_TO_BALANCE: (data?: LedgerFeesData) => <TransferPossibleButNoBalanceLeft />,
-    TRANSFER_POSSIBLE_WITH_FEES: (data?: LedgerFeesData) => <TransferPossible />,
-    TRANSFER_NOT_POSSIBLE_WITH_FEES: (data?: LedgerFeesData) => <TransferNotPossible />,
+    ZERO_FEES: (data?: LedgerFeesData, retry: () => void) => <ZeroFees />,
+    TRANSFER_EQUAL_TO_BALANCE: (data?: LedgerFeesData, retry: () => void) => <TransferPossibleButNoBalanceLeft />,
+    TRANSFER_POSSIBLE_WITH_FEES: (data?: LedgerFeesData, retry: () => void) => <TransferPossible />,
+    TRANSFER_NOT_POSSIBLE_WITH_FEES: (data?: LedgerFeesData, retry: () => void) => <TransferNotPossible />,
   }}
   onStateChange={(state: LedgerFeesStatus, data?: LedgerFeesData) => console.log({state, data})}
   transferAmount={"0.0001"}
+  render={(state: LedgerFeesStatus, data?: LedgerFeesData, retry: () => void) => <CommonComponentForAllStates />}
 />
 
 // Types for data passed in renderPhase props

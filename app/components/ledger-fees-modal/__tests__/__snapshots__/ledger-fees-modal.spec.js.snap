@@ -404,20 +404,11 @@ exports[`<LedgerFeesModalComponent /> show loader, loading text, no buttons, if 
           }
         }
       >
-        <Image
-          source={1}
-          style={
-            Object {
-              "height": 30,
-              "tintColor": "#777777",
-              "transform": Array [
-                Object {
-                  "rotate": "0deg",
-                },
-              ],
-              "width": 30,
-            }
-          }
+        <ActivityIndicator
+          animating={true}
+          color="#777777"
+          hidesWhenStopped={true}
+          size="large"
         />
       </View>
     </View>
@@ -1436,20 +1427,11 @@ exports[`<LedgerFeesModalComponent /> trigger getLedgerFees to start fetching le
           }
         }
       >
-        <Image
-          source={1}
-          style={
-            Object {
-              "height": 30,
-              "tintColor": "#777777",
-              "transform": Array [
-                Object {
-                  "rotate": "0deg",
-                },
-              ],
-              "width": 30,
-            }
-          }
+        <ActivityIndicator
+          animating={true}
+          color="#777777"
+          hidesWhenStopped={true}
+          size="large"
         />
       </View>
     </View>

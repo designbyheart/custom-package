@@ -24,7 +24,15 @@ class LedgerFeesComponent extends Component<LedgerFeesProps, void> {
       transferAmount
     )
 
-    return this.props.renderPhases[state](data)
+    if (this.props.render) {
+      return this.props.render(state, data, this.retry)
+    }
+
+    if (this.props.renderPhases) {
+      return this.props.renderPhases[state](data, this.retry)
+    }
+
+    return null
   }
 
   componentDidUpdate(prevProps) {
@@ -127,6 +135,10 @@ class LedgerFeesComponent extends Component<LedgerFeesProps, void> {
     )
     this.props.onStateChange(state, data)
   }
+
+  retry = () => {
+    this.props.dispatch(getLedgerFees())
+  }
 }
 
 const zeroAmount = new BigNumber('0')
@@ -180,7 +192,7 @@ function getLedgerFeeState(
 }
 
 function formatToken(amount: BigNumber): string {
-  return amount.toFormat()
+  return amount.toFixed(8)
 }
 
 const mapStateToProps = (state: Store) => ({

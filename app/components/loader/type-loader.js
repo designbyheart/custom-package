@@ -7,7 +7,6 @@ export type ColorType = 'dark' | 'light'
 
 export type LoadingIndicatorProps = {
   type: ColorType,
-  size: number,
 }
 
 export type LoaderState = {
@@ -22,5 +21,4 @@ export type LoaderProps = {
   timeout: number,
   delay: number,
   showMessage: boolean,
-  size: number,
 }

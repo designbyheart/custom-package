@@ -261,10 +261,10 @@ export function* claimOfferAccepted(
         // Need to add package with device information and test how it behaves
         if (
           getLedgerFeesStartTime
-            .add(1.5, 'seconds')
+            .add(0.7, 'seconds')
             .isAfter(afterLedgerFeesCalculationDone)
         ) {
-          yield call(delay, 600)
+          yield call(delay, 500)
         }
         yield put(inSufficientBalance(messageId))
         return
