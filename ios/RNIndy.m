@@ -1278,7 +1278,6 @@ RCT_EXPORT_METHOD(appendTxnAuthorAgreement:(NSString *)requestJson
                   withDigest:(NSString *)taaDigest
                   withMechanism:(NSString *)mechanism
                   withTimestamp:(NSInteger)time
-//                  withTimestamp:(NSNumber *)time
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
@@ -1338,6 +1337,23 @@ RCT_EXPORT_METHOD(getAcceptanceMechanisms:(NSString *)requesterDID
       resolve(jsonResult);
     }
   }];
-}  
+} 
+
+RCT_EXPORT_METHOD(setActiveTxnAuthorAgreementMeta:(NSString *)text
+                  withVersion:(NSString *)version
+                  withDigest:(NSString *)taaDigest
+                  withMechanism:(NSString *)mechanism
+                  withTimestamp:(NSInteger)time
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] activateTxnAuthorAgreement: text
+                            withVersion:version
+                            withHash: taaDigest
+                            withMechanism: mechanism
+                            withTimestamp: time
+  ];
+   resolve(@{});
+}
 
 @end
