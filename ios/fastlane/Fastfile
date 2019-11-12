@@ -133,8 +133,8 @@ platform :ios do
         remote_branch: "#{remote_branch}"
     )
 
-    hockey_token = ENV["HOCKEYAPP_TOKEN"]
-    UI.user_error!("You didn't set token for HockeyApp") if hockey_token.empty?
+    appcenter_token = ENV["APPCENTER_API_TOKEN"]
+    UI.user_error!("You didn't set token for AppCenter") if appcenter_token.empty?
     build_type = ENV["BUILD_TYPE"] || "#{build_type}"
     appcenter_upload(api_token: ENV["APPCENTER_API_TOKEN"], owner_type: "user", app_name: "QA-ConnectMe")
 
