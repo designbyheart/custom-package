@@ -287,7 +287,6 @@ export function* hydrate(): any {
       yield* hydrateClaimOffersSaga()
       yield* loadHistorySaga()
       yield* hydrateQuestionSaga()
-      yield* hydrateTxnAuthorAgreementSaga()
 
       if (inRecovery === 'true') {
         // TODO: Move vcx shutdown logic inside ensureVcxInitSuccess
@@ -306,6 +305,7 @@ export function* hydrate(): any {
       if (vcxResult && vcxResult.fail) {
         throw new Error(JSON.stringify(vcxResult.fail.message))
       }
+      yield* hydrateTxnAuthorAgreementSaga()
     } catch (e) {
       captureError(e)
       customLogger.error(`hydrateSaga: ${e}`)

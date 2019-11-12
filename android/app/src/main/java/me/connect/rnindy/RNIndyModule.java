@@ -1308,6 +1308,18 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void setActiveTxnAuthorAgreementMeta(String text, String version, String taaDigest, String mechanism, int timestamp, Promise promise) {
+         Long longtimestamp= new Long(timestamp);
+        try {
+            UtilsApi.setActiveTxnAuthorAgreementMeta(text, version, taaDigest, mechanism, longtimestamp);
+            promise.resolve("");
+        } catch (VcxException e) {
+            promise.reject("setActiveTxnAuthorAgreementMeta Exception", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @ReactMethod
     public void appendTxnAuthorAgreement(String requestJson, String text, String version, String taaDigest, String mechanism, int timestamp, Promise promise) {
         Long longtimestamp= new Long(timestamp);
         try {

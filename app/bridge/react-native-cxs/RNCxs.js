@@ -685,7 +685,7 @@ export async function getTxnAuthorAgreement(): Promise<string> {
 export async function setActiveTxnAuthorAgreementMeta(
   text: string,
   version: string,
-  hash: string,
+  hash: string | typeof undefined,
   accMechType: string,
   timeOfAcceptance: number
 ): Promise<string> {
