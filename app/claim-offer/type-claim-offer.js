@@ -14,6 +14,7 @@ import type {
   Attribute,
   NotificationPayloadInfo,
 } from '../push-notification/type-push-notification'
+import type { LedgerFeesStateEnum } from '../ledger/components/ledger-fees/ledger-fees-type'
 
 export const CLAIM_OFFER_STATUS = {
   IDLE: 'IDLE',
@@ -391,9 +392,15 @@ export type TokenFeesData = {
 }
 
 export type PaymentTransactionInfoProps = {
-  status: string,
+  claimThemePrimary: string,
+  claimThemeSecondary: string,
+  onConfirmAndPay: () => void,
+  onCancel: () => void,
+  credentialPrice: string,
+  txnFeesStatus?: LedgerFeesStateEnum,
+  claimRequestStatus?: string,
+  onRetry?: () => void,
+  children?: React.Node,
   feesData?: TokenFeesData,
-  backgroundColor: string,
-  shouldShow: boolean,
-  children: React.Node,
+  onSuccess?: () => void,
 }

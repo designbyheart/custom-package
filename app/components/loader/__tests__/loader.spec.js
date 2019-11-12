@@ -77,10 +77,4 @@ describe('<Loader />', () => {
 
     expect(tree).toMatchSnapshot()
   })
-
-  it('should check that size works', () => {
-    const component = renderer.create(<Loader size={48} showMessage={false} />)
-    const tree = component.toJSON()
-    expect(tree).toMatchSnapshot()
-  })
 })

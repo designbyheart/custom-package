@@ -87,20 +87,11 @@ exports[`<ProofModal /> should match snapshot when proof sent fail 1`] = `
             }
           }
         >
-          <Image
-            source={1}
-            style={
-              Object {
-                "height": 30,
-                "tintColor": "#777777",
-                "transform": Array [
-                  Object {
-                    "rotate": "0deg",
-                  },
-                ],
-                "width": 30,
-              }
-            }
+          <ActivityIndicator
+            animating={true}
+            color="#777777"
+            hidesWhenStopped={true}
+            size="large"
           />
           <Text
             allowFontScaling={false}
@@ -240,20 +231,11 @@ exports[`<ProofModal /> should match snapshot when proof sent success 1`] = `
             }
           }
         >
-          <Image
-            source={1}
-            style={
-              Object {
-                "height": 30,
-                "tintColor": "#777777",
-                "transform": Array [
-                  Object {
-                    "rotate": "0deg",
-                  },
-                ],
-                "width": 30,
-              }
-            }
+          <ActivityIndicator
+            animating={true}
+            color="#777777"
+            hidesWhenStopped={true}
+            size="large"
           />
           <Text
             allowFontScaling={false}
@@ -393,20 +375,11 @@ exports[`<ProofModal /> should match snapshot when sending proof 1`] = `
             }
           }
         >
-          <Image
-            source={1}
-            style={
-              Object {
-                "height": 30,
-                "tintColor": "#777777",
-                "transform": Array [
-                  Object {
-                    "rotate": "0deg",
-                  },
-                ],
-                "width": 30,
-              }
-            }
+          <ActivityIndicator
+            animating={true}
+            color="#777777"
+            hidesWhenStopped={true}
+            size="large"
           />
           <Text
             allowFontScaling={false}

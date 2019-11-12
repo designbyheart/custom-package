@@ -12,20 +12,11 @@ exports[`<Loader /> should check that custom message works 1`] = `
     }
   }
 >
-  <Image
-    source={1}
-    style={
-      Object {
-        "height": 30,
-        "tintColor": "#777777",
-        "transform": Array [
-          Object {
-            "rotate": "0deg",
-          },
-        ],
-        "width": 30,
-      }
-    }
+  <ActivityIndicator
+    animating={true}
+    color="#777777"
+    hidesWhenStopped={true}
+    size="large"
   />
   <Text
     allowFontScaling={false}
@@ -86,20 +77,11 @@ exports[`<Loader /> should check that dark type works 1`] = `
     }
   }
 >
-  <Image
-    source={1}
-    style={
-      Object {
-        "height": 30,
-        "tintColor": "#777777",
-        "transform": Array [
-          Object {
-            "rotate": "0deg",
-          },
-        ],
-        "width": 30,
-      }
-    }
+  <ActivityIndicator
+    animating={true}
+    color="#777777"
+    hidesWhenStopped={true}
+    size="large"
   />
 </View>
 `;
@@ -116,20 +98,11 @@ exports[`<Loader /> should check that light type works 1`] = `
     }
   }
 >
-  <Image
-    source={1}
-    style={
-      Object {
-        "height": 30,
-        "tintColor": "#ffffff",
-        "transform": Array [
-          Object {
-            "rotate": "0deg",
-          },
-        ],
-        "width": 30,
-      }
-    }
+  <ActivityIndicator
+    animating={true}
+    color="#ffffff"
+    hidesWhenStopped={true}
+    size="large"
   />
 </View>
 `;
@@ -146,20 +119,11 @@ exports[`<Loader /> should check that showMessage works as expected when false 1
     }
   }
 >
-  <Image
-    source={1}
-    style={
-      Object {
-        "height": 30,
-        "tintColor": "#777777",
-        "transform": Array [
-          Object {
-            "rotate": "0deg",
-          },
-        ],
-        "width": 30,
-      }
-    }
+  <ActivityIndicator
+    animating={true}
+    color="#777777"
+    hidesWhenStopped={true}
+    size="large"
   />
 </View>
 `;
@@ -176,20 +140,11 @@ exports[`<Loader /> should check that showMessage works as expected when true 1`
     }
   }
 >
-  <Image
-    source={1}
-    style={
-      Object {
-        "height": 30,
-        "tintColor": "#777777",
-        "transform": Array [
-          Object {
-            "rotate": "0deg",
-          },
-        ],
-        "width": 30,
-      }
-    }
+  <ActivityIndicator
+    animating={true}
+    color="#777777"
+    hidesWhenStopped={true}
+    size="large"
   />
   <Text
     allowFontScaling={false}
@@ -238,36 +193,6 @@ exports[`<Loader /> should check that showMessage works as expected when true 1`
 </View>
 `;
 
-exports[`<Loader /> should check that size works 1`] = `
-<View
-  center={true}
-  style={
-    Object {
-      "alignItems": "center",
-      "flex": 1,
-      "justifyContent": "center",
-      "padding": 20,
-    }
-  }
->
-  <Image
-    source={1}
-    style={
-      Object {
-        "height": 48,
-        "tintColor": "#777777",
-        "transform": Array [
-          Object {
-            "rotate": "0deg",
-          },
-        ],
-        "width": 48,
-      }
-    }
-  />
-</View>
-`;
-
 exports[`<Loader /> should render properly and match the snapshot 1`] = `
 <View
   center={true}
@@ -280,20 +205,11 @@ exports[`<Loader /> should render properly and match the snapshot 1`] = `
     }
   }
 >
-  <Image
-    source={1}
-    style={
-      Object {
-        "height": 30,
-        "tintColor": "#777777",
-        "transform": Array [
-          Object {
-            "rotate": "0deg",
-          },
-        ],
-        "width": 30,
-      }
-    }
+  <ActivityIndicator
+    animating={true}
+    color="#777777"
+    hidesWhenStopped={true}
+    size="large"
   />
   <Text
     allowFontScaling={false}

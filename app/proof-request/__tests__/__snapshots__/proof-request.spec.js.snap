@@ -1392,20 +1392,11 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
               }
             }
           >
-            <Image
-              source={1}
-              style={
-                Object {
-                  "height": 30,
-                  "tintColor": "#777777",
-                  "transform": Array [
-                    Object {
-                      "rotate": "0deg",
-                    },
-                  ],
-                  "width": 30,
-                }
-              }
+            <ActivityIndicator
+              animating={true}
+              color="#777777"
+              hidesWhenStopped={true}
+              size="large"
             />
             <Text
               allowFontScaling={false}
@@ -2851,20 +2842,11 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
               }
             }
           >
-            <Image
-              source={1}
-              style={
-                Object {
-                  "height": 30,
-                  "tintColor": "#777777",
-                  "transform": Array [
-                    Object {
-                      "rotate": "0deg",
-                    },
-                  ],
-                  "width": 30,
-                }
-              }
+            <ActivityIndicator
+              animating={true}
+              color="#777777"
+              hidesWhenStopped={true}
+              size="large"
             />
             <Text
               allowFontScaling={false}
@@ -4310,20 +4292,11 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
               }
             }
           >
-            <Image
-              source={1}
-              style={
-                Object {
-                  "height": 30,
-                  "tintColor": "#777777",
-                  "transform": Array [
-                    Object {
-                      "rotate": "0deg",
-                    },
-                  ],
-                  "width": 30,
-                }
-              }
+            <ActivityIndicator
+              animating={true}
+              color="#777777"
+              hidesWhenStopped={true}
+              size="large"
             />
             <Text
               allowFontScaling={false}
@@ -5769,20 +5742,11 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
               }
             }
           >
-            <Image
-              source={1}
-              style={
-                Object {
-                  "height": 30,
-                  "tintColor": "#777777",
-                  "transform": Array [
-                    Object {
-                      "rotate": "0deg",
-                    },
-                  ],
-                  "width": 30,
-                }
-              }
+            <ActivityIndicator
+              animating={true}
+              color="#777777"
+              hidesWhenStopped={true}
+              size="large"
             />
             <Text
               allowFontScaling={false}
@@ -7239,20 +7203,11 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
               }
             }
           >
-            <Image
-              source={1}
-              style={
-                Object {
-                  "height": 30,
-                  "tintColor": "#777777",
-                  "transform": Array [
-                    Object {
-                      "rotate": "0deg",
-                    },
-                  ],
-                  "width": 30,
-                }
-              }
+            <ActivityIndicator
+              animating={true}
+              color="#777777"
+              hidesWhenStopped={true}
+              size="large"
             />
             <Text
               allowFontScaling={false}
@@ -8698,20 +8653,11 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
               }
             }
           >
-            <Image
-              source={1}
-              style={
-                Object {
-                  "height": 30,
-                  "tintColor": "#777777",
-                  "transform": Array [
-                    Object {
-                      "rotate": "0deg",
-                    },
-                  ],
-                  "width": 30,
-                }
-              }
+            <ActivityIndicator
+              animating={true}
+              color="#777777"
+              hidesWhenStopped={true}
+              size="large"
             />
             <Text
               allowFontScaling={false}

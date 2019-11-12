@@ -2009,20 +2009,11 @@ exports[`<QuestionScreen /> should match loading snapshot 1`] = `
             }
           }
         >
-          <Image
-            source={1}
-            style={
-              Object {
-                "height": 30,
-                "tintColor": "#777777",
-                "transform": Array [
-                  Object {
-                    "rotate": "0deg",
-                  },
-                ],
-                "width": 30,
-              }
-            }
+          <ActivityIndicator
+            animating={true}
+            color="#777777"
+            hidesWhenStopped={true}
+            size="large"
           />
           <Text
             allowFontScaling={false}

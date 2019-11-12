@@ -30,7 +30,6 @@ export default class Loader extends Component<LoaderProps, LoaderState> {
     delay: 0,
     type: DARK,
     showMessage: true,
-    size: 30,
   }
 
   constructor(props: LoaderProps) {
@@ -114,7 +113,7 @@ export default class Loader extends Component<LoaderProps, LoaderState> {
   }
 
   render() {
-    const { type, showMessage, size } = this.props
+    const { type, showMessage } = this.props
     const { show, message } = this.state
     const textColor =
       type === DARK ? color.textColor.charcoal : color.actions.font.primary
@@ -122,7 +121,7 @@ export default class Loader extends Component<LoaderProps, LoaderState> {
     if (show) {
       return (
         <Container center style={[styles.loading]}>
-          <LoadingIndicator type={type} size={size} />
+          <LoadingIndicator type={type} />
           {showMessage && (
             <CustomText
               center
