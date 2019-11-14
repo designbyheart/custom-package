@@ -152,6 +152,7 @@ import firebase from 'react-native-firebase'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import { ensureVcxInitSuccess } from './route-store'
+import { convertSovrinAtomsToSovrinTokens } from '../bridge/react-native-cxs/vcx-transformers'
 
 /**
  * this file contains configuration which is changed only from user action
@@ -786,7 +787,9 @@ const convertSerializedCredentialOfferToAditionalData = (
     issuer_name: senderName,
     remoteName: senderName,
     price:
-      paymentInfo && paymentInfo.price ? paymentInfo.price.toString() : null,
+      paymentInfo && paymentInfo.price
+        ? convertSovrinAtomsToSovrinTokens(paymentInfo.price)
+        : null,
   }
 }
 
@@ -933,7 +936,7 @@ const convertDecryptedPayloadToSerializedProofRequest = (
   return JSON.stringify(stringifiableProofRequest)
 }
 
-export function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
+function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
   const { senderDID, uid, type } = message
   const remotePairwiseDID = senderDID
   const connection: Connection[] = yield select(getConnection, senderDID)

@@ -117,7 +117,6 @@ import { proofRequestReceived } from '../proof-request/proof-request-store'
 import {
   updateMessageStatus,
   processMessages,
-  handleMessage,
   traverseAndGetAllMessages,
   convertDecryptedPayloadToQuestion,
 } from '../store/config-store'
@@ -147,7 +146,6 @@ import moment from 'moment'
 import { cloudBackupSuccess, cloudBackupFailure } from '../backup/backup-store'
 import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
 import RNFetchBlob from 'rn-fetch-blob'
-import { convertSovrinAtomsToSovrinTokens } from '../bridge/react-native-cxs/vcx-transformers'
 
 async function delay(ms): Promise<number> {
   return new Promise(res => setTimeout(res, ms))
@@ -243,9 +241,7 @@ export function convertClaimOfferPushPayloadToAppClaimOffer(
       revealedAttributes,
       claimDefinitionSchemaSequenceNumber: pushPayload.schema_seq_no,
     },
-    payTokenValue: pushPayload.price
-      ? convertSovrinAtomsToSovrinTokens(pushPayload.price)
-      : pushPayload.price,
+    payTokenValue: pushPayload.price,
   }
 }
 

@@ -7,6 +7,7 @@ import {
   convertInvitationToVcxConnectionCreate,
   convertVcxCredentialOfferToCxsClaimOffer,
   convertVcxLedgerFeesToLedgerFees,
+  LEDGER_FEE_TRANSFER_CODE,
 } from '../vcx-transformers'
 import {
   vcxProvisionResult,
@@ -94,7 +95,7 @@ describe('transformer:VCX', () => {
 
   it('convertVcxLedgerFeesToLedgerFees, return correct fees', () => {
     const correctLedgerFees = {
-      '10001': '100',
+      [LEDGER_FEE_TRANSFER_CODE]: '100',
     }
     expect(
       convertVcxLedgerFeesToLedgerFees(JSON.stringify(correctLedgerFees))
@@ -105,7 +106,7 @@ describe('transformer:VCX', () => {
 
   it('convertVcxLedgerFeesToLedgerFees, 0 fees for incorrect ledger fees', () => {
     const incorrectLedgerFees = {
-      '10001': '0',
+      [LEDGER_FEE_TRANSFER_CODE]: '0',
     }
     expect(
       convertVcxLedgerFeesToLedgerFees(JSON.stringify(incorrectLedgerFees))
@@ -113,7 +114,7 @@ describe('transformer:VCX', () => {
       transfer: '0',
     })
     const noLedgerFeesForTransfer = {
-      '1001': '0',
+      [LEDGER_FEE_TRANSFER_CODE]: '0',
     }
     expect(
       convertVcxLedgerFeesToLedgerFees(JSON.stringify(noLedgerFeesForTransfer))
@@ -121,7 +122,7 @@ describe('transformer:VCX', () => {
       transfer: '0',
     })
     const noLedgerFeesAsNumberForTransfer = {
-      '1001': '1a',
+      [LEDGER_FEE_TRANSFER_CODE]: '1a',
     }
     expect(
       convertVcxLedgerFeesToLedgerFees(
