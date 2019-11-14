@@ -1334,7 +1334,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
           }
         >
           <Text
-            accessibilityLabel="send-proof-message"
+            accessibilityLabel="Sending..."
             accessible={true}
             allowFontScaling={false}
             style={

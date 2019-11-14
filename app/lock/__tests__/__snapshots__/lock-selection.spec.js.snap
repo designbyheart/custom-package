@@ -172,7 +172,7 @@ exports[`app lock selection page should render properly 1`] = `
         }
       />
       <Text
-        accessibilityLabel="use-touch-id-text"
+        accessibilityLabel="Use Biometrics"
         accessible={true}
         allowFontScaling={false}
         onLongPress={[Function]}
@@ -601,7 +601,7 @@ exports[`app lock selection page should render properly 1`] = `
         </View>
       </View>
       <Text
-        accessibilityLabel="use-pass-code-text"
+        accessibilityLabel="Use Passcode"
         accessible={true}
         allowFontScaling={false}
         onLongPress={[Function]}

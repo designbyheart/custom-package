@@ -92,7 +92,7 @@ exports[`<ConnectionHistoryDetails /> should ConnectionHistoryDetails render pro
                     }
                   >
                     <Text
-                      accessibilityLabel="custom-list-label-0"
+                      accessibilityLabel="label"
                       accessible={true}
                       allowFontScaling={false}
                       style={

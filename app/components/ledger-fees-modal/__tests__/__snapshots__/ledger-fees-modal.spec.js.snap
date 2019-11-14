@@ -79,7 +79,7 @@ exports[`<LedgerFeesModalComponent /> show error if fetching fees failed, show r
       </View>
     </View>
     <Text
-      accessibilityLabel="ledger-fees-modal-content"
+      accessibilityLabel="There was a problem checking transaction fees. Retry?"
       accessible={true}
       allowFontScaling={false}
       style={
@@ -413,7 +413,7 @@ exports[`<LedgerFeesModalComponent /> show loader, loading text, no buttons, if 
       </View>
     </View>
     <Text
-      accessibilityLabel="ledger-fees-modal-content"
+      accessibilityLabel="Getting fees..."
       accessible={true}
       allowFontScaling={false}
       style={
@@ -535,7 +535,7 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
       </View>
     </View>
     <Text
-      accessibilityLabel="ledger-fees-modal-title"
+      accessibilityLabel="0.01"
       accessible={true}
       allowFontScaling={false}
       style={
@@ -577,7 +577,7 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
       0.01
     </Text>
     <Text
-      accessibilityLabel="ledger-fees-modal-title"
+      accessibilityLabel="Transaction fee"
       accessible={true}
       allowFontScaling={false}
       style={
@@ -619,7 +619,7 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
       Transaction fee
     </Text>
     <Text
-      accessibilityLabel="ledger-fees-modal-content"
+      accessibilityLabel="Passed message ,0.01"
       accessible={true}
       allowFontScaling={false}
       style={
@@ -973,7 +973,7 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
       </View>
     </View>
     <Text
-      accessibilityLabel="ledger-fees-modal-title"
+      accessibilityLabel="0.01"
       accessible={true}
       allowFontScaling={false}
       style={
@@ -1015,7 +1015,7 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
       0.01
     </Text>
     <Text
-      accessibilityLabel="ledger-fees-modal-title"
+      accessibilityLabel="Transaction fee"
       accessible={true}
       allowFontScaling={false}
       style={
@@ -1057,7 +1057,7 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
       Transaction fee
     </Text>
     <Text
-      accessibilityLabel="ledger-fees-modal-content"
+      accessibilityLabel="This transaction will cost you, ,[object Object], ,Sovrin Tokens. Do you wish to continue?"
       accessible={true}
       allowFontScaling={false}
       style={
@@ -1097,7 +1097,7 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
       This transaction will cost you
        
       <Text
-        accessibilityLabel="ledger-fees-modal-content"
+        accessibilityLabel="0.01"
         accessible={true}
         allowFontScaling={false}
         style={
@@ -1436,7 +1436,7 @@ exports[`<LedgerFeesModalComponent /> trigger getLedgerFees to start fetching le
       </View>
     </View>
     <Text
-      accessibilityLabel="ledger-fees-modal-content"
+      accessibilityLabel="Getting fees..."
       accessible={true}
       allowFontScaling={false}
       style={

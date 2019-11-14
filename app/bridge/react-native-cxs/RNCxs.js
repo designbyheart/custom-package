@@ -35,9 +35,6 @@ import {
   convertVcxConnectionToCxsConnection,
   convertVcxCredentialOfferToCxsClaimOffer,
   paymentHandle,
-  convertSovrinTokensToSovrinAtoms,
-  convertSovrinAtomsToSovrinTokens,
-  convertVcxLedgerFeesToLedgerFees,
 } from './vcx-transformers'
 import type { UserOneTimeInfo } from '../../store/user/type-user-store'
 import type { AgencyPoolConfig } from '../../store/type-config-store'
@@ -59,6 +56,11 @@ import { secureSet, getWalletKey } from '../../services/storage'
 import { __uniqueId } from '../../store/type-config-store'
 import type { LedgerFeesData } from '../../ledger/type-ledger-store'
 import { schemaValidator } from '../../services/schema-validator'
+import {
+  convertSovrinTokensToSovrinAtoms,
+  convertSovrinAtomsToSovrinTokens,
+  convertVcxLedgerFeesToLedgerFees,
+} from '../../sovrin-token/sovrin-token-converter'
 
 const { RNIndy } = NativeModules
 

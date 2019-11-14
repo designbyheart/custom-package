@@ -25,6 +25,7 @@ import WalletBalance from './wallet-balance'
 import WalletTabs from './wallet-tabs'
 import styles from './styles'
 import { withStatusBar } from '../components/status-bar/status-bar'
+import { WALLET_HEADER_TOKEN_BALANCE_ID } from './type-wallet'
 
 const closeImage = require('../images/iconClose.png')
 const sovrinLogo = require('../images/sovrinLogo.png')
@@ -104,6 +105,7 @@ export class Wallet extends PureComponent<WalletProps, void> {
                         fontSize: walletTabsHeaderBalanceFontSize(balance),
                       },
                     ]}
+                    testID={WALLET_HEADER_TOKEN_BALANCE_ID}
                   >
                     {balance}
                   </CustomText>

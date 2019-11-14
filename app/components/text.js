@@ -15,145 +15,183 @@ export function formatNumbers(num: string) {
   return num
 }
 
-//TODO: Default font color should be tertiary and background should also be tertiary.
-const CustomText = (props: GenericObject) => {
-  const {
-    h3,
-    h3a,
-    h3b,
-    h4,
-    h4a,
-    h5,
-    h6,
-    h7,
-    bold,
-    thick,
-    semiBold,
-    demiBold,
-    center,
-    bg = 'primary',
-    primary,
-    secondary,
-    tertiary,
-    quaternary,
-    quinaryText,
-    errorText,
-    borderColor,
-    style = [],
-    testID,
-    onPress,
-    onLongPress,
-    transparentBg,
-    uppercase,
-    heavy,
-    numberOfLines,
-    formatNumber,
-    fullWidth,
-    adjustsFontSizeToFit,
-    allowFontScaling,
-    animated,
-    charcoal,
-    secondaryColor,
-    darkgray,
-    medium,
-    // set text color by passing value such as primary, secondary, tertiary
-    // to color prop
-    // for example: <CustomText bg="primary" color="primary">Text</CustomText>
-    color,
-    // set size of text from available font sizes
-    // ideally we should have only 6-7 sizes and we can try to use
-    // following pattern to choose among those sizes
-    // <CustomText size="h3" />
-    size,
-  } = props
+class CustomText extends React.Component<GenericObject, void> {
+  render() {
+    const props = this.props
+    const {
+      h3,
+      h3a,
+      h3b,
+      h4,
+      h4a,
+      h5,
+      h6,
+      h7,
+      bold,
+      thick,
+      semiBold,
+      demiBold,
+      center,
+      bg = 'primary',
+      primary,
+      secondary,
+      tertiary,
+      quaternary,
+      quinaryText,
+      errorText,
+      borderColor,
+      style = [],
+      testID,
+      onPress,
+      onLongPress,
+      transparentBg,
+      uppercase,
+      heavy,
+      numberOfLines,
+      formatNumber,
+      fullWidth,
+      adjustsFontSizeToFit,
+      allowFontScaling,
+      animated,
+      charcoal,
+      secondaryColor,
+      darkgray,
+      medium,
+      // set text color by passing value such as primary, secondary, tertiary
+      // to color prop
+      // for example: <CustomText bg="primary" color="primary">Text</CustomText>
+      color,
+      // set size of text from available font sizes
+      // ideally we should have only 6-7 sizes and we can try to use
+      // following pattern to choose among those sizes
+      // <CustomText size="h3" />
+      size,
+      // show numbers of layout (top, left, width, height) in an alert
+      // this props is purely for testing purpose, and should not be used in any
+      // production code
+      showLayoutDetails = false,
+    } = props
 
-  // preference is given to color prop to set text color
-  const colorType = color
-    ? capitalizeFirstLetter(color)
-    : quaternary
-      ? 'Quaternary'
-      : secondary ? 'Secondary' : tertiary ? 'Tertiary' : 'Primary'
-  // preference is given to size prop, so if user pass both size and h3-h7
-  // value of size will override other values
-  const sizeStyle = size
-    ? size
-    : h3
-      ? 'h3'
-      : h3a ? 'h3a' : h4 ? 'h4' : h4a ? 'h4a' : h6 ? 'h6' : h7 ? 'h7' : 'h5'
-  const fontFamily = 'fontLato'
-  const textStyles = [
-    styles[sizeStyle],
-    styles[fontFamily],
-    // $FlowFixMe Flow does not support below syntax for type checking
-    styles[`${bg}Bg${colorType}`] || {},
-    bold
-      ? styles.bold
-      : semiBold
-        ? styles.semiBold
-        : thick
-          ? styles.thick
-          : demiBold
-            ? styles.demiBold
-            : heavy ? styles.heavy : medium ? styles.medium : null,
-    center ? styles.center : null,
-    transparentBg ? styles.transparentBg : null,
-    quinaryText ? styles.orangeText : null,
-    errorText ? styles.errorText : null,
-    borderColor ? styles.borderColor : null,
-    primary ? styles.primary : null,
-    fullWidth ? styles.fullWidth : null,
-    charcoal ? styles.colorCharcoal : null,
-    secondaryColor ? styles.greyColor : null,
-    darkgray ? styles.darkgray : null,
-  ]
-  if (Array.isArray(style) && style.length) {
-    // style does exist, is an array, and is not empty
-    textStyles.push(...style)
-  }
-  const TextComponent = animated ? Animated.Text : Text
+    // preference is given to color prop to set text color
+    const colorType = color
+      ? capitalizeFirstLetter(color)
+      : quaternary
+        ? 'Quaternary'
+        : secondary ? 'Secondary' : tertiary ? 'Tertiary' : 'Primary'
+    // preference is given to size prop, so if user pass both size and h3-h7
+    // value of size will override other values
+    const sizeStyle = size
+      ? size
+      : h3
+        ? 'h3'
+        : h3a ? 'h3a' : h4 ? 'h4' : h4a ? 'h4a' : h6 ? 'h6' : h7 ? 'h7' : 'h5'
+    const fontFamily = 'fontLato'
+    const textStyles = [
+      styles[sizeStyle],
+      styles[fontFamily],
+      // $FlowFixMe Flow does not support below syntax for type checking
+      styles[`${bg}Bg${colorType}`] || {},
+      bold
+        ? styles.bold
+        : semiBold
+          ? styles.semiBold
+          : thick
+            ? styles.thick
+            : demiBold
+              ? styles.demiBold
+              : heavy ? styles.heavy : medium ? styles.medium : null,
+      center ? styles.center : null,
+      transparentBg ? styles.transparentBg : null,
+      quinaryText ? styles.orangeText : null,
+      errorText ? styles.errorText : null,
+      borderColor ? styles.borderColor : null,
+      primary ? styles.primary : null,
+      fullWidth ? styles.fullWidth : null,
+      charcoal ? styles.colorCharcoal : null,
+      secondaryColor ? styles.greyColor : null,
+      darkgray ? styles.darkgray : null,
+    ]
+    if (Array.isArray(style) && style.length) {
+      // style does exist, is an array, and is not empty
+      textStyles.push(...style)
+    }
+    const TextComponent = animated ? Animated.Text : Text
 
-  let filteredProps = {}
-  if (typeof onLongPress !== 'undefined') {
-    filteredProps.onLongPress = onLongPress
-  }
-  if (typeof testID !== 'undefined') {
-    filteredProps.testID = testID
-    filteredProps.accessible = true
-    filteredProps.accessibilityLabel = testID
-  }
-  if (typeof onPress !== 'undefined') {
-    filteredProps.onPress = debounce(
-      event => {
-        onPress(event)
-      },
-      300,
-      { leading: true, trailing: false }
+    let filteredProps = {}
+    if (typeof onLongPress !== 'undefined') {
+      filteredProps.onLongPress = onLongPress
+    }
+    if (typeof testID !== 'undefined') {
+      filteredProps.testID = testID
+      filteredProps.accessible = true
+      filteredProps.accessibilityLabel = props.children
+        ? props.children.toString()
+        : testID
+    }
+    if (typeof onPress !== 'undefined') {
+      filteredProps.onPress = debounce(
+        event => {
+          onPress(event)
+        },
+        300,
+        { leading: true, trailing: false }
+      )
+    }
+    if (typeof numberOfLines !== 'undefined') {
+      filteredProps.numberOfLines = numberOfLines
+    }
+    let textChild = props.children
+    if (uppercase) {
+      textChild = props.children.toUpperCase()
+    }
+    if (formatNumber) {
+      textChild = formatNumbers(props.children)
+    }
+    if (adjustsFontSizeToFit) {
+      filteredProps.adjustsFontSizeToFit = adjustsFontSizeToFit
+    }
+    if (allowFontScaling && animated) {
+      filteredProps.allowFontScaling = allowFontScaling
+    } else {
+      filteredProps.allowFontScaling = false
+    }
+    if (props.onLayout) {
+      filteredProps.onLayout = props.onLayout
+    }
+
+    if (showLayoutDetails && __DEV__) {
+      return (
+        <TextComponent
+          style={textStyles}
+          {...filteredProps}
+          ref={textRef => (this.textRef = textRef)}
+          onLayout={this.onLayout}
+        >
+          {textChild}
+        </TextComponent>
+      )
+    }
+
+    return (
+      <TextComponent style={textStyles} {...filteredProps}>
+        {textChild}
+      </TextComponent>
     )
   }
-  if (typeof numberOfLines !== 'undefined') {
-    filteredProps.numberOfLines = numberOfLines
-  }
-  let textChild = props.children
-  if (uppercase) {
-    textChild = props.children.toUpperCase()
-  }
-  if (formatNumber) {
-    textChild = formatNumbers(props.children)
-  }
-  if (adjustsFontSizeToFit) {
-    filteredProps.adjustsFontSizeToFit = adjustsFontSizeToFit
-  }
-  if (allowFontScaling && animated) {
-    filteredProps.allowFontScaling = allowFontScaling
-  } else {
-    filteredProps.allowFontScaling = false
-  }
 
-  return (
-    <TextComponent style={textStyles} {...filteredProps}>
-      {textChild}
-    </TextComponent>
-  )
+  textRef = null
+
+  // handle onLayout, and get top, left, width and height
+  onLayout = () => {
+    if (__DEV__) {
+      setTimeout(() => {
+        this.textRef &&
+          this.textRef.measure((fx, fy, width, height, left, top) => {
+            alert(`w: ${width}, h: ${height}, x: ${left}, y: ${top}`)
+          })
+      }, 2000)
+    }
+  }
 }
 
 export default CustomText

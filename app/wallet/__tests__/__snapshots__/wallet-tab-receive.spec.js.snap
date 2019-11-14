@@ -71,6 +71,8 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
             Your Sovrin token payment address is:
           </Text>
           <Text
+            accessibilityLabel="sov:ksudgyi8f98gsih7655hgifuyg79s89s98ydf98fg7gks8fjhkss8f030"
+            accessible={true}
             allowFontScaling={false}
             style={
               Array [
@@ -118,6 +120,7 @@ exports[`<WalletTabReceive /> should render properly and match the snapshot 1`] 
                 },
               ]
             }
+            testID="token-payment-address"
           >
             sov:ksudgyi8f98gsih7655hgifuyg79s89s98ydf98fg7gks8fjhkss8f030
           </Text>

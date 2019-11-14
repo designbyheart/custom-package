@@ -96,6 +96,7 @@ export class WalletTabReceive extends PureComponent<
                     primary
                     key={walletAddress}
                     style={[styles.paymentAddress]}
+                    testID="token-payment-address"
                   >
                     {walletAddress}
                   </CustomText>

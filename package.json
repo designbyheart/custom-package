@@ -21,7 +21,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier --single-quote --no-semi --trailing-comma es5 --write \"{app,__{tests,mocks}__}/**/*.js\"",
+      "prettier --single-quote --no-semi --trailing-comma es5 --write \"{app,e2e,__{tests,mocks}__}/**/*.js\"",
       "git add"
     ],
     "Podfile.lock": [
@@ -128,6 +128,7 @@
     "lint-staged": "^3.4.1",
     "metro-react-native-babel-preset": "0.51.1",
     "node-fetch": "next",
+    "node-ssh": "^6.0.0",
     "prettier": "1.10.2",
     "ramda": "^0.25.0",
     "react-devtools": "^3.6.0",

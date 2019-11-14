@@ -24,11 +24,11 @@ import {
 import type { Store } from '../store/type-store'
 import { STORE_STATUS } from './type-wallet'
 import type { WalletSendAmountNavigation } from './type-wallet'
-import { conversionFactorLength } from '../bridge/react-native-cxs/vcx-transformers'
 import { txnAuthorAgreementRoute } from '../common/route-constants'
 import type { ReactNavigation } from '../common/type-common'
 import { receiveTabRoute, sendTabRoute, historyTabRoute } from '../common'
 import { SEND_TAB, SEND_TAB_TEST_ID } from './wallet-constants'
+import { conversionFactorLength } from '../sovrin-token/sovrin-token-converter'
 
 class WalletSendAmount extends PureComponent<
   WalletSendAmountProps,

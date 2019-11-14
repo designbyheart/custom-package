@@ -2727,7 +2727,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
           </View>
         </View>
         <Text
-          accessibilityLabel="claim-offer-payment-failure-modal-payment-failure-modal-modal-title"
+          accessibilityLabel="Payment Failure"
           accessible={true}
           allowFontScaling={false}
           style={
@@ -2769,7 +2769,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
           Payment Failure
         </Text>
         <Text
-          accessibilityLabel="claim-offer-payment-failure-modal-payment-failure-modal-modal-content"
+          accessibilityLabel="Something went wrong trying to pay Test Issuer. Please try again."
           accessible={true}
           allowFontScaling={false}
           style={
@@ -6716,7 +6716,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
           </View>
         </View>
         <Text
-          accessibilityLabel="ledger-fees-modal-title"
+          accessibilityLabel="0.00001"
           accessible={true}
           allowFontScaling={false}
           style={
@@ -6758,7 +6758,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
           0.00001
         </Text>
         <Text
-          accessibilityLabel="ledger-fees-modal-title"
+          accessibilityLabel="Transaction fee"
           accessible={true}
           allowFontScaling={false}
           style={
@@ -6800,7 +6800,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
           Transaction fee
         </Text>
         <Text
-          accessibilityLabel="ledger-fees-modal-content"
+          accessibilityLabel="The Sovrin Ledger transaction fees brings your total spend to, ,[object Object],. Proceed?"
           accessible={true}
           allowFontScaling={false}
           style={
@@ -6840,7 +6840,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
           The Sovrin Ledger transaction fees brings your total spend to
            
           <Text
-            accessibilityLabel="ledger-fees-modal-content"
+            accessibilityLabel="8000.0675954"
             accessible={true}
             allowFontScaling={false}
             style={
