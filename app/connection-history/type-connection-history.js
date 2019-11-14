@@ -115,6 +115,7 @@ export type ConnectionHistoryEvent = {
   remoteDid: string,
   originalPayload: GenericObject,
   showBadge?: boolean,
+  payTokenValue?: string,
 }
 
 export type ConnectionHistoryItem = {

@@ -2830,7 +2830,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                 "elevation": 0,
                 "marginBottom": 15,
                 "marginTop": 15,
-                "padding": 15,
                 "shadowColor": "#000000",
                 "shadowOffset": Object {
                   "height": 0,
@@ -2844,113 +2843,79 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
             <View
               style={
                 Object {
-                  "alignItems": "stretch",
-                  "flexDirection": "row",
-                  "paddingBottom": 15,
+                  "padding": 15,
                 }
               }
             >
               <View
                 style={
-                  Array [
-                    Object {
-                      "height": 38,
-                      "width": 35,
-                    },
-                    Object {
-                      "display": "flex",
-                    },
-                  ]
+                  Object {
+                    "alignItems": "stretch",
+                    "flexDirection": "row",
+                    "paddingBottom": 15,
+                  }
                 }
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "flex-start",
-                      "height": "100%",
-                      "justifyContent": "flex-end",
-                      "width": "100%",
-                    }
+                    Array [
+                      Object {
+                        "height": 38,
+                        "width": 35,
+                      },
+                      Object {
+                        "display": "flex",
+                      },
+                    ]
                   }
                 >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight="33"
-                    bbWidth="22"
-                    height="33"
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
+                  <View
                     style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        undefined,
-                        null,
-                        Object {
-                          "flex": 0,
-                          "height": 33,
-                          "width": 22,
-                        },
-                      ]
+                      Object {
+                        "alignItems": "flex-start",
+                        "height": "100%",
+                        "justifyContent": "flex-end",
+                        "width": "100%",
+                      }
                     }
-                    vbHeight={33}
-                    vbWidth={22}
-                    width="22"
                   >
-                    <RNSVGGroup
-                      fill={
+                    <RNSVGSvgView
+                      align="xMidYMid"
+                      bbHeight="33"
+                      bbWidth="22"
+                      height="33"
+                      meetOrSlice={0}
+                      minX={0}
+                      minY={0}
+                      style={
                         Array [
-                          0,
-                          4278190080,
+                          Object {
+                            "backgroundColor": "transparent",
+                            "borderWidth": 0,
+                          },
+                          undefined,
+                          null,
+                          Object {
+                            "flex": 0,
+                            "height": 33,
+                            "width": 22,
+                          },
                         ]
                       }
-                      fillOpacity={1}
-                      fillRule={1}
-                      font={Object {}}
-                      matrix={
-                        Array [
-                          1,
-                          0,
-                          0,
-                          1,
-                          0,
-                          0,
-                        ]
-                      }
-                      opacity={1}
-                      originX={0}
-                      originY={0}
-                      propList={Array []}
-                      rotation={0}
-                      scaleX={1}
-                      scaleY={1}
-                      skewX={0}
-                      skewY={0}
-                      stroke={null}
-                      strokeDasharray={null}
-                      strokeDashoffset={null}
-                      strokeLinecap={0}
-                      strokeLinejoin={0}
-                      strokeMiterlimit={4}
-                      strokeOpacity={1}
-                      strokeWidth={1}
-                      vectorEffect={0}
-                      x={0}
-                      y={0}
+                      vbHeight={33}
+                      vbWidth={22}
+                      width="22"
                     >
-                      <RNSVGPath
-                        d="M6.875 21.2004V28.4852L10.9705 25.2123L15.125 28.4852V21.2004C13.8512 21.7161 12.4587 22 11 22C9.54126 22 8.14884 21.7161 6.875 21.2004ZM4.12496 19.5874C1.61021 17.5714 0 14.4738 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11C22 14.5008 20.3646 17.6197 17.8161 19.6343L17.816 32.527L10.9705 28.4315L4.125 32.527L4.12496 19.5874ZM11 19.25C15.5563 19.25 19.25 15.5563 19.25 11C19.25 6.44365 15.5563 2.75 11 2.75C6.44365 2.75 2.75 6.44365 2.75 11C2.75 15.5563 6.44365 19.25 11 19.25ZM16.2142 7.8418C16.2443 7.89785 16.2594 7.93988 16.2594 7.9679C16.2594 7.99593 16.2443 8.03796 16.2142 8.09401L10.5972 14.8196C10.5069 14.9036 10.4393 14.9457 10.3941 14.9457C10.3189 14.9457 10.2438 14.9106 10.1686 14.8406L6.98779 11.9822L6.92012 11.9192C6.89004 11.8631 6.875 11.8211 6.875 11.7931C6.875 11.779 6.89004 11.744 6.92012 11.688L6.96523 11.6459C7.38633 11.2256 7.71719 10.9033 7.95781 10.6791C8.04804 10.5951 8.1082 10.553 8.13828 10.553C8.19844 10.553 8.27363 10.5951 8.36387 10.6791L10.1686 12.3185L14.6803 6.91704C14.7104 6.88901 14.7555 6.875 14.8156 6.875C14.8608 6.875 14.9134 6.88901 14.9736 6.91704L16.2142 7.8418Z"
+                      <RNSVGGroup
                         fill={
                           Array [
                             0,
-                            4283453520,
+                            4278190080,
                           ]
                         }
                         fillOpacity={1}
-                        fillRule={0}
+                        fillRule={1}
+                        font={Object {}}
                         matrix={
                           Array [
                             1,
@@ -2964,12 +2929,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                         opacity={1}
                         originX={0}
                         originY={0}
-                        propList={
-                          Array [
-                            "fill",
-                            "fillRule",
-                          ]
-                        }
+                        propList={Array []}
                         rotation={0}
                         scaleX={1}
                         scaleY={1}
@@ -2986,1278 +2946,1325 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                         vectorEffect={0}
                         x={0}
                         y={0}
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
+                      >
+                        <RNSVGPath
+                          d="M6.875 21.2004V28.4852L10.9705 25.2123L15.125 28.4852V21.2004C13.8512 21.7161 12.4587 22 11 22C9.54126 22 8.14884 21.7161 6.875 21.2004ZM4.12496 19.5874C1.61021 17.5714 0 14.4738 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11C22 14.5008 20.3646 17.6197 17.8161 19.6343L17.816 32.527L10.9705 28.4315L4.125 32.527L4.12496 19.5874ZM11 19.25C15.5563 19.25 19.25 15.5563 19.25 11C19.25 6.44365 15.5563 2.75 11 2.75C6.44365 2.75 2.75 6.44365 2.75 11C2.75 15.5563 6.44365 19.25 11 19.25ZM16.2142 7.8418C16.2443 7.89785 16.2594 7.93988 16.2594 7.9679C16.2594 7.99593 16.2443 8.03796 16.2142 8.09401L10.5972 14.8196C10.5069 14.9036 10.4393 14.9457 10.3941 14.9457C10.3189 14.9457 10.2438 14.9106 10.1686 14.8406L6.98779 11.9822L6.92012 11.9192C6.89004 11.8631 6.875 11.8211 6.875 11.7931C6.875 11.779 6.89004 11.744 6.92012 11.688L6.96523 11.6459C7.38633 11.2256 7.71719 10.9033 7.95781 10.6791C8.04804 10.5951 8.1082 10.553 8.13828 10.553C8.19844 10.553 8.27363 10.5951 8.36387 10.6791L10.1686 12.3185L14.6803 6.91704C14.7104 6.88901 14.7555 6.875 14.8156 6.875C14.8608 6.875 14.9134 6.88901 14.9736 6.91704L16.2142 7.8418Z"
+                          fill={
+                            Array [
+                              0,
+                              4283453520,
+                            ]
+                          }
+                          fillOpacity={1}
+                          fillRule={0}
+                          matrix={
+                            Array [
+                              1,
+                              0,
+                              0,
+                              1,
+                              0,
+                              0,
+                            ]
+                          }
+                          opacity={1}
+                          originX={0}
+                          originY={0}
+                          propList={
+                            Array [
+                              "fill",
+                              "fillRule",
+                            ]
+                          }
+                          rotation={0}
+                          scaleX={1}
+                          scaleY={1}
+                          skewX={0}
+                          skewY={0}
+                          stroke={null}
+                          strokeDasharray={null}
+                          strokeDashoffset={null}
+                          strokeLinecap={0}
+                          strokeLinejoin={0}
+                          strokeMiterlimit={4}
+                          strokeOpacity={1}
+                          strokeWidth={1}
+                          vectorEffect={0}
+                          x={0}
+                          y={0}
+                        />
+                      </RNSVGGroup>
+                    </RNSVGSvgView>
+                  </View>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "width": "100%",
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "#505050",
+                          "fontFamily": "Lato",
+                          "fontSize": 14,
+                          "fontWeight": "700",
+                          "textAlign": "left",
+                        }
+                      }
+                    >
+                      Enterprise name
+                    </Text>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "stretch",
+                        "flexDirection": "row",
+                        "paddingTop": 4,
+                        "width": "100%",
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "#777777",
+                          "flex": 1,
+                          "fontFamily": "Lato",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "lineHeight": 13,
+                          "textAlign": "left",
+                        }
+                      }
+                    >
+                      ACCEPTED CREDENTIAL
+                    </Text>
+                    <Text
+                      style={
+                        Object {
+                          "color": "#505050",
+                          "fontFamily": "Lato",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "textAlign": "right",
+                        }
+                      }
+                    >
+                      2018-01-10T04:32:43+05:30
+                    </Text>
+                  </View>
                 </View>
               </View>
               <View
                 style={
                   Object {
-                    "flex": 1,
+                    "backgroundColor": "transparent",
+                    "flexDirection": "row",
+                    "height": 1,
+                    "justifyContent": "flex-start",
+                    "overflow": "hidden",
+                    "width": "100%",
                   }
                 }
               >
                 <View
                   style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
                     Object {
-                      "width": "100%",
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
                     }
                   }
-                >
-                  <Text
-                    style={
+                />
+                <View
+                  style={
+                    Array [
                       Object {
-                        "color": "#505050",
-                        "fontFamily": "Lato",
-                        "fontSize": 14,
-                        "fontWeight": "700",
-                        "textAlign": "left",
-                      }
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
                     }
-                  >
-                    Enterprise name
-                  </Text>
-                </View>
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "paddingTop": 15,
+                    "width": "100%",
+                  }
+                }
+              >
                 <View
                   style={
                     Object {
                       "alignItems": "stretch",
                       "flexDirection": "row",
-                      "paddingTop": 4,
-                      "width": "100%",
                     }
                   }
                 >
                   <Text
                     style={
                       Object {
-                        "color": "#777777",
-                        "flex": 1,
+                        "color": "#505050",
                         "fontFamily": "Lato",
-                        "fontSize": 11,
-                        "fontWeight": "500",
-                        "lineHeight": 13,
+                        "fontSize": 14,
+                        "fontWeight": "400",
                         "textAlign": "left",
                       }
                     }
                   >
-                    ACCEPTED CREDENTIAL
+                    1
                   </Text>
                   <Text
                     style={
                       Object {
                         "color": "#505050",
                         "fontFamily": "Lato",
-                        "fontSize": 11,
-                        "fontWeight": "500",
-                        "textAlign": "right",
+                        "fontSize": 14,
+                        "fontWeight": "400",
+                        "textAlign": "left",
                       }
                     }
                   >
-                    2018-01-10T04:32:43+05:30
+                     Attributes
                   </Text>
                 </View>
-              </View>
-            </View>
-            <View
-              style={
-                Object {
-                  "backgroundColor": "transparent",
-                  "flexDirection": "row",
-                  "height": 1,
-                  "justifyContent": "flex-start",
-                  "overflow": "hidden",
-                  "width": "100%",
-                }
-              }
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-            </View>
-            <View
-              style={
-                Object {
-                  "backgroundColor": "white",
-                  "paddingTop": 15,
-                  "width": "100%",
-                }
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "stretch",
-                    "flexDirection": "row",
-                  }
-                }
-              >
-                <Text
+                <View
+                  accessible={true}
+                  isTVSelectable={true}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
                   style={
                     Object {
-                      "color": "#505050",
-                      "fontFamily": "Lato",
-                      "fontSize": 14,
-                      "fontWeight": "400",
-                      "textAlign": "left",
+                      "backgroundColor": "transparent",
+                      "borderRadius": 5,
+                      "marginBottom": -8,
+                      "marginLeft": -8,
+                      "opacity": 1,
+                      "padding": 8,
+                      "paddingRight": 25,
                     }
                   }
                 >
-                  1
-                </Text>
-                <Text
-                  style={
-                    Object {
-                      "color": "#505050",
-                      "fontFamily": "Lato",
-                      "fontSize": 14,
-                      "fontWeight": "400",
-                      "textAlign": "left",
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "fontFamily": "Lato",
+                          "fontSize": 14,
+                          "fontWeight": "700",
+                        },
+                        Object {
+                          "color": "rgba(119, 119, 119, 1.0)",
+                        },
+                      ]
                     }
-                  }
-                >
-                   Attributes
-                </Text>
-              </View>
-              <View
-                accessible={true}
-                isTVSelectable={true}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderRadius": 5,
-                    "marginBottom": -8,
-                    "marginLeft": -8,
-                    "opacity": 1,
-                    "padding": 8,
-                    "paddingRight": 25,
-                  }
-                }
-              >
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "fontFamily": "Lato",
-                        "fontSize": 14,
-                        "fontWeight": "700",
-                      },
-                      Object {
-                        "color": "rgba(119, 119, 119, 1.0)",
-                      },
-                    ]
-                  }
-                >
-                  VIEW CREDENTIAL
-                </Text>
+                  >
+                    VIEW CREDENTIAL
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
@@ -4779,7 +4786,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                 "elevation": 0,
                 "marginBottom": 15,
                 "marginTop": 15,
-                "padding": 15,
                 "shadowColor": "#000000",
                 "shadowOffset": Object {
                   "height": 0,
@@ -4793,113 +4799,79 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
             <View
               style={
                 Object {
-                  "alignItems": "stretch",
-                  "flexDirection": "row",
-                  "paddingBottom": 15,
+                  "padding": 15,
                 }
               }
             >
               <View
                 style={
-                  Array [
-                    Object {
-                      "height": 38,
-                      "width": 35,
-                    },
-                    Object {
-                      "display": "none",
-                    },
-                  ]
+                  Object {
+                    "alignItems": "stretch",
+                    "flexDirection": "row",
+                    "paddingBottom": 15,
+                  }
                 }
               >
                 <View
                   style={
-                    Object {
-                      "alignItems": "flex-start",
-                      "height": "100%",
-                      "justifyContent": "flex-end",
-                      "width": "100%",
-                    }
+                    Array [
+                      Object {
+                        "height": 38,
+                        "width": 35,
+                      },
+                      Object {
+                        "display": "none",
+                      },
+                    ]
                   }
                 >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight="33"
-                    bbWidth="22"
-                    height="33"
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
+                  <View
                     style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        undefined,
-                        null,
-                        Object {
-                          "flex": 0,
-                          "height": 33,
-                          "width": 22,
-                        },
-                      ]
+                      Object {
+                        "alignItems": "flex-start",
+                        "height": "100%",
+                        "justifyContent": "flex-end",
+                        "width": "100%",
+                      }
                     }
-                    vbHeight={33}
-                    vbWidth={22}
-                    width="22"
                   >
-                    <RNSVGGroup
-                      fill={
+                    <RNSVGSvgView
+                      align="xMidYMid"
+                      bbHeight="33"
+                      bbWidth="22"
+                      height="33"
+                      meetOrSlice={0}
+                      minX={0}
+                      minY={0}
+                      style={
                         Array [
-                          0,
-                          4278190080,
+                          Object {
+                            "backgroundColor": "transparent",
+                            "borderWidth": 0,
+                          },
+                          undefined,
+                          null,
+                          Object {
+                            "flex": 0,
+                            "height": 33,
+                            "width": 22,
+                          },
                         ]
                       }
-                      fillOpacity={1}
-                      fillRule={1}
-                      font={Object {}}
-                      matrix={
-                        Array [
-                          1,
-                          0,
-                          0,
-                          1,
-                          0,
-                          0,
-                        ]
-                      }
-                      opacity={1}
-                      originX={0}
-                      originY={0}
-                      propList={Array []}
-                      rotation={0}
-                      scaleX={1}
-                      scaleY={1}
-                      skewX={0}
-                      skewY={0}
-                      stroke={null}
-                      strokeDasharray={null}
-                      strokeDashoffset={null}
-                      strokeLinecap={0}
-                      strokeLinejoin={0}
-                      strokeMiterlimit={4}
-                      strokeOpacity={1}
-                      strokeWidth={1}
-                      vectorEffect={0}
-                      x={0}
-                      y={0}
+                      vbHeight={33}
+                      vbWidth={22}
+                      width="22"
                     >
-                      <RNSVGPath
-                        d="M6.875 21.2004V28.4852L10.9705 25.2123L15.125 28.4852V21.2004C13.8512 21.7161 12.4587 22 11 22C9.54126 22 8.14884 21.7161 6.875 21.2004ZM4.12496 19.5874C1.61021 17.5714 0 14.4738 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11C22 14.5008 20.3646 17.6197 17.8161 19.6343L17.816 32.527L10.9705 28.4315L4.125 32.527L4.12496 19.5874ZM11 19.25C15.5563 19.25 19.25 15.5563 19.25 11C19.25 6.44365 15.5563 2.75 11 2.75C6.44365 2.75 2.75 6.44365 2.75 11C2.75 15.5563 6.44365 19.25 11 19.25ZM16.2142 7.8418C16.2443 7.89785 16.2594 7.93988 16.2594 7.9679C16.2594 7.99593 16.2443 8.03796 16.2142 8.09401L10.5972 14.8196C10.5069 14.9036 10.4393 14.9457 10.3941 14.9457C10.3189 14.9457 10.2438 14.9106 10.1686 14.8406L6.98779 11.9822L6.92012 11.9192C6.89004 11.8631 6.875 11.8211 6.875 11.7931C6.875 11.779 6.89004 11.744 6.92012 11.688L6.96523 11.6459C7.38633 11.2256 7.71719 10.9033 7.95781 10.6791C8.04804 10.5951 8.1082 10.553 8.13828 10.553C8.19844 10.553 8.27363 10.5951 8.36387 10.6791L10.1686 12.3185L14.6803 6.91704C14.7104 6.88901 14.7555 6.875 14.8156 6.875C14.8608 6.875 14.9134 6.88901 14.9736 6.91704L16.2142 7.8418Z"
+                      <RNSVGGroup
                         fill={
                           Array [
                             0,
-                            4283453520,
+                            4278190080,
                           ]
                         }
                         fillOpacity={1}
-                        fillRule={0}
+                        fillRule={1}
+                        font={Object {}}
                         matrix={
                           Array [
                             1,
@@ -4913,12 +4885,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                         opacity={1}
                         originX={0}
                         originY={0}
-                        propList={
-                          Array [
-                            "fill",
-                            "fillRule",
-                          ]
-                        }
+                        propList={Array []}
                         rotation={0}
                         scaleX={1}
                         scaleY={1}
@@ -4935,1278 +4902,1325 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                         vectorEffect={0}
                         x={0}
                         y={0}
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
+                      >
+                        <RNSVGPath
+                          d="M6.875 21.2004V28.4852L10.9705 25.2123L15.125 28.4852V21.2004C13.8512 21.7161 12.4587 22 11 22C9.54126 22 8.14884 21.7161 6.875 21.2004ZM4.12496 19.5874C1.61021 17.5714 0 14.4738 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11C22 14.5008 20.3646 17.6197 17.8161 19.6343L17.816 32.527L10.9705 28.4315L4.125 32.527L4.12496 19.5874ZM11 19.25C15.5563 19.25 19.25 15.5563 19.25 11C19.25 6.44365 15.5563 2.75 11 2.75C6.44365 2.75 2.75 6.44365 2.75 11C2.75 15.5563 6.44365 19.25 11 19.25ZM16.2142 7.8418C16.2443 7.89785 16.2594 7.93988 16.2594 7.9679C16.2594 7.99593 16.2443 8.03796 16.2142 8.09401L10.5972 14.8196C10.5069 14.9036 10.4393 14.9457 10.3941 14.9457C10.3189 14.9457 10.2438 14.9106 10.1686 14.8406L6.98779 11.9822L6.92012 11.9192C6.89004 11.8631 6.875 11.8211 6.875 11.7931C6.875 11.779 6.89004 11.744 6.92012 11.688L6.96523 11.6459C7.38633 11.2256 7.71719 10.9033 7.95781 10.6791C8.04804 10.5951 8.1082 10.553 8.13828 10.553C8.19844 10.553 8.27363 10.5951 8.36387 10.6791L10.1686 12.3185L14.6803 6.91704C14.7104 6.88901 14.7555 6.875 14.8156 6.875C14.8608 6.875 14.9134 6.88901 14.9736 6.91704L16.2142 7.8418Z"
+                          fill={
+                            Array [
+                              0,
+                              4283453520,
+                            ]
+                          }
+                          fillOpacity={1}
+                          fillRule={0}
+                          matrix={
+                            Array [
+                              1,
+                              0,
+                              0,
+                              1,
+                              0,
+                              0,
+                            ]
+                          }
+                          opacity={1}
+                          originX={0}
+                          originY={0}
+                          propList={
+                            Array [
+                              "fill",
+                              "fillRule",
+                            ]
+                          }
+                          rotation={0}
+                          scaleX={1}
+                          scaleY={1}
+                          skewX={0}
+                          skewY={0}
+                          stroke={null}
+                          strokeDasharray={null}
+                          strokeDashoffset={null}
+                          strokeLinecap={0}
+                          strokeLinejoin={0}
+                          strokeMiterlimit={4}
+                          strokeOpacity={1}
+                          strokeWidth={1}
+                          vectorEffect={0}
+                          x={0}
+                          y={0}
+                        />
+                      </RNSVGGroup>
+                    </RNSVGSvgView>
+                  </View>
+                </View>
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "width": "100%",
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "#505050",
+                          "fontFamily": "Lato",
+                          "fontSize": 14,
+                          "fontWeight": "700",
+                          "textAlign": "left",
+                        }
+                      }
+                    >
+                      Enterprise name
+                    </Text>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "stretch",
+                        "flexDirection": "row",
+                        "paddingTop": 4,
+                        "width": "100%",
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "#777777",
+                          "flex": 1,
+                          "fontFamily": "Lato",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "lineHeight": 13,
+                          "textAlign": "left",
+                        }
+                      }
+                    >
+                      SHARED
+                    </Text>
+                    <Text
+                      style={
+                        Object {
+                          "color": "#505050",
+                          "fontFamily": "Lato",
+                          "fontSize": 11,
+                          "fontWeight": "500",
+                          "textAlign": "right",
+                        }
+                      }
+                    >
+                      2018-01-10T04:32:43+05:30 | 2018-01-10T04:32:43+05:30
+                    </Text>
+                  </View>
                 </View>
               </View>
               <View
                 style={
                   Object {
-                    "flex": 1,
+                    "backgroundColor": "transparent",
+                    "flexDirection": "row",
+                    "height": 1,
+                    "justifyContent": "flex-start",
+                    "overflow": "hidden",
+                    "width": "100%",
                   }
                 }
               >
                 <View
                   style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
                     Object {
-                      "width": "100%",
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
                     }
                   }
-                >
-                  <Text
-                    style={
+                />
+                <View
+                  style={
+                    Array [
                       Object {
-                        "color": "#505050",
-                        "fontFamily": "Lato",
-                        "fontSize": 14,
-                        "fontWeight": "700",
-                        "textAlign": "left",
-                      }
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
                     }
-                  >
-                    Enterprise name
-                  </Text>
-                </View>
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "backgroundColor": "#f2f2f2",
+                        "height": 1,
+                        "width": 7,
+                      },
+                      Object {
+                        "backgroundColor": "#eaeaea",
+                      },
+                    ]
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "height": 1,
+                      "width": 5,
+                    }
+                  }
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "paddingTop": 15,
+                    "width": "100%",
+                  }
+                }
+              >
                 <View
                   style={
                     Object {
                       "alignItems": "stretch",
                       "flexDirection": "row",
-                      "paddingTop": 4,
-                      "width": "100%",
                     }
                   }
                 >
                   <Text
                     style={
                       Object {
-                        "color": "#777777",
-                        "flex": 1,
+                        "color": "#505050",
                         "fontFamily": "Lato",
-                        "fontSize": 11,
-                        "fontWeight": "500",
-                        "lineHeight": 13,
+                        "fontSize": 14,
+                        "fontWeight": "400",
                         "textAlign": "left",
                       }
                     }
                   >
-                    SHARED
+                    1
                   </Text>
                   <Text
                     style={
                       Object {
                         "color": "#505050",
                         "fontFamily": "Lato",
-                        "fontSize": 11,
-                        "fontWeight": "500",
-                        "textAlign": "right",
+                        "fontSize": 14,
+                        "fontWeight": "400",
+                        "textAlign": "left",
                       }
                     }
                   >
-                    2018-01-10T04:32:43+05:30 | 2018-01-10T04:32:43+05:30
+                     Attributes
                   </Text>
                 </View>
-              </View>
-            </View>
-            <View
-              style={
-                Object {
-                  "backgroundColor": "transparent",
-                  "flexDirection": "row",
-                  "height": 1,
-                  "justifyContent": "flex-start",
-                  "overflow": "hidden",
-                  "width": "100%",
-                }
-              }
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "#f2f2f2",
-                      "height": 1,
-                      "width": 7,
-                    },
-                    Object {
-                      "backgroundColor": "#eaeaea",
-                    },
-                  ]
-                }
-              />
-              <View
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "height": 1,
-                    "width": 5,
-                  }
-                }
-              />
-            </View>
-            <View
-              style={
-                Object {
-                  "backgroundColor": "white",
-                  "paddingTop": 15,
-                  "width": "100%",
-                }
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "stretch",
-                    "flexDirection": "row",
-                  }
-                }
-              >
-                <Text
+                <View
+                  accessible={true}
+                  isTVSelectable={true}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
                   style={
                     Object {
-                      "color": "#505050",
-                      "fontFamily": "Lato",
-                      "fontSize": 14,
-                      "fontWeight": "400",
-                      "textAlign": "left",
+                      "backgroundColor": "transparent",
+                      "borderRadius": 5,
+                      "marginBottom": -8,
+                      "marginLeft": -8,
+                      "opacity": 1,
+                      "padding": 8,
+                      "paddingRight": 25,
                     }
                   }
                 >
-                  1
-                </Text>
-                <Text
-                  style={
-                    Object {
-                      "color": "#505050",
-                      "fontFamily": "Lato",
-                      "fontSize": 14,
-                      "fontWeight": "400",
-                      "textAlign": "left",
+                  <Text
+                    style={
+                      Array [
+                        Object {
+                          "fontFamily": "Lato",
+                          "fontSize": 14,
+                          "fontWeight": "700",
+                        },
+                        Object {
+                          "color": "rgba(119, 119, 119, 1.0)",
+                        },
+                      ]
                     }
-                  }
-                >
-                   Attributes
-                </Text>
-              </View>
-              <View
-                accessible={true}
-                isTVSelectable={true}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderRadius": 5,
-                    "marginBottom": -8,
-                    "marginLeft": -8,
-                    "opacity": 1,
-                    "padding": 8,
-                    "paddingRight": 25,
-                  }
-                }
-              >
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "fontFamily": "Lato",
-                        "fontSize": 14,
-                        "fontWeight": "700",
-                      },
-                      Object {
-                        "color": "rgba(119, 119, 119, 1.0)",
-                      },
-                    ]
-                  }
-                >
-                  VIEW REQUEST DETAILS
-                </Text>
+                  >
+                    VIEW REQUEST DETAILS
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
