@@ -158,6 +158,12 @@ class SwitchEnvironment extends PureComponent<
             />
             <CustomButton
               primary
+              title="QA-RC"
+              testID={`${testID}-qarc`}
+              onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.QATEST1)}
+            />
+            <CustomButton
+              primary
               title="DEV-RC"
               testID={`${testID}-devrc`}
               onPress={() => this.onSwitchTap(SERVER_ENVIRONMENT.DEVRC)}

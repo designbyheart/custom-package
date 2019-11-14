@@ -72,7 +72,7 @@ exports[`<Invitation /> should match snapshot 1`] = `
               testID="invitation-text-container-message-title"
             >
               <Text
-                accessibilityLabel="invitation-text-container-title"
+                accessibilityLabel="Hi target name"
                 accessible={true}
                 allowFontScaling={false}
                 style={
@@ -114,7 +114,7 @@ exports[`<Invitation /> should match snapshot 1`] = `
                 Hi target name
               </Text>
               <Text
-                accessibilityLabel="invitation-text-container-message"
+                accessibilityLabel="sender1 wants to connect with you."
                 accessible={true}
                 allowFontScaling={false}
                 style={

@@ -65,7 +65,7 @@ exports[`<Request /> should match snapshot 1`] = `
             testID="request-text-container-message-title"
           >
             <Text
-              accessibilityLabel="request-text-container-title"
+              accessibilityLabel="Hi Test User"
               accessible={true}
               allowFontScaling={false}
               style={
@@ -107,7 +107,7 @@ exports[`<Request /> should match snapshot 1`] = `
               Hi Test User
             </Text>
             <Text
-              accessibilityLabel="request-text-container-message"
+              accessibilityLabel="Enterprise A agent wants to connect with you"
               accessible={true}
               allowFontScaling={false}
               style={

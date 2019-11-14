@@ -240,7 +240,7 @@ exports[`<ClaimRequestStatusModal /> should match paid credential success, if se
       verticalSpace={true}
     >
       <Text
-        accessibilityLabel="claim-request-message"
+        accessibilityLabel="Paying..."
         accessible={true}
         allowFontScaling={false}
         style={
@@ -571,7 +571,7 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and accepting text,
       verticalSpace={true}
     >
       <Text
-        accessibilityLabel="claim-request-message"
+        accessibilityLabel="Accepting..."
         accessible={true}
         allowFontScaling={false}
         style={

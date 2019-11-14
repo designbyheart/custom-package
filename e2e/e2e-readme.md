@@ -74,8 +74,8 @@ Tests can be run by `yarn e2e`. There are few options to customize while running
 | -b, --build | - | build connectme first, and then run tests. By default e2e script checks that if we already have a build in `build` folder, if build does not exist, then it runs debug build first and then run tests. However, we can pass this option to generate new build. We might need this option if we want to test release build or if we have made some native changes or included new libVcx build, then we would have to build again and then run tests, so in those cases we can use this option |
 | -s, --simulators | iphonexsmax | specify on which simulator tests should run. We can specify multiple values with this option. If we specify more than one simulator, then it would run tests on all those passed simulator in parallel. Possible values that we can pass are `iphone5s iphone7 iphonex iphonexsmax`. The way we can pass multiple value on command line `-s iphone5s iphone7` |
 | -u, --update | false | whether to update failing screenshots with new ones |
-| -t, --testToRun | all tests under \__tests__ | we can pass specific test file which we need to run. For example: if we just need to run token tests, then we can run `yarn e2e -- -t token`. Do not add `.spec.js` to the test file name that we need to run. If we have to run tests only from  connection.spec.js, then command would be `yarn e2e -- -t connection`|
-| -e, --environment | QA Test 1 | select environment which should be used to run end-to-end tests. Possible options are `dev, sandbox, staging, prod, demo, qatest1, devteam1, devteam2, devteam3, devrc` |
+| -t, --testToRun | all tests under \__tests__ | we can pass specific test file which we need to run. For example: if we just need to run token tests, then we can run `yarn e2e -t token`. Do not add `.spec.js` to the test file name that we need to run. If we have to run tests only from  connection.spec.js, then command would be `yarn e2e -t connection`|
+| -e, --environment | QA Test 1 | select environment which should be used to run end-to-end tests. Possible options are `dev, sandbox, staging, prod, demo, qatest1, qarc, devteam1, devteam2, devteam3, devrc` |
 | -k, --skip | false | do not re-install app even if it is a new session. Developer should be sure that by passing this flag we are not going to uninstall previous app installation and run tests on previous installed app. This flag if used wisely can give more than 30 seconds of boost in running e2e tests per simulator. Since this flag does not install new app, developer should be aware that no new build change has be done from last time the app was installed on simulator. This is especially useful if we are running e2e tests continuously on dev machine or we need to run only single test file every time or we are changing JS code of react native and need to keep testing stuff in e2e tests.  |
 | -- | - | Once we pass this option then we can pass any option which we can pass to `detox` directly. See [this documentation](https://github.com/wix/Detox/blob/master/docs/APIRef.DetoxCLI.md#test) to check what options we can pass to detox  |
 | --help | | show usage and available commands on terminal |
@@ -84,23 +84,22 @@ Tests can be run by `yarn e2e`. There are few options to customize while running
 
 - Force a new build and run on iphone5s simulator
     ```sh
-    $ yarn e2e -- -b -s iphone5s
+    $ yarn e2e -b debug -s iphone5s
     or
-    $ yarn e2e -- --build --simulators iphone5s
-
-    # Why do we need --, yarn is warning that we don't need --. Check architectural decisions section for more info on this.
-
-    # Short answer is, if we don't need to pass detox options, then we don't need --.
+    $ yarn e2e --build debug --simulators iphone5s
     ```
 - Run on multiple simulators
     ```sh
-    $ yarn e2e -- -s iphone7 iphonex iphonexsmax
+    $ yarn e2e -s iphone7 iphonex iphonexsmax
     ```
 - Pass detox options as well along with our e2e options
     ```sh
-    $ yarn e2e -- -b -u -s iphone7 -- -r
+    $ yarn -- e2e -b debug -u -s iphone7 -- -r
 
-    # Pay attention to `--` before passing any detox specific option (-r)
+    # Pay attention to two `--`, one at beginning, second before passing any detox specific option (-r)
+    # Why do we need --, yarn is warning that we don't need --. Check architectural decisions section for more info on this.
+
+    # Short answer is, if we don't need to pass detox options, then we don't need --.
     ```
 - Run only token tests on staging environment and reuse installed app
     ```sh
@@ -110,26 +109,36 @@ Tests can be run by `yarn e2e`. There are few options to customize while running
 ### Frequently asked questions
 
 - How can we run tests on iPhone 5s, iPhone 7 & iPhone X in parallel?
-Start one terminal and run
+
+  Start one terminal and run
     ```sh
-    $ yarn e2e -- -s iphone5s
+    $ yarn e2e -s iphone5s
     ```
-Start another terminal and run
+
+  Start another terminal and run
+
     ```sh
-    $ yarn e2e -- -s iphone7
+    $ yarn e2e -s iphone7
     ```
-Start another terminal and run
+
+  Start another terminal and run
     ```sh
-    $ yarn e2e -- -s iphoneX
+    $ yarn e2e -s iphonex
     ```
-All of the simulators will be running all tests in parallel. This is not test parallelization which we talk at the end of this document in [this section](#optimizations-yet-to-do)
+  All of the simulators will be running all tests in parallel. This is not test parallelization which we talk at the end of this document in [this section](#optimizations-yet-to-do)
 - How can I record video of test running in simulator?
     ```sh
     $ yarn e2e -- -- --record-videos all
+
+    # Yes, we need to pass two `--`. Refer architecture decision question about --
     ```
 - How can I record video of only failing test?
     ```sh
     $ yarn e2e -- -- --record-videos failing
+    ```
+- What does normal development command looks like?
+    ```sh
+    $ yarn e2e -t token -k -s iphone5s iphone7 iphonex iphonexsmax
     ```
 
 ## E2E test runner architectural decisions
@@ -204,6 +213,105 @@ Now, we compare existing and new screenshots and check if UI is changed or not. 
 
 If we want to keep new changes and override the existing ones, then we run test via commands that has `-u/--update` flag (`yarn e2e -u`). Apart from setting SIMULATOR environment variable, we are setting UPDATE environment variable as well. This environment variable helps us to decide whether we need to remove existing screenshots and override with new ones. 
 
+### How to handle dynamic areas of screen
+
+When are perform screenshot testing we quickly run into an issue that even though UI is correct and has not changed from previously good known UI, but screenshot comparison still fails due to dynamic data being populated on UI. A good example is date field, if we have date field showing up anywhere in UI, it will be different most of the time. So, when we perform screenshot diffing, date will be caught up in diff, and hence diff will fail. So, what do we do, if we need to selective ignore an area which has dynamic data and we don't care about UI testing of that area, and we would perform other testing on that area inside our test.
+
+For purpose of dynamic area ignorance, we are using below mechanism.
+
+1. Get to know `top, left, width, and height` of dynamic element in react native/simulator/device. Add `ref`, `onLayout` prop to the element which is rendering dynamic element.
+
+    ```js
+      // add ref and onLayout prop
+      <DynamicAddress
+        ref={address => this.element = address}
+        onLayout={this.onLayout}
+      />
+
+      // define ref on class as property
+      element = null
+
+      // handle onLayout, and get top, left, width and height
+      onLayout = () => {
+        setTimeout(() => {
+          this.element.measure((fx, fy, width, height, left, top) => {
+            alert(
+              `w: ${width}, h: ${height}, x: ${left}, y: ${top}`
+            )
+          })
+        }, 2000)
+      }
+    ```
+
+2. Above process needs to be done once per simulator. Once we know what is the area that we need to ignore. We create an object with below format.
+    ```js
+    const walletAddressArea = {
+      iphone5s: {
+        top: 272,
+        left: 19,
+        width: 282,
+        height: 131,
+      },
+      iphone7: {
+        top: 272,
+        left: 19,
+        width: 337,
+        height: 106,
+      },
+      iphonex: {
+        top: 296,
+        left: 19,
+        width: 337,
+        height: 82,
+      },        
+      iphonexsmax: {
+        top: 296,
+        left: 19,
+        width: 337,
+        height: 82,
+      },
+    }
+    ```
+3. Above is done for one area to be ignored, we can ignore multiple areas on an image if we want to, we just need above format for each area. Pass ignore area object to `matchScreenshot`
+    ```js
+    await matchScreenshot('token-dashboard.png', {
+      ignoreAreas: [walletAddressArea],
+    })
+    ```
+4. Our screenshot matcher blackens the areas that needs to be ignored. Below is the result that we get in screenshots
+![Image of blackened dynamic address](screenshots/screenshots/iphonex/token-dashboard.png)
+
+### Dynamic area number calculations made simple for CustomText
+
+Most of the time `Text` is the value that will be dynamic. For example: `Text` for payment address will be different. `Text` for date will be different.
+
+So, we have simplified process to identify `top, left, width, height`. We have added a prop to component `CustomText` which can be used as below
+
+```js
+<CustomText showLayoutDetails>{some_dynamic_variable}</CustomText>
+```
+
+We just need to add prop `showLayoutDetails`, and run our test in simulator. It would automatically show `top, left, width, height` in an alert box, using which we can create `ignoreAreas` object.
+
+Also, we can run our test in multiple simulators simultaneously by running below commands in different terminal tabs.
+```sh
+yarn e2e -s iphone5s -t token
+
+# change test name for the screen on which we need to see layout details
+```
+
+```sh
+yarn e2e -s iphone7 -t token
+```
+
+```sh
+yarn e2e -s iphonex -t token
+```
+
+```sh
+yarn e2e -s iphonexsmax -t token
+```
+
 ### Side notes about screenshot implementation
 
 - One more thing that we do before we save any screenshot is that we remove the header from screenshot, because header contains battery icon, date and time which will never be same and our image diff will always find UI differences. So, we crop the header and then save the screenshot.
@@ -268,6 +376,8 @@ Following all above steps, we now have a e2e test that will go to settings scree
 
 ## ConnectMe Detox Selectors
 
-| Selector Name | Description |
-| ------------- | ----------- |
-| tapOn | Find the element by `id` and then run `.tap` method on fetched element |
+| Selector Name | Description | Usage |
+| ------------- | ----------- | ------ |
+| tapOn | Find the element by `id` and then run `.tap` method on fetched element | `await tapOn('ok-button)` |
+| readVisibleText | Read the text of element by `id`. Detox does not provide any such API | `const text = await readVisibleText('wallet-header')` |
+| wait | wait for the milliseconds before proceeding to next statement. `wait` is a code smell in detox e2e tests, we should not need to use this. | `await wait(1000)` |

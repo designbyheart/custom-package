@@ -1339,7 +1339,7 @@ exports[`<ProofRequest /> should call getProof if offer is accepted after genera
           }
         >
           <Text
-            accessibilityLabel="send-proof-message"
+            accessibilityLabel="Sending..."
             accessible={true}
             allowFontScaling={false}
             style={
@@ -2789,7 +2789,7 @@ exports[`<ProofRequest /> should call proofRequestIgnored if close button is pre
           }
         >
           <Text
-            accessibilityLabel="send-proof-message"
+            accessibilityLabel="Sending..."
             accessible={true}
             allowFontScaling={false}
             style={
@@ -4239,7 +4239,7 @@ exports[`<ProofRequest /> should call proofRequestRejected if ignore button is p
           }
         >
           <Text
-            accessibilityLabel="send-proof-message"
+            accessibilityLabel="Sending..."
             accessible={true}
             allowFontScaling={false}
             style={
@@ -5689,7 +5689,7 @@ exports[`<ProofRequest /> should call proofRequestShown on componentDidMount 1`]
           }
         >
           <Text
-            accessibilityLabel="send-proof-message"
+            accessibilityLabel="Sending..."
             accessible={true}
             allowFontScaling={false}
             style={
@@ -7150,7 +7150,7 @@ exports[`<ProofRequest /> should call userSelfAttestedAttributes if there are mi
           }
         >
           <Text
-            accessibilityLabel="send-proof-message"
+            accessibilityLabel="Sending..."
             accessible={true}
             allowFontScaling={false}
             style={
@@ -8600,7 +8600,7 @@ exports[`<ProofRequest /> should go back on close action 1`] = `
           }
         >
           <Text
-            accessibilityLabel="send-proof-message"
+            accessibilityLabel="Sending..."
             accessible={true}
             allowFontScaling={false}
             style={

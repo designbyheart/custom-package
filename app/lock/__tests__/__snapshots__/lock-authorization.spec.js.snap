@@ -47,7 +47,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
       testID="pin-code-input-boxes-touchable"
     >
       <Text
-        accessibilityLabel="pass-code-input-text"
+        accessibilityLabel="Enter your passcode"
         accessible={true}
         allowFontScaling={false}
         style={

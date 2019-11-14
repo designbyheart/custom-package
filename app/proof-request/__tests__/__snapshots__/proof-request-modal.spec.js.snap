@@ -34,7 +34,7 @@ exports[`<ProofModal /> should match snapshot when proof sent fail 1`] = `
         }
       >
         <Text
-          accessibilityLabel="send-proof-message"
+          accessibilityLabel="Sending..."
           accessible={true}
           allowFontScaling={false}
           style={
@@ -178,7 +178,7 @@ exports[`<ProofModal /> should match snapshot when proof sent success 1`] = `
         }
       >
         <Text
-          accessibilityLabel="send-proof-message"
+          accessibilityLabel="Sending..."
           accessible={true}
           allowFontScaling={false}
           style={
@@ -322,7 +322,7 @@ exports[`<ProofModal /> should match snapshot when sending proof 1`] = `
         }
       >
         <Text
-          accessibilityLabel="send-proof-message"
+          accessibilityLabel="Sending..."
           accessible={true}
           allowFontScaling={false}
           style={

@@ -17,21 +17,37 @@ const SIZE = {
     width: 1125,
     height: 2436,
     cropHeight: 90,
+    scaleFactor: {
+      width: 3,
+      height: 3,
+    },
   },
   [iPhone7]: {
     width: 750,
     height: 1334,
-    cropHeight: 40,
+    cropHeight: 39,
+    scaleFactor: {
+      width: 2,
+      height: 2,
+    },
   },
   [iPhone5s]: {
     width: 640,
     height: 1136,
-    cropHeight: 40,
+    cropHeight: 38,
+    scaleFactor: {
+      width: 2,
+      height: 2,
+    },
   },
   [iPhoneXSMax]: {
     width: 1242,
     height: 2688,
-    cropHeight: 110,
+    cropHeight: 100,
+    scaleFactor: {
+      width: 3.3,
+      height: 3.3,
+    },
   },
 }
 
@@ -79,6 +95,8 @@ export const storeBootedDeviceId = async () => {
   )(list)
 }
 
+export const getBootedDeviceId = () => bootedDeviceId
+
 function getNewScreenshotPath(name: string) {
   return `${baseDirectory}/tmp/${simulator}/${name}`
 }
@@ -114,7 +132,45 @@ async function removeHeader(image: string) {
   })
 }
 
-export async function matchScreenshot(name: string) {
+type ScreenShotOptions = {
+  ignoreAreas: Array<{
+    [simulatorName: string]: {
+      top: number,
+      left: number,
+      width: number,
+      height: number,
+    },
+  }>,
+}
+
+async function mask(path: *, area: *, name: *) {
+  // get area of mask
+  const { top, left, width, height } = area[simulator]
+  const { scaleFactor, cropHeight } = SIZE[simulator]
+  // top left corner coordinate of mask
+  const x0 = left * scaleFactor.width
+  const y0 = top * scaleFactor.height - cropHeight
+  // bottom right coordinate of mask
+  const x1 = x0 + width * scaleFactor.width
+  const y1 = y0 + height * scaleFactor.height
+
+  await new Promise((resolve, reject) => {
+    gm(path)
+      .drawRectangle(x0, y0, x1, y1)
+      .write(path, error => {
+        if (error) {
+          reject(error)
+        }
+
+        resolve()
+      })
+  })
+}
+
+export async function matchScreenshot(
+  name: string,
+  options?: ScreenShotOptions
+) {
   // TODO:KS Add support for screenshot testing for Android as well
   if (getDeviceType() === ANDROID) {
     return
@@ -124,6 +180,14 @@ export async function matchScreenshot(name: string) {
 
   await exec(`xcrun simctl io ${bootedDeviceId} screenshot ${newScreenshot}`)
   await removeHeader(newScreenshot)
+
+  if (options) {
+    // if we want to ignore some areas that will always have dynamic value
+    // for example: we might have date field that will always be different
+    for (const ignoreArea of options.ignoreAreas) {
+      await mask(newScreenshot, ignoreArea, name)
+    }
+  }
 
   const existingScreenshot = getExistingScreenshotPath(name)
 
@@ -148,7 +212,7 @@ export async function matchScreenshot(name: string) {
   if (!result) {
     console.log(
       chalk.red(
-        `Existing screenshot at '${existingScreenshot}' and new screenshot at '${newScreenshot}' are not same. Please see difference at ${diffImagePath}`
+        `Existing screenshot at '${existingScreenshot}' and new screenshot at '${newScreenshot}' are not same. Please see difference at ${diffImagePath}. \nIf you want to keep new screenshot, then run test command with -u flag.`
       )
     )
 

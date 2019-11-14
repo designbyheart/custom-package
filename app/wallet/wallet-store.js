@@ -609,6 +609,16 @@ export const sendTokens = (
   recipientWalletAddress,
 })
 
+// a saga that runs when walletBalance changes
+// a saga that runs when user transfers some token
+// a saga that runs when user pays for a credential
+// a saga that raises token history action to add a token history event
+//  history should have it's own balance amount
+//  this saga should get current balance
+//  first three saga will pass new balance
+//  along with +name, image?, memo?, toAddress?:, fromAddress?:
+//
+
 export default function walletReducer(
   state: WalletStore = walletInitialState,
   action: WalletStoreAction

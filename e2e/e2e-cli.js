@@ -53,6 +53,7 @@ const args = yargs
       'prod',
       'demo',
       'qatest1',
+      'qarc',
       'devteam1',
       'devteam2',
       'devteam3',
@@ -73,7 +74,7 @@ const args = yargs
   .completion()
   .strict(false)
   .example(
-    'yarn e2e -- -u -b release -s iphone7 iphonex -t token -- -r',
+    'yarn e2e -u -b release -s iphone7 iphonex -t token -- -- -r',
     'Run e2e with update, build release mode, on simulators, with detox config as -r, and test file to run'
   )
   .help().argv
@@ -89,7 +90,22 @@ async function runBuildIfNeeded(args) {
   const releaseBuildPath = detoxConfig['ios.sim.release'].binaryPath
   const releaseBuildExist = await pathExists(releaseBuildPath)
   const debugBuildExist = await pathExists(debugBuildPath)
-  const needToGenerateBuild = args.build ? true : !debugBuildExist
+  let needToGenerateBuild = args.build ? true : !debugBuildExist
+  let isDetoxEnvChanged = false
+
+  // we need to be sure that developer is
+  // running metro bundler and build with detox env as yes
+  // if, then set correct info in .env file
+  // and then ask user to run packager again
+  const envContent = await readFile('.env', 'utf8')
+  if (envContent.trim() !== 'detox=yes') {
+    await exec('echo "detox=yes" > .env')
+    isDetoxEnvChanged = true
+    // Also, since previous build might not be using correct detox setting
+    // so, we need to generate build again with correct detox env
+    needToGenerateBuild = true
+  }
+
   if (needToGenerateBuild) {
     // remove builds if already exists
     ;(debugBuildExist || releaseBuildExist) &&
@@ -108,6 +124,17 @@ async function runBuildIfNeeded(args) {
     await build
     // tell user that build has finished
     console.log(chalk.green(`Successfully built using ${detoxCommand}`))
+
+    if (isDetoxEnvChanged) {
+      console.log(
+        chalk.bgRed(
+          `.env file did not have correct config for detox. We have updated .env file with appropriate information needed. Stop already running packager and re-run it via npm start or yarn start`
+        )
+      )
+      throw new Error(
+        'Read above message for detailed information on what to do.'
+      )
+    }
   }
 }
 
@@ -118,20 +145,6 @@ async function runTests(args) {
     iphone7: 'iPhone 7',
     iphonex: 'iPhone X',
     iphonexsmax: 'iPhone XS Max',
-  }
-  // we need to be sure that developer is
-  // running metro bundler with detox env as yes
-  // if, then set correct info in .env file
-  // and then ask user to run packager again
-  const envContent = await readFile('.env', 'utf8')
-  if (envContent.trim() !== 'detox=yes') {
-    await exec('echo "detox=yes" > .env')
-    console.log(
-      chalk.bgRed(
-        `.env file did not have correct config for detox. We have updated .env file with appropriate information needed. Stop already running packager and re-run it via npm start or yarn start`
-      )
-    )
-    return
   }
 
   // set environment variables that are going to be used by our tests
