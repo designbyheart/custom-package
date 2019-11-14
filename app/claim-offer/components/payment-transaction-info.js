@@ -26,6 +26,7 @@ import { Error } from '../../components/error/error'
 import { Container } from '../../components'
 import { Success } from '../../components/success/success'
 import { CLAIM_REQUEST_STATUS } from '../type-claim-offer'
+import { animateLayout } from '../../common/layout-animation'
 
 const messages = {
   IN_PROGRESS: 'Getting network fees...',
@@ -110,6 +111,7 @@ class PaymentTransactionInfo extends PureComponent<
                 ...feesData,
                 credentialPrice,
               })}
+              textStyles={[styles.insufficientBalanceText]}
               containerStyles={[styles.errorContainer]}
             />
           </ScrollView>
@@ -205,6 +207,10 @@ class PaymentTransactionInfo extends PureComponent<
 
     return null
   }
+
+  getSnapshotBeforeUpdate() {
+    animateLayout()
+  }
 }
 
 function Text({ children }: { children: React.Node }) {
@@ -242,4 +248,5 @@ const styles = StyleSheet.create({
   errorContainer: {
     flex: 1,
   },
+  insufficientBalanceText: { fontSize: scale(17) },
 })

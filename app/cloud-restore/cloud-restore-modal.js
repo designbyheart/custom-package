@@ -6,7 +6,6 @@ import {
   Text,
   Platform,
   Image,
-  LayoutAnimation,
   UIManager,
   Animated,
   Dimensions,

@@ -6,7 +6,6 @@ import {
   Text,
   Platform,
   Image,
-  LayoutAnimation,
   UIManager,
   Animated,
   Dimensions,
@@ -76,12 +75,6 @@ const { height } = Dimensions.get('window')
 // TODO: this is copy and pasted questionStyles from the question modal, should refactor once generic modal is made
 export class CloudBackup extends PureComponent<CloudBackupScreenProps, void> {
   _translateY = new Animated.Value(0)
-
-  constructor(props: CloudBackupScreenProps) {
-    super(props)
-    UIManager.setLayoutAnimationEnabledExperimental &&
-      UIManager.setLayoutAnimationEnabledExperimental(true)
-  }
 
   componentDidMount = () => {
     this.props.resetCloudBackupStatus()
