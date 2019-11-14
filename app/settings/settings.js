@@ -105,6 +105,8 @@ import {
 } from '../backup/type-backup'
 import { secureSet, walletSet, safeSet } from '../services/storage'
 import { addPendingRedirection } from '../lock/lock-store'
+import { setupApptentive } from '../feedback'
+import { customLogger } from '../store/custom-logger'
 
 // Use this variable to show/hide token amount
 // if we just comment out code, then we need to adjust other styles as well
@@ -365,8 +367,13 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     this.props.navigation.navigate(walletRoute)
   }
 
-  openFeedback = () => {
-    Apptentive.presentMessageCenter()
+  openFeedback = async () => {
+    try {
+      await setupApptentive()
+      Apptentive.presentMessageCenter()
+    } catch (e) {
+      customLogger.log(e)
+    }
   }
 
   static navigationOptions = {
