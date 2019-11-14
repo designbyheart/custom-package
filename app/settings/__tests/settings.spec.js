@@ -16,6 +16,7 @@ import {
   onfidoRoute,
 } from '../../common'
 import { Apptentive } from 'apptentive-react-native'
+import * as feedback from '../../feedback/'
 
 describe('user settings screen', () => {
   const store = getStore()
@@ -228,15 +229,19 @@ describe('user settings screen', () => {
     expect(navigation.navigate).not.toBeCalled()
   })
 
-  it('should invoke Apptentive message center', () => {
+  it('should invoke Apptentive message center', async () => {
+    const setupApptentiveSpy = jest.spyOn(feedback, 'setupApptentive')
+    setupApptentiveSpy.mockImplementation(() => Promise.resolve(''))
     const presentMessageCenterSpy = jest.spyOn(
       Apptentive,
       'presentMessageCenter'
     )
-    componentInstance && componentInstance.openFeedback()
+    if (componentInstance) {
+      await componentInstance.openFeedback()
+    }
     expect(presentMessageCenterSpy).toHaveBeenCalled()
-    presentMessageCenterSpy.mockReset()
     presentMessageCenterSpy.mockRestore()
+    setupApptentiveSpy.mockRestore()
   })
 
   it('should hide wallet backup modal', () => {

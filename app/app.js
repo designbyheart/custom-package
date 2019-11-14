@@ -42,7 +42,6 @@ import type {
 } from './common/type-common'
 import { exitAppAndroid } from './bridge/react-native-cxs/RNCxs'
 import AppStatus from './app-status/app-status'
-import { setupFeedback } from './feedback'
 import RNShake from 'react-native-shake'
 import Offline from './offline/offline'
 
