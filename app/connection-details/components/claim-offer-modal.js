@@ -59,6 +59,7 @@ import {
   CLAIM_OFFER_STATUS,
   CLAIM_REQUEST_STATUS,
 } from '../../claim-offer/type-claim-offer'
+import { animateLayout } from '../../common/layout-animation'
 
 let ScreenHeight = Dimensions.get('window').height
 let ScreenWidth = Dimensions.get('window').width
@@ -288,6 +289,7 @@ class ClaimOfferModal extends React.Component<any, *> {
     const { shouldShowTransactionInfo } = this.state
     if (shouldShowTransactionInfo === false) {
       this.setState({ shouldShowTransactionInfo: true })
+      animateLayout()
     }
   }
 
@@ -312,6 +314,8 @@ class ClaimOfferModal extends React.Component<any, *> {
     this.props.acceptClaimOffer(this.props.uid)
     if (shouldHideModal === true) {
       this.hideModal()
+    } else {
+      animateLayout()
     }
   }
 

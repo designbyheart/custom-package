@@ -1,7 +1,13 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { Provider } from 'react-redux'
-import { AppRegistry, BackHandler, ToastAndroid, Platform } from 'react-native'
+import {
+  AppRegistry,
+  BackHandler,
+  ToastAndroid,
+  Platform,
+  UIManager,
+} from 'react-native'
 import { detox } from 'react-native-dotenv'
 
 import store from './store'
@@ -50,6 +56,14 @@ if (detox === 'yes') {
   // only in detox tests, for all other builds we will not come inside this IF
   // $FlowFixMe
   console.disableYellowBox = true
+}
+
+// enable layout animation for Android
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 
 const backButtonDisableRoutes = [

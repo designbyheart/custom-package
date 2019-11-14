@@ -6,7 +6,6 @@ import {
   Platform,
   ScrollView,
   Image,
-  LayoutAnimation,
   UIManager,
   Animated,
   Dimensions,
@@ -34,12 +33,6 @@ export function withBottomUpSliderScreen(
 ) {
   class BottomUpSliderScreen extends Component<{} & ReactNavigation, void> {
     _translateY = new Animated.Value(0)
-
-    constructor(props) {
-      super(props)
-      UIManager.setLayoutAnimationEnabledExperimental &&
-        UIManager.setLayoutAnimationEnabledExperimental(true)
-    }
 
     static navigationOptions = () => ({
       header: null,
