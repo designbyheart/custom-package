@@ -8,6 +8,7 @@ import { CustomText } from '../components'
 import Loader from '../components/loader/loader'
 import { Error } from '../components/error/error'
 import { Success } from '../components/success/success'
+import CredentialCostInfo from '../claim-offer/components/credential-cost-info'
 
 class DesignStyleguide extends Component<void, void> {
   render() {
@@ -39,6 +40,20 @@ class DesignStyleguide extends Component<void, void> {
 
           <CustomText style={[styles.title]}>Success</CustomText>
           <Success successText="Some error text" afterSuccessShown={() => {}} />
+
+          <CustomText style={[styles.title]}>CredentialCostInfo</CustomText>
+          <CredentialCostInfo
+            feesData={{
+              fees: '0',
+              total: '111',
+              currentTokenBalance: '111',
+            }}
+            payTokenValue={'0.0004'}
+            backgroundColor={'#999'}
+            onConfirmAndPay={() => {}}
+            onCancel={() => {}}
+            secondColorBackground={'#666'}
+          />
         </ScrollView>
       </View>
     )
@@ -56,5 +71,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
     marginLeft: 20,
+    padding: 5,
   },
 })

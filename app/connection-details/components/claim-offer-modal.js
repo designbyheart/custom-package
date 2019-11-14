@@ -32,7 +32,6 @@ import { newConnectionSeen } from '../../connection-history/connection-history-s
 import { measurements } from '../../../app/common/styles/measurements'
 import { LedgerFees } from '../../ledger/components/ledger-fees/ledger-fees'
 import PaymentTransactionInfo from '../../claim-offer/components/payment-transaction-info'
-import CredentialCostInfo from '../../claim-offer/components/credential-cost-info'
 import {
   getConnectionLogoUrl,
   getConnectionTheme,

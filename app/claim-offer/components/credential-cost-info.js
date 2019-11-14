@@ -22,6 +22,7 @@ type CredentialCostInfoProps = {
   backgroundColor: string,
   onConfirmAndPay: () => void,
   onCancel: () => void,
+  secondColorBackground: string,
 }
 
 const CredentialCostInfo = (props: CredentialCostInfoProps) => {
@@ -31,6 +32,7 @@ const CredentialCostInfo = (props: CredentialCostInfoProps) => {
     backgroundColor,
     onCancel,
     onConfirmAndPay,
+    secondColorBackground,
   } = props
   const credentialCost = new BigNumber(payTokenValue || 0).toFixed(8)
   const costsData = [
@@ -107,6 +109,7 @@ const CredentialCostInfo = (props: CredentialCostInfoProps) => {
           onPress={onConfirmAndPay}
           disableAccept={false}
           colorBackground={backgroundColor}
+          secondColorBackground={secondColorBackground}
           leftBtnText={'Cancel'}
           rightBtnText={'Confirm and Pay'}
         />
@@ -126,13 +129,15 @@ const styles = StyleSheet.create({
   costContainer: { flex: 1, backgroundColor: cardBorder },
   costTable: {
     height: 'auto',
+    flex: 1,
   },
   noteMessage: {
     color: grey,
     textAlign: 'center',
     fontSize: scale(15),
-    marginTop: 15,
-    marginBottom: 5,
+    paddingTop: 15,
+    paddingBottom: 10,
+    flex: 1,
   },
   cell: {
     padding: 15,

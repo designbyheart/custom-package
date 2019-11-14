@@ -1,6 +1,13 @@
 // @flow
 import React from 'react'
-import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from 'react-native'
 import debounce from 'lodash.debounce'
 import { scale } from 'react-native-size-matters'
 import CredentialPriceInfo from '../labels/credential-price-info'
@@ -43,6 +50,8 @@ class ModalButtons extends React.Component<any, {}> {
       buttonsWrapperStyles,
     } = this.props
 
+    const { width: screenWidth } = Dimensions.get('window')
+
     let themeType = colorBackground
     if (disableAccept) {
       const colorsWithoutOpacity = this.props.colorBackground.split(',', 3)
@@ -53,7 +62,13 @@ class ModalButtons extends React.Component<any, {}> {
     return (
       <View style={[styles.container, containerStyles]}>
         {children}
-        <View style={[styles.innerWrapper, buttonsWrapperStyles]}>
+        <View
+          style={[
+            styles.innerWrapper,
+            buttonsWrapperStyles,
+            screenWidth <= 450 && styles.fullWidth,
+          ]}
+        >
           {leftBtnText && (
             <TouchableOpacity
               style={[
@@ -62,6 +77,7 @@ class ModalButtons extends React.Component<any, {}> {
                   backgroundColor:
                     secondColorBackground || shadeColor(colorBackground, 60),
                 },
+                screenWidth <= 450 && styles.fullIgnore,
               ]}
               onPress={onIgnore}
             >
@@ -138,5 +154,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     color: whiteSolid,
     fontFamily: 'Lato',
+  },
+  fullWidth: {
+    flexDirection: 'column',
+  },
+  fullIgnore: {
+    width: '100%',
   },
 })
