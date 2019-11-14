@@ -167,7 +167,7 @@ export function convertSovrinTokensToSovrinAtoms(sovrinTokens: string): string {
     .toString()
 }
 
-const LEDGER_FEE_TRANSFER_CODE = '10001'
+export const LEDGER_FEE_TRANSFER_CODE = 'ALL_XFER_PUBLIC'
 const noTransferFees = {
   transfer: '0',
 }

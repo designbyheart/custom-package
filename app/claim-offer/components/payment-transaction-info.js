@@ -1,7 +1,13 @@
 // @flow
 import * as React from 'react'
 import { PureComponent } from 'react'
-import { View, StyleSheet, ActivityIndicator, Image } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Image,
+  ScrollView,
+} from 'react-native'
 import { scale } from 'react-native-size-matters'
 
 import type {
@@ -27,6 +33,16 @@ const messages = {
   ZERO_FEES: 'No network fees for this transaction. Transferring tokens...',
   INSUFFICIENT_BALANCE:
     'You do not have enough tokens to purchase this credential.',
+  INSUFFICIENT_BALANCE_WITH_DATA: (
+    feesData: TokenFeesData & { credentialPrice: string }
+  ) =>
+    `You do not have enough tokens to purchase this credential. You need (credential price: ${
+      feesData.credentialPrice
+    } + fees: ${feesData.fees} = total: ${
+      feesData.total
+    }), while your current token balance is ${
+      feesData.currentTokenBalance
+    }. Please get in touch with Sovrin Foundation to get more tokens. Once you have enough tokens, open credential offer again and you should be able to accept.`,
   SENDING_PAID_CREDENTIAL_REQUEST: 'Transferring tokens...',
   SENDING_CREDENTIAL_REQUEST: 'Accepting offer...',
   SUCCESS:
@@ -88,10 +104,15 @@ class PaymentTransactionInfo extends PureComponent<
         TRANSFER_EQUAL_TO_BALANCE: credentialCostInfo,
         TRANSFER_POSSIBLE_WITH_FEES: credentialCostInfo,
         TRANSFER_NOT_POSSIBLE_WITH_FEES: (
-          <Error
-            errorText={messages.INSUFFICIENT_BALANCE}
-            containerStyles={[styles.errorContainer]}
-          />
+          <ScrollView>
+            <Error
+              errorText={messages.INSUFFICIENT_BALANCE_WITH_DATA({
+                ...feesData,
+                credentialPrice,
+              })}
+              containerStyles={[styles.errorContainer]}
+            />
+          </ScrollView>
         ),
       }
 
