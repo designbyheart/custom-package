@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native'
+import CredentialPriceInfo from '../../components/labels/credential-price-info'
 import { Border } from '../../components/connection-details/border'
 import {
   proofRequestRoute,
@@ -45,53 +46,61 @@ class ConnectionCard extends React.Component<any, {}> {
       <View style={styles.container}>
         <Text style={styles.messageDate}>{this.props.messageDate}</Text>
         <View style={styles.innerWrapper}>
-          <View style={styles.top}>
-            <View
-              style={[
-                styles.badge,
-                { display: this.props.showBadge ? 'flex' : 'none' },
-              ]}
-            >
-              <View style={styles.iconWrapper}>
-                <SvgCustomIcon
-                  name="CheckmarkBadge"
-                  fill={'#505050'}
-                  width={22}
-                  height={33}
-                />
-              </View>
-            </View>
-            <View style={styles.headerWrapper}>
-              <View style={styles.header}>
-                <Text style={styles.headerText}>{this.props.headerText}</Text>
-              </View>
-              <View style={styles.infoWrapper}>
-                <Text style={styles.infoType}>{this.props.infoType}</Text>
-                <Text style={styles.infoDate}>{this.props.infoDate}</Text>
-              </View>
-            </View>
-          </View>
-          <Border borderColor={'#eaeaea'} />
-          <View style={styles.bottom}>
-            <View style={styles.attributesWrapper}>
-              <Text style={styles.attributesText}>
-                {this.props.noOfAttributes}
-              </Text>
-              <Text style={styles.attributesText}> Attributes</Text>
-            </View>
-            <TouchableOpacity
-              onPress={this.updateAndShowModal}
-              style={styles.button}
-            >
-              <Text
+          {this.props.payTokenValue && (
+            <CredentialPriceInfo
+              isPaid={true}
+              price={this.props.payTokenValue}
+            />
+          )}
+          <View style={styles.innerWrapperPadding}>
+            <View style={styles.top}>
+              <View
                 style={[
-                  styles.buttonText,
-                  { color: this.props.colorBackground },
+                  styles.badge,
+                  { display: this.props.showBadge ? 'flex' : 'none' },
                 ]}
               >
-                {this.props.buttonText}
-              </Text>
-            </TouchableOpacity>
+                <View style={styles.iconWrapper}>
+                  <SvgCustomIcon
+                    name="CheckmarkBadge"
+                    fill={'#505050'}
+                    width={22}
+                    height={33}
+                  />
+                </View>
+              </View>
+              <View style={styles.headerWrapper}>
+                <View style={styles.header}>
+                  <Text style={styles.headerText}>{this.props.headerText}</Text>
+                </View>
+                <View style={styles.infoWrapper}>
+                  <Text style={styles.infoType}>{this.props.infoType}</Text>
+                  <Text style={styles.infoDate}>{this.props.infoDate}</Text>
+                </View>
+              </View>
+            </View>
+            <Border borderColor={'#eaeaea'} />
+            <View style={styles.bottom}>
+              <View style={styles.attributesWrapper}>
+                <Text style={styles.attributesText}>
+                  {this.props.noOfAttributes}
+                </Text>
+                <Text style={styles.attributesText}> Attributes</Text>
+              </View>
+              <TouchableOpacity
+                onPress={this.updateAndShowModal}
+                style={styles.button}
+              >
+                <Text
+                  style={[
+                    styles.buttonText,
+                    { color: this.props.colorBackground },
+                  ]}
+                >
+                  {this.props.buttonText}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
         <View style={styles.helperView} />
@@ -128,6 +137,8 @@ const styles = StyleSheet.create({
     elevation: Platform.OS === 'android' ? 4 : 0,
     marginBottom: 15,
     borderRadius: 6,
+  },
+  innerWrapperPadding: {
     padding: 15,
   },
   messageDate: {

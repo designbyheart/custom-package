@@ -123,12 +123,14 @@ export class TxnAuthorAgreement extends Component<
         <View style={styles.scrollViewWrapperContainer}>
           <View style={styles.overflow}>
             <ScrollView style={styles.scrollViewWrapper}>
+              <View style={styles.placeholderView} />
               <Text>
                 {this.props.text !== ''
                   ? this.props.text
-                  : `TAA is not active this is placeholder text until it is activated Transaction Author Agreement is not active this is placeholder text until it is activated Transaction Author Agreement is not active this is placeholder text until it is activated Transaction Author Agreement is not active this is placeholder text until it is activatedTAA is not active this is placeholder text until it is activated Transaction Author Agreement is not active this is placeholder text until it is activatedTAA is not active this is placeholder text until it is activated`}
+                  : `TAA is not active this is placeholder text until it is activated Transaction Author Agreement`}
               </Text>
             </ScrollView>
+            <View style={styles.placeholderView} />
           </View>
           <ModalButtons
             onPress={this.props.taaAcceptSubmit}
@@ -208,7 +210,7 @@ const styles = StyleSheet.create({
   },
   scrollViewWrapper: {
     paddingHorizontal: '3%',
-    paddingVertical: '3%',
+    paddingVertical: '0%',
     flexGrow: 0,
   },
   overflow: {
@@ -277,4 +279,5 @@ const styles = StyleSheet.create({
     minHeight: 180,
     backgroundColor: '#f2f2f2',
   },
+  placeholderView: { height: 20 },
 })

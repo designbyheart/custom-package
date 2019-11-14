@@ -5,38 +5,48 @@ import { BigNumber } from 'bignumber.js'
 import { scale } from 'react-native-size-matters'
 
 import { maroonRed } from '../../common/styles'
-import { orange, whiteSolid } from '../../common/styles/constant'
+import {
+  orange,
+  whiteSolid,
+  cmGrey5,
+  cmGrey2,
+} from '../../common/styles/constant'
 import SvgCustomIcon from '../../components/svg-setting-icons'
 import { CustomText } from '../../components'
 
-const CredentialPriceInfo = ({ price }: { price: string }) => {
+const CredentialPriceInfo = ({
+  price,
+  isPaid,
+}: {
+  price: string,
+  isPaid?: boolean,
+}) => {
   const priceAmount = new BigNumber(price)
 
   const isBigNumberPrice = priceAmount.toString().length > 15
+  const textStyles = isPaid ? styles.paidText : styles.text
   return priceAmount > 0 ? (
-    <View
-      style={[
-        styles.priceContainer,
-        { flexDirection: isBigNumberPrice ? 'column' : 'row' },
-      ]}
-    >
-      <CustomText transparentBg style={[styles.text]}>
-        This Credential Costs
+    <View style={[styles.priceContainer, isPaid ? styles.paidContainer : {}]}>
+      <CustomText transparentBg style={[textStyles]}>
+        {isPaid ? 'You paid' : 'Price:'}
       </CustomText>
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: isBigNumberPrice ? 'flex-start' : 'flex-end',
+          alignItems: 'center',
         }}
       >
         <SvgCustomIcon
-          fill={whiteSolid}
+          fill={isPaid ? cmGrey2 : whiteSolid}
           name="PaymentToken"
-          height={'30'}
-          width={'30'}
+          height={isPaid ? '16' : '24'}
+          width={isPaid ? '16' : '24'}
         />
-        <CustomText transparentBg style={[styles.text, styles.largeText]}>
+        <CustomText transparentBg style={[textStyles, styles.largeText]}>
           {priceAmount.toFixed().toString()}
+        </CustomText>
+        <CustomText transparentBg style={[textStyles]}>
+          {isPaid ? 'for' : ''}
         </CustomText>
       </View>
     </View>
@@ -49,31 +59,41 @@ export default CredentialPriceInfo
 
 const styles = StyleSheet.create({
   priceContainer: {
+    flexDirection: 'row',
     backgroundColor: orange,
     maxWidth: '100%',
     justifyContent: 'space-between',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    paddingTop: 5,
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    paddingHorizontal: 16,
+    paddingVertical: 11,
+
+    alignItems: 'center',
+  },
+  paidContainer: {
+    backgroundColor: cmGrey5,
+    justifyContent: 'flex-start',
   },
   text: {
-    fontSize: scale(15),
+    fontSize: scale(14),
     color: whiteSolid,
-    padding: 15,
-    paddingBottom: 8,
-    paddingTop: 5,
+  },
+  text1: {
+    fontSize: scale(14),
+    color: whiteSolid,
+  },
+  paidText: {
+    fontSize: scale(11),
+    color: cmGrey2,
+    paddingRight: 5,
   },
   icon: {
     marginRight: 5,
     resizeMode: 'contain',
     height: 25,
-    marginTop: 6,
   },
   largeText: {
     fontSize: scale(17),
-    marginLeft: 5,
-    textAlign: 'right',
     paddingLeft: 5,
-    paddingTop: 4,
   },
 })

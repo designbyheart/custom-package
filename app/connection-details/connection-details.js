@@ -301,6 +301,7 @@ class ConnectionDetails extends PureComponent<
                   }
                   colorBackground={activeConnectionThemePrimary}
                   secondColorBackground={activeConnectionThemeSecondary}
+                  payTokenValue={histForDid.payTokenValue}
                 />
               )
               arrayUI.push(received)
