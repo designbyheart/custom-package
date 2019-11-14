@@ -87,6 +87,7 @@ class PaymentTransactionInfo extends PureComponent<
           backgroundColor={claimThemePrimary}
           onConfirmAndPay={onConfirmAndPay}
           onCancel={onCancel}
+          secondColorBackground={claimThemeSecondary}
         />
       )
       const txnFeesComponent = {
@@ -105,7 +106,7 @@ class PaymentTransactionInfo extends PureComponent<
         TRANSFER_EQUAL_TO_BALANCE: credentialCostInfo,
         TRANSFER_POSSIBLE_WITH_FEES: credentialCostInfo,
         TRANSFER_NOT_POSSIBLE_WITH_FEES: (
-          <ScrollView>
+          <ScrollView style={styles.scrollViewStyles}>
             <Error
               errorText={messages.INSUFFICIENT_BALANCE_WITH_DATA({
                 ...feesData,
@@ -249,4 +250,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   insufficientBalanceText: { fontSize: scale(17) },
+  scrollViewStyles: {
+    flex: 1,
+  },
 })
