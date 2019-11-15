@@ -11,6 +11,8 @@ import {
   yellowSea,
   whiteSolid,
   darkGray,
+  isBiggerThanShortDevice,
+  isBiggerThanMediumDevice,
 } from '../../common/styles'
 import { ModalButtons } from '../../components/buttons/modal-buttons'
 import type { TokenFeesData } from '../type-claim-offer'
@@ -96,6 +98,7 @@ const CredentialCostInfo = (props: CredentialCostInfoProps) => {
       <CustomText bg={false} style={[styles.noteMessage]}>
         Please confirm. Once tokens are transferred, it cannot be undone.
       </CustomText>
+      {/* NOTE: Probably don't need to scroll here, should be able to make UI fit on screen */}
       <FlatList
         data={costsData}
         style={styles.costTable}
@@ -103,17 +106,17 @@ const CredentialCostInfo = (props: CredentialCostInfoProps) => {
         ItemSeparatorComponent={borderSeparator}
         renderItem={renderCostCell}
       />
-      <View style={styles.buttonsContainer}>
-        <ModalButtons
-          onIgnore={onCancel}
-          onPress={onConfirmAndPay}
-          disableAccept={false}
-          colorBackground={backgroundColor}
-          secondColorBackground={secondColorBackground}
-          leftBtnText={'Cancel'}
-          rightBtnText={'Confirm and Pay'}
-        />
-      </View>
+      {/* <View style={styles.buttonsContainer}> */}
+      <ModalButtons
+        onIgnore={onCancel}
+        onPress={onConfirmAndPay}
+        disableAccept={false}
+        colorBackground={backgroundColor}
+        secondColorBackground={secondColorBackground}
+        leftBtnText={'Cancel'}
+        rightBtnText={'Confirm and Pay'}
+      />
+      {/* </View> */}
     </View>
   )
 }
@@ -129,14 +132,14 @@ const styles = StyleSheet.create({
   costContainer: { flex: 1, backgroundColor: cardBorder },
   costTable: {
     height: 'auto',
-    flex: 1,
+    // flex: 1,
   },
   noteMessage: {
     color: grey,
     textAlign: 'center',
-    fontSize: scale(15),
-    paddingTop: 15,
-    paddingBottom: 10,
+    fontSize: isBiggerThanMediumDevice ? scale(15) : scale(12),
+    paddingTop: isBiggerThanMediumDevice ? 15 : 5,
+    paddingBottom: isBiggerThanMediumDevice ? 10 : 5,
     flex: 1,
   },
   cell: {

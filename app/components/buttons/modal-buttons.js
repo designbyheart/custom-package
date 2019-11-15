@@ -66,7 +66,7 @@ class ModalButtons extends React.Component<any, {}> {
           style={[
             styles.innerWrapper,
             buttonsWrapperStyles,
-            screenWidth <= 450 && styles.fullWidth,
+            // screenWidth <= 450 && styles.fullWidth,
           ]}
         >
           {leftBtnText && (
@@ -77,7 +77,7 @@ class ModalButtons extends React.Component<any, {}> {
                   backgroundColor:
                     secondColorBackground || shadeColor(colorBackground, 60),
                 },
-                screenWidth <= 450 && styles.fullIgnore,
+                // screenWidth <= 450 && styles.fullIgnore,
               ]}
               onPress={onIgnore}
             >

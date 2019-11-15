@@ -369,9 +369,6 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                   "borderTopLeftRadius": 0,
                   "borderTopRightRadius": 0,
                 },
-                Object {
-                  "flexDirection": "column",
-                },
               ]
             }
           >
@@ -394,7 +391,6 @@ exports[`<ClaimOfferModal /> should ClaimOfferModal render properly 1`] = `
                   "padding": 17.5,
                   "paddingLeft": 10,
                   "paddingRight": 10,
-                  "width": "100%",
                 }
               }
             >
