@@ -9,7 +9,7 @@ export function animateLayout() {
     LayoutAnimation.configureNext(
       LayoutAnimation.create(
         150,
-        LayoutAnimation.Types.keyboard,
+        LayoutAnimation.Types.linear,
         LayoutAnimation.Properties.opacity
       )
     )
