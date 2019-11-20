@@ -9,7 +9,7 @@
 ## Running e2e tests
 
 * `$ yarn e2e`
-  
+
   That's it.
 
   Above command will check that if there is already a debug build present or not. If no debug build is already generated, then it will generate a debug build. Once e2e finds debug build, then it chooses `iPhone XS Max` as default simulator, uninstalls any previous app install of ConnectMe, installs debug build, and use QA Test 1 as default environment and setup pass code to 000000, and starts running all tests which are under `__tests__` directory.
@@ -75,7 +75,7 @@ Tests can be run by `yarn e2e`. There are few options to customize while running
 | -s, --simulators | iphonexsmax | specify on which simulator tests should run. We can specify multiple values with this option. If we specify more than one simulator, then it would run tests on all those passed simulator in parallel. Possible values that we can pass are `iphone5s iphone7 iphonex iphonexsmax`. The way we can pass multiple value on command line `-s iphone5s iphone7` |
 | -u, --update | false | whether to update failing screenshots with new ones |
 | -t, --testToRun | all tests under \__tests__ | we can pass specific test file which we need to run. For example: if we just need to run token tests, then we can run `yarn e2e -t token`. Do not add `.spec.js` to the test file name that we need to run. If we have to run tests only from  connection.spec.js, then command would be `yarn e2e -t connection`|
-| -e, --environment | QA Test 1 | select environment which should be used to run end-to-end tests. Possible options are `dev, sandbox, staging, prod, demo, qatest1, qarc, devteam1, devteam2, devteam3, devrc` |
+| -e, --environment | QA Test 1 | select environment which should be used to run end-to-end tests. Possible options are `dev, sandbox, staging, prod, demo, qatest1, qa, devteam1, devteam2, devteam3, devrc` |
 | -k, --skip | false | do not re-install app even if it is a new session. Developer should be sure that by passing this flag we are not going to uninstall previous app installation and run tests on previous installed app. This flag if used wisely can give more than 30 seconds of boost in running e2e tests per simulator. Since this flag does not install new app, developer should be aware that no new build change has be done from last time the app was installed on simulator. This is especially useful if we are running e2e tests continuously on dev machine or we need to run only single test file every time or we are changing JS code of react native and need to keep testing stuff in e2e tests.  |
 | -- | - | Once we pass this option then we can pass any option which we can pass to `detox` directly. See [this documentation](https://github.com/wix/Detox/blob/master/docs/APIRef.DetoxCLI.md#test) to check what options we can pass to detox  |
 | --help | | show usage and available commands on terminal |
@@ -153,7 +153,7 @@ Tests can be run by `yarn e2e`. There are few options to customize while running
   - If we have to run tests on multiple simulator simultaneously then we have to run detox command manually in separate terminal by providing separate config. But our cli can handle it just fine
   - There is no way to parallelize test runs on multiple simulator with detox cli. But our cli can potentially parallelize tests and hence cut overall test time to under 3 minutes.
 - Why was option --skip shortened to -k and not -s?
-  
+
   -s was already taken by simulators option. -r for reuse was taken by detox, -n to signify -no-install was taken by detox for --name, -u for uninstall was taken by --update of our cli. So why not -sk, because command line shortened arguments should be single letter. So, randomly picked -k, second letter of --skip
 
 - Why do we need *initial.spec.js*?
@@ -203,7 +203,7 @@ describe('App', () => {
   })
 })
 ```
-Let's dive into details of what happen inside `matchScreenshot`. 
+Let's dive into details of what happen inside `matchScreenshot`.
 
 We first decide that which simulator is running the test. If iPhone X is running the test, then all default screenshots will go to `iphonex` directories. The way we know which simulator is running test is via our own mini cli `e2e-cli`. It sets an environment variable before running tests and we get the value of environment variable to identify simulator.
 
@@ -211,7 +211,7 @@ Once we know the simulator, then we need to know whether this is the first time 
 
 Now, we compare existing and new screenshots and check if UI is changed or not. If UI is changed, then we print the error on console, fail test, generate an image which highlights the differences with red color and save diff image in `e2e/screenshots/diff/iphonex/` directory. If changes are regression and we don't want them, we go ahead and fix the code till tests pass.
 
-If we want to keep new changes and override the existing ones, then we run test via commands that has `-u/--update` flag (`yarn e2e -u`). Apart from setting SIMULATOR environment variable, we are setting UPDATE environment variable as well. This environment variable helps us to decide whether we need to remove existing screenshots and override with new ones. 
+If we want to keep new changes and override the existing ones, then we run test via commands that has `-u/--update` flag (`yarn e2e -u`). Apart from setting SIMULATOR environment variable, we are setting UPDATE environment variable as well. This environment variable helps us to decide whether we need to remove existing screenshots and override with new ones.
 
 ### How to handle dynamic areas of screen
 
@@ -263,7 +263,7 @@ For purpose of dynamic area ignorance, we are using below mechanism.
         left: 19,
         width: 337,
         height: 82,
-      },        
+      },
       iphonexsmax: {
         top: 296,
         left: 19,

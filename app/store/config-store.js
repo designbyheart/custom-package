@@ -204,7 +204,7 @@ export const baseUrls = {
     poolConfig: sharedQAPoolConfig,
     paymentMethod: 'sov',
   },
-  [SERVER_ENVIRONMENT.QARC]: {
+  [SERVER_ENVIRONMENT.QA]: {
     agencyUrl: 'https://agency.pqa.evernym.com',
     agencyDID: 'LhiSANFohRXBWaKSZDvTH5',
     agencyVerificationKey: 'BjpTLofEbVYJ8xxXQxScbmubHsgpHY5uvScfXqW9B1vB',
