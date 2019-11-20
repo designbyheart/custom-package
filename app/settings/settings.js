@@ -805,7 +805,9 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         ),
         onPress: this.openOnfido,
       },
-      __DEV__ && {
+    ]
+    if (__DEV__ === true) {
+      settingsItemList.concat({
         id: 9,
         title: 'Design styleguide',
         subtitle: 'Development only',
@@ -824,8 +826,8 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
           />
         ),
         onPress: this.openStyleguide,
-      },
-    ]
+      })
+    }
 
     return (
       <Container>
