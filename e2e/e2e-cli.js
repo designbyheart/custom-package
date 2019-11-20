@@ -53,7 +53,7 @@ const args = yargs
       'prod',
       'demo',
       'qatest1',
-      'qarc',
+      'qa',
       'devteam1',
       'devteam2',
       'devteam3',
