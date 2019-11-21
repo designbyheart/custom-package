@@ -136,7 +136,11 @@ platform :ios do
     appcenter_token = ENV["APPCENTER_API_TOKEN"]
     UI.user_error!("You didn't set token for AppCenter") if appcenter_token.empty?
     build_type = ENV["BUILD_TYPE"] || "#{build_type}"
-    appcenter_upload(api_token: ENV["APPCENTER_API_TOKEN"], owner_type: "user", app_name: "QA-ConnectMe")
+    if remote_branch == "master"
+      appcenter_upload(api_token: ENV["APPCENTER_API_TOKEN"], owner_type: "user", app_name: "QA-ConnectMe")
+    elsif remote_branch == "stable" || remote_branch == "stage"
+      appcenter_upload(api_token: ENV["APPCENTER_API_TOKEN"], owner_type: "user", app_name: "Stage-ConnectMe")
+    end
 
     build(
         match_type: "appstore",
