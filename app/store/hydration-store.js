@@ -305,7 +305,8 @@ export function* hydrate(): any {
       if (vcxResult && vcxResult.fail) {
         throw new Error(JSON.stringify(vcxResult.fail.message))
       }
-      yield* hydrateTxnAuthorAgreementSaga()
+      // NOTE: This will be changed when the TAA flow changes.
+      // yield* hydrateTxnAuthorAgreementSaga()
     } catch (e) {
       captureError(e)
       customLogger.error(`hydrateSaga: ${e}`)
