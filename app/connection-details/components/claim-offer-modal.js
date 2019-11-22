@@ -101,9 +101,10 @@ class ClaimOfferModal extends React.Component<any, *> {
 
     const testID = 'claim-offer'
     let acceptButtonText = payTokenValue ? 'Accept & Pay' : 'Accept'
-    const hasNotAcceptedTAA =
-      (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
-      new BigNumber(claimPrice).isGreaterThan(0)
+    // NOTE: Just to be safe, we changed the hasNotAcceptedTAA to hardcoded false, so we can be sure 0 tokens doesn't affect the flow.
+    const hasNotAcceptedTAA = false
+    // (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
+    // new BigNumber(claimPrice).isGreaterThan(0)
 
     return (
       <Animated.View style={[styles.outerAnimatedWrapper]}>

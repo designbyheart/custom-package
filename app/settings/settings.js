@@ -110,7 +110,7 @@ import { customLogger } from '../store/custom-logger'
 
 // Use this variable to show/hide token amount
 // if we just comment out code, then we need to adjust other styles as well
-const hideTokenScreen = false
+const hideTokenScreen = true
 
 // Hate to put below logic for height and padding calculations here.
 // Ideally, these things should automatically adjusted by flex
