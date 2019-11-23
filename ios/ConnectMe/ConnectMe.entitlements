@@ -8,6 +8,7 @@
 	<array>
 		<string>applinks:connectme.app.link</string>
 		<string>applinks:connectme-alternate.app.link</string>
+		<string>applinks:link.comect.me</string>
 	</array>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array/>
