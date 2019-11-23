@@ -1,7 +1,7 @@
 // @flow
 
 import React, { PureComponent } from 'react'
-import { StyleSheet, Clipboard, ScrollView } from 'react-native'
+import { StyleSheet, Clipboard, ScrollView, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -23,6 +23,7 @@ import { promptBackupBanner } from '../backup/backup-store'
 import { STORE_STATUS } from './type-wallet'
 import { walletRoute } from '../common'
 import { RECEIVE_TAB, RECEIVE_TAB_TEST_ID } from './wallet-constants'
+import { convertClaimOfferToHistoryEvent } from '../connection-history/connection-history-store'
 
 export class WalletTabReceive extends PureComponent<
   WalletTabReceiveProps,
@@ -44,6 +45,18 @@ export class WalletTabReceive extends PureComponent<
 
   componentDidMount() {
     this.props.refreshWalletAddresses()
+
+    if (this.props.addressStatus === STORE_STATUS.ERROR) {
+      this.setState({
+        copyButtonText: 'Generate Token Payment Address',
+      })
+    }
+  }
+
+  componentDidUpdate(prevProps: WalletTabReceiveProps) {
+    if (this.props.addressStatus !== prevProps.addressStatus) {
+      this.props.refreshWalletAddresses()
+    }
   }
 
   copyToClipboard = () => {
@@ -64,11 +77,31 @@ export class WalletTabReceive extends PureComponent<
     }
   }
 
-  // TODO handle error state
+  renderErrorOrSuccessMessages = () => {
+    if (
+      this.props.addressStatus === STORE_STATUS.ERROR &&
+      Platform.OS === 'android'
+    ) {
+      return `
+                Unable to generate a token payment address.
+                One possible cause is outdated version of Google Play Services.
+                Please update Google Play Services and try again.
+              `
+    } else if (
+      this.props.addressStatus === STORE_STATUS.ERROR &&
+      Platform.OS === 'ios'
+    ) {
+      return 'Unable to generate a token payment address.'
+    } else {
+      return 'Your Sovrin token payment address is:'
+    }
+  }
+
   render() {
     const { walletAddresses, addressStatus } = this.props
     const isLoading =
       addressStatus === STORE_STATUS.IN_PROGRESS && walletAddresses.length === 0
+
     return (
       <Container>
         <Container>
@@ -84,31 +117,36 @@ export class WalletTabReceive extends PureComponent<
               >
                 {isLoading
                   ? 'Fetching your Sovrin token payment address'
-                  : 'Your Sovrin token payment address is:'}
+                  : this.renderErrorOrSuccessMessages()}
               </CustomText>
               {isLoading && <Loader showMessage={false} />}
-              {walletAddresses.map((walletAddress: string) => {
-                return (
-                  <CustomText
-                    center
-                    transparentBg
-                    borderColor
-                    primary
-                    key={walletAddress}
-                    style={[styles.paymentAddress]}
-                    testID="token-payment-address"
-                  >
-                    {walletAddress}
-                  </CustomText>
-                )
-              })}
+              {addressStatus !== STORE_STATUS.ERROR &&
+                walletAddresses.map((walletAddress: string) => {
+                  return (
+                    <CustomText
+                      center
+                      transparentBg
+                      borderColor
+                      primary
+                      key={walletAddress}
+                      style={[styles.paymentAddress]}
+                      testID="token-payment-address"
+                    >
+                      {walletAddress}
+                    </CustomText>
+                  )
+                })}
             </ScrollView>
           </CustomView>
         </Container>
         <CustomView safeArea style={[styles.alignItemsCenter]}>
           {!isLoading && (
             <CustomButton
-              onPress={this.copyToClipboard}
+              onPress={
+                addressStatus === STORE_STATUS.ERROR
+                  ? this.props.refreshWalletAddresses
+                  : this.copyToClipboard
+              }
               testID="token-copy-to-clipboard-label"
               style={[customStyles.ctaButton]}
               primary
