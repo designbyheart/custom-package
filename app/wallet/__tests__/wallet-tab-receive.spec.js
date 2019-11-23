@@ -20,6 +20,7 @@ describe('<WalletTabReceive />', () => {
           promptBackupBanner={jest.fn()}
           addressStatus={STORE_STATUS.IN_PROGRESS}
           currentScreen={walletRoute}
+          error={walletAddresses.error}
         />
       </Provider>
     )
