@@ -3,8 +3,10 @@ import React, { PureComponent } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import branch from 'react-native-branch'
-import { deepLinkData, deepLinkEmpty, deepLinkError } from './deep-link-store'
+
 import type { DeepLinkProps, DeepLinkBundle } from './type-deep-link'
+
+import { deepLinkData, deepLinkEmpty, deepLinkError } from './deep-link-store'
 
 export class DeepLink extends PureComponent<DeepLinkProps, void> {
   onDeepLinkData = (bundle: DeepLinkBundle) => {
@@ -14,6 +16,12 @@ export class DeepLink extends PureComponent<DeepLinkProps, void> {
       if (bundle.params['+clicked_branch_link'] === true) {
         // update store with deep link params
         this.props.deepLinkData(bundle.params.t)
+      } else if (typeof bundle.params['+non_branch_link'] === 'string') {
+        const nonBranchLink = bundle.params['+non_branch_link'].toLowerCase()
+        if (nonBranchLink.startsWith('https://link.comect.me/?t=')) {
+          const invitationToken = nonBranchLink.split('=').slice(-1)[0]
+          this.props.deepLinkData(invitationToken)
+        }
       } else {
         // update store that deep link was not clicked
         Object.keys(this.props.tokens).length === 0 &&

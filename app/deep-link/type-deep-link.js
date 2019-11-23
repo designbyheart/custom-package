@@ -55,8 +55,9 @@ export type DeepLinkAction =
 export type DeepLinkBundle = {
   error: ?string,
   params: ?{
-    ['+clicked_branch_link']: boolean,
+    '+clicked_branch_link': boolean,
     t: string,
+    '+non_branch_link': string,
   },
 }
 
