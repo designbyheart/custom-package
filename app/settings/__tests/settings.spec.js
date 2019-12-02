@@ -45,6 +45,7 @@ describe('user settings screen', () => {
       generateRecoveryPhrase: jest.fn(),
       setAutoCloudBackupEnabled: jest.fn(),
       connectionHistoryBackedUp: jest.fn(),
+      cloudBackupFailure: jest.fn(),
       addPendingRedirection: jest.fn(),
     }
   }

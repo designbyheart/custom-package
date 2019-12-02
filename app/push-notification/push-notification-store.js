@@ -101,7 +101,7 @@ import type { ClaimPushPayloadVcx } from '../claim/type-claim'
 import type { Claim } from '../claim/type-claim'
 import type { QuestionPayload } from './../question/type-question'
 import { saveSerializedClaimOffer } from '../claim-offer/claim-offer-store'
-import { safeGet, safeSet, secureGet } from '../services/storage'
+import { safeGet, safeSet, secureGet, walletSet } from '../services/storage'
 import {
   PUSH_COM_METHOD,
   PASSPHRASE_STORAGE_KEY,
@@ -140,10 +140,19 @@ import { questionReceived } from '../question/question-store'
 import { NavigationActions } from 'react-navigation'
 import type { SerializedClaimOffer } from './../claim-offer/type-claim-offer'
 import { customLogger } from '../store/custom-logger'
-import { SET_WALLET_HANDLE, WALLET_FILE_NAME } from '../backup/type-backup'
+import {
+  SET_WALLET_HANDLE,
+  WALLET_FILE_NAME,
+  AUTO_CLOUD_BACKUP_ENABLED,
+  WALLET_BACKUP_FAILURE,
+} from '../backup/type-backup'
 import { getWords } from '../backup/secure-passphrase'
 import moment from 'moment'
-import { cloudBackupSuccess, cloudBackupFailure } from '../backup/backup-store'
+import {
+  cloudBackupSuccess,
+  cloudBackupFailure,
+  setAutoCloudBackupEnabled,
+} from '../backup/backup-store'
 import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
 import RNFetchBlob from 'rn-fetch-blob'
 
@@ -395,6 +404,25 @@ export function* fetchAdditionalDataSaga(
       yield put(cloudBackupFailure('error'))
       return
     }
+  }
+
+  if (type === WALLET_BACKUP_FAILURE) {
+    yield put(
+      pushNotificationReceived({
+        pushNotifMsgText: action.notificationPayload.pushNotifMsgText,
+        pushNotifMsgTitle: action.notificationPayload.pushNotifMsgTitle,
+        uid,
+        type,
+        remotePairwiseDID: 'NA',
+        forDID: 'NA',
+        additionalData: {},
+      })
+    )
+    walletSet(AUTO_CLOUD_BACKUP_ENABLED, 'false')
+    safeSet(AUTO_CLOUD_BACKUP_ENABLED, 'false')
+    safeSet(LAST_SUCCESSFUL_CLOUD_BACKUP, 'error')
+    yield put(setAutoCloudBackupEnabled(false))
+    yield put(cloudBackupFailure(WALLET_BACKUP_FAILURE))
   }
 
   // NOTE: CLOUD-BACKUP wait for push notification after backupWalletBackup

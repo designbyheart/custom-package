@@ -129,12 +129,13 @@ import {
   getResponderDistance,
 } from './transition'
 import OpenIdConnectScreen from '../app/open-id-connect/open-id-connect-screen'
+import SettingsTab from './settings/settings-tab'
 
 if (__DEV__) {
   require('../tools/reactotron-config')
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   tabBarContainer: {
     borderStyle: 'solid',
     borderTopWidth: 1,
@@ -273,15 +274,7 @@ const Tabs = createTabNavigator(
           accessibilityLabel: `Go to ${TAB_MENU_TITLE}`,
         },
         tabBarIcon: ({ focused }) => {
-          return (
-            <View style={styles.icon}>
-              <SvgCustomIcon
-                name="Settings"
-                height={29}
-                fill={focused ? color.actions.font.tenth : color.actions.sixth}
-              />
-            </View>
-          )
+          return <SettingsTab focused={focused} />
         },
       },
     },

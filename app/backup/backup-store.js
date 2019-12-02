@@ -56,6 +56,7 @@ import {
   HAS_VERIFIED_RECOVERY_PHRASE,
   HYDRATE_HAS_VERIFIED_RECOVERY_PHRASE,
   RESET_BACKUP_PATH,
+  WALLET_BACKUP_FAILURE,
 } from './type-backup'
 import type {
   PromptBackupBannerAction,
@@ -221,6 +222,7 @@ export function* cloudBackupSaga(
     // NOTE: wait/timer for steps in pushNotifaction to complete
     const { cloudBackupSuccess, timeout } = yield race({
       cloudBackupSuccess: take(CLOUD_BACKUP_SUCCESS),
+      cloudBackupError: take(WALLET_BACKUP_FAILURE),
       timeout: call(delay, 60000),
     })
     if (timeout) {
@@ -240,7 +242,7 @@ export function* cloudBackupSaga(
       yield put(cloudBackupStart())
     }
   } catch (error) {
-    yield put(cloudBackupFailure('Failed to create backup' + error.message))
+    yield put(cloudBackupFailure('Failed to create backup: ' + error.message))
     return
   }
 }
@@ -808,7 +810,10 @@ export const cloudBackupSuccess = (lastSuccessfulCloudBackup: string) => ({
 
 export const cloudBackupFailure = (cloudBackupError: string) => ({
   type: CLOUD_BACKUP_FAILURE,
-  cloudBackupStatus: CLOUD_BACKUP_FAILURE,
+  cloudBackupStatus:
+    cloudBackupError === WALLET_BACKUP_FAILURE
+      ? WALLET_BACKUP_FAILURE
+      : CLOUD_BACKUP_FAILURE,
   cloudBackupError,
 })
 

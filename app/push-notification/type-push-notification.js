@@ -66,6 +66,8 @@ export type DownloadedNotification = {
   type: string,
   uid: string,
   senderLogoUrl?: ?string,
+  pushNotifMsgText?: ?string,
+  pushNotifMsgTitle?: ?string,
   remotePairwiseDID: string,
   forDID: string,
 }
