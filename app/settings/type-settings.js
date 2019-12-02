@@ -25,6 +25,8 @@ export type SettingsProps = {
   connectionHistoryBackedUp: () => any,
   isAutoBackupEnabled?: boolean,
   hasVerifiedRecoveryPhrase?: boolean,
+  cloudBackupFailure: (error: string | null) => void,
+  cloudBackupError?: string | null,
 } & ReactNavigation
 
 export type SettingsState = {

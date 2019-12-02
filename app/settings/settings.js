@@ -75,6 +75,7 @@ import {
   exportBackup,
   generateBackupFile,
   generateRecoveryPhrase,
+  cloudBackupFailure,
 } from '../backup/backup-store'
 import { Apptentive } from 'apptentive-react-native'
 import AboutApp from '../about-app/about-app'
@@ -102,6 +103,7 @@ import {
   CLOUD_BACKUP_LOADING,
   CLOUD_BACKUP_FAILURE,
   AUTO_CLOUD_BACKUP_ENABLED,
+  WALLET_BACKUP_FAILURE,
 } from '../backup/type-backup'
 import { secureSet, walletSet, safeSet } from '../services/storage'
 import { addPendingRedirection } from '../lock/lock-store'
@@ -392,6 +394,9 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   }
 
   componentWillReceiveProps(nextProps: SettingsProps) {
+    if (this.props.cloudBackupError) {
+      this.props.cloudBackupFailure(null)
+    }
     if (
       this.props.currentScreen === nextProps.currentScreen &&
       nextProps.currentScreen === settingsRoute &&
@@ -435,7 +440,10 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   getCloudBackupSubtitle = () => {
     if (this.props.cloudBackupStatus === CLOUD_BACKUP_LOADING) {
       return 'Backing up...'
-    } else if (this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE) {
+    } else if (
+      this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE ||
+      this.props.cloudBackupStatus === WALLET_BACKUP_FAILURE
+    ) {
       return (
         <CustomText
           transparentBg
@@ -443,13 +451,17 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
           bold
           style={[style.backupTimeSubtitleStyle, style.subtitleFail]}
         >
-          Backup failed. Tap to retry
+          {this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE
+            ? 'Backup failed. Tap to retry'
+            : 'Backup failed, size limit exceeded'}
         </CustomText>
       )
     } else return this.getLastCloudBackupTime()
   }
   getLastCloudBackupTime() {
-    return this.props.lastSuccessfulCloudBackup !== '' ? (
+    return this.props.lastSuccessfulCloudBackup === 'error' ? (
+      'Backup failed, size limit exceeded'
+    ) : this.props.lastSuccessfulCloudBackup !== '' ? (
       <CustomText transparentBg h7 bold style={[style.backupTimeSubtitleStyle]}>
         Last backup was{' '}
         <CustomText transparentBg h7 bold style={[style.subtitleColor]}>
@@ -681,7 +693,17 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         id: 2,
         title: 'Automatic Cloud Backups',
         subtitle: this.getCloudBackupSubtitle(),
-        avatar: <SvgCustomIcon fill="#777" name="CloudBackup" />,
+        avatar: (
+          <SvgCustomIcon
+            fill={
+              this.props.cloudBackupStatus === WALLET_BACKUP_FAILURE ||
+              lastSuccessfulCloudBackup === 'error'
+                ? maroonRed
+                : '#777'
+            }
+            name="CloudBackup"
+          />
+        ),
         rightIcon:
           cloudBackupStatus === CLOUD_BACKUP_LOADING ? (
             <ActivityIndicator />
@@ -852,16 +874,22 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
                   <ListItem
                     containerStyle={[style.listItemContainer]}
                     titleStyle={[
-                      this.props.connectionsUpdated &&
-                      item.id === 1 &&
-                      !this.props.isAutoBackupEnabled
+                      (this.props.connectionsUpdated &&
+                        item.id === 1 &&
+                        !this.props.isAutoBackupEnabled) ||
+                      (item.id === 2 &&
+                        (this.props.cloudBackupStatus ===
+                          WALLET_BACKUP_FAILURE ||
+                          this.props.lastSuccessfulCloudBackup === 'error'))
                         ? style.walletNotBackedUpTitleStyle
                         : style.titleStyle,
                     ]}
                     subtitleStyle={[
-                      this.props.connectionsUpdated &&
-                      item.id === 1 &&
-                      !this.props.isAutoBackupEnabled
+                      (this.props.connectionsUpdated &&
+                        item.id === 1 &&
+                        !this.props.isAutoBackupEnabled) ||
+                      (item.id === 2 &&
+                        this.props.lastSuccessfulCloudBackup === 'error')
                         ? style.walletNotBackedUpSubtitleStyle
                         : style.subtitleStyle,
                     ]}
@@ -892,6 +920,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
 
 const mapStateToProps = (state: Store) => ({
   status: state.backup.status,
+  cloudBackupError: state.backup.cloudBackupError,
   touchIdActive: state.lock.isTouchIdEnabled,
   walletBackup: state.wallet.backup,
   currentScreen: state.route.currentScreen,
@@ -910,6 +939,7 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      cloudBackupFailure,
       selectUserAvatar,
       setAutoCloudBackupEnabled,
       exportBackup,
