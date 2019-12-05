@@ -1,10 +1,12 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { TouchableOpacity } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { createStackNavigator } from 'react-navigation'
 
 import type { ReactNavigation } from '../common/type-common'
+import SvgCustomIcon from '../components/svg-custom-icon'
 import type { Store } from '../store/type-store'
 import type { LockEnterPinProps, LockEnterPinState } from './type-lock'
 
@@ -15,18 +17,32 @@ import {
   lockPinSetupRoute,
   homeRoute,
   lockSelectionRoute,
+  menuTabRoute,
 } from '../common'
 import { clearPendingRedirect } from './lock-store'
 import {
   ENTER_PASS_CODE_MESSAGE,
   ENTER_YOUR_PASS_CODE_MESSAGE,
 } from '../common/message-constants'
-import { color } from '../common/styles'
+import {
+  color,
+  mediumGray,
+  OFFSET_1X,
+  OFFSET_2X,
+  OFFSET_6X,
+  OFFSET_7X,
+} from '../common/styles'
 import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
 import { unlockApp } from './lock-store'
-import { CustomText, CustomHeader } from '../components'
-import { Keyboard, Platform } from 'react-native'
+import { CustomText, CustomHeader, CustomView, Icon } from '../components'
+import { Keyboard, Platform, StyleSheet } from 'react-native'
 import { withStatusBar } from '../components/status-bar/status-bar'
+
+const styles = StyleSheet.create({
+  headerLeft: {
+    width: OFFSET_2X,
+  },
+})
 
 export class LockEnterPin extends PureComponent<
   LockEnterPinProps,
@@ -54,6 +70,16 @@ export class LockEnterPin extends PureComponent<
             <CustomText bg="tertiary" tertiary transparentBg semiBold>
               App Security
             </CustomText>
+          }
+          leftComponent={
+            <CustomView style={styles.headerLeft}>
+              {navigation.state.params &&
+                navigation.state.params.existingPin === true && (
+                  <TouchableOpacity onPress={() => navigation.goBack(null)}>
+                    <SvgCustomIcon name="Arrow" fill={mediumGray} />
+                  </TouchableOpacity>
+                )}
+            </CustomView>
           }
         />
       ),

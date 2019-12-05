@@ -27,7 +27,7 @@ App to connect Sovrin with 3rd party authentication
 - `sudo gem install bundle`
 - `bundle install`
 - Make sure you get added to the connectme-callcenter-certs repo so that the following command is successful --
-git clone 'git@github.com:evernym/connectme-callcenter-certs.git' '/var/folders/dt/sk594jpn40d0097bpg17gwc40000gn/T/d20180705-10510-lw9oue'
+`git clone 'git@gitlab.corp.evernym.com:dev/connectme/connectme-callcenter-certs.git' '/var/folders/dt/sk594jpn40d0097bpg17gwc40000gn/T/d20180705-10510-lw9oue'`
 - To get the development certificates do `bundle exec fastlane match development`. DO NOT use `--force` with this command.
 - You'll be prompted to enter 2 passwords. Slack a contributor for credentials
 - Open Xcode, select your device and run
@@ -105,6 +105,8 @@ git clone 'git@github.com:evernym/connectme-callcenter-certs.git' '/var/folders/
 ## iOS build issue
 
 - *Problem*: `third-party/glog-0.3.4/src/base/mutex.h 'config.h' file not found`. *Solution*: https://github.com/facebook/react-native/issues/16097. Basically from the ConnectMe toplevel source code directory do 1) cd node_modules/react-native/third-party/glog-0.3.4/ && ../../scripts/ios-configure-glog.sh
+- *Problem*: `curl: (60) SSL certificate problem`. (on Catalina) SSL certificate on repository server for downloading .vcx is self-signed, which is not secure 'enough' and CURL rejects connecting. *Solution
+  *: Before installing .vcx, run this command: `echo insecure >> $HOME/.curlrc`. After commit is successfully pushed and .vcx installed, go and remove `insecure` from `~/.curlrc`.
 
 # Makefile
 - If you want to run the iOS or android emulators from a terminal without the need for

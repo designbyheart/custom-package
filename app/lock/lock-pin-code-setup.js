@@ -1,9 +1,10 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { StyleSheet, Keyboard, Platform } from 'react-native'
+import { StyleSheet, Keyboard, Platform, TouchableOpacity } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import SvgCustomIcon from '../components/svg-custom-icon'
 
 import type { LockPinSetupState, LockPinCodeSetupProps } from './type-lock'
 import type { ReactNavigation } from '../common/type-common'
@@ -23,9 +24,11 @@ import {
   lockSetupSuccessRoute,
   settingsTabRoute,
   lockEnterPinRoute,
+  menuTabRoute,
 } from '../common'
 import {
   color,
+  mediumGray,
   OFFSET_1X,
   OFFSET_2X,
   OFFSET_6X,
@@ -80,19 +83,16 @@ export class LockPinSetup extends PureComponent<
         backgroundColor={color.bg.tertiary.color}
         leftComponent={
           <CustomView>
-            <Icon
-              small
-              testID={'back-arrow'}
-              iconStyle={[styles.headerLeft]}
-              src={require('../images/icon_backArrow.png')}
-              resizeMode="contain"
-              onPress={() =>
+            <TouchableOpacity
+              onPress={() => {
                 navigation.state.params &&
                 navigation.state.params.existingPin === true
-                  ? navigation.navigate(settingsTabRoute)
+                  ? navigation.navigate(menuTabRoute)
                   : navigation.navigate(lockSelectionRoute)
-              }
-            />
+              }}
+            >
+              <SvgCustomIcon name="Arrow" fill={mediumGray} />
+            </TouchableOpacity>
           </CustomView>
         }
         centerComponent={
