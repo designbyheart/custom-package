@@ -191,6 +191,8 @@ export type LockEnterPinState = {
 }
 export type LockEnterFingerState = {
   authenticationSuccess: boolean,
+  failedAttempts: number,
+  errorMessage: ?string,
 }
 export type LockEnterState = {
   interactionsDone: boolean,
