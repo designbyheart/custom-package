@@ -734,6 +734,7 @@ export function* processMessages(
     MESSAGE_TYPE.CLAIM,
     MESSAGE_TYPE.CLAIM_OFFER,
     MESSAGE_TYPE.QUESTION,
+    MESSAGE_TYPE.QUESTION.toLowerCase(),
   ]
   // send each message in data to handleMessage
   // additional data will be fetched and passed to relevant( claim, claimOffer, proofRequest,etc )store.
@@ -1023,8 +1024,8 @@ function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
         proofHandle
       )
     }
-
-    if (type === MESSAGE_TYPE.QUESTION) {
+    // toLowerCase here to handle type 'question' and 'Question'
+    if (type.toLowerCase() === MESSAGE_TYPE.QUESTION.toLowerCase()) {
       const { decryptedPayload } = message
       if (!decryptedPayload) return
       additionalData = convertDecryptedPayloadToQuestion(
@@ -1069,7 +1070,12 @@ function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
 export function* acknowledgeServer(
   data: Array<DownloadedConnectionMessages>
 ): Generator<*, *, *> {
-  const msgTypes = [MESSAGE_TYPE.PROOF_REQUEST, MESSAGE_TYPE.QUESTION]
+  // toLowerCase here to handle type 'question' and 'Question'
+  const msgTypes = [
+    MESSAGE_TYPE.PROOF_REQUEST,
+    MESSAGE_TYPE.QUESTION,
+    MESSAGE_TYPE.QUESTION.toLowerCase(),
+  ]
   let acknowledgeServerData: AcknowledgeServerData = []
   let tempData = data
   if (Array.isArray(tempData) && tempData.length > 0) {

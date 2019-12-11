@@ -537,7 +537,8 @@ export function* fetchAdditionalDataSaga(
       )
     }
 
-    if (type === MESSAGE_TYPE.QUESTION) {
+    // toLowerCase here to handle type 'question' and 'Question'
+    if (type.toLowerCase() === MESSAGE_TYPE.QUESTION.toLowerCase()) {
       const data = yield call(
         downloadMessages,
         MESSAGE_RESPONSE_CODE.MESSAGE_PENDING,
@@ -647,6 +648,7 @@ function* watchUpdateRelevantPushPayloadStoreAndRedirect(): any {
     const directStatusUpdateMessageTypes = [
       MESSAGE_TYPE.PROOF_REQUEST,
       MESSAGE_TYPE.QUESTION,
+      MESSAGE_TYPE.QUESTION.toLowerCase(),
     ]
     if (directStatusUpdateMessageTypes.indexOf(notification.type) > -1) {
       yield* updateMessageStatus([{ pairwiseDID, uids: [uid] }])
