@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet } from 'react-native'
 import { TouchId } from '../components/touch-id/touch-id'
-import { Container, CustomText } from '../components'
+import { Container, CustomText, CustomButton } from '../components'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { captureError } from '../services/error/error-handler'
@@ -24,6 +24,8 @@ export class LockEnterFingerprint extends PureComponent<
 > {
   state = {
     authenticationSuccess: false,
+    failedAttempts: 0,
+    errorMessage: null,
   }
 
   componentWillReceiveProps(nextProps: LockEnterFingerProps) {
@@ -64,23 +66,17 @@ export class LockEnterFingerprint extends PureComponent<
       .then(success => {
         TouchId.authenticate('', this.touchIdHandler)
           .then(success => {
-            this.setState({ authenticationSuccess: true })
+            this.setState({ authenticationSuccess: true, errorMessage: null })
             if (this.props.isFetchingInvitation === false) {
               this.onAuthenticationSuccess(this.props.pendingRedirection)
             }
           })
           .catch(error => {
-            captureError(error)
-            if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
-              this.props.navigation.navigate(lockEnterPinRoute)
-            }
+            this.handleFailedAuth(error)
           })
       })
       .catch(error => {
-        captureError(error)
-        if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
-          this.props.navigation.navigate(lockEnterPinRoute)
-        }
+        this.handleFailedAuth(error)
       })
   }
 
@@ -88,12 +84,49 @@ export class LockEnterFingerprint extends PureComponent<
     this.touchIdHandler()
   }
 
+  handleFailedAuth = (error: Error) => {
+    const { failedAttempts } = this.state
+
+    if (failedAttempts > 0) {
+      if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
+        this.setState({ failedAttempts: 0, errorMessage: null })
+        this.props.navigation.navigate(lockEnterPinRoute)
+      }
+    }
+    this.setState({
+      failedAttempts: failedAttempts + 1,
+      errorMessage: error.message,
+    })
+  }
+
+  retryAuth = () => {
+    this.setState({ errorMessage: null })
+    this.touchIdHandler()
+  }
+
   render() {
     const { isFetchingInvitation } = this.props
+    const { errorMessage } = this.state
     const message =
       isFetchingInvitation && this.state.authenticationSuccess
         ? UNLOCKING_APP_WAIT_MESSAGE
         : ''
+
+    if (errorMessage !== null) {
+      return (
+        <Container center>
+          <CustomText bg="tertiary" h5 tertiary demiBold center transparentBg>
+            {errorMessage}
+          </CustomText>
+          <CustomButton
+            primary
+            style={[style.tryAgainButton]}
+            title={'Try again'}
+            onPress={this.retryAuth}
+          />
+        </Container>
+      )
+    }
 
     if (isFetchingInvitation) {
       return (
@@ -103,9 +136,9 @@ export class LockEnterFingerprint extends PureComponent<
           </CustomText>
         </Container>
       )
-    } else {
-      return <Container />
     }
+
+    return <Container />
   }
 }
 
@@ -132,3 +165,9 @@ const mapDispatchToProps = dispatch =>
 export default withStatusBar()(
   connect(mapStateToProps, mapDispatchToProps)(LockEnterFingerprint)
 )
+
+const style = StyleSheet.create({
+  tryAgainButton: {
+    marginTop: 10,
+  },
+})
