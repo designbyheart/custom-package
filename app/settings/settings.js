@@ -76,6 +76,7 @@ import {
   generateBackupFile,
   generateRecoveryPhrase,
   cloudBackupFailure,
+  viewedWalletError
 } from '../backup/backup-store'
 import { Apptentive } from 'apptentive-react-native'
 import AboutApp from '../about-app/about-app'
@@ -104,9 +105,11 @@ import {
   CLOUD_BACKUP_FAILURE,
   AUTO_CLOUD_BACKUP_ENABLED,
   WALLET_BACKUP_FAILURE,
+  WALLET_BACKUP_FAILURE_VIEWED,
 } from '../backup/type-backup'
 import { secureSet, walletSet, safeSet } from '../services/storage'
 import { addPendingRedirection } from '../lock/lock-store'
+import { cloudBackupStart } from '../backup/backup-store'
 import { setupApptentive } from '../feedback'
 import { customLogger } from '../store/custom-logger'
 
@@ -303,6 +306,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   }
 
   onBackup = () => {
+    
     const {
       generateRecoveryPhrase,
       hasVerifiedRecoveryPhrase,
@@ -394,8 +398,8 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   }
 
   componentWillReceiveProps(nextProps: SettingsProps) {
-    if (this.props.cloudBackupError) {
-      this.props.cloudBackupFailure(null)
+    if (!this.props.hasViewedWalletError  && this.props.cloudBackupError !== null) {
+      this.props.viewedWalletError(true)
     }
     if (
       this.props.currentScreen === nextProps.currentScreen &&
@@ -424,7 +428,8 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   }
 
   getLastBackupTime() {
-    return this.props.connectionsUpdated === false ? (
+    // return this.props.connectionsUpdated === false || this.props.autoCloudBackupEnabled? (
+      return this.props.connectionsUpdated === false ? (
       <CustomText
         transparentBg
         h7
@@ -459,9 +464,15 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     } else return this.getLastCloudBackupTime()
   }
   getLastCloudBackupTime() {
-    return this.props.lastSuccessfulCloudBackup === 'error' ? (
+    // return this.props.lastSuccessfulCloudBackup === 'error' ? (
+      return this.props.cloudBackupError === WALLET_BACKUP_FAILURE ? (
       'Backup failed, size limit exceeded'
-    ) : this.props.lastSuccessfulCloudBackup !== '' ? (
+    // ) : this.props.lastSuccessfulCloudBackup === 'Failed to create backup: Timed out in push notifications' ? (
+      ) : this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE  ? (
+      'Backup failed. Tap to retry'
+    )
+    
+     : this.props.lastSuccessfulCloudBackup !== '' ? (
       <CustomText transparentBg h7 bold style={[style.backupTimeSubtitleStyle]}>
         Last backup was{' '}
         <CustomText transparentBg h7 bold style={[style.subtitleColor]}>
@@ -474,6 +485,14 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   }
 
   onCloudBackupPressed = () => {
+    if (
+      this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE ||
+      this.props.cloudBackupStatus === WALLET_BACKUP_FAILURE ||
+      this.props.cloudBackupError === WALLET_BACKUP_FAILURE
+    ) {
+      this.props.cloudBackupStart()
+      return
+    }
     const { navigation: { navigate, state, goBack } } = this.props
     navigate(cloudBackupRoute, {})
   }
@@ -484,7 +503,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         this.props.lastSuccessfulBackup
       )
 
-      if (this.props.lastSuccessfulCloudBackup !== '') {
+        if (this.props.lastSuccessfulCloudBackup !== '') {
         const lastSuccessfulCloudBackup = this.formatBackupString(
           this.props.lastSuccessfulCloudBackup
         )
@@ -530,21 +549,27 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
       !this.props.lastSuccessfulCloudBackup
     ) {
       return 'Create a Backup'
-    } else if (this.props.connectionsUpdated) {
+    } 
+    else if (this.props.connectionsUpdated) {
       return this.renderLastBackupText()
-    } else if (this.props.connectionsUpdated === false) {
+    } 
+    else {
       return 'Manual Backup'
     }
   }
 
   render() {
+
     const {
       walletBalance,
       lastSuccessfulCloudBackup,
       lastSuccessfulBackup,
       cloudBackupStatus,
       hasVerifiedRecoveryPhrase,
+      cloudBackupError
     } = this.props
+    const hasBackupError = cloudBackupError === WALLET_BACKUP_FAILURE
+    const hasCloudBackupFailed = this.props.cloudBackupStatus === WALLET_BACKUP_FAILURE || this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE || cloudBackupError === WALLET_BACKUP_FAILURE
     const userAvatar = (
       <CustomView center style={[style.userAvatarContainer]}>
         <CustomView verticalSpace>
@@ -625,6 +650,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         />
       ) : (
         <ToggleSwitch
+          isOn={true}
           onToggle={this.toggleAutoCloudBackupEnabled}
           value={this.props.autoCloudBackupEnabled}
           buttonWidth={55}
@@ -679,7 +705,8 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         avatar: (
           <SvgCustomIcon
             fill={
-              this.props.connectionsUpdated && !this.props.isAutoBackupEnabled
+              this.props.connectionsUpdated && !this.props.isAutoBackupEnabled 
+              // || (this.props.connectionsUpdated && this.props.isAutoBackupEnabled && hasCloudBackupFailed)
                 ? maroonRed
                 : '#777'
             }
@@ -695,11 +722,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         subtitle: this.getCloudBackupSubtitle(),
         avatar: (
           <SvgCustomIcon
-            fill={
-              this.props.cloudBackupStatus === WALLET_BACKUP_FAILURE ||
-              lastSuccessfulCloudBackup === 'error'
-                ? maroonRed
-                : '#777'
+            fill={hasCloudBackupFailed ? maroonRed : '#777'
             }
             name="CloudBackup"
           />
@@ -877,10 +900,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
                       (this.props.connectionsUpdated &&
                         item.id === 1 &&
                         !this.props.isAutoBackupEnabled) ||
-                      (item.id === 2 &&
-                        (this.props.cloudBackupStatus ===
-                          WALLET_BACKUP_FAILURE ||
-                          this.props.lastSuccessfulCloudBackup === 'error'))
+                      (item.id === 2 && hasCloudBackupFailed)
                         ? style.walletNotBackedUpTitleStyle
                         : style.titleStyle,
                     ]}
@@ -888,8 +908,9 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
                       (this.props.connectionsUpdated &&
                         item.id === 1 &&
                         !this.props.isAutoBackupEnabled) ||
-                      (item.id === 2 &&
-                        this.props.lastSuccessfulCloudBackup === 'error')
+                      (item.id === 2 && hasBackupError
+                        // && this.props.lastSuccessfulCloudBackup === 'error'
+                        )
                         ? style.walletNotBackedUpSubtitleStyle
                         : style.subtitleStyle,
                     ]}
@@ -930,6 +951,7 @@ const mapStateToProps = (state: Store) => ({
     state.backup && state.backup.lastSuccessfulCloudBackup,
   autoCloudBackupEnabled: state.backup.autoCloudBackupEnabled,
   cloudBackupStatus: state.backup.cloudBackupStatus,
+  hasViewedWalletError: state.backup.hasViewedWalletError,
   connectionsUpdated:
     state.history.data && state.history.data.connectionsUpdated,
   walletBalance: getWalletBalance(state),
@@ -946,6 +968,8 @@ const mapDispatchToProps = dispatch =>
       generateBackupFile,
       addPendingRedirection,
       generateRecoveryPhrase,
+      viewedWalletError,
+      cloudBackupStart
     },
     dispatch
   )

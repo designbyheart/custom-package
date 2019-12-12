@@ -152,6 +152,7 @@ import {
   cloudBackupSuccess,
   cloudBackupFailure,
   setAutoCloudBackupEnabled,
+  viewedWalletError,
 } from '../backup/backup-store'
 import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
 import RNFetchBlob from 'rn-fetch-blob'
@@ -420,9 +421,11 @@ export function* fetchAdditionalDataSaga(
     )
     walletSet(AUTO_CLOUD_BACKUP_ENABLED, 'false')
     safeSet(AUTO_CLOUD_BACKUP_ENABLED, 'false')
-    safeSet(LAST_SUCCESSFUL_CLOUD_BACKUP, 'error')
+    safeSet(WALLET_BACKUP_FAILURE, 'true')
     yield put(setAutoCloudBackupEnabled(false))
+    yield put(viewedWalletError(false))
     yield put(cloudBackupFailure(WALLET_BACKUP_FAILURE))
+    return
   }
 
   // NOTE: CLOUD-BACKUP wait for push notification after backupWalletBackup

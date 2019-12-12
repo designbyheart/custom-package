@@ -172,6 +172,7 @@ export type BackupStore = {
   prepareBackupStatus: PrepareBackupStatus,
   encryptedFileLocation?: string,
   hasVerifiedRecoveryPhrase?: boolean,
+  hasViewedWalletError?: boolean
 }
 
 export type StoreError = { error: ?CustomError }
@@ -236,11 +237,13 @@ export const CLOUD_BACKUP_WAITING = 'CLOUD_BACKUP_WAITING'
 export const CLOUD_BACKUP_SUCCESS = 'CLOUD_BACKUP_SUCCESS'
 export const CLOUD_BACKUP_FAILURE = 'CLOUD_BACKUP_FAILURE'
 export const WALLET_BACKUP_FAILURE = 'WALLET_BACKUP_FAILURE'
+export const WALLET_BACKUP_FAILURE_VIEWED = 'WALLET_BACKUP_FAILURE_VIEWED'
 export const CLOUD_BACKUP_NO_SHARE = 'CLOUD_BACKUP_NO_SHARE'
 export const CLOUD_BACKUP_COMPLETE = 'CLOUD_BACKUP_COMPLETE'
 export const SET_CLOUD_BACKUP_PENDING = 'SET_CLOUD_BACKUP_PENDING'
 export const SET_AUTO_CLOUD_BACKUP_ENABLED = 'SET_AUTO_CLOUD_BACKUP_ENABLED'
 export const SET_WALLET_HANDLE = 'SET_WALLET_HANDLE'
+export const VIEWED_WALLET_ERROR = 'VIEWED_WALLET_ERROR'
 
 export const AUTO_CLOUD_BACKUP_ENABLED = 'autoCloudBackupEnabled' //for asyncstorage
 export const START_AUTOMATIC_CLOUD_BACKUP = 'START_AUTOMATIC_CLOUD_BACKUP'

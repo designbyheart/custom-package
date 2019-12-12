@@ -67,6 +67,7 @@ import {
   CLOUD_BACKUP_COMPLETE,
   CLOUD_BACKUP_FAILURE,
   AUTO_CLOUD_BACKUP_ENABLED,
+  WALLET_BACKUP_FAILURE,
 } from './type-backup'
 import { safeSet, secureSet, walletSet } from '../services/storage'
 
@@ -171,7 +172,7 @@ export class CloudBackup extends PureComponent<CloudBackupScreenProps, void> {
     } else if (cloudBackupStatus === CLOUD_BACKUP_COMPLETE) {
       this.props.connectionHistoryBackedUp()
       return <Success navigateBackToSettings={this.navigateBackToSettings} />
-    } else if (cloudBackupStatus === CLOUD_BACKUP_FAILURE) {
+    } else if (cloudBackupStatus === CLOUD_BACKUP_FAILURE || cloudBackupStatus === WALLET_BACKUP_FAILURE) {
       return <Error navigateBackToSettings={this.navigateBackToSettings} />
     } else {
       return this.mainBody()

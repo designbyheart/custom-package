@@ -31,6 +31,7 @@ Object {
   "encryptedFileLocation": "",
   "error": null,
   "hasVerifiedRecoveryPhrase": false,
+  "hasViewedWalletError": false,
   "lastSuccessfulBackup": "",
   "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
@@ -55,6 +56,7 @@ Object {
   "encryptedFileLocation": "",
   "error": null,
   "hasVerifiedRecoveryPhrase": false,
+  "hasViewedWalletError": false,
   "lastSuccessfulBackup": "2018-06-27T18:27:35+05:30",
   "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
@@ -79,6 +81,7 @@ Object {
   "encryptedFileLocation": "",
   "error": null,
   "hasVerifiedRecoveryPhrase": false,
+  "hasViewedWalletError": false,
   "lastSuccessfulBackup": "",
   "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
@@ -103,6 +106,7 @@ Object {
   "encryptedFileLocation": "",
   "error": null,
   "hasVerifiedRecoveryPhrase": false,
+  "hasViewedWalletError": false,
   "lastSuccessfulBackup": "",
   "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
@@ -145,6 +149,7 @@ Object {
   "encryptedFileLocation": "",
   "error": undefined,
   "hasVerifiedRecoveryPhrase": false,
+  "hasViewedWalletError": false,
   "lastSuccessfulBackup": "",
   "lastSuccessfulCloudBackup": "",
   "passphrase": Object {
@@ -162,6 +167,7 @@ Object {
 exports[`store: backup-store:  action: PREPARE_BACKUP_FAILURE 1`] = `
 Object {
   "backupWalletPath": "",
+  "cloudBackupError": null,
   "cloudBackupPending": false,
   "error": null,
   "lastSuccessfulBackup": "",
@@ -180,6 +186,7 @@ Object {
 exports[`store: backup-store:  action: PREPARE_BACKUP_LOADING 1`] = `
 Object {
   "backupWalletPath": "",
+  "cloudBackupError": null,
   "cloudBackupPending": false,
   "error": null,
   "lastSuccessfulBackup": "",
@@ -198,6 +205,7 @@ Object {
 exports[`store: backup-store:  action: PREPARE_BACKUP_SUCCESS 1`] = `
 Object {
   "backupWalletPath": "",
+  "cloudBackupError": null,
   "cloudBackupPending": false,
   "error": null,
   "lastSuccessfulBackup": "",

@@ -313,7 +313,43 @@ exports[`user settings screen should render properly and snapshot should match f
                 }
               >
                 <View>
-                  <View />
+                  <Text
+                    numberOfLines={1}
+                    style={
+                      Array [
+                        Object {},
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        Array [
+                          Object {
+                            "color": "#43484d",
+                            "fontSize": 14,
+                          },
+                          Object {
+                            "marginLeft": 10,
+                          },
+                          Array [
+                            Object {
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
+                            },
+                          ],
+                          undefined,
+                        ],
+                      ]
+                    }
+                  >
+                    Manual Backup
+                  </Text>
                 </View>
                 <View>
                   <Text
@@ -2376,7 +2412,43 @@ exports[`user settings screen should render properly and snapshot should match i
                 }
               >
                 <View>
-                  <View />
+                  <Text
+                    numberOfLines={1}
+                    style={
+                      Array [
+                        Object {},
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        Array [
+                          Object {
+                            "color": "#43484d",
+                            "fontSize": 14,
+                          },
+                          Object {
+                            "marginLeft": 10,
+                          },
+                          Array [
+                            Object {
+                              "color": "#777777",
+                              "fontFamily": "Lato",
+                              "fontSize": 18,
+                              "fontWeight": "bold",
+                            },
+                          ],
+                          undefined,
+                        ],
+                      ]
+                    }
+                  >
+                    Manual Backup
+                  </Text>
                 </View>
                 <View>
                   <Text

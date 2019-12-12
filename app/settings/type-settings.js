@@ -27,6 +27,10 @@ export type SettingsProps = {
   hasVerifiedRecoveryPhrase?: boolean,
   cloudBackupFailure: (error: string | null) => void,
   cloudBackupError?: string | null,
+  hasViewedWalletError?: boolean,
+  cloudBackupStart: () => void,
+  viewedWalletError: (error: boolean) => void,
+
 } & ReactNavigation
 
 export type SettingsState = {

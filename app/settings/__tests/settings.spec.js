@@ -47,6 +47,9 @@ describe('user settings screen', () => {
       connectionHistoryBackedUp: jest.fn(),
       cloudBackupFailure: jest.fn(),
       addPendingRedirection: jest.fn(),
+      hasViewedWalletError: false,
+      cloudBackupStart: jest.fn(),
+      viewedWalletError: jest.fn(),
     }
   }
 
