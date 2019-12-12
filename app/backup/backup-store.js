@@ -57,6 +57,8 @@ import {
   HYDRATE_HAS_VERIFIED_RECOVERY_PHRASE,
   RESET_BACKUP_PATH,
   WALLET_BACKUP_FAILURE,
+  WALLET_BACKUP_FAILURE_VIEWED,
+  VIEWED_WALLET_ERROR,
 } from './type-backup'
 import type {
   PromptBackupBannerAction,
@@ -147,6 +149,7 @@ const initialState = {
   autoCloudBackupEnabled: false,
   encryptedFileLocation: '',
   hasVerifiedRecoveryPhrase: false,
+  hasViewedWalletError: false,
 }
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -220,9 +223,9 @@ export function* cloudBackupSaga(
     yield put(setWalletHandle(walletHandle))
 
     // NOTE: wait/timer for steps in pushNotifaction to complete
-    const { cloudBackupSuccess, timeout } = yield race({
+    const { cloudBackupSuccess,cloudBackupError, timeout } = yield race({
       cloudBackupSuccess: take(CLOUD_BACKUP_SUCCESS),
-      cloudBackupError: take(WALLET_BACKUP_FAILURE),
+      cloudBackupError: take(CLOUD_BACKUP_FAILURE),
       timeout: call(delay, 60000),
     })
     if (timeout) {
@@ -617,8 +620,15 @@ export function* hydrateLastSuccessfulCloudBackupSaga(): Generator<*, *, *> {
       safeGet,
       LAST_SUCCESSFUL_CLOUD_BACKUP
     )
+    let hasCloudBackupError = yield call(
+      safeGet,
+      WALLET_BACKUP_FAILURE
+    )
     if (lastSuccessfulCloudBackup != null) {
       yield put(hydrateCloudBackup(lastSuccessfulCloudBackup))
+    }
+    if(hasCloudBackupError){
+      yield put(cloudBackupFailure(WALLET_BACKUP_FAILURE))
     }
   } catch (e) {
     captureError(e)
@@ -817,6 +827,12 @@ export const cloudBackupFailure = (cloudBackupError: string) => ({
   cloudBackupError,
 })
 
+
+export const viewedWalletError = (viewedWalletError: boolean) => ({
+  type: VIEWED_WALLET_ERROR,
+  viewedWalletError,
+})
+
 export const startAutomaticCloudBackup = (action: any) => ({
   type: START_AUTOMATIC_CLOUD_BACKUP,
   action,
@@ -1000,6 +1016,7 @@ export default function backupReducer(
       return {
         ...initialState,
         lastSuccessfulCloudBackup: action.lastSuccessfulCloudBackup,
+        cloudBackupError: state.cloudBackupError,
         lastSuccessfulBackup: state.lastSuccessfulBackup,
         autoCloudBackupEnabled: state.autoCloudBackupEnabled,
         hasVerifiedRecoveryPhrase: state.hasVerifiedRecoveryPhrase,
@@ -1010,6 +1027,7 @@ export default function backupReducer(
         ...initialState,
         autoCloudBackupEnabled: action.autoCloudBackupEnabled,
         showBanner: state.showBanner,
+        cloudBackupError: state.cloudBackupError,
         lastSuccessfulCloudBackup: state.lastSuccessfulCloudBackup,
         lastSuccessfulBackup: state.lastSuccessfulBackup,
         hasVerifiedRecoveryPhrase: state.hasVerifiedRecoveryPhrase,
@@ -1019,6 +1037,7 @@ export default function backupReducer(
         ...initialState,
         autoCloudBackupEnabled: state.autoCloudBackupEnabled,
         showBanner: state.showBanner,
+        cloudBackupError: state.cloudBackupError,
         lastSuccessfulCloudBackup: state.lastSuccessfulCloudBackup,
         lastSuccessfulBackup: state.lastSuccessfulBackup,
         hasVerifiedRecoveryPhrase: action.hasVerifiedRecoveryPhrase,
@@ -1033,6 +1052,7 @@ export default function backupReducer(
     case PREPARE_BACKUP_FAILURE:
       return {
         ...state,
+        cloudBackupError: state.cloudBackupError === WALLET_BACKUP_FAILURE ? WALLET_BACKUP_FAILURE : null ,
         prepareBackupStatus: action.status,
       }
     case SET_WALLET_HANDLE:
@@ -1040,6 +1060,11 @@ export default function backupReducer(
         ...state,
         walletHandle: action.walletHandle,
       }
+    case VIEWED_WALLET_ERROR:
+      return {
+        ...state,
+        hasViewedWalletError: action.viewedWalletError,
+      }  
     default:
       return state
   }

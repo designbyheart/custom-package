@@ -7,6 +7,7 @@ import { color } from '../common/styles'
 
 import type { Store } from '../store/type-store'
 import { styles } from '../navigator'
+import { WALLET_BACKUP_FAILURE } from '../backup/type-backup';
 
 class SettingsTab extends Component<any> {
   render() {
@@ -19,7 +20,9 @@ class SettingsTab extends Component<any> {
             this.props.focused ? color.actions.font.tenth : color.actions.sixth
           }
         />
-        {this.props.cloudBackupError && (
+        { (this.props.cloudBackupError !== null && 
+          !this.props.hasViewedWalletError ) &&
+        (
           <View
             style={{
               position: 'absolute',
@@ -40,6 +43,7 @@ class SettingsTab extends Component<any> {
 const mapStateToProps = (state: Store) => {
   return {
     cloudBackupError: state.backup.cloudBackupError,
+    hasViewedWalletError: state.backup.hasViewedWalletError,
   }
 }
 
