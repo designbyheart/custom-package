@@ -398,7 +398,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   }
 
   componentWillReceiveProps(nextProps: SettingsProps) {
-    if (!this.props.hasViewedWalletError  && this.props.cloudBackupError !== null) {
+    if (!this.props.hasViewedWalletError  && this.props.cloudBackupError !== null && (this.props.currentScreen === "Settings" || nextProps.currentScreen === "Settings")) {
       this.props.viewedWalletError(true)
     }
     if (
