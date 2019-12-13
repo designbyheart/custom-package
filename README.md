@@ -26,10 +26,10 @@ App to connect Sovrin with 3rd party authentication
 - `cd ios/fastlane`
 - `sudo gem install bundle`
 - `bundle install`
-- Make sure you get added to the connectme-callcenter-certs repo so that the following command is successful --
+- Make sure you have Development or higher access to the [connectme-callcenter-certs](https://gitlab.corp.evernym.com/dev/connectme/connectme-callcenter-certs/-/project_members) repo so that the following command is successful --
 `git clone 'git@gitlab.corp.evernym.com:dev/connectme/connectme-callcenter-certs.git' '/var/folders/dt/sk594jpn40d0097bpg17gwc40000gn/T/d20180705-10510-lw9oue'`
-- To get the development certificates do `bundle exec fastlane match development`. DO NOT use `--force` with this command.
-- You'll be prompted to enter 2 passwords. Slack a contributor for credentials
+- Install the development certificates, inside the ios folder run `bundle exec fastlane match development`. DO NOT use `--force` with this command.
+- You'll be prompted to enter 2 different passwords. Slack a contributor for credentials.
 - Open Xcode, select your device and run
 
 ## Run on Android simulator/device
