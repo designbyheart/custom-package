@@ -1,10 +1,10 @@
 // @flow
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { StyleSheet, ScrollView, View, Image } from 'react-native'
 import { List, ListItem } from 'react-native-elements'
 import { font } from '../../common/styles/constant'
 
-class ListItemSettings extends React.Component<any, any> {
+class ListItemSettings extends PureComponent<any, any> {
   render() {
     return (
       <ScrollView bounces={false}>

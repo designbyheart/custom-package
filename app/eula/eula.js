@@ -4,7 +4,7 @@
 // you should get the url value and title from constants
 // on click accept take user to lock selection screen
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { WebView, Alert, View } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
@@ -28,7 +28,7 @@ import { color } from '../common/styles/constant'
 import { LoaderGif } from '../components/loader-gif/loader-gif'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
-export class EulaScreen extends PureComponent<*, EulaScreenState> {
+export class EulaScreen extends Component<*, EulaScreenState> {
   state = {
     error: null,
   }

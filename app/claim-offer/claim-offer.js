@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Platform,
@@ -73,7 +73,7 @@ import {
 import { BigNumber } from 'bignumber.js'
 import { memoizeStatusBarStyle } from '../components/status-bar/status-bar'
 
-class ClaimOfferAttributeList extends PureComponent<
+class ClaimOfferAttributeList extends Component<
   ClaimOfferAttributeListProps,
   void
 > {
@@ -119,10 +119,7 @@ class ClaimOfferAttributeList extends PureComponent<
   }
 }
 
-export class ClaimOffer extends PureComponent<
-  ClaimOfferProps,
-  ClaimOfferState
-> {
+export class ClaimOffer extends Component<ClaimOfferProps, ClaimOfferState> {
   constructor(props: ClaimOfferProps) {
     super(props)
     if (props.navigation.state) {

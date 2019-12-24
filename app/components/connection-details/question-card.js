@@ -1,14 +1,10 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { questionRoute } from '../../common'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
-class QuestionCard extends React.Component<any, {}> {
-  constructor(props: any) {
-    super(props)
-    this.state = {}
-  }
+class QuestionCard extends PureComponent<any, {}> {
   navigateToQuestionScreen = () => {
     this.props.navigation.navigate(questionRoute, { uid: this.props.uid })
   }

@@ -1,17 +1,10 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
-class ModalButton extends React.Component<any, {}> {
-  constructor(props: any) {
-    super(props)
-    this.state = {}
-  }
-
+class ModalButton extends PureComponent<any, {}> {
   render() {
-    const { onClose } = this.props
-
     return (
       <View style={styles.container}>
         <View style={styles.innerWrapper}>
@@ -20,7 +13,7 @@ class ModalButton extends React.Component<any, {}> {
               styles.buttonClose,
               { backgroundColor: this.props.colorBackground },
             ]}
-            onPress={onClose}
+            onPress={this.props.onClose}
           >
             <Text style={styles.close}>Close</Text>
           </TouchableOpacity>

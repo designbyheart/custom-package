@@ -7,7 +7,7 @@ import { color } from '../common/styles'
 
 import type { Store } from '../store/type-store'
 import { styles } from '../navigator'
-import { WALLET_BACKUP_FAILURE } from '../backup/type-backup';
+import { WALLET_BACKUP_FAILURE } from '../backup/type-backup'
 
 class SettingsTab extends Component<any> {
   render() {
@@ -20,21 +20,20 @@ class SettingsTab extends Component<any> {
             this.props.focused ? color.actions.font.tenth : color.actions.sixth
           }
         />
-        { (this.props.cloudBackupError !== null && 
-          !this.props.hasViewedWalletError ) &&
-        (
-          <View
-            style={{
-              position: 'absolute',
-              width: 10,
-              height: 10,
-              right: 0,
-              borderRadius: 50,
-              backgroundColor: 'red',
-              zIndex: 10002,
-            }}
-          />
-        )}
+        {this.props.cloudBackupError !== null &&
+          !this.props.hasViewedWalletError && (
+            <View
+              style={{
+                position: 'absolute',
+                width: 10,
+                height: 10,
+                right: 0,
+                borderRadius: 50,
+                backgroundColor: 'red',
+                zIndex: 10002,
+              }}
+            />
+          )}
       </View>
     )
   }

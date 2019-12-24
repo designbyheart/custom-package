@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Image, Dimensions } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
@@ -98,7 +98,7 @@ const PassphraseText = (props: PassphraseTextProps) => {
   )
 }
 
-export class GenerateRecoveryPhrase extends PureComponent<
+export class GenerateRecoveryPhrase extends Component<
   GenerateRecoveryPhraseProps,
   GenerateRecoveryPhraseState
 > {

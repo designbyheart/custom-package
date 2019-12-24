@@ -1,12 +1,12 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 
 import type { ReactNavigation } from '../../common/type-common'
 
 import { Container, CustomView } from '../../components'
 import { questionStyles } from '../question-screen-style'
 
-export class QuestionScreenHeader extends React.Component<
+export class QuestionScreenHeader extends PureComponent<
   QuestionScreenHeaderProps,
   void
 > {

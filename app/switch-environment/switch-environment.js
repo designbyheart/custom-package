@@ -1,5 +1,5 @@
 //@flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { TouchableHighlight, Image, StyleSheet, TextInput } from 'react-native'
 import { Container, CustomView, CustomText, CustomButton } from '../components'
 import { bindActionCreators } from 'redux'
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
 })
 
-class SwitchEnvironment extends PureComponent<
+class SwitchEnvironment extends Component<
   SwitchEnvironmentProps,
   SwitchEnvironmentState
 > {

@@ -420,32 +420,74 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
     }
   />
   <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "paddingTop": 67,
+      }
+    }
+    data={
+      Array [
+        Object {
+          "action": "CLAIM OFFER RECEIVED",
+          "data": Array [
+            Object {
+              "data": "2017-09-06T00:00:00+05:30",
+              "label": "Evernym",
+            },
+          ],
+          "icon": 1,
+          "id": "1",
+          "name": "Enterprise name",
+          "originalPayload": Object {
+            "payload": Object {
+              "requester": Object {
+                "name": "bob",
+              },
+            },
+            "payloadInfo": Object {
+              "uid": "uidProofReceived",
+            },
+          },
+          "remoteDid": "remoteDid",
+          "status": "INVITATION_RECEIVED",
+          "timestamp": "2017-09-06T00:00:00+05:30",
+          "type": "INVITATION",
+        },
+      ]
+    }
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    numColumns={1}
     onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
     style={
       Object {
-        "backgroundColor": "white",
-        "borderColor": "red",
-        "flex": 1,
-        "paddingTop": 5,
+        "backgroundColor": "#fff",
+        "height": "100%",
         "width": "100%",
       }
     }
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
   >
     <View>
       <View
-        style={
-          Object {
-            "height": 67,
-          }
-        }
-      />
-      <RCTSafeAreaView
-        emulateUnlessSupported={true}
-        style={
-          Object {
-            "flex": 1,
-          }
-        }
+        onLayout={[Function]}
+        style={null}
       >
         <View
           style={
@@ -565,7 +607,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             }
           />
         </View>
-      </RCTSafeAreaView>
+      </View>
     </View>
   </RCTScrollView>
   <BlurView
@@ -1009,32 +1051,65 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
     }
   />
   <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "paddingTop": 67,
+      }
+    }
+    data={
+      Array [
+        Object {
+          "action": "CONNECTED",
+          "data": Array [
+            Object {
+              "data": "2017-09-06T00:00:00+05:30",
+              "label": "Evernym",
+            },
+          ],
+          "icon": 1,
+          "id": "1",
+          "name": "Enterprise name",
+          "originalPayload": Object {},
+          "remoteDid": "remoteDid",
+          "status": "INVITATION_RECEIVED",
+          "timestamp": "2017-09-06T00:00:00+05:30",
+          "type": "INVITATION",
+        },
+      ]
+    }
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    numColumns={1}
     onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
     style={
       Object {
-        "backgroundColor": "white",
-        "borderColor": "red",
-        "flex": 1,
-        "paddingTop": 5,
+        "backgroundColor": "#fff",
+        "height": "100%",
         "width": "100%",
       }
     }
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
   >
     <View>
       <View
-        style={
-          Object {
-            "height": 67,
-          }
-        }
-      />
-      <RCTSafeAreaView
-        emulateUnlessSupported={true}
-        style={
-          Object {
-            "flex": 1,
-          }
-        }
+        onLayout={[Function]}
+        style={null}
       >
         <View
           style={
@@ -1154,7 +1229,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             }
           />
         </View>
-      </RCTSafeAreaView>
+      </View>
     </View>
   </RCTScrollView>
   <BlurView
@@ -1598,32 +1673,65 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
     }
   />
   <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "paddingTop": 67,
+      }
+    }
+    data={
+      Array [
+        Object {
+          "action": "PENDING",
+          "data": Array [
+            Object {
+              "data": "2017-09-06T00:00:00+05:30",
+              "label": "Evernym",
+            },
+          ],
+          "icon": 1,
+          "id": "1",
+          "name": "Enterprise name",
+          "originalPayload": Object {},
+          "remoteDid": "remoteDid",
+          "status": "INVITATION_RECEIVED",
+          "timestamp": "2017-09-06T00:00:00+05:30",
+          "type": "INVITATION",
+        },
+      ]
+    }
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    numColumns={1}
     onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
     style={
       Object {
-        "backgroundColor": "white",
-        "borderColor": "red",
-        "flex": 1,
-        "paddingTop": 5,
+        "backgroundColor": "#fff",
+        "height": "100%",
         "width": "100%",
       }
     }
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
   >
     <View>
       <View
-        style={
-          Object {
-            "height": 67,
-          }
-        }
-      />
-      <RCTSafeAreaView
-        emulateUnlessSupported={true}
-        style={
-          Object {
-            "flex": 1,
-          }
-        }
+        onLayout={[Function]}
+        style={null}
       >
         <View
           style={
@@ -1734,7 +1842,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
             </View>
           </View>
         </View>
-      </RCTSafeAreaView>
+      </View>
     </View>
   </RCTScrollView>
   <BlurView
@@ -2178,32 +2286,74 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
     }
   />
   <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "paddingTop": 67,
+      }
+    }
+    data={
+      Array [
+        Object {
+          "action": "PROOF RECEIVED",
+          "data": Array [
+            Object {
+              "data": "2017-09-06T00:00:00+05:30",
+              "label": "Evernym",
+            },
+          ],
+          "icon": 1,
+          "id": "1",
+          "name": "Enterprise name",
+          "originalPayload": Object {
+            "payload": Object {
+              "requester": Object {
+                "name": "bob",
+              },
+            },
+            "payloadInfo": Object {
+              "uid": "uidProofReceived",
+            },
+          },
+          "remoteDid": "remoteDid",
+          "status": "INVITATION_RECEIVED",
+          "timestamp": "2017-09-06T00:00:00+05:30",
+          "type": "INVITATION",
+        },
+      ]
+    }
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    numColumns={1}
     onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
     style={
       Object {
-        "backgroundColor": "white",
-        "borderColor": "red",
-        "flex": 1,
-        "paddingTop": 5,
+        "backgroundColor": "#fff",
+        "height": "100%",
         "width": "100%",
       }
     }
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
   >
     <View>
       <View
-        style={
-          Object {
-            "height": 67,
-          }
-        }
-      />
-      <RCTSafeAreaView
-        emulateUnlessSupported={true}
-        style={
-          Object {
-            "flex": 1,
-          }
-        }
+        onLayout={[Function]}
+        style={null}
       >
         <View
           style={
@@ -2323,7 +2473,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             }
           />
         </View>
-      </RCTSafeAreaView>
+      </View>
     </View>
   </RCTScrollView>
   <BlurView
@@ -2767,32 +2917,74 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
     }
   />
   <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "paddingTop": 67,
+      }
+    }
+    data={
+      Array [
+        Object {
+          "action": "RECEIVED",
+          "data": Array [
+            Object {
+              "data": "2017-09-06T00:00:00+05:30",
+              "label": "Evernym",
+            },
+          ],
+          "icon": 1,
+          "id": "1",
+          "name": "Enterprise name",
+          "originalPayload": Object {
+            "payload": Object {
+              "requester": Object {
+                "name": "bob",
+              },
+            },
+            "payloadInfo": Object {
+              "uid": "uidProofReceived",
+            },
+          },
+          "remoteDid": "remoteDid",
+          "status": "INVITATION_RECEIVED",
+          "timestamp": "2017-09-06T00:00:00+05:30",
+          "type": "INVITATION",
+        },
+      ]
+    }
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    numColumns={1}
     onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
     style={
       Object {
-        "backgroundColor": "white",
-        "borderColor": "red",
-        "flex": 1,
-        "paddingTop": 5,
+        "backgroundColor": "#fff",
+        "height": "100%",
         "width": "100%",
       }
     }
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
   >
     <View>
       <View
-        style={
-          Object {
-            "height": 67,
-          }
-        }
-      />
-      <RCTSafeAreaView
-        emulateUnlessSupported={true}
-        style={
-          Object {
-            "flex": 1,
-          }
-        }
+        onLayout={[Function]}
+        style={null}
       >
         <View
           style={
@@ -3080,1108 +3272,1588 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "backgroundColor": "#f2f2f2",
-                        "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
+                    Object {
+                      "flexDirection": "row",
+                      "height": 1,
+                      "width": 12,
+                    }
                   }
-                />
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
+                      Object {
+                        "backgroundColor": "transparent",
+                        "height": 1,
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
-                <View
-                  style={
-                    Object {
-                      "backgroundColor": "transparent",
-                      "height": 1,
-                      "width": 5,
+                        "width": 5,
+                      }
                     }
-                  }
-                />
+                  />
+                </View>
               </View>
               <View
                 style={
@@ -4279,7 +4951,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
             }
           />
         </View>
-      </RCTSafeAreaView>
+      </View>
     </View>
   </RCTScrollView>
   <BlurView
@@ -4723,32 +5395,65 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
     }
   />
   <RCTScrollView
+    contentContainerStyle={
+      Object {
+        "paddingTop": 67,
+      }
+    }
+    data={
+      Array [
+        Object {
+          "action": "SHARED",
+          "data": Array [
+            Object {
+              "data": "2017-09-06T00:00:00+05:30",
+              "label": "Evernym",
+            },
+          ],
+          "icon": 1,
+          "id": "1",
+          "name": "Enterprise name",
+          "originalPayload": Object {},
+          "remoteDid": "remoteDid",
+          "status": "INVITATION_RECEIVED",
+          "timestamp": "2017-09-06T00:00:00+05:30",
+          "type": "INVITATION",
+        },
+      ]
+    }
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    numColumns={1}
     onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
     style={
       Object {
-        "backgroundColor": "white",
-        "borderColor": "red",
-        "flex": 1,
-        "paddingTop": 5,
+        "backgroundColor": "#fff",
+        "height": "100%",
         "width": "100%",
       }
     }
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
   >
     <View>
       <View
-        style={
-          Object {
-            "height": 67,
-          }
-        }
-      />
-      <RCTSafeAreaView
-        emulateUnlessSupported={true}
-        style={
-          Object {
-            "flex": 1,
-          }
-        }
+        onLayout={[Function]}
+        style={null}
       >
         <View
           style={
@@ -5036,1108 +5741,1588 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "backgroundColor": "#f2f2f2",
-                        "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
+                    Object {
+                      "flexDirection": "row",
+                      "height": 1,
+                      "width": 12,
+                    }
                   }
-                />
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
+                      Object {
+                        "backgroundColor": "transparent",
+                        "height": 1,
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
+                        "width": 5,
+                      }
+                    }
+                  />
+                </View>
                 <View
                   style={
                     Object {
-                      "backgroundColor": "transparent",
+                      "flexDirection": "row",
                       "height": 1,
-                      "width": 5,
+                      "width": 12,
                     }
                   }
-                />
-                <View
-                  style={
-                    Array [
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#f2f2f2",
+                          "height": 1,
+                          "width": 7,
+                        },
+                        Object {
+                          "backgroundColor": "#eaeaea",
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    style={
                       Object {
-                        "backgroundColor": "#f2f2f2",
+                        "backgroundColor": "transparent",
                         "height": 1,
-                        "width": 7,
-                      },
-                      Object {
-                        "backgroundColor": "#eaeaea",
-                      },
-                    ]
-                  }
-                />
-                <View
-                  style={
-                    Object {
-                      "backgroundColor": "transparent",
-                      "height": 1,
-                      "width": 5,
+                        "width": 5,
+                      }
                     }
-                  }
-                />
+                  />
+                </View>
               </View>
               <View
                 style={
@@ -6235,7 +7420,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
             }
           />
         </View>
-      </RCTSafeAreaView>
+      </View>
     </View>
   </RCTScrollView>
   <BlurView

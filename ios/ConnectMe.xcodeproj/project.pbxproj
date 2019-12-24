@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -47,6 +46,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* ConnectMeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ConnectMeTests.m */; };
 		36C1D67FE63A494B9967BC76 /* Lato-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E66F5DD5AA24050B2820530 /* Lato-Medium.ttf */; };
 		389EA055702747668D254668 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A494F6E6E44D65935E5B3F /* libRNFirebase.a */; };
+		43274A15233D19A2007A8C39 /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C10E1B2338DC6800DE0E2E /* libRNScreens.a */; };
 		436B89D422DDF41D00696402 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 436B89BB22DDF19200696402 /* libRNDeviceInfo.a */; };
 		437360F02230443C0055F701 /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 437360EF223043FC0055F701 /* libRNCamera.a */; };
 		4B0AFC4C695A4198A3D2AB69 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0D23D481324711B3988D76 /* libz.tbd */; };
@@ -366,6 +366,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
 			remoteInfo = RNCamera;
+		};
+		43C10E1A2338DC6800DE0E2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43C10DD72338DC3B00DE0E2E /* RNScreens.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNScreens;
 		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -726,6 +733,7 @@
 		421F24F4215B408B9F7C24E1 /* Lato-HairlineItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-HairlineItalic.ttf"; path = "../app/fonts/Lato/Lato-HairlineItalic.ttf"; sourceTree = "<group>"; };
 		436B898222DDF19200696402 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		437360EA223043FC0055F701 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
+		43C10DD72338DC3B00DE0E2E /* RNScreens.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNScreens.xcodeproj; path = "../node_modules/react-native-screens/ios/RNScreens.xcodeproj"; sourceTree = "<group>"; };
 		47A962A206204795B77F3195 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		4855373D09494E1EB7278B71 /* libRCTPBKDF2.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTPBKDF2.a; sourceTree = "<group>"; };
 		4CA9C44856CA4D37A7BE4968 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
@@ -858,6 +866,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43274A15233D19A2007A8C39 /* libRNScreens.a in Frameworks */,
 				436B89D422DDF41D00696402 /* libRNDeviceInfo.a in Frameworks */,
 				ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				DD7F113122C2A84A00AA98FC /* libRCTAnimation.a in Frameworks */,
@@ -1116,6 +1125,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		43C10DD82338DC3B00DE0E2E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43C10E1B2338DC6800DE0E2E /* libRNScreens.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		4FF9AD8D6A2F866F22AFE02A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1154,6 +1171,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				43C10DD72338DC3B00DE0E2E /* RNScreens.xcodeproj */,
 				436B898222DDF19200696402 /* RNDeviceInfo.xcodeproj */,
 				DD18287122A06A6E00D9C233 /* RNReanimated.xcodeproj */,
 				DDA099A62281B55F003CB2B9 /* RNSnackbar.xcodeproj */,
@@ -1635,7 +1653,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -1815,6 +1833,10 @@
 				{
 					ProductGroup = DD18287222A06A6E00D9C233 /* Products */;
 					ProjectRef = DD18287122A06A6E00D9C233 /* RNReanimated.xcodeproj */;
+				},
+				{
+					ProductGroup = 43C10DD82338DC3B00DE0E2E /* Products */;
+					ProjectRef = 43C10DD72338DC3B00DE0E2E /* RNScreens.xcodeproj */;
 				},
 				{
 					ProductGroup = 27C75C681EBA334C0072036E /* Products */;
@@ -2111,6 +2133,13 @@
 			fileType = archive.ar;
 			path = libRNCamera.a;
 			remoteRef = 437360EE223043FC0055F701 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43C10E1B2338DC6800DE0E2E /* libRNScreens.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNScreens.a;
+			remoteRef = 43C10E1A2338DC6800DE0E2E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
@@ -2527,7 +2556,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-ConnectMe/Pods-ConnectMe-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${PODS_ROOT}/Onfido/Onfido.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/apptentive-ios/Apptentive.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${PODS_ROOT}/vcx/vcx/vcx.framework",
@@ -2536,7 +2565,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Onfido.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apptentive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/vcx.framework",

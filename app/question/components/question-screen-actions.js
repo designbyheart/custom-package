@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react'
+import React, { Component } from 'react'
 import { Dimensions } from 'react-native'
 
 import type { QuestionResponse, QuestionStoreMessage } from '../type-question'

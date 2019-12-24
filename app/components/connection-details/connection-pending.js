@@ -1,9 +1,9 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { Text, Image, View, StyleSheet, TouchableOpacity } from 'react-native'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
-class ConnectionPending extends React.Component<any, {}> {
+class ConnectionPending extends PureComponent<any, {}> {
   constructor(props: any) {
     super(props)
     this.state = {}

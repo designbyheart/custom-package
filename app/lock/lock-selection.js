@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
   Image,
   View,
@@ -51,7 +51,7 @@ import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pendi
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
-export class LockSelection extends PureComponent<LockSelectionProps, *> {
+export class LockSelection extends Component<LockSelectionProps, *> {
   constructor(props: LockSelectionProps) {
     super(props)
     Keyboard.dismiss()

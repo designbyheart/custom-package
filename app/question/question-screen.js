@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component, PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
   Platform,
   ScrollView,
@@ -81,7 +81,7 @@ import { customLogger } from '../store/custom-logger'
 
 const { height } = Dimensions.get('window')
 
-export class Question extends PureComponent<
+export class Question extends Component<
   QuestionScreenProps,
   QuestionScreenState
 > {

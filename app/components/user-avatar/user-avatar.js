@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Image, TouchableWithoutFeedback, View, Platform } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -16,7 +16,7 @@ import type { Store } from '../../store/type-store'
 
 const defaultAvatar = require('../../images/UserAvatar.png')
 
-export class UserAvatar extends PureComponent<UserAvatarProps, void> {
+export class UserAvatar extends Component<UserAvatarProps, void> {
   changeAvatar = () => {
     if (!this.props.userCanChange) {
       return

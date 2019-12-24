@@ -1,25 +1,15 @@
 // @flow
-import React from 'react'
-import {
-  View,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-  Text,
-  Dimensions,
-  Animated,
-} from 'react-native'
+import React, { Component } from 'react'
+import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
+import { withNavigation } from 'react-navigation'
 import { bindActionCreators } from 'redux'
+import { claimOfferNewRoute } from '../../common/route-constants'
 import { BigNumber } from 'bignumber.js'
 
 import type { Store } from '../../store/type-store'
 import type {
-  ClaimOfferProps,
   ClaimOfferPayload,
-  ClaimOfferAttributeListProps,
-  ClaimOfferState,
-  ClaimPaidOfferState,
   ClaimProofNavigation,
   TokenFeesData,
 } from '../../claim-offer/type-claim-offer'
@@ -39,31 +29,20 @@ import {
   getAlreadySignedAgreement,
 } from '../../store/store-selector'
 import {
-  claimOfferShown,
   acceptClaimOffer,
-  claimOfferRejected,
   claimOfferIgnored,
   claimOfferShowStart,
   resetClaimRequestStatus,
 } from '../../claim-offer/claim-offer-store'
-import { withStatusBar } from '../../components/status-bar/status-bar'
-import {
-  black,
-  mediumGray,
-  matterhornSecondary,
-  cardBorder,
-} from '../../common/styles'
-import { txnAuthorAgreementRoute, restoreWaitRoute } from '../../common'
+import { withBottomUpSliderScreen } from '../../components/bottom-up-slider-screen/bottom-up-slider-screen'
+import { txnAuthorAgreementRoute } from '../../common'
 import {
   CLAIM_OFFER_STATUS,
   CLAIM_REQUEST_STATUS,
 } from '../../claim-offer/type-claim-offer'
 import { animateLayout } from '../../common/layout-animation'
 
-let ScreenHeight = Dimensions.get('window').height
-let ScreenWidth = Dimensions.get('window').width
-
-class ClaimOfferModal extends React.Component<any, *> {
+class ClaimOfferModal extends Component<any, *> {
   constructor(props) {
     super(props)
     if (props.uid) {
@@ -99,7 +78,6 @@ class ClaimOfferModal extends React.Component<any, *> {
     // as soon as user accepts the cred offer, redux state will change
     const isClaimOfferAccepted = status === CLAIM_OFFER_STATUS.ACCEPTED
 
-    const testID = 'claim-offer'
     let acceptButtonText = payTokenValue ? 'Accept & Pay' : 'Accept'
     // NOTE: Just to be safe, we changed the hasNotAcceptedTAA to hardcoded false, so we can be sure 0 tokens doesn't affect the flow.
     const hasNotAcceptedTAA = false
@@ -107,123 +85,114 @@ class ClaimOfferModal extends React.Component<any, *> {
     // new BigNumber(claimPrice).isGreaterThan(0)
 
     return (
-      <Animated.View style={[styles.outerAnimatedWrapper]}>
-        <Animated.View style={[styles.innerAnimatedWrapper]}>
-          <View>
-            <TouchableOpacity style={styles.touchable} onPress={this.hideModal}>
-              <View style={styles.helperWrapper} />
-            </TouchableOpacity>
-            <View style={styles.modalWrapper}>
-              <ModalHeader
-                institutialName={claimOfferData.issuer.name}
-                credentialName={
-                  hasNotAcceptedTAA
-                    ? 'Please sign the Transaction Author Agreement before continuing'
-                    : claimOfferData.data.name
-                }
-                credentialText={
-                  hasNotAcceptedTAA
-                    ? 'is offering a paid credential'
-                    : 'is offering to issue you'
-                }
-                imageUrl={this.props.logoUrl}
-                colorBackground={this.props.claimThemePrimary}
-              />
+      <View style={styles.modalWrapper}>
+        <ModalHeader
+          institutialName={claimOfferData.issuer.name}
+          credentialName={
+            hasNotAcceptedTAA
+              ? 'Please sign the Transaction Author Agreement before continuing'
+              : claimOfferData.data.name
+          }
+          credentialText={
+            hasNotAcceptedTAA
+              ? 'is offering a paid credential'
+              : 'is offering to issue you'
+          }
+          imageUrl={this.props.logoUrl}
+          colorBackground={this.props.claimThemePrimary}
+        />
 
-              {
-                // if we don't show ledger txn fees, then show credential data
-                // i.e. user has not taken any action on credential modal
-                // it doesn't matter whether TAA is accepted or not
-                // show credential data without needing to consider TAA status
-              }
-              {shouldShowTransactionInfo === false && (
-                <ModalContent
-                  content={this.props.claimOfferData.data.revealedAttributes}
-                />
-              )}
+        {
+          // if we don't show ledger txn fees, then show credential data
+          // i.e. user has not taken any action on credential modal
+          // it doesn't matter whether TAA is accepted or not
+          // show credential data without needing to consider TAA status
+        }
+        {shouldShowTransactionInfo === false && (
+          <ModalContent
+            content={this.props.claimOfferData.data.revealedAttributes}
+          />
+        )}
 
-              {
-                // if this is a paid cred and user has clicked 'Agree & Pay'
-                // and if user has not already accepted cred offer
-                // we are not considering TAA status here because
-                // shouldShowTransactionInfo state is only set
-                // after TAA is accepted
-                // so if shouldShowTransactionInfo == true, then TAA is also set
-              }
-              {shouldShowTransactionInfo &&
-                !isClaimOfferAccepted && (
-                  <LedgerFees
-                    render={this.renderLedgerFeesPhases}
-                    onStateChange={this.updateState}
-                    transferAmount={this.props.claimPrice}
-                  />
-                )}
+        {
+          // if this is a paid cred and user has clicked 'Agree & Pay'
+          // and if user has not already accepted cred offer
+          // we are not considering TAA status here because
+          // shouldShowTransactionInfo state is only set
+          // after TAA is accepted
+          // so if shouldShowTransactionInfo == true, then TAA is also set
+        }
+        {shouldShowTransactionInfo &&
+          !isClaimOfferAccepted && (
+            <LedgerFees
+              render={this.renderLedgerFeesPhases}
+              onStateChange={this.updateState}
+              transferAmount={this.props.claimPrice}
+            />
+          )}
 
-              {
-                // Above code block was dealing with ledger fees is user
-                // has not yet accepted cred offer
-                // But if user has accepted cred offer, and this cred offer
-                // is a paid cred offer
-                // then we need to show user the status of payment as well
-                // so, will keep modal open till user sees success payment
-              }
-              {shouldShowTransactionInfo &&
-                isClaimOfferAccepted && (
-                  <PaymentTransactionInfo
-                    claimThemePrimary={this.props.claimThemePrimary}
-                    claimThemeSecondary={this.props.claimThemeSecondary}
-                    onConfirmAndPay={this.onConfirmAndPay}
-                    onCancel={this.onIgnore}
-                    credentialPrice={this.props.claimPrice}
-                    claimRequestStatus={claimRequestStatus}
-                    onSuccess={this.onPaymentSuccess}
-                    onRetry={this.onConfirmAndPay}
-                  />
-                )}
+        {
+          // Above code block was dealing with ledger fees is user
+          // has not yet accepted cred offer
+          // But if user has accepted cred offer, and this cred offer
+          // is a paid cred offer
+          // then we need to show user the status of payment as well
+          // so, will keep modal open till user sees success payment
+        }
+        {shouldShowTransactionInfo &&
+          isClaimOfferAccepted && (
+            <PaymentTransactionInfo
+              claimThemePrimary={this.props.claimThemePrimary}
+              claimThemeSecondary={this.props.claimThemeSecondary}
+              onConfirmAndPay={this.onConfirmAndPay}
+              onCancel={this.onIgnore}
+              credentialPrice={this.props.claimPrice}
+              claimRequestStatus={claimRequestStatus}
+              onSuccess={this.onPaymentSuccess}
+              onRetry={this.onConfirmAndPay}
+            />
+          )}
 
-              {
-                // if user has not accepted TAA
-                // then no matter what is the state of cred offer
-                // always show TAA accept button to user
-              }
-              {hasNotAcceptedTAA && (
-                <ModalButtons
-                  onPress={this.agree}
-                  onIgnore={this.onIgnore}
-                  colorBackground={this.props.claimThemePrimary}
-                  secondColorBackground={this.props.claimThemeSecondary}
-                  leftBtnText={'Close'}
-                  rightBtnText={'Read and Sign TAA'}
-                />
-              )}
+        {
+          // if user has not accepted TAA
+          // then no matter what is the state of cred offer
+          // always show TAA accept button to user
+        }
+        {hasNotAcceptedTAA && (
+          <ModalButtons
+            onPress={this.agree}
+            onIgnore={this.onIgnore}
+            colorBackground={this.props.claimThemePrimary}
+            secondColorBackground={this.props.claimThemeSecondary}
+            leftBtnText={'Close'}
+            rightBtnText={'Read and Sign TAA'}
+          />
+        )}
 
-              {
-                // if user accepted TAA
-                // and user has not yet taken any action on cred offer
-                // then show Accept, Ignore buttons
-              }
-              {hasNotAcceptedTAA === false &&
-                shouldShowTransactionInfo === false &&
-                !isClaimOfferAccepted && (
-                  <ModalButtons
-                    onPress={this.onAccept}
-                    onIgnore={this.onIgnore}
-                    colorBackground={this.props.claimThemePrimary}
-                    secondColorBackground={this.props.claimThemeSecondary}
-                    leftBtnText={'Ignore'}
-                    rightBtnText={acceptButtonText}
-                    buttonsWrapperStyles={{
-                      borderTopLeftRadius: 0,
-                      borderTopRightRadius: 0,
-                    }}
-                  >
-                    <CredentialPriceInfo price={payTokenValue || ''} />
-                  </ModalButtons>
-                )}
-            </View>
-          </View>
-        </Animated.View>
-      </Animated.View>
+        {
+          // if user accepted TAA
+          // and user has not yet taken any action on cred offer
+          // then show Accept, Ignore buttons
+        }
+        {hasNotAcceptedTAA === false &&
+          shouldShowTransactionInfo === false &&
+          !isClaimOfferAccepted && (
+            <ModalButtons
+              onPress={this.onAccept}
+              onIgnore={this.onIgnore}
+              colorBackground={this.props.claimThemePrimary}
+              secondColorBackground={this.props.claimThemeSecondary}
+              leftBtnText={'Ignore'}
+              rightBtnText={acceptButtonText}
+              buttonsWrapperStyles={{
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+              }}
+            >
+              <CredentialPriceInfo price={payTokenValue || ''} />
+            </ModalButtons>
+          )}
+      </View>
     )
   }
 
@@ -360,9 +329,7 @@ const mapStateToProps = (
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      claimOfferShown,
       acceptClaimOffer,
-      claimOfferRejected,
       claimOfferIgnored,
       claimOfferShowStart,
       resetClaimRequestStatus,
@@ -371,67 +338,16 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default withStatusBar({ color: black })(
-  connect(mapStateToProps, mapDispatchToProps)(ClaimOfferModal)
+export default withBottomUpSliderScreen(
+  { routeName: claimOfferNewRoute },
+  withNavigation(connect(mapStateToProps, mapDispatchToProps)(ClaimOfferModal))
 )
 
 const styles = StyleSheet.create({
-  wrapper: {
-    backgroundColor: cardBorder,
-    width: '90%',
-    marginLeft: '5%',
-    paddingTop: 12,
-    position: 'relative',
-  },
-  innerAnimatedWrapper: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  outerAnimatedWrapper: {
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    width: ScreenWidth,
-    height: ScreenHeight,
-    position: 'absolute',
-    zIndex: 999,
-    elevation: 20,
-  },
   modalWrapper: {
-    backgroundColor: 'white',
     width: '100%',
-    flex: 1,
     borderRadius: 10,
     overflow: 'hidden',
     height: measurements.WINDOW_HEIGHT * 0.85,
-  },
-  touchable: {
-    height: measurements.WINDOW_HEIGHT * 0.15,
-    justifyContent: 'flex-end',
-  },
-  helperWrapper: {
-    backgroundColor: 'white',
-    width: '15%',
-    height: 6,
-    borderRadius: 3,
-    marginBottom: 7,
-    alignSelf: 'center',
-  },
-  title: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: mediumGray,
-    width: '100%',
-    textAlign: 'left',
-    marginBottom: 2,
-    fontFamily: 'Lato',
-  },
-  content: {
-    fontSize: 17,
-    fontWeight: '400',
-    color: matterhornSecondary,
-    width: '100%',
-    textAlign: 'left',
-    fontFamily: 'Lato',
-    paddingBottom: 12,
   },
 })

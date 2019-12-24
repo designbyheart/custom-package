@@ -182,6 +182,11 @@ export type ConnectionHistoryBackedUpAction = {
   type: typeof CONNECTION_HISTORY_BACKED_UP,
 }
 
+export const NOTIFICATION_CARD_SWIPED_UP = 'NOTIFICATION_CARD_SWIPED_UP'
+export type NotificationCardSwipedUpAction = {
+  type: typeof NOTIFICATION_CARD_SWIPED_UP,
+}
+
 export type ClaimOfferAction =
   | ClaimOfferReceivedAction
   | ClaimOfferFailedAction

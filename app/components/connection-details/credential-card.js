@@ -1,10 +1,10 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { proofRequestRoute, claimOfferRoute } from '../../common'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
-class CredentialCard extends React.Component<any, {}> {
+class CredentialCard extends PureComponent<any, {}> {
   constructor(props: any) {
     super(props)
     this.state = {}

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, PureComponent } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -24,7 +24,7 @@ import ErrorBanner from '../banner/banner-danger'
 import { baseUrls, changeEnvironment } from '../../store/config-store'
 import type { Store } from '../../store/type-store'
 
-export class BackupRestorePassphrase extends PureComponent<
+export class BackupRestorePassphrase extends Component<
   BackupRestorePassphraseProps,
   void
 > {

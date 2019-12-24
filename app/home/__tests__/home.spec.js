@@ -57,6 +57,8 @@ function props(claimOfferStatus, noConnections) {
     environmentName: SERVER_ENVIRONMENT.PROD,
     history: getStore().getState().history,
     onNewConnectionSeen: jest.fn(),
+    shouldShowNotification: true,
+    notificationCardSwipedUp: jest.fn(),
   }
 }
 

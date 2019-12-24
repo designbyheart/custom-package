@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
   ActivityIndicator,
   Alert,
@@ -76,7 +76,7 @@ import {
   generateBackupFile,
   generateRecoveryPhrase,
   cloudBackupFailure,
-  viewedWalletError
+  viewedWalletError,
 } from '../backup/backup-store'
 import { Apptentive } from 'apptentive-react-native'
 import AboutApp from '../about-app/about-app'
@@ -110,8 +110,17 @@ import {
 import { secureSet, walletSet, safeSet } from '../services/storage'
 import { addPendingRedirection } from '../lock/lock-store'
 import { cloudBackupStart } from '../backup/backup-store'
+import {
+  newConnectionSeen,
+  notificationCardSwipedUp,
+} from '../connection-history/connection-history-store'
 import { setupApptentive } from '../feedback'
 import { customLogger } from '../store/custom-logger'
+import { getConnections } from '../store/connections-store'
+import type { Connection } from '../store/type-connection-store'
+import { connectionHistRoute } from '../common/route-constants'
+
+import { NotificationCard } from '../components/notification-card/notification-card'
 
 // Use this variable to show/hide token amount
 // if we just comment out code, then we need to adjust other styles as well
@@ -245,7 +254,7 @@ const style = StyleSheet.create({
   },
 })
 
-export class Settings extends PureComponent<SettingsProps, SettingsState> {
+export class Settings extends Component<SettingsProps, SettingsState> {
   state = {
     walletBackupModalVisible: false,
     disableTouchIdSwitch: false,
@@ -306,7 +315,6 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   }
 
   onBackup = () => {
-    
     const {
       generateRecoveryPhrase,
       hasVerifiedRecoveryPhrase,
@@ -398,7 +406,12 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   }
 
   componentWillReceiveProps(nextProps: SettingsProps) {
-    if (!this.props.hasViewedWalletError  && this.props.cloudBackupError !== null && (this.props.currentScreen === "Settings" || nextProps.currentScreen === "Settings")) {
+    if (
+      !this.props.hasViewedWalletError &&
+      this.props.cloudBackupError !== null &&
+      (this.props.currentScreen === 'Settings' ||
+        nextProps.currentScreen === 'Settings')
+    ) {
       this.props.viewedWalletError(true)
     }
     if (
@@ -427,9 +440,21 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
     return this.getLastBackupTime()
   }
 
+  onNotificationCardPress = (
+    senderName: string,
+    image: ?string,
+    senderDID: string
+  ) => {
+    this.props.navigation.navigate(connectionHistRoute, {
+      senderName,
+      image,
+      senderDID,
+    })
+  }
+
   getLastBackupTime() {
     // return this.props.connectionsUpdated === false || this.props.autoCloudBackupEnabled? (
-      return this.props.connectionsUpdated === false ? (
+    return this.props.connectionsUpdated === false ? (
       <CustomText
         transparentBg
         h7
@@ -465,14 +490,12 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
   }
   getLastCloudBackupTime() {
     // return this.props.lastSuccessfulCloudBackup === 'error' ? (
-      return this.props.cloudBackupError === WALLET_BACKUP_FAILURE ? (
+    return this.props.cloudBackupError === WALLET_BACKUP_FAILURE ? (
       'Backup failed, size limit exceeded'
-    // ) : this.props.lastSuccessfulCloudBackup === 'Failed to create backup: Timed out in push notifications' ? (
-      ) : this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE  ? (
+    ) : // ) : this.props.lastSuccessfulCloudBackup === 'Failed to create backup: Timed out in push notifications' ? (
+    this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE ? (
       'Backup failed. Tap to retry'
-    )
-    
-     : this.props.lastSuccessfulCloudBackup !== '' ? (
+    ) : this.props.lastSuccessfulCloudBackup !== '' ? (
       <CustomText transparentBg h7 bold style={[style.backupTimeSubtitleStyle]}>
         Last backup was{' '}
         <CustomText transparentBg h7 bold style={[style.subtitleColor]}>
@@ -503,7 +526,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         this.props.lastSuccessfulBackup
       )
 
-        if (this.props.lastSuccessfulCloudBackup !== '') {
+      if (this.props.lastSuccessfulCloudBackup !== '') {
         const lastSuccessfulCloudBackup = this.formatBackupString(
           this.props.lastSuccessfulCloudBackup
         )
@@ -549,27 +572,108 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
       !this.props.lastSuccessfulCloudBackup
     ) {
       return 'Create a Backup'
-    } 
-    else if (this.props.connectionsUpdated) {
+    } else if (this.props.connectionsUpdated) {
       return this.renderLastBackupText()
-    } 
-    else {
+    } else {
       return 'Manual Backup'
     }
   }
 
   render() {
-
     const {
       walletBalance,
       lastSuccessfulCloudBackup,
       lastSuccessfulBackup,
       cloudBackupStatus,
       hasVerifiedRecoveryPhrase,
-      cloudBackupError
+      cloudBackupError,
+      connections: { data, hydrated },
+      history,
     } = this.props
     const hasBackupError = cloudBackupError === WALLET_BACKUP_FAILURE
-    const hasCloudBackupFailed = this.props.cloudBackupStatus === WALLET_BACKUP_FAILURE || this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE || cloudBackupError === WALLET_BACKUP_FAILURE
+    const hasCloudBackupFailed =
+      this.props.cloudBackupStatus === WALLET_BACKUP_FAILURE ||
+      this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE ||
+      cloudBackupError === WALLET_BACKUP_FAILURE
+
+    const receivedConnections: Connection[] = (getConnections(data): any)
+    const newestUpdatedConnection = [
+      receivedConnections[receivedConnections.length - 1],
+    ]
+
+    const newConnections = receivedConnections.map((connection, index) => {
+      return {
+        ...connection,
+        index,
+        date:
+          history.data &&
+          history.data.connections &&
+          history.data.connections[connection.senderDID] &&
+          history.data.connections[connection.senderDID].data &&
+          history.data.connections[connection.senderDID].data[
+            history.data.connections[connection.senderDID].data.length - 1
+          ] &&
+          history.data.connections[connection.senderDID].data[
+            history.data.connections[connection.senderDID].data.length - 1
+          ].timestamp,
+        status:
+          history.data &&
+          history.data.connections &&
+          history.data.connections[connection.senderDID] &&
+          history.data.connections[connection.senderDID].data &&
+          history.data.connections[connection.senderDID].data[
+            history.data.connections[connection.senderDID].data.length - 1
+          ] &&
+          history.data.connections[connection.senderDID].data[
+            history.data.connections[connection.senderDID].data.length - 1
+          ].status,
+        questionTitle:
+          history.data &&
+          history.data.connections &&
+          history.data.connections[connection.senderDID] &&
+          history.data.connections[connection.senderDID].data &&
+          history.data.connections[connection.senderDID].data[
+            history.data.connections[connection.senderDID].data.length - 1
+          ] &&
+          history.data.connections[connection.senderDID].data[
+            history.data.connections[connection.senderDID].data.length - 1
+          ].name,
+        credentialName:
+          history.data &&
+          history.data.connections &&
+          history.data.connections[connection.senderDID] &&
+          history.data.connections[connection.senderDID].data &&
+          history.data.connections[connection.senderDID].data[
+            history.data.connections[connection.senderDID].data.length - 1
+          ] &&
+          history.data.connections[connection.senderDID].data[
+            history.data.connections[connection.senderDID].data.length - 1
+          ].name,
+        type:
+          history.data &&
+          history.data.connections &&
+          history.data.connections[connection.senderDID] &&
+          history.data.connections[connection.senderDID].data &&
+          history.data.connections[connection.senderDID].data[
+            history.data.connections[connection.senderDID].data.length - 1
+          ] &&
+          history.data.connections[connection.senderDID].data[
+            history.data.connections[connection.senderDID].data.length - 1
+          ].type,
+        newBadge:
+          history.data &&
+          history.data.connections &&
+          history.data.connections[connection.senderDID] &&
+          history.data.connections[connection.senderDID].newBadge,
+        senderDID: connection.senderDID,
+      }
+    })
+
+    const isCorrectStatus =
+      (newConnections[0] && newConnections[0].status === 'PROOF RECEIVED') ||
+      (newConnections[0] && newConnections[0].status === 'QUESTION_RECEIVED') ||
+      (newConnections[0] && newConnections[0].status === 'CLAIM OFFER RECEIVED')
+
     const userAvatar = (
       <CustomView center style={[style.userAvatarContainer]}>
         <CustomView verticalSpace>
@@ -705,9 +809,9 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         avatar: (
           <SvgCustomIcon
             fill={
-              this.props.connectionsUpdated && !this.props.isAutoBackupEnabled 
-              // || (this.props.connectionsUpdated && this.props.isAutoBackupEnabled && hasCloudBackupFailed)
-                ? maroonRed
+              this.props.connectionsUpdated && !this.props.isAutoBackupEnabled
+                ? // || (this.props.connectionsUpdated && this.props.isAutoBackupEnabled && hasCloudBackupFailed)
+                  maroonRed
                 : '#777'
             }
             name="Backup"
@@ -722,8 +826,7 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
         subtitle: this.getCloudBackupSubtitle(),
         avatar: (
           <SvgCustomIcon
-            fill={hasCloudBackupFailed ? maroonRed : '#777'
-            }
+            fill={hasCloudBackupFailed ? maroonRed : '#777'}
             name="CloudBackup"
           />
         ),
@@ -876,6 +979,20 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
 
     return (
       <Container>
+        {this.props.shouldShowNotification &&
+          isCorrectStatus && (
+            <NotificationCard
+              image={newConnections[0].logoUrl}
+              status={newConnections[0].status}
+              senderName={newConnections[0].senderName}
+              credentialName={newConnections[0].credentialName}
+              question={newConnections[0].questionTitle}
+              senderDID={newConnections[0].senderDID}
+              newBadge={newConnections[0].newBadge}
+              notificationCardSwipedUp={this.props.notificationCardSwipedUp}
+              onNotificationCardPress={this.onNotificationCardPress}
+            />
+          )}
         <CustomView style={[style.secondaryContainer]} tertiary>
           {userAvatar}
           <ScrollView>
@@ -908,10 +1025,9 @@ export class Settings extends PureComponent<SettingsProps, SettingsState> {
                       (this.props.connectionsUpdated &&
                         item.id === 1 &&
                         !this.props.isAutoBackupEnabled) ||
-                      (item.id === 2 && hasBackupError
-                        // && this.props.lastSuccessfulCloudBackup === 'error'
-                        )
-                        ? style.walletNotBackedUpSubtitleStyle
+                      (item.id === 2 && hasBackupError)
+                        ? // && this.props.lastSuccessfulCloudBackup === 'error'
+                          style.walletNotBackedUpSubtitleStyle
                         : style.subtitleStyle,
                     ]}
                     key={index}
@@ -956,6 +1072,10 @@ const mapStateToProps = (state: Store) => ({
     state.history.data && state.history.data.connectionsUpdated,
   walletBalance: getWalletBalance(state),
   hasVerifiedRecoveryPhrase: getHasVerifiedRecoveryPhrase(state),
+  shouldShowNotification:
+    state.history.data && state.history.data.shouldShowNotification,
+  connections: state.connections,
+  history: state.history,
 })
 
 const mapDispatchToProps = dispatch =>
@@ -969,7 +1089,8 @@ const mapDispatchToProps = dispatch =>
       addPendingRedirection,
       generateRecoveryPhrase,
       viewedWalletError,
-      cloudBackupStart
+      cloudBackupStart,
+      notificationCardSwipedUp,
     },
     dispatch
   )

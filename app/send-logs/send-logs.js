@@ -1,12 +1,11 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Image,
   NativeModules,
   View,
-  ScrollView,
   Text,
   Button,
   Platform,
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export class SendLogs extends PureComponent<SendLogsProps, any> {
+export class SendLogs extends Component<SendLogsProps, any> {
   constructor(props: SendLogsProps) {
     super(props)
   }

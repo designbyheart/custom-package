@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import {
   Text,
   View,
@@ -11,7 +11,7 @@ import {
 let ScreenHeight = Dimensions.get('window').height
 
 // TODO: Fix the <any, void> to be the correct types for props and state
-class ConnectionRequestCard extends React.Component<any, {}> {
+class ConnectionRequestCard extends PureComponent<any, {}> {
   updateAndShowModal = () => {
     this.props.showModal(this.props.order)
   }

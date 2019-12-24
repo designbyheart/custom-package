@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Image, StyleSheet, Dimensions } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import { bindActionCreators } from 'redux'
@@ -33,7 +33,7 @@ import { withStatusBar } from '../components/status-bar/status-bar'
 const backImage = require('../images/icon_backArrow_white.png')
 const closeImage = require('../images/iconClose.png')
 
-export class BackupErrorScreen extends PureComponent<BackupErrorProps, void> {
+export class BackupErrorScreen extends Component<BackupErrorProps, void> {
   static navigationOptions = ({
     navigation: { goBack, navigate, state },
   }: ReactNavigationBackup) => ({

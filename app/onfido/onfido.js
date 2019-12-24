@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { StyleSheet, Linking, Alert, ScrollView, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -43,7 +43,7 @@ import {
 import { connectionsTabRoute, connectionHistoryDetailsRoute } from '../common'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
-export class Onfido extends PureComponent<OnfidoProps, void> {
+export class Onfido extends Component<OnfidoProps, void> {
   static navigationOptions = ({ navigation }: OnfidoNavigation) => ({
     headerStyle: {
       backgroundColor: color.bg.tertiary.color,

@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { View, StatusBar, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -32,7 +32,7 @@ import {
 } from '../api/api-constants'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
-export class Invitation extends PureComponent<InvitationProps, void> {
+export class Invitation extends Component<InvitationProps, void> {
   render() {
     const { invitation, showErrorAlerts, navigation } = this.props
 

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 
@@ -38,7 +38,7 @@ const closeImage = require('../images/icon-Close.png')
 const backup = require('../images/upload13x.png')
 const download = require('../images/download3x.png')
 
-export class SelectRecoveryMethod extends PureComponent<
+export class SelectRecoveryMethod extends Component<
   // ReactNavigationBackup,
   SelectRecoveryMethodProps,
   void

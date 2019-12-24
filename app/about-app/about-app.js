@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { StyleSheet, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { createStackNavigator } from 'react-navigation'
@@ -50,10 +50,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export class AboutAppListItem extends PureComponent<
-  AboutAppListItemProps,
-  void
-> {
+export class AboutAppListItem extends Component<AboutAppListItemProps, void> {
   render() {
     return (
       <ListItem
@@ -79,7 +76,7 @@ const logoEvernym = <Image source={require('../images/logo_evernym.png')} />
 const logoSovrin = <Image source={require('../images/logo_sovrin.png')} />
 const versionNumber = VersionNumber
 
-export class AboutApp extends PureComponent<AboutAppProps, void> {
+export class AboutApp extends Component<AboutAppProps, void> {
   openTermsAndConditions = () => {
     this.props.navigation.navigate(privacyTNCRoute, PrivacyTNC.INFO_TYPE.TNC)
   }

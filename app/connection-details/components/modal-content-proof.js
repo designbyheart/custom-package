@@ -1,9 +1,8 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
   Text,
   View,
-  ScrollView,
   StyleSheet,
   TextInput,
   Alert,
@@ -61,7 +60,7 @@ import {
   MESSAGE_ERROR_PROOF_GENERATION_DESCRIPTION,
   PROOF_STATUS,
 } from '../../proof-request/type-proof-request'
-
+import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import {
   userSelfAttestedAttributes,
   updateAttributeClaim,
@@ -109,7 +108,7 @@ export function isInvalidValues(
   })
 }
 
-class ProofRequestAttributeList extends PureComponent<
+class ProofRequestAttributeList extends Component<
   ProofRequestAttributeListProp,
   ProofRequestAttributeListState
 > {
@@ -334,7 +333,7 @@ export function getMissingAttributeNames(
   return Object.keys(missingAttributes).join(', ')
 }
 
-class ModalContentProof extends PureComponent<
+class ModalContentProof extends Component<
   ProofRequestProps,
   ProofRequestState
 > {
@@ -645,6 +644,7 @@ const mapDispatchToProps = dispatch =>
       getProof,
       userSelfAttestedAttributes,
       proofRequestShowStart,
+      newConnectionSeen,
     },
     dispatch
   )

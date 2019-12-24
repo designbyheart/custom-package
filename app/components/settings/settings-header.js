@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import {
   StyleSheet,
   View,
@@ -13,7 +13,7 @@ import { USER_AVATAR_TEST_ID } from '../../settings/settings-constant'
 import type { ImageSource } from '../../common/type-common'
 import { measurements } from '../../common/styles/measurements'
 
-class SettingsHeader extends React.Component<any, any> {
+class SettingsHeader extends PureComponent<any, any> {
   renderAvatarWithSource = (avatarSource: number | ImageSource) => (
     <Avatar medium round src={avatarSource} />
   )

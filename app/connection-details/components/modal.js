@@ -1,23 +1,9 @@
 // @flow
-import React, { PureComponent } from 'react'
-import {
-  View,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-  Dimensions,
-  Animated,
-} from 'react-native'
+import React, { Component } from 'react'
+import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
-import type {
-  ClaimOfferProps,
-  ClaimOfferPayload,
-  ClaimOfferAttributeListProps,
-  ClaimOfferState,
-} from '../../claim-offer/type-claim-offer'
-
+import { withNavigation } from 'react-navigation'
 import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
 import { ModalButtons } from '../../components/buttons/modal-buttons'
@@ -25,103 +11,39 @@ import { ModalButton } from '../../components/connection-details/modal-button'
 import ModalContentProof from './modal-content-proof'
 import { measurements } from '../../../app/common/styles/measurements'
 import {
-  claimOfferShown,
   acceptClaimOffer,
-  claimOfferRejected,
   claimOfferIgnored,
-  claimOfferShowStart,
-  resetClaimRequestStatus,
 } from '../../claim-offer/claim-offer-store'
-import { withStatusBar } from '../../components/status-bar/status-bar'
-import { black } from '../../common/styles'
-
-let ScreenHeight = Dimensions.get('window').height
-let ScreenWidth = Dimensions.get('window').width
+import { withBottomUpSliderScreen } from '../../components/bottom-up-slider-screen/bottom-up-slider-screen'
+import { modalScreenRoute } from '../../common/route-constants'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
-class Modal extends PureComponent<any, any> {
+class Modal extends Component<any, any> {
   constructor(props: any) {
     super(props)
-    this.state = {
-      moveMoreOptions: new Animated.Value(ScreenWidth),
-      fadeInOut: new Animated.Value(0),
-      moveModal: new Animated.Value(ScreenHeight),
-      moveModalHeight: new Animated.Value(ScreenHeight),
-      positionValue: new Animated.Value(0),
-    }
     this.onAccept = this.onAccept.bind(this)
   }
-  handleScroll = (event: any) => {
-    if (event.nativeEvent.contentOffset.y < -100) {
-      this.props.updatePosition(event.nativeEvent.contentOffset.y)
-      this.hideModal()
-    }
-  }
-  updatePosition = value => {
-    Animated.timing(this.state.positionValue, {
-      toValue: value,
-      duration: 1,
-      useNativeDriver: true,
-    }).start()
-  }
 
-  moreOptionsClose = () => {
-    Animated.timing(this.state.moveMoreOptions, {
-      toValue: ScreenWidth,
-      duration: 1,
-      useNativeDriver: true,
-    }).start()
-  }
-  moreOptionsOpen = () => {
-    Animated.timing(this.state.moveMoreOptions, {
-      toValue: 0,
-      duration: 1,
-      useNativeDriver: true,
-    }).start()
-  }
-  showModal = () => {
-    Animated.parallel([
-      Animated.timing(this.state.moveModal, {
-        toValue: 0,
-        duration: 1,
-        useNativeDriver: true,
-      }),
-      Animated.timing(this.state.fadeInOut, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(this.state.moveModalHeight, {
-        toValue: 0,
-        duration: 400,
-        useNativeDriver: true,
-      }),
-    ]).start()
-  }
   hideModal = () => {
     this.props.navigation.goBack(null)
   }
 
   onIgnore = () => {
-    this.hideModal()
-    this.setState(() =>
-      this.props.claimOfferIgnored(
-        this.props.data.originalPayload.payloadInfo.uid
-      )
+    this.props.claimOfferIgnored(
+      this.props.data.originalPayload.payloadInfo.uid
     )
+    this.hideModal()
   }
+
   onClose = () => {
     this.hideModal()
   }
 
   onAccept = () => {
+    this.props.acceptClaimOffer(this.props.data.originalPayload.payloadInfo.uid)
     this.hideModal()
-    this.setState(() =>
-      this.props.acceptClaimOffer(
-        this.props.data.originalPayload.payloadInfo.uid
-      )
-    )
   }
+
   renderText(param) {
     switch (param) {
       case 'CLAIM OFFER RECEIVED':
@@ -136,6 +58,7 @@ class Modal extends PureComponent<any, any> {
         return ''
     }
   }
+
   renderModalContent(data) {
     switch (data.action) {
       case 'CLAIM OFFER RECEIVED':
@@ -158,12 +81,12 @@ class Modal extends PureComponent<any, any> {
             secondColorBackground={
               this.props.navigation.state.params.secondColorBackground
             }
-            hideModal={() => this.onClose()}
           />
         )
       default:
     }
   }
+
   renderButtons(param) {
     switch (param.action) {
       case 'CLAIM OFFER RECEIVED':
@@ -198,52 +121,18 @@ class Modal extends PureComponent<any, any> {
       secondColorBackground,
     } = this.props.navigation.state.params
     const { data } = this.props.navigation.state.params
-    this.showModal()
     return (
-      <Animated.View
-        style={[
-          styles.outerAnimatedWrapper,
-          {
-            transform: [{ translateY: this.state.moveModal }],
-            opacity: this.state.fadeInOut,
-          },
-        ]}
-      >
-        <Animated.View
-          style={{
-            width: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transform: [{ translateY: this.state.moveModalHeight }],
-          }}
-          style={[
-            styles.innerAnimatedWrapper,
-            { transform: [{ translateY: this.state.moveModal }] },
-          ]}
-        >
-          <View>
-            <TouchableOpacity
-              style={styles.touchable}
-              onPress={this.props.hideModal}
-            >
-              <View style={styles.helperWrapper} />
-            </TouchableOpacity>
-            <View style={styles.modalWrapper}>
-              <ModalHeader
-                institutialName={institutialName}
-                credentialName={data.name}
-                credentialText={this.renderText(data.action)}
-                imageUrl={imageUrl}
-                colorBackground={
-                  this.props.navigation.state.params.colorBackground
-                }
-              />
-              {this.renderModalContent(data)}
-              {this.renderButtons(data)}
-            </View>
-          </View>
-        </Animated.View>
-      </Animated.View>
+      <View style={styles.modalWrapper}>
+        <ModalHeader
+          institutialName={institutialName}
+          credentialName={data.name}
+          credentialText={this.renderText(data.action)}
+          imageUrl={imageUrl}
+          colorBackground={this.props.navigation.state.params.colorBackground}
+        />
+        {this.renderModalContent(data)}
+        {this.renderButtons(data)}
+      </View>
     )
   }
 }
@@ -251,52 +140,22 @@ class Modal extends PureComponent<any, any> {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      claimOfferShown,
       acceptClaimOffer,
-      claimOfferRejected,
       claimOfferIgnored,
-      claimOfferShowStart,
-      resetClaimRequestStatus,
     },
     dispatch
   )
 
-export default withStatusBar({ color: black })(
-  connect(null, mapDispatchToProps)(Modal)
+export default withBottomUpSliderScreen(
+  { routeName: modalScreenRoute },
+  withNavigation(connect(null, mapDispatchToProps)(Modal))
 )
 
 const styles = StyleSheet.create({
-  touchable: {
-    height: measurements.WINDOW_HEIGHT * 0.15,
-    justifyContent: 'flex-end',
-  },
-  helperWrapper: {
-    backgroundColor: 'white',
-    width: '15%',
-    height: 6,
-    borderRadius: 3,
-    marginBottom: 7,
-    alignSelf: 'center',
-  },
   modalWrapper: {
-    backgroundColor: 'white',
     width: '100%',
-    flex: 1,
     borderRadius: 10,
     overflow: 'hidden',
     height: measurements.WINDOW_HEIGHT * 0.85,
-  },
-  outerAnimatedWrapper: {
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    width: ScreenWidth,
-    height: ScreenHeight,
-    position: 'absolute',
-    zIndex: 999,
-    elevation: 20,
-  },
-  innerAnimatedWrapper: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 })

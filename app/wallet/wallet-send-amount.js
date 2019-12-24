@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Text, Animated } from 'react-native'
@@ -30,7 +30,7 @@ import { receiveTabRoute, sendTabRoute, historyTabRoute } from '../common'
 import { SEND_TAB, SEND_TAB_TEST_ID } from './wallet-constants'
 import { conversionFactorLength } from '../sovrin-token/sovrin-token-converter'
 
-class WalletSendAmount extends PureComponent<
+class WalletSendAmount extends Component<
   WalletSendAmountProps,
   WalletSendAmountState
 > {

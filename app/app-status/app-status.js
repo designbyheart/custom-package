@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { AppState } from 'react-native'
@@ -9,7 +9,7 @@ import type { Store } from './../store/type-store'
 import { RestoreStatus } from '../restore/type-restore'
 import type { AppStatusProps, AppStatusState } from './type-app-status'
 
-class AppStatusComponent extends PureComponent<AppStatusProps, AppStatusState> {
+class AppStatusComponent extends Component<AppStatusProps, AppStatusState> {
   state = {
     appState: AppState.currentState,
   }

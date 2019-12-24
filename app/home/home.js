@@ -1,6 +1,6 @@
 // @flow
-import React, { PureComponent } from 'react'
-import { Animated, StyleSheet, Platform, View, FlatList } from 'react-native'
+import React, { Component } from 'react'
+import { StyleSheet, Platform, View, Text, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import { BlurView } from 'react-native-blur'
@@ -10,10 +10,13 @@ import type { HomeProps } from './type-home'
 import type { Connection } from '../store/type-connection-store'
 import type { ReactNavigation } from '../common/type-common'
 
-import { newConnectionSeen } from '../connection-history/connection-history-store'
+import {
+  newConnectionSeen,
+  notificationCardSwipedUp,
+} from '../connection-history/connection-history-store'
 import { PrimaryHeader } from '../components'
 import { ConnectionCard } from './connection-card/connection-card'
-import { createStackNavigator } from 'react-navigation'
+import { createStackNavigator, NavigationActions } from 'react-navigation'
 import { homeRoute } from '../common'
 import { getConnections } from '../store/connections-store'
 import { connectionHistRoute } from '../common/route-constants'
@@ -27,7 +30,9 @@ import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { bindActionCreators } from 'redux'
 
-export class DashboardScreen extends PureComponent<HomeProps> {
+import { NotificationCard } from '../components/notification-card/notification-card'
+
+export class DashboardScreen extends Component<HomeProps> {
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: <PrimaryHeader headline="Connections" />,
   })
@@ -41,19 +46,13 @@ export class DashboardScreen extends PureComponent<HomeProps> {
     }
   }
 
-  keyExtractor = (item: Object) => item.identifier
+  keyExtractor = (item: Object) => item.index
 
-  onCardPress = (
-    senderName: string,
-    image: ?string,
-    senderDID: string,
-    identifier: string
-  ) => {
+  onCardPress = (senderName: string, image: ?string, senderDID: string) => {
     this.props.navigation.navigate(connectionHistRoute, {
       senderName,
       image,
       senderDID,
-      identifier,
     })
   }
 
@@ -62,7 +61,6 @@ export class DashboardScreen extends PureComponent<HomeProps> {
       senderName,
       logoUrl,
       senderDID,
-      identifier,
       questionTitle,
       status,
       type,
@@ -74,10 +72,9 @@ export class DashboardScreen extends PureComponent<HomeProps> {
     return (
       <ConnectionCard
         onPress={() => {
-          this.onCardPress(senderName, logoUrl, senderDID, identifier)
+          this.onCardPress(senderName, logoUrl, senderDID)
         }}
         onNewConnectionSeen={this.props.onNewConnectionSeen}
-        identifier={identifier}
         image={logoUrl}
         status={status}
         senderName={senderName}
@@ -107,7 +104,7 @@ export class DashboardScreen extends PureComponent<HomeProps> {
     // type casting from Array<mixed> to any and then to what we need
     // because flow Array<mixed> can't be directly type casted as of now
     const receivedConnections: Connection[] = (getConnections(data): any)
-    const connections = receivedConnections
+    const newConnections = receivedConnections
       .map((connection, index) => {
         return {
           ...connection,
@@ -187,24 +184,46 @@ export class DashboardScreen extends PureComponent<HomeProps> {
         return bTimestamp - aTimestamp
       })
 
-    const hasNoConnection = hydrated ? connections.length === 0 : false
+    const hasNoConnection = hydrated ? newConnections.length === 0 : false
+    const isCorrectStatus =
+      (newConnections[0] && newConnections[0].status === 'PROOF RECEIVED') ||
+      (newConnections[0] && newConnections[0].status === 'QUESTION_RECEIVED') ||
+      (newConnections[0] && newConnections[0].status === 'CLAIM OFFER RECEIVED')
     return (
-      <View style={container} testID="home-container">
-        {hasNoConnection && (
-          <NewConnectionInstructions
-            usingProductionNetwork={environmentName === SERVER_ENVIRONMENT.PROD}
+      <View style={{ flex: 1 }}>
+        {this.props.shouldShowNotification &&
+          isCorrectStatus && (
+            <NotificationCard
+              image={newConnections[0].logoUrl}
+              status={newConnections[0].status}
+              senderName={newConnections[0].senderName}
+              credentialName={newConnections[0].credentialName}
+              question={newConnections[0].questionTitle}
+              senderDID={newConnections[0].senderDID}
+              newBadge={newConnections[0].newBadge}
+              notificationCardSwipedUp={this.props.notificationCardSwipedUp}
+              onNotificationCardPress={this.onCardPress}
+            />
+          )}
+        <View style={container} testID="home-container">
+          {hasNoConnection && (
+            <NewConnectionInstructions
+              usingProductionNetwork={
+                environmentName === SERVER_ENVIRONMENT.PROD
+              }
+            />
+          )}
+          <FlatList
+            keyExtractor={this.keyExtractor}
+            style={flatListContainer}
+            contentContainerStyle={flatListInnerContainer}
+            data={newConnections}
+            renderItem={this.renderItem}
           />
-        )}
-        <FlatList
-          keyExtractor={this.keyExtractor}
-          style={flatListContainer}
-          contentContainerStyle={flatListInnerContainer}
-          data={connections}
-          renderItem={this.renderItem}
-        />
-        {Platform.OS === 'ios' ? (
-          <BlurView style={blurContainer} blurType="light" blurAmount={8} />
-        ) : null}
+          {Platform.OS === 'ios' ? (
+            <BlurView style={blurContainer} blurType="light" blurAmount={8} />
+          ) : null}
+        </View>
       </View>
     )
   }
@@ -219,6 +238,8 @@ const mapStateToProps = (state: Store) => {
     unSeenMessages,
     history: state.history,
     environmentName: getEnvironmentName(state.config),
+    shouldShowNotification:
+      state.history.data && state.history.data.shouldShowNotification,
   }
 }
 
@@ -226,6 +247,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       onNewConnectionSeen: newConnectionSeen,
+      notificationCardSwipedUp: notificationCardSwipedUp,
     },
     dispatch
   )

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Image, Dimensions } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 import { bindActionCreators } from 'redux'
@@ -47,10 +47,7 @@ const backImage = require('../images/icon_backArrow_white.png')
 const closeImage = require('../images/iconClose.png')
 const encryptedFile = require('../images/encryptedFile.png')
 
-export class ExportBackupFile extends PureComponent<
-  ExportBackupFileProps,
-  void
-> {
+export class ExportBackupFile extends Component<ExportBackupFileProps, void> {
   parseFilePath = (path: string) => {
     const beginning = path.lastIndexOf('/') + 1
     const end = path.length

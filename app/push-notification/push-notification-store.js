@@ -771,7 +771,7 @@ function* handleRedirection(routeName: string, params: NavigationParams): any {
       ])
     )
   } else {
-    yield put(navigateToRoutePN(routeName, params))
+    // yield put(navigateToRoutePN(routeName, params))
   }
 }
 
