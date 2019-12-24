@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import type { Store } from '../../store/type-store'
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export class FooterActions extends PureComponent<FooterActionsProps, void> {
+export class FooterActions extends Component<FooterActionsProps, void> {
   render() {
     const {
       denyTitle = DENY,

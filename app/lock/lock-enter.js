@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
   InteractionManager,
   StyleSheet,
@@ -65,7 +65,7 @@ export const WrongPinText = (
   </CustomText>
 )
 
-export class LockEnter extends PureComponent<LockEnterProps, LockEnterState> {
+export class LockEnter extends Component<LockEnterProps, LockEnterState> {
   pinCodeBox = null
   clearFailStatus = () => {
     this.props.checkPinStatusIdle()

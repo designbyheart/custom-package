@@ -687,7 +687,7 @@ export function* getMessagesSaga(): Generator<*, *, *> {
       null,
       allConnectionsPairwiseDids.join(',')
     )
-    console.log('data:',data)
+    console.log('data:', data)
     if (data && data.length != 0) {
       try {
         // Remove all the FCM notifications from the tray

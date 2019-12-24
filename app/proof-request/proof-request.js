@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { StyleSheet, Image, FlatList, Alert, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -111,7 +111,7 @@ export function isInvalidValues(
   })
 }
 
-class ProofRequestAttributeList extends PureComponent<
+class ProofRequestAttributeList extends Component<
   ProofRequestAttributeListProp,
   ProofRequestAttributeListState
 > {
@@ -355,7 +355,7 @@ export function getMissingAttributeNames(
   return Object.keys(missingAttributes).join(', ')
 }
 
-export class ProofRequest extends PureComponent<
+export class ProofRequest extends Component<
   ProofRequestProps,
   ProofRequestState
 > {

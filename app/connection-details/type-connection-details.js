@@ -113,7 +113,7 @@ export type ConnectionHistoryEvent = {
   data: any,
   id: string,
   name: string,
-  status: string, // HistoryEventStatus
+  status: string,
   timestamp: string,
   type: HistoryEventType,
   remoteDid: string,
@@ -239,13 +239,7 @@ export const HISTORY_EVENT_STORAGE_KEY = 'HISTORY_EVENT_STORAGE_KEY'
 
 export type ConnectionHistoryState = {
   hideMoreOptions: boolean,
-  disableTaps: boolean,
-  positionValue: any,
-  moveMoreOptions: any,
-  fadeInOut: any,
-  moveModal: any,
-  moveModalHeight: any,
-  modalDataOrder: any,
+  moveMoreOptions: Object,
   newMessageLine?: boolean,
 }
 
@@ -267,9 +261,7 @@ export type ConnectionHistoryProps = {
   claimMap: ?ClaimMap,
   activeConnectionThemePrimary: string,
   activeConnectionThemeSecondary: string,
-  connectionHistory: {
-    [string]: ConnectionHistoryEvent[],
-  },
+  connectionHistory: ConnectionHistoryEvent[],
   updateStatusBarTheme: (color?: string) => void,
   deleteConnectionAction: (senderDID: string) => void,
   goToUIScreen: (

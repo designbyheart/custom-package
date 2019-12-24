@@ -4,7 +4,7 @@ exports[`<App/> in android environment. should dispatch navigation action 1`] = 
 [MockFunction] {
   "calls": Array [
     Array [
-      Arguments [
+      Array [
         Object {
           "params": Object {
             "existingPin": true,
@@ -27,7 +27,7 @@ exports[`<App/> in android environment. should redirect to lockSelectionRoute sc
 [MockFunction] {
   "calls": Array [
     Array [
-      Arguments [
+      Array [
         Object {
           "routeName": "LockSelection",
         },
@@ -47,7 +47,7 @@ exports[`<App/> in android environment. should redirect to settingsTab screen if
 [MockFunction] {
   "calls": Array [
     Array [
-      Arguments [
+      Array [
         Object {
           "routeName": "TabSettings",
         },

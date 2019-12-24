@@ -1,7 +1,7 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 
-export class RNCamera extends React.Component<any, any> {
+export class RNCamera extends PureComponent<any, any> {
   static Constants = {
     Aspect: {},
     BarCodeType: {},

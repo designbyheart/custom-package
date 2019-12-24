@@ -3,6 +3,14 @@ import { StyleSheet, Platform } from 'react-native'
 import { color } from '../../common/styles/constant'
 
 const styles = StyleSheet.create({
+  animatedContainer: {
+    position: 'absolute',
+    zIndex: 1000,
+    width: '100%',
+    height: 96,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     width: '100%',
     height: 80,
@@ -109,6 +117,14 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
     color: color.bg.primary.font.primary,
+  },
+  outerContainer: {
+    position: 'absolute',
+    zIndex: 1000,
+    width: '100%',
+    height: 96,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
 

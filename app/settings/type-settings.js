@@ -1,6 +1,11 @@
 // @flow
 import type { ReactNavigation } from '../common/type-common'
+import type {
+  ConnectionStore,
+  Connection,
+} from '../store/type-connection-store'
 import type { PendingRedirection } from '../lock/type-lock'
+import type { ConnectionHistoryStore } from '../connection-history/type-connection-history'
 
 export type SettingsProps = {
   touchIdActive: boolean,
@@ -30,7 +35,10 @@ export type SettingsProps = {
   hasViewedWalletError?: boolean,
   cloudBackupStart: () => void,
   viewedWalletError: (error: boolean) => void,
-
+  shouldShowNotification: boolean,
+  notificationCardSwipedUp: Function,
+  connections: ConnectionStore,
+  history: ConnectionHistoryStore,
 } & ReactNavigation
 
 export type SettingsState = {

@@ -1,34 +1,10 @@
 // @flow
 import React from 'react'
-import {
-  Text,
-  View,
-  Button,
-  Image,
-  ScrollView,
-  Dimensions,
-  StyleSheet,
-} from 'react-native'
+import { Text, View, Dimensions, StyleSheet } from 'react-native'
 
 let ScreenWidth = Dimensions.get('window').width
 
-// TODO: Fix the <any, void> to be the correct types for props and state
-class NewMessageBreakLine extends React.Component<any, void> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.border} />
-        <View style={styles.textWrapper}>
-          <Text style={styles.text}>New Messages</Text>
-        </View>
-      </View>
-    )
-  }
-}
-
-export { NewMessageBreakLine }
-
-const styles = StyleSheet.create({
+const styles = {
   container: {
     width: ScreenWidth,
     height: 26,
@@ -38,20 +14,6 @@ const styles = StyleSheet.create({
     marginTop: -15,
     marginBottom: -15,
     alignItems: 'center',
-  },
-  absolute: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    width: '100%',
-    height: 45,
-  },
-  scrollView: {
-    flex: 1,
-    // borderWidth: 1,
-    borderColor: 'red',
-    width: '100%',
-    backgroundColor: 'white',
   },
   border: {
     width: '100%',
@@ -75,4 +37,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#CE0B24',
   },
-})
+}
+
+// TODO: Fix the <any, void> to be the correct types for props and state
+export const NewMessageBreakLine = () => (
+  <View style={styles.container}>
+    <View style={styles.border} />
+    <View style={styles.textWrapper}>
+      <Text style={styles.text}>New Messages</Text>
+    </View>
+  </View>
+)

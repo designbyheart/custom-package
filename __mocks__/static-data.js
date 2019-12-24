@@ -1090,6 +1090,7 @@ export function getStore(store?: Object = {}) {
                 },
               },
               connectionsUpdated: true,
+              shouldShowNotification: true,
             },
             isLoading: true,
           },

@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { WebView, Platform } from 'react-native'
 import RNFetchBlob from 'rn-fetch-blob'
 import { connect } from 'react-redux'
@@ -46,7 +46,7 @@ export function getImageType(imageUrl: string) {
   return imageType[imageExtension] || imageType.jpg
 }
 
-export class ImageColorPicker extends PureComponent<
+export class ImageColorPicker extends Component<
   ImagePickerProps,
   ImagePickerStates
 > {

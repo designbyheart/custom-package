@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { View, Alert } from 'react-native'
 import firebase from 'react-native-firebase'
 import { bindActionCreators } from 'redux'
@@ -19,7 +19,7 @@ import {
   ERROR_ALREADY_EXIST_TITLE,
 } from '../../api/api-constants'
 
-export class Request extends PureComponent<RequestProps, RequestState> {
+export class Request extends Component<RequestProps, RequestState> {
   state = {
     disableAccept: false,
   }

@@ -1,5 +1,5 @@
 //@flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
 import { TouchId } from '../components/touch-id/touch-id'
 import { Container, CustomText, CustomButton } from '../components'
@@ -18,7 +18,7 @@ import type {
 import { AllowedFallbackToucheIDErrors } from './type-lock'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
-export class LockEnterFingerprint extends PureComponent<
+export class LockEnterFingerprint extends Component<
   LockEnterFingerProps,
   LockEnterFingerState
 > {

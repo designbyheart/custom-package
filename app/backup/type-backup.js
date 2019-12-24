@@ -172,7 +172,7 @@ export type BackupStore = {
   prepareBackupStatus: PrepareBackupStatus,
   encryptedFileLocation?: string,
   hasVerifiedRecoveryPhrase?: boolean,
-  hasViewedWalletError?: boolean
+  hasViewedWalletError?: boolean,
 }
 
 export type StoreError = { error: ?CustomError }

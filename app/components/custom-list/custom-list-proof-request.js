@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { StyleSheet, FlatList, View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -9,10 +9,7 @@ import { getUserAvatarSource } from '../../store/store-selector'
 import type { CustomListProps, Item } from './type-custom-list'
 import type { Store } from '../../store/type-store'
 
-export class CustomListProofRequest extends PureComponent<
-  CustomListProps,
-  void
-> {
+export class CustomListProofRequest extends Component<CustomListProps, void> {
   keyExtractor = ({ label }: Item, index: number) => `${label}${index}`
 
   renderListType1Item = ({ item, index }: { item: Item, index: number }) => {
@@ -53,11 +50,10 @@ export class CustomListProofRequest extends PureComponent<
   }
 
   render() {
-    const items: Item[] = this.props.items
     return (
       <FlatList
         style={styles.keyboardFlatList}
-        data={items}
+        data={this.props.items}
         keyExtractor={this.keyExtractor}
         ItemSeparatorComponent={BorderSeparator}
         ListFooterComponent={BorderSeparator}

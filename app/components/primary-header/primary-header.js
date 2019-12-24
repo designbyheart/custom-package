@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import SvgCustomIcon from '../svg-custom-icon'
 import { Platform, View, TouchableOpacity, Text } from 'react-native'
 import { CustomHeader, CustomView, CustomText } from '../'
@@ -9,7 +9,7 @@ import type { PrimaryHeaderProps } from './type-primary-header'
 import { styles } from './styles'
 import { grey } from '../../common/styles/constant'
 
-class PrimaryHeader extends Component<PrimaryHeaderProps, void> {
+class PrimaryHeader extends PureComponent<PrimaryHeaderProps, void> {
   renderBlurForIos = () => {
     const { blur } = styles
 

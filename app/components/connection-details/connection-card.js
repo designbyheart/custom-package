@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import SvgCustomIcon from '../../components/svg-custom-icon'
 import {
   Text,
@@ -19,11 +19,7 @@ import {
 } from '../../common'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
-class ConnectionCard extends React.Component<any, {}> {
-  constructor(props: any) {
-    super(props)
-    this.state = {}
-  }
+class ConnectionCard extends PureComponent<any, {}> {
   updateAndShowModal = () => {
     if (this.props.proof) {
       this.props.navigation.navigate(modalContentProofShared, {

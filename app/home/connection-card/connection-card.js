@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import SvgCustomIcon from '../../components/svg-custom-icon'
 import { Avatar } from '../../components/avatar/avatar'
 import {
@@ -12,7 +12,7 @@ import type { ConnectionCardProps } from './type-connection-card'
 import { styles } from './styles'
 import { mediumGray } from '../../common/styles/constant'
 
-class ConnectionCard extends Component<ConnectionCardProps, void> {
+class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
   pad = (dateOrMonth: number) => {
     return dateOrMonth < 10 ? '0' + dateOrMonth : dateOrMonth
   }
@@ -145,6 +145,15 @@ class ConnectionCard extends Component<ConnectionCardProps, void> {
     }
   }
 
+  onButtonPress = () => {
+    this.props.onPress(
+      this.props.senderName,
+      this.props.image,
+      this.props.senderDID
+    )
+    this.props.onNewConnectionSeen(this.props.senderDID)
+  }
+
   render() {
     const {
       image,
@@ -176,10 +185,7 @@ class ConnectionCard extends Component<ConnectionCardProps, void> {
     return (
       <TouchableOpacity
         style={[container, newBadge ? newCardContainer : null]}
-        onPress={() => {
-          onPress()
-          onNewConnectionSeen(senderDID)
-        }}
+        onPress={this.onButtonPress}
       >
         <View style={avatarSection}>
           {typeof image === 'string' ? (

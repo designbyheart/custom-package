@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import {
   Text,
   View,
@@ -12,7 +12,7 @@ import { ImageColorPicker } from '../../components'
 import { CheckmarkBadge } from '../../components/connection-details/checkmark-badge'
 
 // TODO: Fix the <any, void> to be the correct types for props and state
-class ModalHeader extends React.Component<any, void> {
+class ModalHeader extends PureComponent<any, void> {
   render() {
     const { useColorPicker = false } = this.props
 
@@ -54,9 +54,9 @@ export { ModalHeader }
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    position: 'relative',
     flexDirection: 'column',
     width: '100%',
+    height: 112,
     padding: 17,
     shadowColor: '#000000',
     shadowOpacity: 0.1,
@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
       height: 0,
       width: 0,
     },
-    zIndex: 200,
     elevation: Platform.OS === 'android' ? 8 : 0,
   },
   row: {

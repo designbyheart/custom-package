@@ -1,6 +1,6 @@
 // @flow
 import 'react-native'
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { BackHandler, StatusBar, ToastAndroid } from 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'

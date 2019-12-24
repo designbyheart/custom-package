@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react'
-import { Component } from 'react'
+import { PureComponent } from 'react'
 import { StatusBar, Platform } from 'react-native'
 import hoistNonReactStatic from 'hoist-non-react-statics'
 import memoize from 'lodash.memoize'
@@ -30,7 +30,7 @@ export function withStatusBar(
   // React Element to wrap it inside withStatusBar
   return function(WrappedComponent: any) {
     // "any" is a legit type here as well, with same explanation as above
-    class WithStatusBar extends Component<any, void> {
+    class WithStatusBar extends PureComponent<any, void> {
       // Once we have migrated to 0.59, then we would rewrite this HOC with hooks
       // that should remove class property, and different lifecycle events
 

@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { View } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -45,10 +45,7 @@ export const remoteMessageParser = (message: RemoteMessage) => {
   }
 }
 
-export class PushNotification extends PureComponent<
-  PushNotificationProps,
-  void
-> {
+export class PushNotification extends Component<PushNotificationProps, void> {
   notificationListener = null
   initialNotificationListener = null
   refreshTokenListener = null

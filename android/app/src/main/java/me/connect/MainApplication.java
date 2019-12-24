@@ -3,6 +3,7 @@ package me.connect;
 import android.app.Application;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.facebook.react.ReactApplication;
+import com.swmansion.rnscreens.RNScreensPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.azendoo.reactnativesnackbar.SnackbarPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -56,6 +57,7 @@ public class MainApplication extends Application implements ShareApplication, Re
       return Arrays.<ReactPackage>asList(
         new RNDeviceInfo(),
         new MainReactPackage(),
+            new RNScreensPackage(),
             new ReanimatedPackage(),
             new SnackbarPackage(),
             new RNGestureHandlerPackage(),

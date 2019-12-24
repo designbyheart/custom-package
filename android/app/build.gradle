@@ -203,6 +203,7 @@ android.applicationVariants.all { variant ->
 
 
 dependencies {
+    implementation project(':react-native-screens')
     implementation project(':react-native-reanimated')
     implementation project(':react-native-device-info')
     // Watch for these: fresco:1.10.0 and animated-gif:1.10.0 when upgrading RN

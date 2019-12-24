@@ -223,7 +223,7 @@ export function* cloudBackupSaga(
     yield put(setWalletHandle(walletHandle))
 
     // NOTE: wait/timer for steps in pushNotifaction to complete
-    const { cloudBackupSuccess,cloudBackupError, timeout } = yield race({
+    const { cloudBackupSuccess, cloudBackupError, timeout } = yield race({
       cloudBackupSuccess: take(CLOUD_BACKUP_SUCCESS),
       cloudBackupError: take(CLOUD_BACKUP_FAILURE),
       timeout: call(delay, 60000),
@@ -620,14 +620,11 @@ export function* hydrateLastSuccessfulCloudBackupSaga(): Generator<*, *, *> {
       safeGet,
       LAST_SUCCESSFUL_CLOUD_BACKUP
     )
-    let hasCloudBackupError = yield call(
-      safeGet,
-      WALLET_BACKUP_FAILURE
-    )
+    let hasCloudBackupError = yield call(safeGet, WALLET_BACKUP_FAILURE)
     if (lastSuccessfulCloudBackup != null) {
       yield put(hydrateCloudBackup(lastSuccessfulCloudBackup))
     }
-    if(hasCloudBackupError){
+    if (hasCloudBackupError) {
       yield put(cloudBackupFailure(WALLET_BACKUP_FAILURE))
     }
   } catch (e) {
@@ -826,7 +823,6 @@ export const cloudBackupFailure = (cloudBackupError: string) => ({
       : CLOUD_BACKUP_FAILURE,
   cloudBackupError,
 })
-
 
 export const viewedWalletError = (viewedWalletError: boolean) => ({
   type: VIEWED_WALLET_ERROR,
@@ -1052,7 +1048,10 @@ export default function backupReducer(
     case PREPARE_BACKUP_FAILURE:
       return {
         ...state,
-        cloudBackupError: state.cloudBackupError === WALLET_BACKUP_FAILURE ? WALLET_BACKUP_FAILURE : null ,
+        cloudBackupError:
+          state.cloudBackupError === WALLET_BACKUP_FAILURE
+            ? WALLET_BACKUP_FAILURE
+            : null,
         prepareBackupStatus: action.status,
       }
     case SET_WALLET_HANDLE:
@@ -1064,7 +1063,7 @@ export default function backupReducer(
       return {
         ...state,
         hasViewedWalletError: action.viewedWalletError,
-      }  
+      }
     default:
       return state
   }

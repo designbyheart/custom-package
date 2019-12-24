@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { StyleSheet, InteractionManager } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -20,7 +20,7 @@ import { OFFSET_1X, OFFSET_2X, OFFSET_4X, color } from '../common/styles'
 import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
-export class LockSetupSuccess extends PureComponent<
+export class LockSetupSuccess extends Component<
   LockSetupSuccessProps,
   LockSetupSuccessState
 > {

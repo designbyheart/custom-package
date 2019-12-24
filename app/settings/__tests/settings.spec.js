@@ -1,7 +1,7 @@
 // @flow
 import 'react-native'
 import { Platform } from 'react-native'
-import React from 'react'
+import React, { PureComponent } from 'react'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import SettingsStack, { Settings } from '../settings'
@@ -50,6 +50,10 @@ describe('user settings screen', () => {
       hasViewedWalletError: false,
       cloudBackupStart: jest.fn(),
       viewedWalletError: jest.fn(),
+      notificationCardSwipedUp: jest.fn(),
+      shouldShowNotification: false,
+      connections: store.getState().connections,
+      history: store.getState().history,
     }
   }
 

@@ -1,16 +1,11 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { Text, View, ScrollView, StyleSheet } from 'react-native'
 import { Border } from '../../components/connection-details/border'
 import { Avatar } from '../../components/avatar/avatar'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
-class ModalContent extends React.Component<any, {}> {
-  constructor(props: any) {
-    super(props)
-    this.state = {}
-  }
-
+class ModalContent extends PureComponent<any, {}> {
   render() {
     return (
       <View style={styles.container}>

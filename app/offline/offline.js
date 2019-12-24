@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { View, StyleSheet, NetInfo } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -11,7 +11,7 @@ import { getOfflineStatus } from '../store/store-selector'
 import { Container } from '../components'
 import VectorIcon from '../components/vector-icon/vector-icon'
 
-export class Offline extends PureComponent<OfflineProps> {
+export class Offline extends Component<OfflineProps> {
   connectivityChecker: IntervalID
 
   componentDidMount() {

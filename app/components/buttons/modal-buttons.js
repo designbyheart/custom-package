@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import {
   Text,
   View,
@@ -16,7 +16,7 @@ import { lightGray, whiteSolid } from '../../common/styles/constant'
 import { CustomText } from '../../components'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
-class ModalButtons extends React.Component<any, {}> {
+class ModalButtons extends PureComponent<any, {}> {
   constructor(props: any) {
     super(props)
   }

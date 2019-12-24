@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { RNCamera } from 'react-native-camera'
@@ -108,7 +108,7 @@ export function convertQrCodeToInvitation(qrCode: QrCode) {
   }
 }
 
-export class QRCodeScannerScreen extends PureComponent<
+export class QRCodeScannerScreen extends Component<
   QRCodeScannerScreenProps,
   QRCodeScannerScreenState
 > {

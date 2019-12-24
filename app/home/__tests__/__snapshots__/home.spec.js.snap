@@ -4,245 +4,253 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
 <View
   style={
     Object {
-      "backgroundColor": "#fff",
-      "height": "100%",
-      "width": "100%",
+      "flex": 1,
     }
   }
-  testID="home-container"
 >
   <View
-    accessibilityIgnoresInvertColors={true}
     style={
       Object {
+        "backgroundColor": "#fff",
         "height": "100%",
         "width": "100%",
       }
     }
+    testID="home-container"
   >
-    <Image
-      source={1}
-      style={
-        Array [
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          Object {
-            "height": "100%",
-            "width": "100%",
-          },
-          undefined,
-        ]
-      }
-    />
     <View
-      center={true}
+      accessibilityIgnoresInvertColors={true}
       style={
         Object {
-          "alignItems": "center",
-          "flex": 1,
-          "justifyContent": "center",
-          "marginTop": 64,
+          "height": "100%",
+          "width": "100%",
         }
       }
     >
+      <Image
+        source={1}
+        style={
+          Array [
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+            Object {
+              "height": "100%",
+              "width": "100%",
+            },
+            undefined,
+          ]
+        }
+      />
       <View
         center={true}
         style={
           Object {
             "alignItems": "center",
+            "flex": 1,
             "justifyContent": "center",
+            "marginTop": 64,
           }
         }
       >
-        <Image
-          resizeMode="contain"
-          source={1}
+        <View
+          center={true}
           style={
             Object {
-              "height": 90,
+              "alignItems": "center",
+              "justifyContent": "center",
             }
           }
-        />
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
-              Object {
-                "fontSize": 23,
-              },
-              Object {
-                "fontFamily": "Lato",
-              },
-              Object {
-                "backgroundColor": "#333333",
-                "color": "#ffffff",
-              },
-              Object {
-                "fontWeight": "bold",
-              },
-              null,
-              Object {
-                "backgroundColor": "transparent",
-              },
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              Object {
-                "color": "#EB9B2D",
-                "marginVertical": 5,
-                "textAlign": "center",
-              },
-            ]
-          }
         >
-          You now have a digital wallet!
-        </Text>
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
+          <Image
+            resizeMode="contain"
+            source={1}
+            style={
               Object {
-                "fontSize": 17,
-              },
-              Object {
-                "fontFamily": "Lato",
-              },
-              Object {
-                "backgroundColor": "#333333",
-                "color": "#ffffff",
-              },
-              Object {
-                "fontWeight": "bold",
-              },
-              null,
-              Object {
-                "backgroundColor": "transparent",
-              },
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              Object {
-                "color": "#505050",
-                "marginVertical": 5,
-              },
-            ]
-          }
-        >
-          Want to see how it works?
-        </Text>
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
-              Object {
-                "fontSize": 15,
-              },
-              Object {
-                "fontFamily": "Lato",
-              },
-              Object {
-                "backgroundColor": "#333333",
-                "color": "#ffffff",
-              },
-              null,
-              null,
-              Object {
-                "backgroundColor": "transparent",
-              },
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              Object {
-                "color": "#505050",
-                "marginHorizontal": "5%",
-                "marginVertical": 5,
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          We have setup an optional tutorial site for you to go through using this Connect.Me app. To start this process, go to try.connect.me in a desktop browser and click Start Tutorial.
-        </Text>
+                "height": 90,
+              }
+            }
+          />
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "fontSize": 23,
+                },
+                Object {
+                  "fontFamily": "Lato",
+                },
+                Object {
+                  "backgroundColor": "#333333",
+                  "color": "#ffffff",
+                },
+                Object {
+                  "fontWeight": "bold",
+                },
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Object {
+                  "color": "#EB9B2D",
+                  "marginVertical": 5,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            You now have a digital wallet!
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "fontSize": 17,
+                },
+                Object {
+                  "fontFamily": "Lato",
+                },
+                Object {
+                  "backgroundColor": "#333333",
+                  "color": "#ffffff",
+                },
+                Object {
+                  "fontWeight": "bold",
+                },
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Object {
+                  "color": "#505050",
+                  "marginVertical": 5,
+                },
+              ]
+            }
+          >
+            Want to see how it works?
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "fontSize": 15,
+                },
+                Object {
+                  "fontFamily": "Lato",
+                },
+                Object {
+                  "backgroundColor": "#333333",
+                  "color": "#ffffff",
+                },
+                null,
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Object {
+                  "color": "#505050",
+                  "marginHorizontal": "5%",
+                  "marginVertical": 5,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            We have setup an optional tutorial site for you to go through using this Connect.Me app. To start this process, go to try.connect.me in a desktop browser and click Start Tutorial.
+          </Text>
+        </View>
       </View>
     </View>
-  </View>
-  <RCTScrollView
-    contentContainerStyle={
-      Object {
-        "paddingBottom": 170,
-      }
-    }
-    data={Array []}
-    disableVirtualization={false}
-    getItem={[Function]}
-    getItemCount={[Function]}
-    horizontal={false}
-    initialNumToRender={10}
-    keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
-    numColumns={1}
-    onContentSizeChange={[Function]}
-    onEndReachedThreshold={2}
-    onLayout={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    renderItem={[Function]}
-    scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
-    style={
-      Object {
-        "backgroundColor": "#fff",
-        "height": "100%",
-        "paddingTop": 72,
-        "width": "100%",
-      }
-    }
-    updateCellsBatchingPeriod={50}
-    viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
-  >
-    <View />
-  </RCTScrollView>
-  <BlurView
-    blurAmount={8}
-    blurType="light"
-    style={
-      Array [
+    <RCTScrollView
+      contentContainerStyle={
         Object {
-          "backgroundColor": "transparent",
-        },
+          "paddingBottom": 170,
+        }
+      }
+      data={Array []}
+      disableVirtualization={false}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={false}
+      initialNumToRender={10}
+      keyExtractor={[Function]}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={2}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      style={
         Object {
-          "bottom": 0,
-          "height": 59,
-          "left": 0,
-          "position": "absolute",
+          "backgroundColor": "#fff",
+          "height": "100%",
+          "paddingTop": 72,
           "width": "100%",
-        },
-      ]
-    }
-  />
+        }
+      }
+      updateCellsBatchingPeriod={50}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
+    >
+      <View />
+    </RCTScrollView>
+    <BlurView
+      blurAmount={8}
+      blurType="light"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "bottom": 0,
+            "height": 59,
+            "left": 0,
+            "position": "absolute",
+            "width": "100%",
+          },
+        ]
+      }
+    />
+  </View>
 </View>
 `;
 
@@ -250,245 +258,253 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
 <View
   style={
     Object {
-      "backgroundColor": "#fff",
-      "height": "100%",
-      "width": "100%",
+      "flex": 1,
     }
   }
-  testID="home-container"
 >
   <View
-    accessibilityIgnoresInvertColors={true}
     style={
       Object {
+        "backgroundColor": "#fff",
         "height": "100%",
         "width": "100%",
       }
     }
+    testID="home-container"
   >
-    <Image
-      source={1}
-      style={
-        Array [
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          Object {
-            "height": "100%",
-            "width": "100%",
-          },
-          undefined,
-        ]
-      }
-    />
     <View
-      center={true}
+      accessibilityIgnoresInvertColors={true}
       style={
         Object {
-          "alignItems": "center",
-          "flex": 1,
-          "justifyContent": "center",
-          "marginTop": 64,
+          "height": "100%",
+          "width": "100%",
         }
       }
     >
+      <Image
+        source={1}
+        style={
+          Array [
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+            Object {
+              "height": "100%",
+              "width": "100%",
+            },
+            undefined,
+          ]
+        }
+      />
       <View
         center={true}
         style={
           Object {
             "alignItems": "center",
+            "flex": 1,
             "justifyContent": "center",
+            "marginTop": 64,
           }
         }
       >
-        <Image
-          resizeMode="contain"
-          source={1}
+        <View
+          center={true}
           style={
             Object {
-              "height": 90,
+              "alignItems": "center",
+              "justifyContent": "center",
             }
           }
-        />
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
-              Object {
-                "fontSize": 23,
-              },
-              Object {
-                "fontFamily": "Lato",
-              },
-              Object {
-                "backgroundColor": "#333333",
-                "color": "#ffffff",
-              },
-              Object {
-                "fontWeight": "bold",
-              },
-              null,
-              Object {
-                "backgroundColor": "transparent",
-              },
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              Object {
-                "color": "#EB9B2D",
-                "marginVertical": 5,
-                "textAlign": "center",
-              },
-            ]
-          }
         >
-          You now have a digital wallet!
-        </Text>
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
+          <Image
+            resizeMode="contain"
+            source={1}
+            style={
               Object {
-                "fontSize": 17,
-              },
-              Object {
-                "fontFamily": "Lato",
-              },
-              Object {
-                "backgroundColor": "#333333",
-                "color": "#ffffff",
-              },
-              Object {
-                "fontWeight": "bold",
-              },
-              null,
-              Object {
-                "backgroundColor": "transparent",
-              },
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              Object {
-                "color": "#505050",
-                "marginVertical": 5,
-              },
-            ]
-          }
-        >
-          Want to see how it works?
-        </Text>
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
-              Object {
-                "fontSize": 15,
-              },
-              Object {
-                "fontFamily": "Lato",
-              },
-              Object {
-                "backgroundColor": "#333333",
-                "color": "#ffffff",
-              },
-              null,
-              null,
-              Object {
-                "backgroundColor": "transparent",
-              },
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              null,
-              Object {
-                "color": "#505050",
-                "marginHorizontal": "5%",
-                "marginVertical": 5,
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          We have setup an optional tutorial site for you to go through using this Connect.Me app. To start this process, go to try.connect.me in a desktop browser and click Start Tutorial.
-        </Text>
+                "height": 90,
+              }
+            }
+          />
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "fontSize": 23,
+                },
+                Object {
+                  "fontFamily": "Lato",
+                },
+                Object {
+                  "backgroundColor": "#333333",
+                  "color": "#ffffff",
+                },
+                Object {
+                  "fontWeight": "bold",
+                },
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Object {
+                  "color": "#EB9B2D",
+                  "marginVertical": 5,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            You now have a digital wallet!
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "fontSize": 17,
+                },
+                Object {
+                  "fontFamily": "Lato",
+                },
+                Object {
+                  "backgroundColor": "#333333",
+                  "color": "#ffffff",
+                },
+                Object {
+                  "fontWeight": "bold",
+                },
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Object {
+                  "color": "#505050",
+                  "marginVertical": 5,
+                },
+              ]
+            }
+          >
+            Want to see how it works?
+          </Text>
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "fontSize": 15,
+                },
+                Object {
+                  "fontFamily": "Lato",
+                },
+                Object {
+                  "backgroundColor": "#333333",
+                  "color": "#ffffff",
+                },
+                null,
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                },
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                Object {
+                  "color": "#505050",
+                  "marginHorizontal": "5%",
+                  "marginVertical": 5,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            We have setup an optional tutorial site for you to go through using this Connect.Me app. To start this process, go to try.connect.me in a desktop browser and click Start Tutorial.
+          </Text>
+        </View>
       </View>
     </View>
-  </View>
-  <RCTScrollView
-    contentContainerStyle={
-      Object {
-        "paddingBottom": 170,
-      }
-    }
-    data={Array []}
-    disableVirtualization={false}
-    getItem={[Function]}
-    getItemCount={[Function]}
-    horizontal={false}
-    initialNumToRender={10}
-    keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
-    numColumns={1}
-    onContentSizeChange={[Function]}
-    onEndReachedThreshold={2}
-    onLayout={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    renderItem={[Function]}
-    scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
-    style={
-      Object {
-        "backgroundColor": "#fff",
-        "height": "100%",
-        "paddingTop": 72,
-        "width": "100%",
-      }
-    }
-    updateCellsBatchingPeriod={50}
-    viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
-  >
-    <View />
-  </RCTScrollView>
-  <BlurView
-    blurAmount={8}
-    blurType="light"
-    style={
-      Array [
+    <RCTScrollView
+      contentContainerStyle={
         Object {
-          "backgroundColor": "transparent",
-        },
+          "paddingBottom": 170,
+        }
+      }
+      data={Array []}
+      disableVirtualization={false}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={false}
+      initialNumToRender={10}
+      keyExtractor={[Function]}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={2}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      style={
         Object {
-          "bottom": 0,
-          "height": 59,
-          "left": 0,
-          "position": "absolute",
+          "backgroundColor": "#fff",
+          "height": "100%",
+          "paddingTop": 72,
           "width": "100%",
-        },
-      ]
-    }
-  />
+        }
+      }
+      updateCellsBatchingPeriod={50}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
+    >
+      <View />
+    </RCTScrollView>
+    <BlurView
+      blurAmount={8}
+      blurType="light"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "bottom": 0,
+            "height": 59,
+            "left": 0,
+            "position": "absolute",
+            "width": "100%",
+          },
+        ]
+      }
+    />
+  </View>
 </View>
 `;
 
@@ -496,69 +512,77 @@ exports[`<DashboardScreen /> should render Home and show loader 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "#fff",
-      "height": "100%",
-      "width": "100%",
+      "flex": 1,
     }
   }
-  testID="home-container"
 >
-  <RCTScrollView
-    contentContainerStyle={
-      Object {
-        "paddingBottom": 170,
-      }
-    }
-    data={Array []}
-    disableVirtualization={false}
-    getItem={[Function]}
-    getItemCount={[Function]}
-    horizontal={false}
-    initialNumToRender={10}
-    keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
-    numColumns={1}
-    onContentSizeChange={[Function]}
-    onEndReachedThreshold={2}
-    onLayout={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    renderItem={[Function]}
-    scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
+  <View
     style={
       Object {
         "backgroundColor": "#fff",
         "height": "100%",
-        "paddingTop": 72,
         "width": "100%",
       }
     }
-    updateCellsBatchingPeriod={50}
-    viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
+    testID="home-container"
   >
-    <View />
-  </RCTScrollView>
-  <BlurView
-    blurAmount={8}
-    blurType="light"
-    style={
-      Array [
+    <RCTScrollView
+      contentContainerStyle={
         Object {
-          "backgroundColor": "transparent",
-        },
+          "paddingBottom": 170,
+        }
+      }
+      data={Array []}
+      disableVirtualization={false}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={false}
+      initialNumToRender={10}
+      keyExtractor={[Function]}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={2}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      style={
         Object {
-          "bottom": 0,
-          "height": 59,
-          "left": 0,
-          "position": "absolute",
+          "backgroundColor": "#fff",
+          "height": "100%",
+          "paddingTop": 72,
           "width": "100%",
-        },
-      ]
-    }
-  />
+        }
+      }
+      updateCellsBatchingPeriod={50}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
+    >
+      <View />
+    </RCTScrollView>
+    <BlurView
+      blurAmount={8}
+      blurType="light"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "bottom": 0,
+            "height": 59,
+            "left": 0,
+            "position": "absolute",
+            "width": "100%",
+          },
+        ]
+      }
+    />
+  </View>
 </View>
 `;

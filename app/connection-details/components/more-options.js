@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { Component } from 'react'
 import SvgCustomIcon from '../../components/svg-custom-icon'
 import {
   View,
@@ -18,7 +18,7 @@ import type { Store } from '../../store/type-store'
 
 const defaultAvatar = require('../../images/UserAvatar.png')
 // TODO: Fix the <any, void> to be the correct types for props and state
-class MoreOptions extends React.Component<any, void> {
+class MoreOptions extends Component<any, void> {
   onDeleteConnection = senderDID => {
     this.props.deleteConnectionAction(senderDID)
     this.props.navigation.goBack(null)

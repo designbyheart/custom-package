@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
   View,
   Text,
@@ -74,7 +74,7 @@ import { safeSet, secureSet, walletSet } from '../services/storage'
 const { height } = Dimensions.get('window')
 
 // TODO: this is copy and pasted questionStyles from the question modal, should refactor once generic modal is made
-export class CloudBackup extends PureComponent<CloudBackupScreenProps, void> {
+export class CloudBackup extends Component<CloudBackupScreenProps, void> {
   _translateY = new Animated.Value(0)
 
   componentDidMount = () => {
@@ -172,7 +172,10 @@ export class CloudBackup extends PureComponent<CloudBackupScreenProps, void> {
     } else if (cloudBackupStatus === CLOUD_BACKUP_COMPLETE) {
       this.props.connectionHistoryBackedUp()
       return <Success navigateBackToSettings={this.navigateBackToSettings} />
-    } else if (cloudBackupStatus === CLOUD_BACKUP_FAILURE || cloudBackupStatus === WALLET_BACKUP_FAILURE) {
+    } else if (
+      cloudBackupStatus === CLOUD_BACKUP_FAILURE ||
+      cloudBackupStatus === WALLET_BACKUP_FAILURE
+    ) {
       return <Error navigateBackToSettings={this.navigateBackToSettings} />
     } else {
       return this.mainBody()

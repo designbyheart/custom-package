@@ -1,40 +1,29 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
-  Text,
   View,
-  Button,
-  Image,
-  ScrollView,
+  FlatList,
   Dimensions,
   Animated,
-  TouchableOpacity,
   StyleSheet,
   Platform,
-  SafeAreaView,
 } from 'react-native'
 import { ConnectionDetailsNav } from './components/connection-details-nav'
 import { CredentialCard } from '../components/connection-details/credential-card'
 import { ConnectionCard } from '../components/connection-details/connection-card'
 import { NewMessageBreakLine } from '../components/connection-details/new-message-break-line'
 import MoreOptions from './components/more-options'
-import { ConnectionRequestCard } from '../components/connection-details/connection-request-card'
 import { ConnectionPending } from '../components/connection-details/connection-pending'
-import Modal from './components/modal'
 import { updateStatusBarTheme } from '../../app/store/connections-store'
 import { newConnectionSeen } from '../../app/connection-history/connection-history-store'
 import { BlurView } from 'react-native-blur'
 import Snackbar from 'react-native-snackbar'
-
 import { measurements } from '../../app/common/styles/measurements'
-
 import { connect } from 'react-redux'
 import moment from 'moment'
-import groupBy from 'lodash.groupby'
 import { bindActionCreators } from 'redux'
 import { QuestionCard } from '../components/connection-details/question-card'
 import { QuestionViewCard } from '../components/connection-details/question-view-card'
-
 import type { Store } from '../store/type-store'
 import type {
   ConnectionHistoryProps,
@@ -42,31 +31,26 @@ import type {
   ConnectionHistoryEvent,
   ConnectionHistoryNavigation,
 } from './type-connection-details'
-
 import { CONNECTION_ALREADY_EXIST } from './type-connection-details'
 import { getConnection, getConnectionTheme } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { isIphoneX, isIphoneXR } from '../common/styles/constant'
 
-let ScreenHeight = Dimensions.get('window').height
 let ScreenWidth = Dimensions.get('window').width
 
-class ConnectionDetails extends PureComponent<
+class ConnectionDetails extends Component<
   ConnectionHistoryProps,
   ConnectionHistoryState
 > {
-  scrollView: any = {}
-
   state = {
     hideMoreOptions: true,
     moveMoreOptions: new Animated.Value(ScreenWidth),
-    fadeInOut: new Animated.Value(0),
-    moveModal: new Animated.Value(ScreenHeight),
-    moveModalHeight: new Animated.Value(ScreenHeight),
-    positionValue: new Animated.Value(0),
-    modalDataOrder: 0,
-    disableTaps: false,
     newMessageLine: false,
+  }
+
+  componentDidMount() {
+    this.props.updateStatusBarTheme(this.props.activeConnectionThemePrimary)
+    this.showSnackBar()
   }
 
   componentDidUpdate(prevProps: ConnectionHistoryProps) {
@@ -78,23 +62,144 @@ class ConnectionDetails extends PureComponent<
       this.showSnackBar()
     }
 
-    let currentHistArr: Array<any> = Object.values(this.props.connectionHistory)
-    let previousHistArr: Array<any> = Object.values(prevProps.connectionHistory)
-    let pendingCell = false
+    // let currentHistArr: Array<any> = Object.values(this.props.connectionHistory)
+    // let previousHistArr: Array<any> = Object.values(prevProps.connectionHistory)
+    // let pendingCell = false
 
-    currentHistArr.forEach(function(value, index) {
-      value.forEach(function(value, index) {
-        if (value.action === 'PENDING') {
-          pendingCell = true
-        }
+    // currentHistArr.forEach(function(value, index) {
+    //   if (value.action === 'PENDING') {
+    //     pendingCell = true
+    //   }
+    // })
+    // if (!pendingCell) {
+    //   if (currentHistArr[0].length > previousHistArr[0].length) {
+    //     this.setState({
+    //       newMessageLine: true,
+    //     })
+    //   }
+    // }
+  }
+
+  keyExtractor = (item: Object) => item.timestamp
+
+  renderItem = ({ item }: { item: Object }) => {
+    const formattedDate = moment(item.timestamp)
+      .format('DD MMM YYYY')
+      .toUpperCase()
+    const formattedTime =
+      formattedDate + ' | ' + moment(item.timestamp).format('h:mm A')
+
+    if (item.action === 'CONNECTED') {
+      return (
+        <CredentialCard
+          messageDate={formattedTime}
+          messageTitle={'Added Connection'}
+          messageContent={'You added ' + item.name + ' as a Connection'}
+          showButtons={false}
+        />
+      )
+    } else if (item.action === 'SHARED') {
+      return (
+        <ConnectionCard
+          messageDate={formattedTime}
+          headerText={item.name}
+          infoType={'SHARED'}
+          infoDate={formattedTime}
+          noOfAttributes={item.data.length}
+          buttonText={'VIEW REQUEST DETAILS'}
+          showBadge={false}
+          colorBackground={this.props.activeConnectionThemePrimary}
+          uid={item.originalPayload.uid}
+          proof={true}
+          navigation={this.props.navigation}
+          claimMap={this.props.claimMap}
+          data={item.data}
+          type={item.action}
+        />
+      )
+    } else if (item.action === 'PROOF RECEIVED') {
+      let attributesText = ''
+      item.data.map((dataItem, attrIndex) => {
+        attributesText +=
+          dataItem.label + (attrIndex < item.data.length - 1 ? ', ' : '')
       })
-    })
-    if (!pendingCell) {
-      if (currentHistArr[0].length > previousHistArr[0].length) {
-        this.setState({
-          newMessageLine: true,
-        })
-      }
+      return (
+        <CredentialCard
+          messageDate={formattedTime}
+          uid={item.originalPayload.payloadInfo.uid}
+          messageTitle={
+            item.originalPayload.payload.requester.name +
+            ' wants you to share the following:'
+          }
+          messageContent={attributesText}
+          showButtons={true}
+          navigation={this.props.navigation}
+          proof={true}
+          colorBackground={this.props.activeConnectionThemePrimary}
+        />
+      )
+    } else if (item.action === 'PENDING') {
+      return (
+        <ConnectionPending
+          date={formattedTime}
+          title={item.name}
+          content={'ISSUING - PLEASE WAIT'}
+        />
+      )
+    } else if (item.action === 'RECEIVED') {
+      return (
+        <ConnectionCard
+          messageDate={formattedTime}
+          headerText={item.name}
+          infoType={'ACCEPTED CREDENTIAL'}
+          infoDate={formattedDate}
+          noOfAttributes={item.data.length}
+          buttonText={'VIEW CREDENTIAL'}
+          showBadge={true}
+          colorBackground={this.props.activeConnectionThemePrimary}
+          navigation={this.props.navigation}
+          received={true}
+          data={item}
+          imageUrl={this.props.navigation.state.params.image}
+          institutialName={this.props.navigation.state.params.senderName}
+          colorBackground={this.props.activeConnectionThemePrimary}
+          secondColorBackground={this.props.activeConnectionThemeSecondary}
+        />
+      )
+    } else if (item.action === 'QUESTION_RECEIVED') {
+      return (
+        <QuestionCard
+          messageDate={formattedTime}
+          uid={item.data.uid}
+          messageTitle={item.data.messageTitle}
+          messageContent={item.data.messageText}
+          showButtons={true}
+          navigation={this.props.navigation}
+          colorBackground={this.props.activeConnectionThemePrimary}
+        />
+      )
+    } else if (item.action === 'UPDATE_QUESTION_ANSWER') {
+      return (
+        <QuestionViewCard
+          messageDate={formattedTime}
+          uid={item.data.uid}
+          requestStatus={'YOU ANSWERED'}
+          requestAction={'"' + item.data.answer.text + '"'}
+          navigation={this.props.navigation}
+        />
+      )
+    } else if (item.action === 'CLAIM OFFER RECEIVED') {
+      return (
+        <CredentialCard
+          messageDate={formattedTime}
+          messageTitle={'New Credential Offer'}
+          messageContent={item.name}
+          showButtons={true}
+          uid={item.originalPayload.payloadInfo.uid}
+          navigation={this.props.navigation}
+          colorBackground={this.props.activeConnectionThemePrimary}
+        />
+      )
     }
   }
 
@@ -108,18 +213,6 @@ class ConnectionDetails extends PureComponent<
       })
     }
   }
-  componentDidMount() {
-    this.props.updateStatusBarTheme(this.props.activeConnectionThemePrimary)
-    this.showSnackBar()
-  }
-
-  updatePosition = value => {
-    Animated.timing(this.state.positionValue, {
-      toValue: value,
-      duration: 1,
-      useNativeDriver: true,
-    }).start()
-  }
 
   moreOptionsClose = () => {
     Animated.timing(this.state.moveMoreOptions, {
@@ -130,6 +223,7 @@ class ConnectionDetails extends PureComponent<
       this.setState({ hideMoreOptions: true })
     })
   }
+
   moreOptionsOpen = () => {
     this.setState(
       { hideMoreOptions: false },
@@ -142,8 +236,6 @@ class ConnectionDetails extends PureComponent<
   }
 
   render() {
-    let arrayUI = []
-
     if (this.props.navigation.state) {
       const {
         senderName,
@@ -161,225 +253,10 @@ class ConnectionDetails extends PureComponent<
         ? { uri: image }
         : require('../images/cb_evernym.png')
 
-      const historySenderDIDs = Object.keys(connectionHistory)
-      const historyList = historySenderDIDs.map((sdid, didIndex) => {
-        //items in history list
-        const historyItems = connectionHistory[sdid].map(
-          (histForDid, historyIndex) => {
-            if (histForDid.action === 'CONNECTED') {
-              const connected = (
-                <CredentialCard
-                  key={historyIndex}
-                  messageDate={
-                    moment(histForDid.timestamp)
-                      .format('DD MMM YYYY')
-                      .toUpperCase() +
-                    ' | ' +
-                    moment(histForDid.timestamp).format('h:mm A')
-                  }
-                  messageTitle={'Added Connection'}
-                  order={historyIndex}
-                  messageContent={
-                    'You added ' + histForDid.name + ' as a Connection'
-                  }
-                  showButtons={false}
-                />
-              )
-              arrayUI.push(connected)
-            }
-
-            if (histForDid.action === 'SHARED') {
-              const shared = (
-                <ConnectionCard
-                  key={historyIndex}
-                  messageDate={
-                    moment(histForDid.timestamp)
-                      .format('DD MMM YYYY')
-                      .toUpperCase() +
-                    ' | ' +
-                    moment(histForDid.timestamp).format('h:mm A')
-                  }
-                  headerText={histForDid.name}
-                  infoType={'SHARED'}
-                  infoDate={
-                    moment(histForDid.timestamp)
-                      .format('DD MMM YYYY')
-                      .toUpperCase() +
-                    ' | ' +
-                    moment(histForDid.timestamp).format('h:mm A')
-                  }
-                  noOfAttributes={histForDid.data.length}
-                  buttonText={'VIEW REQUEST DETAILS'}
-                  showBadge={false}
-                  colorBackground={activeConnectionThemePrimary}
-                  uid={histForDid.originalPayload.uid}
-                  proof={true}
-                  navigation={this.props.navigation}
-                  claimMap={this.props.claimMap}
-                  data={histForDid.data}
-                  type={histForDid.action}
-                />
-              )
-              arrayUI.push(shared)
-            }
-            if (histForDid.action === 'PROOF RECEIVED') {
-              let attributesText = ''
-              histForDid.data.map((item, attrIndex) => {
-                attributesText +=
-                  item.label +
-                  (attrIndex < histForDid.data.length - 1 ? ', ' : '')
-              })
-              const proof = (
-                <CredentialCard
-                  key={historyIndex}
-                  messageDate={
-                    moment(histForDid.timestamp)
-                      .format('DD MMM YYYY')
-                      .toUpperCase() +
-                    ' | ' +
-                    moment(histForDid.timestamp).format('h:mm A')
-                  }
-                  uid={histForDid.originalPayload.payloadInfo.uid}
-                  messageTitle={
-                    histForDid.originalPayload.payload.requester.name +
-                    ' wants you to share the following:'
-                  }
-                  messageContent={attributesText}
-                  showButtons={true}
-                  navigation={this.props.navigation}
-                  proof={true}
-                  colorBackground={activeConnectionThemePrimary}
-                />
-              )
-              arrayUI.push(proof)
-            }
-
-            if (histForDid.action === 'PENDING') {
-              const pending = (
-                <ConnectionPending
-                  date={
-                    moment(histForDid.timestamp)
-                      .format('DD MMM YYYY')
-                      .toUpperCase() +
-                    ' | ' +
-                    moment(histForDid.timestamp).format('h:mm A')
-                  }
-                  key={historyIndex}
-                  title={histForDid.name}
-                  content={'ISSUING - PLEASE WAIT'}
-                />
-              )
-              arrayUI.push(pending)
-            }
-
-            if (histForDid.action === 'RECEIVED') {
-              const received = (
-                <ConnectionCard
-                  key={historyIndex}
-                  messageDate={
-                    moment(histForDid.timestamp)
-                      .format('DD MMM YYYY')
-                      .toUpperCase() +
-                    ' | ' +
-                    moment(histForDid.timestamp).format('h:mm A')
-                  }
-                  headerText={histForDid.name}
-                  infoType={'ACCEPTED CREDENTIAL'}
-                  infoDate={moment(histForDid.timestamp)
-                    .format('DD MMM YYYY')
-                    .toUpperCase()}
-                  noOfAttributes={histForDid.data.length}
-                  buttonText={'VIEW CREDENTIAL'}
-                  showBadge={true}
-                  colorBackground={activeConnectionThemePrimary}
-                  navigation={this.props.navigation}
-                  received={true}
-                  data={histForDid}
-                  imageUrl={this.props.navigation.state.params.image}
-                  institutialName={
-                    this.props.navigation.state.params.senderName
-                  }
-                  colorBackground={activeConnectionThemePrimary}
-                  secondColorBackground={activeConnectionThemeSecondary}
-                  payTokenValue={histForDid.payTokenValue}
-                />
-              )
-              arrayUI.push(received)
-            }
-            if (histForDid.action === 'QUESTION_RECEIVED') {
-              const questionReceived = (
-                <QuestionCard
-                  key={historyIndex}
-                  messageDate={
-                    moment(histForDid.timestamp)
-                      .format('DD MMM YYYY')
-                      .toUpperCase() +
-                    ' | ' +
-                    moment(histForDid.timestamp).format('h:mm A')
-                  }
-                  uid={histForDid.data.uid}
-                  messageTitle={histForDid.data.messageTitle}
-                  order={historyIndex}
-                  messageContent={histForDid.data.messageText}
-                  showButtons={true}
-                  navigation={this.props.navigation}
-                  colorBackground={activeConnectionThemePrimary}
-                />
-              )
-              arrayUI.push(questionReceived)
-            }
-            if (histForDid.action === 'UPDATE_QUESTION_ANSWER') {
-              const updateQuestionAnswer = (
-                <QuestionViewCard
-                  key={historyIndex}
-                  order={historyIndex}
-                  messageDate={
-                    moment(histForDid.timestamp)
-                      .format('DD MMM YYYY')
-                      .toUpperCase() +
-                    ' | ' +
-                    moment(histForDid.timestamp).format('h:mm A')
-                  }
-                  uid={histForDid.data.uid}
-                  requestStatus={'YOU ANSWERED'}
-                  requestAction={'"' + histForDid.data.answer.text + '"'}
-                  //buttonText={'VIEW'}
-                  navigation={this.props.navigation}
-                />
-              )
-              arrayUI.push(updateQuestionAnswer)
-            }
-
-            if (histForDid.action === 'CLAIM OFFER RECEIVED') {
-              const claimOfferReceived = (
-                <CredentialCard
-                  key={historyIndex}
-                  messageDate={
-                    moment(histForDid.timestamp)
-                      .format('DD MMM YYYY')
-                      .toUpperCase() +
-                    ' | ' +
-                    moment(histForDid.timestamp).format('h:mm A')
-                  }
-                  messageTitle={'New Credential Offer'}
-                  order={historyIndex}
-                  messageContent={histForDid.name}
-                  showButtons={true}
-                  uid={histForDid.originalPayload.payloadInfo.uid}
-                  navigation={this.props.navigation}
-                  colorBackground={activeConnectionThemePrimary}
-                />
-              )
-              arrayUI.push(claimOfferReceived)
-            }
-          }
-        )
-
-        if (this.state.newMessageLine) {
-          const slackLine = <NewMessageBreakLine key={arrayUI.length} />
-          arrayUI.splice(1, 0, slackLine)
-        }
-      })
+      // if (this.state.newMessageLine) {
+      //   const slackLine = <NewMessageBreakLine key={arrayUI.length} />
+      //   arrayUI.splice(1, 0, slackLine)
+      // }
 
       return (
         <View style={styles.container}>
@@ -402,19 +279,13 @@ class ConnectionDetails extends PureComponent<
               />
             )}
           </Animated.View>
-
-          <ScrollView
-            style={styles.scrollView}
-            ref={ref => (this.scrollView = ref)}
-            onContentSizeChange={(contentWidth, contentHeight) => {
-              this.scrollView.scrollToEnd({ animated: true })
-            }}
-          >
-            <View style={styles.helperWrapper} />
-            <SafeAreaView style={styles.safeAreaContainer}>
-              {arrayUI.reverse()}
-            </SafeAreaView>
-          </ScrollView>
+          <FlatList
+            keyExtractor={this.keyExtractor}
+            style={styles.flatListContainer}
+            contentContainerStyle={styles.flatListInnerContainer}
+            data={connectionHistory}
+            renderItem={this.renderItem}
+          />
           {Platform.OS === 'ios' ? (
             <BlurView
               style={styles.absoluteTop}
@@ -449,12 +320,7 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
   return {
     activeConnectionThemePrimary: themeForLogo.primary,
     activeConnectionThemeSecondary: themeForLogo.secondary,
-    connectionHistory: groupBy(
-      connectionHistory.sort((a, b) => {
-        return new Date(b.timestamp) - new Date(a.timestamp)
-      }),
-      history => moment(history.timestamp).format('MMMM YYYY')
-    ),
+    connectionHistory: connectionHistory,
     claimMap: state.claim.claimMap,
   }
 }
@@ -467,14 +333,19 @@ export default withStatusBar()(
 )
 
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    flex: 1,
-  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  flatListContainer: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#fff',
+  },
+  flatListInnerContainer: {
+    paddingTop: isIphoneX || isIphoneXR ? 91 : 67,
   },
   moreOptionsWrapper: {
     position: 'absolute',
@@ -483,34 +354,11 @@ const styles = StyleSheet.create({
     elevation: 16,
     height: measurements.WINDOW_HEIGHT,
   },
-  helperWrapper: {
-    height: isIphoneX || isIphoneXR ? 91 : 67,
-  },
-  outerModalWrapper: {
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    width: ScreenWidth,
-    height: ScreenHeight,
-    position: 'absolute',
-    zIndex: 999,
-    elevation: 20,
-  },
-  innerModalWrapper: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   absoluteTop: {
     position: 'absolute',
     left: 0,
     top: 0,
     width: '100%',
     height: measurements.connectionDetailsBlurNav,
-  },
-  scrollView: {
-    flex: 1,
-    paddingTop: 5,
-    borderColor: 'red',
-    width: '100%',
-    backgroundColor: 'white',
   },
 })

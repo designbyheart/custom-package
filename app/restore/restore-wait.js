@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Image, StyleSheet, Dimensions } from 'react-native'
 import { Container, CustomView, CustomText, Icon } from '../components'
 import { darkGray } from '../common/styles/constant'
@@ -11,10 +11,7 @@ import type { Store } from '../store/type-store'
 import { RestoreStatus } from './type-restore'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
-export class RestoreWaitScreen extends PureComponent<
-  RestoreWaitScreenProps,
-  void
-> {
+export class RestoreWaitScreen extends Component<RestoreWaitScreenProps, void> {
   componentDidUpdate(prevProps: RestoreWaitScreenProps) {
     if (
       !this.props.restore.error &&

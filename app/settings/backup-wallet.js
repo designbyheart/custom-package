@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { View } from 'react-native'
 import { connect } from 'react-redux'
 import get from 'lodash.get'
@@ -8,7 +8,7 @@ import type { Store } from '../store/type-store'
 import type { BackupWalletProps } from '../wallet/type-wallet'
 import { genRecoveryPhraseRoute, settingsRoute } from '../common'
 
-class BackupWallet extends PureComponent<BackupWalletProps, void> {
+class BackupWallet extends Component<BackupWalletProps, void> {
   backupWallet = () => {
     const { navigation: { navigate, state, goBack } } = this.props
     // If no there is no route, then default to Settings

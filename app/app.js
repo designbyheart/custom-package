@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import {
   AppRegistry,
@@ -40,6 +40,7 @@ import {
   sendLogsRoute,
 } from './common'
 import { NavigationActions } from 'react-navigation'
+import { useScreens } from 'react-native-screens'
 import type { AppProps } from './type-app'
 import type {
   NavigationState,
@@ -50,6 +51,8 @@ import { exitAppAndroid } from './bridge/react-native-cxs/RNCxs'
 import AppStatus from './app-status/app-status'
 import RNShake from 'react-native-shake'
 import Offline from './offline/offline'
+
+useScreens()
 
 if (detox === 'yes') {
   // we are disabling flow check only because this line will come into effect
@@ -99,7 +102,7 @@ const backButtonConditionalRoutes = [
   lockAuthorizationHomeRoute,
 ]
 
-export class ConnectMeApp extends PureComponent<AppProps, void> {
+export class ConnectMeApp extends Component<AppProps, void> {
   currentRouteKey: string = ''
   currentRoute: string = ''
   navigatorRef = null

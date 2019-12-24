@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import React, { PureComponent } from 'react'
 import {
   Text,
   View,
@@ -12,7 +12,7 @@ import { questionRoute } from '../../common'
 let ScreenHeight = Dimensions.get('window').height
 
 // TODO: Fix the <any, void> to be the correct types for props and state
-class QuestionViewCard extends React.Component<any, {}> {
+class QuestionViewCard extends PureComponent<any, {}> {
   navigateToQuestionScreen = () => {
     this.props.navigation.navigate(questionRoute, { uid: this.props.uid })
   }

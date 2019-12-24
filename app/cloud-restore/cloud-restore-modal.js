@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import {
   View,
   Text,
@@ -67,10 +67,7 @@ import { safeSet } from '../services/storage'
 import { RestoreStatus } from '../restore/type-restore'
 
 const { height } = Dimensions.get('window')
-export class CloudRestoreModal extends PureComponent<
-  CloudBackupScreenProps,
-  void
-> {
+export class CloudRestoreModal extends Component<CloudBackupScreenProps, void> {
   _translateY = new Animated.Value(0)
   constructor(props: CloudBackupScreenProps) {
     super(props)

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Image, StyleSheet, Dimensions, Platform } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -29,7 +29,7 @@ import type { Store } from '../store/type-store'
 import { RestoreStatus } from './type-restore'
 import { customLogger } from '../store/custom-logger'
 
-export class RestoreStartScreen extends PureComponent<RestoreProps, void> {
+export class RestoreStartScreen extends Component<RestoreProps, void> {
   restoreBackup = () => {
     this.props.navigation.navigate(selectRestoreMethodRoute)
   }

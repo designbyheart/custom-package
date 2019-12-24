@@ -18,4 +18,6 @@ export type HomeProps = {
   environmentName: string,
   history: ConnectionHistoryStore,
   onNewConnectionSeen: (senderDid: string) => void,
+  shouldShowNotification: boolean,
+  notificationCardSwipedUp: Function,
 } & ReactNavigation
