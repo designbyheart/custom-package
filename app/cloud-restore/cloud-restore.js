@@ -64,7 +64,7 @@ export class CloudRestore extends Component<
     navigate(selectRestoreMethodRoute)
   }
   static navigationOptions = ({
-    navigation: { getParam },
+    navigation: { getParam, navigate },
   }: ReactNavigationBackup) => ({
     header: (
       <CustomHeader
@@ -75,7 +75,7 @@ export class CloudRestore extends Component<
         <CustomView style={[styles.headerSpacer]}>
           <Icon
             medium
-            onPress={() => getParam('navigateBack')}
+            onPress={getParam('navigateBack')}
             testID={VERIFY_BACK_TEST_ID}
             iconStyle={[styles.headerBackIcon]}
             src={backImage}
@@ -85,7 +85,7 @@ export class CloudRestore extends Component<
         <CustomView style={[styles.headerSpacer]}>
           <Icon
             medium
-            onPress={() => getParam('navigateBack')}
+            onPress={getParam('navigateBack')}
             testID={VERIFY_CLOSE_TEST_ID}
             iconStyle={[styles.headerIcon]}
             src={closeImage}
