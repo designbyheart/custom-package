@@ -64,7 +64,7 @@
     "react-native-keep-screen-on": "^1.2.0",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-mail": "^3.0.7",
-    "react-native-modal": "6.2.0",
+    "react-native-modal": "^11.5.3",
     "react-native-pbkdf2": "https://github.com/SolidStateGroup/react-native-pbkdf2",
     "react-native-permissions": "1.1.1",
     "react-native-randombytes": "3.5.3",

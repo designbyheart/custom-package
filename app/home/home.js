@@ -34,7 +34,7 @@ import { NotificationCard } from '../components/notification-card/notification-c
 
 export class DashboardScreen extends Component<HomeProps> {
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
-    header: <PrimaryHeader headline="Connections" />,
+    header: null,
   })
 
   componentDidUpdate(prevProps: HomeProps) {
@@ -94,6 +94,7 @@ export class DashboardScreen extends Component<HomeProps> {
       flatListContainer,
       flatListInnerContainer,
       blurContainer,
+      outerContainer,
     } = externalStyles
     const {
       environmentName,
@@ -190,7 +191,8 @@ export class DashboardScreen extends Component<HomeProps> {
       (newConnections[0] && newConnections[0].status === 'QUESTION_RECEIVED') ||
       (newConnections[0] && newConnections[0].status === 'CLAIM OFFER RECEIVED')
     return (
-      <View style={{ flex: 1 }}>
+      <View style={outerContainer}>
+        <PrimaryHeader headline="Connections" />
         {this.props.shouldShowNotification &&
           isCorrectStatus && (
             <NotificationCard
@@ -220,9 +222,6 @@ export class DashboardScreen extends Component<HomeProps> {
             data={newConnections}
             renderItem={this.renderItem}
           />
-          {Platform.OS === 'ios' ? (
-            <BlurView style={blurContainer} blurType="light" blurAmount={8} />
-          ) : null}
         </View>
       </View>
     )

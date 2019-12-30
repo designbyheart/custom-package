@@ -152,7 +152,7 @@ const style = StyleSheet.create({
     height: headerHeight,
     width: '100%',
     position: 'absolute',
-    zIndex: 10000,
+    zIndex: 1,
     top: 0,
     backgroundColor:
       Platform.OS === 'ios' ? 'rgba(255, 255, 255, 0.8)' : '#fff',
