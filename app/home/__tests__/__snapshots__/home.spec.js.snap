@@ -11,6 +11,69 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
   <View
     style={
       Object {
+        "backgroundColor": "rgba(255, 255, 255, 0.8)",
+        "elevation": 0,
+        "flexDirection": "row",
+        "height": 72,
+        "position": "absolute",
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.2,
+        "shadowRadius": 10,
+        "top": 0,
+        "width": "100%",
+        "zIndex": 1,
+      }
+    }
+  >
+    <BlurView
+      blurAmount={8}
+      blurType="light"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "bottom": 0,
+            "height": 120,
+            "left": 0,
+            "position": "absolute",
+            "width": "100%",
+          },
+        ]
+      }
+    />
+    <View
+      style={
+        Object {
+          "height": "100%",
+          "width": "75%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#505050",
+            "fontFamily": "Lato",
+            "fontSize": 26,
+            "fontWeight": "bold",
+            "marginLeft": 16,
+            "marginTop": 25,
+          }
+        }
+      >
+        Connections
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
         "backgroundColor": "#fff",
         "height": "100%",
         "width": "100%",
@@ -232,24 +295,6 @@ exports[`<DashboardScreen /> should render Home and redirect user to claim offer
     >
       <View />
     </RCTScrollView>
-    <BlurView
-      blurAmount={8}
-      blurType="light"
-      style={
-        Array [
-          Object {
-            "backgroundColor": "transparent",
-          },
-          Object {
-            "bottom": 0,
-            "height": 59,
-            "left": 0,
-            "position": "absolute",
-            "width": "100%",
-          },
-        ]
-      }
-    />
   </View>
 </View>
 `;
@@ -265,6 +310,69 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
   <View
     style={
       Object {
+        "backgroundColor": "rgba(255, 255, 255, 0.8)",
+        "elevation": 0,
+        "flexDirection": "row",
+        "height": 72,
+        "position": "absolute",
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.2,
+        "shadowRadius": 10,
+        "top": 0,
+        "width": "100%",
+        "zIndex": 1,
+      }
+    }
+  >
+    <BlurView
+      blurAmount={8}
+      blurType="light"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "bottom": 0,
+            "height": 120,
+            "left": 0,
+            "position": "absolute",
+            "width": "100%",
+          },
+        ]
+      }
+    />
+    <View
+      style={
+        Object {
+          "height": "100%",
+          "width": "75%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#505050",
+            "fontFamily": "Lato",
+            "fontSize": 26,
+            "fontWeight": "bold",
+            "marginLeft": 16,
+            "marginTop": 25,
+          }
+        }
+      >
+        Connections
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
         "backgroundColor": "#fff",
         "height": "100%",
         "width": "100%",
@@ -486,24 +594,6 @@ exports[`<DashboardScreen /> should render Home and show introductory text 1`] =
     >
       <View />
     </RCTScrollView>
-    <BlurView
-      blurAmount={8}
-      blurType="light"
-      style={
-        Array [
-          Object {
-            "backgroundColor": "transparent",
-          },
-          Object {
-            "bottom": 0,
-            "height": 59,
-            "left": 0,
-            "position": "absolute",
-            "width": "100%",
-          },
-        ]
-      }
-    />
   </View>
 </View>
 `;
@@ -516,6 +606,69 @@ exports[`<DashboardScreen /> should render Home and show loader 1`] = `
     }
   }
 >
+  <View
+    style={
+      Object {
+        "backgroundColor": "rgba(255, 255, 255, 0.8)",
+        "elevation": 0,
+        "flexDirection": "row",
+        "height": 72,
+        "position": "absolute",
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.2,
+        "shadowRadius": 10,
+        "top": 0,
+        "width": "100%",
+        "zIndex": 1,
+      }
+    }
+  >
+    <BlurView
+      blurAmount={8}
+      blurType="light"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+          },
+          Object {
+            "bottom": 0,
+            "height": 120,
+            "left": 0,
+            "position": "absolute",
+            "width": "100%",
+          },
+        ]
+      }
+    />
+    <View
+      style={
+        Object {
+          "height": "100%",
+          "width": "75%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#505050",
+            "fontFamily": "Lato",
+            "fontSize": 26,
+            "fontWeight": "bold",
+            "marginLeft": 16,
+            "marginTop": 25,
+          }
+        }
+      >
+        Connections
+      </Text>
+    </View>
+  </View>
   <View
     style={
       Object {
@@ -565,24 +718,6 @@ exports[`<DashboardScreen /> should render Home and show loader 1`] = `
     >
       <View />
     </RCTScrollView>
-    <BlurView
-      blurAmount={8}
-      blurType="light"
-      style={
-        Array [
-          Object {
-            "backgroundColor": "transparent",
-          },
-          Object {
-            "bottom": 0,
-            "height": 59,
-            "left": 0,
-            "position": "absolute",
-            "width": "100%",
-          },
-        ]
-      }
-    />
   </View>
 </View>
 `;

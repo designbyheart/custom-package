@@ -59,7 +59,7 @@ class NotificationCard extends PureComponent<
 
   showNotification = () => {
     Animated.timing(this.state.translateY, {
-      toValue: 200,
+      toValue: 50,
       duration: 200,
     }).start()
   }
