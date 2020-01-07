@@ -24,6 +24,9 @@ import type {
   SelfAttestedAttributes,
   MissingAttributes,
   ProofRequestReceivedAction,
+  DissatisfiedAttribute,
+  DenyProofRequestAction,
+  DenyProofRequestSuccessAction,
 } from './type-proof-request'
 
 import {
@@ -51,6 +54,9 @@ import {
   PROOF_SERIALIZED,
   UPDATE_PROOF_HANDLE,
   PROOF_REQUEST_SHOW_START,
+  PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND,
+  DENY_PROOF_REQUEST,
+  DENY_PROOF_REQUEST_SUCCESS,
 } from './type-proof-request'
 import type {
   NotificationPayloadInfo,
@@ -60,6 +66,7 @@ import {
   sendProof as sendProofApi,
   getHandleBySerializedConnection,
   proofSerialize,
+  proofReject,
 } from '../bridge/react-native-cxs/RNCxs'
 import type { Connection } from '../store/type-connection-store'
 import type { UserOneTimeInfo } from '../store/user/type-user-store'
@@ -93,6 +100,19 @@ export const acceptProofRequest = (
   type: PROOF_REQUEST_ACCEPTED,
   uid,
 })
+
+export const denyProofRequest = (uid: string): DenyProofRequestAction => ({
+  type: DENY_PROOF_REQUEST,
+  uid,
+})
+
+export const denyProofRequestSuccess = (
+  uid: string
+): DenyProofRequestSuccessAction => ({
+  type: DENY_PROOF_REQUEST_SUCCESS,
+  uid,
+})
+
 export const proofRequestShown = (uid: string): ProofRequestShownAction => ({
   type: PROOF_REQUEST_SHOWN,
   uid,
@@ -141,6 +161,15 @@ export const missingAttributesFound = (
 ) => ({
   type: MISSING_ATTRIBUTES_FOUND,
   missingAttributes: convertMissingAttributeListToObject(missingAttributeList),
+  uid,
+})
+
+export const dissatisfiedAttributesFound = (
+  dissatisfiedAttributes: DissatisfiedAttribute[],
+  uid: string
+) => ({
+  type: PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND,
+  dissatisfiedAttributes,
   uid,
 })
 
@@ -278,6 +307,68 @@ export function* serializeProofRequestSaga(
 
 export function* watchProofRequestReceived(): any {
   yield takeEvery(PROOF_REQUEST_RECEIVED, serializeProofRequestSaga)
+}
+
+function* denyProofRequestSaga(
+  action: DenyProofRequestAction
+): Generator<*, *, *> {
+  try {
+    const { uid } = action
+    const remoteDid: string = yield select(getProofRequestPairwiseDid, uid)
+    const userPairwiseDid: string | null = yield select(
+      getUserPairwiseDid,
+      remoteDid
+    )
+
+    if (!userPairwiseDid) {
+      customLogger.log(
+        'Connection not found while trying to deny proof request.'
+      )
+
+      return
+    }
+
+    const proofRequestPayload: ProofRequestPayload = yield select(
+      getProofRequest,
+      uid
+    )
+    const { proofHandle } = proofRequestPayload
+    const connection: {
+      remotePairwiseDID: string,
+      remoteName: string,
+    } & Connection = yield select(getRemotePairwiseDidAndName, userPairwiseDid)
+    if (!connection.vcxSerializedConnection) {
+      customLogger.log(
+        'Serialized connection not found while trying to deny proof request.'
+      )
+      return
+    }
+
+    try {
+      const connectionHandle: number = yield call(
+        getHandleBySerializedConnection,
+        connection.vcxSerializedConnection
+      )
+      try {
+        yield call(proofReject, proofHandle, connectionHandle)
+        yield put(denyProofRequestSuccess(uid))
+      } catch (e) {
+        customLogger.log(
+          'error calling vcx deny API while denying proof request.'
+        )
+      }
+    } catch (e) {
+      customLogger.log(
+        'connection handle not found while denying proof request.'
+      )
+    }
+  } catch (e) {
+    customLogger.log('something went wrong trying to deny proof request.')
+  }
+}
+
+export function* watchProofRequestDeny(): any {
+  yield takeEvery(DENY_PROOF_REQUEST, denyProofRequestSaga)
 }
 
 export const updateProofHandle = (proofHandle: number, uid: string) => ({
@@ -436,6 +527,14 @@ export default function proofRequestReducer(
         [action.uid]: {
           ...state[action.uid],
           proofHandle: action.proofHandle,
+        },
+      }
+    case PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND:
+      return {
+        ...state,
+        [action.uid]: {
+          ...state[action.uid],
+          dissatisfiedAttributes: action.dissatisfiedAttributes,
         },
       }
     default:

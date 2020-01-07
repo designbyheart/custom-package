@@ -1064,6 +1064,25 @@ RCT_EXPORT_METHOD(proofSend:(NSInteger)proof_handle
   }];
 }
 
+RCT_EXPORT_METHOD(proofReject:(NSInteger)proof_handle
+                  withConnectionHandle:(NSInteger)connection_handle
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] proofReject:proof_handle
+                      withConnectionHandle:connection_handle
+                            withCompletion:^(NSError *error)
+   {
+     if (error != nil && error.code != 0) {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, @"Error occurred while rejecting proof", error);
+     }
+     else {
+       resolve(@{});
+     }
+   }];
+}
+
 RCT_EXPORT_METHOD(proofCreateWithRequest:(NSString*)sourceId
                   withProofRequest:(NSString*)proofRequest
                   resolver: (RCTPromiseResolveBlock) resolve

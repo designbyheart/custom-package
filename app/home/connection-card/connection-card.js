@@ -107,6 +107,7 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
       'CLAIM OFFER RECEIVED': 'Offering ' + credentialName,
       QUESTION_RECEIVED: question,
       UPDATE_QUESTION_ANSWER: question,
+      DENY_PROOF_REQUEST_SUCCESS: `You denied ${credentialName}`,
     }
 
     return statusMsg[status]

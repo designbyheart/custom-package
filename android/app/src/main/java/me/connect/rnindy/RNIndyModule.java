@@ -1234,6 +1234,25 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void proofReject(int proofHandle, int connectionHandle, Promise promise) {
+        Log.d(TAG, "proofReject() called with connectionHandle = " + connectionHandle + ", proofHandle = "+ proofHandle);
+
+        try {
+            DisclosedProofApi.proofReject(proofHandle, connectionHandle).exceptionally((e) -> {
+                Log.e(TAG, "proofReject", e);
+                promise.reject("VcxException", e.getMessage());
+                return -1;
+            }).thenAccept(result -> {
+                if (result != -1) {
+                    BridgeUtils.resolveIfValid(promise, result);
+                }
+            });
+        } catch(VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    }
+
+    @ReactMethod
     public void createWalletKey(int lengthOfKey, Promise promise) {
         try {
             SecureRandom random = new SecureRandom();

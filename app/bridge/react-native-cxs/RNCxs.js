@@ -725,3 +725,10 @@ export async function appendTxnAuthorAgreement(
     timestamp
   )
 }
+
+export async function proofReject(
+  proofHandle: number,
+  connectionHandle: number
+): Promise<void> {
+  return RNIndy.proofReject(proofHandle, connectionHandle)
+}

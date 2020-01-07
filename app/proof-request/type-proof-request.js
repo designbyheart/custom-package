@@ -20,7 +20,9 @@ import type { ClaimMap } from '../claim/type-claim'
 
 export type RequestedAttribute = {|
   name: string,
+  self_attest_allowed?: boolean,
 |}
+
 export type RequestedPredicates = {
   attr_name: string,
   p_type: string,
@@ -139,6 +141,14 @@ export type ProofModalProps = {
   onContinue: () => void,
 }
 
+export const NO_SELF_ATTEST: 'NO_SELF_ATTEST' = 'NO_SELF_ATTEST'
+export const NO_CRED_NO_SELF_ATTEST: 'NO_CRED_NO_SELF_ATTEST' =
+  'NO_CRED_NO_SELF_ATTEST'
+export type DissatisfiedAttribute = {|
+  name: string,
+  reason: typeof NO_SELF_ATTEST | typeof NO_CRED_NO_SELF_ATTEST,
+|}
+
 export type ProofRequestPayload = AdditionalProofDataPayload & {
   status: ProofRequestStatus,
   proofStatus: ProofStatus,
@@ -147,6 +157,11 @@ export type ProofRequestPayload = AdditionalProofDataPayload & {
   remotePairwiseDID: string,
   missingAttributes?: MissingAttributes,
   vcxSerializedProofRequest?: string,
+  // this key will be used to indicate that this proof request
+  // cannot be fulfilled by credentials that are in user's wallet
+  // nor user can fill self attested values inside empty attributes
+  // value inside this key will tell reason that cannot fulfill each attribute
+  dissatisfiedAttributes?: DissatisfiedAttribute[],
 }
 
 export type ProofRequestProps = {
@@ -181,6 +196,8 @@ export type ProofRequestProps = {
   proofRequestShowStart: (uid: string) => ProofRequestShowStartAction,
   newConnectionSeen: (senderDID: string) => void,
   hideModal: () => void,
+  dissatisfiedAttributes: DissatisfiedAttribute[],
+  denyProofRequest: (uid: string) => void,
 } & ReactNavigation
 
 export type ProofRequestState = {
@@ -325,6 +342,27 @@ export type ProofRequestShowStartAction = {
   uid: string,
 }
 
+export const PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND: 'PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND' =
+  'PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND'
+export type ProofRequestDissatisfiedAttributesFoundAction = {
+  type: typeof PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND,
+  uid: string,
+  dissatisfiedAttributes: DissatisfiedAttribute[],
+}
+
+export const DENY_PROOF_REQUEST: 'DENY_PROOF_REQUEST' = 'DENY_PROOF_REQUEST'
+export type DenyProofRequestAction = {
+  type: typeof DENY_PROOF_REQUEST,
+  uid: string,
+}
+
+export const DENY_PROOF_REQUEST_SUCCESS: 'DENY_PROOF_REQUEST_SUCCESS' =
+  'DENY_PROOF_REQUEST_SUCCESS'
+export type DenyProofRequestSuccessAction = {
+  type: typeof DENY_PROOF_REQUEST_SUCCESS,
+  uid: string,
+}
+
 export type ProofRequestAction =
   | ProofRequestReceivedAction
   | SendProofSuccessAction
@@ -341,6 +379,9 @@ export type ProofRequestAction =
   | UpdateProofHandleAction
   | ProofRequestShowStartAction
   | ResetAction
+  | ProofRequestDissatisfiedAttributesFoundAction
+  | DenyProofRequestAction
+  | DenyProofRequestSuccessAction
 
 export type ProofRequestStore = {
   +[string]: ProofRequestPayload,
@@ -363,3 +404,22 @@ export const ERROR_SEND_PROOF = (message: string) => ({
   code: 'PR-001',
   message: `Error sending proof: ${message}`,
 })
+
+export const MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_TITLE = 'Missing Credentials'
+export const MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_DESCRIPTION = (
+  attributes: DissatisfiedAttribute[],
+  connectionName: string
+) => `You are unable to fulfill this request from ${connectionName}. This could be because
+
+- You don’t have the required credentials in your Connect.Me wallet
+- ${connectionName} has indicated you may not type your own answers to certain fields in this request
+- Some of the attributes ${connectionName} is requesting come from credentials you own that have been revoked or expired
+
+Specifically, you are missing credentials with the following attributes:
+- ${attributes.map(attribute => attribute.name).join('\n- ')}
+
+Contact ${connectionName} for more information.
+
+Pressing IGNORE will dismiss the request, and allow you to find and fulfill it later when you are able to fulfill this request, and will send no response notification back to ${connectionName}.
+
+Pressing REJECT will notify ${connectionName}. They will not know you are unable to fulfill the request, only that you have rejected it.`

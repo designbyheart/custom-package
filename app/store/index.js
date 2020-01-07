@@ -30,6 +30,7 @@ import proofRequest, {
   watchProofRequestAccepted,
   watchPersistProofRequests,
   watchProofRequestReceived,
+  watchProofRequestDeny,
 } from '../proof-request/proof-request-store'
 import invitation, { watchInvitation } from '../invitation/invitation-store'
 import claim, { watchClaim } from '../claim/claim-store'
@@ -143,6 +144,7 @@ sagaMiddleware.run(function*() {
     watchQuestion(),
     watchTxnAuthorAgreement(),
     watchOpenIdConnectStore(),
+    watchProofRequestDeny(),
   ])
 })
 

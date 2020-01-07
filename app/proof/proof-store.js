@@ -33,6 +33,7 @@ import type {
   SelfAttestedAttribute,
   ProofRequestedAttributes,
   ProofRequestPayload,
+  DissatisfiedAttribute,
 } from '../proof-request/type-proof-request'
 import {
   UPDATE_ATTRIBUTE_CLAIM,
@@ -58,6 +59,7 @@ import {
   acceptProofRequest,
   sendProof,
   updateProofHandle,
+  dissatisfiedAttributesFound,
 } from '../proof-request/proof-request-store'
 import {
   getOriginalProofRequestData,
@@ -69,7 +71,10 @@ import {
 } from '../store/store-selector'
 import type { Attribute } from '../push-notification/type-push-notification'
 import { RESET } from '../common/type-common'
-import { PROOF_REQUEST_SHOW_START } from '../proof-request/type-proof-request'
+import {
+  PROOF_REQUEST_SHOW_START,
+  NO_SELF_ATTEST,
+} from '../proof-request/type-proof-request'
 import { captureError } from '../services/error/error-handler'
 import KeepScreenOn from 'react-native-keep-screen-on'
 
@@ -156,20 +161,32 @@ export function convertSelfAttestedToIndySelfAttested(
 export function convertPreparedProofToRequestedAttributes(
   preparedProof: IndyPreparedProof,
   proofRequest: ProofRequestData
-): [IndyRequestedAttributes, MissingAttribute[]] {
+): [IndyRequestedAttributes, MissingAttribute[], DissatisfiedAttribute[]] {
   // apart from conversion, it finds attributes that are not in any claim
 
   const missingAttributes: MissingAttribute[] = []
+  const dissatisfiedAttributes: DissatisfiedAttribute[] = []
   const requestedAttributes = Object.keys(
     proofRequest.requested_attributes
   ).reduce((acc, attrKey) => {
     const attributeClaimData = preparedProof.attrs[attrKey]
 
     if (!attributeClaimData || !attributeClaimData[0]) {
-      missingAttributes.push({
-        key: attrKey,
-        name: proofRequest.requested_attributes[attrKey].name,
-      })
+      const requestedAttribute = proofRequest.requested_attributes[attrKey]
+      if (
+        typeof requestedAttribute.self_attest_allowed === 'boolean' &&
+        requestedAttribute.self_attest_allowed === false
+      ) {
+        dissatisfiedAttributes.push({
+          name: requestedAttribute.name,
+          reason: NO_SELF_ATTEST,
+        })
+      } else {
+        missingAttributes.push({
+          key: attrKey,
+          name: requestedAttribute.name,
+        })
+      }
 
       return acc
     }
@@ -180,7 +197,7 @@ export function convertPreparedProofToRequestedAttributes(
     }
   }, {})
 
-  return [requestedAttributes, missingAttributes]
+  return [requestedAttributes, missingAttributes, dissatisfiedAttributes]
 }
 
 export function convertIndyPreparedProofToAttributes(
@@ -370,17 +387,31 @@ export function* generateProofSaga(action: GenerateProofAction): any {
     const [
       requestedAttrsJson,
       missingAttributes,
+      dissatisfiedAttributes,
     ] = convertPreparedProofToRequestedAttributes(
       matchingCredentials,
       proofRequest
     )
     let selfAttestedAttributes: SelfAttestedAttributes = {}
 
+    if (dissatisfiedAttributes.length > 0) {
+      // if we find that there are some attributes that are not available
+      // in any of the claims stored in user wallet
+      // and also proof requester has intended not to accept self-attested-attributes
+      // then user cannot fulfill this whole proof request
+      // let user know that there are dissatisfied attributes
+      yield put(dissatisfiedAttributesFound(dissatisfiedAttributes, uid))
+
+      // as user cannot proceed ahead with accepting proof request
+      // we stop this saga here
+      return
+    }
+
     if (missingAttributes.length > 0) {
       // if we find that there are some attributes that are not available
       // in any of the claims stored in user wallet
       // then we ask user to fill in those attributes
-      // so we need to tell proof request screen to ask user to
+      // so we need to tell proof request screen to ask user to self attest
       yield put(missingAttributesFound(missingAttributes, uid))
 
       // once user has filled all attributes, we need to get those details here

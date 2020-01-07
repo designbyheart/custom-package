@@ -10,6 +10,7 @@ import { CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
 import {
   PROOF_REQUEST_RECEIVED,
   SEND_PROOF_SUCCESS,
+  DENY_PROOF_REQUEST_SUCCESS,
 } from '../proof-request/type-proof-request'
 import { RECORD_HISTORY_EVENT } from './type-connection-history'
 import { historyEventOccurred } from './connection-history-store'
@@ -33,6 +34,7 @@ const actionToRecord = [
   SEND_PROOF_SUCCESS,
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
+  DENY_PROOF_REQUEST_SUCCESS,
 ]
 
 // TODO:KS Fix any type using `redux` provided Generic Types
