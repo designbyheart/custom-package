@@ -66,6 +66,7 @@ import type {
   ProofRequestReceivedAction,
   SendProofSuccessAction,
   ProofRequestPayload,
+  DenyProofRequestSuccessAction,
 } from '../proof-request/type-proof-request'
 import type {
   QuestionReceivedAction,
@@ -75,6 +76,7 @@ import type {
 import {
   PROOF_REQUEST_RECEIVED,
   SEND_PROOF_SUCCESS,
+  DENY_PROOF_REQUEST_SUCCESS,
 } from '../proof-request/type-proof-request'
 import { secureSet, getHydrationItem } from '../services/storage'
 import {
@@ -368,6 +370,23 @@ export function convertProofSendToHistoryEvent(
   }
 }
 
+export function convertProofDenyToHistoryEvent(
+  action: DenyProofRequestSuccessAction,
+  proofRequest: ProofRequestPayload
+): ConnectionHistoryEvent {
+  return {
+    action: HISTORY_EVENT_STATUS[DENY_PROOF_REQUEST_SUCCESS],
+    data: proofRequest,
+    id: uuid(),
+    name: proofRequest.data.name,
+    status: HISTORY_EVENT_STATUS[DENY_PROOF_REQUEST_SUCCESS],
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.PROOF,
+    remoteDid: proofRequest.remotePairwiseDID,
+    originalPayload: { ...action, proofRequest },
+  }
+}
+
 export function convertQuestionReceivedToHistoryEvent(
   action: QuestionReceivedAction
 ): ConnectionHistoryEvent {
@@ -516,6 +535,21 @@ export function* historyEventOccurredSaga(
       const oldHistoryEvent = yield select(
         getHistoryEvent,
         historyEvent.originalPayload.uid,
+        historyEvent.remoteDid,
+        PROOF_REQUEST_RECEIVED
+      )
+      if (oldHistoryEvent) yield put(deleteHistoryEvent(oldHistoryEvent))
+    }
+
+    if (event.type === DENY_PROOF_REQUEST_SUCCESS) {
+      const proofRequest: ProofRequestPayload = yield select(
+        getProofRequest,
+        event.uid
+      )
+      historyEvent = convertProofDenyToHistoryEvent(event, proofRequest)
+      const oldHistoryEvent = yield select(
+        getHistoryEvent,
+        event.uid,
         historyEvent.remoteDid,
         PROOF_REQUEST_RECEIVED
       )

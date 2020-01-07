@@ -44,6 +44,7 @@ import {
   ignoreProofRequest,
   proofRequestShown,
   proofRequestShowStart,
+  denyProofRequest,
 } from '../../proof-request/proof-request-store'
 import {
   getConnectionLogoUrl,
@@ -59,6 +60,8 @@ import {
   MESSAGE_ERROR_PROOF_GENERATION_TITLE,
   MESSAGE_ERROR_PROOF_GENERATION_DESCRIPTION,
   PROOF_STATUS,
+  MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_TITLE,
+  MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_DESCRIPTION,
 } from '../../proof-request/type-proof-request'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import {
@@ -368,6 +371,29 @@ class ModalContentProof extends Component<
     }, {})
   }
 
+  componentDidUpdate() {
+    if (this.props.dissatisfiedAttributes.length > 0) {
+      Alert.alert(
+        MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_TITLE,
+        MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_DESCRIPTION(
+          this.props.dissatisfiedAttributes,
+          this.props.name
+        ),
+        [
+          {
+            text: 'Ignore',
+            onPress: this.onIgnore,
+          },
+          {
+            text: 'Reject',
+            onPress: this.onDeny,
+          },
+        ],
+        { cancelable: false }
+      )
+    }
+  }
+
   componentWillReceiveProps(nextProps: ProofRequestProps) {
     if (
       this.props.missingAttributes !== nextProps.missingAttributes &&
@@ -512,6 +538,11 @@ class ModalContentProof extends Component<
     this.props.updateAttributeClaim(this.props.uid, this.state.selectedClaims)
   }
 
+  onDeny = () => {
+    this.props.denyProofRequest(this.props.uid)
+    this.props.hideModal()
+  }
+
   onSend = () => {
     if (
       this.state.generateProofClicked ||
@@ -609,6 +640,7 @@ const mapStateToProps = (state: Store, mergeProps) => {
     proofStatus,
     remotePairwiseDID,
     missingAttributes = {},
+    dissatisfiedAttributes = [],
   } = proofRequestData
   const { name } = requester
   const isValid = proofRequestData && data && data.requestedAttributes
@@ -630,6 +662,7 @@ const mapStateToProps = (state: Store, mergeProps) => {
     userAvatarSource: getUserAvatarSource(state.user.avatarName),
     errorProofSendData,
     remotePairwiseDID,
+    dissatisfiedAttributes,
   }
 }
 
@@ -645,6 +678,7 @@ const mapDispatchToProps = dispatch =>
       userSelfAttestedAttributes,
       proofRequestShowStart,
       newConnectionSeen,
+      denyProofRequest,
     },
     dispatch
   )

@@ -6,9 +6,9 @@ source 'git@gitlab.corp.evernym.com:dev/vcx/indy-sdk.git'
 
 def vcx_version_for_debug_or_release
     if ENV['CONNECTME_DEBUG'] == "true"
-        '0.0.126'
+        '0.0.134'
     else
-        '0.0.125'
+        '0.0.133'
     end
 end
 
@@ -18,6 +18,7 @@ target 'ConnectMe' do
 
     pod 'vcx', vcx_version_for_debug_or_release
     pod 'Firebase/Messaging', '4.8.0'
+    # pod 'Firebase/Analytics', '4.2.0'
     pod 'Onfido', '10.0.0'
     pod 'apptentive-ios', '5.2.2'
 

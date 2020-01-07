@@ -35,6 +35,7 @@ import { CONNECTION_ALREADY_EXIST } from './type-connection-details'
 import { getConnection, getConnectionTheme } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { isIphoneX, isIphoneXR } from '../common/styles/constant'
+import { DENY_PROOF_REQUEST_SUCCESS } from '../proof-request/type-proof-request'
 
 let ScreenWidth = Dimensions.get('window').width
 
@@ -198,6 +199,16 @@ class ConnectionDetails extends Component<
           uid={item.originalPayload.payloadInfo.uid}
           navigation={this.props.navigation}
           colorBackground={this.props.activeConnectionThemePrimary}
+        />
+      )
+    } else if (item.action === DENY_PROOF_REQUEST_SUCCESS) {
+      return (
+        <QuestionViewCard
+          messageDate={formattedTime}
+          uid={item.data.uid}
+          requestStatus={'YOU DENIED'}
+          requestAction={'"' + item.name + '"'}
+          navigation={this.props.navigation}
         />
       )
     }

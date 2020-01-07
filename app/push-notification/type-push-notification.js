@@ -103,6 +103,7 @@ export type Attribute = {
   logoUrl?: string,
   claimUuid?: ?string,
   cred_info?: MatchingCredential,
+  self_attest_allowed?: boolean,
 }
 
 export type AdditionalData = {

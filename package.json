@@ -6,11 +6,8 @@
     "start": "react-native start",
     "test": "jest --detectOpenHandles --forceExit",
     "lint": "glow && eslint app",
-    "precommit": "yarn run pod:install && yarn revert:detox && lint-staged && yarn pod:dev:install",
-    "prepush": "onerror \"npm test && npm run lint\" -t \"Push Failed\" -s Purr",
-    "postcheckout": "yarnhook",
-    "postmerge": "yarnhook",
     "ios": "react-native run-ios",
+    "android": "react-native run-android",
     "coverage": "npm test -- --coverage",
     "pod:dev:install": "cd ios && CONNECTME_DEBUG=true pod install",
     "pod:install": "cd ios && pod install",
@@ -123,7 +120,7 @@
     "fs-extra": "^8.1.0",
     "glow": "^1.2.2",
     "gm": "^1.23.1",
-    "husky": "^0.13.4",
+    "husky": "3.1.0",
     "imap-simple": "^4.0.0",
     "jest": "24.7.1",
     "lint-staged": "^3.4.1",
@@ -192,5 +189,13 @@
     },
     "test-runner": "jest",
     "runner-config": "e2e/config.json"
+  },
+  "husky": {
+    "hooks": {
+      "post-checkout": "yarnhook",
+      "post-merge": "yarnhook",
+      "pre-commit": "yarn run pod:install && yarn revert:detox && lint-staged && yarn pod:dev:install",
+      "pre-push": "onerror \"npm test && npm run lint\" -t \"Push Failed\" -s Purr"
+    }
   }
 }
