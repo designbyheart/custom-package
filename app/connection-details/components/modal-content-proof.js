@@ -371,8 +371,11 @@ class ModalContentProof extends Component<
     }, {})
   }
 
-  componentDidUpdate() {
-    if (this.props.dissatisfiedAttributes.length > 0) {
+  componentDidUpdate(prevProps: ProofRequestProps) {
+    if (
+      prevProps.dissatisfiedAttributes !== this.props.dissatisfiedAttributes &&
+      this.props.dissatisfiedAttributes.length > 0
+    ) {
       Alert.alert(
         MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_TITLE,
         MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_DESCRIPTION(
