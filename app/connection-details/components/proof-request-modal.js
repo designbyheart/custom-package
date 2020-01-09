@@ -16,7 +16,10 @@ import {
   getUserAvatarSource,
 } from '../../store/store-selector'
 import { proofRequestNewRoute } from '../../common/route-constants'
-import { newConnectionSeen } from '../../connection-history/connection-history-store'
+import {
+  newConnectionSeen,
+  resetNotificationCardPressed,
+} from '../../connection-history/connection-history-store'
 import { withBottomUpSliderScreen } from '../../components/bottom-up-slider-screen/bottom-up-slider-screen'
 
 class ProofRequestModal extends Component<any, any> {
@@ -33,6 +36,7 @@ class ProofRequestModal extends Component<any, any> {
   }
 
   hideModal = () => {
+    this.props.resetNotificationCardPressed()
     this.props.navigation.goBack(null)
   }
 
@@ -103,6 +107,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       newConnectionSeen,
+      resetNotificationCardPressed,
     },
     dispatch
   )

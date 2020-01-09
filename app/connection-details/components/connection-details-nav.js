@@ -64,6 +64,7 @@ class ConnectionDetailsNav extends PureComponent<any, void> {
   }
 
   goBack = () => {
+    this.props.resetNotificationCardPressed()
     const { navigation } = this.props
     const { params } = this.props.navigation.state
     this.props.newConnectionSeen(params.senderDID)

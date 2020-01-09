@@ -113,6 +113,7 @@ import { cloudBackupStart } from '../backup/backup-store'
 import {
   newConnectionSeen,
   notificationCardSwipedUp,
+  notificationCardPressed,
 } from '../connection-history/connection-history-store'
 import { setupApptentive } from '../feedback'
 import { customLogger } from '../store/custom-logger'
@@ -445,6 +446,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
     image: ?string,
     senderDID: string
   ) => {
+    this.props.notificationCardPressed()
     this.props.navigation.navigate(connectionHistRoute, {
       senderName,
       image,
@@ -1091,6 +1093,7 @@ const mapDispatchToProps = dispatch =>
       viewedWalletError,
       cloudBackupStart,
       notificationCardSwipedUp,
+      notificationCardPressed,
     },
     dispatch
   )

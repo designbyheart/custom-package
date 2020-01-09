@@ -187,6 +187,16 @@ export type NotificationCardSwipedUpAction = {
   type: typeof NOTIFICATION_CARD_SWIPED_UP,
 }
 
+export const NOTIFICATION_CARD_PRESSED = 'NOTIFICATION_CARD_PRESSED'
+export type NotificationCardPressedAction = {
+  type: typeof NOTIFICATION_CARD_PRESSED,
+}
+
+export const RESET_NOTIFICATION_CARD_PRESSED = 'RESET_NOTIFICATION_CARD_PRESSED'
+export type ResetNotificationCardPressedAction = {
+  type: typeof RESET_NOTIFICATION_CARD_PRESSED,
+}
+
 export type ClaimOfferAction =
   | ClaimOfferReceivedAction
   | ClaimOfferFailedAction

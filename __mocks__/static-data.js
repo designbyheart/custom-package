@@ -1091,6 +1091,7 @@ export function getStore(store?: Object = {}) {
               },
               connectionsUpdated: true,
               shouldShowNotification: true,
+              shouldOpenModalFromNotification: true,
             },
             isLoading: true,
           },

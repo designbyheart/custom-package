@@ -97,6 +97,8 @@ import {
   NEW_CONNECTION_SEEN,
   CONNECTION_HISTORY_BACKED_UP,
   NOTIFICATION_CARD_SWIPED_UP,
+  NOTIFICATION_CARD_PRESSED,
+  RESET_NOTIFICATION_CARD_PRESSED,
 } from '../claim-offer/type-claim-offer'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
@@ -124,6 +126,14 @@ export const connectionHistoryBackedUp = () => ({
 
 export const notificationCardSwipedUp = () => ({
   type: NOTIFICATION_CARD_SWIPED_UP,
+})
+
+export const notificationCardPressed = () => ({
+  type: NOTIFICATION_CARD_PRESSED,
+})
+
+export const resetNotificationCardPressed = () => ({
+  type: RESET_NOTIFICATION_CARD_PRESSED,
 })
 
 export const loadHistory = () => ({
@@ -155,10 +165,17 @@ export function* loadHistorySaga(): Generator<*, *, *> {
         connections: { data: null, newBadge: false },
         connectionsUpdated: false,
         shouldShowNotification: false,
+        shouldOpenModalFromNotification: false,
       }
-
-      if ('shouldShowNotification' in oldHistory) {
+      if ('shouldOpenModalFromNotification' in oldHistory) {
         yield put(loadHistorySuccess(oldHistory))
+      } else if ('shouldShowNotification' in oldHistory) {
+        yield put(
+          loadHistorySuccess({
+            ...oldHistory,
+            shouldOpenModalFromNotification: false,
+          })
+        )
       } else if ('connectionsUpdated' in oldHistory) {
         yield put(
           loadHistorySuccess({
@@ -605,6 +622,14 @@ export function* watchNotificationCardSwipedUp(): any {
   yield takeEvery(NOTIFICATION_CARD_SWIPED_UP, persistHistory)
 }
 
+export function* watchNotificationCardPressed(): any {
+  yield takeEvery(NOTIFICATION_CARD_PRESSED, persistHistory)
+}
+
+export function* watchResetNotificationCardPressed(): any {
+  yield takeEvery(RESET_NOTIFICATION_CARD_PRESSED, persistHistory)
+}
+
 export function* persistHistory(action): any {
   // if we get action to record history event
   // that means our history store is updated with data
@@ -637,6 +662,8 @@ export function* watchConnectionHistory(): any {
     watchNewConnectionSeen(),
     watchConnectionHistoryBackedUp(),
     watchNotificationCardSwipedUp(),
+    watchNotificationCardPressed(),
+    watchResetNotificationCardPressed(),
   ])
 }
 
@@ -691,6 +718,7 @@ export default function connectionHistoryReducer(
           },
           connectionsUpdated: true,
           shouldShowNotification: true,
+          shouldOpenModalFromNotification: false,
         },
       }
     }
@@ -772,6 +800,24 @@ export default function connectionHistoryReducer(
         data: {
           ...(state.data ? state.data : {}),
           shouldShowNotification: false,
+        },
+      }
+
+    case NOTIFICATION_CARD_PRESSED:
+      return {
+        ...state,
+        data: {
+          ...(state.data ? state.data : {}),
+          shouldOpenModalFromNotification: true,
+        },
+      }
+
+    case RESET_NOTIFICATION_CARD_PRESSED:
+      return {
+        ...state,
+        data: {
+          ...(state.data ? state.data : {}),
+          shouldOpenModalFromNotification: false,
         },
       }
 

@@ -39,6 +39,7 @@ export type SettingsProps = {
   notificationCardSwipedUp: Function,
   connections: ConnectionStore,
   history: ConnectionHistoryStore,
+  notificationCardPressed: Function,
 } & ReactNavigation
 
 export type SettingsState = {

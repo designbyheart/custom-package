@@ -161,6 +161,7 @@ export type ConnectionHistoryData = {
   },
   connectionsUpdated: boolean,
   shouldShowNotification: boolean,
+  shouldOpenModalFromNotification: boolean,
   notificationCardSwipedUp: Function,
 }
 

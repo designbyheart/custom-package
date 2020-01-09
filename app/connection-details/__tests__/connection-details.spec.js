@@ -24,6 +24,7 @@ describe('<ConnectionDetails />', () => {
             image: 'https://robothash.com/logo.png',
           },
         },
+        navigate: jest.fn(),
         getParam: jest.fn(),
       },
     }

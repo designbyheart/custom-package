@@ -59,6 +59,7 @@ function props(claimOfferStatus, noConnections) {
     onNewConnectionSeen: jest.fn(),
     shouldShowNotification: true,
     notificationCardSwipedUp: jest.fn(),
+    notificationCardPressed: jest.fn(),
   }
 }
 
