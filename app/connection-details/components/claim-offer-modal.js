@@ -18,7 +18,10 @@ import CredentialPriceInfo from '../../components/labels/credential-price-info'
 import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
 import { ModalButtons } from '../../components/buttons/modal-buttons'
-import { newConnectionSeen } from '../../connection-history/connection-history-store'
+import {
+  newConnectionSeen,
+  resetNotificationCardPressed,
+} from '../../connection-history/connection-history-store'
 import { measurements } from '../../../app/common/styles/measurements'
 import { LedgerFees } from '../../ledger/components/ledger-fees/ledger-fees'
 import PaymentTransactionInfo from '../../claim-offer/components/payment-transaction-info'
@@ -263,6 +266,7 @@ class ClaimOfferModal extends Component<any, *> {
   }
 
   hideModal = () => {
+    this.props.resetNotificationCardPressed()
     this.props.navigation.goBack(null)
   }
 
@@ -334,6 +338,7 @@ const mapDispatchToProps = dispatch =>
       claimOfferShowStart,
       resetClaimRequestStatus,
       newConnectionSeen,
+      resetNotificationCardPressed,
     },
     dispatch
   )

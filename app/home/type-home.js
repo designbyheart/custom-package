@@ -20,4 +20,5 @@ export type HomeProps = {
   onNewConnectionSeen: (senderDid: string) => void,
   shouldShowNotification: boolean,
   notificationCardSwipedUp: Function,
+  notificationCardPressed: Function,
 } & ReactNavigation

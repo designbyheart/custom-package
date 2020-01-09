@@ -13,6 +13,7 @@ import type { ReactNavigation } from '../common/type-common'
 import {
   newConnectionSeen,
   notificationCardSwipedUp,
+  notificationCardPressed,
 } from '../connection-history/connection-history-store'
 import { PrimaryHeader } from '../components'
 import { ConnectionCard } from './connection-card/connection-card'
@@ -49,6 +50,19 @@ export class DashboardScreen extends Component<HomeProps> {
   keyExtractor = (item: Object) => item.index
 
   onCardPress = (senderName: string, image: ?string, senderDID: string) => {
+    this.props.navigation.navigate(connectionHistRoute, {
+      senderName,
+      image,
+      senderDID,
+    })
+  }
+
+  onNotificationCardPress = (
+    senderName: string,
+    image: ?string,
+    senderDID: string
+  ) => {
+    this.props.notificationCardPressed()
     this.props.navigation.navigate(connectionHistRoute, {
       senderName,
       image,
@@ -204,7 +218,7 @@ export class DashboardScreen extends Component<HomeProps> {
               senderDID={newConnections[0].senderDID}
               newBadge={newConnections[0].newBadge}
               notificationCardSwipedUp={this.props.notificationCardSwipedUp}
-              onNotificationCardPress={this.onCardPress}
+              onNotificationCardPress={this.onNotificationCardPress}
             />
           )}
         <View style={container} testID="home-container">
@@ -247,6 +261,7 @@ const mapDispatchToProps = dispatch =>
     {
       onNewConnectionSeen: newConnectionSeen,
       notificationCardSwipedUp: notificationCardSwipedUp,
+      notificationCardPressed,
     },
     dispatch
   )

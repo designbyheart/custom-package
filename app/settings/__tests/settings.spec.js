@@ -54,6 +54,7 @@ describe('user settings screen', () => {
       shouldShowNotification: false,
       connections: store.getState().connections,
       history: store.getState().history,
+      notificationCardPressed: jest.fn(),
     }
   }
 

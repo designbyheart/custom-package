@@ -568,6 +568,7 @@ Object {
       },
     },
     "connectionsUpdated": true,
+    "shouldOpenModalFromNotification": false,
     "shouldShowNotification": true,
   },
   "error": null,

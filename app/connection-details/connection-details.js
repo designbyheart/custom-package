@@ -15,7 +15,10 @@ import { NewMessageBreakLine } from '../components/connection-details/new-messag
 import MoreOptions from './components/more-options'
 import { ConnectionPending } from '../components/connection-details/connection-pending'
 import { updateStatusBarTheme } from '../../app/store/connections-store'
-import { newConnectionSeen } from '../../app/connection-history/connection-history-store'
+import {
+  newConnectionSeen,
+  resetNotificationCardPressed,
+} from '../../app/connection-history/connection-history-store'
 import { BlurView } from 'react-native-blur'
 import Snackbar from 'react-native-snackbar'
 import { measurements } from '../../app/common/styles/measurements'
@@ -36,6 +39,7 @@ import { getConnection, getConnectionTheme } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { isIphoneX, isIphoneXR } from '../common/styles/constant'
 import { DENY_PROOF_REQUEST_SUCCESS } from '../proof-request/type-proof-request'
+import { proofRequestRoute, claimOfferRoute, questionRoute } from '../common'
 
 let ScreenWidth = Dimensions.get('window').width
 
@@ -52,6 +56,7 @@ class ConnectionDetails extends Component<
   componentDidMount() {
     this.props.updateStatusBarTheme(this.props.activeConnectionThemePrimary)
     this.showSnackBar()
+    this.navigateToModal()
   }
 
   componentDidUpdate(prevProps: ConnectionHistoryProps) {
@@ -79,6 +84,33 @@ class ConnectionDetails extends Component<
     //     })
     //   }
     // }
+  }
+
+  navigateToModal = () => {
+    const uid =
+      this.props.connectionHistory &&
+      this.props.connectionHistory[this.props.connectionHistory.length - 1] &&
+      this.props.connectionHistory[this.props.connectionHistory.length - 1]
+        .originalPayload &&
+      this.props.connectionHistory[this.props.connectionHistory.length - 1]
+        .originalPayload.payloadInfo &&
+      this.props.connectionHistory[this.props.connectionHistory.length - 1]
+        .originalPayload.payloadInfo.uid
+    const action =
+      this.props.connectionHistory &&
+      this.props.connectionHistory[this.props.connectionHistory.length - 1] &&
+      this.props.connectionHistory[this.props.connectionHistory.length - 1]
+        .action
+
+    if (this.props.shouldOpenModalFromNotification) {
+      if (action === 'PROOF RECEIVED') {
+        this.props.navigation.navigate(proofRequestRoute, { uid })
+      } else if (action === 'CLAIM OFFER RECEIVED') {
+        this.props.navigation.navigate(claimOfferRoute, { uid })
+      } else if (action === 'QUESTION_RECEIVED') {
+        this.props.navigation.navigate(questionRoute, { uid })
+      }
+    }
   }
 
   keyExtractor = (item: Object) => item.timestamp
@@ -276,6 +308,9 @@ class ConnectionDetails extends Component<
             navigation={this.props.navigation}
             moreOptionsOpen={this.moreOptionsOpen}
             colorBackground={activeConnectionThemePrimary}
+            resetNotificationCardPressed={
+              this.props.resetNotificationCardPressed
+            }
           />
           <Animated.View
             style={[
@@ -333,11 +368,16 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
     activeConnectionThemeSecondary: themeForLogo.secondary,
     connectionHistory: connectionHistory,
     claimMap: state.claim.claimMap,
+    shouldOpenModalFromNotification:
+      state.history.data && state.history.data.shouldOpenModalFromNotification,
   }
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ updateStatusBarTheme, newConnectionSeen }, dispatch)
+  bindActionCreators(
+    { updateStatusBarTheme, newConnectionSeen, resetNotificationCardPressed },
+    dispatch
+  )
 
 export default withStatusBar()(
   connect(mapStateToProps, mapDispatchToProps)(ConnectionDetails)

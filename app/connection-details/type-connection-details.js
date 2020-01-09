@@ -258,6 +258,8 @@ export type ConnectionHistoryNavigation = {
 
 export type ConnectionHistoryProps = {
   newConnectionSeen: Function,
+  resetNotificationCardPressed: Function,
+  shouldOpenModalFromNotification: boolean,
   claimMap: ?ClaimMap,
   activeConnectionThemePrimary: string,
   activeConnectionThemeSecondary: string,

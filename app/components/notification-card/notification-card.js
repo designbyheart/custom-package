@@ -61,7 +61,14 @@ class NotificationCard extends PureComponent<
     Animated.timing(this.state.translateY, {
       toValue: 50,
       duration: 200,
-    }).start()
+    }).start(() => {
+      setTimeout(() => {
+        Animated.timing(this.state.translateY, {
+          toValue: -100,
+          duration: 200,
+        }).start(() => this.props.notificationCardSwipedUp())
+      }, 5000)
+    })
   }
 
   onHandlerStateChange = (event: Object) => {
@@ -199,7 +206,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 10,
     backgroundColor: '#fff',
-    elevation: Platform.OS === 'android' ? 8 : 0,
+    elevation: Platform.OS === 'android' ? 9 : 0,
   },
   buttonContainer: {
     width: '100%',
