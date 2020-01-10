@@ -297,16 +297,25 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
       }
       testID="pin-code-digit-0-touchable"
     >
-      <Image
-        resizeMode="contain"
-        source={1}
+      <Text
+        allowFontScaling={false}
         style={
-          Object {
-            "height": 26,
-            "width": 26,
-          }
+          Array [
+            Object {
+              "color": "#777777",
+              "fontSize": 26,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+          ]
         }
-      />
+      >
+        
+      </Text>
     </View>
     <View
       accessibilityLabel="pin-code-digit-1-touchable"
@@ -339,16 +348,25 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
       }
       testID="pin-code-digit-1-touchable"
     >
-      <Image
-        resizeMode="contain"
-        source={1}
+      <Text
+        allowFontScaling={false}
         style={
-          Object {
-            "height": 26,
-            "width": 26,
-          }
+          Array [
+            Object {
+              "color": "#777777",
+              "fontSize": 26,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+          ]
         }
-      />
+      >
+        
+      </Text>
     </View>
     <View
       accessibilityLabel="pin-code-digit-2-touchable"

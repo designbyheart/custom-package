@@ -30,16 +30,25 @@ exports[`<PinCodeDigit /> when digit is entered 1`] = `
     }
   }
 >
-  <Image
-    resizeMode="contain"
-    source={1}
+  <Text
+    allowFontScaling={false}
     style={
-      Object {
-        "height": 26,
-        "width": 26,
-      }
+      Array [
+        Object {
+          "color": "#777777",
+          "fontSize": 26,
+        },
+        undefined,
+        Object {
+          "fontFamily": "Material Icons",
+          "fontStyle": "normal",
+          "fontWeight": "normal",
+        },
+      ]
     }
-  />
+  >
+    
+  </Text>
 </View>
 `;
 

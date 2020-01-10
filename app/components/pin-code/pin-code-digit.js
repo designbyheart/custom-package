@@ -1,11 +1,10 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { StyleSheet, Image } from 'react-native'
+import { StyleSheet } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import { CustomView } from '../../components'
 import { color, OFFSET_1X } from '../../common/styles'
 import type { PinCodeDigitProps } from './type-pin-code-box'
-
-const sovrinIcon = require('../../images/icon_sovrin.png')
 
 export default class PinCodeDigit extends PureComponent<
   PinCodeDigitProps,
@@ -23,7 +22,11 @@ export default class PinCodeDigit extends PureComponent<
         testID={testID}
       >
         {entered && (
-          <Image style={styles.icon} source={sovrinIcon} resizeMode="contain" />
+          <Icon
+            size={styles.icon.height}
+            name="brightness-1"
+            color={styles.icon.color}
+          />
         )}
       </CustomView>
     )
@@ -46,5 +49,6 @@ const styles = StyleSheet.create({
   icon: {
     height: iconDimension,
     width: iconDimension,
+    color: color.bg.tertiary.font.tertiary,
   },
 })
