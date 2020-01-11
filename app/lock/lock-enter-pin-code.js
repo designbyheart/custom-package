@@ -179,7 +179,7 @@ export class LockEnterPin extends PureComponent<
       })
       props.clearPendingRedirect()
     } else {
-      // If the app doesn't know where to redirect, send it to home isntead of sitting on the locked screen forever
+      // If the app doesn't know where to redirect, send it to home instead of sitting on the locked screen
       this.props.navigation.navigate(homeRoute)
     }
   }
