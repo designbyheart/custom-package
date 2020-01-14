@@ -29,7 +29,9 @@ import type {
   DeleteConnectionSuccessEventAction,
   DeleteConnectionFailureEventAction,
   DeleteConnectionEventAction,
+  SendConnectionRedirectAction,
 } from './type-connection-store'
+import type { InvitationPayload } from '../invitation/type-invitation'
 import {
   NEW_CONNECTION,
   DELETE_CONNECTION_SUCCESS,
@@ -41,10 +43,13 @@ import {
   UPDATE_STATUS_BAR_THEME,
   NEW_CONNECTION_FAIL,
   HYDRATE_CONNECTIONS,
+  SEND_CONNECTION_REDIRECT,
 } from './type-connection-store'
 import {
   deleteConnection,
   getHandleBySerializedConnection,
+  createConnectionWithInvite,
+  connectionRedirect,
 } from '../bridge/react-native-cxs/RNCxs'
 import { RESET } from '../common/type-common'
 import type { UserOneTimeInfo } from './user/type-user-store'
@@ -301,11 +306,83 @@ export function* watchUpdateConnectionTheme(): any {
   yield takeLatest(UPDATE_CONNECTION_THEME, persistThemes)
 }
 
+export const sendConnectionRedirect = (
+  qrCodeInvitationPayload: InvitationPayload,
+  existingConnectionDetails: $PropertyType<
+    SendConnectionRedirectAction,
+    'existingConnectionDetails'
+  >
+) => ({
+  type: SEND_CONNECTION_REDIRECT,
+  qrCodeInvitationPayload,
+  existingConnectionDetails,
+})
+
+function* sendConnectionRedirectSaga(
+  action: SendConnectionRedirectAction
+): Generator<*, *, *> {
+  try {
+    try {
+      // get redirect connection handle
+      const [connection]: Array<Connection> = yield select(
+        getConnectionBySenderDid,
+        action.existingConnectionDetails.senderDID
+      )
+      const redirectConnectionHandle = yield call(
+        getHandleBySerializedConnection,
+        connection.vcxSerializedConnection
+      )
+      try {
+        // get (new) connection handle
+        const connectionHandle = yield call(
+          createConnectionWithInvite,
+          action.qrCodeInvitationPayload
+        )
+        try {
+          // call API for connectionRedirect
+          yield call(
+            connectionRedirect,
+            redirectConnectionHandle,
+            connectionHandle
+          )
+        } catch (e) {
+          // catch error if connectionRedirect API fails
+          yield put({
+            type: 'ERROR_SENDING_REDIRECT',
+            e,
+          })
+        }
+      } catch (e) {
+        // catch error if handle creation API fails
+        yield put({
+          type: 'ERROR_CONNECTION_HANDLE_NEW_CONNECTION_REDIRECT',
+          e,
+        })
+      }
+    } catch (e) {
+      // catch error if existing handle is not found
+      yield put({
+        type: 'ERROR_CONNECTION_HANDLE_REDIRECT',
+        e,
+      })
+    }
+  } catch (e) {
+    // catch error
+    captureError(e)
+    customLogger.error(`connectionRedirect: ${e}`)
+  }
+}
+
+export function* watchSendConnectionRedirect(): any {
+  yield takeEvery(SEND_CONNECTION_REDIRECT, sendConnectionRedirectSaga)
+}
+
 export function* watchConnection(): any {
   yield all([
     watchDeleteConnectionOccurred(),
     watchNewConnection(),
     watchUpdateConnectionTheme(),
+    watchSendConnectionRedirect(),
   ])
 }
 

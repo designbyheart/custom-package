@@ -14,7 +14,10 @@ import { ConnectionCard } from '../components/connection-details/connection-card
 import { NewMessageBreakLine } from '../components/connection-details/new-message-break-line'
 import MoreOptions from './components/more-options'
 import { ConnectionPending } from '../components/connection-details/connection-pending'
-import { updateStatusBarTheme } from '../../app/store/connections-store'
+import {
+  updateStatusBarTheme,
+  sendConnectionRedirect,
+} from '../../app/store/connections-store'
 import {
   newConnectionSeen,
   resetNotificationCardPressed,
@@ -55,35 +58,20 @@ class ConnectionDetails extends Component<
 
   componentDidMount() {
     this.props.updateStatusBarTheme(this.props.activeConnectionThemePrimary)
-    this.showSnackBar()
     this.navigateToModal()
-  }
 
-  componentDidUpdate(prevProps: ConnectionHistoryProps) {
-    const oldShowSnack =
-      prevProps.navigation.getParam('showExistingConnectionSnack') || false
-    const newShowSnack =
-      this.props.navigation.getParam('showExistingConnectionSnack') || false
-    if (oldShowSnack !== newShowSnack && newShowSnack === true) {
+    // since componentDidMount is always getting called when navigating to this screen
+    // the check if snack bar should be displayed can be done in componentDidMount
+    if (this.props.navigation.getParam('showExistingConnectionSnack')) {
       this.showSnackBar()
+      this.props.sendConnectionRedirect(
+        this.props.navigation.getParam('qrCodeInvitationPayload'),
+        {
+          senderDID: this.props.navigation.getParam('senderDID'),
+          identifier: this.props.navigation.getParam('identifier'),
+        }
+      )
     }
-
-    // let currentHistArr: Array<any> = Object.values(this.props.connectionHistory)
-    // let previousHistArr: Array<any> = Object.values(prevProps.connectionHistory)
-    // let pendingCell = false
-
-    // currentHistArr.forEach(function(value, index) {
-    //   if (value.action === 'PENDING') {
-    //     pendingCell = true
-    //   }
-    // })
-    // if (!pendingCell) {
-    //   if (currentHistArr[0].length > previousHistArr[0].length) {
-    //     this.setState({
-    //       newMessageLine: true,
-    //     })
-    //   }
-    // }
   }
 
   navigateToModal = () => {
@@ -375,7 +363,12 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { updateStatusBarTheme, newConnectionSeen, resetNotificationCardPressed },
+    {
+      updateStatusBarTheme,
+      newConnectionSeen,
+      resetNotificationCardPressed,
+      sendConnectionRedirect,
+    },
     dispatch
   )
 

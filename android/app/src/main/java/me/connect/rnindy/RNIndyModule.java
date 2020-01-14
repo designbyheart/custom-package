@@ -1253,6 +1253,40 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void connectionRedirect(int redirectConnectionHandle, int connectionHandle, Promise promise) {
+        Log.d(TAG, "connectionRedirect() called with connectionHandle = " + connectionHandle + ", redirectConnectionHandle = " + redirectConnectionHandle);
+
+        try {
+            ConnectionApi.vcxConnectionRedirect(connectionHandle, redirectConnectionHandle).exceptionally((e) -> {
+                Log.e(TAG, "connectionRedirect", e);
+                promise.reject("VcxException", e.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch(VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void getRedirectDetails(int connectionHandle, Promise promise) {
+        Log.d(TAG, "getRedirectDetails() called with connectionHandle = " + connectionHandle);
+
+        try {
+            ConnectionApi.vcxConnectionGetRedirectDetails(connectionHandle).exceptionally((e) -> {
+                Log.e(TAG, "getRedirectDetails", e);
+                promise.reject("VcxException", e.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    }
+
+    @ReactMethod
     public void createWalletKey(int lengthOfKey, Promise promise) {
         try {
             SecureRandom random = new SecureRandom();

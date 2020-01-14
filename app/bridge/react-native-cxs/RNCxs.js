@@ -732,3 +732,16 @@ export async function proofReject(
 ): Promise<void> {
   return RNIndy.proofReject(proofHandle, connectionHandle)
 }
+
+export async function connectionRedirect(
+  redirectConnectionHandle: number,
+  connectionHandle: number
+): Promise<void> {
+  return RNIndy.connectionRedirect(redirectConnectionHandle, connectionHandle)
+}
+
+export async function getRedirectDetails(
+  connectionHandle: number
+): Promise<void> {
+  return RNIndy.getRedirectDetails(connectionHandle)
+}
