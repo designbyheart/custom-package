@@ -11,7 +11,10 @@ import type {
   CustomError,
   ResetAction,
 } from '../common/type-common'
-import type { InvitationReceivedAction } from '../invitation/type-invitation'
+import type {
+  InvitationReceivedAction,
+  InvitationPayload,
+} from '../invitation/type-invitation'
 import type { NewConnectionAction } from '../store/type-connection-store'
 import type { SendClaimRequestAction } from './components/types/type-details-claim-offer'
 import type { ClaimReceivedAction } from './components/types/type-details-claim'
@@ -55,6 +58,7 @@ import {
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
 } from '../question/type-question'
+import { sendConnectionRedirect } from '../store/connections-store'
 
 export const HISTORY_EVENT_STATUS = {
   [INVITATION_RECEIVED]: 'CONNECTION REQUEST',
@@ -252,6 +256,7 @@ export type ConnectionHistoryNavigation = {
       image: string,
       senderDID: string,
       identifier: string,
+      qrCodeInvitationPayload: InvitationPayload,
     |},
   |}>,
 }
@@ -271,6 +276,7 @@ export type ConnectionHistoryProps = {
     string,
     $PropertyType<ReactNavigation, 'navigation'>
   ) => void,
+  sendConnectionRedirect: typeof sendConnectionRedirect,
 } & ConnectionHistoryNavigation
 
 export const CONNECTION_ALREADY_EXIST = 'Connection already exists.'

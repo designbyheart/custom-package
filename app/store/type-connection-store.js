@@ -76,3 +76,14 @@ export type ConnectionThemes = {
 }
 
 export const HYDRATE_CONNECTION_THEMES = 'HYDRATE_CONNECTION_THEMES'
+
+export const SEND_CONNECTION_REDIRECT: 'SEND_CONNECTION_REDIRECT' =
+  'SEND_CONNECTION_REDIRECT'
+export type SendConnectionRedirectAction = {
+  type: typeof SEND_CONNECTION_REDIRECT,
+  qrCodeInvitationPayload: InvitationPayload,
+  existingConnectionDetails: {
+    senderDID: string,
+    identifier: string,
+  },
+}
