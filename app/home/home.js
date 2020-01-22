@@ -47,7 +47,7 @@ export class DashboardScreen extends Component<HomeProps> {
     }
   }
 
-  keyExtractor = (item: Object) => item.index
+  keyExtractor = (item: Object) => item.index.toString()
 
   onCardPress = (senderName: string, image: ?string, senderDID: string) => {
     this.props.navigation.navigate(connectionHistRoute, {
