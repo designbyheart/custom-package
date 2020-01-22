@@ -67,7 +67,7 @@ class NotificationCard extends PureComponent<
           toValue: -100,
           duration: 200,
         }).start(() => this.props.notificationCardSwipedUp())
-      }, 5000)
+      }, 4000)
     })
   }
 
@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
     height: 96,
     alignItems: 'center',
     justifyContent: 'center',
+    elevation: Platform.OS === 'android' ? 9 : 0,
   },
   container: {
     width: 343,

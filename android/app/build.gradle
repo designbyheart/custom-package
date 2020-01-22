@@ -117,8 +117,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 1001
-        versionName "1.0.113"
+        versionCode 999
+        versionName "1.0.111"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
@@ -264,7 +264,7 @@ dependencies {
     // android custom logging ENABLED -- 0.4.53980513-bd81815
     // android custom logging DISABLED -- 0.4.54375765-111929a
     // current libvcx aar
-    implementation 'com.evernym:vcx:0.4.63002819-1cc51a6@aar'
+    implementation 'com.evernym:vcx:0.4.64206563-b6f70b9@aar'
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.6.2'
     implementation 'net.sourceforge.streamsupport:android-retrostreams:1.6.2'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.59'
