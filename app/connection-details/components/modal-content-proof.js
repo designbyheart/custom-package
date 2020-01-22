@@ -172,7 +172,6 @@ class ProofRequestAttributeList extends Component<
         showsButtons={false}
         showsPagination={false}
         height={69}
-        width={'100%'}
         onIndexChanged={swipeIndex => this.onSwipe(items[swipeIndex])}
       >
         {items.map((item, itemIndex) => {

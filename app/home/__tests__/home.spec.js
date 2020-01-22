@@ -60,6 +60,22 @@ function props(claimOfferStatus, noConnections) {
     shouldShowNotification: true,
     notificationCardSwipedUp: jest.fn(),
     notificationCardPressed: jest.fn(),
+    newConnections: [
+      {
+        logoUrl: '',
+        status: '',
+        senderName: '',
+        credentialName: '',
+        date: '',
+        index: new Number(1),
+        newBadge: true,
+        questionTitle: '',
+        senderDID: '',
+        type: '',
+      },
+    ],
+    isCorrectStatus: true,
+    hasNoConnection: true,
   }
 }
 
