@@ -10,6 +10,7 @@ import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { ModalButton } from '../../components/connection-details/modal-button'
 import ModalContentProof from './modal-content-proof'
 import { measurements } from '../../../app/common/styles/measurements'
+import { resetNotificationCardPressed } from '../../connection-history/connection-history-store'
 import {
   acceptClaimOffer,
   claimOfferIgnored,
@@ -25,6 +26,7 @@ class Modal extends Component<any, any> {
   }
 
   hideModal = () => {
+    this.props.resetNotificationCardPressed()
     this.props.navigation.goBack(null)
   }
 
@@ -142,6 +144,7 @@ const mapDispatchToProps = dispatch =>
     {
       acceptClaimOffer,
       claimOfferIgnored,
+      resetNotificationCardPressed,
     },
     dispatch
   )

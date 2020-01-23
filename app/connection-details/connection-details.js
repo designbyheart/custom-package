@@ -91,6 +91,7 @@ class ConnectionDetails extends Component<
         .action
 
     if (this.props.shouldOpenModalFromNotification) {
+      // <== This here should be somehow combined with the handleAppStateChange method from the home screen.
       if (action === 'PROOF RECEIVED') {
         this.props.navigation.navigate(proofRequestRoute, { uid })
       } else if (action === 'CLAIM OFFER RECEIVED') {
