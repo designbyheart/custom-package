@@ -72,11 +72,20 @@ export class DashboardScreen extends Component<HomeProps, HomeState> {
       this.state.appState.match(/inactive|background/) &&
       nextAppState === 'active'
     ) {
-      this.onNotificationCardPress(
-        this.props.newConnections[0].senderName,
-        this.props.newConnections[0].logoUrl,
-        this.props.newConnections[0].senderDID
-      )
+      this.props.newConnections &&
+      this.props.newConnections[this.props.newConnections.length - 1] &&
+      this.props.shouldShowNotification && // <== This is a problem. Not sure why this evaluates to false in this place here.
+        // Another flag is shouldOpenModalFromNotification, which is used in connection-details.
+        this.props.navigation.navigate(connectionHistRoute, {
+          senderName: this.props.newConnections[
+            this.props.newConnections.length - 1
+          ].senderName,
+          image: this.props.newConnections[this.props.newConnections.length - 1]
+            .logoUrl,
+          senderDID: this.props.newConnections[
+            this.props.newConnections.length - 1
+          ].senderDID,
+        })
     }
     this.setState({ appState: nextAppState })
   }
@@ -293,6 +302,8 @@ const mapStateToProps = (state: Store) => {
     isCorrectStatus,
     hasNoConnection,
     newConnections,
+    shouldOpenModalFromNotification:
+      state.history.data && state.history.data.shouldOpenModalFromNotification,
   }
 }
 
