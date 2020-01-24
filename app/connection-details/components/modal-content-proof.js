@@ -172,7 +172,7 @@ class ProofRequestAttributeList extends Component<
         showsButtons={false}
         showsPagination={false}
         height={69}
-        width={'100%'}
+        removeClippedSubviews={false}
         onIndexChanged={swipeIndex => this.onSwipe(items[swipeIndex])}
       >
         {items.map((item, itemIndex) => {
@@ -396,19 +396,19 @@ class ModalContentProof extends Component<
         { cancelable: false }
       )
     }
-  }
 
-  componentWillReceiveProps(nextProps: ProofRequestProps) {
     if (
-      this.props.missingAttributes !== nextProps.missingAttributes &&
-      hasMissingAttributes(nextProps.missingAttributes)
+      this.props.missingAttributes !== prevProps.missingAttributes &&
+      hasMissingAttributes(this.props.missingAttributes)
     ) {
       Alert.alert(
         MESSAGE_MISSING_ATTRIBUTES_TITLE,
-        MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION(nextProps.name)
+        MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION(this.props.name)
       )
     }
+  }
 
+  componentWillReceiveProps(nextProps: ProofRequestProps) {
     if (
       (this.props.proofGenerationError !== nextProps.proofGenerationError &&
         nextProps.proofGenerationError) ||

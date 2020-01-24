@@ -44,7 +44,7 @@ DEPENDENCIES:
 SPEC REPOS:
   "git@gitlab.corp.evernym.com:dev/vcx/indy-sdk.git":
     - vcx
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - apptentive-ios
     - Firebase
     - FirebaseAnalytics
@@ -71,4 +71,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 850a3a3586036db492dbac7bee59544a88f1895d
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.4
