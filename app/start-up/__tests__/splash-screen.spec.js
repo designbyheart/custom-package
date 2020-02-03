@@ -132,6 +132,48 @@ describe('<SplashScreen />', () => {
     expect(navigation.navigate).toHaveBeenCalledWith(waitForInvitationRoute)
   })
 
+  it(`should go to 'waitForInvitation' screen and fetch invitation if the same deepLink was used twice`, () => {
+    const { component, props } = setup()
+    const { deepLink, getSmsPendingInvitation, lock, navigation } = props
+    const updatedDeepLink = {
+      ...deepLink,
+      isLoading: false,
+      tokens: {
+        token1: {
+          status: DEEP_LINK_STATUS.NONE,
+          token: 'token1',
+          error: null,
+        },
+      },
+    }
+    const finishedDeepLink = {
+      ...updatedDeepLink,
+      tokens: {
+        token1: {
+          status: DEEP_LINK_STATUS.PROCESSED,
+        },
+      },
+    }
+
+    component.update(
+      <SplashScreenView
+        {...props}
+        deepLink={finishedDeepLink}
+        lock={{ ...lock, isAppLocked: false }}
+      />
+    )
+    component.update(
+      <SplashScreenView
+        {...props}
+        deepLink={updatedDeepLink}
+        lock={{ ...lock, isAppLocked: false }}
+      />
+    )
+
+    expect(getSmsPendingInvitation).toHaveBeenCalledWith('token1')
+    expect(navigation.navigate).toHaveBeenCalledWith(waitForInvitationRoute)
+  })
+
   it(`should show invitation if invitation is fetched and app is unlocked`, () => {
     const { component, props } = setup()
     const { deepLink, deepLinkProcessed, lock, navigation } = props

@@ -48,17 +48,26 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
     const nextDeepLinkTokens = this.props.deepLink.tokens
     if (
       this.props.deepLink.isLoading === false &&
-      Object.keys(nextDeepLinkTokens).length >
-        Object.keys(prevProps.deepLink.tokens).length
+      JSON.stringify(nextDeepLinkTokens) !==
+        JSON.stringify(prevProps.deepLink.tokens)
     ) {
-      Object.keys(nextDeepLinkTokens).map(
-        smsToken =>
-          nextDeepLinkTokens[smsToken].status !== DEEP_LINK_STATUS.PROCESSED &&
+      Object.keys(nextDeepLinkTokens).map(smsToken => {
+        if (
+          nextDeepLinkTokens[smsToken].status !== DEEP_LINK_STATUS.PROCESSED
+        ) {
           this.props.getSmsPendingInvitation(smsToken)
-      )
-      if (this.props.lock.isAppLocked === false) {
-        this.props.navigation.navigate(waitForInvitationRoute)
-      }
+
+          this.redirect(this.props, waitForInvitationRoute)
+        }
+      })
+    }
+  }
+
+  redirect = (props: SplashScreenProps, route: string) => {
+    if (props.lock.isAppLocked === false) {
+      props.navigation.navigate(route)
+    } else {
+      props.addPendingRedirection([{ routeName: route }])
     }
   }
 
@@ -90,21 +99,11 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
       ({ error }) => error && error.code && error.code === TOKEN_EXPIRED_CODE
     )
     if (isAnyOneOfSmsPendingInvitationWasExpired) {
-      // TODO: This conditions pops up too many times, we should create a common function for this.
-      // TODO: It should be something like this this.redirect(nextProps.lock, routeName)
-      if (this.props.lock.isAppLocked === false) {
-        this.props.navigation.navigate(expiredTokenRoute)
-      } else {
-        this.props.addPendingRedirection([{ routeName: expiredTokenRoute }])
-      }
+      this.redirect(this.props, expiredTokenRoute)
     } else if (isAnyOneOfSmsPendingInvitationHasError) {
       // * This condition is needed to avoid un wanted redirection to home screen if unHandledSmsPendingInvitations are empty
       // * or if we are in middle of other invitation fetching process
-      if (this.props.lock.isAppLocked === false) {
-        this.props.navigation.navigate(homeRoute)
-      } else {
-        this.props.addPendingRedirection([{ routeName: homeRoute }])
-      }
+      this.redirect(this.props, homeRoute)
     }
     unHandledSmsPendingInvitations.map(({ error, invitationToken }) => {
       error ? this.props.deepLinkProcessed(invitationToken) : null
@@ -113,9 +112,11 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
 
   handleSmsPendingInvitations = (prevProps: SplashScreenProps) => {
     const nextDeepLinkTokens = this.props.deepLink.tokens
+    // Check if the pending sms invitations have changed, or if there is unhandled sms invitations to proceed
     if (
       JSON.stringify(prevProps.smsPendingInvitation) !==
-      JSON.stringify(this.props.smsPendingInvitation)
+        JSON.stringify(this.props.smsPendingInvitation) ||
+      typeof this.getUnHandledSmsPendingInvitations() !== 'undefined'
     ) {
       const unHandledSmsPendingInvitations = this.getUnHandledSmsPendingInvitations()
       this.handleExpiredTokens(unHandledSmsPendingInvitations)
@@ -198,13 +199,8 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
       this.props.deepLink.isLoading === false &&
       Object.keys(nextDeepLinkTokens).length === 0
     ) {
-      if (this.props.lock.isAppLocked === false) {
-        // we did not get any token and deepLink data loading is done
-        SplashScreen.hide()
-        this.props.navigation.navigate(homeRoute)
-      } else {
-        this.props.addPendingRedirection([{ routeName: homeRoute }])
-      }
+      // we did not get any token and deepLink data loading is done
+      this.redirect(this.props, homeRoute)
     }
 
     this.ifDeepLinkFoundGoToWaitForInvitationScreenNFetchInvitation(prevProps)
