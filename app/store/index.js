@@ -66,6 +66,10 @@ import {
   watchOpenIdConnectStore,
   openIdConnectReducer,
 } from '../open-id-connect/open-id-connect-store'
+import {
+  watchInAppNotificationActions,
+  inAppNotificationReducer,
+} from '../in-app-notification/in-app-notification-store'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -96,6 +100,7 @@ const appReducer = combineReducers({
   question,
   txnAuthorAgreement,
   openIdConnect: openIdConnectReducer,
+  inAppNotification: inAppNotificationReducer,
 })
 
 let middlewares = [historyRecorder, automaticCloudBackup]
@@ -148,6 +153,7 @@ sagaMiddleware.run(function*() {
     watchTxnAuthorAgreement(),
     watchOpenIdConnectStore(),
     watchProofRequestDeny(),
+    watchInAppNotificationActions(),
   ])
 })
 

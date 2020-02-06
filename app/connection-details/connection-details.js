@@ -18,10 +18,7 @@ import {
   updateStatusBarTheme,
   sendConnectionRedirect,
 } from '../../app/store/connections-store'
-import {
-  newConnectionSeen,
-  resetNotificationCardPressed,
-} from '../../app/connection-history/connection-history-store'
+import { newConnectionSeen } from '../../app/connection-history/connection-history-store'
 import { BlurView } from 'react-native-blur'
 import Snackbar from 'react-native-snackbar'
 import { measurements } from '../../app/common/styles/measurements'
@@ -43,6 +40,7 @@ import { withStatusBar } from '../components/status-bar/status-bar'
 import { isIphoneX, isIphoneXR } from '../common/styles/constant'
 import { DENY_PROOF_REQUEST_SUCCESS } from '../proof-request/type-proof-request'
 import { proofRequestRoute, claimOfferRoute, questionRoute } from '../common'
+import { MESSAGE_TYPE } from '../api/api-constants'
 
 let ScreenWidth = Dimensions.get('window').width
 
@@ -75,29 +73,40 @@ class ConnectionDetails extends Component<
   }
 
   navigateToModal = () => {
-    const uid =
-      this.props.connectionHistory &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1] &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1]
-        .originalPayload &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1]
-        .originalPayload.payloadInfo &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1]
-        .originalPayload.payloadInfo.uid
-    const action =
-      this.props.connectionHistory &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1] &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1]
-        .action
+    const notificationOpenOptions = this.props.navigation.getParam(
+      'notificationOpenOptions'
+    )
+    if (
+      !notificationOpenOptions ||
+      !notificationOpenOptions.openMessageDirectly
+    ) {
+      // the param 'notificationOpenOptions' helps us decide if we need to open
+      // modal of clicked message directly
+      // if we don't get any options or if openMessageDirectly is false
+      // then we just return from here
+      return
+    }
 
-    if (this.props.shouldOpenModalFromNotification) {
-      // <== This here should be somehow combined with the handleAppStateChange method from the home screen.
-      if (action === 'PROOF RECEIVED') {
-        this.props.navigation.navigate(proofRequestRoute, { uid })
-      } else if (action === 'CLAIM OFFER RECEIVED') {
-        this.props.navigation.navigate(claimOfferRoute, { uid })
-      } else if (action === 'QUESTION_RECEIVED') {
-        this.props.navigation.navigate(questionRoute, { uid })
+    // If we reach here, then we have param indicating that we need open
+    // a message. Now, we need to know what is messageId and messageType
+    // so that we can open correct modal
+
+    const messageType = this.props.navigation.getParam('messageType')
+    const uid = this.props.navigation.getParam('uid')
+
+    if (messageType && uid) {
+      switch (messageType) {
+        case MESSAGE_TYPE.CLAIM_OFFER:
+          this.props.navigation.navigate(claimOfferRoute, { uid })
+          break
+
+        case MESSAGE_TYPE.PROOF_REQUEST:
+          this.props.navigation.navigate(proofRequestRoute, { uid })
+          break
+
+        case MESSAGE_TYPE.QUESTION:
+          this.props.navigation.navigate(questionRoute, { uid })
+          break
       }
     }
   }
@@ -297,9 +306,6 @@ class ConnectionDetails extends Component<
             navigation={this.props.navigation}
             moreOptionsOpen={this.moreOptionsOpen}
             colorBackground={activeConnectionThemePrimary}
-            resetNotificationCardPressed={
-              this.props.resetNotificationCardPressed
-            }
           />
           <Animated.View
             style={[
@@ -357,8 +363,6 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
     activeConnectionThemeSecondary: themeForLogo.secondary,
     connectionHistory: connectionHistory,
     claimMap: state.claim.claimMap,
-    shouldOpenModalFromNotification:
-      state.history.data && state.history.data.shouldOpenModalFromNotification,
   }
 }
 
@@ -367,7 +371,6 @@ const mapDispatchToProps = dispatch =>
     {
       updateStatusBarTheme,
       newConnectionSeen,
-      resetNotificationCardPressed,
       sendConnectionRedirect,
     },
     dispatch

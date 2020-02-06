@@ -160,9 +160,6 @@ export type ConnectionHistoryData = {
     [string]: { data: ConnectionHistoryEvent[], newBadge: boolean },
   },
   connectionsUpdated: boolean,
-  shouldShowNotification: boolean,
-  shouldOpenModalFromNotification: boolean,
-  notificationCardSwipedUp: Function,
 }
 
 export const LOAD_HISTORY = 'LOAD_HISTORY'

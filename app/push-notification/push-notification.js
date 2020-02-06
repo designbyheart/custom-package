@@ -9,15 +9,20 @@ import type {
   NotificationOpen,
   RemoteMessage,
 } from 'react-native-firebase'
+
+import type {
+  PushNotificationProps,
+  NotificationOpenOptions,
+} from './type-push-notification'
+import type { Store } from '../store/type-store'
+import type { NotificationPayload } from '../common/type-common'
+
 import {
   pushNotificationPermissionAction,
   updatePushToken,
   fetchAdditionalData,
 } from './push-notification-store'
 import PushNotificationNavigator from './push-notification-navigator'
-import type { PushNotificationProps } from './type-push-notification'
-import type { Store } from '../store/type-store'
-import type { NotificationPayload } from '../common/type-common'
 import { customLogger } from '../store/custom-logger'
 import { getUnacknowledgedMessages } from '../store/config-store'
 
@@ -99,7 +104,9 @@ export class PushNotification extends Component<PushNotificationProps, void> {
         const action = notificationOpen.action
         // Get information about the notification that was opened
         const notification: Notification = notificationOpen.notification
-        this.onPushNotificationReceived(this.notificationParser(notification))
+        this.onPushNotificationReceived(this.notificationParser(notification), {
+          openMessageDirectly: true,
+        })
       })
 
     this.messageListener = firebase
@@ -108,8 +115,6 @@ export class PushNotification extends Component<PushNotificationProps, void> {
         // Process your message as required
         // https://rnfirebase.io/docs/v5.x.x/messaging/receiving-messages
         // https://rnfirebase.io/docs/v5.x.x/messaging/upstream-messages
-        //console.log('Remote message: ', message)
-        //this.props.getUnacknowledgedMessages()
         this.onPushNotificationReceived(remoteMessageParser(message))
       })
 
@@ -125,7 +130,9 @@ export class PushNotification extends Component<PushNotificationProps, void> {
         const action = notificationOpen.action
         // Get information about the notification that was opened
         const notification: Notification = notificationOpen.notification
-        this.onPushNotificationReceived(this.notificationParser(notification))
+        this.onPushNotificationReceived(this.notificationParser(notification), {
+          openMessageDirectly: true,
+        })
       }
     } catch (e) {
       // TODO: handle error better
@@ -139,9 +146,15 @@ export class PushNotification extends Component<PushNotificationProps, void> {
     })
   }
 
-  onPushNotificationReceived(notificationPayload: NotificationPayload) {
+  onPushNotificationReceived(
+    notificationPayload: NotificationPayload,
+    notificationOpenOptions: ?NotificationOpenOptions
+  ) {
     if (notificationPayload) {
-      this.props.fetchAdditionalData(notificationPayload)
+      this.props.fetchAdditionalData(
+        notificationPayload,
+        notificationOpenOptions
+      )
     }
   }
 

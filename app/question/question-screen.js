@@ -54,7 +54,6 @@ import {
   getScreenStatus,
   getQuestionValidity,
 } from './question-store'
-import { resetNotificationCardPressed } from '../connection-history/connection-history-store'
 import {
   transparentHeaderStyle,
   noBorderNoShadowHeaderStyle,
@@ -210,7 +209,6 @@ export class Question extends Component<
   }
 
   componentDidMount() {
-    this.props.resetNotificationCardPressed()
     if (this.props.question) {
       this.props.updateQuestionStatus(
         this.props.question.payload.uid,
@@ -615,7 +613,6 @@ const mapDispatchToProps = dispatch =>
     {
       updateQuestionStatus,
       sendAnswerToQuestion,
-      resetNotificationCardPressed,
     },
     dispatch
   )

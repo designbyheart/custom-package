@@ -29,6 +29,7 @@ import type {
   Attribute,
   AdditionalDataPayload,
   NotificationPayloadInfo,
+  NotificationOpenOptions,
 } from '../push-notification/type-push-notification'
 import type { ClaimMap } from './components/types/type-details-claim'
 
@@ -257,18 +258,20 @@ export type ConnectionHistoryNavigation = {
       senderDID: string,
       identifier: string,
       qrCodeInvitationPayload: InvitationPayload,
+      messageType: ?string,
+      notificationOpenOptions: ?NotificationOpenOptions,
+      uid: ?string,
     |},
   |}>,
 }
 
 export type ConnectionHistoryProps = {
-  newConnectionSeen: Function,
-  resetNotificationCardPressed: Function,
-  shouldOpenModalFromNotification: boolean,
   claimMap: ?ClaimMap,
   activeConnectionThemePrimary: string,
   activeConnectionThemeSecondary: string,
   connectionHistory: ConnectionHistoryEvent[],
+  sendConnectionRedirect: typeof sendConnectionRedirect,
+  newConnectionSeen: Function,
   updateStatusBarTheme: (color?: string) => void,
   deleteConnectionAction: (senderDID: string) => void,
   goToUIScreen: (
@@ -276,7 +279,6 @@ export type ConnectionHistoryProps = {
     string,
     $PropertyType<ReactNavigation, 'navigation'>
   ) => void,
-  sendConnectionRedirect: typeof sendConnectionRedirect,
 } & ConnectionHistoryNavigation
 
 export const CONNECTION_ALREADY_EXIST = 'Connection already exists.'

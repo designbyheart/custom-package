@@ -17,11 +17,7 @@ import type { HomeProps, HomeState, Item } from './type-home'
 import type { Connection } from '../store/type-connection-store'
 import type { ReactNavigation } from '../common/type-common'
 
-import {
-  newConnectionSeen,
-  notificationCardSwipedUp,
-  notificationCardPressed,
-} from '../connection-history/connection-history-store'
+import { newConnectionSeen } from '../connection-history/connection-history-store'
 import { PrimaryHeader } from '../components'
 import { ConnectionCard } from './connection-card/connection-card'
 import { createStackNavigator, NavigationActions } from 'react-navigation'
@@ -38,78 +34,35 @@ import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { bindActionCreators } from 'redux'
 
-import { NotificationCard } from '../components/notification-card/notification-card'
+import { NotificationCard } from '../in-app-notification/in-app-notification-card'
 
 export class DashboardScreen extends Component<HomeProps, HomeState> {
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: null,
   })
 
-  state = {
-    appState: AppState.currentState,
-  }
-
-  componentDidMount() {
-    AppState.addEventListener('change', this.handleAppStateChange)
-  }
-
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange)
-  }
-
   componentDidUpdate(prevProps: HomeProps) {
     const noUnSeenMessages =
-      Object.keys(prevProps.unSeenMessages).length &&
-      !Object.keys(this.props.unSeenMessages).length
+      prevProps.unSeenMessagesCount && !this.props.unSeenMessagesCount
+
     if (noUnSeenMessages) {
       firebase.notifications().setBadge(0)
     }
   }
 
-  handleAppStateChange = (nextAppState: string) => {
-    if (
-      this.state.appState &&
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === 'active'
-    ) {
-      this.props.newConnections &&
-      this.props.newConnections[this.props.newConnections.length - 1] &&
-      this.props.shouldShowNotification && // <== This is a problem. Not sure why this evaluates to false in this place here.
-        // Another flag is shouldOpenModalFromNotification, which is used in connection-details.
-        this.props.navigation.navigate(connectionHistRoute, {
-          senderName: this.props.newConnections[
-            this.props.newConnections.length - 1
-          ].senderName,
-          image: this.props.newConnections[this.props.newConnections.length - 1]
-            .logoUrl,
-          senderDID: this.props.newConnections[
-            this.props.newConnections.length - 1
-          ].senderDID,
-        })
-    }
-    this.setState({ appState: nextAppState })
-  }
-
   keyExtractor = (item: Object) => item.index.toString()
 
-  onCardPress = (senderName: string, image: ?string, senderDID: string) => {
-    this.props.navigation.navigate(connectionHistRoute, {
-      senderName,
-      image,
-      senderDID,
-    })
-  }
-
-  onNotificationCardPress = (
+  onCardPress = (
     senderName: string,
     image: ?string,
-    senderDID: string
+    senderDID: string,
+    identifier: string
   ) => {
-    this.props.notificationCardPressed()
     this.props.navigation.navigate(connectionHistRoute, {
       senderName,
       image,
       senderDID,
+      identifier,
     })
   }
 
@@ -124,12 +77,13 @@ export class DashboardScreen extends Component<HomeProps, HomeState> {
       credentialName,
       date,
       newBadge,
+      identifier,
     } = item
 
     return (
       <ConnectionCard
         onPress={() => {
-          this.onCardPress(senderName, logoUrl, senderDID)
+          this.onCardPress(senderName, logoUrl, senderDID, identifier)
         }}
         onNewConnectionSeen={this.props.onNewConnectionSeen}
         image={logoUrl}
@@ -157,23 +111,9 @@ export class DashboardScreen extends Component<HomeProps, HomeState> {
     return (
       <View style={outerContainer}>
         <PrimaryHeader headline="Connections" />
-        {this.props.shouldShowNotification &&
-          this.props.isCorrectStatus && (
-            <NotificationCard
-              image={
-                this.props.newConnections &&
-                this.props.newConnections[0].logoUrl
-              }
-              status={this.props.newConnections[0].status}
-              senderName={this.props.newConnections[0].senderName}
-              credentialName={this.props.newConnections[0].credentialName}
-              question={this.props.newConnections[0].questionTitle}
-              senderDID={this.props.newConnections[0].senderDID}
-              newBadge={this.props.newConnections[0].newBadge}
-              notificationCardSwipedUp={this.props.notificationCardSwipedUp}
-              onNotificationCardPress={this.onNotificationCardPress}
-            />
-          )}
+
+        <NotificationCard />
+
         <View style={container} testID="home-container">
           {this.props.hasNoConnection && (
             <NewConnectionInstructions
@@ -186,7 +126,7 @@ export class DashboardScreen extends Component<HomeProps, HomeState> {
             keyExtractor={this.keyExtractor}
             style={flatListContainer}
             contentContainerStyle={flatListInnerContainer}
-            data={this.props.newConnections}
+            data={this.props.connections}
             renderItem={this.renderItem}
           />
         </View>
@@ -203,7 +143,7 @@ const mapStateToProps = (state: Store) => {
   const receivedConnections: Connection[] = (getConnections(
     state.connections.data
   ): any)
-  const newConnections = receivedConnections
+  const connections = receivedConnections
     .map((connection, index) => {
       return {
         ...connection,
@@ -284,26 +224,16 @@ const mapStateToProps = (state: Store) => {
     })
 
   const hasNoConnection = state.connections.hydrated
-    ? newConnections.length === 0
+    ? connections.length === 0
     : false
-  const isCorrectStatus =
-    (newConnections[0] && newConnections[0].status === 'PROOF RECEIVED') ||
-    (newConnections[0] && newConnections[0].status === 'QUESTION_RECEIVED') ||
-    (newConnections[0] && newConnections[0].status === 'CLAIM OFFER RECEIVED')
 
-  let unSeenMessages = getUnseenMessages(state)
+  let unSeenMessagesCount = Object.keys(getUnseenMessages(state)).length
+
   return {
-    connections: state.connections,
-    unSeenMessages,
-    history: state.history,
+    unSeenMessagesCount,
     environmentName: getEnvironmentName(state.config),
-    shouldShowNotification:
-      state.history.data && state.history.data.shouldShowNotification,
-    isCorrectStatus,
     hasNoConnection,
-    newConnections,
-    shouldOpenModalFromNotification:
-      state.history.data && state.history.data.shouldOpenModalFromNotification,
+    connections,
   }
 }
 
@@ -311,8 +241,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       onNewConnectionSeen: newConnectionSeen,
-      notificationCardSwipedUp: notificationCardSwipedUp,
-      notificationCardPressed,
     },
     dispatch
   )

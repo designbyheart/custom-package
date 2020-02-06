@@ -145,7 +145,6 @@ describe('<QuestionScreen />', () => {
       },
       questionStyles,
       useIgnoreButton: true,
-      resetNotificationCardPressed: jest.fn(),
     }
   }
 
