@@ -1054,6 +1054,7 @@ function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
       senderLogoUrl,
       remotePairwiseDID,
       forDID,
+      notificationOpenOptions: null,
     })
   } catch (e) {
     captureError(e)

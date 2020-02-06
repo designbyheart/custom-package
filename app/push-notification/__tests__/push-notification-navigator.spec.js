@@ -13,6 +13,7 @@ import {
 import {
   claimOfferPushNotification,
   proofRequestPushPayloadAdditionalData,
+  getStore,
 } from '../../../__mocks__/static-data'
 
 describe('<PushNotificationNavigator />', () => {
@@ -26,19 +27,7 @@ describe('<PushNotificationNavigator />', () => {
   }
 
   beforeAll(() => {
-    store = {
-      getState() {
-        return {
-          ...storeToProps,
-        }
-      },
-      subscribe() {
-        return jest.fn()
-      },
-      dispatch() {
-        return jest.fn()
-      },
-    }
+    store = getStore(storeToProps)
   })
 
   function props() {

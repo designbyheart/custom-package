@@ -12,7 +12,6 @@ import type {
 } from 'react-navigation'
 
 export type QuestionScreenProps = {
-  resetNotificationCardPressed: Function,
   updateQuestionStatus: (
     uid: string,
     status: QuestionStatus,

@@ -79,6 +79,7 @@ export type RestoreActions =
 
 export type RestoreStore = {
   restoreFile: SaveToAppDirectory,
+  passphrase?: ?string,
 } & StoreError &
   RestoreStoreStatus
 

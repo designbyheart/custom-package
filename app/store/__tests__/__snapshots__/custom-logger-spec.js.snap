@@ -114,6 +114,9 @@ Object {
     "data": "****",
     "isLoading": true,
   },
+  "inAppNotification": Object {
+    "notification": "****",
+  },
   "invitation": Object {},
   "ledger": Object {
     "fees": Object {
@@ -162,6 +165,7 @@ Object {
   },
   "restore": Object {
     "error": null,
+    "passphrase": null,
     "restoreFile": Object {
       "fileName": "backup.zip",
       "fileSize": 22,

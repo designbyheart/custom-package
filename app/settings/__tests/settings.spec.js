@@ -50,11 +50,6 @@ describe('user settings screen', () => {
       hasViewedWalletError: false,
       cloudBackupStart: jest.fn(),
       viewedWalletError: jest.fn(),
-      notificationCardSwipedUp: jest.fn(),
-      shouldShowNotification: false,
-      connections: store.getState().connections,
-      history: store.getState().history,
-      notificationCardPressed: jest.fn(),
     }
   }
 

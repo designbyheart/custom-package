@@ -32,6 +32,7 @@ export const FETCH_ADDITIONAL_DATA = 'FETCH_ADDITIONAL_DATA'
 export type FetchAdditionalDataAction = {
   type: typeof FETCH_ADDITIONAL_DATA,
   notificationPayload: NotificationPayload,
+  notificationOpenOptions: NotificationOpenOptions,
 }
 
 export const FETCH_ADDITIONAL_DATA_PENDING_KEYS =
@@ -70,6 +71,7 @@ export type DownloadedNotification = {
   pushNotifMsgTitle?: ?string,
   remotePairwiseDID: string,
   forDID: string,
+  notificationOpenOptions: ?NotificationOpenOptions,
 }
 
 export type PushNotificationStore = {
@@ -221,7 +223,10 @@ export type UiType = {
 export type RedirectToRelevantScreen = DownloadedNotification & UiType
 
 export type PushNotificationProps = {
-  fetchAdditionalData: NotificationPayload => void,
+  fetchAdditionalData: (
+    payload: NotificationPayload,
+    options: ?NotificationOpenOptions
+  ) => void,
   pushNotificationPermissionAction: boolean => void,
   updatePushToken: string => void,
   navigateToRoute: (routeName: string, params: NavigationParams) => void,
@@ -251,4 +256,8 @@ export type updatePayloadToRelevantStoreAction = {
 export type GetClaimVcxResult = {
   claimUuid: string,
   claim: ClaimPushPayload,
+}
+
+export type NotificationOpenOptions = {
+  openMessageDirectly: boolean,
 }

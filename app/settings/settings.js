@@ -110,18 +110,13 @@ import {
 import { secureSet, walletSet, safeSet } from '../services/storage'
 import { addPendingRedirection } from '../lock/lock-store'
 import { cloudBackupStart } from '../backup/backup-store'
-import {
-  newConnectionSeen,
-  notificationCardSwipedUp,
-  notificationCardPressed,
-} from '../connection-history/connection-history-store'
+import { newConnectionSeen } from '../connection-history/connection-history-store'
 import { setupApptentive } from '../feedback'
 import { customLogger } from '../store/custom-logger'
 import { getConnections } from '../store/connections-store'
 import type { Connection } from '../store/type-connection-store'
-import { connectionHistRoute } from '../common/route-constants'
 
-import { NotificationCard } from '../components/notification-card/notification-card'
+import { NotificationCard } from '../in-app-notification/in-app-notification-card'
 
 // Use this variable to show/hide token amount
 // if we just comment out code, then we need to adjust other styles as well
@@ -437,21 +432,9 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       })
     }
   }
+
   getLastBackupTitle = () => {
     return this.getLastBackupTime()
-  }
-
-  onNotificationCardPress = (
-    senderName: string,
-    image: ?string,
-    senderDID: string
-  ) => {
-    this.props.notificationCardPressed()
-    this.props.navigation.navigate(connectionHistRoute, {
-      senderName,
-      image,
-      senderDID,
-    })
   }
 
   getLastBackupTime() {
@@ -469,6 +452,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       'You have unsaved Connect.Me information'
     )
   }
+
   getCloudBackupSubtitle = () => {
     if (this.props.cloudBackupStatus === CLOUD_BACKUP_LOADING) {
       return 'Backing up...'
@@ -490,6 +474,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       )
     } else return this.getLastCloudBackupTime()
   }
+
   getLastCloudBackupTime() {
     // return this.props.lastSuccessfulCloudBackup === 'error' ? (
     return this.props.cloudBackupError === WALLET_BACKUP_FAILURE ? (
@@ -589,92 +574,12 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       cloudBackupStatus,
       hasVerifiedRecoveryPhrase,
       cloudBackupError,
-      connections: { data, hydrated },
-      history,
     } = this.props
     const hasBackupError = cloudBackupError === WALLET_BACKUP_FAILURE
     const hasCloudBackupFailed =
       this.props.cloudBackupStatus === WALLET_BACKUP_FAILURE ||
       this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE ||
       cloudBackupError === WALLET_BACKUP_FAILURE
-
-    const receivedConnections: Connection[] = (getConnections(data): any)
-    const newestUpdatedConnection = [
-      receivedConnections[receivedConnections.length - 1],
-    ]
-
-    const newConnections = receivedConnections.map((connection, index) => {
-      return {
-        ...connection,
-        index,
-        date:
-          history.data &&
-          history.data.connections &&
-          history.data.connections[connection.senderDID] &&
-          history.data.connections[connection.senderDID].data &&
-          history.data.connections[connection.senderDID].data[
-            history.data.connections[connection.senderDID].data.length - 1
-          ] &&
-          history.data.connections[connection.senderDID].data[
-            history.data.connections[connection.senderDID].data.length - 1
-          ].timestamp,
-        status:
-          history.data &&
-          history.data.connections &&
-          history.data.connections[connection.senderDID] &&
-          history.data.connections[connection.senderDID].data &&
-          history.data.connections[connection.senderDID].data[
-            history.data.connections[connection.senderDID].data.length - 1
-          ] &&
-          history.data.connections[connection.senderDID].data[
-            history.data.connections[connection.senderDID].data.length - 1
-          ].status,
-        questionTitle:
-          history.data &&
-          history.data.connections &&
-          history.data.connections[connection.senderDID] &&
-          history.data.connections[connection.senderDID].data &&
-          history.data.connections[connection.senderDID].data[
-            history.data.connections[connection.senderDID].data.length - 1
-          ] &&
-          history.data.connections[connection.senderDID].data[
-            history.data.connections[connection.senderDID].data.length - 1
-          ].name,
-        credentialName:
-          history.data &&
-          history.data.connections &&
-          history.data.connections[connection.senderDID] &&
-          history.data.connections[connection.senderDID].data &&
-          history.data.connections[connection.senderDID].data[
-            history.data.connections[connection.senderDID].data.length - 1
-          ] &&
-          history.data.connections[connection.senderDID].data[
-            history.data.connections[connection.senderDID].data.length - 1
-          ].name,
-        type:
-          history.data &&
-          history.data.connections &&
-          history.data.connections[connection.senderDID] &&
-          history.data.connections[connection.senderDID].data &&
-          history.data.connections[connection.senderDID].data[
-            history.data.connections[connection.senderDID].data.length - 1
-          ] &&
-          history.data.connections[connection.senderDID].data[
-            history.data.connections[connection.senderDID].data.length - 1
-          ].type,
-        newBadge:
-          history.data &&
-          history.data.connections &&
-          history.data.connections[connection.senderDID] &&
-          history.data.connections[connection.senderDID].newBadge,
-        senderDID: connection.senderDID,
-      }
-    })
-
-    const isCorrectStatus =
-      (newConnections[0] && newConnections[0].status === 'PROOF RECEIVED') ||
-      (newConnections[0] && newConnections[0].status === 'QUESTION_RECEIVED') ||
-      (newConnections[0] && newConnections[0].status === 'CLAIM OFFER RECEIVED')
 
     const userAvatar = (
       <CustomView center style={[style.userAvatarContainer]}>
@@ -981,20 +886,8 @@ export class Settings extends Component<SettingsProps, SettingsState> {
 
     return (
       <Container>
-        {this.props.shouldShowNotification &&
-          isCorrectStatus && (
-            <NotificationCard
-              image={newConnections[0].logoUrl}
-              status={newConnections[0].status}
-              senderName={newConnections[0].senderName}
-              credentialName={newConnections[0].credentialName}
-              question={newConnections[0].questionTitle}
-              senderDID={newConnections[0].senderDID}
-              newBadge={newConnections[0].newBadge}
-              notificationCardSwipedUp={this.props.notificationCardSwipedUp}
-              onNotificationCardPress={this.onNotificationCardPress}
-            />
-          )}
+        <NotificationCard />
+
         <CustomView style={[style.secondaryContainer]} tertiary>
           {userAvatar}
           <ScrollView>
@@ -1074,10 +967,6 @@ const mapStateToProps = (state: Store) => ({
     state.history.data && state.history.data.connectionsUpdated,
   walletBalance: getWalletBalance(state),
   hasVerifiedRecoveryPhrase: getHasVerifiedRecoveryPhrase(state),
-  shouldShowNotification:
-    state.history.data && state.history.data.shouldShowNotification,
-  connections: state.connections,
-  history: state.history,
 })
 
 const mapDispatchToProps = dispatch =>
@@ -1092,8 +981,6 @@ const mapDispatchToProps = dispatch =>
       generateRecoveryPhrase,
       viewedWalletError,
       cloudBackupStart,
-      notificationCardSwipedUp,
-      notificationCardPressed,
     },
     dispatch
   )
