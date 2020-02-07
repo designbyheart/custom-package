@@ -775,7 +775,7 @@ function* redirectToRelevantScreen(notification: RedirectToRelevantScreen) {
             uid,
             notificationOpenOptions,
             senderDID: remotePairwiseDID,
-            image: additionalData.senderImage,
+            image: additionalData.senderLogoUrl,
             senderName: additionalData.remoteName,
             messageType: type,
             identifier: forDID,
@@ -819,7 +819,7 @@ function* handleRedirection(
     yield put(
       showInAppNotification({
         senderName: params.senderName,
-        senderImage: params.senderLogoUrl,
+        senderImage: params.image,
         senderDID: params.senderDID,
         text: notificationText,
         messageType: notification.type,
