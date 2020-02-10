@@ -168,6 +168,7 @@ export class LockEnterPin extends PureComponent<
 
   // passing the props in to the function
   redirect = (props: LockEnterPinProps) => {
+    //This will set isAppLocked to false
     props.unlockApp()
     if (props.pendingRedirection) {
       props.pendingRedirection.map(pendingRedirection => {
@@ -177,15 +178,11 @@ export class LockEnterPin extends PureComponent<
         )
       })
       props.clearPendingRedirect()
-    } else if (props.isAppLocked === true) {
-      // * if app is unlocked and invitation is fetched , with out this condition we are redirecting user to home screen from invitation screen.
-      // * this condition will avoid redirecting user to home screen if app is already unlocked
-      setTimeout(() => {
-        props.navigation.navigate(homeRoute)
-      }, 0)
+    } else {
+      // If the app doesn't know where to redirect, send it to home instead of sitting on the locked screen
+      this.props.navigation.navigate(homeRoute)
     }
   }
-
   onSuccess = () => {
     if (!this.state.authenticationSuccess) {
       this.setState({ authenticationSuccess: true })
