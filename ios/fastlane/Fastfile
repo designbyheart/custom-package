@@ -164,7 +164,10 @@ platform :ios do
     if ENV["CI_PIPELINE_SOURCE"] == "merge_request" || ENV["CI_BUILD_REF_SLUG"] != "master"
       buildNumber = increment_build_number(build_number: ci_job_id, xcodeproj: "ConnectMe.xcodeproj")
     end
-    versionNumber = increment_version_number(xcodeproj: "ConnectMe.xcodeproj")
+    # we are fixing the version number as of now
+    # any version number change has to be manual
+    version_number = "1.1.1"
+    versionNumber = increment_version_number(version_number: version_number, xcodeproj: "ConnectMe.xcodeproj")
     path = '../../android/app/build.gradle'
     reVersionCode = /versionCode\s+(\d+)/
     reVersionName = /versionName\s+(\S+)/

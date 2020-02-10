@@ -14,11 +14,11 @@ import { ConnectionCard } from '../components/connection-details/connection-card
 import { NewMessageBreakLine } from '../components/connection-details/new-message-break-line'
 import MoreOptions from './components/more-options'
 import { ConnectionPending } from '../components/connection-details/connection-pending'
-import { updateStatusBarTheme } from '../../app/store/connections-store'
 import {
-  newConnectionSeen,
-  resetNotificationCardPressed,
-} from '../../app/connection-history/connection-history-store'
+  updateStatusBarTheme,
+  sendConnectionRedirect,
+} from '../../app/store/connections-store'
+import { newConnectionSeen } from '../../app/connection-history/connection-history-store'
 import { BlurView } from 'react-native-blur'
 import Snackbar from 'react-native-snackbar'
 import { measurements } from '../../app/common/styles/measurements'
@@ -40,6 +40,7 @@ import { withStatusBar } from '../components/status-bar/status-bar'
 import { isIphoneX, isIphoneXR } from '../common/styles/constant'
 import { DENY_PROOF_REQUEST_SUCCESS } from '../proof-request/type-proof-request'
 import { proofRequestRoute, claimOfferRoute, questionRoute } from '../common'
+import { MESSAGE_TYPE } from '../api/api-constants'
 
 let ScreenWidth = Dimensions.get('window').width
 
@@ -55,60 +56,57 @@ class ConnectionDetails extends Component<
 
   componentDidMount() {
     this.props.updateStatusBarTheme(this.props.activeConnectionThemePrimary)
-    this.showSnackBar()
     this.navigateToModal()
-  }
 
-  componentDidUpdate(prevProps: ConnectionHistoryProps) {
-    const oldShowSnack =
-      prevProps.navigation.getParam('showExistingConnectionSnack') || false
-    const newShowSnack =
-      this.props.navigation.getParam('showExistingConnectionSnack') || false
-    if (oldShowSnack !== newShowSnack && newShowSnack === true) {
+    // since componentDidMount is always getting called when navigating to this screen
+    // the check if snack bar should be displayed can be done in componentDidMount
+    if (this.props.navigation.getParam('showExistingConnectionSnack')) {
       this.showSnackBar()
+      this.props.sendConnectionRedirect(
+        this.props.navigation.getParam('qrCodeInvitationPayload'),
+        {
+          senderDID: this.props.navigation.getParam('senderDID'),
+          identifier: this.props.navigation.getParam('identifier'),
+        }
+      )
     }
-
-    // let currentHistArr: Array<any> = Object.values(this.props.connectionHistory)
-    // let previousHistArr: Array<any> = Object.values(prevProps.connectionHistory)
-    // let pendingCell = false
-
-    // currentHistArr.forEach(function(value, index) {
-    //   if (value.action === 'PENDING') {
-    //     pendingCell = true
-    //   }
-    // })
-    // if (!pendingCell) {
-    //   if (currentHistArr[0].length > previousHistArr[0].length) {
-    //     this.setState({
-    //       newMessageLine: true,
-    //     })
-    //   }
-    // }
   }
 
   navigateToModal = () => {
-    const uid =
-      this.props.connectionHistory &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1] &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1]
-        .originalPayload &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1]
-        .originalPayload.payloadInfo &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1]
-        .originalPayload.payloadInfo.uid
-    const action =
-      this.props.connectionHistory &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1] &&
-      this.props.connectionHistory[this.props.connectionHistory.length - 1]
-        .action
+    const notificationOpenOptions = this.props.navigation.getParam(
+      'notificationOpenOptions'
+    )
+    if (
+      !notificationOpenOptions ||
+      !notificationOpenOptions.openMessageDirectly
+    ) {
+      // the param 'notificationOpenOptions' helps us decide if we need to open
+      // modal of clicked message directly
+      // if we don't get any options or if openMessageDirectly is false
+      // then we just return from here
+      return
+    }
 
-    if (this.props.shouldOpenModalFromNotification) {
-      if (action === 'PROOF RECEIVED') {
-        this.props.navigation.navigate(proofRequestRoute, { uid })
-      } else if (action === 'CLAIM OFFER RECEIVED') {
-        this.props.navigation.navigate(claimOfferRoute, { uid })
-      } else if (action === 'QUESTION_RECEIVED') {
-        this.props.navigation.navigate(questionRoute, { uid })
+    // If we reach here, then we have param indicating that we need open
+    // a message. Now, we need to know what is messageId and messageType
+    // so that we can open correct modal
+
+    const messageType = this.props.navigation.getParam('messageType')
+    const uid = this.props.navigation.getParam('uid')
+
+    if (messageType && uid) {
+      switch (messageType) {
+        case MESSAGE_TYPE.CLAIM_OFFER:
+          this.props.navigation.navigate(claimOfferRoute, { uid })
+          break
+
+        case MESSAGE_TYPE.PROOF_REQUEST:
+          this.props.navigation.navigate(proofRequestRoute, { uid })
+          break
+
+        case MESSAGE_TYPE.QUESTION:
+          this.props.navigation.navigate(questionRoute, { uid })
+          break
       }
     }
   }
@@ -308,9 +306,6 @@ class ConnectionDetails extends Component<
             navigation={this.props.navigation}
             moreOptionsOpen={this.moreOptionsOpen}
             colorBackground={activeConnectionThemePrimary}
-            resetNotificationCardPressed={
-              this.props.resetNotificationCardPressed
-            }
           />
           <Animated.View
             style={[
@@ -368,14 +363,16 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
     activeConnectionThemeSecondary: themeForLogo.secondary,
     connectionHistory: connectionHistory,
     claimMap: state.claim.claimMap,
-    shouldOpenModalFromNotification:
-      state.history.data && state.history.data.shouldOpenModalFromNotification,
   }
 }
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { updateStatusBarTheme, newConnectionSeen, resetNotificationCardPressed },
+    {
+      updateStatusBarTheme,
+      newConnectionSeen,
+      sendConnectionRedirect,
+    },
     dispatch
   )
 

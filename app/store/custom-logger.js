@@ -83,6 +83,8 @@ import {
   WALLET_ADDRESSES_REFRESHED,
   SEND_TOKENS,
 } from '../wallet/type-wallet'
+import { SHOW_IN_APP_NOTIFICATION } from '../in-app-notification/in-app-notification-type'
+import { RESTORE_SUBMIT_PASSPHRASE } from '../restore/type-restore'
 
 const { RNIndy } = NativeModules
 
@@ -409,6 +411,15 @@ export function PiiHiddenTransformer(state: Store) {
         tokenAmount: hiddenInfoReplacement,
       },
     },
+    inAppNotification: {
+      notification: state.inAppNotification.notification
+        ? hiddenInfoReplacement
+        : null,
+    },
+    restore: {
+      ...state.restore,
+      passphrase: state.restore.passphrase ? hiddenInfoReplacement : null,
+    },
   })
 }
 
@@ -423,6 +434,7 @@ export function PiiHiddenActionTransformer(action: any) {
   // we list name of properties that we want to hide from action logging
   const actionToFilterPropMap = {
     [GENERATE_RECOVERY_PHRASE_SUCCESS]: ['passphrase'],
+    [RESTORE_SUBMIT_PASSPHRASE]: ['passphrase'],
 
     [NEW_CONNECTION]: ['connection'],
     [NEW_CONNECTION_SUCCESS]: ['connection'],
@@ -478,6 +490,8 @@ export function PiiHiddenActionTransformer(action: any) {
     [GET_WALLET_ENCRYPTION_KEY]: ['data'],
 
     [SEND_TOKENS]: ['tokenAmount', 'recipientWalletAddress'],
+
+    [SHOW_IN_APP_NOTIFICATION]: ['notification'],
   }
 
   // There are some action which has deep nested data

@@ -1,7 +1,6 @@
 // @flow
-import React, { PureComponent } from 'react'
-import SvgCustomIcon from '../../components/svg-custom-icon'
-import { Avatar } from '../../components/avatar/avatar'
+
+import React, { Component } from 'react'
 import {
   View,
   Text,
@@ -11,98 +10,51 @@ import {
   Platform,
   Animated,
 } from 'react-native'
-import type {
-  NotificationCardProps,
-  NotificationCardState,
-} from './type-notification-card'
-import { mediumGray, color } from '../../common/styles/constant'
 import {
   PanGestureHandler,
   State,
   RectButton,
 } from 'react-native-gesture-handler'
+import { connect } from 'react-redux'
+import { withNavigation } from 'react-navigation'
 
-class NotificationCard extends PureComponent<
-  NotificationCardProps,
-  NotificationCardState
-> {
-  state = {
-    translateY: new Animated.Value(0),
-  }
+import type { NotificationCardProps } from './in-app-notification-type'
+import type { Store } from '../store/type-store'
 
-  componentDidMount() {
-    this.showNotification()
-  }
+import SvgCustomIcon from '../components/svg-custom-icon'
+import { Avatar } from '../components/avatar/avatar'
+import { mediumGray, color } from '../common/styles/constant'
+import { scheduleClearInAppNotification } from './in-app-notification-actions'
+import { connectionHistRoute } from '../common'
 
-  onGestureEvent = Animated.event([
-    {
-      nativeEvent: {
-        absoluteY: this.state.translateY,
+class NotificationCardComponent extends Component<NotificationCardProps, void> {
+  translateY = new Animated.Value(0)
+
+  onGestureEvent = Animated.event(
+    [
+      {
+        nativeEvent: {
+          absoluteY: this.translateY,
+        },
       },
-    },
-  ])
-
-  getInfoMessage = (
-    status: string,
-    senderName: string,
-    credentialName: string,
-    question: string
-  ) => {
-    const statusMsg = {
-      'PROOF RECEIVED': senderName + ' wants you to share some information',
-      QUESTION_RECEIVED: question,
-      'CLAIM OFFER RECEIVED': 'Offering ' + credentialName,
+    ],
+    {
+      useNativeDriver: true,
     }
-
-    return statusMsg[status]
-  }
-
-  showNotification = () => {
-    Animated.timing(this.state.translateY, {
-      toValue: 50,
-      duration: 200,
-    }).start(() => {
-      setTimeout(() => {
-        Animated.timing(this.state.translateY, {
-          toValue: -100,
-          duration: 200,
-        }).start(() => this.props.notificationCardSwipedUp())
-      }, 5000)
-    })
-  }
-
-  onHandlerStateChange = (event: Object) => {
-    const { status } = this.props
-
-    if (event.nativeEvent.oldState === State.ACTIVE) {
-      Animated.timing(this.state.translateY, {
-        toValue: -100,
-        duration: 200,
-      }).start(() => this.props.notificationCardSwipedUp())
-    }
-  }
-
-  onCardPress = () => {
-    Animated.timing(this.state.translateY, {
-      toValue: -100,
-      duration: 200,
-    }).start(() => {
-      this.props.notificationCardSwipedUp()
-      this.props.onNotificationCardPress(
-        this.props.senderName,
-        this.props.image,
-        this.props.senderDID
-      )
-    })
-  }
+  )
 
   render() {
-    const { image, senderName, credentialName, status, question } = this.props
+    const { notification } = this.props
+
+    if (!notification) {
+      return null
+    }
+
+    const { senderName, senderImage: image, text } = notification
     const {
       container,
       initialsContainer,
       initialsText,
-      newCardContainer,
       avatarSection,
       infoSection,
       companyNameSection,
@@ -126,15 +78,16 @@ class NotificationCard extends PureComponent<
           style={[
             outerContainer,
             {
-              top: this.state.translateY,
+              transform: [
+                {
+                  translateY: this.translateY,
+                },
+              ],
             },
           ]}
         >
           <View style={container}>
-            <RectButton
-              style={buttonContainer}
-              onPress={() => this.onCardPress()}
-            >
+            <RectButton style={buttonContainer} onPress={this.onCardPress}>
               <View style={avatarSection}>
                 {typeof image === 'string' ? (
                   <Avatar radius={16} src={{ uri: image }} />
@@ -168,12 +121,7 @@ class NotificationCard extends PureComponent<
                       numberOfLines={2}
                       ellipsizeMode="tail"
                     >
-                      {this.getInfoMessage(
-                        status,
-                        senderName,
-                        credentialName,
-                        question
-                      )}
+                      {text}
                     </Text>
                   </View>
                 </View>
@@ -184,9 +132,78 @@ class NotificationCard extends PureComponent<
       </PanGestureHandler>
     )
   }
+
+  componentDidUpdate(prevProps: NotificationCardProps) {
+    if (prevProps.notification !== this.props.notification) {
+      if (this.props.notification) {
+        this.showNotification()
+      } else {
+        this.hideNotification()
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.showNotification()
+  }
+
+  showNotification = () => {
+    Animated.timing(this.translateY, {
+      toValue: 50,
+      duration: 150,
+      useNativeDriver: true,
+    }).start(() => {
+      this.props.dispatch(scheduleClearInAppNotification())
+    })
+  }
+
+  hideNotification = () => {
+    Animated.timing(this.translateY, {
+      toValue: -100,
+      duration: 150,
+      useNativeDriver: true,
+    }).start()
+  }
+
+  onCardPress = () => {
+    this.hideNotification()
+
+    const {
+      senderName,
+      senderImage: image,
+      senderDID,
+      messageType,
+      messageId: uid,
+      identifier,
+    } = this.props.notification
+
+    this.props.navigation.navigate(connectionHistRoute, {
+      senderName,
+      senderDID,
+      identifier,
+      image,
+      uid,
+      messageType,
+      notificationOpenOptions: {
+        openMessageDirectly: true,
+      },
+    })
+  }
+
+  onHandlerStateChange = (event: Object) => {
+    if (event.nativeEvent.oldState === State.ACTIVE) {
+      this.hideNotification()
+    }
+  }
 }
 
-export { NotificationCard }
+const mapStateToProps = (state: Store) => ({
+  notification: state.inAppNotification.notification,
+})
+
+export const NotificationCard = withNavigation(
+  connect(mapStateToProps)(NotificationCardComponent)
+)
 
 const styles = StyleSheet.create({
   outerContainer: {
@@ -196,6 +213,7 @@ const styles = StyleSheet.create({
     height: 96,
     alignItems: 'center',
     justifyContent: 'center',
+    elevation: Platform.OS === 'android' ? 9 : 0,
   },
   container: {
     width: 343,
@@ -228,9 +246,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     color: color.textColor.darkgray,
-  },
-  newCardContainer: {
-    backgroundColor: color.bg.sixteenth.color,
   },
   avatarSection: {
     height: '100%',
@@ -266,18 +281,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  dateSection: {
-    width: '70%',
-    height: '100%',
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-  },
-  buttonSection: {
-    height: '50%',
-    width: '30%',
-    justifyContent: 'flex-end',
-  },
   companyNameText: {
     fontFamily: 'Lato',
     fontSize: 17,
@@ -294,25 +297,5 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: color.textColor.mediumGray,
     marginBottom: 5,
-  },
-  newButtonSection: {
-    height: '100%',
-    width: '30%',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  newLabel: {
-    width: 64,
-    height: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: color.bg.twelfth.color,
-    marginBottom: 5,
-  },
-  newLabelText: {
-    fontFamily: 'Lato',
-    fontSize: 11,
-    fontWeight: '500',
-    color: color.bg.primary.font.primary,
   },
 })

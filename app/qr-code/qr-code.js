@@ -179,6 +179,7 @@ export class QRCodeScannerScreen extends Component<
         identifier,
         backRedirectRoute: homeTabRoute,
         showExistingConnectionSnack: true,
+        qrCodeInvitationPayload: invitation.payload,
       }
       navigation.navigate(connectionHistRoute, params)
 

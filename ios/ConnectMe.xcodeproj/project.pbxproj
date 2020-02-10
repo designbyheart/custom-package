@@ -2782,7 +2782,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Evernym Automation (3XVZBU8VAE)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 998;
+				CURRENT_PROJECT_VERSION = 1008;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = ES8QU3D2A4;
 				ENABLE_BITCODE = NO;
@@ -2822,7 +2822,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.evernym.connectme.callcenter 1554132379";
 				SWIFT_OBJC_BRIDGING_HEADER = "ConnectMe/ConnectMe-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.1;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -2838,7 +2838,7 @@
 				CODE_SIGN_ENTITLEMENTS = ConnectMe/ConnectMe.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: EVERNYM, INC. (ES8QU3D2A4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 998;
+				CURRENT_PROJECT_VERSION = 1008;
 				DEVELOPMENT_TEAM = ES8QU3D2A4;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
@@ -2876,7 +2876,7 @@
 				PROVISIONING_PROFILE = "3010dc9c-611b-410c-a932-7b166c3e6107";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.evernym.connectme.callcenter";
 				SWIFT_OBJC_BRIDGING_HEADER = "ConnectMe/ConnectMe-Bridging-Header.h";
-				SWIFT_VERSION = 4.1;
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

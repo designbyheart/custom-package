@@ -57,6 +57,7 @@ import {
   PROOF_REQUEST_STATUS,
   PROOF_STATUS,
 } from '../app/proof-request/type-proof-request'
+import { inAppNotificationMockData } from './data/in-app-notification-mock-data'
 
 // sadly, we can't export all variables in one line and use them in file as well
 // to use them in this file, we have to import them first
@@ -1090,8 +1091,6 @@ export function getStore(store?: Object = {}) {
                 },
               },
               connectionsUpdated: true,
-              shouldShowNotification: true,
-              shouldOpenModalFromNotification: true,
             },
             isLoading: true,
           },
@@ -1187,6 +1186,7 @@ export function getStore(store?: Object = {}) {
             taaAcceptedVersion: '',
             version: '',
           },
+          inAppNotification: inAppNotificationMockData,
         },
         store
       )
@@ -1561,6 +1561,7 @@ export const claimOfferPushNotification = {
   senderLogoUrl: 'http://testissuer.com/logoUrl.png',
   remotePairwiseDID: 'ha66899sadfjZJGINKN0770',
   forDID: 'forDID',
+  notificationOpenOptions: null,
 }
 
 export const getSmsPendingInvitationOfToken = (token: string) => ({

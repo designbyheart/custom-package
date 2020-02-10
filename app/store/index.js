@@ -12,7 +12,10 @@ import user, { watchUserStore } from './user/user-store'
 import pushNotification, {
   watchPushNotification,
 } from '../push-notification/push-notification-store'
-import connections, { watchConnection } from './connections-store'
+import connections, {
+  watchConnection,
+  watchSendConnectionRedirect,
+} from './connections-store'
 import config, { watchConfig, watchGetMessagesSaga } from './config-store'
 import deepLink from '../deep-link/deep-link-store'
 import route from './route-store'
@@ -63,6 +66,10 @@ import {
   watchOpenIdConnectStore,
   openIdConnectReducer,
 } from '../open-id-connect/open-id-connect-store'
+import {
+  watchInAppNotificationActions,
+  inAppNotificationReducer,
+} from '../in-app-notification/in-app-notification-store'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -93,6 +100,7 @@ const appReducer = combineReducers({
   question,
   txnAuthorAgreement,
   openIdConnect: openIdConnectReducer,
+  inAppNotification: inAppNotificationReducer,
 })
 
 let middlewares = [historyRecorder, automaticCloudBackup]
@@ -145,6 +153,7 @@ sagaMiddleware.run(function*() {
     watchTxnAuthorAgreement(),
     watchOpenIdConnectStore(),
     watchProofRequestDeny(),
+    watchInAppNotificationActions(),
   ])
 })
 

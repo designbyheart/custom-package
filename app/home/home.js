@@ -1,20 +1,23 @@
 // @flow
 import React, { Component } from 'react'
-import { StyleSheet, Platform, View, Text, FlatList } from 'react-native'
+import {
+  StyleSheet,
+  Platform,
+  View,
+  Text,
+  FlatList,
+  AppState,
+} from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import { BlurView } from 'react-native-blur'
 
 import type { Store } from '../store/type-store'
-import type { HomeProps } from './type-home'
+import type { HomeProps, HomeState, Item } from './type-home'
 import type { Connection } from '../store/type-connection-store'
 import type { ReactNavigation } from '../common/type-common'
 
-import {
-  newConnectionSeen,
-  notificationCardSwipedUp,
-  notificationCardPressed,
-} from '../connection-history/connection-history-store'
+import { newConnectionSeen } from '../connection-history/connection-history-store'
 import { PrimaryHeader } from '../components'
 import { ConnectionCard } from './connection-card/connection-card'
 import { createStackNavigator, NavigationActions } from 'react-navigation'
@@ -31,42 +34,35 @@ import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { bindActionCreators } from 'redux'
 
-import { NotificationCard } from '../components/notification-card/notification-card'
+import { NotificationCard } from '../in-app-notification/in-app-notification-card'
 
-export class DashboardScreen extends Component<HomeProps> {
+export class DashboardScreen extends Component<HomeProps, HomeState> {
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: null,
   })
 
   componentDidUpdate(prevProps: HomeProps) {
     const noUnSeenMessages =
-      Object.keys(prevProps.unSeenMessages).length &&
-      !Object.keys(this.props.unSeenMessages).length
+      prevProps.unSeenMessagesCount && !this.props.unSeenMessagesCount
+
     if (noUnSeenMessages) {
       firebase.notifications().setBadge(0)
     }
   }
 
-  keyExtractor = (item: Object) => item.index
+  keyExtractor = (item: Object) => item.index.toString()
 
-  onCardPress = (senderName: string, image: ?string, senderDID: string) => {
-    this.props.navigation.navigate(connectionHistRoute, {
-      senderName,
-      image,
-      senderDID,
-    })
-  }
-
-  onNotificationCardPress = (
+  onCardPress = (
     senderName: string,
     image: ?string,
-    senderDID: string
+    senderDID: string,
+    identifier: string
   ) => {
-    this.props.notificationCardPressed()
     this.props.navigation.navigate(connectionHistRoute, {
       senderName,
       image,
       senderDID,
+      identifier,
     })
   }
 
@@ -81,12 +77,13 @@ export class DashboardScreen extends Component<HomeProps> {
       credentialName,
       date,
       newBadge,
+      identifier,
     } = item
 
     return (
       <ConnectionCard
         onPress={() => {
-          this.onCardPress(senderName, logoUrl, senderDID)
+          this.onCardPress(senderName, logoUrl, senderDID, identifier)
         }}
         onNewConnectionSeen={this.props.onNewConnectionSeen}
         image={logoUrl}
@@ -110,122 +107,18 @@ export class DashboardScreen extends Component<HomeProps> {
       blurContainer,
       outerContainer,
     } = externalStyles
-    const {
-      environmentName,
-      connections: { data, hydrated },
-      unSeenMessages,
-      history,
-    } = this.props
-    // type casting from Array<mixed> to any and then to what we need
-    // because flow Array<mixed> can't be directly type casted as of now
-    const receivedConnections: Connection[] = (getConnections(data): any)
-    const newConnections = receivedConnections
-      .map((connection, index) => {
-        return {
-          ...connection,
-          index,
-          date:
-            history.data &&
-            history.data.connections &&
-            history.data.connections[connection.senderDID] &&
-            history.data.connections[connection.senderDID].data &&
-            history.data.connections[connection.senderDID].data[
-              history.data.connections[connection.senderDID].data.length - 1
-            ] &&
-            history.data.connections[connection.senderDID].data[
-              history.data.connections[connection.senderDID].data.length - 1
-            ].timestamp,
-          status:
-            history.data &&
-            history.data.connections &&
-            history.data.connections[connection.senderDID] &&
-            history.data.connections[connection.senderDID].data &&
-            history.data.connections[connection.senderDID].data[
-              history.data.connections[connection.senderDID].data.length - 1
-            ] &&
-            history.data.connections[connection.senderDID].data[
-              history.data.connections[connection.senderDID].data.length - 1
-            ].status,
-          questionTitle:
-            history.data &&
-            history.data.connections &&
-            history.data.connections[connection.senderDID] &&
-            history.data.connections[connection.senderDID].data &&
-            history.data.connections[connection.senderDID].data[
-              history.data.connections[connection.senderDID].data.length - 1
-            ] &&
-            history.data.connections[connection.senderDID].data[
-              history.data.connections[connection.senderDID].data.length - 1
-            ].name,
-          credentialName:
-            history.data &&
-            history.data.connections &&
-            history.data.connections[connection.senderDID] &&
-            history.data.connections[connection.senderDID].data &&
-            history.data.connections[connection.senderDID].data[
-              history.data.connections[connection.senderDID].data.length - 1
-            ] &&
-            history.data.connections[connection.senderDID].data[
-              history.data.connections[connection.senderDID].data.length - 1
-            ].name,
-          type:
-            history.data &&
-            history.data.connections &&
-            history.data.connections[connection.senderDID] &&
-            history.data.connections[connection.senderDID].data &&
-            history.data.connections[connection.senderDID].data[
-              history.data.connections[connection.senderDID].data.length - 1
-            ] &&
-            history.data.connections[connection.senderDID].data[
-              history.data.connections[connection.senderDID].data.length - 1
-            ].type,
-          newBadge:
-            history.data &&
-            history.data.connections &&
-            history.data.connections[connection.senderDID] &&
-            history.data.connections[connection.senderDID].newBadge,
-          senderDID: connection.senderDID,
-        }
-      })
-      .sort((a, b) => {
-        if (!b.date) {
-          return 0
-        }
-        let bTimestamp = new Date(b.date).getTime()
-        if (!a.date) {
-          return 0
-        }
-        let aTimestamp = new Date(a.date).getTime()
-        return bTimestamp - aTimestamp
-      })
 
-    const hasNoConnection = hydrated ? newConnections.length === 0 : false
-    const isCorrectStatus =
-      (newConnections[0] && newConnections[0].status === 'PROOF RECEIVED') ||
-      (newConnections[0] && newConnections[0].status === 'QUESTION_RECEIVED') ||
-      (newConnections[0] && newConnections[0].status === 'CLAIM OFFER RECEIVED')
     return (
       <View style={outerContainer}>
         <PrimaryHeader headline="Connections" />
-        {this.props.shouldShowNotification &&
-          isCorrectStatus && (
-            <NotificationCard
-              image={newConnections[0].logoUrl}
-              status={newConnections[0].status}
-              senderName={newConnections[0].senderName}
-              credentialName={newConnections[0].credentialName}
-              question={newConnections[0].questionTitle}
-              senderDID={newConnections[0].senderDID}
-              newBadge={newConnections[0].newBadge}
-              notificationCardSwipedUp={this.props.notificationCardSwipedUp}
-              onNotificationCardPress={this.onNotificationCardPress}
-            />
-          )}
+
+        <NotificationCard />
+
         <View style={container} testID="home-container">
-          {hasNoConnection && (
+          {this.props.hasNoConnection && (
             <NewConnectionInstructions
               usingProductionNetwork={
-                environmentName === SERVER_ENVIRONMENT.PROD
+                this.props.environmentName === SERVER_ENVIRONMENT.PROD
               }
             />
           )}
@@ -233,7 +126,7 @@ export class DashboardScreen extends Component<HomeProps> {
             keyExtractor={this.keyExtractor}
             style={flatListContainer}
             contentContainerStyle={flatListInnerContainer}
-            data={newConnections}
+            data={this.props.connections}
             renderItem={this.renderItem}
           />
         </View>
@@ -245,14 +138,102 @@ export class DashboardScreen extends Component<HomeProps> {
 const mapStateToProps = (state: Store) => {
   // when ever there is change in claimOffer state and proof request state
   // getUnseenMessages selector will return updated data
-  let unSeenMessages = getUnseenMessages(state)
+  // type casting from Array<mixed> to any and then to what we need
+  // because flow Array<mixed> can't be directly type casted as of now
+  const receivedConnections: Connection[] = (getConnections(
+    state.connections.data
+  ): any)
+  const connections = receivedConnections
+    .map((connection, index) => {
+      return {
+        ...connection,
+        index,
+        date:
+          state.history.data &&
+          state.history.data.connections &&
+          state.history.data.connections[connection.senderDID] &&
+          state.history.data.connections[connection.senderDID].data &&
+          state.history.data.connections[connection.senderDID].data[
+            state.history.data.connections[connection.senderDID].data.length - 1
+          ] &&
+          state.history.data.connections[connection.senderDID].data[
+            state.history.data.connections[connection.senderDID].data.length - 1
+          ].timestamp,
+        status:
+          state.history.data &&
+          state.history.data.connections &&
+          state.history.data.connections[connection.senderDID] &&
+          state.history.data.connections[connection.senderDID].data &&
+          state.history.data.connections[connection.senderDID].data[
+            state.history.data.connections[connection.senderDID].data.length - 1
+          ] &&
+          state.history.data.connections[connection.senderDID].data[
+            state.history.data.connections[connection.senderDID].data.length - 1
+          ].status,
+        questionTitle:
+          state.history.data &&
+          state.history.data.connections &&
+          state.history.data.connections[connection.senderDID] &&
+          state.history.data.connections[connection.senderDID].data &&
+          state.history.data.connections[connection.senderDID].data[
+            state.history.data.connections[connection.senderDID].data.length - 1
+          ] &&
+          state.history.data.connections[connection.senderDID].data[
+            state.history.data.connections[connection.senderDID].data.length - 1
+          ].name,
+        credentialName:
+          state.history.data &&
+          state.history.data.connections &&
+          state.history.data.connections[connection.senderDID] &&
+          state.history.data.connections[connection.senderDID].data &&
+          state.history.data.connections[connection.senderDID].data[
+            state.history.data.connections[connection.senderDID].data.length - 1
+          ] &&
+          state.history.data.connections[connection.senderDID].data[
+            state.history.data.connections[connection.senderDID].data.length - 1
+          ].name,
+        type:
+          state.history.data &&
+          state.history.data.connections &&
+          state.history.data.connections[connection.senderDID] &&
+          state.history.data.connections[connection.senderDID].data &&
+          state.history.data.connections[connection.senderDID].data[
+            state.history.data.connections[connection.senderDID].data.length - 1
+          ] &&
+          state.history.data.connections[connection.senderDID].data[
+            state.history.data.connections[connection.senderDID].data.length - 1
+          ].type,
+        newBadge:
+          state.history.data &&
+          state.history.data.connections &&
+          state.history.data.connections[connection.senderDID] &&
+          state.history.data.connections[connection.senderDID].newBadge,
+        senderDID: connection.senderDID,
+      }
+    })
+    .sort((a, b) => {
+      if (!b.date) {
+        return 0
+      }
+      let bTimestamp = new Date(b.date).getTime()
+      if (!a.date) {
+        return 0
+      }
+      let aTimestamp = new Date(a.date).getTime()
+      return bTimestamp - aTimestamp
+    })
+
+  const hasNoConnection = state.connections.hydrated
+    ? connections.length === 0
+    : false
+
+  let unSeenMessagesCount = Object.keys(getUnseenMessages(state)).length
+
   return {
-    connections: state.connections,
-    unSeenMessages,
-    history: state.history,
+    unSeenMessagesCount,
     environmentName: getEnvironmentName(state.config),
-    shouldShowNotification:
-      state.history.data && state.history.data.shouldShowNotification,
+    hasNoConnection,
+    connections,
   }
 }
 
@@ -260,8 +241,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       onNewConnectionSeen: newConnectionSeen,
-      notificationCardSwipedUp: notificationCardSwipedUp,
-      notificationCardPressed,
     },
     dispatch
   )

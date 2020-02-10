@@ -11,7 +11,10 @@ import type {
   CustomError,
   ResetAction,
 } from '../common/type-common'
-import type { InvitationReceivedAction } from '../invitation/type-invitation'
+import type {
+  InvitationReceivedAction,
+  InvitationPayload,
+} from '../invitation/type-invitation'
 import type { NewConnectionAction } from '../store/type-connection-store'
 import type { SendClaimRequestAction } from './components/types/type-details-claim-offer'
 import type { ClaimReceivedAction } from './components/types/type-details-claim'
@@ -26,6 +29,7 @@ import type {
   Attribute,
   AdditionalDataPayload,
   NotificationPayloadInfo,
+  NotificationOpenOptions,
 } from '../push-notification/type-push-notification'
 import type { ClaimMap } from './components/types/type-details-claim'
 
@@ -55,6 +59,7 @@ import {
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
 } from '../question/type-question'
+import { sendConnectionRedirect } from '../store/connections-store'
 
 export const HISTORY_EVENT_STATUS = {
   [INVITATION_RECEIVED]: 'CONNECTION REQUEST',
@@ -252,18 +257,21 @@ export type ConnectionHistoryNavigation = {
       image: string,
       senderDID: string,
       identifier: string,
+      qrCodeInvitationPayload: InvitationPayload,
+      messageType: ?string,
+      notificationOpenOptions: ?NotificationOpenOptions,
+      uid: ?string,
     |},
   |}>,
 }
 
 export type ConnectionHistoryProps = {
-  newConnectionSeen: Function,
-  resetNotificationCardPressed: Function,
-  shouldOpenModalFromNotification: boolean,
   claimMap: ?ClaimMap,
   activeConnectionThemePrimary: string,
   activeConnectionThemeSecondary: string,
   connectionHistory: ConnectionHistoryEvent[],
+  sendConnectionRedirect: typeof sendConnectionRedirect,
+  newConnectionSeen: Function,
   updateStatusBarTheme: (color?: string) => void,
   deleteConnectionAction: (senderDID: string) => void,
   goToUIScreen: (

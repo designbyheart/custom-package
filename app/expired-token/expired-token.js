@@ -10,13 +10,8 @@ import { homeRoute } from '../common'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
 class ExpiredToken extends PureComponent<ReactNavigation, void> {
-  okClicked = false
-
   onOk = () => {
-    if (!this.okClicked) {
-      this.props.navigation.navigate(homeRoute)
-      this.okClicked = true
-    }
+    this.props.navigation.navigate(homeRoute)
   }
 
   render() {

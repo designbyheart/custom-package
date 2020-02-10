@@ -10,7 +10,7 @@ import {
   put,
   fork,
 } from 'redux-saga/effects'
-import { PAYLOAD_TYPE, MESSAGE_TYPE } from '../api/api-constants'
+import { MESSAGE_TYPE } from '../api/api-constants'
 import { captureError } from '../services/error/error-handler'
 import {
   getAgencyUrl,
@@ -63,6 +63,7 @@ import type {
   HydratePushTokenAction,
   updatePayloadToRelevantStoreAndRedirectAction,
   RedirectToRelevantScreen,
+  NotificationOpenOptions,
 } from './type-push-notification'
 import type { Connections } from '../connection/type-connection'
 import type { UserOneTimeInfo } from '../store/user/type-user-store'
@@ -107,6 +108,7 @@ import {
   PASSPHRASE_STORAGE_KEY,
   PASSPHRASE_SALT_STORAGE_KEY,
   LAST_SUCCESSFUL_CLOUD_BACKUP,
+  connectionHistRoute,
 } from '../common'
 import type { NavigationParams, GenericObject } from '../common/type-common'
 
@@ -156,6 +158,7 @@ import {
 } from '../backup/backup-store'
 import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
 import RNFetchBlob from 'rn-fetch-blob'
+import { showInAppNotification } from '../in-app-notification/in-app-notification-actions'
 
 async function delay(ms): Promise<number> {
   return new Promise(res => setTimeout(res, ms))
@@ -307,10 +310,12 @@ export const pushNotificationReceived = (
 })
 
 export const fetchAdditionalData = (
-  notificationPayload: NotificationPayload
+  notificationPayload: NotificationPayload,
+  notificationOpenOptions: ?NotificationOpenOptions
 ) => ({
   type: FETCH_ADDITIONAL_DATA,
   notificationPayload,
+  notificationOpenOptions,
 })
 
 export const fetchAdditionalDataError = (error: CustomError) => ({
@@ -331,6 +336,7 @@ export function* fetchAdditionalDataSaga(
   action: FetchAdditionalDataAction
 ): Generator<*, *, *> {
   const { forDID, uid, type, senderLogoUrl } = action.notificationPayload
+  const { notificationOpenOptions } = action
 
   if (forDID && uid) {
     const fetchDataAlreadyExists = yield select(
@@ -376,6 +382,7 @@ export function* fetchAdditionalDataSaga(
           uid,
           remotePairwiseDID: 'NA',
           forDID: 'NA',
+          notificationOpenOptions,
         })
       )
 
@@ -417,6 +424,7 @@ export function* fetchAdditionalDataSaga(
         remotePairwiseDID: 'NA',
         forDID: 'NA',
         additionalData: {},
+        notificationOpenOptions,
       })
     )
     walletSet(AUTO_CLOUD_BACKUP_ENABLED, 'false')
@@ -446,6 +454,7 @@ export function* fetchAdditionalDataSaga(
           uid,
           remotePairwiseDID: 'NA',
           forDID: 'NA',
+          notificationOpenOptions,
         })
       )
 
@@ -580,6 +589,7 @@ export function* fetchAdditionalDataSaga(
 
     const remoteName = connection.remoteName
     const remotePairwiseDID = connection.remotePairwiseDID
+    const senderImage = connection.logoUrl
 
     // NOTE: We need to wait for the app to be unlocked before
     // dispatching the pushNotificationReceived action. Also, we
@@ -597,11 +607,13 @@ export function* fetchAdditionalDataSaga(
         additionalData: {
           ...additionalData,
           remoteName,
+          senderLogoUrl: senderImage,
         },
         uid,
         senderLogoUrl,
         remotePairwiseDID,
         forDID,
+        notificationOpenOptions,
       })
     )
   } catch (e) {
@@ -719,49 +731,69 @@ export function* updatePayloadToRelevantStoreSaga(
   }
 }
 
-function* redirectToRelevantScreen({
-  additionalData,
-  uiType,
-  type,
-  uid,
-}: RedirectToRelevantScreen) {
+function* redirectToRelevantScreen(notification: RedirectToRelevantScreen) {
+  const {
+    additionalData,
+    uiType,
+    type,
+    uid,
+    notificationOpenOptions,
+    remotePairwiseDID,
+    forDID,
+  } = notification
   const currentScreen: string = yield select(getCurrentScreen)
-  if (uiType || type)
-    if (!blackListedRoute[currentScreen])
+
+  if (uiType || type) {
+    if (!blackListedRoute[currentScreen]) {
+      let routeToDirect = null
+      let notificationText = ''
       switch (uiType || type) {
         case 'CLAIM_OFFER_RECEIVED':
-          yield handleRedirection(claimOfferRoute, {
-            uid,
-          })
-          break
-
         case MESSAGE_TYPE.CLAIM_OFFER:
-          yield handleRedirection(claimOfferRoute, {
-            uid,
-          })
+          routeToDirect = claimOfferRoute
+          notificationText = `Offering ${additionalData.claim_name}`
           break
 
         case MESSAGE_TYPE.PROOF_REQUEST:
-          yield handleRedirection(proofRequestRoute, {
-            uid,
-          })
-          break
-
         case 'PROOF_REQUEST_RECEIVED':
-          yield handleRedirection(proofRequestRoute, {
-            uid,
-          })
+          routeToDirect = proofRequestRoute
+          notificationText = `${
+            additionalData.remoteName
+          } wants you to share information`
           break
 
         case MESSAGE_TYPE.QUESTION:
-          yield handleRedirection(questionRoute, {
-            uid,
-          })
+          routeToDirect = questionRoute
+          notificationText = `${additionalData.messageTitle}`
           break
       }
+
+      if (routeToDirect) {
+        yield handleRedirection(
+          routeToDirect,
+          {
+            uid,
+            notificationOpenOptions,
+            senderDID: remotePairwiseDID,
+            image: additionalData.senderLogoUrl,
+            senderName: additionalData.remoteName,
+            messageType: type,
+            identifier: forDID,
+          },
+          notification,
+          notificationText
+        )
+      }
+    }
+  }
 }
 
-function* handleRedirection(routeName: string, params: NavigationParams): any {
+function* handleRedirection(
+  routeName: string,
+  params: NavigationParams,
+  notification: RedirectToRelevantScreen,
+  notificationText: string
+): any {
   const isAppLocked: boolean = yield select(getIsAppLocked)
   if (isAppLocked) {
     yield put(
@@ -770,8 +802,31 @@ function* handleRedirection(routeName: string, params: NavigationParams): any {
         { routeName, params },
       ])
     )
+  } else if (
+    params.notificationOpenOptions &&
+    params.notificationOpenOptions.openMessageDirectly
+  ) {
+    // if we find that we can open notification directly
+    // i.e. we received this notification from user tapping on notification
+    // from notification center outside of the app
+    // then we want user to go connection details screen of particular notification
+    // and then inside connection details screen, we want to show message
+    // that belongs to this notification
+    yield put(navigateToRoutePN(connectionHistRoute, params))
   } else {
-    // yield put(navigateToRoutePN(routeName, params))
+    // if we find that we did not have indication to open notification directly
+    // that means we need to show in-app notification that we have received a message
+    yield put(
+      showInAppNotification({
+        senderName: params.senderName,
+        senderImage: params.image,
+        senderDID: params.senderDID,
+        text: notificationText,
+        messageType: notification.type,
+        messageId: params.uid,
+        identifier: notification.forDID,
+      })
+    )
   }
 }
 
