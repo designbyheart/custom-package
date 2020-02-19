@@ -408,7 +408,7 @@ export function* fetchAdditionalDataSaga(
       yield call(backupWalletBackup, walletHandle, destinationZipPath)
       return
     } catch (error) {
-      customLogger.error(`MESSAGE_TYPE.WALLET_BACKUP_READY: ${error}`)
+      customLogger.log(error)
       yield put(cloudBackupFailure('error'))
       return
     }
@@ -474,7 +474,7 @@ export function* fetchAdditionalDataSaga(
       yield put(cloudBackupSuccess(lastSuccessfulCloudBackup))
       return
     } catch (error) {
-      customLogger.error(`MESSAGE_TYPE.WALLET_BACKUP_ACK: ${error}`)
+      customLogger.log(error)
       yield put(cloudBackupFailure('error'))
       return
     }

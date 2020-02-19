@@ -54,6 +54,8 @@ class ConnectionDetails extends Component<
     newMessageLine: false,
   }
 
+  flatList = null
+
   componentDidMount() {
     this.props.updateStatusBarTheme(this.props.activeConnectionThemePrimary)
     this.navigateToModal()
@@ -276,6 +278,10 @@ class ConnectionDetails extends Component<
     )
   }
 
+  scrollToEnd = () => {
+    this.flatList && this.flatList.scrollToEnd({ animated: true })
+  }
+
   render() {
     if (this.props.navigation.state) {
       const {
@@ -321,11 +327,15 @@ class ConnectionDetails extends Component<
             )}
           </Animated.View>
           <FlatList
+            ref={ref => {
+              this.flatList = ref
+            }}
             keyExtractor={this.keyExtractor}
             style={styles.flatListContainer}
             contentContainerStyle={styles.flatListInnerContainer}
             data={connectionHistory}
             renderItem={this.renderItem}
+            onContentSizeChange={this.scrollToEnd}
           />
           {Platform.OS === 'ios' ? (
             <BlurView
