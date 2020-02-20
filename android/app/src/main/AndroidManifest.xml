@@ -61,13 +61,15 @@
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
         android:screenOrientation="portrait"
         android:windowSoftInputMode="adjustPan">
+        
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
 
+        <!-- Branch URI Scheme, IMPORTANT! The <data> element has to contain android:scheme='name of scheme on branch.io dashboard' otherwise it will not be handled by branch. -->
         <intent-filter>
-            <data android:scheme="branchandroid" />
+            <data android:scheme="connectme" android:host="open"/>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
@@ -86,11 +88,11 @@
         </intent-filter>
       </activity>
 
-              <!-- Branch init -->
-        <meta-data android:name="io.branch.sdk.BranchKey" android:value="${BRANCH_LIVE_KEY}" />
-        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="${BRANCH_TEST_KEY}" />
-        <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
-
+      <!-- Branch init -->
+      <meta-data android:name="io.branch.sdk.BranchKey" android:value="${BRANCH_LIVE_KEY}" />
+      <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="${BRANCH_TEST_KEY}" />
+      <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
+       
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
        <!-- TODO add InstanceIdService.java to manifest file -->
 

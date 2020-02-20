@@ -71,12 +71,6 @@ public class MainActivity extends ReactFragmentActivity {
     }
 
     @Override
-    protected void onPause() {
-        SplashScreen.hide(this);
-        super.onPause();
-    }
-
-    @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
         case RNIndyStaticData.REQUEST_WRITE_EXTERNAL_STORAGE: {
