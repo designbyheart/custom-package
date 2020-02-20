@@ -33,6 +33,9 @@ export class DeepLink extends PureComponent<DeepLinkProps, void> {
   }
 
   componentDidMount() {
+    // Branch only caches a deeplink for 5 seconds by default, if app loads slower it is deleted before used.
+    // This causes branch to cache deeplink for 10 seconds instead.
+    branch.initSessionTtl = 10000
     branch.subscribe(this.onDeepLinkData)
   }
 
