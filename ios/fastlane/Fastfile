@@ -166,7 +166,7 @@ platform :ios do
     end
     # we are fixing the version number as of now
     # any version number change has to be manual
-    version_number = "1.1.2"
+    version_number = "1.2.0"
     versionNumber = increment_version_number(version_number: version_number, xcodeproj: "ConnectMe.xcodeproj")
     path = '../../android/app/build.gradle'
     reVersionCode = /versionCode\s+(\d+)/
