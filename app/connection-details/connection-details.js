@@ -279,7 +279,9 @@ class ConnectionDetails extends Component<
   }
 
   scrollToEnd = () => {
-    this.flatList && this.flatList.scrollToEnd({ animated: true })
+    setTimeout(() => {
+      this.flatList && this.flatList.scrollToEnd({ animated: true })
+    }, 300)
   }
 
   render() {
