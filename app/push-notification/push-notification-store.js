@@ -725,6 +725,7 @@ export function* updatePayloadToRelevantStoreSaga(
         )
         break
       case MESSAGE_TYPE.QUESTION:
+      case MESSAGE_TYPE.QUESTION.toLowerCase():
         yield put(questionReceived(additionalData))
         break
     }
@@ -763,6 +764,7 @@ function* redirectToRelevantScreen(notification: RedirectToRelevantScreen) {
           break
 
         case MESSAGE_TYPE.QUESTION:
+        case MESSAGE_TYPE.QUESTION.toLowerCase():
           routeToDirect = questionRoute
           notificationText = `${additionalData.messageTitle}`
           break
