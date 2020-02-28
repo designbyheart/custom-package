@@ -83,6 +83,7 @@ import {
   HYDRATED,
   VCX_INIT_SUCCESS,
   MESSAGE_RESPONSE_CODE,
+  GET_UN_ACKNOWLEDGED_MESSAGES,
 } from '../store/type-config-store'
 import type {
   DownloadedConnectionsWithMessages,
@@ -337,6 +338,18 @@ export function* fetchAdditionalDataSaga(
 ): Generator<*, *, *> {
   const { forDID, uid, type, senderLogoUrl } = action.notificationPayload
   const { notificationOpenOptions } = action
+
+  if (type === 'unknown') {
+    // if we get type as unknown, that means we are running aries protocol
+    // for aries protocol we just want to run downloadMessages logic
+    // so we are raising this action to run downloadMessagesSaga
+    yield put({
+      type: GET_UN_ACKNOWLEDGED_MESSAGES,
+    })
+    // once we start processing aries message, we don't to run any other logic
+    // so we return from here
+    return
+  }
 
   if (forDID && uid) {
     const fetchDataAlreadyExists = yield select(

@@ -45,7 +45,10 @@ import type {
   OIDCAuthenticationRequest,
 } from '../components/qr-scanner/type-qr-scanner'
 import type { Store } from '../store/type-store'
-import type { InvitationPayload } from '../invitation/type-invitation'
+import type {
+  InvitationPayload,
+  AriesConnectionInvite,
+} from '../invitation/type-invitation'
 import type {
   QRCodeScannerScreenState,
   QRCodeScannerScreenProps,
@@ -65,6 +68,7 @@ import {
   openIdConnectUpdateStatus,
   OPEN_ID_CONNECT_STATE,
 } from '../open-id-connect/open-id-connect-actions'
+import { ID } from '../common/type-common'
 
 export function convertQrCodeToInvitation(qrCode: QrCode) {
   const qrSenderDetail = qrCode[QR_CODE_SENDER_DETAIL]
@@ -335,6 +339,7 @@ export class QRCodeScannerScreen extends Component<
             onEnvironmentSwitchUrl={this.onEnvironmentSwitchUrl}
             onInvitationUrl={this.onInvitationUrl}
             onOIDCAuthenticationRequest={this.onOIDCAuthenticationRequest}
+            onAriesConnectionInviteRead={this.onAriesConnectionInviteRead}
           />
         ) : null}
       </Container>
@@ -351,6 +356,47 @@ export class QRCodeScannerScreen extends Component<
     this.props.navigation.navigate(openIdConnectRoute, {
       oidcAuthenticationRequest,
     })
+  }
+
+  onAriesConnectionInviteRead = (
+    ariesConnectionInvite: AriesConnectionInvite
+  ) => {
+    const { payload, original } = ariesConnectionInvite
+
+    const senderAgentKeyDelegationProof = {
+      agentDID: payload.routingKeys[0],
+      agentDelegatedKey: payload.routingKeys[0],
+      signature: '<no-signature-supplied>',
+    }
+
+    const invitation = {
+      senderEndpoint: payload.serviceEndpoint,
+      requestId: payload[ID],
+      senderAgentKeyDelegationProof,
+      senderName: payload.label || 'Anonymous',
+      senderDID: payload.recipientKeys[0],
+      // TODO:KS Need to discuss with architects to know how to fulfill this requirement
+      senderLogoUrl: 'http://robohash.org/234',
+      senderVerificationKey: payload.recipientKeys[0],
+      targetName: payload.label || 'Anonymous',
+      senderDetail: {
+        name: payload.label || 'Anonymous',
+        agentKeyDlgProof: senderAgentKeyDelegationProof,
+        DID: payload.recipientKeys[0],
+        logoUrl: 'http://robohash.org/234',
+        verKey: payload.recipientKeys[0],
+        publicDID: payload.recipientKeys[0],
+      },
+      senderAgencyDetail: {
+        DID: payload.recipientKeys[0],
+        verKey: payload.recipientKeys[1],
+        endpoint: payload.serviceEndpoint,
+      },
+      version: '1.0',
+      original,
+    }
+
+    this.checkExistingConnectionAndRedirect({ payload: invitation })
   }
 }
 

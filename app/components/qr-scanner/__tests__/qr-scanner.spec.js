@@ -20,6 +20,7 @@ describe('<QRScanner />', () => {
     onEnvironmentSwitchUrl: jest.fn(),
     onInvitationUrl: jest.fn(),
     onOIDCAuthenticationRequest: jest.fn(),
+    onAriesConnectionInviteRead: jest.fn(),
   })
 
   function setup() {
@@ -38,7 +39,7 @@ describe('<QRScanner />', () => {
     expect(wrapper.toJSON()).toMatchSnapshot()
   })
 
-  it('should call onRead once QR code read is successful', () => {
+  it('should call onRead once QR code read is successful', async () => {
     jest.useFakeTimers()
     const { onRead, instance } = setup()
 
@@ -46,17 +47,17 @@ describe('<QRScanner />', () => {
       data: JSON.stringify(qrData),
     }
 
-    instance.onRead(qrReadEvent)
+    await instance.onRead(qrReadEvent)
     expect(onRead).toHaveBeenCalledWith(expect.objectContaining(qrData))
     expect(instance.state.scanStatus).toBe(SCAN_STATUS.SUCCESS)
   })
 
-  it('should set state to fail if QR code is not correct', () => {
+  it('should set state to fail if QR code is not correct', async () => {
     jest.useFakeTimers()
 
     const { instance } = setup()
 
-    instance.onRead({ data: '' })
+    await instance.onRead({ data: '' })
     expect(instance.state.scanStatus).toBe(SCAN_STATUS.FAIL)
 
     jest.runAllTimers()
@@ -64,11 +65,11 @@ describe('<QRScanner />', () => {
     expect(instance.state.scanStatus).toBe(SCAN_STATUS.SCANNING)
   })
 
-  it('should call onEnvironmentSwitchUrl if it reads correct environment switcher url', () => {
+  it('should call onEnvironmentSwitchUrl if it reads correct environment switcher url', async () => {
     jest.useFakeTimers()
     const { onEnvironmentSwitchUrl, instance } = setup()
 
-    instance.onRead({ data: validQrCodeEnvironmentSwitchUrl })
+    await instance.onRead({ data: validQrCodeEnvironmentSwitchUrl })
     expect(onEnvironmentSwitchUrl).toHaveBeenCalledWith({
       name: 'dev',
       url: validQrCodeEnvironmentSwitchUrl,
@@ -92,7 +93,7 @@ describe('<QRScanner />', () => {
     const pendingQrProcessing = instance.onRead({
       data: validInvitationUrlQrCode,
     })
-    expect(instance.state.scanStatus).toBe(SCAN_STATUS.DOWNLOADING_INVITATION)
+    expect(instance.state.scanStatus).toBe(SCAN_STATUS.SCANNING)
     // process API call
     await pendingQrProcessing
 

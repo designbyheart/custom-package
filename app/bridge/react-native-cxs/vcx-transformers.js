@@ -12,6 +12,7 @@ import type {
   VcxConnectionConnectResult,
   VcxCredentialOffer,
   WalletPoolName,
+  VcxConnectionConnectV2Result,
 } from './type-cxs'
 import type { UserOneTimeInfo } from '../../store/user/type-user-store'
 import type { InvitationPayload } from '../../invitation/type-invitation'
@@ -20,6 +21,11 @@ import type { ClaimOfferPushPayload } from '../../push-notification/type-push-no
 import { getWalletKey } from '../../services/storage'
 
 export const paymentHandle = 0
+const commonConfigParams = {
+  protocol_type: '1.0',
+  communication_method: 'aries',
+  use_latest_protocols: 'true',
+}
 
 export async function convertAgencyConfigToVcxProvision(
   config: AgencyPoolConfig,
@@ -35,6 +41,7 @@ export async function convertAgencyConfigToVcxProvision(
     agent_seed: null,
     enterprise_seed: null,
     payment_method: config.paymentMethod,
+    ...commonConfigParams,
   }
 }
 
@@ -75,6 +82,7 @@ export async function convertCxsInitToVcxInit(
     institution_did: init.oneTimeAgencyDid,
     institution_verkey: init.oneTimeAgencyVerificationKey,
     payment_method: init.paymentMethod,
+    ...commonConfigParams,
   }
 }
 
@@ -121,6 +129,24 @@ export function convertVcxConnectionToCxsConnection(
   }
 }
 
+export function convertVcxConnectionV2ToCMConnection(
+  vcxConnection: VcxConnectionConnectV2Result
+): MyPairwiseInfo {
+  const {
+    agent_info,
+    state: { Invitee: { Requested: { remote_info } } },
+  } = vcxConnection.state
+
+  return {
+    myPairwiseDid: agent_info.pw_did,
+    myPairwiseVerKey: agent_info.pw_verkey,
+    myPairwiseAgentDid: agent_info.agent_did,
+    myPairwiseAgentVerKey: agent_info.agent_vk,
+    myPairwisePeerVerKey: remote_info.routingKeys[0],
+    senderDID: remote_info.recipientKeys[0],
+  }
+}
+
 export function convertVcxCredentialOfferToCxsClaimOffer(
   vcxCredentialOffer: VcxCredentialOffer
 ): ClaimOfferPushPayload {
@@ -130,7 +156,7 @@ export function convertVcxCredentialOfferToCxsClaimOffer(
     to_did: vcxCredentialOffer.to_did,
     from_did: vcxCredentialOffer.from_did,
     claim: vcxCredentialOffer.credential_attrs,
-    claim_name: vcxCredentialOffer.claim_name,
+    claim_name: vcxCredentialOffer.claim_name || 'Anonymous',
     schema_seq_no: vcxCredentialOffer.schema_seq_no,
     issuer_did: vcxCredentialOffer.from_did,
     // should override it when generating claim offer object

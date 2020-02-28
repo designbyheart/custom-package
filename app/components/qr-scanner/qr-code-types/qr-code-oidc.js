@@ -75,7 +75,7 @@ export async function fetchValidateJWT(
     .map(addBase64Padding)
 
   // check if header is valid as per ConnectMe expectations
-  const [header, decodeError] = await decodeToJSON(encodedHeader)
+  const [decodeError, header] = await decodeToJSON(encodedHeader)
   if (decodeError !== null || header === null) {
     return [null, SCAN_STATUS.AUTH_REQUEST_INVALID_HEADER_DECODE_ERROR]
   }
@@ -84,7 +84,7 @@ export async function fetchValidateJWT(
   }
 
   // check if body is valid
-  const [body, bodyDecodeError] = await decodeToJSON(encodedBody)
+  const [bodyDecodeError, body] = await decodeToJSON(encodedBody)
   if (bodyDecodeError !== null || body === null) {
     return [null, SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_DECODE_ERROR]
   }
@@ -122,14 +122,14 @@ export async function fetchValidateJWT(
 
 async function decodeToJSON(
   encodedValue: string
-): Promise<[null | Object, null | typeof Error]> {
+): Promise<[null | typeof Error, null | Object]> {
   try {
     const decodedUtf = await toUtf8FromBase64(encodedValue, 'URL_SAFE')
     const decodedJSON = JSON.parse(decodedUtf)
 
-    return [decodedJSON, null]
+    return [null, decodedJSON]
   } catch (e) {
-    return [null, e]
+    return [e, null]
   }
 }
 

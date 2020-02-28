@@ -32,6 +32,7 @@ export type InvitationPayload = {
   senderDetail: InvitationSenderDetail,
   senderAgencyDetail: InvitationSenderAgencyDetail,
   version?: string,
+  original?: string,
 }
 
 export type Invitation = {
@@ -130,3 +131,36 @@ export const ERROR_INVITATION_CONNECT = (message: string) => ({
   code: 'INVITATION-002',
   message: `Error while establishing a connection ${message}`,
 })
+
+export const ERROR_INVITATION_SERIALIZE_UPDATE = (message: string) => ({
+  code: 'INVITATION-003',
+  message: `Error while getting serialized connection for aries: ${message}`,
+})
+
+export const CONNECTION_INVITE_TYPES = {
+  ARIES_V1_QR: 'ARIES_V1_QR',
+}
+
+export type ConnectionInviteTypes = $Keys<typeof CONNECTION_INVITE_TYPES>
+
+export type AriesConnectionInviteType =
+  'did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/connections/1.0/invitation'
+
+export type AriesConnectionInvitePayload = {
+  '@id': string,
+  '@type': AriesConnectionInviteType,
+  label?: string,
+  recipientKeys: Array<string>,
+  routingKeys: Array<string>,
+  serviceEndpoint: string,
+}
+
+export type AriesConnectionInvite = {
+  payload: AriesConnectionInvitePayload,
+  type: ConnectionInviteTypes,
+  // this version is specific to CM's own data
+  version: '1.0',
+  // this would contain data that would be as it is that connect me receives
+  // for example: this would have original QR code string
+  original: string,
+}

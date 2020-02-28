@@ -1,6 +1,9 @@
 // @flow
 
-import type { InvitationPayload } from '../../invitation/type-invitation'
+import type {
+  InvitationPayload,
+  AriesConnectionInvite,
+} from '../../invitation/type-invitation'
 
 export const SCAN_STATUS = {
   SCANNING: 'scanning...',
@@ -67,6 +70,7 @@ export type QrScannerProps = {
   onEnvironmentSwitchUrl: EnvironmentSwitchUrlQrCode => void,
   onInvitationUrl: InvitationPayload => void,
   onOIDCAuthenticationRequest: OIDCAuthenticationRequest => void,
+  onAriesConnectionInviteRead: AriesConnectionInvite => void,
 }
 
 export type CameraMarkerProps = {

@@ -167,3 +167,6 @@ export type Dispatch = (action: { type: string }) => any
 export type ReduxConnect = {
   dispatch: Dispatch,
 }
+
+export const ID = '@id'
+export const TYPE = '@type'

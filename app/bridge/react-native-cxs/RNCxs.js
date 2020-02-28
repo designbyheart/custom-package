@@ -24,6 +24,7 @@ import type {
   WalletTokenInfo,
   PaymentAddress,
   SignDataResponse,
+  VcxConnectionConnectV2Result,
 } from './type-cxs'
 import type { InvitationPayload } from '../../invitation/type-invitation'
 import {
@@ -35,6 +36,7 @@ import {
   convertVcxConnectionToCxsConnection,
   convertVcxCredentialOfferToCxsClaimOffer,
   paymentHandle,
+  convertVcxConnectionV2ToCMConnection,
 } from './vcx-transformers'
 import type { UserOneTimeInfo } from '../../store/user/type-user-store'
 import type { AgencyPoolConfig } from '../../store/type-config-store'
@@ -86,11 +88,22 @@ export async function acceptInvitationVcx(
     connectionHandle
   )
 
-  const vcxConnection: { data: VcxConnectionConnectResult } = JSON.parse(
-    serializedConnection
-  )
+  const {
+    data,
+    version = '1.0',
+  }: {
+    data: VcxConnectionConnectResult,
+    version: string,
+  } = JSON.parse(serializedConnection)
 
-  return convertVcxConnectionToCxsConnection(vcxConnection.data)
+  // un-comment below line if data structure is changed
+  // if (data.state && version === '2.0') {
+  //   // if this is aries version of connection
+  //   return convertVcxConnectionV2ToCMConnection(data)
+  // } else if (data.pw_did) {
+  // }
+
+  return convertVcxConnectionToCxsConnection(data)
 }
 
 export async function updatePushTokenVcx(pushTokenConfig: CxsPushTokenConfig) {
@@ -206,6 +219,17 @@ export async function createConnectionWithInvite(
   return connectionHandle
 }
 
+export async function createConnectionWithAriesInvite(
+  invitation: InvitationPayload
+): Promise<number> {
+  const connectionHandle: number = await RNIndy.createConnectionWithInvite(
+    invitation.requestId,
+    invitation.original
+  )
+
+  return connectionHandle
+}
+
 export async function serializeConnection(
   connectionHandle: number
 ): Promise<string> {
@@ -251,6 +275,30 @@ export async function downloadClaimOffer(
   vcxCredentialOffer.price = price
     ? convertSovrinAtomsToSovrinTokens(price)
     : null
+
+  return {
+    claimHandle: credential_handle,
+    claimOffer: convertVcxCredentialOfferToCxsClaimOffer(vcxCredentialOffer),
+  }
+}
+
+export async function downloadAriesCredentialOffer(
+  connectionHandle: number,
+  sourceId: string,
+  messageId: string
+): Promise<CxsCredentialOfferResult> {
+  const {
+    credential_offer,
+    credential_handle,
+  }: VcxCredentialOfferResult = await RNIndy.credentialCreateWithMsgId(
+    sourceId,
+    connectionHandle,
+    messageId
+  )
+
+  const [vcxCredentialOffer]: [VcxCredentialOffer] = JSON.parse(
+    credential_offer
+  )
 
   return {
     claimHandle: credential_handle,
@@ -744,4 +792,14 @@ export async function getRedirectDetails(
   connectionHandle: number
 ): Promise<void> {
   return RNIndy.getRedirectDetails(connectionHandle)
+}
+
+export async function connectionGetState(
+  connectionHandle: number
+): Promise<number> {
+  return RNIndy.connectionGetState(connectionHandle)
+}
+
+export async function connectionUpdateState(connectionHandle: number) {
+  return RNIndy.connectionUpdateState(connectionHandle)
 }

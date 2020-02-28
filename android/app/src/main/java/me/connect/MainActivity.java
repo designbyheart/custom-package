@@ -47,6 +47,7 @@ public class MainActivity extends ReactFragmentActivity {
             Os.setenv("EXTERNAL_STORAGE", c.getFilesDir().toString(), true);
             // un-comment to enable logging in vcx, indy & sovtoken libraries
             // Os.setenv("RUST_LOG", "TRACE", true);
+            // Os.setenv("RUST_BACKTRACE", "1", true);
         } catch (Exception e) {
             e.printStackTrace();
         }
