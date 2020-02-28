@@ -64,13 +64,18 @@ export type AcceptInvitationResponse = {
   uid: string,
 }
 
-// TODO: Remove types that will not be used once vcx is integrated
+export type AriesProtocolConfig = {
+  protocol_type: string,
+  communication_method: string,
+  use_latest_protocols: string,
+}
+
 export type VcxProvision = {
   agency_url: string,
   agency_did: string,
   agency_verkey: string,
   payment_method: string,
-}
+} & AriesProtocolConfig
 
 export type VcxProvisionResult = {
   wallet_name: string,
@@ -111,7 +116,7 @@ export type VcxInitConfig = {
   sdk_to_remote_verkey: string,
   institution_did: string,
   institution_verkey: string,
-}
+} & AriesProtocolConfig
 
 export type VcxPushTokenConfig = {
   id: string,
@@ -130,7 +135,7 @@ export type VcxCreateConnection = {
 
 export type VcxConnectionCreateResult = number
 
-export type VcxConnectionConnectResult = {
+export type VcxConnectionConnectResult = {|
   source_id: string,
   pw_did: string,
   pw_verkey: string,
@@ -140,7 +145,28 @@ export type VcxConnectionConnectResult = {
   agent_vk: string,
   their_pw_did: string,
   their_pw_verkey: string,
-}
+|}
+
+export type VcxConnectionConnectV2Result = {|
+  state: {
+    agent_info: {
+      pw_did: string,
+      pw_verkey: string,
+      agent_did: string,
+      agent_vk: string,
+    },
+    state: {
+      Invitee: {
+        Requested: {
+          remote_info: {
+            recipientKeys: Array<string>,
+            routingKeys: Array<string>,
+          },
+        },
+      },
+    },
+  },
+|}
 
 export type VcxCredentialOfferResult = {
   credential_handle: number,

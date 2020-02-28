@@ -352,6 +352,42 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void connectionGetState(int connectionHandle, Promise promise) {
+        try {
+            ConnectionApi.connectionGetState(connectionHandle).exceptionally((t) -> {
+                Log.e(TAG, "connectionGetState", t);
+                promise.reject("FutureException", t.getMessage());
+                return -1;
+            }).thenAccept(result -> {
+                if (result != -1) {
+                    BridgeUtils.resolveIfValid(promise, result);
+                }
+            });
+        } catch(Exception e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void connectionUpdateState(int connectionHandle, Promise promise) {
+        try {
+            ConnectionApi.vcxConnectionUpdateState(connectionHandle).exceptionally((t) -> {
+                Log.e(TAG, "vcxConnectionUpdateState", t);
+                promise.reject("FutureException", t.getMessage());
+                return -1;
+            }).thenAccept(result -> {
+                if (result != -1) {
+                    BridgeUtils.resolveIfValid(promise, result);
+                }
+            });
+        } catch(Exception e) {
+            e.printStackTrace();
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
     public void generateProof(String proofRequestId, String requestedAttrs, String requestedPredicates,
             String revocationInterval, String proofName, Promise promise) {
         try {

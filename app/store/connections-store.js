@@ -30,6 +30,8 @@ import type {
   DeleteConnectionFailureEventAction,
   DeleteConnectionEventAction,
   SendConnectionRedirectAction,
+  UpdateSerializeConnectionFailAction,
+  UpdateConnectionSerializedStateAction,
 } from './type-connection-store'
 import type { InvitationPayload } from '../invitation/type-invitation'
 import {
@@ -44,6 +46,8 @@ import {
   NEW_CONNECTION_FAIL,
   HYDRATE_CONNECTIONS,
   SEND_CONNECTION_REDIRECT,
+  UPDATE_SERIALIZE_CONNECTION_FAIL,
+  UPDATE_CONNECTION_SERIALIZED_STATE,
 } from './type-connection-store'
 import {
   deleteConnection,
@@ -301,9 +305,26 @@ export function* removePersistedThemes(): Generator<*, *, *> {
     customLogger.error(`removePersistedThemes: ${e}`)
   }
 }
+export function updateSerializedConnectionFail({
+  identifier,
+  error,
+}: *): UpdateSerializeConnectionFailAction {
+  return {
+    type: UPDATE_SERIALIZE_CONNECTION_FAIL,
+    error,
+    identifier,
+  }
+}
 
-export function* watchUpdateConnectionTheme(): any {
-  yield takeLatest(UPDATE_CONNECTION_THEME, persistThemes)
+export function updateConnectionSerializedState({
+  identifier,
+  vcxSerializedConnection,
+}: *): UpdateConnectionSerializedStateAction {
+  return {
+    type: UPDATE_CONNECTION_SERIALIZED_STATE,
+    identifier,
+    vcxSerializedConnection,
+  }
 }
 
 export const sendConnectionRedirect = (
@@ -377,6 +398,10 @@ export function* watchSendConnectionRedirect(): any {
   yield takeEvery(SEND_CONNECTION_REDIRECT, sendConnectionRedirectSaga)
 }
 
+export function* watchUpdateConnectionTheme(): any {
+  yield takeLatest(UPDATE_CONNECTION_THEME, persistThemes)
+}
+
 export function* watchConnection(): any {
   yield all([
     watchDeleteConnectionOccurred(),
@@ -388,7 +413,7 @@ export function* watchConnection(): any {
 
 export default function connections(
   state: ConnectionStore = initialState,
-  action: any
+  action: any | UpdateConnectionSerializedStateAction
 ) {
   switch (action.type) {
     case UPDATE_CONNECTION_THEME:
@@ -453,6 +478,17 @@ export default function connections(
       return {
         ...state,
         hydrated: true,
+      }
+    case UPDATE_CONNECTION_SERIALIZED_STATE:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [action.identifier]: {
+            ...(state.data ? state.data[action.identifier] || {} : {}),
+            vcxSerializedConnection: action.vcxSerializedConnection,
+          },
+        },
       }
     case RESET:
       return initialState

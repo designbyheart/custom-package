@@ -36,6 +36,8 @@ import {
   fetchValidateJWT,
 } from './qr-code-types/qr-code-oidc'
 import { uuid } from '../../services/uuid'
+import { isAriesConnectionInviteQrCode } from './qr-code-types/qr-code-aries-connection-invite'
+import { CONNECTION_INVITE_TYPES } from '../../invitation/type-invitation'
 
 export default class QRScanner extends PureComponent<
   QrScannerProps,
@@ -114,75 +116,86 @@ export default class QRScanner extends PureComponent<
         this.onSuccessRead(nextState)
         this.props.onRead(qrData)
       } else {
-        // we support another type of qr code as well
-        // in which we recognize the url which allows us
-        // to switch environment
-        const urlQrCode = isValidUrlQrCode(event.data)
-        if (urlQrCode && typeof urlQrCode === 'object') {
+        const ariesConnectionInviteQr = await isAriesConnectionInviteQrCode(
+          event.data
+        )
+        if (
+          ariesConnectionInviteQr &&
+          ariesConnectionInviteQr.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR
+        ) {
           this.onSuccessRead(nextState)
-          this.props.onEnvironmentSwitchUrl(urlQrCode)
+          this.props.onAriesConnectionInviteRead(ariesConnectionInviteQr)
         } else {
-          // check if we get OIDC based authentication qr-code
-          const oidcAuthenticationQrCode = isValidOIDCQrCode(event.data)
-          if (
-            oidcAuthenticationQrCode &&
-            oidcAuthenticationQrCode.type === QR_CODE_TYPES.OIDC
-          ) {
-            nextState.scanStatus = SCAN_STATUS.DOWNLOADING_AUTHENTICATION_JWT
-            this.setState(nextState)
-            const [jwtAuthenticationRequest, error] = await fetchValidateJWT(
-              oidcAuthenticationQrCode
-            )
-            if (error !== null || jwtAuthenticationRequest === null) {
-              // if we get error while validating JWT request
-              // then show error on QR scanner and resume re-scanning of QR code
-              // after certain amount of time to let user read error
-              // and also so that qr code reader does not keep reading qr code
-              // and keep checking status in every sub millisecond
-              nextState.scanStatus = error || SCAN_STATUS.FAIL
-              this.setState(nextState, this.delayedReactivate)
-            } else {
-              nextState.scanStatus = SCAN_STATUS.SUCCESS
-              this.onSuccessRead(nextState)
-              this.props.onOIDCAuthenticationRequest({
-                oidcAuthenticationQrCode,
-                jwtAuthenticationRequest,
-                id: uuid(),
-              })
-            }
+          // we support another type of qr code as well
+          // in which we recognize the url which allows us
+          // to switch environment
+          const urlQrCode = isValidUrlQrCode(event.data)
+          if (urlQrCode && typeof urlQrCode === 'object') {
+            this.onSuccessRead(nextState)
+            this.props.onEnvironmentSwitchUrl(urlQrCode)
           } else {
-            // now check if we get invitation url in qr-code
-            const urlInvitationQrCode = isValidInvitationUrl(event.data)
+            // check if we get OIDC based authentication qr-code
+            const oidcAuthenticationQrCode = isValidOIDCQrCode(event.data)
             if (
-              urlInvitationQrCode &&
-              typeof urlInvitationQrCode === 'object'
+              oidcAuthenticationQrCode &&
+              oidcAuthenticationQrCode.type === QR_CODE_TYPES.OIDC
             ) {
-              nextState.scanStatus = SCAN_STATUS.DOWNLOADING_INVITATION
+              nextState.scanStatus = SCAN_STATUS.DOWNLOADING_AUTHENTICATION_JWT
               this.setState(nextState)
-              try {
-                const invitationData: SMSPendingInvitationPayload = await invitationDetailsRequest(
-                  {
-                    url: urlInvitationQrCode.url,
-                  }
-                )
-                const invitationPayload = convertSmsPayloadToInvitation(
-                  invitationData
-                )
+              const [jwtAuthenticationRequest, error] = await fetchValidateJWT(
+                oidcAuthenticationQrCode
+              )
+              if (error !== null || jwtAuthenticationRequest === null) {
+                // if we get error while validating JWT request
+                // then show error on QR scanner and resume re-scanning of QR code
+                // after certain amount of time to let user read error
+                // and also so that qr code reader does not keep reading qr code
+                // and keep checking status in every sub millisecond
+                nextState.scanStatus = error || SCAN_STATUS.FAIL
+                this.setState(nextState, this.delayedReactivate)
+              } else {
                 nextState.scanStatus = SCAN_STATUS.SUCCESS
                 this.onSuccessRead(nextState)
-                this.props.onInvitationUrl(invitationPayload)
-              } catch (e) {
-                // set status that no invitation data was found at the url
-                nextState.scanStatus = SCAN_STATUS.NO_INVITATION_DATA
-                // re-activate scanning after setting fail status
-                this.setState(nextState, this.delayedReactivate)
+                this.props.onOIDCAuthenticationRequest({
+                  oidcAuthenticationQrCode,
+                  jwtAuthenticationRequest,
+                  id: uuid(),
+                })
               }
             } else {
-              // qr code read failed
-              nextState.scanStatus = SCAN_STATUS.FAIL
-              // if qr code read failed, we reactivate qr code scan after delay
-              // so that user can see that QR code scan failed
-              this.setState(nextState, this.delayedReactivate)
+              // now check if we get invitation url in qr-code
+              const urlInvitationQrCode = isValidInvitationUrl(event.data)
+              if (
+                urlInvitationQrCode &&
+                typeof urlInvitationQrCode === 'object'
+              ) {
+                nextState.scanStatus = SCAN_STATUS.DOWNLOADING_INVITATION
+                this.setState(nextState)
+                try {
+                  const invitationData: SMSPendingInvitationPayload = await invitationDetailsRequest(
+                    {
+                      url: urlInvitationQrCode.url,
+                    }
+                  )
+                  const invitationPayload = convertSmsPayloadToInvitation(
+                    invitationData
+                  )
+                  nextState.scanStatus = SCAN_STATUS.SUCCESS
+                  this.onSuccessRead(nextState)
+                  this.props.onInvitationUrl(invitationPayload)
+                } catch (e) {
+                  // set status that no invitation data was found at the url
+                  nextState.scanStatus = SCAN_STATUS.NO_INVITATION_DATA
+                  // re-activate scanning after setting fail status
+                  this.setState(nextState, this.delayedReactivate)
+                }
+              } else {
+                // qr code read failed
+                nextState.scanStatus = SCAN_STATUS.FAIL
+                // if qr code read failed, we reactivate qr code scan after delay
+                // so that user can see that QR code scan failed
+                this.setState(nextState, this.delayedReactivate)
+              }
             }
           }
         }

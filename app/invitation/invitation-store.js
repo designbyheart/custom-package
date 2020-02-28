@@ -1,6 +1,6 @@
 // @flow
 import { Platform } from 'react-native'
-import { put, takeLatest, call, all, select } from 'redux-saga/effects'
+import { put, takeLatest, call, all, select, fork } from 'redux-saga/effects'
 import {
   INVITATION_RECEIVED,
   INVITATION_RESPONSE_SEND,
@@ -9,6 +9,7 @@ import {
   INVITATION_REJECTED,
   ERROR_INVITATION_VCX_INIT,
   ERROR_INVITATION_CONNECT,
+  ERROR_INVITATION_SERIALIZE_UPDATE,
 } from './type-invitation'
 import { ResponseType } from '../components/request/type-request'
 import {
@@ -27,11 +28,19 @@ import {
   getUserOneTimeInfo,
   getPoolConfig,
 } from '../store/store-selector'
-import { saveNewConnection } from '../store/connections-store'
+import {
+  saveNewConnection,
+  persistConnections,
+  updateSerializedConnectionFail,
+  updateConnectionSerializedState,
+} from '../store/connections-store'
 import {
   createConnectionWithInvite,
   acceptInvitationVcx,
   serializeConnection,
+  createConnectionWithAriesInvite,
+  connectionGetState,
+  connectionUpdateState,
 } from '../bridge/react-native-cxs/RNCxs'
 import type {
   InvitationResponseSendData,
@@ -57,6 +66,7 @@ import { ensureVcxInitSuccess } from '../store/route-store'
 import { VCX_INIT_SUCCESS } from '../store/type-config-store'
 import type { MyPairwiseInfo } from '../store/type-connection-store'
 import { safeSet, safeGet } from '../services/storage'
+import { flattenAsync } from '../common/flatten-async'
 
 export const invitationInitialState = {}
 
@@ -106,14 +116,26 @@ export function* sendResponse(
       getInvitationPayload,
       senderDID
     )
-    const connectionHandle: number = yield call(
-      createConnectionWithInvite,
-      payload
-    )
+    // check if invitation is aries protocol invitation
+    const isAriesInvite = Boolean(payload.original)
+    const createConnectionApi = isAriesInvite
+      ? createConnectionWithAriesInvite
+      : createConnectionWithInvite
+
+    const connectionHandle: number = yield call(createConnectionApi, payload)
     const pairwiseInfo: MyPairwiseInfo = yield call(
       acceptInvitationVcx,
       connectionHandle
     )
+
+    if (isAriesInvite) {
+      yield fork(
+        updateAriesInviteState,
+        payload,
+        connectionHandle,
+        pairwiseInfo
+      )
+    }
 
     yield put(invitationSuccess(senderDID))
 
@@ -125,9 +147,6 @@ export function* sendResponse(
       serializeConnection,
       connectionHandle
     )
-    // TODO:KS Above call will probably interfere with showing bubbles as soon as user
-    // is on home screen after accepting connection
-    // there are few more things that we can do, but we are not doing those here for now
 
     const connection = {
       newConnection: {
@@ -148,6 +167,70 @@ export function* sendResponse(
     captureError(e)
     yield put(invitationFail(ERROR_INVITATION_CONNECT(e.message), senderDID))
   }
+}
+
+function* updateAriesInviteState(
+  payload: InvitationPayload,
+  connectionHandle: number,
+  pairwiseInfo: MyPairwiseInfo
+): Generator<*, *, *> {
+  const flatConnectionGetState = flattenAsync(connectionGetState)
+  const flatConnectionUpdateState = flattenAsync(connectionUpdateState)
+
+  // if we receive an aries invite
+  // then we need to keep calling connection update state
+  // till connection state becomes accepted on vcx side
+  let done = false
+  while (!done) {
+    const [updateStateError]: [typeof Error] = yield call(
+      flatConnectionUpdateState,
+      connectionHandle
+    )
+    if (updateStateError) {
+      continue
+    }
+    const [getStateError, connectionState]: [typeof Error, number] = yield call(
+      flatConnectionGetState,
+      connectionHandle
+    )
+    if (getStateError) {
+      continue
+    }
+    if (connectionState !== 4) {
+      continue
+    }
+    done = true
+  }
+
+  // now we know that connection state is in accepted
+  // we need to take serialized connection state again
+  // and update serialized state on connectme side
+  const [serializedStateError, vcxSerializedConnection]: [
+    typeof Error,
+    string,
+  ] = yield call(flattenAsync(serializeConnection), connectionHandle)
+
+  if (serializedStateError) {
+    yield put(
+      updateSerializedConnectionFail({
+        identifier: pairwiseInfo.myPairwiseDid,
+        error: ERROR_INVITATION_SERIALIZE_UPDATE(
+          serializedStateError.toString()
+        ),
+      })
+    )
+    return
+  }
+
+  yield put(
+    updateConnectionSerializedState({
+      identifier: pairwiseInfo.myPairwiseDid,
+      vcxSerializedConnection,
+    })
+  )
+  // once we have update our connection store
+  // we need to update phone storage as well
+  yield* persistConnections()
 }
 
 function* watchSendInvitationResponse(): any {

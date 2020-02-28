@@ -393,9 +393,9 @@ export const SECONDARY_ACTION_IGNORE = 'Ignore'
 
 export const MESSAGE_MISSING_ATTRIBUTES_TITLE = 'Missing information'
 export const MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION = (
-  connectionname: string
+  connectionName: string
 ) =>
-  `You don't have all the attributes ${connectionname} is asking you to share with them. Manually fill in the missing attributes and tap Generate.`
+  `You don't have all the attributes ${connectionName} is asking you to share with them. Manually fill in the missing attributes and tap Generate.`
 
 export const MESSAGE_ERROR_PROOF_GENERATION_TITLE = 'Error generating proof'
 export const MESSAGE_ERROR_PROOF_GENERATION_DESCRIPTION = 'Please try again.'

@@ -6,6 +6,10 @@ export const UPDATE_CONNECTION_THEME = 'UPDATE_CONNECTION_THEME'
 export const UPDATE_STATUS_BAR_THEME = 'UPDATE_STATUS_BAR_THEME'
 export const NEW_CONNECTION_FAIL = 'NEW_CONNECTION_FAIL'
 export const HYDRATE_CONNECTIONS = 'HYDRATE_CONNECTIONS'
+export const UPDATE_SERIALIZE_CONNECTION_FAIL =
+  'UPDATE_SERIALIZE_CONNECTION_FAIL'
+export const UPDATE_CONNECTION_SERIALIZED_STATE =
+  'UPDATE_CONNECTION_SERIALIZED_STATE'
 
 export type MyPairwiseInfo = {
   myPairwiseDid: string,
@@ -64,6 +68,18 @@ export type NewConnectionAction = {
     identifier: string,
     logoUrl?: ?string,
   } & InvitationPayload,
+}
+
+export type UpdateSerializeConnectionFailAction = {
+  type: typeof UPDATE_SERIALIZE_CONNECTION_FAIL,
+  error: CustomError,
+  identifier: string,
+}
+
+export type UpdateConnectionSerializedStateAction = {
+  type: typeof UPDATE_CONNECTION_SERIALIZED_STATE,
+  identifier: string,
+  vcxSerializedConnection: string,
 }
 
 export const STORAGE_KEY_THEMES = 'STORAGE_KEY_THEMES'

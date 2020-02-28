@@ -8,6 +8,7 @@ import {
   fork,
   select,
   takeLatest,
+  takeLeading,
 } from 'redux-saga/effects'
 
 import { secureSet, getHydrationItem } from '../services/storage'
@@ -26,6 +27,7 @@ import {
   getClaimOffer,
   getClaimOffers,
   getAgencyUrl,
+  getConnectionByProp,
 } from '../store/store-selector'
 import {
   SERVER_ENVIRONMENT,
@@ -103,6 +105,8 @@ import {
   getHandleBySerializedConnection,
   getClaimHandleBySerializedClaimOffer,
   proofDeserialize,
+  downloadClaimOffer,
+  downloadAriesCredentialOffer,
 } from '../bridge/react-native-cxs/RNCxs'
 import { RESET } from '../common/type-common'
 import type { Connection } from './type-connection-store'
@@ -742,8 +746,27 @@ export function* processMessages(
   const dataAlreadyExists = yield select(getPendingFetchAdditionalDataKey)
   for (let i = 0; i < messages.length; i++) {
     try {
-      let connection = yield select(getConnection, messages[i].senderDID)
-      let pairwiseDID = connection && connection[0].myPairwiseDid
+      // get message type
+      const messageType = messages[i].type
+      let isAries = messageType === 'unknown'
+
+      let connection = []
+      if (isAries) {
+        // if message type is unkown that means we are in aries protocol
+        // and in aries protocol, senderDID is actually myPairwiseAgentDID
+        // so we need to select connection on the basis of myPairwiseAgentDID
+        // instead of senderDID
+        connection = yield select(
+          getConnectionByProp,
+          'myPairwiseAgentDid',
+          messages[i].senderDID
+        )
+      } else {
+        connection = yield select(getConnection, messages[i].senderDID)
+      }
+
+      let { myPairwiseDid: pairwiseDID, senderDID } =
+        connection && connection[0]
 
       if (
         !(
@@ -752,7 +775,11 @@ export function* processMessages(
           msgTypes.indexOf(messages[i].type) > -1
         )
       ) {
-        yield fork(handleMessage, messages[i])
+        if (isAries) {
+          yield fork(handleMessage, { ...messages[i], senderDID }, isAries)
+        } else {
+          yield fork(handleMessage, messages[i], isAries)
+        }
       }
     } catch (e) {
       // capturing error for handleMessage fork
@@ -946,8 +973,11 @@ const convertDecryptedPayloadToSerializedProofRequest = (
   return JSON.stringify(stringifiableProofRequest)
 }
 
-function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
-  const { senderDID, uid, type } = message
+function* handleMessage(
+  message: DownloadedMessage,
+  isAries: boolean
+): Generator<*, *, *> {
+  const { senderDID, uid, type, decryptedPayload } = message
   const remotePairwiseDID = senderDID
   const connection: Connection[] = yield select(getConnection, senderDID)
   const {
@@ -969,7 +999,6 @@ function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
       | QuestionPayload
       | null = null
     if (type === MESSAGE_TYPE.CLAIM_OFFER) {
-      const { decryptedPayload } = message
       // convert message decrypted payload to claim serialized claimOffer
       if (decryptedPayload) {
         // TODO:KS It should not be with serialized claim offer
@@ -1002,7 +1031,6 @@ function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
     }
 
     if (type === MESSAGE_TYPE.CLAIM) {
-      const { decryptedPayload } = message
       additionalData = {
         connectionHandle,
         decryptedPayload,
@@ -1010,7 +1038,6 @@ function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
     }
 
     if (type === MESSAGE_TYPE.PROOF_REQUEST) {
-      const { decryptedPayload } = message
       if (!decryptedPayload) return
       const serializedProof = convertDecryptedPayloadToSerializedProofRequest(
         decryptedPayload,
@@ -1026,7 +1053,6 @@ function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
     }
     // toLowerCase here to handle type 'question' and 'Question'
     if (type.toLowerCase() === MESSAGE_TYPE.QUESTION.toLowerCase()) {
-      const { decryptedPayload } = message
       if (!decryptedPayload) return
       additionalData = convertDecryptedPayloadToQuestion(
         connectionHandle,
@@ -1039,13 +1065,58 @@ function* handleMessage(message: DownloadedMessage): Generator<*, *, *> {
       )
     }
 
+    let ariesMessageType = null
+    // if we don't find any matching type, then our type can be expected from aries
+    // now we can try to look inside decryptedpayload
+    if (decryptedPayload) {
+      const payload = JSON.parse(decryptedPayload)
+      const payloadType = payload['@type']
+      if (payloadType.name === 'CRED_OFFER') {
+        // update type so that aries messages can be processed and added
+        ariesMessageType = MESSAGE_TYPE.CLAIM_OFFER
+        const { claimHandle, claimOffer } = yield call(
+          downloadAriesCredentialOffer,
+          connectionHandle,
+          uid,
+          uid
+        )
+
+        yield fork(saveSerializedClaimOffer, claimHandle, forDID, uid)
+
+        additionalData = {
+          ...claimOffer,
+          issuer_did: senderDID,
+          from_did: senderDID,
+          to_did: forDID,
+        }
+      }
+
+      if (payloadType.name === 'CRED') {
+        ariesMessageType = MESSAGE_TYPE.CLAIM
+        additionalData = {
+          connectionHandle,
+          decryptedPayload,
+        }
+      }
+
+      if (payloadType.name === 'PROOF_REQUEST') {
+        ariesMessageType = MESSAGE_TYPE.PROOF_REQUEST
+        additionalData = yield call(
+          downloadProofRequest,
+          uid,
+          connectionHandle,
+          uid
+        )
+      }
+    }
+
     if (!additionalData) {
       // we did not get any data or either push notification type is not supported
       return
     }
 
     yield* updatePayloadToRelevantStoreSaga({
-      type,
+      type: ariesMessageType || type,
       additionalData: {
         remoteName: senderName,
         ...additionalData,
@@ -1122,11 +1193,11 @@ export function* updateMessageStatus(
 }
 
 export function* watchOnHydrationDownloadMessages(): any {
-  yield takeLatest(VCX_INIT_SUCCESS, getMessagesSaga)
+  yield takeLeading(VCX_INIT_SUCCESS, getMessagesSaga)
 }
 
 export function* watchGetMessagesSaga(): any {
-  yield takeLatest(GET_UN_ACKNOWLEDGED_MESSAGES, getMessagesSaga)
+  yield takeLeading(GET_UN_ACKNOWLEDGED_MESSAGES, getMessagesSaga)
 }
 
 export const getUnacknowledgedMessages = (): GetUnacknowledgedMessagesAction => ({
