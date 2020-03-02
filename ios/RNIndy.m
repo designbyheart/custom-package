@@ -353,6 +353,37 @@ RCT_EXPORT_METHOD(deserializeConnection: (NSString *)serializedConnection
   }];
 }
 
+RCT_EXPORT_METHOD(connectionGetState: (NSInteger) connectionHandle
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] connectionGetState:connectionHandle
+                                   withCompletion:^(NSError *error, NSInteger state) {
+    if (error != nil) {
+      NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+      reject(indyErrorCode, @"Error occurred while getting connection state", error);
+    } else {
+      resolve(@(state));
+    }
+  }];
+}
+
+RCT_EXPORT_METHOD(connectionUpdateState: (NSInteger) connectionHandle
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] connectionUpdateState:connectionHandle
+                                      withCompletion:^(NSError *error, NSInteger state)
+  {
+    if (error != nil) {
+      NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+      reject(indyErrorCode, @"Error occurred while updating connection state", error);
+    } else {
+      resolve(@(state));
+    }
+  }];
+}
+
 RCT_EXPORT_METHOD(decryptWalletFile: (NSString *) config
                            resolver: (RCTPromiseResolveBlock) resolve
                            rejecter: (RCTPromiseRejectBlock) reject)
