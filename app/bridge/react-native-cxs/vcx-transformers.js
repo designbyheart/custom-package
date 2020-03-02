@@ -22,7 +22,7 @@ import { getWalletKey } from '../../services/storage'
 
 export const paymentHandle = 0
 const commonConfigParams = {
-  protocol_type: '1.0',
+  protocol_type: '2.0',
   communication_method: 'aries',
   use_latest_protocols: 'true',
 }
