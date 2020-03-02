@@ -8,6 +8,7 @@ import { Icon } from '../index'
 import { getUserAvatarSource } from '../../store/store-selector'
 import type { CustomListProps, Item } from './type-custom-list'
 import type { Store } from '../../store/type-store'
+import { BLANK_ATTRIBUTE_DATA_TEXT } from '../../connection-details/type-connection-details'
 
 export class CustomListProofRequest extends Component<CustomListProps, void> {
   keyExtractor = ({ label }: Item, index: number) => `${label}${index}`
@@ -19,21 +20,32 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
       item = item[0]
     }
 
-    const logoUrl = item.data
-      ? item.claimUuid &&
-        this.props.claimMap &&
-        this.props.claimMap[item.claimUuid] &&
-        this.props.claimMap[item.claimUuid].logoUrl
-        ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
-        : this.props.avatarSource || require('../../images/UserAvatar.png')
-      : null
+    // If the item has data, even if it is just a blank string, it exists. If it has no data it will be null and not show the icon.
+    const isDataEmptyString = item.data === ''
+
+    const logoUrl =
+      item.data || isDataEmptyString
+        ? item.claimUuid &&
+          this.props.claimMap &&
+          this.props.claimMap[item.claimUuid] &&
+          this.props.claimMap[item.claimUuid].logoUrl
+          ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
+          : this.props.avatarSource || require('../../images/UserAvatar.png')
+        : null
 
     return (
       <View key={index} style={styles.wrapper}>
         <View style={styles.textAvatarWrapper}>
           <View style={styles.textWrapper}>
             <Text style={styles.title}>{item.label}</Text>
-            <Text style={styles.content}>{item.data}</Text>
+            {// Show (none) in a lighter gray if the data is actually a blank string
+            isDataEmptyString ? (
+              <Text style={styles.contentGray}>
+                {BLANK_ATTRIBUTE_DATA_TEXT}
+              </Text>
+            ) : (
+              <Text style={styles.content}>{item.data}</Text>
+            )}
           </View>
           <View style={styles.avatarWrapper}>
             <Icon
@@ -92,7 +104,14 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'left',
     fontFamily: 'Lato',
-    paddingBottom: 12,
+  },
+  contentGray: {
+    fontSize: 17,
+    fontWeight: '400',
+    color: '#a5a5a5',
+    width: '100%',
+    textAlign: 'left',
+    fontFamily: 'Lato',
   },
   textAvatarWrapper: {
     width: '98.5%',
@@ -100,6 +119,7 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     width: '85%',
+    paddingBottom: 12,
   },
   avatarWrapper: {
     marginTop: -10,
