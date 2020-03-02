@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 import { Text, View, ScrollView, StyleSheet } from 'react-native'
 import { Border } from '../../components/connection-details/border'
 import { Avatar } from '../../components/avatar/avatar'
+import { BLANK_ATTRIBUTE_DATA_TEXT } from '../type-connection-details'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
 class ModalContent extends PureComponent<any, {}> {
@@ -15,7 +16,14 @@ class ModalContent extends PureComponent<any, {}> {
               <View style={styles.textAvatarWrapper}>
                 <View style={styles.textWrapper}>
                   <Text style={styles.title}>{userData.label}</Text>
-                  <Text style={styles.content}>{userData.data}</Text>
+                  {// Replace empty data string with (none) in lighter gray
+                  userData.data === '' ? (
+                    <Text style={styles.contentGray}>
+                      {BLANK_ATTRIBUTE_DATA_TEXT}
+                    </Text>
+                  ) : (
+                    <Text style={styles.content}>{userData.data}</Text>
+                  )}
                 </View>
                 {this.props.showSidePicture && (
                   <View style={styles.avatarWrapper}>
@@ -66,7 +74,14 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'left',
     fontFamily: 'Lato',
-    paddingBottom: 12,
+  },
+  contentGray: {
+    fontSize: 17,
+    fontWeight: '400',
+    color: '#a5a5a5',
+    width: '100%',
+    textAlign: 'left',
+    fontFamily: 'Lato',
   },
   textAvatarWrapper: {
     width: '98.5%',
@@ -74,6 +89,7 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     width: '85%',
+    paddingBottom: 12,
   },
   avatarWrapper: {
     width: '15%',

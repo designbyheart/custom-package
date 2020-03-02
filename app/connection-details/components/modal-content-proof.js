@@ -63,6 +63,7 @@ import {
   MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_TITLE,
   MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_DESCRIPTION,
 } from '../../proof-request/type-proof-request'
+import { BLANK_ATTRIBUTE_DATA_TEXT } from '../type-connection-details'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import {
   userSelfAttestedAttributes,
@@ -178,15 +179,20 @@ class ProofRequestAttributeList extends Component<
         {items.map((item, itemIndex) => {
           const adjustedLabel = item.label.toLocaleLowerCase()
           const testID = 'proof-request-attribute-item'
-          const logoUrl = item.data
-            ? item.claimUuid &&
-              this.props.claimMap &&
-              this.props.claimMap[item.claimUuid] &&
-              this.props.claimMap[item.claimUuid].logoUrl
-              ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
-              : this.props.userAvatarSource ||
-                require('../../images/UserAvatar.png')
-            : null
+
+          const isDataEmptyString = item.data === ''
+
+          const logoUrl =
+            item.data || isDataEmptyString
+              ? item.claimUuid &&
+                this.props.claimMap &&
+                this.props.claimMap[item.claimUuid] &&
+                this.props.claimMap[item.claimUuid].logoUrl
+                ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
+                : this.props.userAvatarSource ||
+                  require('../../images/UserAvatar.png')
+              : null
+
           const showInputBox =
             adjustedLabel in this.props.missingAttributes && !item.data
 
@@ -213,8 +219,13 @@ class ProofRequestAttributeList extends Component<
                       editable={!this.props.disableUserInputs}
                       underlineColorAndroid="transparent"
                     />
+                  ) : // If data is empty string, show the BLANK text in gray instead
+                  isDataEmptyString ? (
+                    <Text style={styles.contentGray}>
+                      {BLANK_ATTRIBUTE_DATA_TEXT}
+                    </Text>
                   ) : (
-                    <Text style={styles.titleFilledValues}>{item.data}</Text>
+                    <Text style={styles.content}>{item.data}</Text>
                   )}
                 </View>
                 <View style={styles.avatarWrapper}>
@@ -288,7 +299,7 @@ export const isPropEmpty = (prop: string) => (
   if (Array.isArray(data)) {
     return data.some(missingData)
   }
-  return !data[prop]
+  return !(data[prop] || data[prop] === '')
 }
 
 export const missingData = isPropEmpty('data')
@@ -702,7 +713,7 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     width: '85%',
-    paddingBottom: 10,
+    paddingBottom: 12,
   },
   avatarWrapper: {
     marginTop: -15,
@@ -717,15 +728,6 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     fontFamily: 'Lato',
   },
-  titleFilledValues: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#505050',
-    width: '100%',
-    textAlign: 'left',
-    marginBottom: 2,
-    fontFamily: 'Lato',
-  },
   content: {
     fontSize: 17,
     fontWeight: '400',
@@ -733,7 +735,14 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'left',
     fontFamily: 'Lato',
-    paddingBottom: 12,
+  },
+  contentGray: {
+    fontSize: 17,
+    fontWeight: '400',
+    color: '#a5a5a5',
+    width: '100%',
+    textAlign: 'left',
+    fontFamily: 'Lato',
   },
   outerModalWrapper: {
     width: '100%',
