@@ -22,9 +22,11 @@ import { getWalletKey } from '../../services/storage'
 
 export const paymentHandle = 0
 const commonConfigParams = {
-  protocol_type: '2.0',
-  communication_method: 'aries',
-  use_latest_protocols: 'true',
+  // Do Not remove commented code below
+  // when we add back aries compatibility, we will un-comment below code
+  // protocol_type: '2.0',
+  // communication_method: 'aries',
+  // use_latest_protocols: 'true',
 }
 
 export async function convertAgencyConfigToVcxProvision(
