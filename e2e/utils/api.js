@@ -126,6 +126,8 @@ export async function getInvitation() {
     appLinkIndex + appLink.length,
     appLinkIndex + appLink.length + tokenSize
   )
+
+  console.log(latestEmailBody)
   console.log(token)
 
   // no need to wait for invitation to be fetched
