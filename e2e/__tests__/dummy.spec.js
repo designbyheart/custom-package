@@ -29,7 +29,7 @@ describe('Dummy test suite', () => {
         {
           timeout: 150000,
           httpsAgent: new https.Agent({
-            ca: fs.readFileSync('/Users/vladimir.shishkin/Downloads/ca.crt'),
+            ca: fs.readFileSync('devops/ca.crt'),
           }),
           auth: {
             username: 'demo',

@@ -9,6 +9,7 @@
     "ios": "react-native run-ios",
     "android": "react-native run-android",
     "coverage": "npm test -- --coverage",
+    "pod:update": "pod repo update",
     "pod:dev:install": "cd ios && CONNECTME_DEBUG=true pod install",
     "pod:install": "cd ios && pod install",
     "build:ios": "mkdir -p -v ./ios/ConnectMe/RNbundle && pwd && which react-native && react-native bundle --entry-file='index.js' --bundle-output='./ios/ConnectMe/RNbundle/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios/ConnectMe/RNbundle'",

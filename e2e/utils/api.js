@@ -14,7 +14,7 @@ import fs from 'fs'
 const httpsConfig = {
   timeout: 150000,
   httpsAgent: new https.Agent({
-    ca: fs.readFileSync('/Users/vladimir.shishkin/Downloads/ca.crt'),
+    ca: fs.readFileSync('devops/ca.crt'),
   }),
   auth: {
     username: 'demo',
@@ -95,7 +95,7 @@ export async function getInvitation() {
     {
       timeout: 150000,
       httpsAgent: new https.Agent({
-        ca: fs.readFileSync('/Users/vladimir.shishkin/Downloads/ca.crt'),
+        ca: fs.readFileSync('devops/ca.crt'),
       }),
       auth: {
         username: 'demo',
