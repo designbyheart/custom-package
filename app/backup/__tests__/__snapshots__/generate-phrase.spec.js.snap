@@ -159,6 +159,8 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
         }
       >
         <Text
+          accessibilityLabel="hello some passphrase"
+          accessible={true}
           allowFontScaling={false}
           style={
             Array [
@@ -195,6 +197,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
               },
             ]
           }
+          testID="show-recovery-passphrase"
         >
           hello some passphrase
         </Text>
