@@ -40,7 +40,10 @@ import {
   TEXT_ONFIDO_ID_PARAGRAPH,
   TEXT_ONFIDO_HEADING_2,
 } from './type-onfido'
-import { connectionsTabRoute, connectionHistoryDetailsRoute } from '../common'
+import {
+  connectionsDrawerRoute,
+  connectionHistoryDetailsRoute,
+} from '../common'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class Onfido extends Component<OnfidoProps, void> {
@@ -59,7 +62,7 @@ export class Onfido extends Component<OnfidoProps, void> {
   onAction = () => {
     if (isSuccess(this.props.status, this.props.connectionStatus)) {
       this.props.navigation.goBack()
-      this.props.navigation.navigate(connectionsTabRoute)
+      this.props.navigation.navigate(connectionsDrawerRoute)
       return
     }
 

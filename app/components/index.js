@@ -42,4 +42,10 @@ export { default as Keyboard } from './keyboard/keyboard'
 export { default as CustomHeader } from './custom-header/custom-header'
 export { default as Loader } from './loader/loader'
 export { PrimaryHeader } from './primary-header/primary-header'
-export { ConnectionCard } from '../home/connection-card/connection-card'
+export {
+  ConnectionCard,
+} from '../my-connections/connection-card/connection-card'
+export { CameraButton } from './camera-button/camera-button'
+export {
+  default as UnreadMessagesBadge,
+} from './unread-messages-badge/unread-messages-badge'

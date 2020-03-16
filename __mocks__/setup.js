@@ -29,7 +29,7 @@ jest.mock('Linking', () => ({
 jest.mock('react-navigation', () => ({
   createStackNavigator: jest.fn(() => mockView),
   createTabNavigator: jest.fn(() => mockView),
-  createSwitchNavigator: jest.fn(() => mockView),
+  createDrawerNavigator: jest.fn(() => mockView),
   TabBarTop: jest.fn(),
   isFocused: true,
   withNavigationFocus: jest.fn(() => mockView),

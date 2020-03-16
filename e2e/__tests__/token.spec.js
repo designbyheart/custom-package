@@ -2,7 +2,7 @@
 
 import { device, element, by } from 'detox'
 import { tapOn, readVisibleText, wait } from '../utils/detox-selectors'
-import { SOVRIN_TOKEN_AMOUNT_TEST_ID } from '../../app/home/home-constants'
+import { SOVRIN_TOKEN_AMOUNT_TEST_ID } from '../../app/my-connections/my-connections-constants'
 import { matchScreenshot } from '../utils/screenshot'
 import { mintTokens } from '../utils/mint-tokens'
 import { BigNumber } from 'bignumber.js'

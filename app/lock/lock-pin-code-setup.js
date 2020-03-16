@@ -24,7 +24,7 @@ import {
   lockSetupSuccessRoute,
   settingsTabRoute,
   lockEnterPinRoute,
-  menuTabRoute,
+  settingsDrawerRoute,
 } from '../common'
 import {
   color,
@@ -87,7 +87,7 @@ export class LockPinSetup extends PureComponent<
               onPress={() => {
                 navigation.state.params &&
                 navigation.state.params.existingPin === true
-                  ? navigation.navigate(menuTabRoute)
+                  ? navigation.navigate(settingsDrawerRoute)
                   : navigation.navigate(lockSelectionRoute)
               }}
             >

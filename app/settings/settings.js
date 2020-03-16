@@ -16,7 +16,14 @@ import {
 import { measurements } from '../common/styles/measurements'
 import { BlurView } from 'react-native-blur'
 import { createStackNavigator } from 'react-navigation'
-import { UserAvatar, CustomText, Icon, Avatar } from '../components'
+import {
+  UserAvatar,
+  CustomText,
+  Icon,
+  Avatar,
+  PrimaryHeader,
+  CameraButton,
+} from '../components'
 import { CustomView, Container } from '../components/layout'
 import {
   cloudBackupRoute,
@@ -30,6 +37,7 @@ import {
   genRecoveryPhraseRoute,
   walletRoute,
   exportBackupFileRoute,
+  qrCodeScannerTabRoute,
 } from '../common/route-constants'
 import ToggleSwitch from 'react-native-flip-toggle-button'
 import { connect } from 'react-redux'
@@ -65,7 +73,7 @@ import {
 import {
   SOVRIN_TOKEN_AMOUNT_TEST_ID,
   SOVRIN_TOKEN_TEST_ID,
-} from '../home/home-constants'
+} from '../my-connections/my-connections-constants'
 import type { Store } from '../store/type-store'
 import type { SettingsProps, SettingsState } from './type-settings'
 import type { ImageSource, ReactNavigation } from '../common/type-common'
@@ -95,7 +103,7 @@ import {
   getAutoCloudBackupEnabled,
   getHasVerifiedRecoveryPhrase,
 } from '../store/store-selector'
-import { tokenAmountSize } from '../home/home'
+import { tokenAmountSize } from '../my-connections/my-connections'
 
 import SvgCustomIcon from '../components/svg-setting-icons'
 import { withStatusBar } from '../components/status-bar/status-bar'
@@ -131,14 +139,11 @@ const hideTokenScreen = true
 // positioned fine as well.
 // And now we have to show token balance in settings view, so we need to
 // take token height as well into consideration for height and padding
-let headerHeight = 116
-if (isIphoneXR || isIphoneX) {
-  headerHeight = 180
-}
+let headerHeight = 120
 if (!hideTokenScreen) {
   headerHeight += 40
 }
-let listTopPadding = headerHeight - 20
+let listTopPadding = headerHeight
 
 const style = StyleSheet.create({
   secondaryContainer: {
@@ -163,12 +168,6 @@ const style = StyleSheet.create({
     top: 0,
     width: '100%',
     height: headerHeight,
-  },
-  footerBlur: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    height: measurements.bottomBlurNavBarHeight,
   },
   listContainer: {
     borderBottomWidth: 0,
@@ -304,10 +303,10 @@ export class Settings extends Component<SettingsProps, SettingsState> {
     if (minutes >= 24 * 60) {
       return moment(date).format('h:mm a, MMMM Do YYYY')
     } else if (minutes >= 120) return `${Math.floor(minutes / 60)} hours ago`
-    else if (minutes >= 60) return 'an hour ago'
+    else if (minutes >= 60) return 'An hour ago'
     else if (minutes >= 5) return `${minutes} minutes ago`
-    else if (minutes >= 2) return 'a few minutes ago'
-    else return 'just now'
+    else if (minutes >= 2) return 'A few minutes ago'
+    else return 'Just now'
   }
 
   onBackup = () => {
@@ -889,7 +888,6 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         <NotificationCard />
 
         <CustomView style={[style.secondaryContainer]} tertiary>
-          {userAvatar}
           <ScrollView>
             <List
               containerStyle={[
@@ -943,8 +941,14 @@ export class Settings extends Component<SettingsProps, SettingsState> {
             </List>
           </ScrollView>
           {this.renderBlurForIos(style.userAvatarContainerBlur)}
-          {this.renderBlurForIos(style.footerBlur)}
+          <PrimaryHeader
+            headline="Settings"
+            navigation={this.props.navigation}
+          />
         </CustomView>
+        <CameraButton
+          onPress={() => this.props.navigation.navigate(qrCodeScannerTabRoute)}
+        />
       </Container>
     )
   }

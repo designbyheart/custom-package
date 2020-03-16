@@ -4,7 +4,7 @@ import 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 
-import { DashboardScreen } from '../home'
+import { MyConnectionsScreen } from '../my-connections'
 import { SERVER_ENVIRONMENT } from '../../store/type-config-store'
 
 import {
@@ -56,7 +56,7 @@ function props(claimOfferStatus, noConnections) {
   }
 }
 
-describe('<DashboardScreen />', () => {
+describe('<MyConnectionsScreen />', () => {
   const store = getStore()
 
   jest.useFakeTimers()
@@ -66,25 +66,25 @@ describe('<DashboardScreen />', () => {
   // we did not remove tests and updated snapshots
   // we should remove these tests and write tests
   // that tests functionality of home screen
-  it('should render Home and redirect user to claim offer modal', () => {
-    const dashboardProps = props(false, true)
+  it('should render MyConnections and redirect user to claim offer modal', () => {
+    const myConnectionsProps = props(false, true)
     const wrapper = renderer
       .create(
         <Provider store={store}>
-          <DashboardScreen {...dashboardProps} />
+          <MyConnectionsScreen {...myConnectionsProps} />
         </Provider>
       )
       .toJSON()
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('should render Home and show introductory text', () => {
-    const dashboardProps = props(false, false)
-    dashboardProps.connections = []
+  it('should render MyConnections and show introductory text', () => {
+    const myConnectionsProps = props(false, false)
+    myConnectionsProps.connections = []
     const wrapper = renderer
       .create(
         <Provider store={store}>
-          <DashboardScreen {...dashboardProps} />
+          <MyConnectionsScreen {...myConnectionsProps} />
         </Provider>
       )
       .toJSON()

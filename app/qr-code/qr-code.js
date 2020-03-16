@@ -36,7 +36,7 @@ import {
 import {
   invitationRoute,
   qrCodeScannerTabRoute,
-  homeTabRoute,
+  homeRoute,
   connectionHistRoute,
   openIdConnectRoute,
 } from '../common/'
@@ -136,7 +136,7 @@ export class QRCodeScannerScreen extends Component<
 
   onAllowSwitchEnvironment = (url: EnvironmentSwitchUrlQrCode) => {
     this.props.changeEnvironmentUrl(url.url)
-    this.props.navigation.navigate(homeTabRoute)
+    this.props.navigation.goBack(null)
   }
 
   onEnvironmentSwitchUrl = (url: EnvironmentSwitchUrlQrCode) => {
@@ -181,7 +181,7 @@ export class QRCodeScannerScreen extends Component<
         senderName,
         image,
         identifier,
-        backRedirectRoute: homeTabRoute,
+        backRedirectRoute: homeRoute,
         showExistingConnectionSnack: true,
         qrCodeInvitationPayload: invitation.payload,
       }
@@ -201,7 +201,7 @@ export class QRCodeScannerScreen extends Component<
   }
 
   onClose = () => {
-    this.props.navigation.navigate(homeTabRoute)
+    this.props.navigation.goBack(null)
     this.setState({ isCameraEnabled: false })
   }
 

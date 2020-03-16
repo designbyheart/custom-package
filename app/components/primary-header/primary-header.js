@@ -1,41 +1,53 @@
 // @flow
 import React, { PureComponent } from 'react'
 import SvgCustomIcon from '../svg-custom-icon'
-import { Platform, View, TouchableOpacity, Text } from 'react-native'
-import { CustomHeader, CustomView, CustomText } from '../'
+import { UnreadMessagesBadge } from '../'
+import { View, TouchableOpacity, Text } from 'react-native'
 import { BlurView } from 'react-native-blur'
-import type { PrimaryHeaderProps } from './type-primary-header'
 
 import { styles } from './styles'
 import { grey } from '../../common/styles/constant'
 
+import type { PrimaryHeaderProps } from './type-primary-header'
+
 class PrimaryHeader extends PureComponent<PrimaryHeaderProps, void> {
-  renderBlurForIos = () => {
-    const { blur } = styles
-
-    if (Platform.OS === 'ios') {
-      return <BlurView style={blur} blurType="light" blurAmount={8} />
-    } else return null
-  }
-
   render() {
-    const { container, labelSection, iconsSection, label, icon } = styles
+    const {
+      container,
+      labelSection,
+      iconsSection,
+      label,
+      icon,
+      svgIcon,
+      labelNotHome,
+    } = styles
     const { headline } = this.props
 
     return (
       <View style={container}>
-        {this.renderBlurForIos()}
-        <View style={labelSection}>
-          <Text style={label}>{headline}</Text>
+        <View style={iconsSection}>
+          <TouchableOpacity
+            style={icon}
+            onPress={this.props.navigation && this.props.navigation.openDrawer}
+          >
+            <SvgCustomIcon
+              name="BurgerMenu"
+              width={36}
+              height={36}
+              fill={grey}
+              style={svgIcon}
+            />
+          </TouchableOpacity>
+          {headline !== 'Home' && (
+            <UnreadMessagesBadge absolutePosition={true} />
+          )}
         </View>
-        {/* We won’t use this for now. <View style={iconsSection}>
-         <TouchableOpacity style={icon}>
-           <SvgCustomIcon name=“Add” fill={grey} />
-         </TouchableOpacity>
-         <TouchableOpacity style={icon}>
-           <SvgCustomIcon name=“Search” fill={grey} />
-         </TouchableOpacity>
-       </View> */}
+        <View style={labelSection}>
+          <Text style={headline === 'Home' ? label : labelNotHome}>
+            {headline}
+          </Text>
+          {headline === 'Home' && <UnreadMessagesBadge />}
+        </View>
       </View>
     )
   }

@@ -28,6 +28,7 @@ export type Connection = {
   senderName?: string,
   vcxSerializedConnection: string,
   publicDID: ?string,
+  timestamp?: string,
 } & MyPairwiseInfo
 
 export const DELETE_CONNECTION = 'DELETE_CONNECTION'
