@@ -21,7 +21,7 @@ import {
   venetianRed,
 } from '../common/styles'
 
-import type { NewConnectionInstructionsProps } from './type-home'
+import type { NewConnectionInstructionsProps } from './type-my-connections'
 
 const { extraSmall, small, medium, large } = verticalBreakpoint
 

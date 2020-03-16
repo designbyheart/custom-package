@@ -1,11 +1,12 @@
 // @flow
-import { StyleSheet, Platform, PixelRatio } from 'react-native'
+import { StyleSheet, Platform, PixelRatio, Dimensions } from 'react-native'
 
-import { primaryHeaderHeight } from '../../common/styles/constant'
+import { primaryHeaderHeight, grey } from '../../common/styles/constant'
 
 // original in icon{} and label{} marginTop was 73 and height was 120, thus the 47 to keep
 // subtracting 47 from containerHeight keeps it relative to what is was.
 const marginTop = primaryHeaderHeight - 47
+const { width } = Dimensions.get('screen')
 
 const styles = StyleSheet.create({
   container: {
@@ -24,21 +25,33 @@ const styles = StyleSheet.create({
     elevation: Platform.OS === 'android' ? 8 : 0,
   },
   labelSection: {
-    width: '75%',
+    width: width * 0.8,
     height: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   iconsSection: {
-    width: '25%',
+    width: width * 0.2,
     height: '100%',
-    flexDirection: 'row-reverse',
+  },
+  svgIcon: {
+    marginLeft: 20,
   },
   label: {
     fontFamily: 'Lato',
     fontWeight: 'bold',
     fontSize: 26,
     marginTop,
-    marginLeft: 16,
-    color: '#505050',
+    color: grey,
+    marginLeft: 20,
+  },
+  labelNotHome: {
+    fontFamily: 'Lato',
+    fontWeight: 'bold',
+    fontSize: 26,
+    marginTop,
+    color: grey,
+    marginRight: width * 0.2,
   },
   icon: {
     marginTop,

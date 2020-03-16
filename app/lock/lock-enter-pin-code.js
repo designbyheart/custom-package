@@ -17,7 +17,7 @@ import {
   lockPinSetupRoute,
   homeRoute,
   lockSelectionRoute,
-  menuTabRoute,
+  settingsDrawerRoute,
 } from '../common'
 import { clearPendingRedirect } from './lock-store'
 import {

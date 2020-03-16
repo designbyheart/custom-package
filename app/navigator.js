@@ -1,14 +1,27 @@
 // @flow
 import React from 'react'
-import { View, StyleSheet, Animated, Easing, Platform } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  Animated,
+  Easing,
+  Platform,
+  ScrollView,
+  Dimensions,
+  Image,
+  Text,
+} from 'react-native'
 import {
   createStackNavigator,
   TabBarBottom,
   createTabNavigator,
+  createDrawerNavigator,
   SafeAreaView,
+  DrawerItems,
 } from 'react-navigation'
 import DeviceInfo from 'react-native-device-info'
 import AboutApp from './about-app/about-app'
+import MyConnectionsScreen from './my-connections/my-connections'
 import HomeScreen from './home/home'
 import SplashScreenView from './start-up/splash-screen'
 import Settings from './settings/settings'
@@ -45,7 +58,7 @@ import WalletTabs from './wallet/wallet-tabs'
 import SelectRestoreMethod from './restore/select-restore-method'
 import CloudRestoreModal from './cloud-restore/cloud-restore-modal'
 import CloudRestore from './cloud-restore/cloud-restore'
-import { Icon, CustomView } from './components'
+import { Icon, CustomView, UserAvatar, CustomText, Avatar } from './components'
 import ConnectionHistNavigator from './connection-details/connection-details-navigator'
 import {
   splashScreenRoute,
@@ -86,10 +99,10 @@ import {
   sendLogsRoute,
   questionRoute,
   txnAuthorAgreementRoute,
-  connectionsTabRoute,
+  connectionsDrawerRoute,
   credentialsTabRoute,
   discoverTabRoute,
-  menuTabRoute,
+  settingsRoute,
   connectionHistRoute,
   modalContentProofShared,
   modalScreenRoute,
@@ -98,7 +111,10 @@ import {
   cloudRestoreRoute,
   cloudRestoreModalRoute,
   openIdConnectRoute,
+  settingsDrawerRoute,
+  homeDrawerRoute,
 } from './common/'
+import type { ImageSource } from './common/type-common'
 import { color, font } from './common/styles'
 import WalletTabSendDetails from './wallet/wallet-tab-send-details'
 import EulaScreen from './eula/eula'
@@ -116,11 +132,14 @@ import {
 } from './type-navigator'
 import { measurements } from './common/styles/measurements'
 import {
-  whiteTransparent,
-  whiteSolid,
-  cmGrey5,
+  atlantis,
+  mediumGray,
+  darkGray2,
   isIphoneX,
   isIphoneXR,
+  cmGrey5,
+  whiteSolid,
+  whiteTransparent,
 } from '../app/common/styles/constant'
 import {
   modalTransitionConfig,
@@ -129,10 +148,14 @@ import {
 } from './transition'
 import OpenIdConnectScreen from '../app/open-id-connect/open-id-connect-screen'
 import SettingsTab from './settings/settings-tab'
+import VersionNumber from 'react-native-version-number'
+import { UnreadMessagesBadge } from './components'
 
 if (__DEV__) {
   require('../tools/reactotron-config')
 }
+
+const { width } = Dimensions.get('screen')
 
 export const styles = StyleSheet.create({
   tabBarContainer: {
@@ -163,151 +186,218 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 15,
   },
+  drawerOuterContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  drawerHeader: {
+    width: '100%',
+    height: 190,
+    justifyContent: 'space-evenly',
+    paddingLeft: 20,
+  },
+  drawerFooterContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  drawerFooter: {
+    width: '100%',
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  evernymIconImage: {
+    width: 32,
+    height: 32,
+    marginLeft: 20,
+    marginRight: 10,
+  },
+  evernymIconTextContainer: {
+    height: 32,
+  },
+  evernymIconLogoText: {
+    height: '50%',
+    justifyContent: 'flex-start',
+  },
+  evernymIconBuildText: {
+    height: '50%',
+    justifyContent: 'flex-end',
+  },
+  text: {
+    fontFamily: 'Lato',
+    fontSize: 12,
+    color: mediumGray,
+    fontWeight: 'bold',
+  },
+  labelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
+  },
+  labelText: {
+    fontFamily: 'Lato',
+    fontSize: 17,
+    fontWeight: '500',
+    color: mediumGray,
+  },
+  labelTextFocusedColor: {
+    color: color.bg.twelfth.color,
+  },
+  customGreenBadgeContainer: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: atlantis,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 175,
+  },
 })
 
-const Tabs = createTabNavigator(
+const evernymSquareIcon = require('./images/evernym-square.png')
+
+const versionNumber = VersionNumber
+
+const renderAvatarWithSource = (avatarSource: number | ImageSource) => {
+  let medium = isIphoneXR || isIphoneX
+  return <Avatar medium={medium} small={!medium} round src={avatarSource} />
+}
+
+const drawerComponent = (props: Object) => (
+  <SafeAreaView style={styles.drawerOuterContainer}>
+    <View style={styles.drawerHeader}>
+      <SvgCustomIcon
+        name="ConnectMe"
+        width={152}
+        height={20}
+        fill={darkGray2}
+      />
+      <UserAvatar userCanChange>{renderAvatarWithSource}</UserAvatar>
+    </View>
+    <DrawerItems {...props} />
+    <View style={styles.drawerFooterContainer}>
+      <View style={styles.drawerFooter}>
+        <Image source={evernymSquareIcon} style={styles.evernymIconImage} />
+        <View style={styles.evernymIconTextContainer}>
+          <View style={styles.evernymIconLogoText}>
+            <Text style={styles.text}>built by Evernym Inc.</Text>
+          </View>
+          <View style={styles.evernymIconBuildText}>
+            <Text style={styles.text}>
+              Version {versionNumber.appVersion}.{versionNumber.buildVersion}
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </SafeAreaView>
+)
+
+const Drawer = createDrawerNavigator(
   {
-    [connectionsTabRoute]: {
+    [homeDrawerRoute]: {
       screen: HomeScreen,
       navigationOptions: {
-        title: TAB_CONNECTIONS_TITLE,
-        tabBarTestIDProps: {
-          testID: 'tab-bar-home-icon',
-          accessible: true,
-          accessibilityRole: 'button',
-          accessibilityLabel: `Go to ${TAB_CONNECTIONS_TITLE}`,
-        },
-        tabBarIcon: ({ focused }) => {
-          return (
-            <View style={styles.icon}>
-              <SvgCustomIcon
-                name="Connections"
-                fill={focused ? color.actions.font.tenth : color.actions.sixth}
-              />
-            </View>
-          )
-        },
+        drawerIcon: ({ tintColor }) => (
+          <SvgCustomIcon name="Home" width={24} height={24} fill={tintColor} />
+        ),
+        drawerLabel: ({ focused, tintColor }) => (
+          <View style={styles.labelContainer}>
+            <Text
+              style={[
+                styles.labelText,
+                focused && styles.labelTextFocusedColor,
+              ]}
+            >
+              Home
+            </Text>
+            <UnreadMessagesBadge
+              customContainerStyle={styles.customGreenBadgeContainer}
+            />
+          </View>
+        ),
       },
     },
-    //   [credentialsTabRoute]: {
-    //     screen: Settings,
-    //     navigationOptions: {
-    //       title: TAB_CREDENTIALS_TITLE,
-    //       tabBarTestIDProps: {
-    //         testID: 'tab-bar-settings-icon',
-    //         accessible: true,
-    //         accessibilityRole: "button",
-    //         accessibilityLabel: `Go to ${TAB_CREDENTIALS_TITLE}`,
-    //       },
-    //       tabBarIcon: ({ focused }) => {
-    //         if (focused) {
-    //           return <SvgCustomIcon name="CredentialsOn" />
-    //         }
-    //         return <SvgCustomIcon name="Credentials" />
-    //       },
-    //     },
-    //   },
-    //   [discoverTabRoute]: {
-    //     screen: Settings,
-    //     navigationOptions: {
-    //       title: TAB_DISCOVER_TITLE,
-    //       tabBarTestIDProps: {
-    //         testID: 'tab-bar-qrcode-icon',
-    //         accessible: true,
-    //         accessibilityRole: "button",
-    //         accessibilityLabel: `Go to ${TAB_DISCOVER_TITLE}`,
-    //       },
-    //       tabBarIcon: ({ focused }) => {
-    //         return (
-    //           <SvgCustomIcon
-    //             name="Discover"
-    //             fill={focused ? color.actions.font.seventh : color.actions.sixth}
-    //           />
-    //         )
-    //       },
-    //     },
-    //  },
-    [qrCodeScannerTabRoute]: {
-      screen: QRCodeScanner,
+    [connectionsDrawerRoute]: {
+      screen: MyConnectionsScreen,
       navigationOptions: {
-        title: TAB_SCAN_TITLE,
-        tabBarTestIDProps: {
-          testID: 'tab-bar-qrcode-icon',
-          accessible: true,
-          accessibilityRole: 'button',
-          accessibilityLabel: `Go to ${TAB_SCAN_TITLE}`,
-        },
-        tabBarVisible: false,
-        tabBarIcon: ({ focused }) => {
-          if (focused) {
-            return (
-              <View style={styles.icon}>
-                <SvgCustomIcon
-                  name="ScanOn"
-                  fill={
-                    focused ? color.actions.font.tenth : color.actions.sixth
-                  }
-                />
-              </View>
-            )
-          }
-          return (
-            <View style={styles.icon}>
-              <SvgCustomIcon
-                name="Scan"
-                fill={focused ? color.actions.font.tenth : color.actions.sixth}
-              />
-            </View>
-          )
-        },
+        drawerIcon: ({ tintColor }) => (
+          <SvgCustomIcon
+            name="Connections"
+            width={24}
+            height={24}
+            fill={tintColor}
+          />
+        ),
+        drawerLabel: ({ focused, tintColor }) => (
+          <View style={styles.labelContainer}>
+            <Text
+              style={[
+                styles.labelText,
+                focused && styles.labelTextFocusedColor,
+              ]}
+            >
+              My Connections
+            </Text>
+          </View>
+        ),
       },
     },
-    [menuTabRoute]: {
+    [settingsDrawerRoute]: {
       screen: Settings,
       navigationOptions: {
-        title: TAB_MENU_TITLE,
-        tabBarTestIDProps: {
-          testID: 'tab-bar-settings-icon',
-          accessible: true,
-          accessibilityRole: 'button',
-          accessibilityLabel: `Go to ${TAB_MENU_TITLE}`,
-        },
-        tabBarIcon: ({ focused }) => {
-          return <SettingsTab focused={focused} />
-        },
+        drawerIcon: ({ tintColor }) => (
+          <SvgCustomIcon
+            name="Settings"
+            width={24}
+            height={24}
+            fill={tintColor}
+          />
+        ),
+        drawerLabel: ({ focused, tintColor }) => (
+          <View style={styles.labelContainer}>
+            <Text
+              style={[
+                styles.labelText,
+                focused && styles.labelTextFocusedColor,
+              ]}
+            >
+              Settings
+            </Text>
+          </View>
+        ),
       },
     },
   },
   {
-    animationEnabled: true,
-    swipeEnabled: true,
-    lazy: true,
-    initialRouteName: connectionsTabRoute,
-    order: [
-      connectionsTabRoute,
-      // credentialsTabRoute,
-      // discoverTabRoute,
-      qrCodeScannerTabRoute,
-      menuTabRoute,
-    ],
-    tabBarOptions: {
-      style: [styles.tabBarContainer],
-      labelStyle: [styles.tabBarTitle],
-      activeTintColor: color.actions.font.tenth,
-      inactiveTintColor: color.actions.sixth,
+    contentComponent: drawerComponent,
+    drawerBackgroundColor: 'transparent',
+    drawerWidth: width * 0.85,
+    contentOptions: {
+      activeTintColor: color.bg.twelfth.color,
+      inactiveTintColor: '#777',
+      labelStyle: {
+        fontFamily: 'Lato',
+        fontSize: 17,
+        fontWeight: '500',
+      },
     },
-    tabBarComponent: TabBarBottom,
-    tabBarPosition: 'bottom',
   }
 )
 
 const CardStack = createStackNavigator(
   {
+    [qrCodeScannerTabRoute]: {
+      screen: QRCodeScanner,
+    },
     [splashScreenRoute]: {
       screen: SplashScreenView,
     },
     [homeRoute]: {
-      screen: Tabs,
+      screen: Drawer,
     },
     [expiredTokenRoute]: {
       screen: ExpiredTokenScreen,

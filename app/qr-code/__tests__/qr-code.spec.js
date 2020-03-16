@@ -79,7 +79,7 @@ describe('<QRScannerScreen />', () => {
   it('should navigate back to home if qr code scanner is closed', () => {
     const { instance, component, props } = setup()
     instance.onClose()
-    expect(props.navigation.navigate).toHaveBeenCalledWith(homeTabRoute)
+    expect(props.navigation.goBack).toHaveBeenCalledWith(null)
   })
 
   it('check camera permission screen is updated', () => {
@@ -102,7 +102,7 @@ describe('<QRScannerScreen />', () => {
     const {
       instance,
       component,
-      props: { changeEnvironmentUrl, navigation: { navigate } },
+      props: { changeEnvironmentUrl, navigation: { goBack } },
     } = setup()
     const alertSpy = jest.spyOn(Alert, 'alert')
 
@@ -117,7 +117,7 @@ describe('<QRScannerScreen />', () => {
       validQrCodeEnvironmentSwitchUrl
     )
 
-    expect(navigate).toHaveBeenCalledWith(homeTabRoute)
+    expect(goBack).toHaveBeenCalledWith(null)
 
     alertSpy.mockReset()
     alertSpy.mockRestore()
