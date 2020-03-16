@@ -110,6 +110,7 @@
     "cross-env": "^5.1.4",
     "del": "^5.1.0",
     "detox": "^14.4.1",
+    "detox-getprops": "0.1.1",
     "eslint": "^3.19.0",
     "eslint-plugin-flowtype": "^2.47.1",
     "eslint-plugin-import": "^2.16.0",

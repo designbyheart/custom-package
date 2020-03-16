@@ -21,7 +21,7 @@ import { getInvitation } from '../utils/api'
 import { unlock } from '../utils/lock-unlock'
 
 describe('Connection via QR Code', () => {
-  it('User should be able to establish connection via scanning QR code', async () => {
+  it.skip('User should be able to establish connection via scanning QR code', async () => {
     // await device.launchApp({ permissions: { camera: 'YES' } })
     // await element(by.id(PIN_CODE_INPUT_BOX)).replaceText(TEST_PASS_CODE)
     // await expect(element(by.id(USER_AVATAR))).toBeVisible()
