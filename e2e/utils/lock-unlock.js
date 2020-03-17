@@ -50,7 +50,8 @@ async function setupPassCode() {
 
   await element(by.id(LOCK_SETUP_SUCCESS_CLOSE_BUTTON)).tap()
 
-  const home = element(by.id('tab-bar-home-icon'))
+  // const home = element(by.id('tab-bar-home-icon'))
+  const home = element(by.id('home-container'))
   // $FlowFixMe not sure why toBeVisible is not being recognized by Flow
   await expect(home).toBeVisible()
 }
