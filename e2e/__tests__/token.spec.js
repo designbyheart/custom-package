@@ -10,7 +10,7 @@ import { WALLET_HEADER_TOKEN_BALANCE_ID } from '../../app/wallet/type-wallet'
 import { convertSovrinAtomsToSovrinTokens } from '../../app/sovrin-token/sovrin-token-converter'
 
 describe('Token functionality', () => {
-  it('should show token history', async () => {
+  it.skip('should show token history', async () => {
     await tapOn('tab-bar-settings-icon')
     await tapOn(SOVRIN_TOKEN_AMOUNT_TEST_ID)
     await matchScreenshot('token-dashboard.png', {

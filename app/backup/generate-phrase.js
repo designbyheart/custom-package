@@ -35,6 +35,7 @@ import { BACKUP_STORE_STATUS } from './type-backup'
 import { generateRecoveryPhrase } from './backup-store'
 import {
   RECOVERY_PHRASE_CLOSE_TEST_ID,
+  SHOW_RECOVERY_PHRASE_TEST_ID,
   SUBMIT_RECOVERY_PHRASE_TEST_ID,
   SUBMIT_RECOVERY_PHRASE_BUTTON_TITLE,
   SUBMIT_RECOVERY_GO_BACK,
@@ -91,7 +92,11 @@ const PassphraseText = (props: PassphraseTextProps) => {
         },
       ]}
     >
-      <CustomText transparentBg style={[styles.genRecoveryPhrase]}>
+      <CustomText
+        transparentBg
+        style={[styles.genRecoveryPhrase]}
+        testID={SHOW_RECOVERY_PHRASE_TEST_ID}
+      >
         {props.recoveryPassphrase.phrase}
       </CustomText>
     </CustomView>

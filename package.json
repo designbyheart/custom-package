@@ -9,6 +9,7 @@
     "ios": "react-native run-ios",
     "android": "react-native run-android",
     "coverage": "npm test -- --coverage",
+    "pod:update": "pod repo update",
     "pod:dev:install": "cd ios && CONNECTME_DEBUG=true pod install",
     "pod:install": "cd ios && pod install",
     "build:ios": "mkdir -p -v ./ios/ConnectMe/RNbundle && pwd && which react-native && react-native bundle --entry-file='index.js' --bundle-output='./ios/ConnectMe/RNbundle/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios/ConnectMe/RNbundle'",
@@ -109,6 +110,7 @@
     "cross-env": "^5.1.4",
     "del": "^5.1.0",
     "detox": "^14.4.1",
+    "detox-getprops": "0.1.1",
     "eslint": "^3.19.0",
     "eslint-plugin-flowtype": "^2.47.1",
     "eslint-plugin-import": "^2.16.0",
@@ -147,6 +149,7 @@
     ]
   },
   "jest": {
+    "testEnvironment": "node",
     "preset": "react-native",
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-navigation|jest-fetch-mock|apptentive-react-native|react-native-version-number)"

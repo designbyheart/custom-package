@@ -3,6 +3,8 @@ stages:
   - test
   - build
 
+### - Test - ###
+
 yarn-test:
   stage: test
   tags:
@@ -17,8 +19,39 @@ yarn-test:
     - yarn lint
     - yarn test
 
+.ios-test:
+  stage: test
+  tags:
+    - macos
+    - mojave
+    - xcode10-1
+  before_script:
+    - xcrun simctl boot 2D6426B4-A64F-4513-B141-0F0153239DCA
+    - xcrun simctl list | grep "iPhone 7"
 
-### - iOS - ###
+detox-ios-test:
+  extends: .ios-test
+  script:
+    - mkdir -p ~/.ssh/
+    - ssh-keyscan -4H gitlab.corp.evernym.com > ~/.ssh/known_hosts
+    - eval $(ssh-agent -s)
+    - echo "$CALLCENTER_CERTS_DEPLOY_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - echo "$IOSDEV_EVERNYM_RSA_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - chmod 644 ~/.ssh/known_hosts
+    - brew update
+    - brew tap wix/brew && brew install applesimutils
+    - brew install imagemagick && brew install GraphicsMagick
+    - yarn global add detox-cli
+    - yarn
+    - yarn pod:update
+    - yarn pod:dev:install
+    - yarn e2e -b release -e qa -s iphone7 -t home
+  artifacts:
+    paths:
+      - e2e/screenshots
+    expire_in: 1 week
+
+      ### - iOS - ###
 .build-ios:
   stage: build
   tags:

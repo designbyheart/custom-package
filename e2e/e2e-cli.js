@@ -80,7 +80,9 @@ const args = yargs
   .help().argv
 ;(async function() {
   await runBuildIfNeeded(args)
-  await runTests(args)
+  const exitCode = await runTests(args)
+  console.log("Result exit code: " + exitCode)
+  process.exit(exitCode)
 })()
 
 async function runBuildIfNeeded(args) {
@@ -172,7 +174,11 @@ async function runTests(args) {
         { stdio: 'inherit' }
       )
       // wait for initial test run to finish
-      await initialTestRun
+      const { stdout, stderr, exitCode } = await initialTestRun
+
+      if (exitCode) {
+		return exitCode
+      }
     }
 
     const extraArgs = []
@@ -207,6 +213,8 @@ async function runTests(args) {
     ]
     const testRun = spawn('detox', detoxRunArgs, { stdio: 'inherit' })
     // wait for test run to finish
-    await testRun
+    const { stdout, stderr, exitCode } = await testRun
+
+   	return exitCode
   }
 }
