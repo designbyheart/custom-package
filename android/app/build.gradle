@@ -201,8 +201,14 @@ android.applicationVariants.all { variant ->
   }
 }
 
+preBuild.doFirst {
+    ant.replaceregexp(match:'androidx.core.content.', replace:'android.support.v4.content.', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/react-native-file-viewer/android/src/main/java/com/vinzscam/reactnativefileviewer', includes: '*.java')
+    }
+}
 
 dependencies {
+    implementation project(':react-native-file-viewer')
     implementation project(':react-native-screens')
     implementation project(':react-native-reanimated')
     implementation project(':react-native-device-info')

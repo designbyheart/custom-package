@@ -331,3 +331,7 @@ jest.mock('react-native-snackbar', () => ({
   show: jest.fn(),
   LENGTH_LONG: 3,
 }))
+
+jest.mock('react-native-file-viewer', () => ({
+  open: jest.fn((path, options) => Promise.resolve()),
+}))

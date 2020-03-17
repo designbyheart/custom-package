@@ -259,7 +259,10 @@ export function convertClaimStorageSuccessToHistoryEvent(
     timestamp: moment().format(),
     type: HISTORY_EVENT_TYPE.CLAIM,
     remoteDid: claim.remotePairwiseDID,
-    originalPayload: action,
+    originalPayload: {
+      ...action,
+      remotePairwiseDID: claim.remotePairwiseDID,
+    },
     payTokenValue: claim.payTokenValue,
   }
 }

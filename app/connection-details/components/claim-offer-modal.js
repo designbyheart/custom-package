@@ -111,6 +111,8 @@ class ClaimOfferModal extends Component<any, *> {
         {shouldShowTransactionInfo === false && (
           <ModalContent
             content={this.props.claimOfferData.data.revealedAttributes}
+            uid={this.props.uid}
+            remotePairwiseDID={issuer.did}
           />
         )}
 
