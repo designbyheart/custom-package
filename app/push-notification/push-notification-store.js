@@ -217,7 +217,8 @@ export function* onPushTokenUpdate(
 }
 
 export function convertClaimOfferPushPayloadToAppClaimOffer(
-  pushPayload: ClaimOfferPushPayload
+  pushPayload: ClaimOfferPushPayload,
+  extraPayload: { remotePairwiseDID: string }
 ): AdditionalDataPayload {
   /**
    * Below expression Converts this format
@@ -247,7 +248,7 @@ export function convertClaimOfferPushPayloadToAppClaimOffer(
   return {
     issuer: {
       name: pushPayload.issuer_name || pushPayload.remoteName,
-      did: pushPayload.issuer_did,
+      did: pushPayload.issuer_did || extraPayload.remotePairwiseDID,
     },
     data: {
       name: pushPayload.claim_name,
@@ -704,7 +705,9 @@ export function* updatePayloadToRelevantStoreSaga(
       case MESSAGE_TYPE.CLAIM_OFFER:
         yield put(
           claimOfferReceived(
-            convertClaimOfferPushPayloadToAppClaimOffer(additionalData),
+            convertClaimOfferPushPayloadToAppClaimOffer(additionalData, {
+              remotePairwiseDID,
+            }),
             {
               uid,
               senderLogoUrl,

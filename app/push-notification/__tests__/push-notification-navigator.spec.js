@@ -107,7 +107,9 @@ describe('convertClaimOfferPushPayloadToAppClaimOffer', () => {
     }
 
     expect(
-      convertClaimOfferPushPayloadToAppClaimOffer(claimOfferPushPayload)
+      convertClaimOfferPushPayloadToAppClaimOffer(claimOfferPushPayload, {
+        remotePairwiseDID: 'V4SGRU86Z58d6TV7PBUe6f',
+      })
     ).toMatchSnapshot()
   })
 })

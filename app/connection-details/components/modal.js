@@ -71,7 +71,14 @@ class Modal extends Component<any, any> {
           />
         )
       case 'RECEIVED':
-        return <ModalContent content={data.data} imageUrl={data.imageUrl} />
+        return (
+          <ModalContent
+            content={data.data}
+            imageUrl={data.imageUrl}
+            uid={data.originalPayload.messageId}
+            remotePairwiseDID={data.remoteDid}
+          />
+        )
       case 'PROOF RECEIVED':
         return (
           <ModalContentProof
