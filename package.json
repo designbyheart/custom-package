@@ -198,7 +198,7 @@
     "hooks": {
       "post-checkout": "yarnhook",
       "post-merge": "yarnhook",
-      "pre-commit": "yarn run pod:install && yarn revert:detox && lint-staged && yarn pod:dev:install",
+      "pre-commit": "yarn run pod:install && lint-staged && yarn pod:dev:install",
       "pre-push": "onerror \"npm test && npm run lint\" -t \"Push Failed\" -s Purr"
     }
   }
