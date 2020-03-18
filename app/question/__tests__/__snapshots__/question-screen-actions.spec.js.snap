@@ -1,1343 +1,818 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<QuestionActions /> when more than two responses are present match snapshot if in error status 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  safeArea={true}
-  style={Object {}}
+<View
+  style={
+    Object {
+      "marginLeft": "3%",
+      "width": "94%",
+    }
+  }
 >
   <View
-    row={true}
     style={
       Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-        "justifyContent": "space-around",
-        "marginVertical": "3%",
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "marginBottom": 15,
+        "minHeight": 56,
       }
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "marginRight": "3%",
-        }
+        Array [
+          Object {
+            "marginLeft": 15,
+            "marginRight": 15,
+          },
+          undefined,
+          Object {
+            "marginLeft": 0,
+            "marginRight": 0,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        accessibilityLabel="question-action-submit"
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Array [
             Object {
-              "marginLeft": 15,
-              "marginRight": 15,
+              "backgroundColor": "transparent",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "height": 56,
             },
-            undefined,
             Object {
-              "marginLeft": 0,
-              "marginRight": 0,
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
             },
-            undefined,
           ]
         }
+        testID="question-action-submit"
       >
         <View
-          accessibilityLabel="question-action-cancel"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          pointerEvents="box-only"
           style={
             Array [
               Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
+                "alignItems": "center",
+                "backgroundColor": "#9E9E9E",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 19,
               },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
               Object {
-                "borderColor": "#A5A5A5",
+                "backgroundColor": "#86B93B",
               },
+              undefined,
+              Object {
+                "padding": 12,
+              },
+              undefined,
+              undefined,
+              undefined,
+              Array [
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderRadius": 5,
+                  "borderWidth": 0,
+                  "height": 56,
+                },
+                Object {
+                  "backgroundColor": "#86B93B",
+                  "borderColor": "#86B93B",
+                },
+              ],
+              false,
+              false,
             ]
           }
-          testID="question-action-cancel"
         >
-          <View
-            pointerEvents="box-only"
+          <Text
             style={
               Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
+                Object {},
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {
-                  "backgroundColor": "#ffffff",
-                },
                 undefined,
-                Object {
-                  "padding": 12,
-                },
                 undefined,
                 undefined,
                 undefined,
                 Array [
-                  null,
                   Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
+                    "color": "white",
+                    "fontSize": 16,
                   },
                   Object {
-                    "borderColor": "#A5A5A5",
+                    "color": "#ffffff",
                   },
+                  Object {
+                    "fontSize": 14,
+                  },
+                  Object {
+                    "fontSize": 17,
+                  },
+                  undefined,
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "fontFamily": "Lato",
+                  },
+                  false,
                 ],
-                undefined,
-                undefined,
               ]
             }
           >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#777777",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    undefined,
-                  ],
-                ]
-              }
-            >
-              Cancel
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "marginLeft": 15,
-              "marginRight": 15,
-            },
-            undefined,
-            Object {
-              "marginLeft": 0,
-              "marginRight": 0,
-            },
-            undefined,
-          ]
-        }
-      >
-        <View
-          accessibilityLabel="question-action-submit"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#01C8A1",
-              },
-            ]
-          }
-          testID="question-action-submit"
-        >
-          <View
-            pointerEvents="box-only"
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "backgroundColor": "#01C8A1",
-                },
-                undefined,
-                Object {
-                  "padding": 12,
-                },
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  null,
-                  Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
-                  },
-                  Object {
-                    "borderColor": "#01C8A1",
-                  },
-                ],
-                false,
-                false,
-              ]
-            }
-          >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#ffffff",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    false,
-                  ],
-                ]
-              }
-            >
-              Try Again
-            </Text>
-          </View>
+            Try Again
+          </Text>
         </View>
       </View>
     </View>
   </View>
-</RCTSafeAreaView>
+</View>
 `;
 
 exports[`<QuestionActions /> when more than two responses are present match snapshot if in success status 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  safeArea={true}
-  style={Object {}}
+<View
+  style={
+    Object {
+      "marginLeft": "3%",
+      "width": "94%",
+    }
+  }
 >
   <View
-    row={true}
     style={
       Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-        "justifyContent": "space-around",
-        "marginVertical": "3%",
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "marginBottom": 15,
+        "minHeight": 56,
       }
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-        }
+        Array [
+          Object {
+            "marginLeft": 15,
+            "marginRight": 15,
+          },
+          undefined,
+          Object {
+            "marginLeft": 0,
+            "marginRight": 0,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        accessibilityLabel="question-action-submit"
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Array [
             Object {
-              "marginLeft": 15,
-              "marginRight": 15,
+              "backgroundColor": "transparent",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "height": 56,
             },
-            undefined,
             Object {
-              "marginLeft": 0,
-              "marginRight": 0,
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
             },
-            undefined,
           ]
         }
+        testID="question-action-submit"
       >
         <View
-          accessibilityLabel="question-action-submit"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          pointerEvents="box-only"
           style={
             Array [
               Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
+                "alignItems": "center",
+                "backgroundColor": "#9E9E9E",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 19,
               },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
               Object {
-                "borderColor": "#01C8A1",
+                "backgroundColor": "#86B93B",
               },
+              undefined,
+              Object {
+                "padding": 12,
+              },
+              undefined,
+              undefined,
+              undefined,
+              Array [
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderRadius": 5,
+                  "borderWidth": 0,
+                  "height": 56,
+                },
+                Object {
+                  "backgroundColor": "#86B93B",
+                  "borderColor": "#86B93B",
+                },
+              ],
+              false,
+              false,
             ]
           }
-          testID="question-action-submit"
         >
-          <View
-            pointerEvents="box-only"
+          <Text
             style={
               Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
+                Object {},
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {
-                  "backgroundColor": "#01C8A1",
-                },
                 undefined,
-                Object {
-                  "padding": 12,
-                },
                 undefined,
                 undefined,
                 undefined,
                 Array [
-                  null,
                   Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
+                    "color": "white",
+                    "fontSize": 16,
                   },
                   Object {
-                    "borderColor": "#01C8A1",
+                    "color": "#ffffff",
                   },
+                  Object {
+                    "fontSize": 14,
+                  },
+                  Object {
+                    "fontSize": 17,
+                  },
+                  undefined,
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "fontFamily": "Lato",
+                  },
+                  false,
                 ],
-                false,
-                false,
               ]
             }
           >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#ffffff",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    false,
-                  ],
-                ]
-              }
-            >
-              OK
-            </Text>
-          </View>
+            OK
+          </Text>
         </View>
       </View>
     </View>
   </View>
-</RCTSafeAreaView>
+</View>
 `;
 
 exports[`<QuestionActions /> when more than two responses are present render Ignore and Submit button 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  safeArea={true}
-  style={Object {}}
+<View
+  style={
+    Object {
+      "marginLeft": "3%",
+      "width": "94%",
+    }
+  }
 >
   <View
-    row={true}
     style={
       Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-        "justifyContent": "space-around",
-        "marginVertical": "3%",
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "marginBottom": 15,
+        "minHeight": 56,
       }
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "marginRight": "3%",
-        }
+        Array [
+          Object {
+            "marginLeft": 15,
+            "marginRight": 15,
+          },
+          undefined,
+          Object {
+            "marginLeft": 0,
+            "marginRight": 0,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        accessibilityLabel="question-action-submit"
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Array [
             Object {
-              "marginLeft": 15,
-              "marginRight": 15,
+              "backgroundColor": "transparent",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "height": 56,
             },
-            undefined,
             Object {
-              "marginLeft": 0,
-              "marginRight": 0,
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
             },
-            undefined,
           ]
         }
+        testID="question-action-submit"
       >
         <View
-          accessibilityLabel="question-action-cancel"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          pointerEvents="box-only"
           style={
             Array [
               Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
+                "alignItems": "center",
+                "backgroundColor": "#9E9E9E",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 19,
               },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
               Object {
-                "borderColor": "#A5A5A5",
+                "backgroundColor": "#86B93B",
               },
-            ]
-          }
-          testID="question-action-cancel"
-        >
-          <View
-            pointerEvents="box-only"
-            style={
+              undefined,
+              Object {
+                "padding": 12,
+              },
+              undefined,
+              undefined,
+              undefined,
+              Array [
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderRadius": 5,
+                  "borderWidth": 0,
+                  "height": 56,
+                },
+                Object {
+                  "backgroundColor": "#86B93B",
+                  "borderColor": "#86B93B",
+                },
+              ],
+              Object {
+                "backgroundColor": "#dadee0",
+              },
               Array [
                 Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
+                  "backgroundColor": "#86B93B",
                 },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
                 Object {
-                  "backgroundColor": "#ffffff",
+                  "opacity": 0.4,
                 },
-                undefined,
-                Object {
-                  "padding": 12,
-                },
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  null,
-                  Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
-                  },
-                  Object {
-                    "borderColor": "#A5A5A5",
-                  },
-                ],
-                undefined,
-                undefined,
-              ]
-            }
-          >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#777777",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    undefined,
-                  ],
-                ]
-              }
-            >
-              Ignore
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "marginLeft": 15,
-              "marginRight": 15,
-            },
-            undefined,
-            Object {
-              "marginLeft": 0,
-              "marginRight": 0,
-            },
-            undefined,
-          ]
-        }
-      >
-        <View
-          accessibilityLabel="question-action-submit"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#01C8A1",
-              },
+              ],
             ]
           }
-          testID="question-action-submit"
         >
-          <View
-            pointerEvents="box-only"
+          <Text
             style={
               Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
+                Object {},
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {
-                  "backgroundColor": "#01C8A1",
-                },
                 undefined,
-                Object {
-                  "padding": 12,
-                },
                 undefined,
                 undefined,
                 undefined,
                 Array [
-                  null,
                   Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
+                    "color": "white",
+                    "fontSize": 16,
                   },
                   Object {
-                    "borderColor": "#01C8A1",
-                  },
-                ],
-                Object {
-                  "backgroundColor": "#dadee0",
-                },
-                Array [
-                  Object {
-                    "backgroundColor": "#01C8A1",
+                    "color": "#ffffff",
                   },
                   Object {
-                    "opacity": 0.4,
+                    "fontSize": 14,
                   },
+                  Object {
+                    "fontSize": 17,
+                  },
+                  undefined,
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "fontFamily": "Lato",
+                  },
+                  undefined,
                 ],
               ]
             }
           >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#ffffff",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    undefined,
-                  ],
-                ]
-              }
-            >
-              Submit
-            </Text>
-          </View>
+            Submit
+          </Text>
         </View>
       </View>
     </View>
   </View>
-</RCTSafeAreaView>
+</View>
 `;
 
 exports[`<QuestionActions /> when one response is present match snapshot if in error status 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  safeArea={true}
-  style={Object {}}
+<View
+  style={
+    Object {
+      "marginLeft": "3%",
+      "width": "94%",
+    }
+  }
 >
   <View
-    row={true}
     style={
       Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-        "justifyContent": "space-around",
-        "marginVertical": "3%",
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "marginBottom": 15,
+        "minHeight": 56,
       }
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "marginRight": "3%",
-        }
+        Array [
+          Object {
+            "marginLeft": 15,
+            "marginRight": 15,
+          },
+          undefined,
+          Object {
+            "marginLeft": 0,
+            "marginRight": 0,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        accessibilityLabel="question-action-submit"
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Array [
             Object {
-              "marginLeft": 15,
-              "marginRight": 15,
+              "backgroundColor": "transparent",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "height": 56,
             },
-            undefined,
             Object {
-              "marginLeft": 0,
-              "marginRight": 0,
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
             },
-            undefined,
           ]
         }
+        testID="question-action-submit"
       >
         <View
-          accessibilityLabel="question-action-cancel"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          pointerEvents="box-only"
           style={
             Array [
               Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
+                "alignItems": "center",
+                "backgroundColor": "#9E9E9E",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 19,
               },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
               Object {
-                "borderColor": "#A5A5A5",
+                "backgroundColor": "#86B93B",
               },
+              undefined,
+              Object {
+                "padding": 12,
+              },
+              undefined,
+              undefined,
+              undefined,
+              Array [
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderRadius": 5,
+                  "borderWidth": 0,
+                  "height": 56,
+                },
+                Object {
+                  "backgroundColor": "#86B93B",
+                  "borderColor": "#86B93B",
+                },
+              ],
+              false,
+              false,
             ]
           }
-          testID="question-action-cancel"
         >
-          <View
-            pointerEvents="box-only"
+          <Text
             style={
               Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
+                Object {},
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {
-                  "backgroundColor": "#ffffff",
-                },
                 undefined,
-                Object {
-                  "padding": 12,
-                },
                 undefined,
                 undefined,
                 undefined,
                 Array [
-                  null,
                   Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
+                    "color": "white",
+                    "fontSize": 16,
                   },
                   Object {
-                    "borderColor": "#A5A5A5",
+                    "color": "#ffffff",
                   },
+                  Object {
+                    "fontSize": 14,
+                  },
+                  Object {
+                    "fontSize": 17,
+                  },
+                  undefined,
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "fontFamily": "Lato",
+                  },
+                  false,
                 ],
-                undefined,
-                undefined,
               ]
             }
           >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#777777",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    undefined,
-                  ],
-                ]
-              }
-            >
-              Cancel
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "marginLeft": 15,
-              "marginRight": 15,
-            },
-            undefined,
-            Object {
-              "marginLeft": 0,
-              "marginRight": 0,
-            },
-            undefined,
-          ]
-        }
-      >
-        <View
-          accessibilityLabel="question-action-submit"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#01C8A1",
-              },
-            ]
-          }
-          testID="question-action-submit"
-        >
-          <View
-            pointerEvents="box-only"
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "backgroundColor": "#01C8A1",
-                },
-                undefined,
-                Object {
-                  "padding": 12,
-                },
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  null,
-                  Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
-                  },
-                  Object {
-                    "borderColor": "#01C8A1",
-                  },
-                ],
-                false,
-                false,
-              ]
-            }
-          >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#ffffff",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    false,
-                  ],
-                ]
-              }
-            >
-              Try Again
-            </Text>
-          </View>
+            Try Again
+          </Text>
         </View>
       </View>
     </View>
   </View>
-</RCTSafeAreaView>
+</View>
 `;
 
 exports[`<QuestionActions /> when one response is present match snapshot if in success status 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  safeArea={true}
-  style={Object {}}
+<View
+  style={
+    Object {
+      "marginLeft": "3%",
+      "width": "94%",
+    }
+  }
 >
   <View
-    row={true}
     style={
       Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-        "justifyContent": "space-around",
-        "marginVertical": "3%",
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "marginBottom": 15,
+        "minHeight": 56,
       }
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-        }
+        Array [
+          Object {
+            "marginLeft": 15,
+            "marginRight": 15,
+          },
+          undefined,
+          Object {
+            "marginLeft": 0,
+            "marginRight": 0,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        accessibilityLabel="question-action-submit"
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Array [
             Object {
-              "marginLeft": 15,
-              "marginRight": 15,
+              "backgroundColor": "transparent",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "height": 56,
             },
-            undefined,
             Object {
-              "marginLeft": 0,
-              "marginRight": 0,
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
             },
-            undefined,
           ]
         }
+        testID="question-action-submit"
       >
         <View
-          accessibilityLabel="question-action-submit"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          pointerEvents="box-only"
           style={
             Array [
               Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
+                "alignItems": "center",
+                "backgroundColor": "#9E9E9E",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 19,
               },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
               Object {
-                "borderColor": "#01C8A1",
+                "backgroundColor": "#86B93B",
               },
+              undefined,
+              Object {
+                "padding": 12,
+              },
+              undefined,
+              undefined,
+              undefined,
+              Array [
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderRadius": 5,
+                  "borderWidth": 0,
+                  "height": 56,
+                },
+                Object {
+                  "backgroundColor": "#86B93B",
+                  "borderColor": "#86B93B",
+                },
+              ],
+              false,
+              false,
             ]
           }
-          testID="question-action-submit"
         >
-          <View
-            pointerEvents="box-only"
+          <Text
             style={
               Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
+                Object {},
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {
-                  "backgroundColor": "#01C8A1",
-                },
                 undefined,
-                Object {
-                  "padding": 12,
-                },
                 undefined,
                 undefined,
                 undefined,
                 Array [
-                  null,
                   Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
+                    "color": "white",
+                    "fontSize": 16,
                   },
                   Object {
-                    "borderColor": "#01C8A1",
+                    "color": "#ffffff",
                   },
+                  Object {
+                    "fontSize": 14,
+                  },
+                  Object {
+                    "fontSize": 17,
+                  },
+                  undefined,
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "fontFamily": "Lato",
+                  },
+                  false,
                 ],
-                false,
-                false,
               ]
             }
           >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#ffffff",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    false,
-                  ],
-                ]
-              }
-            >
-              OK
-            </Text>
-          </View>
+            OK
+          </Text>
         </View>
       </View>
     </View>
   </View>
-</RCTSafeAreaView>
+</View>
 `;
 
 exports[`<QuestionActions /> when one response is present render Ignore and response button 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  safeArea={true}
-  style={Object {}}
+<View
+  style={
+    Object {
+      "marginLeft": "3%",
+      "width": "94%",
+    }
+  }
 >
   <View
-    row={true}
     style={
       Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-        "justifyContent": "space-around",
-        "marginVertical": "3%",
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "marginBottom": 15,
+        "minHeight": 56,
       }
     }
   >
     <View
-      style={
-        Object {
-          "flex": 1,
-          "marginRight": "3%",
-        }
-      }
+      style={Object {}}
     >
       <View
         style={
-          Array [
-            Object {
-              "marginLeft": 15,
-              "marginRight": 15,
-            },
-            undefined,
-            Object {
-              "marginLeft": 0,
-              "marginRight": 0,
-            },
-            undefined,
-          ]
-        }
-      >
-        <View
-          accessibilityLabel="question-action-cancel"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#A5A5A5",
-              },
-            ]
+          Object {
+            "backgroundColor": "#86B93B",
+            "borderColor": "#86B93B",
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "marginBottom": 15,
+            "minHeight": 56,
           }
-          testID="question-action-cancel"
-        >
-          <View
-            pointerEvents="box-only"
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "backgroundColor": "#ffffff",
-                },
-                undefined,
-                Object {
-                  "padding": 12,
-                },
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  null,
-                  Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
-                  },
-                  Object {
-                    "borderColor": "#A5A5A5",
-                  },
-                ],
-                undefined,
-                undefined,
-              ]
-            }
-          >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#777777",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    undefined,
-                  ],
-                ]
-              }
-            >
-              Ignore
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        Object {
-          "flex": 1,
         }
-      }
-    >
-      <View
-        style={Object {}}
       >
         <View
           style={
@@ -1368,11 +843,14 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
             style={
               Array [
                 Object {
+                  "backgroundColor": "transparent",
                   "borderRadius": 5,
-                  "borderWidth": 1,
+                  "borderWidth": 0,
+                  "height": 56,
                 },
                 Object {
-                  "borderColor": "#01C8A1",
+                  "backgroundColor": "#86B93B",
+                  "borderColor": "#86B93B",
                 },
               ]
             }
@@ -1407,11 +885,14 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
                   Array [
                     null,
                     Object {
+                      "backgroundColor": "transparent",
                       "borderRadius": 5,
-                      "borderWidth": 1,
+                      "borderWidth": 0,
+                      "height": 56,
                     },
                     Object {
-                      "borderColor": "#01C8A1",
+                      "backgroundColor": "#86B93B",
+                      "borderColor": "#86B93B",
                     },
                   ],
                   undefined,
@@ -1466,479 +947,348 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
       </View>
     </View>
   </View>
-</RCTSafeAreaView>
+</View>
 `;
 
 exports[`<QuestionActions /> when two responses are present match snapshot if in error status 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  safeArea={true}
-  style={Object {}}
+<View
+  style={
+    Object {
+      "marginLeft": "3%",
+      "width": "94%",
+    }
+  }
 >
   <View
-    row={true}
     style={
       Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-        "justifyContent": "space-around",
-        "marginVertical": "3%",
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "marginBottom": 15,
+        "minHeight": 56,
       }
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "marginRight": "3%",
-        }
+        Array [
+          Object {
+            "marginLeft": 15,
+            "marginRight": 15,
+          },
+          undefined,
+          Object {
+            "marginLeft": 0,
+            "marginRight": 0,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        accessibilityLabel="question-action-submit"
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Array [
             Object {
-              "marginLeft": 15,
-              "marginRight": 15,
+              "backgroundColor": "transparent",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "height": 56,
             },
-            undefined,
             Object {
-              "marginLeft": 0,
-              "marginRight": 0,
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
             },
-            undefined,
           ]
         }
+        testID="question-action-submit"
       >
         <View
-          accessibilityLabel="question-action-cancel"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          pointerEvents="box-only"
           style={
             Array [
               Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
+                "alignItems": "center",
+                "backgroundColor": "#9E9E9E",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 19,
               },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
               Object {
-                "borderColor": "#A5A5A5",
+                "backgroundColor": "#86B93B",
               },
+              undefined,
+              Object {
+                "padding": 12,
+              },
+              undefined,
+              undefined,
+              undefined,
+              Array [
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderRadius": 5,
+                  "borderWidth": 0,
+                  "height": 56,
+                },
+                Object {
+                  "backgroundColor": "#86B93B",
+                  "borderColor": "#86B93B",
+                },
+              ],
+              false,
+              false,
             ]
           }
-          testID="question-action-cancel"
         >
-          <View
-            pointerEvents="box-only"
+          <Text
             style={
               Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
+                Object {},
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {
-                  "backgroundColor": "#ffffff",
-                },
                 undefined,
-                Object {
-                  "padding": 12,
-                },
                 undefined,
                 undefined,
                 undefined,
                 Array [
-                  null,
                   Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
+                    "color": "white",
+                    "fontSize": 16,
                   },
                   Object {
-                    "borderColor": "#A5A5A5",
+                    "color": "#ffffff",
                   },
+                  Object {
+                    "fontSize": 14,
+                  },
+                  Object {
+                    "fontSize": 17,
+                  },
+                  undefined,
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "fontFamily": "Lato",
+                  },
+                  false,
                 ],
-                undefined,
-                undefined,
               ]
             }
           >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#777777",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    undefined,
-                  ],
-                ]
-              }
-            >
-              Cancel
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "marginLeft": 15,
-              "marginRight": 15,
-            },
-            undefined,
-            Object {
-              "marginLeft": 0,
-              "marginRight": 0,
-            },
-            undefined,
-          ]
-        }
-      >
-        <View
-          accessibilityLabel="question-action-submit"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Array [
-              Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
-              },
-              Object {
-                "borderColor": "#01C8A1",
-              },
-            ]
-          }
-          testID="question-action-submit"
-        >
-          <View
-            pointerEvents="box-only"
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "backgroundColor": "#01C8A1",
-                },
-                undefined,
-                Object {
-                  "padding": 12,
-                },
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  null,
-                  Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
-                  },
-                  Object {
-                    "borderColor": "#01C8A1",
-                  },
-                ],
-                false,
-                false,
-              ]
-            }
-          >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#ffffff",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    false,
-                  ],
-                ]
-              }
-            >
-              Try Again
-            </Text>
-          </View>
+            Try Again
+          </Text>
         </View>
       </View>
     </View>
   </View>
-</RCTSafeAreaView>
+</View>
 `;
 
 exports[`<QuestionActions /> when two responses are present match snapshot if in success status 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  safeArea={true}
-  style={Object {}}
+<View
+  style={
+    Object {
+      "marginLeft": "3%",
+      "width": "94%",
+    }
+  }
 >
   <View
-    row={true}
     style={
       Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-        "justifyContent": "space-around",
-        "marginVertical": "3%",
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "marginBottom": 15,
+        "minHeight": 56,
       }
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-        }
+        Array [
+          Object {
+            "marginLeft": 15,
+            "marginRight": 15,
+          },
+          undefined,
+          Object {
+            "marginLeft": 0,
+            "marginRight": 0,
+          },
+          undefined,
+        ]
       }
     >
       <View
+        accessibilityLabel="question-action-submit"
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Array [
             Object {
-              "marginLeft": 15,
-              "marginRight": 15,
+              "backgroundColor": "transparent",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "height": 56,
             },
-            undefined,
             Object {
-              "marginLeft": 0,
-              "marginRight": 0,
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
             },
-            undefined,
           ]
         }
+        testID="question-action-submit"
       >
         <View
-          accessibilityLabel="question-action-submit"
-          accessible={true}
-          isTVSelectable={true}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+          pointerEvents="box-only"
           style={
             Array [
               Object {
-                "borderRadius": 5,
-                "borderWidth": 1,
+                "alignItems": "center",
+                "backgroundColor": "#9E9E9E",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 19,
               },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
               Object {
-                "borderColor": "#01C8A1",
+                "backgroundColor": "#86B93B",
               },
+              undefined,
+              Object {
+                "padding": 12,
+              },
+              undefined,
+              undefined,
+              undefined,
+              Array [
+                null,
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderRadius": 5,
+                  "borderWidth": 0,
+                  "height": 56,
+                },
+                Object {
+                  "backgroundColor": "#86B93B",
+                  "borderColor": "#86B93B",
+                },
+              ],
+              false,
+              false,
             ]
           }
-          testID="question-action-submit"
         >
-          <View
-            pointerEvents="box-only"
+          <Text
             style={
               Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
+                Object {},
                 undefined,
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                Object {
-                  "backgroundColor": "#01C8A1",
-                },
                 undefined,
-                Object {
-                  "padding": 12,
-                },
                 undefined,
                 undefined,
                 undefined,
                 Array [
-                  null,
                   Object {
-                    "borderRadius": 5,
-                    "borderWidth": 1,
+                    "color": "white",
+                    "fontSize": 16,
                   },
                   Object {
-                    "borderColor": "#01C8A1",
+                    "color": "#ffffff",
                   },
+                  Object {
+                    "fontSize": 14,
+                  },
+                  Object {
+                    "fontSize": 17,
+                  },
+                  undefined,
+                  Object {
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "fontFamily": "Lato",
+                  },
+                  false,
                 ],
-                false,
-                false,
               ]
             }
           >
-            <Text
-              style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#ffffff",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    Object {
-                      "fontSize": 17,
-                    },
-                    undefined,
-                    Object {
-                      "fontWeight": "bold",
-                    },
-                    Object {
-                      "fontFamily": "Lato",
-                    },
-                    false,
-                  ],
-                ]
-              }
-            >
-              OK
-            </Text>
-          </View>
+            OK
+          </Text>
         </View>
       </View>
     </View>
   </View>
-</RCTSafeAreaView>
+</View>
 `;
 
 exports[`<QuestionActions /> when two responses are present render both response buttons and no ignore button 1`] = `
-<RCTSafeAreaView
-  emulateUnlessSupported={true}
-  safeArea={true}
-  style={Object {}}
+<View
+  style={
+    Object {
+      "marginLeft": "3%",
+      "width": "94%",
+    }
+  }
 >
   <View
-    row={true}
     style={
       Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-        "justifyContent": "space-around",
-        "marginVertical": "3%",
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "marginBottom": 15,
+        "minHeight": 56,
       }
     }
   >
     <View
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
+      style={Object {}}
     >
       <View
         style={
           Object {
-            "marginTop": 10,
+            "borderColor": "#CE0B24",
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "marginBottom": 15,
+            "minHeight": 56,
           }
         }
       >
@@ -1959,7 +1309,7 @@ exports[`<QuestionActions /> when two responses are present render both response
           }
         >
           <View
-            accessibilityLabel="hyjjjjuifhjkiutyojoh-submit"
+            accessibilityLabel="No-submit"
             accessible={true}
             isTVSelectable={true}
             onResponderGrant={[Function]}
@@ -1971,15 +1321,15 @@ exports[`<QuestionActions /> when two responses are present render both response
             style={
               Array [
                 Object {
+                  "backgroundColor": "transparent",
                   "borderRadius": 5,
-                  "borderWidth": 1,
+                  "borderWidth": 0,
+                  "height": 56,
                 },
-                Object {
-                  "borderColor": "#A5A5A5",
-                },
+                false,
               ]
             }
-            testID="hyjjjjuifhjkiutyojoh-submit"
+            testID="No-submit"
           >
             <View
               pointerEvents="box-only"
@@ -1998,7 +1348,7 @@ exports[`<QuestionActions /> when two responses are present render both response
                   undefined,
                   undefined,
                   Object {
-                    "backgroundColor": "#ffffff",
+                    "backgroundColor": "white",
                   },
                   undefined,
                   Object {
@@ -2010,12 +1360,12 @@ exports[`<QuestionActions /> when two responses are present render both response
                   Array [
                     null,
                     Object {
+                      "backgroundColor": "transparent",
                       "borderRadius": 5,
-                      "borderWidth": 1,
+                      "borderWidth": 0,
+                      "height": 56,
                     },
-                    Object {
-                      "borderColor": "#A5A5A5",
-                    },
+                    false,
                   ],
                   undefined,
                   undefined,
@@ -2041,7 +1391,7 @@ exports[`<QuestionActions /> when two responses are present render both response
                         "fontSize": 16,
                       },
                       Object {
-                        "color": "#777777",
+                        "color": "#CE0B24",
                       },
                       Object {
                         "fontSize": 14,
@@ -2070,7 +1420,12 @@ exports[`<QuestionActions /> when two responses are present render both response
       <View
         style={
           Object {
-            "marginTop": 10,
+            "backgroundColor": "#86B93B",
+            "borderColor": "#86B93B",
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "marginBottom": 15,
+            "minHeight": 56,
           }
         }
       >
@@ -2091,7 +1446,7 @@ exports[`<QuestionActions /> when two responses are present render both response
           }
         >
           <View
-            accessibilityLabel="akdfakjfkjdaadkgak-submit"
+            accessibilityLabel="YES-submit"
             accessible={true}
             isTVSelectable={true}
             onResponderGrant={[Function]}
@@ -2103,15 +1458,18 @@ exports[`<QuestionActions /> when two responses are present render both response
             style={
               Array [
                 Object {
+                  "backgroundColor": "transparent",
                   "borderRadius": 5,
-                  "borderWidth": 1,
+                  "borderWidth": 0,
+                  "height": 56,
                 },
                 Object {
-                  "borderColor": "#01C8A1",
+                  "backgroundColor": "#86B93B",
+                  "borderColor": "#86B93B",
                 },
               ]
             }
-            testID="akdfakjfkjdaadkgak-submit"
+            testID="YES-submit"
           >
             <View
               pointerEvents="box-only"
@@ -2142,11 +1500,14 @@ exports[`<QuestionActions /> when two responses are present render both response
                   Array [
                     null,
                     Object {
+                      "backgroundColor": "transparent",
                       "borderRadius": 5,
-                      "borderWidth": 1,
+                      "borderWidth": 0,
+                      "height": 56,
                     },
                     Object {
-                      "borderColor": "#01C8A1",
+                      "backgroundColor": "#86B93B",
+                      "borderColor": "#86B93B",
                     },
                   ],
                   undefined,
@@ -2201,5 +1562,5 @@ exports[`<QuestionActions /> when two responses are present render both response
       </View>
     </View>
   </View>
-</RCTSafeAreaView>
+</View>
 `;

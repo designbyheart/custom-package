@@ -1,10 +1,8 @@
 // @flow
-
 import React from 'react'
-import { StyleSheet, Platform, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, Platform, StatusBar } from 'react-native'
 import {
   blackTransparent,
-  OFFSET_2X,
   cmGrey5,
   OFFSET_3X,
   OFFSET_1X,
@@ -12,13 +10,13 @@ import {
   font,
   cmGrey1,
   white,
-  cmGrey2,
-  caribbeanGreen,
-  darkGray2,
   color,
+  cmRed,
+  deviceHeight,
+  primaryGreen,
 } from '../common/styles'
 
-const QUESTION_SENDER_LOGO_DIMENSION = 32
+const QUESTION_SENDER_LOGO_DIMENSION = 100
 const questionScreenSpacing = '5%'
 
 export const getQuestionStylesObject = (
@@ -52,17 +50,21 @@ export const getQuestionStylesObject = (
     backgroundColor: color.bg.tertiary.color,
   },
   questionSenderContainer: {
-    minHeight: 64,
-    maxHeight: 90,
+    minHeight: deviceHeight * 0.35,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   questionSenderLogo: {
     width: QUESTION_SENDER_LOGO_DIMENSION,
     height: QUESTION_SENDER_LOGO_DIMENSION,
     borderRadius: questionSenderLogoBorderRadius,
-    borderWidth: questionSenderLogoBorderWidth,
+    borderWidth: 0,
+    marginBottom: 15,
   },
   questionSenderName: {
-    marginLeft: questionScreenSpacing,
+    marginTop: 10,
+    marginBottom: 20,
   },
   questionTitle: {
     marginBottom: OFFSET_1X,
@@ -74,20 +76,20 @@ export const getQuestionStylesObject = (
     maxHeight: getQuestionResponsesHeight(),
   },
   questionResponsesContainerSingleResponse: {
-    maxHeight: getQuestionResponsesHeight(true),
+    flex: 1,
   },
   questionResponseRadio: {
     borderWidth: 0,
     backgroundColor: cmGrey4,
   },
   questionResponseRadioWrapper: {
-    marginLeft: '5%',
+    marginLeft: 0,
   },
   questionResponseRadioLabel: {
     fontFamily: font.family,
     fontSize: font.size.M,
     color: cmGrey1,
-    fontWeight: 'bold',
+    fontWeight: 'normal',
   },
   questionResponseRadioLabelWrapper: {
     marginLeft: 16,
@@ -100,19 +102,38 @@ export const getQuestionStylesObject = (
     alignItems: 'center',
     flexWrap: 'wrap',
     marginVertical: '3%',
+    backgroundColor: 'transparent',
+    maxWidth: '94%',
+    marginLeft: '3%',
+    borderRadius: 5,
+    overflow: 'hidden',
   },
   buttonSpacing: {
     marginRight: '3%',
   },
-  actionButton: {
-    borderRadius: 5,
-    borderWidth: 1,
+  actionWrapper: {
+    width: '94%',
+    marginLeft: '3%',
   },
-  cancelButton: {
-    borderColor: darkGray2,
+  actionButtonContainer: {
+    marginBottom: 15,
+    borderRadius: 5,
+    borderColor: white,
+    borderWidth: 1,
+    minHeight: 56,
+  },
+  actionButton: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    height: 56,
+    borderRadius: 5,
   },
   submitButton: {
-    borderColor: caribbeanGreen,
+    borderColor: primaryGreen,
+    backgroundColor: primaryGreen,
+  },
+  cancelButton: {
+    borderColor: cmRed,
   },
   feedbackIcon: {
     width: 150,
@@ -127,9 +148,42 @@ export const getQuestionStylesObject = (
   },
   questionErrorContainer: {
     marginVertical: '10%',
+    minHeight: 200,
   },
   questionSuccessContainer: {
     marginVertical: '10%',
+    minHeight: 200,
+  },
+  bottomContainer: {
+    padding: 15,
+    paddingTop: 0,
+    paddingBottom: 20,
+  },
+  closeButton: {
+    position: 'absolute',
+    right: 10,
+    padding: 16,
+    marginTop: Platform.OS !== 'android' ? StatusBar.currentHeight || 30 : 0,
+  },
+  cancelBtnColor: {
+    color: cmRed,
+    backgroundColor: 'white',
+  },
+  listContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    position: 'relative',
+  },
+  listStyle: { flex: 1, padding: 20 },
+  questionDetails: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    minHeight: 250,
+    justifyContent: 'center',
+    marginBottom: 25,
+  },
+  transparentBack: {
+    backgroundColor: 'transparent',
   },
 })
 
@@ -144,7 +198,7 @@ export const questionActionButtonDefaultProps = {
 }
 
 export const disabledStyle = {
-  backgroundColor: caribbeanGreen,
+  backgroundColor: primaryGreen,
 }
 
 function getQuestionResponsesHeight(singleResponse: ?boolean) {

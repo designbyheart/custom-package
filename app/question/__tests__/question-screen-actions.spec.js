@@ -6,7 +6,7 @@ import renderer from 'react-test-renderer'
 import merge from 'lodash.merge'
 
 import type { GenericObject } from '../../common/type-common'
-import type { QuestionResponse, QuestionStoreMessage } from '../type-question'
+import type { QuestionResponse } from '../type-question'
 import type { QuestionActionProps } from '../components/question-screen-actions'
 
 import { QuestionActions } from '../components/question-screen-actions'
@@ -16,21 +16,13 @@ import {
   mockQuestionPayload2,
   mockQuestionPayload3,
 } from '../../../__mocks__/data/question-store-mock-data'
-import { QUESTION_STATUS, TEXT_SUBMIT, TEXT_IGNORE } from '../type-question'
+import { QUESTION_STATUS, TEXT_SUBMIT } from '../type-question'
 
 describe('<QuestionActions />', () => {
   describe('when one response is present', () => {
     it('render Ignore and response button', () => {
       const { component } = oneResponseSetup()
       expect(component.toJSON()).toMatchSnapshot()
-    })
-
-    it('should call onCancel if Ignore button is pressed', () => {
-      const { component, props } = oneResponseSetup()
-      const ignoreButton = component.root.findByProps({ title: TEXT_IGNORE })
-      ignoreButton.props.onPress()
-      expect(props.onCancel).toHaveBeenCalledTimes(1)
-      expect(props.onCancel).toHaveBeenCalledWith()
     })
 
     it('should call onPress with response if response button is clicked ', () => {
@@ -134,14 +126,6 @@ describe('<QuestionActions />', () => {
       expect(props.onSubmit).toHaveBeenCalledWith()
     })
 
-    it('should goBack if ignore button is pressed', () => {
-      const { component, props } = setup(overrideProps)
-      const ignoreButton = component.root.findByProps({ title: TEXT_IGNORE })
-      ignoreButton.props.onPress()
-      expect(props.onCancel).toHaveBeenCalledTimes(1)
-      expect(props.onCancel).toHaveBeenCalledWith()
-    })
-
     it('match snapshot if in error status', () => {
       const { component } = setup({
         ...overrideProps,
@@ -171,7 +155,6 @@ function getProps(extraProps: ?GenericObject = {}) {
       mockQuestionReceivedState.data[mockQuestionPayload.uid],
       extraProps
     ),
-    useIgnoreButton: true,
   }
 }
 

@@ -25,8 +25,8 @@ export const mockQuestionPayload = {
   question_text: 'Question Text',
   question_detail: 'Question Detail',
   valid_responses: [
-    { text: 'Answer 1', nonce: 'akdfakjfkjdaadkgak' },
-    { text: 'Answer 2', nonce: 'hyjjjjuifhjkiutyojoh' },
+    { text: 'Answer 1', nonce: 'YES' },
+    { text: 'Answer 2', nonce: 'No' },
   ],
   timing: { expires_time: '2017-06-01:05:07:07' },
   issuer_did: 'issuerDid',

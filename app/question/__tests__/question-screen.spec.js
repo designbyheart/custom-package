@@ -17,14 +17,8 @@ import {
   mockQuestionReceivedState,
   mockQuestionPayload2,
 } from '../../../__mocks__/data/question-store-mock-data'
-import {
-  QUESTION_STATUS,
-  TEXT_IGNORE,
-  TEXT_OK,
-  TEXT_SUBMIT,
-} from '../type-question'
+import { QUESTION_STATUS, TEXT_SUBMIT } from '../type-question'
 import { questionStyles } from '../question-screen-style'
-import { QuestionScreenHeader } from '../components/question-screen-header'
 
 describe('<QuestionScreen />', () => {
   it('should match idle state snapshot', () => {
@@ -53,46 +47,28 @@ describe('<QuestionScreen />', () => {
     expect(component.toJSON()).toMatchSnapshot()
   })
 
-  it('should goBack if cancel button is pressed', () => {
-    const { component, props } = setup({
-      status: QUESTION_STATUS.SEEN,
-    })
-    const cancelButton = component.root.findByProps({ title: TEXT_IGNORE })
-    cancelButton.props.onPress()
-    expect(props.navigation.goBack).toHaveBeenCalledTimes(1)
-  })
-
-  it('should not goBack if header is tapped when in loading state', () => {
+  it('should goBack if close button is tapped when in loading state', () => {
     const { component, props } = setup({
       status: QUESTION_STATUS.SEND_ANSWER_IN_PROGRESS,
     })
-    const headerWithHandle = component.root.findByType(QuestionScreenHeader)
-    headerWithHandle.props.onCancel()
-    expect(props.navigation.goBack).not.toHaveBeenCalled()
-  })
-
-  it('should not goBack if header is tapped when in success state', () => {
-    const { component, props } = setup({
-      status: QUESTION_STATUS.SEND_ANSWER_SUCCESS_TILL_CLOUD_AGENT,
-    })
-    const headerWithHandle = component.root.findByType(QuestionScreenHeader)
-    headerWithHandle.props.onCancel()
-    expect(props.navigation.goBack).not.toHaveBeenCalled()
-  })
-
-  it('should goBack if header is tapped when in error state', () => {
-    const { component, props } = setup({
-      status: QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
-    })
-    const headerWithHandle = component.root.findByType(QuestionScreenHeader)
-    headerWithHandle.props.onCancel()
+    const closeBtn = component.root.findByProps({ icon: 'CloseIcon' })
+    closeBtn.props.onPress()
     expect(props.navigation.goBack).toHaveBeenCalledTimes(1)
   })
 
-  it('should goBack if header is tapped when in idle state', () => {
+  it('should goBack if close button is tapped when in error state', () => {
+    const { component, props } = setup({
+      status: QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
+    })
+    const closeBtn = component.root.findByProps({ icon: 'CloseIcon' })
+    closeBtn.props.onPress()
+    expect(props.navigation.goBack).toHaveBeenCalledTimes(1)
+  })
+
+  it('should goBack if close button is tapped when in idle state', () => {
     const { component, props } = setup()
-    const headerWithHandle = component.root.findByType(QuestionScreenHeader)
-    headerWithHandle.props.onCancel()
+    const closeBtn = component.root.findByProps({ icon: 'CloseIcon' })
+    closeBtn.props.onPress()
     expect(props.navigation.goBack).toHaveBeenCalledTimes(1)
   })
 
@@ -144,7 +120,6 @@ describe('<QuestionScreen />', () => {
         ...getNavigation(),
       },
       questionStyles,
-      useIgnoreButton: true,
     }
   }
 

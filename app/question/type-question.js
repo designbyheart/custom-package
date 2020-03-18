@@ -25,7 +25,6 @@ export type QuestionScreenProps = {
   senderLogoUrl: number | GenericObject,
   senderName: string,
   questionStyles?: any,
-  useIgnoreButton: boolean,
 } & ReactNavigation
 
 export type QuestionScreenState = {
