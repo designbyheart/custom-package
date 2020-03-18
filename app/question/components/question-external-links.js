@@ -1,5 +1,4 @@
 // @flow
-
 import React, { PureComponent } from 'react'
 import { StyleSheet, TouchableOpacity, Alert, Linking } from 'react-native'
 import Snackbar from 'react-native-snackbar'
@@ -16,7 +15,6 @@ import { CustomView, CustomText } from '../../components'
 import {
   OFFSET_1X,
   alertCancel,
-  whiteSmoke,
   white,
   venetianRed,
   color,

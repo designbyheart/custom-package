@@ -25,11 +25,11 @@ Object {
         "uid": "001",
         "valid_responses": Array [
           Object {
-            "nonce": "akdfakjfkjdaadkgak",
+            "nonce": "YES",
             "text": "Answer 1",
           },
           Object {
-            "nonce": "hyjjjjuifhjkiutyojoh",
+            "nonce": "No",
             "text": "Answer 2",
           },
         ],
@@ -111,11 +111,11 @@ Object {
         "uid": "001",
         "valid_responses": Array [
           Object {
-            "nonce": "akdfakjfkjdaadkgak",
+            "nonce": "YES",
             "text": "Answer 1",
           },
           Object {
-            "nonce": "hyjjjjuifhjkiutyojoh",
+            "nonce": "No",
             "text": "Answer 2",
           },
         ],
@@ -197,11 +197,11 @@ Object {
         "uid": "001",
         "valid_responses": Array [
           Object {
-            "nonce": "akdfakjfkjdaadkgak",
+            "nonce": "YES",
             "text": "Answer 1",
           },
           Object {
-            "nonce": "hyjjjjuifhjkiutyojoh",
+            "nonce": "No",
             "text": "Answer 2",
           },
         ],
@@ -238,11 +238,11 @@ Object {
         "uid": "001",
         "valid_responses": Array [
           Object {
-            "nonce": "akdfakjfkjdaadkgak",
+            "nonce": "YES",
             "text": "Answer 1",
           },
           Object {
-            "nonce": "hyjjjjuifhjkiutyojoh",
+            "nonce": "No",
             "text": "Answer 2",
           },
         ],
@@ -259,7 +259,7 @@ Object {
   "data": Object {
     "001": Object {
       "answer": Object {
-        "nonce": "akdfakjfkjdaadkgak",
+        "nonce": "YES",
         "text": "Answer 1",
       },
       "answerMsgId": "answerMsgId",
@@ -282,11 +282,11 @@ Object {
         "uid": "001",
         "valid_responses": Array [
           Object {
-            "nonce": "akdfakjfkjdaadkgak",
+            "nonce": "YES",
             "text": "Answer 1",
           },
           Object {
-            "nonce": "hyjjjjuifhjkiutyojoh",
+            "nonce": "No",
             "text": "Answer 2",
           },
         ],
@@ -323,11 +323,11 @@ Object {
         "uid": "001",
         "valid_responses": Array [
           Object {
-            "nonce": "akdfakjfkjdaadkgak",
+            "nonce": "YES",
             "text": "Answer 1",
           },
           Object {
-            "nonce": "hyjjjjuifhjkiutyojoh",
+            "nonce": "No",
             "text": "Answer 2",
           },
         ],
@@ -367,11 +367,11 @@ Object {
         "uid": "001",
         "valid_responses": Array [
           Object {
-            "nonce": "akdfakjfkjdaadkgak",
+            "nonce": "YES",
             "text": "Answer 1",
           },
           Object {
-            "nonce": "hyjjjjuifhjkiutyojoh",
+            "nonce": "No",
             "text": "Answer 2",
           },
         ],
@@ -408,11 +408,11 @@ Object {
         "uid": "001",
         "valid_responses": Array [
           Object {
-            "nonce": "akdfakjfkjdaadkgak",
+            "nonce": "YES",
             "text": "Answer 1",
           },
           Object {
-            "nonce": "hyjjjjuifhjkiutyojoh",
+            "nonce": "No",
             "text": "Answer 2",
           },
         ],

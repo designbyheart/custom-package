@@ -24,6 +24,7 @@ class CustomText extends React.Component<GenericObject, void> {
       h3b,
       h4,
       h4a,
+      h4b,
       h5,
       h6,
       h7,
@@ -208,6 +209,9 @@ export const styles = StyleSheet.create({
   },
   h4a: {
     fontSize: font.size.M1,
+  },
+  h4b: {
+    fontSize: font.size.ML2,
   },
   h4: {
     fontSize: font.size.ML,

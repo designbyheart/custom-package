@@ -122,7 +122,7 @@ export class HomeScreen extends Component<HomeProps, void> {
     else if (status === HISTORY_EVENT_STATUS.SEND_PROOF_SUCCESS)
       statusMessage = `You shared "${action}".`
     else if (status === HISTORY_EVENT_STATUS.UPDATE_QUESTION_ANSWER)
-      statusMessage = `You answered "${action}".`
+      statusMessage = `${action}.`
     else if (status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST_SUCCESS)
       statusMessage = `You denied "${action}".`
     else if (status === HISTORY_EVENT_STATUS.SEND_CLAIM_REQUEST_SUCCESS)

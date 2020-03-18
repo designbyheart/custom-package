@@ -1,7 +1,6 @@
 // @flow
 
 import React, { Component } from 'react'
-import { Dimensions } from 'react-native'
 
 import type { QuestionResponse, QuestionStoreMessage } from '../type-question'
 
@@ -19,25 +18,22 @@ import {
   questionStyles,
   disabledStyle,
 } from '../question-screen-style'
+
 import { isSmallWidthDevice } from '../../common/styles'
 
 export class QuestionActions extends React.Component<
   QuestionActionProps,
   void
 > {
-  static defaultProps = {
-    useIgnoreButton: true,
-  }
-
   render() {
     const testID = 'question-action'
-    const { question, selectedResponse, useIgnoreButton } = this.props
+    const { question, selectedResponse } = this.props
 
     if (!question) {
       return null
     }
-
     const { valid_responses: responses } = question.payload
+
     let cancelButtonTitle = TEXT_IGNORE
     let submitButtonTitle = TEXT_SUBMIT
 
@@ -57,16 +53,10 @@ export class QuestionActions extends React.Component<
     // and only after that submit button is enabled
     const isSubmitDisabled = success || error ? false : !selectedResponse
 
-    // as per our requirement from product team
-    // If there is one response, then we need to render that one response
-    // as a button, and add another button of our own that would be Ignore button
-    // Also, if user is not in success state, then also we need to show Ignore button
-    const shouldRenderIgnoreButton = useIgnoreButton
-      ? idle ? responses.length === 1 || responses.length > 2 : !success
-      : false
     // If there are more than two responses, then we need to render
     // our own buttons (submit and cancel)
     const shouldRenderSubmitButton = idle ? responses.length > 2 : true
+
     // we need to render responses as buttons, so user can just press a button
     // to select the response for question
     // If a question has two valid responses
@@ -76,47 +66,32 @@ export class QuestionActions extends React.Component<
       <QuestionResponseButtons
         responses={responses}
         onPress={this.props.onSelectResponseAndSubmit}
-        useIgnoreButton={useIgnoreButton}
       />
     )
 
     return (
-      <CustomView safeArea>
-        <CustomView row style={[questionStyles.questionActionContainer]}>
-          {shouldRenderIgnoreButton && (
-            <Container style={[questionStyles.buttonSpacing]}>
-              <CustomButton
-                {...questionActionButtonDefaultProps}
-                twelfth
-                style={[
-                  questionStyles.actionButton,
-                  questionStyles.cancelButton,
-                ]}
-                title={cancelButtonTitle}
-                testID={`${testID}-cancel`}
-                onPress={this.props.onCancel}
-              />
-            </Container>
+      <CustomView
+        //   row
+        style={[
+          // questionStyles.questionActionContainer,
+          questionStyles.actionWrapper,
+        ]}
+      >
+        <CustomView style={questionStyles.actionButtonContainer}>
+          {shouldRenderSubmitButton ? (
+            <CustomButton
+              {...questionActionButtonDefaultProps}
+              eleventh
+              style={[questionStyles.actionButton, questionStyles.submitButton]}
+              title={submitButtonTitle}
+              disabled={isSubmitDisabled}
+              testID={`${testID}-submit`}
+              onPress={this.props.onSubmit}
+              customColor={disabledStyle}
+            />
+          ) : (
+            responseButtons
           )}
-          <Container>
-            {shouldRenderSubmitButton ? (
-              <CustomButton
-                {...questionActionButtonDefaultProps}
-                eleventh
-                style={[
-                  questionStyles.actionButton,
-                  questionStyles.submitButton,
-                ]}
-                title={submitButtonTitle}
-                disabled={isSubmitDisabled}
-                testID={`${testID}-submit`}
-                onPress={this.props.onSubmit}
-                customColor={disabledStyle}
-              />
-            ) : (
-              responseButtons
-            )}
-          </Container>
         </CustomView>
       </CustomView>
     )
@@ -124,7 +99,7 @@ export class QuestionActions extends React.Component<
 }
 
 function QuestionResponseButtons(props: QuestionResponseButtonsProps) {
-  const { responses, onPress, useIgnoreButton } = props
+  const { responses, onPress } = props
 
   if (responses.length === 0 || responses.length > 2) {
     return null
@@ -146,33 +121,27 @@ function QuestionResponseButtons(props: QuestionResponseButtonsProps) {
   // for more logic
   const isSingleResponse = reversedResponses.length === 1
 
-  return reversedResponses.map((response: QuestionResponse, index: number) => (
-    <QuestionResponseButton
-      response={response}
-      key={response.nonce}
-      onPress={onPress}
-      isPrimaryResponse={index === lastItemIndex}
-      isSingleResponse={isSingleResponse}
-      useIgnoreButton={useIgnoreButton}
-    />
-  ))
+  return (
+    <CustomView>
+      {reversedResponses.map((response: QuestionResponse, index: number) => (
+        <QuestionResponseButton
+          response={response}
+          key={response.nonce}
+          onPress={onPress}
+          isPrimaryResponse={index === lastItemIndex}
+          isSingleResponse={isSingleResponse}
+        />
+      ))}
+    </CustomView>
+  )
 }
 
 class QuestionResponseButton extends React.PureComponent<
   QuestionResponseButtonProps,
   void
 > {
-  static defaultProps = {
-    useIgnoreButton: true,
-  }
-
   render() {
-    const {
-      response,
-      isPrimaryResponse,
-      isSingleResponse,
-      useIgnoreButton,
-    } = this.props
+    const { response, isPrimaryResponse, isSingleResponse } = this.props
 
     // We need to show only one line of text on action buttons
     // Normally, we should have used react-native's numberOfLines prop
@@ -184,14 +153,18 @@ class QuestionResponseButton extends React.PureComponent<
     // then we need to show half text limit on button, because in single response
     // buttons are placed side by side and has less width
     // TODO: Upgrade react-native-elements and use numberOfLines prop
-    const buttonText =
-      isSingleResponse && useIgnoreButton
-        ? ellipsis(response.text, Math.floor(getResponseButtonsTextLimit() / 2))
-        : ellipsis(response.text, getResponseButtonsTextLimit())
+    const buttonText = isSingleResponse
+      ? ellipsis(response.text, Math.floor(getResponseButtonsTextLimit() / 2))
+      : ellipsis(response.text, getResponseButtonsTextLimit())
 
     return (
       <CustomView
-        style={[isSingleResponse ? {} : questionStyles.responseButton]}
+        style={[
+          questionStyles.actionButtonContainer,
+          isPrimaryResponse
+            ? questionStyles.submitButton
+            : questionStyles.cancelButton,
+        ]}
       >
         <CustomButton
           {...questionActionButtonDefaultProps}
@@ -199,13 +172,12 @@ class QuestionResponseButton extends React.PureComponent<
           twelfth={!isPrimaryResponse}
           style={[
             questionStyles.actionButton,
-            isPrimaryResponse
-              ? questionStyles.submitButton
-              : questionStyles.cancelButton,
+            isPrimaryResponse && questionStyles.submitButton,
           ]}
           title={buttonText}
           testID={`${response.nonce}-submit`}
           onPress={this.onPress}
+          customColor={isPrimaryResponse ? {} : questionStyles.cancelBtnColor}
         />
       </CustomView>
     )
@@ -233,16 +205,13 @@ function getResponseButtonsTextLimit() {
 export type QuestionActionProps = {
   selectedResponse: ?QuestionResponse,
   onSubmit: () => void,
-  onCancel: () => void,
   onSelectResponseAndSubmit: (response: QuestionResponse) => void,
   question?: QuestionStoreMessage,
-  useIgnoreButton: boolean,
 }
 
 type QuestionResponseButtonsProps = {
   responses: Array<QuestionResponse>,
   onPress: (response: QuestionResponse) => void,
-  useIgnoreButton: boolean,
 }
 
 type QuestionResponseButtonProps = {
@@ -250,5 +219,4 @@ type QuestionResponseButtonProps = {
   onPress: (response: QuestionResponse) => void,
   isPrimaryResponse: boolean,
   isSingleResponse: boolean,
-  useIgnoreButton: boolean,
 }
