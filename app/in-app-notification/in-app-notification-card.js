@@ -135,16 +135,12 @@ class NotificationCardComponent extends Component<NotificationCardProps, void> {
 
   componentDidUpdate(prevProps: NotificationCardProps) {
     if (prevProps.notification !== this.props.notification) {
-      if (this.props.notification) {
-        this.showNotification()
-      } else {
-        this.hideNotification()
-      }
+      this.showNotification()
     }
   }
 
   componentDidMount() {
-    this.showNotification()
+    this.hideNotification()
   }
 
   showNotification = () => {

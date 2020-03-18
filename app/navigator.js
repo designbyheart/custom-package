@@ -73,7 +73,6 @@ import {
   lockEnterFingerprintRoute,
   claimOfferRoute,
   claimOfferNewRoute,
-  homeTabRoute,
   settingsTabRoute,
   qrCodeScannerTabRoute,
   proofRequestRoute,

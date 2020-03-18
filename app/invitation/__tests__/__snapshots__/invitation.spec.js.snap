@@ -78,7 +78,7 @@ exports[`<Invitation /> should match snapshot 1`] = `
                 style={
                   Array [
                     Object {
-                      "fontSize": 20,
+                      "fontSize": 19,
                     },
                     Object {
                       "fontFamily": "Lato",

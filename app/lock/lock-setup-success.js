@@ -14,7 +14,11 @@ import {
   CustomButton,
   Icon,
 } from '../components'
-import { settingsTabRoute, homeTabRoute, settingsDrawerRoute } from '../common'
+import {
+  settingsTabRoute,
+  homeDrawerRoute,
+  settingsDrawerRoute,
+} from '../common'
 import { unlockApp, clearPendingRedirect } from './lock-store'
 import { OFFSET_1X, OFFSET_2X, OFFSET_4X, color } from '../common/styles'
 import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
@@ -45,7 +49,7 @@ export class LockSetupSuccess extends Component<
       })
       this.props.clearPendingRedirect()
     } else {
-      this.props.navigation.navigate(homeTabRoute)
+      this.props.navigation.navigate(homeDrawerRoute)
     }
   }
 

@@ -1,6 +1,13 @@
 // @flow
 import React from 'react'
 import { TouchableOpacity, Text, View, Image, StyleSheet } from 'react-native'
+import {
+  atlantis,
+  atlantisOpacity,
+  darkGray,
+  font,
+  newBannerCardSizes,
+} from '../../common/styles/constant'
 
 import type { NewBannerCardProps } from './type-new-banner-card'
 
@@ -39,14 +46,14 @@ export const NewBannerCard = (props: NewBannerCardProps) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(134, 185, 59, 0.15)',
+    backgroundColor: atlantisOpacity,
     borderWidth: 1,
-    borderColor: '#86B93B',
-    height: 80,
-    marginLeft: 8,
-    marginRight: 8,
+    borderColor: atlantis,
+    height: newBannerCardSizes.height,
+    marginLeft: newBannerCardSizes.distance,
+    marginRight: newBannerCardSizes.distance,
+    marginTop: newBannerCardSizes.distance,
     borderRadius: 8,
-    marginTop: 8,
   },
   iconSection: {
     height: '100%',
@@ -72,30 +79,30 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   issuerText: {
-    fontFamily: 'Lato',
-    fontSize: 17,
+    fontFamily: font.family,
+    fontSize: font.size.M,
     fontWeight: 'bold',
-    color: '#505050',
+    color: darkGray,
     marginBottom: 3,
   },
   newMessageText: {
-    fontFamily: 'Lato',
-    fontSize: 13,
+    fontFamily: font.family,
+    fontSize: font.size.XS1,
     fontWeight: 'bold',
-    color: '#505050',
+    color: darkGray,
     marginTop: 3,
   },
   issuerLogo: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: newBannerCardSizes.logoSize,
+    height: newBannerCardSizes.logoSize,
+    borderRadius: newBannerCardSizes.logoSize / 2,
   },
   dateText: {
-    fontFamily: 'Lato',
+    fontFamily: font.family,
     fontWeight: '500',
-    fontSize: 10,
+    fontSize: font.size.XXXS,
     fontStyle: 'italic',
-    color: '#505050',
+    color: darkGray,
     marginTop: 8,
     marginRight: 8,
   },

@@ -50,7 +50,7 @@ export const yellowSea = '#EB9B2D'
 export const cornFlowerBlue = '#4A90E2'
 export const atlantis = '#86B93B'
 export const cmRed = '#CE0B24'
-const atlantisOpacity = '#86B93B1A'
+export const atlantisOpacity = 'rgba(134, 185, 59, 0.15)'
 const gamboge = '#DD9012'
 const blueViolet = '#8D13FE'
 const seaBuckthorn = '#f79347'
@@ -236,13 +236,15 @@ export const color = {
 
 export const font = {
   size: {
+    XXXXS: 9,
     XXXS: 10,
     XXS: 11,
     XS: 12,
+    XS1: 13,
     S: 15,
     M: 17,
     M1: 18,
-    ML: 20,
+    ML: 19,
     ML1: 23,
     ML2: 26,
     L1: 34,
@@ -277,6 +279,12 @@ export const bubbleSize = {
   L: 100,
   XL: 120,
   XXL: 140,
+}
+
+export const newBannerCardSizes = {
+  height: 80,
+  distance: 8,
+  logoSize: 40,
 }
 
 export const PIN_CODE_BORDER_BOTTOM = 4

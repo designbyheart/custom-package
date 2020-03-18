@@ -260,7 +260,7 @@ exports[`<QuestionScreen /> should match error snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontSize": 20,
+                "fontSize": 19,
               },
               Object {
                 "fontFamily": "Lato",
@@ -2326,7 +2326,7 @@ exports[`<QuestionScreen /> should match success snapshot 1`] = `
           style={
             Array [
               Object {
-                "fontSize": 20,
+                "fontSize": 19,
               },
               Object {
                 "fontFamily": "Lato",

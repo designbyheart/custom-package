@@ -53,7 +53,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
         style={
           Array [
             Object {
-              "fontSize": 20,
+              "fontSize": 19,
             },
             Object {
               "fontFamily": "Lato",
@@ -391,7 +391,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
         style={
           Array [
             Object {
-              "fontSize": 20,
+              "fontSize": 19,
             },
             Object {
               "fontFamily": "Lato",
@@ -729,7 +729,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
         style={
           Array [
             Object {
-              "fontSize": 20,
+              "fontSize": 19,
             },
             Object {
               "fontFamily": "Lato",
@@ -1067,7 +1067,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
         style={
           Array [
             Object {
-              "fontSize": 20,
+              "fontSize": 19,
             },
             Object {
               "fontFamily": "Lato",

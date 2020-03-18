@@ -63,7 +63,7 @@ exports[`<LockSetupSuccess /> should display Loading while fetching the invitati
       style={
         Array [
           Object {
-            "fontSize": 20,
+            "fontSize": 19,
           },
           Object {
             "fontFamily": "Lato",
@@ -325,7 +325,7 @@ exports[`<LockSetupSuccess /> should render Lock setup success Screen 1`] = `
       style={
         Array [
           Object {
-            "fontSize": 20,
+            "fontSize": 19,
           },
           Object {
             "fontFamily": "Lato",

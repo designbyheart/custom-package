@@ -5,11 +5,7 @@ import { Alert } from 'react-native'
 import renderer from 'react-test-renderer'
 import { RNCamera } from 'react-native-camera'
 import Permissions from 'react-native-permissions'
-import {
-  qrCodeScannerTabRoute,
-  invitationRoute,
-  homeTabRoute,
-} from '../../common/'
+import { qrCodeScannerTabRoute, invitationRoute } from '../../common/'
 import { QRCodeScannerScreen, convertQrCodeToInvitation } from '../qr-code'
 import {
   getNavigation,

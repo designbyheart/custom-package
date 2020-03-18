@@ -583,7 +583,7 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
       style={
         Array [
           Object {
-            "fontSize": 20,
+            "fontSize": 19,
           },
           Object {
             "fontFamily": "Lato",
@@ -1021,7 +1021,7 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
       style={
         Array [
           Object {
-            "fontSize": 20,
+            "fontSize": 19,
           },
           Object {
             "fontFamily": "Lato",

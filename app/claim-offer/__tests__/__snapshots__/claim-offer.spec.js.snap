@@ -258,7 +258,7 @@ exports[`<ClaimOffer /> should call claimOfferShown on componentDidMount 1`] = `
           style={
             Array [
               Object {
-                "fontSize": 20,
+                "fontSize": 19,
               },
               Object {
                 "fontFamily": "Lato",
@@ -1136,7 +1136,7 @@ exports[`<ClaimOffer /> should enable accept button if claim offer error occurs 
           style={
             Array [
               Object {
-                "fontSize": 20,
+                "fontSize": 19,
               },
               Object {
                 "fontFamily": "Lato",
@@ -2014,7 +2014,7 @@ exports[`<ClaimOffer /> should show Send Paid Credential Request Fail Modal 1`] 
           style={
             Array [
               Object {
-                "fontSize": 20,
+                "fontSize": 19,
               },
               Object {
                 "fontFamily": "Lato",
@@ -3305,7 +3305,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
           style={
             Array [
               Object {
-                "fontSize": 20,
+                "fontSize": 19,
               },
               Object {
                 "fontFamily": "Lato",
@@ -3357,7 +3357,7 @@ exports[`Paid <ClaimOffer /> should call claimOfferShown on componentDidMount 1`
             style={
               Array [
                 Object {
-                  "fontSize": 20,
+                  "fontSize": 19,
                 },
                 Object {
                   "fontFamily": "Lato",
@@ -4418,7 +4418,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
           style={
             Array [
               Object {
-                "fontSize": 20,
+                "fontSize": 19,
               },
               Object {
                 "fontFamily": "Lato",
@@ -4470,7 +4470,7 @@ exports[`Paid <ClaimOffer /> should show Insufficient Balance Modal 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 20,
+                  "fontSize": 19,
                 },
                 Object {
                   "fontFamily": "Lato",
@@ -5768,7 +5768,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
           style={
             Array [
               Object {
-                "fontSize": 20,
+                "fontSize": 19,
               },
               Object {
                 "fontFamily": "Lato",
@@ -5820,7 +5820,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 20,
+                  "fontSize": 19,
                 },
                 Object {
                   "fontFamily": "Lato",
@@ -6764,7 +6764,7 @@ exports[`Paid <ClaimOffer /> should show Ledger Fees Modal 1`] = `
           style={
             Array [
               Object {
-                "fontSize": 20,
+                "fontSize": 19,
               },
               Object {
                 "fontFamily": "Lato",

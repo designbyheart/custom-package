@@ -25,7 +25,7 @@ import { newConnectionSeen } from '../connection-history/connection-history-stor
 import { PrimaryHeader, CameraButton } from '../components'
 import { ConnectionCard } from './connection-card/connection-card'
 import { createStackNavigator, NavigationActions } from 'react-navigation'
-import { homeRoute, qrCodeScannerTabRoute } from '../common'
+import { myConnectionsRoute, qrCodeScannerTabRoute } from '../common'
 import { getConnections } from '../store/connections-store'
 import { connectionHistRoute } from '../common/route-constants'
 import { getUnseenMessages } from '../store/store-selector'
@@ -73,6 +73,18 @@ export class MyConnectionsScreen extends Component<
     })
   }
 
+  renderBlurForIos = () => {
+    if (Platform.OS === 'ios') {
+      return (
+        <BlurView
+          style={externalStyles.blurContainer}
+          blurType="light"
+          blurAmount={8}
+        />
+      )
+    } else return null
+  }
+
   renderItem = ({ item }: { item: Object }) => {
     const {
       senderName,
@@ -111,17 +123,11 @@ export class MyConnectionsScreen extends Component<
       container,
       flatListContainer,
       flatListInnerContainer,
-      blurContainer,
       outerContainer,
     } = externalStyles
 
     return (
       <View style={outerContainer}>
-        <PrimaryHeader
-          headline="My Connections"
-          navigation={this.props.navigation}
-        />
-
         <NotificationCard />
 
         <View style={container} testID="home-container">
@@ -140,6 +146,11 @@ export class MyConnectionsScreen extends Component<
             renderItem={this.renderItem}
           />
         </View>
+        {this.renderBlurForIos()}
+        <PrimaryHeader
+          headline="My Connections"
+          navigation={this.props.navigation}
+        />
         <CameraButton
           onPress={() => this.props.navigation.navigate(qrCodeScannerTabRoute)}
         />
@@ -259,7 +270,7 @@ const mapDispatchToProps = dispatch =>
   )
 
 export default createStackNavigator({
-  [homeRoute]: {
+  [myConnectionsRoute]: {
     screen: withStatusBar()(
       connect(mapStateToProps, mapDispatchToProps)(MyConnectionsScreen)
     ),

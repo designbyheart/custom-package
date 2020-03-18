@@ -11,7 +11,6 @@ export type NewConnectionInstructionsProps = {
 }
 
 export type HomeProps = {
-  unSeenMessagesCount: number,
   environmentName: string,
   newBannerConnections: Array<Object>,
   recentConnections: Array<Object>,

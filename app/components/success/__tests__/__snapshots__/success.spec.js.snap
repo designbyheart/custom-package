@@ -55,7 +55,7 @@ exports[`<Success /> should render successText 1`] = `
     style={
       Array [
         Object {
-          "fontSize": 20,
+          "fontSize": 19,
         },
         Object {
           "fontFamily": "Lato",

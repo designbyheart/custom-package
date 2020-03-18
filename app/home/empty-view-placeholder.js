@@ -1,6 +1,11 @@
 // @flow
 import React from 'react'
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native'
+import {
+  mediumGray,
+  font,
+  primaryHeaderHeight,
+} from '../common/styles/constant'
 
 const checkmarkImage = require('../images/homeCheckmark.png')
 const { height } = Dimensions.get('screen')
@@ -17,7 +22,8 @@ export const EmptyViewPlaceholder = () => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: height * 0.65,
+    height: '100%',
+    paddingTop: 50,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -26,10 +32,10 @@ const styles = StyleSheet.create({
     height: 100,
   },
   infoText: {
-    fontFamily: 'Lato',
-    fontSize: 19,
+    fontFamily: font.family,
+    fontSize: font.size.ML,
     fontWeight: '500',
-    color: '#A5A5A5',
+    color: mediumGray,
     marginTop: 70,
   },
 })
