@@ -29,7 +29,6 @@ import {
   lockSetupSuccessRoute,
   invitationRoute,
   lockEnterPinRoute,
-  homeTabRoute,
   splashScreenRoute,
   eulaRoute,
   lockSelectionRoute,
@@ -71,7 +70,6 @@ if (
 
 const backButtonDisableRoutes = [
   lockEnterPinRoute,
-  homeTabRoute,
   homeRoute,
   splashScreenRoute,
   settingsRoute,

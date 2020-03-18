@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NewBannerCard /> should render NewBannerCard component and match snapshot 1`] = `
+<View
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "backgroundColor": "rgba(134, 185, 59, 0.15)",
+      "borderColor": "#86B93B",
+      "borderRadius": 8,
+      "borderWidth": 1,
+      "flexDirection": "row",
+      "height": 80,
+      "marginLeft": 8,
+      "marginRight": 8,
+      "marginTop": 8,
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "height": "100%",
+        "justifyContent": "center",
+        "width": 64,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjimxZbcvZzPcPvHd_y7f0tc5d8QoC9DOPecb8JTOChmS1IoDq",
+        }
+      }
+      style={
+        Object {
+          "borderRadius": 20,
+          "height": 40,
+          "width": 40,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 2,
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <Text
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={
+          Object {
+            "color": "#505050",
+            "fontFamily": "Lato",
+            "fontSize": 17,
+            "fontWeight": "bold",
+            "marginBottom": 3,
+          }
+        }
+      >
+        Evernym QA-RC
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 2,
+          "justifyContent": "flex-start",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#505050",
+            "fontFamily": "Lato",
+            "fontSize": 13,
+            "fontWeight": "bold",
+            "marginTop": 3,
+          }
+        }
+      >
+        NEW MESSAGE - TAP TO OPEN
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "height": "100%",
+        "justifyContent": "flex-start",
+        "width": 65,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#505050",
+          "fontFamily": "Lato",
+          "fontSize": 10,
+          "fontStyle": "italic",
+          "fontWeight": "500",
+          "marginRight": 8,
+          "marginTop": 8,
+        }
+      }
+    >
+      2020-03-15T15:57:54+01:00
+    </Text>
+  </View>
+</View>
+`;

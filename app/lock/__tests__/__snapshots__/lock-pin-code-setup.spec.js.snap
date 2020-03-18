@@ -23,7 +23,7 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
       style={
         Array [
           Object {
-            "fontSize": 20,
+            "fontSize": 19,
           },
           Object {
             "fontFamily": "Lato",
@@ -330,7 +330,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
       style={
         Array [
           Object {
-            "fontSize": 20,
+            "fontSize": 19,
           },
           Object {
             "fontFamily": "Lato",
@@ -637,7 +637,7 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
       style={
         Array [
           Object {
-            "fontSize": 20,
+            "fontSize": 19,
           },
           Object {
             "fontFamily": "Lato",

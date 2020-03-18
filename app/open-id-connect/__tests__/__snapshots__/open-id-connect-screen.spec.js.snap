@@ -65,7 +65,7 @@ exports[`<OpenIdConnectScreen /> should match in fail state 1`] = `
       style={
         Array [
           Object {
-            "fontSize": 20,
+            "fontSize": 19,
           },
           Object {
             "fontFamily": "Lato",
@@ -968,7 +968,7 @@ exports[`<OpenIdConnectScreen /> should match in signature verification failed 1
       style={
         Array [
           Object {
-            "fontSize": 20,
+            "fontSize": 19,
           },
           Object {
             "fontFamily": "Lato",
@@ -1365,7 +1365,7 @@ exports[`<OpenIdConnectScreen /> should match in success state 1`] = `
     style={
       Array [
         Object {
-          "fontSize": 20,
+          "fontSize": 19,
         },
         Object {
           "fontFamily": "Lato",

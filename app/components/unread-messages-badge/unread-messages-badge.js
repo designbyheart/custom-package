@@ -9,6 +9,8 @@ import type { Store } from '../../store/type-store'
 import type { UnreadMessagesBadgeProps } from './type-unread-messages-badge'
 import type { Connection } from '../../store/type-connection-store'
 
+import { HISTORY_EVENT_STATUS } from '../../connection-history/type-connection-history'
+
 const { width } = Dimensions.get('screen')
 const marginTop = primaryHeaderHeight - 47
 
@@ -67,9 +69,9 @@ const mapStateToProps = (state: Store) => {
 
   const isNewConnection = (status: string) => {
     if (
-      status === 'CLAIM OFFER RECEIVED' ||
-      status === 'PROOF RECEIVED' ||
-      status === 'QUESTION_RECEIVED'
+      status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
+      status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
+      status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED
     ) {
       return true
     } else return false

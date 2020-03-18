@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RecentCard /> should render RecentCard component and match snapshot 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "height": 48,
+      "marginLeft": 20,
+      "marginRight": 20,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "height": "100%",
+        "justifyContent": "center",
+        "width": 40,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "uri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjimxZbcvZzPcPvHd_y7f0tc5d8QoC9DOPecb8JTOChmS1IoDq",
+        }
+      }
+      style={
+        Object {
+          "borderRadius": 16,
+          "height": 32,
+          "opacity": 0.5,
+          "width": 32,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 2,
+          "justifyContent": "flex-end",
+        }
+      }
+    >
+      <Text
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={
+          Object {
+            "color": "#a5a5a5",
+            "fontFamily": "Lato",
+            "fontSize": 14,
+            "fontWeight": "normal",
+          }
+        }
+      >
+        You have been issued a 'Name'.
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 2,
+          "justifyContent": "flex-start",
+        }
+      }
+    >
+      <Text
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={
+          Object {
+            "color": "#a5a5a5",
+            "fontFamily": "Lato",
+            "fontSize": 11,
+            "fontWeight": "normal",
+          }
+        }
+      >
+        Evernym QA-RC
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "height": "100%",
+        "justifyContent": "center",
+        "width": 52,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#a5a5a5",
+          "fontFamily": "Lato",
+          "fontSize": 9,
+          "fontStyle": "italic",
+          "fontWeight": "normal",
+        }
+      }
+    >
+      2020-03-15T15:57:54+01:00
+    </Text>
+  </View>
+</View>
+`;

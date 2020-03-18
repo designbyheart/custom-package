@@ -128,7 +128,7 @@ import {
   invitationRoute,
   proofRequestRoute,
   qrCodeScannerTabRoute,
-  homeTabRoute,
+  homeDrawerRoute,
   lockPinSetupRoute,
   lockTouchIdSetupRoute,
   lockPinSetupHomeRoute,
@@ -816,7 +816,7 @@ function* handleRedirection(
   if (isAppLocked) {
     yield put(
       addPendingRedirection([
-        { routeName: homeTabRoute },
+        { routeName: homeDrawerRoute },
         { routeName, params },
       ])
     )

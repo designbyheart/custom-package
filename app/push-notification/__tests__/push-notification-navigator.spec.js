@@ -3,7 +3,6 @@ import 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
-import { homeTabRoute } from '../../common'
 import { PushNotificationNavigator } from '../push-notification-navigator'
 import {
   convertClaimOfferPushPayloadToAppClaimOffer,

@@ -239,7 +239,7 @@ exports[`app lock selection page should render properly 1`] = `
         style={
           Array [
             Object {
-              "fontSize": 20,
+              "fontSize": 19,
             },
             Object {
               "fontFamily": "Lato",
@@ -339,7 +339,7 @@ exports[`app lock selection page should render properly 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 20,
+                  "fontSize": 19,
                 },
                 Object {
                   "fontFamily": "Lato",
@@ -385,7 +385,7 @@ exports[`app lock selection page should render properly 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 20,
+                  "fontSize": 19,
                 },
                 Object {
                   "fontFamily": "Lato",
@@ -431,7 +431,7 @@ exports[`app lock selection page should render properly 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 20,
+                  "fontSize": 19,
                 },
                 Object {
                   "fontFamily": "Lato",
@@ -477,7 +477,7 @@ exports[`app lock selection page should render properly 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 20,
+                  "fontSize": 19,
                 },
                 Object {
                   "fontFamily": "Lato",
@@ -523,7 +523,7 @@ exports[`app lock selection page should render properly 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 20,
+                  "fontSize": 19,
                 },
                 Object {
                   "fontFamily": "Lato",
@@ -569,7 +569,7 @@ exports[`app lock selection page should render properly 1`] = `
             style={
               Array [
                 Object {
-                  "fontSize": 20,
+                  "fontSize": 19,
                 },
                 Object {
                   "fontFamily": "Lato",

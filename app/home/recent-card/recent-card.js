@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { Text, View, Image, StyleSheet, ActivityIndicator } from 'react-native'
+import { mediumGray, font } from '../../common/styles/constant'
 
 import type { RecentCardProps } from './type-recent-card'
 
@@ -78,22 +79,22 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   textMessage: {
-    fontSize: 14,
+    fontSize: font.size.PREFIX,
     fontWeight: 'normal',
-    fontFamily: 'Lato',
-    color: '#A5A5A5',
+    fontFamily: font.family,
+    color: mediumGray,
   },
   textIssuer: {
-    fontSize: 11,
+    fontSize: font.size.XXS,
     fontWeight: 'normal',
-    fontFamily: 'Lato',
-    color: '#A5A5A5',
+    fontFamily: font.family,
+    color: mediumGray,
   },
   textDate: {
-    fontSize: 9,
+    fontSize: font.size.XXXXS,
     fontWeight: 'normal',
-    fontFamily: 'Lato',
+    fontFamily: font.family,
     fontStyle: 'italic',
-    color: '#A5A5A5',
+    color: mediumGray,
   },
 })

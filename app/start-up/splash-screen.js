@@ -15,7 +15,7 @@ import {
   waitForInvitationRoute,
   eulaRoute,
   restoreRoute,
-  homeTabRoute,
+  homeDrawerRoute,
   connectionHistRoute,
 } from '../common/route-constants'
 import { Container, Loader } from '../components'
@@ -158,7 +158,7 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
                 senderName,
                 image,
                 identifier,
-                backRedirectRoute: homeTabRoute,
+                backRedirectRoute: homeDrawerRoute,
                 showExistingConnectionSnack: true,
               }
             }

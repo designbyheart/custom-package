@@ -1,19 +1,26 @@
 // @flow
 import React, { Component } from 'react'
-import { StyleSheet, Platform, View, Text, FlatList } from 'react-native'
-import { connect } from 'react-redux'
-import firebase from 'react-native-firebase'
-import { BlurView } from 'react-native-blur'
 import moment from 'moment'
+import firebase from 'react-native-firebase'
+import {
+  StyleSheet,
+  Platform,
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+} from 'react-native'
+import { connect } from 'react-redux'
+import { BlurView } from 'react-native-blur'
 
 import type { Store } from '../store/type-store'
 import type { HomeProps } from './type-home'
 import type { Connection } from '../store/type-connection-store'
 import type { ReactNavigation } from '../common/type-common'
 
-import { newConnectionSeen } from '../connection-history/connection-history-store'
+import { HISTORY_EVENT_STATUS } from '../connection-history/type-connection-history'
 import { PrimaryHeader, CameraButton } from '../components'
-import { createStackNavigator, NavigationActions } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 import {
   homeRoute,
   qrCodeScannerTabRoute,
@@ -22,16 +29,15 @@ import {
   questionRoute,
 } from '../common'
 import { getConnections } from '../store/connections-store'
-import { getUnseenMessages } from '../store/store-selector'
-import { scale } from 'react-native-size-matters'
-import { size } from '../components/icon'
 import { NewConnectionInstructions } from '../my-connections/new-connection-instructions'
 import { getEnvironmentName } from '../store/config-store'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
-import { bindActionCreators } from 'redux'
-import { measurements } from '../common/styles/measurements'
-import { primaryHeaderHeight } from '../common/styles/constant'
+import {
+  primaryHeaderHeight,
+  white,
+  newBannerCardSizes,
+} from '../common/styles/constant'
 import { NewBannerCard } from './new-banner-card/new-banner-card'
 import { RecentCard } from './recent-card/recent-card'
 import { RecentCardSeparator } from './recent-card-separator'
@@ -41,15 +47,6 @@ export class HomeScreen extends Component<HomeProps, void> {
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: null,
   })
-
-  componentDidUpdate(prevProps: HomeProps) {
-    const noUnSeenMessages =
-      prevProps.unSeenMessagesCount && !this.props.unSeenMessagesCount
-
-    if (noUnSeenMessages) {
-      firebase.notifications().setBadge(0)
-    }
-  }
 
   formatTimestamp = (timestamp: string) => {
     const now = moment().valueOf()
@@ -79,11 +76,11 @@ export class HomeScreen extends Component<HomeProps, void> {
     const formattedTimestamp = this.formatTimestamp(item.timestamp)
 
     let navigationRoute = ''
-    if (item.status === 'CLAIM OFFER RECEIVED')
+    if (item.status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED)
       navigationRoute = claimOfferRoute
-    else if (item.status === 'PROOF RECEIVED')
+    else if (item.status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED)
       navigationRoute = proofRequestRoute
-    else if (item.status === 'QUESTION_RECEIVED')
+    else if (item.status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED)
       navigationRoute = questionRoute
 
     return (
@@ -112,17 +109,18 @@ export class HomeScreen extends Component<HomeProps, void> {
     const formattedTimestamp = this.formatTimestamp(item.timestamp)
 
     let statusMessage = ''
-    if (status === 'CONNECTED')
+    if (status === HISTORY_EVENT_STATUS.NEW_CONNECTION_SUCCESS)
       statusMessage = `You connected with "${issuerName}".`
-    else if (status === 'RECEIVED')
+    else if (status === HISTORY_EVENT_STATUS.CLAIM_STORAGE_SUCCESS)
       statusMessage = `You have been issued a "${action}".`
-    else if (status === 'SHARED') statusMessage = `You shared "${action}".`
-    else if (status === 'UPDATE_QUESTION_ANSWER')
+    else if (status === HISTORY_EVENT_STATUS.SEND_PROOF_SUCCESS)
+      statusMessage = `You shared "${action}".`
+    else if (status === HISTORY_EVENT_STATUS.UPDATE_QUESTION_ANSWER)
       statusMessage = `You answered "${action}".`
-    else if (status === 'DENY_PROOF_REQUEST_SUCCESS')
+    else if (status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST_SUCCESS)
       statusMessage = `You denied "${action}".`
-    else if (status === 'PENDING')
-      statusMessage = `"${action}" will be issued to you shortly...`
+    else if (status === HISTORY_EVENT_STATUS.SEND_CLAIM_REQUEST_SUCCESS)
+      statusMessage = `"${action}" will be issued to you shortly.`
 
     return (
       <RecentCard
@@ -149,21 +147,26 @@ export class HomeScreen extends Component<HomeProps, void> {
     } else return null
   }
 
-  render() {
-    const {
-      container,
-      newBannerFlatListContainer,
-      recentCardFlatListInnerContainer,
-      outerContainer,
-      recentCardFlatListContainer,
-      newBannerCardFlatListInnerContainer,
-      checkmarkFlatListContainer,
-      newBannerCardFlatListInnerContainerMaxHeight,
-    } = styles
+  // This function replaces flexGrow style property we had before.
+  // FlexGrow is not able to work properly when combined with FlatList
+  // and its content container.
+  applyCorrectStylesForNewBadgeFlatList = () => {
+    if (this.props.newBannerConnections.length === 0)
+      return styles.checkmarkContainer
+    else if (this.props.newBannerConnections.length === 1)
+      return styles.newBadgeFlatListContainer1
+    else if (this.props.newBannerConnections.length === 2)
+      return styles.newBadgeFlatListContainer2
+    else if (this.props.newBannerConnections.length === 3)
+      return styles.newBadgeFlatListContainer3
+    else if (this.props.newBannerConnections.length >= 4)
+      return styles.newBadgeFlatListContainer4
+  }
 
+  render() {
     return (
-      <View style={outerContainer}>
-        <View style={container} testID="home-container">
+      <View style={styles.outerContainer}>
+        <View style={styles.container} testID="home-container">
           {this.props.hasNoConnection && (
             <NewConnectionInstructions
               usingProductionNetwork={
@@ -171,32 +174,26 @@ export class HomeScreen extends Component<HomeProps, void> {
               }
             />
           )}
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            ListEmptyComponent={this.renderEmptyListPlaceholder}
-            style={
-              this.props.newBannerConnections.length > 0
-                ? newBannerFlatListContainer
-                : checkmarkFlatListContainer
-            }
-            contentContainerStyle={
-              this.props.newBannerConnections.length < 4
-                ? newBannerCardFlatListInnerContainer
-                : newBannerCardFlatListInnerContainerMaxHeight
-            }
-            data={this.props.newBannerConnections}
-            renderItem={({ item }) => this.renderNewBannerCard(item)}
-          />
+          <View style={this.applyCorrectStylesForNewBadgeFlatList()}>
+            <FlatList
+              keyExtractor={this.keyExtractor}
+              contentContainerStyle={styles.newBadgeFlatListInnerContainer}
+              data={this.props.newBannerConnections}
+              renderItem={({ item }) => this.renderNewBannerCard(item)}
+              ListEmptyComponent={this.renderEmptyListPlaceholder}
+            />
+          </View>
 
           <RecentCardSeparator />
 
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            style={recentCardFlatListContainer}
-            contentContainerStyle={recentCardFlatListInnerContainer}
-            data={this.props.recentConnections}
-            renderItem={({ item }) => this.renderRecentCard(item)}
-          />
+          <View style={styles.recentFlatListContainer}>
+            <FlatList
+              keyExtractor={this.keyExtractor}
+              contentContainerStyle={styles.recentFlatListInnerContainer}
+              data={this.props.recentConnections}
+              renderItem={({ item }) => this.renderRecentCard(item)}
+            />
+          </View>
         </View>
         {this.renderBlurForIos()}
         <PrimaryHeader headline="Home" navigation={this.props.navigation} />
@@ -211,9 +208,9 @@ export class HomeScreen extends Component<HomeProps, void> {
 const mapStateToProps = (state: Store) => {
   const isNewConnection = (status: string) => {
     if (
-      status === 'CLAIM OFFER RECEIVED' ||
-      status === 'PROOF RECEIVED' ||
-      status === 'QUESTION_RECEIVED'
+      status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
+      status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
+      status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED
     ) {
       return true
     } else return false
@@ -264,10 +261,7 @@ const mapStateToProps = (state: Store) => {
     ? connections.length === 0
     : false
 
-  let unSeenMessagesCount = Object.keys(getUnseenMessages(state)).length
-
   return {
-    unSeenMessagesCount,
     environmentName: getEnvironmentName(state.config),
     hasNoConnection,
     newBannerConnections,
@@ -282,6 +276,11 @@ export default createStackNavigator({
   },
 })
 
+const { height } = Dimensions.get('screen')
+const growHeightBase = newBannerCardSizes.height
+const growDistanceBase = newBannerCardSizes.distance
+const growPaddingBase = 50 // 25 pixels padding from the top header and the bottom list
+
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
@@ -289,17 +288,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
-  },
-  newBannerFlatListContainer: {
-    flexGrow: 0,
-    backgroundColor: '#fff',
-    paddingTop: primaryHeaderHeight + 12,
-  },
-  checkmarkFlatListContainer: {
-    flexGrow: 0,
-    backgroundColor: '#fff',
-    paddingTop: 20,
+    backgroundColor: white,
   },
   blurContainer: {
     position: 'absolute',
@@ -307,19 +296,47 @@ const styles = StyleSheet.create({
     width: '100%',
     height: primaryHeaderHeight,
   },
-  recentCardFlatListContainer: {
+  checkmarkContainer: {
     width: '100%',
-    minHeight: '35%',
-    backgroundColor: '#fff',
+    height: height * 0.6,
   },
-  recentCardFlatListInnerContainer: {
-    paddingBottom: 120,
-    paddingTop: 20,
+  newBadgeFlatListContainer1: {
+    width: '100%',
+    height: primaryHeaderHeight + growHeightBase + growPaddingBase,
   },
-  newBannerCardFlatListInnerContainer: {
+  newBadgeFlatListContainer2: {
+    width: '100%',
+    height:
+      primaryHeaderHeight +
+      growHeightBase * 2 +
+      growPaddingBase +
+      growDistanceBase,
+  },
+  newBadgeFlatListContainer3: {
+    width: '100%',
+    height:
+      primaryHeaderHeight +
+      growHeightBase * 3 +
+      growPaddingBase +
+      growDistanceBase * 2,
+  },
+  newBadgeFlatListContainer4: {
+    width: '100%',
+    height:
+      primaryHeaderHeight +
+      growHeightBase * 4 +
+      growPaddingBase +
+      growDistanceBase * 3,
+  },
+  newBadgeFlatListInnerContainer: {
+    paddingTop: primaryHeaderHeight + 20,
     paddingBottom: 25,
   },
-  newBannerCardFlatListInnerContainerMaxHeight: {
-    paddingBottom: '40%',
+  recentFlatListContainer: {
+    flex: 1,
+  },
+  recentFlatListInnerContainer: {
+    paddingBottom: 80,
+    paddingTop: 20,
   },
 })

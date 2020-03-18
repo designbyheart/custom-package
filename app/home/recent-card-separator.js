@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
+import { mediumGray, font } from '../common/styles/constant'
 
 export const RecentCardSeparator = () => {
   return (
@@ -38,12 +39,12 @@ const styles = StyleSheet.create({
   line: {
     height: 1,
     width: '100%',
-    backgroundColor: '#A5A5A5',
+    backgroundColor: mediumGray,
   },
   text: {
-    fontFamily: 'Lato',
-    color: '#A5A5A5',
+    fontFamily: font.family,
+    color: mediumGray,
     fontWeight: 'normal',
-    fontSize: 14,
+    fontSize: font.size.PREFIX,
   },
 })
