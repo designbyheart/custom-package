@@ -73,9 +73,15 @@ export class HomeScreen extends Component<HomeProps, void> {
 
   renderNewBannerCard = (item: Object) => {
     const issuerName =
-      (item.originalPayload.payload.issuer &&
+      (item.originalPayload &&
+        item.originalPayload.payload &&
+        item.originalPayload.payload.issuer &&
         item.originalPayload.payload.issuer.name) ||
-      item.originalPayload.payload.requester.name
+      (item.originalPayload &&
+        item.originalPayload.payload &&
+        item.originalPayload.payload.requester &&
+        item.originalPayload.payload.requester.name) ||
+      (item.data && item.data.remoteName)
     const formattedTimestamp = this.formatTimestamp(item.timestamp)
 
     let navigationRoute = ''
