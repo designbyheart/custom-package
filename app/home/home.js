@@ -344,6 +344,6 @@ const styles = StyleSheet.create({
   },
   recentFlatListInnerContainer: {
     paddingBottom: 80,
-    paddingTop: isiPhone5 ? 10 : 20,
+    paddingTop: isiPhone5 ? 10 : 14,
   },
 })

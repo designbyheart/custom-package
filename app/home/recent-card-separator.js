@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-import { mediumGray, font } from '../common/styles/constant'
+import { mediumGray, font, isiPhone5 } from '../common/styles/constant'
 
 export const RecentCardSeparator = () => {
   return (
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   textSection: {
     height: '100%',
-    width: 80,
+    width: isiPhone5 ? 72 : 80,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -45,6 +45,6 @@ const styles = StyleSheet.create({
     fontFamily: font.family,
     color: mediumGray,
     fontWeight: 'normal',
-    fontSize: font.size.PREFIX,
+    fontSize: isiPhone5 ? font.size.XS1 : font.size.PREFIX,
   },
 })

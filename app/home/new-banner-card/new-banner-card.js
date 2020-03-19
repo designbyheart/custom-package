@@ -5,12 +5,21 @@ import {
   atlantis,
   atlantisOpacity,
   darkGray,
+  grey,
+  mediumGray,
+  white,
   font,
   newBannerCardSizes,
   isiPhone5,
 } from '../../common/styles/constant'
 
 import type { NewBannerCardProps } from './type-new-banner-card'
+
+const renderPlaceholderIfNoImage = (character: string) => (
+  <View style={styles.placeholderIfNoImage}>
+    <Text style={styles.placeholderTextIfNoImage}>{character}</Text>
+  </View>
+)
 
 export const NewBannerCard = (props: NewBannerCardProps) => {
   return (
@@ -21,7 +30,11 @@ export const NewBannerCard = (props: NewBannerCardProps) => {
       }
     >
       <View style={styles.iconSection}>
-        <Image source={{ uri: props.logoUrl }} style={styles.issuerLogo} />
+        {typeof props.logoUrl === 'string' ? (
+          <Image source={{ uri: props.logoUrl }} style={styles.issuerLogo} />
+        ) : (
+          renderPlaceholderIfNoImage(props.issuerName[0].toUpperCase())
+        )}
       </View>
       <View style={styles.textSection}>
         <View style={styles.textIssuerSection}>
@@ -106,5 +119,19 @@ const styles = StyleSheet.create({
     color: darkGray,
     marginTop: 8,
     marginRight: 8,
+  },
+  placeholderIfNoImage: {
+    width: newBannerCardSizes.logoSize,
+    height: newBannerCardSizes.logoSize,
+    borderRadius: newBannerCardSizes.logoSize / 2,
+    backgroundColor: grey,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  placeholderTextIfNoImage: {
+    fontFamily: font.family,
+    fontSize: isiPhone5 ? font.size.M : font.size.ML,
+    fontWeight: 'bold',
+    color: white,
   },
 })
