@@ -37,6 +37,7 @@ import {
   primaryHeaderHeight,
   white,
   newBannerCardSizes,
+  isiPhone5,
 } from '../common/styles/constant'
 import { NewBannerCard } from './new-banner-card/new-banner-card'
 import { RecentCard } from './recent-card/recent-card'
@@ -343,6 +344,6 @@ const styles = StyleSheet.create({
   },
   recentFlatListInnerContainer: {
     paddingBottom: 80,
-    paddingTop: 20,
+    paddingTop: isiPhone5 ? 10 : 20,
   },
 })

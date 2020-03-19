@@ -5,7 +5,6 @@ exports[`<ConnectedUserAvatar /> should match snapshot when no user image is sel
   accessibilityLabel="user-avatar-touchable"
   accessible={false}
   clearBg={true}
-  extraLarge={true}
   hitSlop={
     Object {
       "bottom": 20,
@@ -29,6 +28,7 @@ exports[`<ConnectedUserAvatar /> should match snapshot when no user image is sel
     }
   }
   testID="user-avatar-touchable"
+  xxLarge={true}
 >
   <View
     style={Object {}}
@@ -41,12 +41,10 @@ exports[`<ConnectedUserAvatar /> should match snapshot when no user image is sel
       style={
         Array [
           Object {
-            "height": 80,
-            "width": 80,
+            "height": 90,
+            "width": 90,
           },
-          Object {
-            "borderRadius": 40,
-          },
+          undefined,
         ]
       }
       testID="user-avatar"
@@ -60,7 +58,6 @@ exports[`<ConnectedUserAvatar /> should match snapshot when user image is select
   accessibilityLabel="user-avatar-touchable"
   accessible={false}
   clearBg={true}
-  extraLarge={true}
   hitSlop={
     Object {
       "bottom": 20,
@@ -88,6 +85,7 @@ exports[`<ConnectedUserAvatar /> should match snapshot when user image is select
     }
   }
   testID="user-avatar-touchable"
+  xxLarge={true}
 >
   <View
     style={Object {}}
@@ -104,12 +102,10 @@ exports[`<ConnectedUserAvatar /> should match snapshot when user image is select
       style={
         Array [
           Object {
-            "height": 80,
-            "width": 80,
+            "height": 90,
+            "width": 90,
           },
-          Object {
-            "borderRadius": 40,
-          },
+          undefined,
         ]
       }
       testID="user-avatar"

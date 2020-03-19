@@ -1,7 +1,12 @@
 // @flow
 import React from 'react'
 import { Text, View, Image, StyleSheet, ActivityIndicator } from 'react-native'
-import { mediumGray, font } from '../../common/styles/constant'
+import {
+  mediumGray,
+  font,
+  recentCardSizes,
+  isiPhone5,
+} from '../../common/styles/constant'
 
 import type { RecentCardProps } from './type-recent-card'
 
@@ -46,7 +51,7 @@ export const RecentCard = (props: RecentCardProps) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 48,
+    height: recentCardSizes.height,
     marginLeft: 20,
     marginRight: 20,
   },
@@ -68,30 +73,30 @@ const styles = StyleSheet.create({
   },
   textDateSection: {
     height: '100%',
-    width: 52,
+    width: isiPhone5 ? 48 : 52,
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
   issuerLogo: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: recentCardSizes.logoSize,
+    height: recentCardSizes.logoSize,
+    borderRadius: recentCardSizes.logoSize / 2,
     opacity: 0.5,
   },
   textMessage: {
-    fontSize: font.size.PREFIX,
+    fontSize: isiPhone5 ? font.size.XS1 : font.size.PREFIX,
     fontWeight: 'normal',
     fontFamily: font.family,
     color: mediumGray,
   },
   textIssuer: {
-    fontSize: font.size.XXS,
+    fontSize: isiPhone5 ? font.size.XXXS : font.size.XXS,
     fontWeight: 'normal',
     fontFamily: font.family,
     color: mediumGray,
   },
   textDate: {
-    fontSize: font.size.XXXXS,
+    fontSize: isiPhone5 ? font.size.XXXXXS : font.size.XXXXS,
     fontWeight: 'normal',
     fontFamily: font.family,
     fontStyle: 'italic',

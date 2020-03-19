@@ -2267,16 +2267,16 @@ exports[`user settings screen should render properly and snapshot should match f
           style={
             Object {
               "marginRight": 6,
-              "marginTop": 25,
+              "marginTop": 30,
               "opacity": 1,
             }
           }
         >
           <RNSVGSvgView
             align="xMidYMid"
-            bbHeight="36"
-            bbWidth="36"
-            height="36"
+            bbHeight="32"
+            bbWidth="32"
+            height="32"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -2287,19 +2287,19 @@ exports[`user settings screen should render properly and snapshot should match f
                   "borderWidth": 0,
                 },
                 Object {
-                  "marginLeft": 20,
+                  "marginLeft": 15,
                 },
                 null,
                 Object {
                   "flex": 0,
-                  "height": 36,
-                  "width": 36,
+                  "height": 32,
+                  "width": 32,
                 },
               ]
             }
             vbHeight={32}
             vbWidth={32}
-            width="36"
+            width="32"
           >
             <RNSVGGroup
               fill={
@@ -2409,7 +2409,7 @@ exports[`user settings screen should render properly and snapshot should match f
               Object {
                 "color": "#FFF",
                 "fontFamily": "Lato",
-                "fontSize": 16,
+                "fontSize": 14,
                 "fontWeight": "500",
               }
             }
@@ -2433,10 +2433,10 @@ exports[`user settings screen should render properly and snapshot should match f
             Object {
               "color": "#777777",
               "fontFamily": "Lato",
-              "fontSize": 26,
+              "fontSize": 20,
               "fontWeight": "bold",
               "marginRight": 64,
-              "marginTop": 25,
+              "marginTop": 33,
             }
           }
         >
@@ -2461,7 +2461,7 @@ exports[`user settings screen should render properly and snapshot should match f
         "borderRadius": 30,
         "bottom": 20,
         "elevation": 0,
-        "height": 60,
+        "height": 50,
         "justifyContent": "center",
         "opacity": 1,
         "position": "absolute",
@@ -2473,16 +2473,16 @@ exports[`user settings screen should render properly and snapshot should match f
         },
         "shadowOpacity": 0.5,
         "shadowRadius": 5,
-        "width": 60,
+        "width": 50,
         "zIndex": 1000,
       }
     }
   >
     <RNSVGSvgView
       align="xMidYMid"
-      bbHeight="26"
-      bbWidth="26"
-      height="26"
+      bbHeight="22"
+      bbWidth="22"
+      height="22"
       meetOrSlice={0}
       minX={0}
       minY={0}
@@ -2496,14 +2496,14 @@ exports[`user settings screen should render properly and snapshot should match f
           null,
           Object {
             "flex": 0,
-            "height": 26,
-            "width": 26,
+            "height": 22,
+            "width": 22,
           },
         ]
       }
       vbHeight={24}
       vbWidth={24}
-      width="26"
+      width="22"
     >
       <RNSVGGroup
         fill={
@@ -2599,7 +2599,7 @@ exports[`user settings screen should render properly and snapshot should match f
         Object {
           "color": "#777",
           "fontFamily": "Lato",
-          "fontSize": 10,
+          "fontSize": 9,
         }
       }
     >
@@ -4844,16 +4844,16 @@ exports[`user settings screen should render properly and snapshot should match i
           style={
             Object {
               "marginRight": 6,
-              "marginTop": 25,
+              "marginTop": 30,
               "opacity": 1,
             }
           }
         >
           <RNSVGSvgView
             align="xMidYMid"
-            bbHeight="36"
-            bbWidth="36"
-            height="36"
+            bbHeight="32"
+            bbWidth="32"
+            height="32"
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -4864,19 +4864,19 @@ exports[`user settings screen should render properly and snapshot should match i
                   "borderWidth": 0,
                 },
                 Object {
-                  "marginLeft": 20,
+                  "marginLeft": 15,
                 },
                 null,
                 Object {
                   "flex": 0,
-                  "height": 36,
-                  "width": 36,
+                  "height": 32,
+                  "width": 32,
                 },
               ]
             }
             vbHeight={32}
             vbWidth={32}
-            width="36"
+            width="32"
           >
             <RNSVGGroup
               fill={
@@ -4986,7 +4986,7 @@ exports[`user settings screen should render properly and snapshot should match i
               Object {
                 "color": "#FFF",
                 "fontFamily": "Lato",
-                "fontSize": 16,
+                "fontSize": 14,
                 "fontWeight": "500",
               }
             }
@@ -5010,10 +5010,10 @@ exports[`user settings screen should render properly and snapshot should match i
             Object {
               "color": "#777777",
               "fontFamily": "Lato",
-              "fontSize": 26,
+              "fontSize": 20,
               "fontWeight": "bold",
               "marginRight": 64,
-              "marginTop": 25,
+              "marginTop": 33,
             }
           }
         >
@@ -5038,7 +5038,7 @@ exports[`user settings screen should render properly and snapshot should match i
         "borderRadius": 30,
         "bottom": 20,
         "elevation": 0,
-        "height": 60,
+        "height": 50,
         "justifyContent": "center",
         "opacity": 1,
         "position": "absolute",
@@ -5050,16 +5050,16 @@ exports[`user settings screen should render properly and snapshot should match i
         },
         "shadowOpacity": 0.5,
         "shadowRadius": 5,
-        "width": 60,
+        "width": 50,
         "zIndex": 1000,
       }
     }
   >
     <RNSVGSvgView
       align="xMidYMid"
-      bbHeight="26"
-      bbWidth="26"
-      height="26"
+      bbHeight="22"
+      bbWidth="22"
+      height="22"
       meetOrSlice={0}
       minX={0}
       minY={0}
@@ -5073,14 +5073,14 @@ exports[`user settings screen should render properly and snapshot should match i
           null,
           Object {
             "flex": 0,
-            "height": 26,
-            "width": 26,
+            "height": 22,
+            "width": 22,
           },
         ]
       }
       vbHeight={24}
       vbWidth={24}
-      width="26"
+      width="22"
     >
       <RNSVGGroup
         fill={
@@ -5176,7 +5176,7 @@ exports[`user settings screen should render properly and snapshot should match i
         Object {
           "color": "#777",
           "fontFamily": "Lato",
-          "fontSize": 10,
+          "fontSize": 9,
         }
       }
     >

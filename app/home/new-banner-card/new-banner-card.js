@@ -7,6 +7,7 @@ import {
   darkGray,
   font,
   newBannerCardSizes,
+  isiPhone5,
 } from '../../common/styles/constant'
 
 import type { NewBannerCardProps } from './type-new-banner-card'
@@ -80,14 +81,14 @@ const styles = StyleSheet.create({
   },
   issuerText: {
     fontFamily: font.family,
-    fontSize: font.size.M,
+    fontSize: isiPhone5 ? font.size.S : font.size.M,
     fontWeight: 'bold',
     color: darkGray,
     marginBottom: 3,
   },
   newMessageText: {
     fontFamily: font.family,
-    fontSize: font.size.XS1,
+    fontSize: isiPhone5 ? font.size.XXS : font.size.XS1,
     fontWeight: 'bold',
     color: darkGray,
     marginTop: 3,
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
   dateText: {
     fontFamily: font.family,
     fontWeight: '500',
-    fontSize: font.size.XXXS,
+    fontSize: isiPhone5 ? font.size.XXXXS : font.size.XXXS,
     fontStyle: 'italic',
     color: darkGray,
     marginTop: 8,
