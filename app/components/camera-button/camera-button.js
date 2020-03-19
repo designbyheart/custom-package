@@ -1,13 +1,20 @@
 // @flow
 import React from 'react'
-import { TouchableOpacity, StyleSheet, Text, Platform } from 'react-native'
 import SvgCustomIcon from '../svg-custom-icon'
+import { TouchableOpacity, StyleSheet, Text, Platform } from 'react-native'
+import { isiPhone5 } from '../../common/styles/constant'
+
 import type { CameraButtonProps } from './type-camera-button'
 
 export const CameraButton = (props: CameraButtonProps) => {
   return (
     <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
-      <SvgCustomIcon name="Camera" width={26} height={26} fill={'#777'} />
+      <SvgCustomIcon
+        name="Camera"
+        width={isiPhone5 ? 22 : 26}
+        height={isiPhone5 ? 22 : 26}
+        fill={'#777'}
+      />
       <Text style={styles.text}>Scan</Text>
     </TouchableOpacity>
   )
@@ -15,8 +22,8 @@ export const CameraButton = (props: CameraButtonProps) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    width: 60,
-    height: 60,
+    width: isiPhone5 ? 50 : 60,
+    height: isiPhone5 ? 50 : 60,
     borderRadius: 30,
     backgroundColor: '#FFF',
     position: 'absolute',
@@ -33,7 +40,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'Lato',
-    fontSize: 10,
+    fontSize: isiPhone5 ? 9 : 10,
     color: '#777',
   },
 })

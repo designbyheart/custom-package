@@ -17,7 +17,7 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
       "borderRadius": 8,
       "borderWidth": 1,
       "flexDirection": "row",
-      "height": 80,
+      "height": 70,
       "marginLeft": 8,
       "marginRight": 8,
       "marginTop": 8,
@@ -43,9 +43,9 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
       }
       style={
         Object {
-          "borderRadius": 20,
-          "height": 40,
-          "width": 40,
+          "borderRadius": 17,
+          "height": 34,
+          "width": 34,
         }
       }
     />
@@ -72,7 +72,7 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
           Object {
             "color": "#505050",
             "fontFamily": "Lato",
-            "fontSize": 17,
+            "fontSize": 15,
             "fontWeight": "bold",
             "marginBottom": 3,
           }
@@ -94,7 +94,7 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
           Object {
             "color": "#505050",
             "fontFamily": "Lato",
-            "fontSize": 13,
+            "fontSize": 11,
             "fontWeight": "bold",
             "marginTop": 3,
           }
@@ -119,7 +119,7 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
         Object {
           "color": "#505050",
           "fontFamily": "Lato",
-          "fontSize": 10,
+          "fontSize": 9,
           "fontStyle": "italic",
           "fontWeight": "500",
           "marginRight": 8,

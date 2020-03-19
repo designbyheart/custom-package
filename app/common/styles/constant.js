@@ -237,6 +237,7 @@ export const color = {
 
 export const font = {
   size: {
+    XXXXXS: 8,
     XXXXS: 9,
     XXXS: 10,
     XXS: 11,
@@ -282,12 +283,6 @@ export const bubbleSize = {
   XXL: 140,
 }
 
-export const newBannerCardSizes = {
-  height: 80,
-  distance: 8,
-  logoSize: 40,
-}
-
 export const PIN_CODE_BORDER_BOTTOM = 4
 
 const { width, height } = Dimensions.get('screen')
@@ -318,6 +313,22 @@ export const isIphoneXR =
       phoneModel.toLowerCase() === 'iphone xs max'))
 export const deviceHeight = height
 export const primaryHeaderHeight = height >= MEDIUM_DEVICE ? 120 : 72
+
+export const newBannerCardSizes = {
+  height: isiPhone5 ? 70 : 80,
+  distance: 8,
+  logoSize: isiPhone5 ? 34 : 40,
+}
+
+export const recentCardSizes = {
+  height: isiPhone5 ? 40 : 48,
+  distance: 8,
+  logoSize: isiPhone5 ? 24 : 32,
+}
+
+export const unreadMessagesBadgeSizes = {
+  height: isiPhone5 ? 22 : 24,
+}
 
 export const verticalBreakpoint = {
   extraSmall: height <= 550,

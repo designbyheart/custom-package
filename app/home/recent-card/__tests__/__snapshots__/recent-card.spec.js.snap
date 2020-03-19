@@ -5,7 +5,7 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
   style={
     Object {
       "flexDirection": "row",
-      "height": 48,
+      "height": 40,
       "marginLeft": 20,
       "marginRight": 20,
     }
@@ -28,10 +28,10 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
       }
       style={
         Object {
-          "borderRadius": 16,
-          "height": 32,
+          "borderRadius": 12,
+          "height": 24,
           "opacity": 0.5,
-          "width": 32,
+          "width": 24,
         }
       }
     />
@@ -58,7 +58,7 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
           Object {
             "color": "#a5a5a5",
             "fontFamily": "Lato",
-            "fontSize": 14,
+            "fontSize": 13,
             "fontWeight": "normal",
           }
         }
@@ -81,7 +81,7 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
           Object {
             "color": "#a5a5a5",
             "fontFamily": "Lato",
-            "fontSize": 11,
+            "fontSize": 10,
             "fontWeight": "normal",
           }
         }
@@ -96,7 +96,7 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
         "alignItems": "flex-end",
         "height": "100%",
         "justifyContent": "center",
-        "width": 52,
+        "width": 48,
       }
     }
   >
@@ -105,7 +105,7 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
         Object {
           "color": "#a5a5a5",
           "fontFamily": "Lato",
-          "fontSize": 9,
+          "fontSize": 8,
           "fontStyle": "italic",
           "fontWeight": "normal",
         }

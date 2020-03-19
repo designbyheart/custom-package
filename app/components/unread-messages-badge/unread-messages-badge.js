@@ -3,7 +3,11 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
 import { getConnections } from '../../store/connections-store'
-import { primaryHeaderHeight } from '../../common/styles/constant'
+import {
+  primaryHeaderHeight,
+  isiPhone5,
+  unreadMessagesBadgeSizes,
+} from '../../common/styles/constant'
 
 import type { Store } from '../../store/type-store'
 import type { UnreadMessagesBadgeProps } from './type-unread-messages-badge'
@@ -12,7 +16,9 @@ import type { Connection } from '../../store/type-connection-store'
 import { HISTORY_EVENT_STATUS } from '../../connection-history/type-connection-history'
 
 const { width } = Dimensions.get('screen')
-const marginTop = primaryHeaderHeight - 47
+const marginTop = isiPhone5
+  ? primaryHeaderHeight - 42
+  : primaryHeaderHeight - 47
 
 export class UnreadMessagesBadge extends Component<
   UnreadMessagesBadgeProps,
@@ -104,9 +110,9 @@ export default connect(mapStateToProps, null)(UnreadMessagesBadge)
 
 const styles = StyleSheet.create({
   container: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: unreadMessagesBadgeSizes.height,
+    height: unreadMessagesBadgeSizes.height,
+    borderRadius: unreadMessagesBadgeSizes.height / 2,
     backgroundColor: '#86B93B',
     alignItems: 'center',
     justifyContent: 'center',
@@ -119,13 +125,13 @@ const styles = StyleSheet.create({
     height: 0,
   },
   containerAbsolute: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: unreadMessagesBadgeSizes.height,
+    height: unreadMessagesBadgeSizes.height,
+    borderRadius: unreadMessagesBadgeSizes.height / 2,
     backgroundColor: '#86B93B',
     alignItems: 'center',
     justifyContent: 'center',
-    top: marginTop,
+    top: isiPhone5 ? marginTop - 3 : marginTop,
     left: width * 0.1 + 5,
     position: 'absolute',
   },
@@ -147,7 +153,7 @@ const styles = StyleSheet.create({
   },
   numberText: {
     fontFamily: 'Lato',
-    fontSize: 16,
+    fontSize: isiPhone5 ? 14 : 16,
     fontWeight: '500',
     color: '#FFF',
   },

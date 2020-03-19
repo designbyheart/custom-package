@@ -49,7 +49,7 @@ export class UserAvatar extends Component<UserAvatarProps, void> {
       <Icon
         src={avatarSource}
         onPress={this.changeAvatar}
-        extraLarge
+        xxLarge
         round
         resizeMode="cover"
         testID="user-avatar"

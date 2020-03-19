@@ -139,6 +139,8 @@ import {
   cmGrey5,
   whiteSolid,
   whiteTransparent,
+  isiPhone5,
+  unreadMessagesBadgeSizes,
 } from '../app/common/styles/constant'
 import {
   modalTransitionConfig,
@@ -188,8 +190,8 @@ export const styles = StyleSheet.create({
   drawerOuterContainer: {
     flex: 1,
     backgroundColor: 'white',
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
+    borderTopRightRadius: isiPhone5 ? 14 : 20,
+    borderBottomRightRadius: isiPhone5 ? 14 : 20,
   },
   drawerHeader: {
     width: '100%',
@@ -208,13 +210,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   evernymIconImage: {
-    width: 32,
-    height: 32,
+    width: isiPhone5 ? 26 : 32,
+    height: isiPhone5 ? 26 : 32,
     marginLeft: 20,
     marginRight: 10,
   },
   evernymIconTextContainer: {
-    height: 32,
+    height: isiPhone5 ? 26 : 32,
   },
   evernymIconLogoText: {
     height: '50%',
@@ -226,7 +228,7 @@ export const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'Lato',
-    fontSize: 12,
+    fontSize: isiPhone5 ? 10 : 12,
     color: mediumGray,
     fontWeight: 'bold',
   },
@@ -238,7 +240,7 @@ export const styles = StyleSheet.create({
   },
   labelText: {
     fontFamily: 'Lato',
-    fontSize: 17,
+    fontSize: isiPhone5 ? 15 : 17,
     fontWeight: '500',
     color: mediumGray,
   },
@@ -246,13 +248,13 @@ export const styles = StyleSheet.create({
     color: color.bg.twelfth.color,
   },
   customGreenBadgeContainer: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: unreadMessagesBadgeSizes.height,
+    height: unreadMessagesBadgeSizes.height,
+    borderRadius: unreadMessagesBadgeSizes.height / 2,
     backgroundColor: atlantis,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 175,
+    marginLeft: isiPhone5 ? 120 : 175,
   },
 })
 
@@ -270,8 +272,8 @@ const drawerComponent = (props: Object) => (
     <View style={styles.drawerHeader}>
       <SvgCustomIcon
         name="ConnectMe"
-        width={152}
-        height={20}
+        width={isiPhone5 ? 136 : 152}
+        height={isiPhone5 ? 18 : 20}
         fill={darkGray2}
       />
       <UserAvatar userCanChange>{renderAvatarWithSource}</UserAvatar>
@@ -301,7 +303,12 @@ const Drawer = createDrawerNavigator(
       screen: HomeScreen,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
-          <SvgCustomIcon name="Home" width={24} height={24} fill={tintColor} />
+          <SvgCustomIcon
+            name="Home"
+            width={isiPhone5 ? 22 : 24}
+            height={isiPhone5 ? 22 : 24}
+            fill={tintColor}
+          />
         ),
         drawerLabel: ({ focused, tintColor }) => (
           <View style={styles.labelContainer}>
@@ -326,8 +333,8 @@ const Drawer = createDrawerNavigator(
         drawerIcon: ({ tintColor }) => (
           <SvgCustomIcon
             name="Connections"
-            width={24}
-            height={24}
+            width={isiPhone5 ? 22 : 24}
+            height={isiPhone5 ? 22 : 24}
             fill={tintColor}
           />
         ),
@@ -351,8 +358,8 @@ const Drawer = createDrawerNavigator(
         drawerIcon: ({ tintColor }) => (
           <SvgCustomIcon
             name="Settings"
-            width={24}
-            height={24}
+            width={isiPhone5 ? 22 : 24}
+            height={isiPhone5 ? 22 : 24}
             fill={tintColor}
           />
         ),
@@ -374,15 +381,10 @@ const Drawer = createDrawerNavigator(
   {
     contentComponent: drawerComponent,
     drawerBackgroundColor: 'transparent',
-    drawerWidth: width * 0.85,
+    drawerWidth: isiPhone5 ? width * 0.8 : width * 0.85,
     contentOptions: {
       activeTintColor: color.bg.twelfth.color,
       inactiveTintColor: '#777',
-      labelStyle: {
-        fontFamily: 'Lato',
-        fontSize: 17,
-        fontWeight: '500',
-      },
     },
   }
 )

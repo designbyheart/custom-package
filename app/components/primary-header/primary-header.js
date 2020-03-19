@@ -6,7 +6,7 @@ import { View, TouchableOpacity, Text } from 'react-native'
 import { BlurView } from 'react-native-blur'
 
 import { styles } from './styles'
-import { grey } from '../../common/styles/constant'
+import { grey, isiPhone5 } from '../../common/styles/constant'
 
 import type { PrimaryHeaderProps } from './type-primary-header'
 
@@ -32,8 +32,8 @@ class PrimaryHeader extends PureComponent<PrimaryHeaderProps, void> {
           >
             <SvgCustomIcon
               name="BurgerMenu"
-              width={36}
-              height={36}
+              width={isiPhone5 ? 32 : 36}
+              height={isiPhone5 ? 32 : 36}
               fill={grey}
               style={svgIcon}
             />

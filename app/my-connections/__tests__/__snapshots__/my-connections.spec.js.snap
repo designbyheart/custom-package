@@ -683,16 +683,16 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
         style={
           Object {
             "marginRight": 6,
-            "marginTop": 25,
+            "marginTop": 30,
             "opacity": 1,
           }
         }
       >
         <RNSVGSvgView
           align="xMidYMid"
-          bbHeight="36"
-          bbWidth="36"
-          height="36"
+          bbHeight="32"
+          bbWidth="32"
+          height="32"
           meetOrSlice={0}
           minX={0}
           minY={0}
@@ -703,19 +703,19 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
                 "borderWidth": 0,
               },
               Object {
-                "marginLeft": 20,
+                "marginLeft": 15,
               },
               null,
               Object {
                 "flex": 0,
-                "height": 36,
-                "width": 36,
+                "height": 32,
+                "width": 32,
               },
             ]
           }
           vbHeight={32}
           vbWidth={32}
-          width="36"
+          width="32"
         >
           <RNSVGGroup
             fill={
@@ -825,7 +825,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
             Object {
               "color": "#FFF",
               "fontFamily": "Lato",
-              "fontSize": 16,
+              "fontSize": 14,
               "fontWeight": "500",
             }
           }
@@ -849,10 +849,10 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
           Object {
             "color": "#777777",
             "fontFamily": "Lato",
-            "fontSize": 26,
+            "fontSize": 20,
             "fontWeight": "bold",
             "marginRight": 64,
-            "marginTop": 25,
+            "marginTop": 33,
           }
         }
       >
@@ -876,7 +876,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
         "borderRadius": 30,
         "bottom": 20,
         "elevation": 0,
-        "height": 60,
+        "height": 50,
         "justifyContent": "center",
         "opacity": 1,
         "position": "absolute",
@@ -888,16 +888,16 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
         },
         "shadowOpacity": 0.5,
         "shadowRadius": 5,
-        "width": 60,
+        "width": 50,
         "zIndex": 1000,
       }
     }
   >
     <RNSVGSvgView
       align="xMidYMid"
-      bbHeight="26"
-      bbWidth="26"
-      height="26"
+      bbHeight="22"
+      bbWidth="22"
+      height="22"
       meetOrSlice={0}
       minX={0}
       minY={0}
@@ -911,14 +911,14 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
           null,
           Object {
             "flex": 0,
-            "height": 26,
-            "width": 26,
+            "height": 22,
+            "width": 22,
           },
         ]
       }
       vbHeight={24}
       vbWidth={24}
-      width="26"
+      width="22"
     >
       <RNSVGGroup
         fill={
@@ -1014,7 +1014,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
         Object {
           "color": "#777",
           "fontFamily": "Lato",
-          "fontSize": 10,
+          "fontSize": 9,
         }
       }
     >
@@ -1512,16 +1512,16 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
         style={
           Object {
             "marginRight": 6,
-            "marginTop": 25,
+            "marginTop": 30,
             "opacity": 1,
           }
         }
       >
         <RNSVGSvgView
           align="xMidYMid"
-          bbHeight="36"
-          bbWidth="36"
-          height="36"
+          bbHeight="32"
+          bbWidth="32"
+          height="32"
           meetOrSlice={0}
           minX={0}
           minY={0}
@@ -1532,19 +1532,19 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
                 "borderWidth": 0,
               },
               Object {
-                "marginLeft": 20,
+                "marginLeft": 15,
               },
               null,
               Object {
                 "flex": 0,
-                "height": 36,
-                "width": 36,
+                "height": 32,
+                "width": 32,
               },
             ]
           }
           vbHeight={32}
           vbWidth={32}
-          width="36"
+          width="32"
         >
           <RNSVGGroup
             fill={
@@ -1654,7 +1654,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
             Object {
               "color": "#FFF",
               "fontFamily": "Lato",
-              "fontSize": 16,
+              "fontSize": 14,
               "fontWeight": "500",
             }
           }
@@ -1678,10 +1678,10 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
           Object {
             "color": "#777777",
             "fontFamily": "Lato",
-            "fontSize": 26,
+            "fontSize": 20,
             "fontWeight": "bold",
             "marginRight": 64,
-            "marginTop": 25,
+            "marginTop": 33,
           }
         }
       >
@@ -1705,7 +1705,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
         "borderRadius": 30,
         "bottom": 20,
         "elevation": 0,
-        "height": 60,
+        "height": 50,
         "justifyContent": "center",
         "opacity": 1,
         "position": "absolute",
@@ -1717,16 +1717,16 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
         },
         "shadowOpacity": 0.5,
         "shadowRadius": 5,
-        "width": 60,
+        "width": 50,
         "zIndex": 1000,
       }
     }
   >
     <RNSVGSvgView
       align="xMidYMid"
-      bbHeight="26"
-      bbWidth="26"
-      height="26"
+      bbHeight="22"
+      bbWidth="22"
+      height="22"
       meetOrSlice={0}
       minX={0}
       minY={0}
@@ -1740,14 +1740,14 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
           null,
           Object {
             "flex": 0,
-            "height": 26,
-            "width": 26,
+            "height": 22,
+            "width": 22,
           },
         ]
       }
       vbHeight={24}
       vbWidth={24}
-      width="26"
+      width="22"
     >
       <RNSVGGroup
         fill={
@@ -1843,7 +1843,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
         Object {
           "color": "#777",
           "fontFamily": "Lato",
-          "fontSize": 10,
+          "fontSize": 9,
         }
       }
     >

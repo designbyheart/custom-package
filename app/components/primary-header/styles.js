@@ -1,11 +1,17 @@
 // @flow
 import { StyleSheet, Platform, PixelRatio, Dimensions } from 'react-native'
 
-import { primaryHeaderHeight, grey } from '../../common/styles/constant'
+import {
+  primaryHeaderHeight,
+  grey,
+  isiPhone5,
+} from '../../common/styles/constant'
 
 // original in icon{} and label{} marginTop was 73 and height was 120, thus the 47 to keep
 // subtracting 47 from containerHeight keeps it relative to what is was.
-const marginTop = primaryHeaderHeight - 47
+const marginTop = isiPhone5
+  ? primaryHeaderHeight - 42
+  : primaryHeaderHeight - 47
 const { width } = Dimensions.get('screen')
 
 const styles = StyleSheet.create({
@@ -35,21 +41,21 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   svgIcon: {
-    marginLeft: 20,
+    marginLeft: isiPhone5 ? 15 : 20,
   },
   label: {
     fontFamily: 'Lato',
     fontWeight: 'bold',
-    fontSize: 26,
-    marginTop,
+    fontSize: isiPhone5 ? 20 : 26,
+    marginTop: isiPhone5 ? marginTop + 3 : marginTop,
     color: grey,
-    marginLeft: 20,
+    marginLeft: isiPhone5 ? 14 : 20,
   },
   labelNotHome: {
     fontFamily: 'Lato',
     fontWeight: 'bold',
-    fontSize: 26,
-    marginTop,
+    fontSize: isiPhone5 ? 20 : 26,
+    marginTop: isiPhone5 ? marginTop + 3 : marginTop,
     color: grey,
     marginRight: width * 0.2,
   },
