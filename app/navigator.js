@@ -190,8 +190,8 @@ export const styles = StyleSheet.create({
   drawerOuterContainer: {
     flex: 1,
     backgroundColor: 'white',
-    borderTopRightRadius: isiPhone5 ? 14 : 20,
-    borderBottomRightRadius: isiPhone5 ? 14 : 20,
+    borderTopRightRadius: Platform.OS === 'ios' ? (isiPhone5 ? 14 : 20) : 0,
+    borderBottomRightRadius: Platform.OS === 'ios' ? (isiPhone5 ? 14 : 20) : 0,
   },
   drawerHeader: {
     width: '100%',

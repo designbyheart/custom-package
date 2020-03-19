@@ -3,6 +3,7 @@ import React from 'react'
 import { Text, View, Image, StyleSheet, ActivityIndicator } from 'react-native'
 import {
   mediumGray,
+  white,
   font,
   recentCardSizes,
   isiPhone5,
@@ -10,16 +11,30 @@ import {
 
 import type { RecentCardProps } from './type-recent-card'
 
-const renderIndicatorOrImage = (status: string, logoUrl: string) => {
+const renderPlaceholderIfNoImage = (character: string) => (
+  <View style={styles.placeholderIfNoImage}>
+    <Text style={styles.placeholderTextIfNoImage}>{character}</Text>
+  </View>
+)
+
+const renderIndicatorOrImage = (
+  status: string,
+  logoUrl: string,
+  issuerName: string
+) => {
   if (status === 'PENDING') return <ActivityIndicator size="small" />
-  return <Image source={{ uri: logoUrl }} style={styles.issuerLogo} />
+  return typeof logoUrl === 'string' ? (
+    <Image source={{ uri: logoUrl }} style={styles.issuerLogo} />
+  ) : (
+    renderPlaceholderIfNoImage(issuerName[0])
+  )
 }
 
 export const RecentCard = (props: RecentCardProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconSection}>
-        {renderIndicatorOrImage(props.status, props.logoUrl)}
+        {renderIndicatorOrImage(props.status, props.logoUrl, props.issuerName)}
       </View>
       <View style={styles.textSection}>
         <View style={styles.textMessageSection}>
@@ -101,5 +116,19 @@ const styles = StyleSheet.create({
     fontFamily: font.family,
     fontStyle: 'italic',
     color: mediumGray,
+  },
+  placeholderIfNoImage: {
+    width: recentCardSizes.logoSize,
+    height: recentCardSizes.logoSize,
+    borderRadius: recentCardSizes.logoSize / 2,
+    backgroundColor: mediumGray,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  placeholderTextIfNoImage: {
+    fontFamily: font.family,
+    fontSize: isiPhone5 ? font.size.S : font.size.M,
+    fontWeight: 'bold',
+    color: white,
   },
 })

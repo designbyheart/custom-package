@@ -312,7 +312,8 @@ export const isIphoneXR =
     (phoneModel.toLowerCase() === 'iphone xr' ||
       phoneModel.toLowerCase() === 'iphone xs max'))
 export const deviceHeight = height
-export const primaryHeaderHeight = height >= MEDIUM_DEVICE ? 120 : 72
+export const primaryHeaderHeight =
+  Platform.OS === 'ios' ? (height >= MEDIUM_DEVICE ? 120 : 72) : 88
 
 export const newBannerCardSizes = {
   height: isiPhone5 ? 70 : 80,
