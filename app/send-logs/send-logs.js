@@ -110,7 +110,8 @@ export class SendLogs extends Component<SendLogsProps, any> {
           }
         })
         .catch(error => {
-          console.log('error', error)
+          this.setState({ deniedPermission: true })
+          console.log(error)
         })
     } else {
       store.dispatch({
@@ -135,6 +136,7 @@ export class SendLogs extends Component<SendLogsProps, any> {
         }
       })
       .catch(error => {
+        this.setState({ deniedPermission: true })
         console.log('error', error)
       })
   }
@@ -195,7 +197,7 @@ export class SendLogs extends Component<SendLogsProps, any> {
         type: UPDATE_LOG_ISENCRYPTED,
         logIsEncrypted: false,
       })
-    }, 3000)
+    }, 300)
   }
 
   static sendLogs(navigation: $PropertyType<ReactNavigation, 'navigation'>) {

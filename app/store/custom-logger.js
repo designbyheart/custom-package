@@ -368,6 +368,10 @@ export function PiiHiddenTransformer(state: Store) {
     },
     claim: hiddenInfoReplacement,
     claimOffer: hiddenInfoReplacement,
+    config: {
+      ...state.config,
+      poolConfig: hiddenInfoReplacement,
+    },
     deepLink: {
       ...state.deepLink,
       tokens: hiddenInfoReplacement,
