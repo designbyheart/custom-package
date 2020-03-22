@@ -51,7 +51,10 @@ import AppStatus from './app-status/app-status'
 import RNShake from 'react-native-shake'
 import Offline from './offline/offline'
 
-useScreens()
+if (Platform.Version < 29) {
+  // Disable react-native-screens for android 10 and 11 (API level 29 and 30)
+  useScreens()
+}
 
 if (detox === 'yes') {
   // we are disabling flow check only because this line will come into effect
