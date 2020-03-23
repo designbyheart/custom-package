@@ -496,6 +496,9 @@ export default function claimOfferReducer(
 ) {
   switch (action.type) {
     case CLAIM_OFFER_RECEIVED:
+      if (state[action.payloadInfo.uid]) {
+        return state
+      }
       return {
         ...state,
         [action.payloadInfo.uid]: {
