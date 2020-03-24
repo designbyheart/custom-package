@@ -1,11 +1,34 @@
 // @flow
 
-import { matchScreenshot } from '../utils/screenshot'
-import { SCREENSHOT_HOME } from '../utils/test-constants'
+// import { matchScreenshot } from '../utils/screenshot'
+// import { SCREENSHOT_HOME } from '../utils/test-constants'
+
+import { element, by, waitFor } from 'detox'
+import { HOME_CONTAINER } from '../utils/test-constants'
 
 describe('Home screen', () => {
-  it.skip('pass code unlock, show home, take screenshot', async () => {
-    // it doesn't work in pipeline: CM-2552
-    await matchScreenshot(SCREENSHOT_HOME)
+  it('pass code unlock, show home, find all necessary elements', async () => {
+    // // it doesn't work in pipeline: CM-2552
+    // await matchScreenshot(SCREENSHOT_HOME)
+
+    // check home view
+    await waitFor(element(by.id(HOME_CONTAINER)))
+      .toBeVisible()
+      .withTimeout(5000)
+
+    // check home header
+    await waitFor(element(by.text('Home')))
+      .toBeVisible()
+      .withTimeout(5000)
+
+    // check menu button
+    await waitFor(element(by.id('burger-menu')))
+      .toBeVisible()
+      .withTimeout(5000)
+
+    // check camera button
+    await waitFor(element(by.text('Scan')))
+      .toBeVisible()
+      .withTimeout(5000)
   })
 })

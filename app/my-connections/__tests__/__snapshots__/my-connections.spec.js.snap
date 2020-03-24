@@ -687,6 +687,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
             "opacity": 1,
           }
         }
+        testID="burger-menu"
       >
         <RNSVGSvgView
           align="xMidYMid"
@@ -1516,6 +1517,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
             "opacity": 1,
           }
         }
+        testID="burger-menu"
       >
         <RNSVGSvgView
           align="xMidYMid"
