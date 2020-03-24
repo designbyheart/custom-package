@@ -2271,6 +2271,7 @@ exports[`user settings screen should render properly and snapshot should match f
               "opacity": 1,
             }
           }
+          testID="burger-menu"
         >
           <RNSVGSvgView
             align="xMidYMid"
@@ -4848,6 +4849,7 @@ exports[`user settings screen should render properly and snapshot should match i
               "opacity": 1,
             }
           }
+          testID="burger-menu"
         >
           <RNSVGSvgView
             align="xMidYMid"

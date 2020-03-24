@@ -9,13 +9,15 @@ import { getText } from 'detox-getprops'
 
 describe('Backup test suite', () => {
   it.skip('Case 1: positive backup tests', async () => {
-    // can use testID instead
-    // await waitFor(element(by.text('Settings'))).toBeVisible().withTimeout(5000)
-    // await element(by.text('Settings')).tap()
-    await waitFor(element(by.id('tab-bar-settings-icon')))
+    await waitFor(element(by.id('burger-menu')))
       .toBeVisible()
       .withTimeout(5000)
-    await element(by.id('tab-bar-settings-icon')).tap()
+    await element(by.id('burger-menu')).tap()
+
+    await waitFor(element(by.text('Settings')))
+      .toBeVisible()
+      .withTimeout(5000)
+    await element(by.text('Settings')).tap()
 
     await waitFor(element(by.text('Create a Backup')))
       .toBeVisible()
@@ -53,10 +55,15 @@ describe('Backup test suite', () => {
       .withTimeout(5000)
     await element(by.id('export-encrypted-backup')).tap()
 
-    await waitFor(element(by.type('_UIPopoverControllerActionView')))
+    const elementType = '_UISizeTrackingView'
+    // this is top visible tappable element in hierarchy
+    await waitFor(element(by.type(elementType)))
       .toBeVisible()
-      .withTimeout(5000)
-    await element(by.type('_UIPopoverControllerActionView')).tap()
+      .withTimeout(15000)
+    // try to press `Copy` - it doesn't work
+    await element(by.type(elementType)).tapAtPoint({ x: 50, y: 200 })
+    // try to press `Save to Files` - it doesn't work
+    await element(by.type(elementType)).tapAtPoint({ x: 125, y: 200 })
 
     await waitFor(element(by.id('backup-complete-submit-button')))
       .toBeVisible()
