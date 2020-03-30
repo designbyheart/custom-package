@@ -3,6 +3,7 @@ package test.java.appModules;
 import java.util.HashMap;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
@@ -13,6 +14,8 @@ import org.testng.Reporter;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
+
+import static java.time.Duration.ofSeconds;
 
 
 /**
@@ -151,4 +154,33 @@ public class AppiumUtils {
 		}
 
 	}
+
+	public static void scroll(AppiumDriver driver, int startx, int starty, int endx, int endy) {
+
+		TouchAction touchAction = new TouchAction(driver);
+
+		touchAction.longPress(startx, starty)
+				.waitAction(1000)
+				.moveTo(endx, endy)
+				.release()
+				.perform();
+
+	}
+
+	public static void swipeRight(AppiumDriver driver) {
+
+		//The viewing size of the device
+		Dimension size = driver.manage().window().getSize();
+
+		//Starting x location set to 5% of the width (near left)
+		int startx = (int) (size.width * 0.05);
+		//Ending x location set to 95% of the width (near right)
+		int endx = (int) (size.width * 0.95);
+		//y position set to mid-screen vertically
+		int starty = size.height / 2;
+
+		scroll(driver, startx, starty, endx, starty);
+
+	}
+
 }

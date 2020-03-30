@@ -66,9 +66,12 @@ public class ConnectionModules extends AppPageInjector {
 			Thread.sleep(3000);
             ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.BACK);
             RestAssured.baseURI = "https://api.appcenter.ms/v0.1/apps";
-            final String owner = "/build-zg6l";
-            final String app = "/QA-MeConnect-Android";
-            final String postfix = "/releases/latest";
+//            final String owner = "/build-zg6l";
+			final String owner = "/Evernym-Inc";
+//            final String app = "/QA-MeConnect-Android";
+			final String app = "/Dev-MeConnect-Android";
+//            final String postfix = "/releases/latest";
+			final String postfix = "/releases/1771"; // FIXME
             final String token = "bd9a9b4be1ce8bd87e99b7b0a150663d00e56566";
             String InstallConnectMeLink = RestAssured
 													.given()

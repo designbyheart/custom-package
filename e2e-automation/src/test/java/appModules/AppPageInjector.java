@@ -22,6 +22,12 @@ public class AppPageInjector {
 	@Inject
 	protected HomePage homePage;
 	@Inject
+	protected HomePageV2 homePageV2;
+	@Inject
+	protected ScannerPageV2 scannerPageV2;
+	@Inject
+	protected MenuPageV2 menuPageV2;
+	@Inject
 	protected CredentialPage credentialPage;
 	@Inject
 	protected ChooseLockPage chooseLockPage;
