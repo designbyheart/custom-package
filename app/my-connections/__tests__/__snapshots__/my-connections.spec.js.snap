@@ -672,6 +672,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
       }
     >
       <View
+        accessibilityLabel="burger-menu"
         accessible={true}
         isTVSelectable={true}
         onResponderGrant={[Function]}
@@ -1502,6 +1503,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
       }
     >
       <View
+        accessibilityLabel="burger-menu"
         accessible={true}
         isTVSelectable={true}
         onResponderGrant={[Function]}

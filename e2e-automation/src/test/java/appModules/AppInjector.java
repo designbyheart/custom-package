@@ -45,6 +45,9 @@ public class AppInjector extends AbstractModule {
 			bind(HockeyAppPage.class).to(HockeyAppPageAndroid.class);
 			bind(AppCenterPage.class).to(AppCenterPageAndroid.class);
 			bind(HomePage.class).to(HomePageAndroid.class);
+			bind(HomePageV2.class).to(HomePageAndroidV2.class);
+			bind(ScannerPageV2.class).to(ScannerPageAndroidV2.class);
+			bind(MenuPageV2.class).to(MenuPageAndroidV2.class);
 			bind(CredentialPage.class).to(CredentialPageAndroid.class);
 			bind(ChooseLockPage.class).to(ChooseLockPageAndroid.class);
 			bind(SettingPage.class).to(SettingPageAndroid.class);
