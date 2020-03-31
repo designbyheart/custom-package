@@ -2248,6 +2248,8 @@ exports[`user settings screen should render properly and snapshot should match f
       }
     >
       <View
+        accessibilityLabel="burger-menu"
+        accessible={true}
         style={
           Object {
             "height": "100%",
@@ -2256,7 +2258,6 @@ exports[`user settings screen should render properly and snapshot should match f
         }
       >
         <View
-          accessibilityLabel="burger-menu"
           accessible={true}
           isTVSelectable={true}
           onResponderGrant={[Function]}
@@ -4827,6 +4828,8 @@ exports[`user settings screen should render properly and snapshot should match i
       }
     >
       <View
+        accessibilityLabel="burger-menu"
+        accessible={true}
         style={
           Object {
             "height": "100%",
@@ -4835,7 +4838,6 @@ exports[`user settings screen should render properly and snapshot should match i
         }
       >
         <View
-          accessibilityLabel="burger-menu"
           accessible={true}
           isTVSelectable={true}
           onResponderGrant={[Function]}

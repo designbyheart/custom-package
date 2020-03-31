@@ -25,10 +25,13 @@ class PrimaryHeader extends PureComponent<PrimaryHeaderProps, void> {
 
     return (
       <View style={container}>
-        <View style={iconsSection}>
+        <View
+          style={iconsSection}
+          accessible={true}
+          accessibilityLabel="burger-menu"
+        >
           <TouchableOpacity
             testID="burger-menu"
-            accessibilityLabel="burger-menu"
             style={icon}
             onPress={this.props.navigation && this.props.navigation.openDrawer}
           >
