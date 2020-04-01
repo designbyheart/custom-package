@@ -220,12 +220,15 @@ exports[`user settings screen should render properly and snapshot should match f
     </View>
   </View>
   <View
+    accessibilityLabel="settings-container"
+    accessible={true}
     style={
       Object {
         "backgroundColor": "#F4F4F4",
       }
     }
     tertiary={true}
+    testID="settings-container"
   >
     <RCTScrollView>
       <View>
@@ -2818,12 +2821,15 @@ exports[`user settings screen should render properly and snapshot should match i
     </View>
   </View>
   <View
+    accessibilityLabel="settings-container"
+    accessible={true}
     style={
       Object {
         "backgroundColor": "#F4F4F4",
       }
     }
     tertiary={true}
+    testID="settings-container"
   >
     <RCTScrollView>
       <View>
