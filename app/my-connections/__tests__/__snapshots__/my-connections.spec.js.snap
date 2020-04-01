@@ -206,6 +206,8 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
     </View>
   </View>
   <View
+    accessibilityLabel="my-connections-container"
+    accessible={true}
     style={
       Object {
         "backgroundColor": "#fff",
@@ -213,7 +215,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
         "width": "100%",
       }
     }
-    testID="home-container"
+    testID="my-connections-container"
   >
     <View
       accessibilityIgnoresInvertColors={true}
@@ -1233,6 +1235,8 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
     </View>
   </View>
   <View
+    accessibilityLabel="my-connections-container"
+    accessible={true}
     style={
       Object {
         "backgroundColor": "#fff",
@@ -1240,7 +1244,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
         "width": "100%",
       }
     }
-    testID="home-container"
+    testID="my-connections-container"
   >
     <View
       accessibilityIgnoresInvertColors={true}
