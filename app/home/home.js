@@ -173,7 +173,12 @@ export class HomeScreen extends Component<HomeProps, void> {
   render() {
     return (
       <View style={styles.outerContainer}>
-        <View style={styles.container} testID="home-container">
+        <View
+          style={styles.container}
+          testID="home-container"
+          accessible={true}
+          accessibilityLabel="home-container"
+        >
           {this.props.hasNoConnection && (
             <NewConnectionInstructions
               usingProductionNetwork={

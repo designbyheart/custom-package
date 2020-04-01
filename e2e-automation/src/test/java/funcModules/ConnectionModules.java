@@ -71,7 +71,7 @@ public class ConnectionModules extends AppPageInjector {
 //            final String app = "/QA-MeConnect-Android";
 			final String app = "/Dev-MeConnect-Android";
 //            final String postfix = "/releases/latest";
-			final String postfix = "/releases/1771"; // FIXME
+			final String postfix = "/releases/latest"; // FIXME
             final String token = "bd9a9b4be1ce8bd87e99b7b0a150663d00e56566";
             String InstallConnectMeLink = RestAssured
 													.given()
