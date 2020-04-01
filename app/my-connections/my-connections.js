@@ -130,7 +130,12 @@ export class MyConnectionsScreen extends Component<
       <View style={outerContainer}>
         <NotificationCard />
 
-        <View style={container} testID="home-container">
+        <View
+          style={container}
+          testID="my-connections-container"
+          accessible={true}
+          accessibilityLabel="my-connections-container"
+        >
           {this.props.hasNoConnection && (
             <NewConnectionInstructions
               usingProductionNetwork={

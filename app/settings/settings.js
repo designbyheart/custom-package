@@ -887,7 +887,13 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       <Container>
         <NotificationCard />
 
-        <CustomView style={[style.secondaryContainer]} tertiary>
+        <CustomView
+          style={[style.secondaryContainer]}
+          tertiary
+          testID="settings-container"
+          accessible={true}
+          accessibilityLabel="settings-container"
+        >
           <ScrollView>
             <List
               containerStyle={[
