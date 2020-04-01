@@ -10,24 +10,7 @@ public class HomePageAndroidV2 implements HomePageV2 {
     public WebElement homeContainer(AppiumDriver driver) throws Exception {
         return AppiumUtils.findElement(
                 driver,
-                // FIXME
-                "/hierarchy" +
-                        "/android.widget.FrameLayout" +
-                        "/android.widget.LinearLayout" +
-                        "/android.widget.FrameLayout" +
-                        "/android.widget.FrameLayout" +
-                        "/android.view.ViewGroup" +
-                        "/android.view.ViewGroup" +
-                        "/android.view.ViewGroup" +
-                        "/android.view.ViewGroup" +
-                        "/android.view.ViewGroup" +
-                        "/android.view.ViewGroup[2]" +
-                        "/android.support.v4.widget.DrawerLayout" +
-                        "/android.view.ViewGroup" +
-                        "/android.view.ViewGroup" +
-                        "/android.view.ViewGroup" +
-                        "/android.view.ViewGroup" +
-                        "/android.view.ViewGroup",
+                "//android.view.ViewGroup[@content-desc=\"home-container\"]",
                 "Home Container"
         );
     }

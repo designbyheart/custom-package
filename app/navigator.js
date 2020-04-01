@@ -268,9 +268,17 @@ const renderAvatarWithSource = (avatarSource: number | ImageSource) => {
 }
 
 const drawerComponent = (props: Object) => (
-  <SafeAreaView style={styles.drawerOuterContainer}>
+  <SafeAreaView
+    style={styles.drawerOuterContainer}
+    testID="menu-container"
+    accessible={true}
+    accessibilityLabel="menu-container"
+  >
     <View style={styles.drawerHeader}>
       <SvgCustomIcon
+        testID="connect-me-banner"
+        accessible={true}
+        accessibilityLabel="connect-me-banner"
         name="ConnectMe"
         width={isiPhone5 ? 136 : 152}
         height={isiPhone5 ? 18 : 20}
