@@ -67,8 +67,8 @@ public class MenuPageAndroidV2 implements MenuPageV2 {
                         "/android.view.ViewGroup" +
                         "/android.view.ViewGroup" +
                         "/android.view.ViewGroup[2]" +
-                        "/android.support.v4.widget.DrawerLayou" +
-                        "t/android.view.ViewGroup[2]" +
+                        "/android.support.v4.widget.DrawerLayout" +
+                        "/android.view.ViewGroup[2]" +
                         "/android.view.ViewGroup" +
                         "/android.view.ViewGroup[2]" +
                         "/android.widget.ImageView",
