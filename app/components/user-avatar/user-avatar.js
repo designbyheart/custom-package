@@ -53,6 +53,8 @@ export class UserAvatar extends Component<UserAvatarProps, void> {
         round
         resizeMode="cover"
         testID="user-avatar"
+        accessible={true}
+        accessibilityLabel="user-avatar"
       />
     )
   }
