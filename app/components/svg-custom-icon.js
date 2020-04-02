@@ -2,7 +2,7 @@
 import React from 'react'
 import SvgIcon from 'react-native-svg-icon'
 import { Path, G, Use, ClipPath, Defs, Svg } from 'react-native-svg'
-import { urlQrQueryParamAllowedRegex } from './qr-scanner/qr-url-validator'
+
 import { atlantis } from '../common/styles/constant'
 
 export const svgIcons = {

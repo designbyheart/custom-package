@@ -201,48 +201,31 @@ export function* proofAccepted(
   action: ProofRequestAcceptedAction
 ): Generator<*, *, *> {
   const { uid } = action
-  const remoteDid: string = yield select(getProofRequestPairwiseDid, uid)
-  const userPairwiseDid: string | null = yield select(
-    getUserPairwiseDid,
-    remoteDid
-  )
-  if (!userPairwiseDid) {
-    captureError(new Error('OCS-002 No pairwise connection found'))
-    yield put(
-      errorSendProofFail(uid, {
-        code: 'OCS-002',
-        message: 'No pairwise connection found',
-      })
-    )
-    return
-  }
-
   const proofRequestPayload: ProofRequestPayload = yield select(
     getProofRequest,
     uid
   )
-  const { proofHandle } = proofRequestPayload
-  const connection: {
-    remotePairwiseDID: string,
-    remoteName: string,
-  } & Connection = yield select(getRemotePairwiseDidAndName, userPairwiseDid)
+  const {
+    proofHandle,
+    ephemeralProofRequest,
+    remotePairwiseDID,
+  } = proofRequestPayload
 
-  if (!connection.vcxSerializedConnection) {
-    captureError(new Error('OCS-002 No pairwise connection found'))
-    yield put(
-      errorSendProofFail(uid, {
-        code: 'OCS-002',
-        message: 'No pairwise connection found',
-      })
-    )
+  // for ephemeral proof request there will be no pairwise connection
+  // so we are keeping connection handle to 0
+  let connectionHandle = 0
+  if (!ephemeralProofRequest) {
+    // if this proof request is not ephemeral, then we expects a pairwise connection
+    connectionHandle = yield* getConnectionHandle(remotePairwiseDID, uid)
+  }
+
+  if (typeof connectionHandle === 'undefined') {
+    // connection handle was returned as undefined by getConnectionHandle
+    // so we stop processing further
     return
   }
 
   try {
-    const connectionHandle: number = yield call(
-      getHandleBySerializedConnection,
-      connection.vcxSerializedConnection
-    )
     yield call(sendProofApi, proofHandle, connectionHandle)
     yield put(sendProofSuccess(uid))
     yield put(resetTempProofData(uid))
@@ -252,6 +235,55 @@ export function* proofAccepted(
     KeepScreenOn.setKeepScreenOn(false)
     captureError(e)
     yield put(errorSendProofFail(uid, ERROR_SEND_PROOF(e.message)))
+  }
+}
+
+function* getConnectionHandle(
+  remoteDid: string,
+  uid: string
+): Generator<*, *, *> {
+  try {
+    const userPairwiseDid: string | null = yield select(
+      getUserPairwiseDid,
+      remoteDid
+    )
+    if (!userPairwiseDid) {
+      // if we don't find a pairwise connection
+      // and this proof request is also not ephemeral proof request
+      // then we raise error and tell user that sending proof failed
+      captureError(new Error('OCS-002 No pairwise connection found'))
+      yield put(
+        errorSendProofFail(uid, {
+          code: 'OCS-002',
+          message: 'No pairwise connection found',
+        })
+      )
+      return
+    }
+
+    const connection: {
+      remotePairwiseDID: string,
+      remoteName: string,
+    } & Connection = yield select(getRemotePairwiseDidAndName, userPairwiseDid)
+
+    if (!connection.vcxSerializedConnection) {
+      captureError(new Error('OCS-002 No pairwise connection found'))
+      yield put(
+        errorSendProofFail(uid, {
+          code: 'OCS-002',
+          message: 'No pairwise connection found',
+        })
+      )
+      return
+    }
+
+    const connectionHandle: number = yield call(
+      getHandleBySerializedConnection,
+      connection.vcxSerializedConnection
+    )
+    return connectionHandle
+  } catch (e) {
+    return
   }
 }
 

@@ -1,6 +1,6 @@
 // @flow
 
-import { isValidInvitationUrl } from '../qr-invitation-url-validator'
+import { isValidInvitationUrl } from '../sms-invitation-validator'
 
 describe('fn:isValidInvitationUrl', () => {
   // creating variables in test, so that our tests break if someone changes

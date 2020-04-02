@@ -16,6 +16,10 @@ export type SMSPendingInvitationStatusType = $Keys<
   typeof SMSPendingInvitationStatus
 >
 
+export type InvitationUrl = {
+  url: string,
+}
+
 export type AgentKeyDelegationProof = {
   agentDID: string,
   agentDelegatedKey: string,

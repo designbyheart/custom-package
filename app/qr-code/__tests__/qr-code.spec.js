@@ -25,6 +25,7 @@ describe('<QRScannerScreen />', () => {
       isCameraEnabled: true,
       publicDIDs: {},
       openIdConnectUpdateStatus: jest.fn(),
+      proofRequestReceived: jest.fn(),
     }
   }
 
@@ -92,7 +93,8 @@ describe('<QRScannerScreen />', () => {
     expect(Permissions.request).toHaveBeenCalledTimes(5)
   })
 
-  it(`show alert if environment switch url is scanned,
+  // skipping this test because as of now this code is commented and not used
+  xit(`show alert if environment switch url is scanned,
       trigger action when Switch is clicked,
       and redirect to home tab`, () => {
     const {
@@ -102,7 +104,7 @@ describe('<QRScannerScreen />', () => {
     } = setup()
     const alertSpy = jest.spyOn(Alert, 'alert')
 
-    instance.onEnvironmentSwitchUrl(environmentSwitchQrCodeData)
+    //instance.onEnvironmentSwitchUrl(environmentSwitchQrCodeData)
     expect(alertSpy).toHaveBeenCalled()
 
     const switchButton = alertSpy.mock.calls[0][2][1]

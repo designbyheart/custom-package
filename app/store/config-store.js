@@ -105,8 +105,9 @@ import {
   getHandleBySerializedConnection,
   getClaimHandleBySerializedClaimOffer,
   proofDeserialize,
-  downloadClaimOffer,
-  downloadAriesCredentialOffer,
+  createAriesCredentialOffer,
+  credentialCreateWithOffer,
+  proofCreateWithRequest,
 } from '../bridge/react-native-cxs/RNCxs'
 import { RESET } from '../common/type-common'
 import type { Connection } from './type-connection-store'
@@ -691,6 +692,7 @@ export function* getMessagesSaga(): Generator<*, *, *> {
       null,
       allConnectionsPairwiseDids.join(',')
     )
+
     if (data && data.length != 0) {
       try {
         // Remove all the FCM notifications from the tray
@@ -739,6 +741,7 @@ export function* processMessages(
     MESSAGE_TYPE.CLAIM_OFFER,
     MESSAGE_TYPE.QUESTION,
     MESSAGE_TYPE.QUESTION.toLowerCase(),
+    MESSAGE_TYPE.ARIES,
   ]
   // send each message in data to handleMessage
   // additional data will be fetched and passed to relevant( claim, claimOffer, proofRequest,etc )store.
@@ -748,7 +751,7 @@ export function* processMessages(
     try {
       // get message type
       const messageType = messages[i].type
-      let isAries = messageType === 'unknown'
+      let isAries = messageType === MESSAGE_TYPE.ARIES
 
       let connection = []
       if (isAries) {
@@ -990,6 +993,7 @@ function* handleMessage(
     getHandleBySerializedConnection,
     vcxSerializedConnection
   )
+
   try {
     let additionalData:
       | ClaimOfferMessagePayload
@@ -1016,16 +1020,17 @@ function* handleMessage(
           uid
         )
         if (!vcxSerializedClaimOffer) {
+          const credentialHandle: number = yield call(
+            credentialCreateWithOffer,
+            uid,
+            addMessageRefId(decryptedPayload, uid)
+          )
           additionalData = convertSerializedCredentialOfferToAditionalData(
             convertedSerializedClaimOffer,
             senderName,
             senderDID
           )
-          const claimHandle: number = yield call(
-            getClaimHandleBySerializedClaimOffer,
-            convertedSerializedClaimOffer
-          )
-          yield fork(saveSerializedClaimOffer, claimHandle, forDID, uid)
+          yield fork(saveSerializedClaimOffer, credentialHandle, forDID, uid)
         }
       }
     }
@@ -1068,30 +1073,33 @@ function* handleMessage(
     let ariesMessageType = null
     // if we don't find any matching type, then our type can be expected from aries
     // now we can try to look inside decryptedpayload
-    if (decryptedPayload) {
+    if (isAries && decryptedPayload) {
       const payload = JSON.parse(decryptedPayload)
       const payloadType = payload['@type']
-      if (payloadType.name === 'CRED_OFFER') {
+      if (
+        payloadType.name === 'CRED_OFFER' ||
+        payloadType.name === 'credential-offer'
+      ) {
         // update type so that aries messages can be processed and added
         ariesMessageType = MESSAGE_TYPE.CLAIM_OFFER
         const { claimHandle, claimOffer } = yield call(
-          downloadAriesCredentialOffer,
-          connectionHandle,
+          createAriesCredentialOffer,
           uid,
-          uid
+          payload['@msg']
         )
-
         yield fork(saveSerializedClaimOffer, claimHandle, forDID, uid)
 
         additionalData = {
           ...claimOffer,
+          remoteName: senderName,
           issuer_did: senderDID,
           from_did: senderDID,
           to_did: forDID,
         }
+        yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
       }
 
-      if (payloadType.name === 'CRED') {
+      if (payloadType.name === 'CRED' || payloadType.name === 'credential') {
         ariesMessageType = MESSAGE_TYPE.CLAIM
         additionalData = {
           connectionHandle,
@@ -1099,14 +1107,36 @@ function* handleMessage(
         }
       }
 
-      if (payloadType.name === 'PROOF_REQUEST') {
-        ariesMessageType = MESSAGE_TYPE.PROOF_REQUEST
-        additionalData = yield call(
-          downloadProofRequest,
-          uid,
-          connectionHandle,
-          uid
+      if (
+        ['proof_request', 'proof-request', 'presentation-request'].includes(
+          payloadType.name.toLowerCase()
         )
+      ) {
+        ariesMessageType = MESSAGE_TYPE.PROOF_REQUEST
+        const proofHandle = yield call(
+          proofCreateWithRequest,
+          uid,
+          payload['@msg']
+        )
+        additionalData = {
+          ...JSON.parse(payload['@msg']),
+          proofHandle,
+        }
+
+        // acknowledge proof request because existing acknowledge saga
+        // does not acknowledge aries based proof request
+        yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
+      }
+
+      if (payloadType && payloadType.name === 'aries' && payload['@msg']) {
+        const payloadMessageType = JSON.parse(payload['@msg'])['@type']
+        if (payloadMessageType && payloadMessageType.endsWith('ack')) {
+          // if we have just ack data then for now send acknowledge to server
+          // so that we don't download it again
+          yield fork(updateMessageStatus, [
+            { pairwiseDID: forDID, uids: [uid] },
+          ])
+        }
       }
     }
 
@@ -1132,7 +1162,7 @@ function* handleMessage(
     yield put(
       fetchAdditionalDataError({
         code: 'OCS-000',
-        message: 'Invalid additional data',
+        message: `Invalid additional data: ${e}`,
       })
     )
   }
@@ -1183,13 +1213,26 @@ export function* updateMessageStatus(
     return
   }
   try {
-    yield call(updateMessages, 'MS-106', JSON.stringify(acknowledgeServerData))
+    const messagesToAck = JSON.stringify(acknowledgeServerData)
+    console.log('acknowledging messages', acknowledgeServerData)
+    yield call(updateMessages, 'MS-106', messagesToAck)
   } catch (e) {
     captureError(e)
     yield put(
       acknowledgeMessagesFail(`failed at updateMessages api, ${e.message}`)
     )
   }
+}
+
+function addMessageRefId(decryptedPayload: string, uid: string): string {
+  return JSON.stringify(
+    JSON.parse(JSON.parse(decryptedPayload)['@msg']).map(message => {
+      if (message.hasOwnProperty('msg_ref_id')) {
+        message.msg_ref_id = uid
+      }
+      return message
+    })
+  )
 }
 
 export function* watchOnHydrationDownloadMessages(): any {

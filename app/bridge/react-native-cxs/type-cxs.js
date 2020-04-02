@@ -65,11 +65,7 @@ export type AcceptInvitationResponse = {
 }
 
 export type AriesProtocolConfig = {
-  // Do Not remove commented code below
-  // when we add back aries compatibility, we will un-comment below code
-  // protocol_type: string,
-  // communication_method: string,
-  // use_latest_protocols: string,
+  protocol_type: string,
 }
 
 export type VcxProvision = {

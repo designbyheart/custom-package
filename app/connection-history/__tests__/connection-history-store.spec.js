@@ -51,7 +51,6 @@ import { invitationRejected } from '../../invitation/invitation-store'
 import { saveNewConnection } from '../../store/connections-store'
 import {
   claimOfferReceived,
-  claimRequestSuccess,
   sendClaimRequestSuccess,
 } from '../../claim-offer/claim-offer-store'
 import { claimReceived, claimStorageSuccess } from '../../claim/claim-store'

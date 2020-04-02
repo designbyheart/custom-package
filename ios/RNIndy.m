@@ -577,6 +577,24 @@ RCT_EXPORT_METHOD(credentialCreateWithMsgId: (NSString *) sourceId
     }];
 }
 
+RCT_EXPORT_METHOD(credentialCreateWithOffer: (NSString *) sourceId
+                  withCredOffer: (NSString *) credOffer
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+    [[[ConnectMeVcx alloc] init] credentialCreateWithOffer:sourceId
+                                                     offer:credOffer
+                                                completion:^(NSError *error, NSInteger credentialHandle) {
+      if (error != nil && error.code != 0)
+      {
+        NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+        reject(indyErrorCode, @"Error occurred while creating credential handle", error);
+      } else {
+        resolve(@(credentialHandle));
+      }
+    }];
+}
+
 RCT_EXPORT_METHOD(serializeClaimOffer: (NSInteger)credentialHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)

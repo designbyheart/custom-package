@@ -8,6 +8,7 @@ Object {
   "agent_seed": null,
   "enterprise_seed": null,
   "payment_method": "sov",
+  "protocol_type": "3.0",
   "wallet_key": "walletKey",
   "wallet_name": "walletName",
 }
@@ -29,6 +30,7 @@ Object {
   "institution_verkey": "oneTimeAgencyVerKey",
   "payment_method": "sov",
   "pool_name": "poolName",
+  "protocol_type": "3.0",
   "remote_to_sdk_did": "myOneTimeAgentDid",
   "remote_to_sdk_verkey": "myOneTimeAgentVerificationKey",
   "sdk_to_remote_did": "myOneTimeDid",
