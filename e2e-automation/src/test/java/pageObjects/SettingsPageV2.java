@@ -12,5 +12,5 @@ public interface SettingsPageV2 {
     public WebElement passcodeButton(AppiumDriver driver) throws Exception;
     public WebElement chatButton(AppiumDriver driver) throws Exception;
     public WebElement aboutButton(AppiumDriver driver) throws Exception;
-    public WebElement onFidoButton(AppiumDriver driver) throws Exception;
+    public WebElement onfidoButton(AppiumDriver driver) throws Exception;
 }

@@ -28,6 +28,10 @@ public class AppPageInjector {
 	@Inject
 	protected MenuPageV2 menuPageV2;
 	@Inject
+	protected MyConnectionsPageV2 myConnectionsPageV2;
+	@Inject
+	protected SettingsPageV2 settingsPageV2;
+	@Inject
 	protected CredentialPage credentialPage;
 	@Inject
 	protected ChooseLockPage chooseLockPage;
