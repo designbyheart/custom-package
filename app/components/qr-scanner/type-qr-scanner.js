@@ -4,6 +4,7 @@ import type {
   InvitationPayload,
   AriesConnectionInvite,
 } from '../../invitation/type-invitation'
+import type { QrCodeEphemeralProofRequest } from '../../proof-request/type-proof-request'
 
 export const SCAN_STATUS = {
   SCANNING: 'scanning...',
@@ -24,9 +25,12 @@ export const SCAN_STATUS = {
   AUTH_REQUEST_INVALID_SIGNATURE: '005::Malformed authentication request.',
   AUTH_REQUEST_INVALID_BODY_SCHEMA_AND_SEND_FAIL:
     '006::Malformed authentication request.',
+  DOWNLOADING: 'Downloading...',
+  INVALID_DOWNLOADED_DATA: '007::Invalid data from QR Code.',
+  INVALID_URL_QR_CODE: '008::Invalid QR code.',
 }
 
-export type QrCode = {
+export type QrCodeShortInvite = {
   id: string,
   s: {
     n: string,
@@ -51,26 +55,36 @@ export type QrCode = {
 
 type ValuesType = <V>(v: V) => V
 
-type QR_SCAN_STATUS =
+export type QR_SCAN_STATUS =
   | typeof SCAN_STATUS.SCANNING
   | typeof SCAN_STATUS.FAIL
   | typeof SCAN_STATUS.SUCCESS
   | typeof SCAN_STATUS.DOWNLOADING_INVITATION
   | typeof SCAN_STATUS.NO_INVITATION_DATA
+  | typeof SCAN_STATUS.DOWNLOADING_AUTHENTICATION_JWT
+  | typeof SCAN_STATUS.NO_AUTHENTICATION_REQUEST
+  | typeof SCAN_STATUS.AUTH_REQUEST_DOWNLOAD_FAILED
+  | typeof SCAN_STATUS.AUTH_REQUEST_INVALID_HEADER_DECODE_ERROR
+  | typeof SCAN_STATUS.AUTH_REQUEST_INVALID_HEADER_SCHEMA
+  | typeof SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_DECODE_ERROR
+  | typeof SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_SCHEMA
+  | typeof SCAN_STATUS.AUTH_REQUEST_INVALID_SIGNATURE
+  | typeof SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_SCHEMA_AND_SEND_FAIL
+  | typeof SCAN_STATUS.DOWNLOADING
+  | typeof SCAN_STATUS.INVALID_DOWNLOADED_DATA
+  | typeof SCAN_STATUS.INVALID_URL_QR_CODE
 
 export type QrScannerState = {
-  scanning: boolean,
   scanStatus: QR_SCAN_STATUS,
-  cameraActive?: boolean,
 }
 
 export type QrScannerProps = {
-  onRead: QrCode => void,
+  onRead: QrCodeShortInvite => void,
   onClose: () => void,
-  onEnvironmentSwitchUrl: EnvironmentSwitchUrlQrCode => void,
   onInvitationUrl: InvitationPayload => void,
   onOIDCAuthenticationRequest: OIDCAuthenticationRequest => void,
   onAriesConnectionInviteRead: AriesConnectionInvite => void,
+  onEphemeralProofRequest: QrCodeEphemeralProofRequest => void,
 }
 
 export type CameraMarkerProps = {
@@ -92,20 +106,16 @@ export type CornerBoxProps = {
     | typeof BOTTOM_RIGHT,
 }
 
-export type EnvironmentSwitchUrlQrCode = {
-  url: string,
-  name: string,
-}
-
-export type InvitationUrlQrCode = {
-  url: string,
-}
-
 export const QR_CODE_TYPES = {
   INVITATION: 'INVITATION',
   URL_INVITATION: 'URL_INVITATION',
   ENV_SWITCH_URL: 'ENV_SWITCH_URL',
   OIDC: 'OIDC',
+  EPHEMERAL_PROOF_REQUEST_V1: 'EPHEMERAL_PROOF_REQUEST_V1',
+  // this is the type of QR code, where QR code is a url, and response from URL is not a json object, instead it is non-json string
+  // it could be a base64 encoded data, so we need to keep this type
+  // so that other types of QR handler can handle such type of qr codes
+  URL_NON_JSON_RESPONSE: 'URL_NON_JSON_RESPONSE',
 }
 export type QrCodeTypes = $Keys<typeof QR_CODE_TYPES>
 
@@ -144,4 +154,9 @@ export type OIDCAuthenticationRequest = {
   oidcAuthenticationQrCode: QrCodeOIDC,
   jwtAuthenticationRequest: JWTAuthenticationRequest,
   id: string,
+}
+
+export type QrCodeNonJsonUrl = {
+  type: 'URL_NON_JSON_RESPONSE',
+  data: string,
 }

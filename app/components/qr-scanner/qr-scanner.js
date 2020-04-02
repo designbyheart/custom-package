@@ -8,6 +8,7 @@ import type {
   QrScannerState,
   CameraMarkerProps,
   CornerBoxProps,
+  QR_SCAN_STATUS,
 } from './type-qr-scanner'
 import type { SMSPendingInvitationPayload } from '../../sms-pending-invitation/type-sms-pending-invitation'
 
@@ -18,7 +19,7 @@ import {
   OFFSET_3X,
   OFFSET_5X,
 } from '../../common/styles/constant'
-import { isValidQrCode } from './qr-scanner-validator'
+import { isValidShortInviteQrCode } from './qr-code-types/qr-code-short-invite'
 import {
   SCAN_STATUS,
   BOTTOM_RIGHT,
@@ -27,8 +28,7 @@ import {
   TOP_LEFT,
   QR_CODE_TYPES,
 } from './type-qr-scanner'
-import { isValidUrlQrCode } from './qr-url-validator'
-import { isValidInvitationUrl } from './qr-invitation-url-validator'
+import { isValidUrlQrCode, getUrlQrCodeData } from './qr-code-types/qr-url'
 import { invitationDetailsRequest } from '../../api/api'
 import { convertSmsPayloadToInvitation } from '../../sms-pending-invitation/sms-pending-invitation-store'
 import {
@@ -36,19 +36,23 @@ import {
   fetchValidateJWT,
 } from './qr-code-types/qr-code-oidc'
 import { uuid } from '../../services/uuid'
-import { isAriesConnectionInviteQrCode } from './qr-code-types/qr-code-aries-connection-invite'
+import {
+  isAriesConnectionInviteQrCode,
+  isValidAriesV1InviteData,
+} from './qr-code-types/qr-code-aries-connection-invite'
 import { CONNECTION_INVITE_TYPES } from '../../invitation/type-invitation'
+import { flatFetch } from '../../common/flat-fetch'
+import { flatTryCatch } from '../../common/flat-try-catch'
+import { flatJsonParse } from '../../common/flat-json-parse'
+import { isValidSMSInvitation } from '../../sms-pending-invitation/sms-invitation-validator'
+import { validateEphemeralProofQrCode } from '../../proof-request/ephemeral-proof-request-qr-code-reader'
 
 export default class QRScanner extends PureComponent<
   QrScannerProps,
   QrScannerState
 > {
   state = {
-    // this flag is used to restrict camera to keep on scanning QR codes
-    // if this is set to false, only then we
-    scanning: false,
     scanStatus: SCAN_STATUS.SCANNING,
-    cameraActive: true,
   }
 
   // Need to have this property because we can't rely
@@ -69,7 +73,6 @@ export default class QRScanner extends PureComponent<
     // "scanning..." text, otherwise as soon as we set state
     // in "reactivate" function, "scanning..." text will disappear and it looks bad
     const reactivateTimer = setTimeout(() => {
-      this.setState({ scanning: false })
       this.isScanning = false
     }, 2000)
     this.timers.push(reactivateTimer)
@@ -90,138 +93,166 @@ export default class QRScanner extends PureComponent<
     this.timers.push(delayedTimer)
   }
 
-  onSuccessRead = (nextState: QrScannerState) => {
-    nextState.scanStatus = SCAN_STATUS.SUCCESS
-    nextState.cameraActive = false
-    this.setState(nextState)
-    // reset state after work is done
-    // expectation is that parent will finish it's work within this timeout
-    this.delayedReactivate()
-  }
-
   componentWillUnmount() {
     this.timers.map(clearTimeout)
     this.timers = []
   }
 
   onRead = async (event: {| data: string |}) => {
-    if (!this.state.scanning && !this.isScanning) {
-      // set this instance property to avoid async state issue
-      this.isScanning = true
-
-      const qrData = isValidQrCode(event.data)
-      let nextState = { scanning: true, scanStatus: SCAN_STATUS.SCANNING }
-
-      if (qrData && typeof qrData === 'object') {
-        this.onSuccessRead(nextState)
-        this.props.onRead(qrData)
-      } else {
-        const ariesConnectionInviteQr = await isAriesConnectionInviteQrCode(
-          event.data
-        )
-        if (
-          ariesConnectionInviteQr &&
-          ariesConnectionInviteQr.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR
-        ) {
-          this.onSuccessRead(nextState)
-          this.props.onAriesConnectionInviteRead(ariesConnectionInviteQr)
-        } else {
-          // we support another type of qr code as well
-          // in which we recognize the url which allows us
-          // to switch environment
-          const urlQrCode = isValidUrlQrCode(event.data)
-          if (urlQrCode && typeof urlQrCode === 'object') {
-            this.onSuccessRead(nextState)
-            this.props.onEnvironmentSwitchUrl(urlQrCode)
-          } else {
-            // check if we get OIDC based authentication qr-code
-            const oidcAuthenticationQrCode = isValidOIDCQrCode(event.data)
-            if (
-              oidcAuthenticationQrCode &&
-              oidcAuthenticationQrCode.type === QR_CODE_TYPES.OIDC
-            ) {
-              nextState.scanStatus = SCAN_STATUS.DOWNLOADING_AUTHENTICATION_JWT
-              this.setState(nextState)
-              const [jwtAuthenticationRequest, error] = await fetchValidateJWT(
-                oidcAuthenticationQrCode
-              )
-              if (error !== null || jwtAuthenticationRequest === null) {
-                // if we get error while validating JWT request
-                // then show error on QR scanner and resume re-scanning of QR code
-                // after certain amount of time to let user read error
-                // and also so that qr code reader does not keep reading qr code
-                // and keep checking status in every sub millisecond
-                nextState.scanStatus = error || SCAN_STATUS.FAIL
-                this.setState(nextState, this.delayedReactivate)
-              } else {
-                nextState.scanStatus = SCAN_STATUS.SUCCESS
-                this.onSuccessRead(nextState)
-                this.props.onOIDCAuthenticationRequest({
-                  oidcAuthenticationQrCode,
-                  jwtAuthenticationRequest,
-                  id: uuid(),
-                })
-              }
-            } else {
-              // now check if we get invitation url in qr-code
-              const urlInvitationQrCode = isValidInvitationUrl(event.data)
-              if (
-                urlInvitationQrCode &&
-                typeof urlInvitationQrCode === 'object'
-              ) {
-                nextState.scanStatus = SCAN_STATUS.DOWNLOADING_INVITATION
-                this.setState(nextState)
-                try {
-                  const invitationData: SMSPendingInvitationPayload = await invitationDetailsRequest(
-                    {
-                      url: urlInvitationQrCode.url,
-                    }
-                  )
-                  const invitationPayload = convertSmsPayloadToInvitation(
-                    invitationData
-                  )
-                  nextState.scanStatus = SCAN_STATUS.SUCCESS
-                  this.onSuccessRead(nextState)
-                  this.props.onInvitationUrl(invitationPayload)
-                } catch (e) {
-                  // set status that no invitation data was found at the url
-                  nextState.scanStatus = SCAN_STATUS.NO_INVITATION_DATA
-                  // re-activate scanning after setting fail status
-                  this.setState(nextState, this.delayedReactivate)
-                }
-              } else {
-                // qr code read failed
-                nextState.scanStatus = SCAN_STATUS.FAIL
-                // if qr code read failed, we reactivate qr code scan after delay
-                // so that user can see that QR code scan failed
-                this.setState(nextState, this.delayedReactivate)
-              }
-            }
-          }
-        }
-      }
+    if (this.isScanning) {
+      return false
     }
+
+    let qrData = null
+
+    // set class instance property as well to avoid async React state issue
+    this.isScanning = true
+
+    // check if qr code data is url or json object
+    const urlQrCode = isValidUrlQrCode(event.data)
+
+    if (urlQrCode) {
+      // update UI to reflect that ConnectMe has read url and now downloading data
+      this.setState({ scanStatus: SCAN_STATUS.DOWNLOADING })
+
+      // we have different url type qr codes as well,
+      // identify which type of url qr it is and get a json object from url
+      const [urlError, urlData] = await getUrlQrCodeData(urlQrCode, event.data)
+      if (urlError) {
+        // we could not get data from url, show error to user
+        return this.showError(urlError)
+      }
+
+      qrData = urlData
+    }
+
+    if (!qrData) {
+      // If we are here, that means we either got data in `qrData` variable from url
+      // or it was not urlQrCode, so we need to check if it is json object
+      const [parseError, parsedData] = flatJsonParse(event.data)
+      if (parseError) {
+        // we did not get data from url,
+        // then we tried to check if data is json, and that also failed in parsing
+        // show error to user and end continuing with this function
+        return this.showError(SCAN_STATUS.FAIL)
+      }
+
+      qrData = parsedData
+    }
+
+    if (!qrData) {
+      // if we still does not get data, then show another error to user
+      return this.showError(SCAN_STATUS.FAIL)
+    }
+
+    // now we got json object, either via qr code or via downloading from url
+
+    // check if version 1.0 qr invitation
+    const shortInviteQrCode = isValidShortInviteQrCode(qrData)
+    if (shortInviteQrCode) {
+      this.setState({ scanStatus: SCAN_STATUS.SCANNING })
+      // TODO: Change name of this prop to onShortInvite
+      return this.props.onRead(shortInviteQrCode)
+    }
+
+    // check if version 1.0 SMS invitation
+    const smsInviteQrCode = isValidSMSInvitation(qrData)
+    if (smsInviteQrCode) {
+      this.setState({ scanStatus: SCAN_STATUS.SCANNING })
+      // TODO: KS Change name of this prop to something like onSMSInvitation
+      return this.props.onInvitationUrl(
+        convertSmsPayloadToInvitation(smsInviteQrCode)
+      )
+    }
+
+    // check if aries invite
+    if (qrData.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR) {
+      this.setState({ scanStatus: SCAN_STATUS.SCANNING })
+      return this.props.onAriesConnectionInviteRead(qrData)
+    }
+
+    // aries invitation can be directly copied as json string as well
+    // above case handles when aries invite comes from url encoded
+    const ariesV1Invite = isValidAriesV1InviteData(qrData, event.data)
+    if (ariesV1Invite) {
+      this.setState({ scanStatus: SCAN_STATUS.SCANNING })
+      return this.props.onAriesConnectionInviteRead(ariesV1Invite)
+    }
+
+    // check if OIDC qr code
+    if (qrData.type === QR_CODE_TYPES.OIDC) {
+      // for OIDC based qr code, we have to follow few more steps
+      // show user that we are downloading JWT token
+      this.setState({ scanStatus: SCAN_STATUS.DOWNLOADING_AUTHENTICATION_JWT })
+      const [jwtAuthenticationRequest, jwtError] = await fetchValidateJWT(
+        qrData
+      )
+      if (jwtError !== null || jwtAuthenticationRequest === null) {
+        // if we get error while validating JWT request
+        // then show error on QR scanner and resume re-scanning of QR code
+        // after certain amount of time to let user read error
+        // and also so that qr code reader does not keep reading qr code
+        // and keep checking status in every sub millisecond
+        return this.setState(
+          { scanStatus: jwtError || SCAN_STATUS.FAIL },
+          this.delayedReactivate
+        )
+      }
+
+      return this.props.onOIDCAuthenticationRequest({
+        oidcAuthenticationQrCode: qrData,
+        jwtAuthenticationRequest,
+        id: uuid(),
+      })
+    }
+
+    // check if ephemeral proof request
+    const [
+      ephemeralProofError,
+      ephemeralProofRequest,
+    ] = await validateEphemeralProofQrCode(
+      qrData.type === QR_CODE_TYPES.URL_NON_JSON_RESPONSE
+        ? qrData.data
+        : JSON.stringify(qrData)
+    )
+    if (
+      ephemeralProofRequest &&
+      ephemeralProofRequest.type === QR_CODE_TYPES.EPHEMERAL_PROOF_REQUEST_V1
+    ) {
+      this.setState({ scanStatus: SCAN_STATUS.SCANNING })
+      return this.props.onEphemeralProofRequest(
+        ephemeralProofRequest.proofRequest
+      )
+    }
+
+    // if none of the code matches
+    // change scan status to fail, show unknown qr code format
+    this.setState({ scanStatus: SCAN_STATUS.FAIL })
+  }
+
+  showError = (error: QR_SCAN_STATUS) => {
+    // re-activate scanning after setting fail status
+    this.setState({ scanStatus: error }, this.delayedReactivate)
   }
 
   render() {
     return (
       <Container>
-        {this.state.cameraActive ? (
-          <RNCamera
-            onBarCodeRead={this.onRead}
-            style={[cameraStyle.camera]}
-            captureAudio={false}
-          >
-            <CameraMarker
-              status={this.state.scanStatus}
-              onClose={this.props.onClose}
-            />
-          </RNCamera>
-        ) : null}
+        <RNCamera
+          onBarCodeRead={this.onRead}
+          style={[cameraStyle.camera]}
+          captureAudio={false}
+        >
+          <CameraMarker
+            status={this.state.scanStatus}
+            onClose={this.props.onClose}
+          />
+        </RNCamera>
       </Container>
     )
   }
 }
+
 export class CameraMarker extends PureComponent<CameraMarkerProps, void> {
   render() {
     const { status, onClose } = this.props
@@ -302,6 +333,7 @@ const SUCCESS_STYLE_STATES = [
   SCAN_STATUS.SUCCESS,
   SCAN_STATUS.DOWNLOADING_INVITATION,
   SCAN_STATUS.DOWNLOADING_AUTHENTICATION_JWT,
+  SCAN_STATUS.DOWNLOADING,
 ]
 const FAILURE_STYLE_STATES = [
   SCAN_STATUS.FAIL,
@@ -314,6 +346,8 @@ const FAILURE_STYLE_STATES = [
   SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_SCHEMA,
   SCAN_STATUS.AUTH_REQUEST_INVALID_SIGNATURE,
   SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_SCHEMA_AND_SEND_FAIL,
+  SCAN_STATUS.INVALID_DOWNLOADED_DATA,
+  SCAN_STATUS.INVALID_URL_QR_CODE,
 ]
 
 const markerSize = 250

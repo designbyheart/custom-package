@@ -35,6 +35,7 @@ export const MESSAGE_TYPE = {
   QUESTION: 'Question',
   WALLET_BACKUP_READY: 'WALLET_BACKUP_READY',
   WALLET_BACKUP_ACK: 'WALLET_BACKUP_ACK',
+  ARIES: 'aries',
 }
 
 export const PAYLOAD_TYPE = {

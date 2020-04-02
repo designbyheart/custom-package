@@ -42,7 +42,7 @@ import {
 } from '../store/type-config-store'
 import { RESET } from '../common/type-common'
 import { captureError } from '../services/error/error-handler'
-import { isValidInvitationUrl } from '../components/qr-scanner/qr-invitation-url-validator'
+import { isValidInvitationUrl } from './sms-invitation-validator'
 import { schemaValidator } from '../services/schema-validator'
 
 const initialState = {}

@@ -82,6 +82,7 @@ export type ProofRequestPushPayload = {
   proof_request_data: ProofRequestData,
   remoteName: string,
   proofHandle: number,
+  ephemeralProofRequest?: string,
 }
 
 export type ProofApiData = {
@@ -110,6 +111,7 @@ export type AdditionalProofDataPayload = {
   originalProofRequestData: ProofRequestData,
   statusMsg?: string,
   proofHandle: number,
+  ephemeralProofRequest?: string,
 }
 
 export type ProofRequestAttributeListProp = {
@@ -385,6 +387,28 @@ export type ProofRequestAction =
 
 export type ProofRequestStore = {
   +[string]: ProofRequestPayload,
+}
+
+export type QrCodeEphemeralProofRequest = {
+  originalMessage: string,
+  ephemeralProofRequest: {
+    '@id': string,
+    '@type': string,
+    'request_presentations~attach': Array<{
+      '@id': string,
+      'mime-type': string,
+      data: {
+        base64: string,
+      },
+    }>,
+    comment: ?string,
+    '~service': {
+      recipientKeys: Array<string>,
+      routingKeys: ?Array<string>,
+      serviceEndpoint: string,
+    },
+  },
+  proofRequestPayload: AdditionalProofDataPayload,
 }
 
 export const PRIMARY_ACTION_SEND = 'Send'

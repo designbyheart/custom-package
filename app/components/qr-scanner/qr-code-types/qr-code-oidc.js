@@ -12,13 +12,10 @@ import { STORE_STATUS } from '../../../common/type-common'
 import { schemaValidator } from '../../../services/schema-validator'
 import { toUtf8FromBase64 } from '../../../bridge/react-native-cxs/RNCxs'
 import { addBase64Padding } from '../../../common/base64-padding'
+import { flatTryCatch } from '../../../common/flat-try-catch'
 
-export function isValidOIDCQrCode(passedUrlString: string): QrCodeOIDC | false {
-  if (passedUrlString.length > validInvitationUrlLength) {
-    return false
-  }
-
-  const { protocol, query, hostname } = urlParse(passedUrlString, {}, true)
+export function isValidOIDCQrCode(parsedUrl: urlParse): QrCodeOIDC | false {
+  const { protocol, query, hostname } = parsedUrl
 
   if (!validInvitationUrlScheme.includes(protocol)) {
     return false
@@ -41,13 +38,17 @@ export function isValidOIDCQrCode(passedUrlString: string): QrCodeOIDC | false {
     return false
   }
 
-  const clientId = decodeURIComponent(query.client_id)
-  if (!isUrl(clientId)) {
+  const [decodeError, clientId] = flatTryCatch(decodeURIComponent)(
+    query.client_id
+  )
+  if (decodeError || !clientId || !isUrl(clientId)) {
     return false
   }
 
-  const requestUri = decodeURIComponent(query.request_uri)
-  if (!isUrl(requestUri)) {
+  const [requestDecodeError, requestUri] = flatTryCatch(decodeURIComponent)(
+    query.request_uri
+  )
+  if (requestDecodeError || !requestUri || !isUrl(requestUri)) {
     return false
   }
 

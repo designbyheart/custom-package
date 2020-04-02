@@ -22,7 +22,7 @@ import type {
 } from './type-onfido'
 import type { CustomError, GenericObject } from '../common/type-common'
 import type { Store } from '../store/type-store'
-import type { QrCode } from '../components/qr-scanner/type-qr-scanner'
+import type { QrCodeShortInvite } from '../components/qr-scanner/type-qr-scanner'
 
 import {
   LAUNCH_ONFIDO_SDK,
@@ -49,7 +49,7 @@ import {
 } from './onfido-api'
 import { captureError } from '../services/error/error-handler'
 import { secureDelete, getHydrationItem, secureSet } from '../services/storage'
-import { isValidQrCode } from '../components/qr-scanner/qr-scanner-validator'
+import { isValidShortInviteQrCode } from '../components/qr-scanner/qr-code-types/qr-code-short-invite'
 import {
   invitationReceived,
   sendInvitationResponse,
@@ -301,9 +301,9 @@ export function* makeConnectionWithOnfidoSaga(
       )
       return
     }
-    const invitationData: QrCode | boolean = isValidQrCode(
-      JSON.stringify(invitationDetails.invite)
-    )
+    const invitationData:
+      | QrCodeShortInvite
+      | boolean = isValidShortInviteQrCode(invitationDetails.invite)
     if (!invitationData || typeof invitationData !== 'object') {
       yield put(
         updateOnfidoConnectionStatus(

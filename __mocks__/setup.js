@@ -183,7 +183,7 @@ jest.mock('react-native-share', () => {})
 jest.mock('react-native-mail', () => {})
 
 jest.mock('react-native-permissions', () => ({
-  request: jest.fn(permission => Promise.resolve()),
+  request: jest.fn(permission => Promise.resolve('authorized')),
 }))
 
 jest.mock('react-native-branch', () => {

@@ -282,28 +282,28 @@ export async function downloadClaimOffer(
   }
 }
 
-export async function downloadAriesCredentialOffer(
-  connectionHandle: number,
+export async function createAriesCredentialOffer(
   sourceId: string,
-  messageId: string
+  credentialOffer: string
 ): Promise<CxsCredentialOfferResult> {
-  const {
-    credential_offer,
-    credential_handle,
-  }: VcxCredentialOfferResult = await RNIndy.credentialCreateWithMsgId(
+  const credential_handle = await credentialCreateWithOffer(
     sourceId,
-    connectionHandle,
-    messageId
+    credentialOffer
   )
 
-  const [vcxCredentialOffer]: [VcxCredentialOffer] = JSON.parse(
-    credential_offer
-  )
+  const [vcxCredentialOffer]: [VcxCredentialOffer] = JSON.parse(credentialOffer)
 
   return {
     claimHandle: credential_handle,
     claimOffer: convertVcxCredentialOfferToCxsClaimOffer(vcxCredentialOffer),
   }
+}
+
+export async function credentialCreateWithOffer(
+  sourceId: string,
+  credentialOffer: string
+): Promise<number> {
+  return await RNIndy.credentialCreateWithOffer(sourceId, credentialOffer)
 }
 
 export async function serializeClaimOffer(

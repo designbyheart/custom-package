@@ -15,14 +15,9 @@ import { flattenAsync } from '../../../common/flatten-async'
 import { toUtf8FromBase64 } from '../../../bridge/react-native-cxs/RNCxs'
 
 export async function isAriesConnectionInviteQrCode(
-  qr: string
+  parsedUrl: URLParse
 ): Promise<AriesConnectionInvite | false> {
-  if (!isUrl(qr)) {
-    // if qr is not a url, then it cannot be a aries invite
-    return false
-  }
-
-  const { query } = URLParse(qr, {}, true)
+  const { query } = parsedUrl
 
   if (!query.c_i) {
     // if url does not have a query param named c_i, then return false
@@ -43,17 +38,24 @@ export async function isAriesConnectionInviteQrCode(
     return false
   }
 
-  if (!schemaValidator.validate(ariesConnectionInviteQrSchema, qrData)) {
+  return isValidAriesV1InviteData(qrData, decodedInvite)
+}
+
+export function isValidAriesV1InviteData(
+  payload: Object,
+  original: string
+): false | AriesConnectionInvite {
+  if (!schemaValidator.validate(ariesConnectionInviteQrSchema, payload)) {
     return false
   }
 
-  if (!isUrl(qrData.serviceEndpoint)) {
+  if (!isUrl(payload.serviceEndpoint)) {
     return false
   }
 
   return {
-    original: decodedInvite,
-    payload: qrData,
+    original,
+    payload,
     type: CONNECTION_INVITE_TYPES.ARIES_V1_QR,
     version: '1.0',
   }

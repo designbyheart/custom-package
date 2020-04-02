@@ -39,9 +39,11 @@ import {
   homeRoute,
   connectionHistRoute,
   openIdConnectRoute,
+  proofRequestRoute,
 } from '../common/'
+
 import type {
-  QrCode,
+  QrCodeShortInvite,
   OIDCAuthenticationRequest,
 } from '../components/qr-scanner/type-qr-scanner'
 import type { Store } from '../store/type-store'
@@ -53,13 +55,14 @@ import type {
   QRCodeScannerScreenState,
   QRCodeScannerScreenProps,
 } from './type-qr-code'
+import type { QrCodeEphemeralProofRequest } from '../proof-request/type-proof-request'
+
 import {
   MESSAGE_NO_CAMERA_PERMISSION,
   MESSAGE_ALLOW_CAMERA_PERMISSION,
   MESSAGE_RESET_CONNECT_ME,
   MESSAGE_RESET_DETAILS,
 } from './type-qr-code'
-import type { EnvironmentSwitchUrlQrCode } from '../components/qr-scanner/type-qr-scanner'
 import { changeEnvironmentUrl } from '../store/config-store'
 import { captureError } from '../services/error/error-handler'
 import { getAllPublicDid } from '../store/store-selector'
@@ -69,8 +72,9 @@ import {
   OPEN_ID_CONNECT_STATE,
 } from '../open-id-connect/open-id-connect-actions'
 import { ID } from '../common/type-common'
+import { proofRequestReceived } from '../proof-request/proof-request-store'
 
-export function convertQrCodeToInvitation(qrCode: QrCode) {
+export function convertQrCodeToInvitation(qrCode: QrCodeShortInvite) {
   const qrSenderDetail = qrCode[QR_CODE_SENDER_DETAIL]
   const qrSenderAgency = qrCode[QR_CODE_SENDER_AGENCY]
   const senderDetail = {
@@ -125,7 +129,7 @@ export class QRCodeScannerScreen extends Component<
   permissionCheckIntervalId: ?IntervalID = undefined
   checkPermission = false
 
-  onRead = (qrCode: QrCode) => {
+  onRead = (qrCode: QrCodeShortInvite) => {
     if (this.props.currentScreen === qrCodeScannerTabRoute) {
       const invitation = {
         payload: convertQrCodeToInvitation(qrCode),
@@ -134,22 +138,26 @@ export class QRCodeScannerScreen extends Component<
     }
   }
 
-  onAllowSwitchEnvironment = (url: EnvironmentSwitchUrlQrCode) => {
-    this.props.changeEnvironmentUrl(url.url)
-    this.props.navigation.goBack(null)
-  }
+  // Please do not remove below commented lines
+  // We will want to have environment switcher from QR code
+  // sometime in future
 
-  onEnvironmentSwitchUrl = (url: EnvironmentSwitchUrlQrCode) => {
-    if (this.props.currentScreen === qrCodeScannerTabRoute) {
-      Alert.alert(MESSAGE_RESET_CONNECT_ME, MESSAGE_RESET_DETAILS(url.name), [
-        { text: 'Cancel' },
-        {
-          text: 'Switch',
-          onPress: () => this.onAllowSwitchEnvironment(url),
-        },
-      ])
-    }
-  }
+  // onAllowSwitchEnvironment = (url: EnvironmentSwitchUrlQrCode) => {
+  //   this.props.changeEnvironmentUrl(url.url)
+  //   this.props.navigation.goBack(null)
+  // }
+
+  // onEnvironmentSwitchUrl = (url: EnvironmentSwitchUrlQrCode) => {
+  //   if (this.props.currentScreen === qrCodeScannerTabRoute) {
+  //     Alert.alert(MESSAGE_RESET_CONNECT_ME, MESSAGE_RESET_DETAILS(url.name), [
+  //       { text: 'Cancel' },
+  //       {
+  //         text: 'Switch',
+  //         onPress: () => this.onAllowSwitchEnvironment(url),
+  //       },
+  //     ])
+  //   }
+  // }
 
   onInvitationUrl = (payload: InvitationPayload) => {
     if (this.props.currentScreen === qrCodeScannerTabRoute) {
@@ -336,10 +344,10 @@ export class QRCodeScannerScreen extends Component<
           <QRScanner
             onRead={this.onRead}
             onClose={this.onClose}
-            onEnvironmentSwitchUrl={this.onEnvironmentSwitchUrl}
             onInvitationUrl={this.onInvitationUrl}
             onOIDCAuthenticationRequest={this.onOIDCAuthenticationRequest}
             onAriesConnectionInviteRead={this.onAriesConnectionInviteRead}
+            onEphemeralProofRequest={this.onEphemeralProofRequest}
           />
         ) : null}
       </Container>
@@ -398,6 +406,22 @@ export class QRCodeScannerScreen extends Component<
 
     this.checkExistingConnectionAndRedirect({ payload: invitation })
   }
+
+  onEphemeralProofRequest = (
+    ephemeralProofRequest: QrCodeEphemeralProofRequest
+  ) => {
+    const uid = ephemeralProofRequest.ephemeralProofRequest['@id']
+    this.props.proofRequestReceived(ephemeralProofRequest.proofRequestPayload, {
+      uid,
+      remotePairwiseDID:
+        ephemeralProofRequest.ephemeralProofRequest['~service']
+          .recipientKeys[0],
+      senderLogoUrl: null,
+    })
+    this.props.navigation.navigate(proofRequestRoute, {
+      uid,
+    })
+  }
 }
 
 const mapStateToProps = (state: Store) => ({
@@ -411,6 +435,7 @@ const mapDispatchToProps = dispatch =>
       invitationReceived,
       changeEnvironmentUrl,
       openIdConnectUpdateStatus,
+      proofRequestReceived,
     },
     dispatch
   )

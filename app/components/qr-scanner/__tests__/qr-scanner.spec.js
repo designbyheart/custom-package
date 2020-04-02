@@ -10,8 +10,11 @@ import {
   validInvitationUrlQrCode,
   smsDownloadedPayload,
 } from '../../../../__mocks__/static-data'
-import * as api from '../../../api/api'
+import { mockAriesV1QrCode } from '../../../../__mocks__/data/mock-qr-data'
+import * as fetch from '../../../common/flat-fetch'
 import { convertSmsPayloadToInvitation } from '../../../sms-pending-invitation/sms-pending-invitation-store'
+import { CONNECTION_INVITE_TYPES } from '../../../invitation/type-invitation'
+import * as vcx from '../../../bridge/react-native-cxs/RNCxs'
 
 describe('<QRScanner />', () => {
   const getProps = () => ({
@@ -21,6 +24,7 @@ describe('<QRScanner />', () => {
     onInvitationUrl: jest.fn(),
     onOIDCAuthenticationRequest: jest.fn(),
     onAriesConnectionInviteRead: jest.fn(),
+    onEphemeralProofRequest: jest.fn(),
   })
 
   function setup() {
@@ -49,7 +53,7 @@ describe('<QRScanner />', () => {
 
     await instance.onRead(qrReadEvent)
     expect(onRead).toHaveBeenCalledWith(expect.objectContaining(qrData))
-    expect(instance.state.scanStatus).toBe(SCAN_STATUS.SUCCESS)
+    expect(instance.state.scanStatus).toBe(SCAN_STATUS.SCANNING)
   })
 
   it('should set state to fail if QR code is not correct', async () => {
@@ -65,7 +69,8 @@ describe('<QRScanner />', () => {
     expect(instance.state.scanStatus).toBe(SCAN_STATUS.SCANNING)
   })
 
-  it('should call onEnvironmentSwitchUrl if it reads correct environment switcher url', async () => {
+  // this functionality is commented as of now
+  xit('should call onEnvironmentSwitchUrl if it reads correct environment switcher url', async () => {
     jest.useFakeTimers()
     const { onEnvironmentSwitchUrl, instance } = setup()
 
@@ -79,13 +84,10 @@ describe('<QRScanner />', () => {
 
   it('should send a request to download invitation if url is scanned', async () => {
     jest.useFakeTimers()
-    const invitationDetailRequestSpy = jest.spyOn(
-      api,
-      'invitationDetailsRequest'
-    )
+    const invitationDetailRequestSpy = jest.spyOn(fetch, 'flatFetch')
 
     invitationDetailRequestSpy.mockImplementation(() =>
-      Promise.resolve(smsDownloadedPayload)
+      Promise.resolve([null, JSON.stringify(smsDownloadedPayload)])
     )
 
     const { onInvitationUrl, instance } = setup()
@@ -93,17 +95,72 @@ describe('<QRScanner />', () => {
     const pendingQrProcessing = instance.onRead({
       data: validInvitationUrlQrCode,
     })
-    expect(instance.state.scanStatus).toBe(SCAN_STATUS.SCANNING)
+    expect(instance.state.scanStatus).toBe(SCAN_STATUS.DOWNLOADING)
     // process API call
     await pendingQrProcessing
 
     expect(onInvitationUrl).toHaveBeenCalledWith(
       convertSmsPayloadToInvitation(smsDownloadedPayload)
     )
-    expect(instance.state.scanStatus).toBe(SCAN_STATUS.SUCCESS)
+    expect(instance.state.scanStatus).toBe(SCAN_STATUS.SCANNING)
 
     invitationDetailRequestSpy.mockReset()
     invitationDetailRequestSpy.mockRestore()
+
+    jest.runAllTimers()
+
+    expect(instance.state.scanStatus).toBe(SCAN_STATUS.SCANNING)
+  })
+
+  it('should call onAriesConnectionInviteRead, if we get aries QR code', async () => {
+    jest.useFakeTimers()
+    const { onAriesConnectionInviteRead, instance } = setup()
+
+    const qrReadEvent = {
+      data: JSON.stringify(mockAriesV1QrCode),
+    }
+
+    await instance.onRead(qrReadEvent)
+    expect(onAriesConnectionInviteRead).toHaveBeenCalledWith(
+      expect.objectContaining({
+        payload: mockAriesV1QrCode,
+        type: CONNECTION_INVITE_TYPES.ARIES_V1_QR,
+        version: '1.0',
+      })
+    )
+    expect(instance.state.scanStatus).toBe(SCAN_STATUS.SCANNING)
+  })
+
+  it('should call onAriesConnectionInviteRead, if we pass a url that gives aries v1 qr code', async () => {
+    jest.useFakeTimers()
+
+    const toUtf8Spy = jest.spyOn(vcx, 'toUtf8FromBase64')
+    toUtf8Spy.mockImplementation(() =>
+      Promise.resolve(JSON.stringify(mockAriesV1QrCode))
+    )
+
+    const { onAriesConnectionInviteRead, instance } = setup()
+
+    const pendingQrProcessing = instance.onRead({
+      data: `${validInvitationUrlQrCode}?c_i=${JSON.stringify(
+        mockAriesV1QrCode
+      )}`,
+    })
+    expect(instance.state.scanStatus).toBe(SCAN_STATUS.DOWNLOADING)
+    // process API call
+    await pendingQrProcessing
+
+    expect(onAriesConnectionInviteRead).toHaveBeenCalledWith(
+      expect.objectContaining({
+        payload: mockAriesV1QrCode,
+        type: CONNECTION_INVITE_TYPES.ARIES_V1_QR,
+        version: '1.0',
+      })
+    )
+    expect(instance.state.scanStatus).toBe(SCAN_STATUS.SCANNING)
+
+    toUtf8Spy.mockReset()
+    toUtf8Spy.mockRestore()
 
     jest.runAllTimers()
 

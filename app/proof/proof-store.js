@@ -52,6 +52,7 @@ import {
   generateProof,
   getMatchingCredentials,
   proofDeserialize,
+  proofCreateWithRequest,
 } from '../bridge/react-native-cxs/RNCxs'
 import {
   proofRequestAutoFill,
@@ -343,8 +344,20 @@ export function* generateProofSaga(action: GenerateProofAction): any {
       uid
     )
     const proofRequest = proofRequestPayload.originalProofRequestData
-    let proofHandle: number = proofRequestPayload.proofHandle
+    let { proofHandle, ephemeralProofRequest } = proofRequestPayload
     let matchingCredentialsJson: ?string = undefined
+
+    // we can have proofHandle as 0 as well
+    // if we have proofHandle as 0, that means we need to get proofHandle again
+    if (proofHandle === 0 && ephemeralProofRequest) {
+      proofHandle = yield call(
+        proofCreateWithRequest,
+        uid,
+        ephemeralProofRequest
+      )
+      // update proof handle in store, because it would be used by proof-request store
+      yield put(updateProofHandle(proofHandle, uid))
+    }
 
     try {
       matchingCredentialsJson = yield call(getMatchingCredentials, proofHandle)

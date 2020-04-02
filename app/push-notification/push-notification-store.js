@@ -263,7 +263,12 @@ export function convertClaimOfferPushPayloadToAppClaimOffer(
 export function convertProofRequestPushPayloadToAppProofRequest(
   pushPayload: ProofRequestPushPayload
 ): AdditionalProofDataPayload {
-  const { proof_request_data, remoteName, proofHandle } = pushPayload
+  const {
+    proof_request_data,
+    remoteName,
+    proofHandle,
+    ephemeralProofRequest,
+  } = pushPayload
   const { requested_attributes, name, version } = proof_request_data
 
   const requestedAttributes = Object.keys(requested_attributes).map(
@@ -283,6 +288,7 @@ export function convertProofRequestPushPayloadToAppProofRequest(
     },
     originalProofRequestData: proof_request_data,
     proofHandle,
+    ephemeralProofRequest,
   }
 }
 

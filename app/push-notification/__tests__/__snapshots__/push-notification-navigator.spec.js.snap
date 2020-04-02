@@ -75,6 +75,7 @@ Object {
     ],
     "version": "0.1",
   },
+  "ephemeralProofRequest": undefined,
   "originalProofRequestData": Object {
     "name": "proof_req_1",
     "nonce": "123432421212",

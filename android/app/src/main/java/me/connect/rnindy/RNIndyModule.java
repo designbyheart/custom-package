@@ -673,6 +673,25 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void credentialCreateWithOffer(String sourceId, String credOffer, Promise promise) {
+        try {
+            CredentialApi.credentialCreateWithOffer(sourceId, credOffer).exceptionally((t) -> {
+                Log.e(TAG, "credentialCreateWithOffer: ", t);
+                promise.reject("FutureException", t.getMessage());
+                return -1;
+            }).thenAccept(result -> {
+                Log.e(TAG, ">>>><<<< got result back");
+                if (result != -1) {
+                    BridgeUtils.resolveIfValid(promise, result);
+                }
+            });
+        } catch(VcxException e) {
+            promise.reject("VCXException", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @ReactMethod
     public void serializeClaimOffer(int credentialHandle, Promise promise) {
         // it would return error code, json string of credential inside callback
 

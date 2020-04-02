@@ -7,6 +7,7 @@ import type { ReactNavigation } from '../common/type-common'
 import type { Connection } from '../store/type-connection-store'
 import type { OIDCAuthenticationRequest } from '../components/qr-scanner/type-qr-scanner'
 import type { OpenIdConnectState } from '../open-id-connect/open-id-connect-actions'
+import { proofRequestReceived } from '../proof-request/proof-request-store'
 
 export type QRCodeScannerScreenState = {
   isCameraAuthorized: boolean,
@@ -25,6 +26,7 @@ export type QRCodeScannerScreenProps = {
     OIDCAuthenticationRequest,
     OpenIdConnectState
   ) => void,
+  proofRequestReceived: typeof proofRequestReceived,
 } & ReactNavigation
 
 export const MESSAGE_NO_CAMERA_PERMISSION = 'No Camera permission'
