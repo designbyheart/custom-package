@@ -426,9 +426,17 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
       onEndReachedThreshold={2}
       onLayout={[Function]}
       onMomentumScrollEnd={[Function]}
+      onRefresh={[Function]}
       onScroll={[Function]}
       onScrollBeginDrag={[Function]}
       onScrollEndDrag={[Function]}
+      refreshControl={
+        <RefreshControlMock
+          onRefresh={[Function]}
+          refreshing={false}
+        />
+      }
+      refreshing={false}
       renderItem={[Function]}
       scrollEventThrottle={50}
       stickyHeaderIndices={Array []}
@@ -436,7 +444,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
         Object {
           "backgroundColor": "#fff",
           "height": "100%",
-          "paddingTop": 72,
+          "marginTop": 72,
           "width": "100%",
         }
       }
@@ -444,6 +452,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
       viewabilityConfigCallbackPairs={Array []}
       windowSize={21}
     >
+      <RCTRefreshControl />
       <View>
         <View
           onLayout={[Function]}
@@ -1440,9 +1449,17 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
       onEndReachedThreshold={2}
       onLayout={[Function]}
       onMomentumScrollEnd={[Function]}
+      onRefresh={[Function]}
       onScroll={[Function]}
       onScrollBeginDrag={[Function]}
       onScrollEndDrag={[Function]}
+      refreshControl={
+        <RefreshControlMock
+          onRefresh={[Function]}
+          refreshing={false}
+        />
+      }
+      refreshing={false}
       renderItem={[Function]}
       scrollEventThrottle={50}
       stickyHeaderIndices={Array []}
@@ -1450,7 +1467,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
         Object {
           "backgroundColor": "#fff",
           "height": "100%",
-          "paddingTop": 72,
+          "marginTop": 72,
           "width": "100%",
         }
       }
@@ -1458,6 +1475,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
       viewabilityConfigCallbackPairs={Array []}
       windowSize={21}
     >
+      <RCTRefreshControl />
       <View />
     </RCTScrollView>
   </View>

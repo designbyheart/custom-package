@@ -122,6 +122,9 @@ import {
   processMessages,
   traverseAndGetAllMessages,
   convertDecryptedPayloadToQuestion,
+  getMessagesLoading,
+  getMessagesSuccess,
+  getMessagesFail,
 } from '../store/config-store'
 import {
   claimOfferRoute,
@@ -521,6 +524,9 @@ export function* fetchAdditionalDataSaga(
     connection.vcxSerializedConnection
   )
 
+  // update that we are downloading messages
+  yield put(getMessagesLoading())
+
   try {
     let additionalData:
       | ClaimOfferPushPayload
@@ -602,6 +608,9 @@ export function* fetchAdditionalDataSaga(
 
     // do something with data, probably get the message here
 
+    // update that message download was success
+    yield put(getMessagesSuccess())
+
     if (!additionalData) {
       // we did not get any data or either push notification type is not supported
       return
@@ -619,6 +628,7 @@ export function* fetchAdditionalDataSaga(
     if (isAppLocked) {
       yield take(UNLOCK_APP)
     }
+
     yield call(delay, 600)
 
     yield put(
@@ -637,6 +647,8 @@ export function* fetchAdditionalDataSaga(
       })
     )
   } catch (e) {
+    // update that message download failed
+    yield put(getMessagesFail())
     customLogger.log(e)
     captureError(e)
     yield put(
@@ -892,6 +904,7 @@ export function* hydratePushTokenSaga(): Generator<*, *, *> {
 export function* savePushTokenSaga(pushToken: string): Generator<*, *, *> {
   try {
     yield call(safeSet, PUSH_COM_METHOD, pushToken)
+    yield put({ type: 'PUSH_TOKEN_SAVED' })
   } catch (e) {
     // Need to figure out what should be done if storage fails
     customLogger.error(`savePushTokenSaga: ${e}`)

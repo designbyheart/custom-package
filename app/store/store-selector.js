@@ -83,6 +83,9 @@ export const getConnection = (
   return []
 }
 
+export const getConnectionsCount = (state: Store) =>
+  Object.keys(state.connections.data || {}).length
+
 export const isDuplicateConnection = (state: Store, senderDID: string) => {
   const connections = getConnection(state, senderDID)
 

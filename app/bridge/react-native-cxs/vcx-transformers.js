@@ -154,7 +154,7 @@ export function convertVcxCredentialOfferToCxsClaimOffer(
     to_did: vcxCredentialOffer.to_did,
     from_did: vcxCredentialOffer.from_did,
     claim: vcxCredentialOffer.credential_attrs,
-    claim_name: vcxCredentialOffer.claim_name || 'Anonymous',
+    claim_name: vcxCredentialOffer.claim_name || 'Unknown',
     schema_seq_no: vcxCredentialOffer.schema_seq_no,
     issuer_did: vcxCredentialOffer.from_did,
     // should override it when generating claim offer object

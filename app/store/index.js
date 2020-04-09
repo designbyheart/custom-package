@@ -70,6 +70,7 @@ import {
   watchInAppNotificationActions,
   inAppNotificationReducer,
 } from '../in-app-notification/in-app-notification-store'
+import { watchMessageDownload } from '../message-download/message-download'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -154,6 +155,7 @@ sagaMiddleware.run(function*() {
     watchOpenIdConnectStore(),
     watchProofRequestDeny(),
     watchInAppNotificationActions(),
+    watchMessageDownload(),
   ])
 })
 

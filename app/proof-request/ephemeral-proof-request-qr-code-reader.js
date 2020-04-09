@@ -109,7 +109,7 @@ export async function validateEphemeralProofQrCode(
           },
           '@topic': { mid: 0, tid: 0 },
           '@type': { name: 'proof_request', version: '0.1' },
-          remoteName: ephemeralProofRequest.comment || 'Anonymous',
+          remoteName: ephemeralProofRequest.comment || 'Unknown',
           proofHandle: 0,
           ephemeralProofRequest: originalMessage,
         }),

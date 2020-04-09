@@ -5,6 +5,7 @@ import type {
   Connection,
 } from '../store/type-connection-store'
 import type { ConnectionHistoryStore } from '../connection-history/type-connection-history'
+import type { MessageDownloadStatus } from '../store/type-config-store'
 
 export type NewConnectionInstructionsProps = {
   usingProductionNetwork: boolean,
@@ -16,4 +17,7 @@ export type HomeProps = {
   recentConnections: Array<Object>,
   hasNoConnection: boolean,
   mappedDidToLogoAndName: Object,
+  getUnacknowledgedMessages: () => void,
+  messageDownloadStatus: MessageDownloadStatus,
+  snackError: ?string,
 } & ReactNavigation

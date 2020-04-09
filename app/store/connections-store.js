@@ -48,6 +48,7 @@ import {
   SEND_CONNECTION_REDIRECT,
   UPDATE_SERIALIZE_CONNECTION_FAIL,
   UPDATE_CONNECTION_SERIALIZED_STATE,
+  SEND_REDIRECT_SUCCESS,
 } from './type-connection-store'
 import {
   deleteConnection,
@@ -366,6 +367,9 @@ function* sendConnectionRedirectSaga(
             redirectConnectionHandle,
             connectionHandle
           )
+          yield put({
+            type: SEND_REDIRECT_SUCCESS,
+          })
         } catch (e) {
           // catch error if connectionRedirect API fails
           yield put({
