@@ -77,5 +77,5 @@ const ariesConnectionInviteQrSchema = {
     },
     serviceEndpoint: { type: 'string' },
   },
-  required: [ID, TYPE, 'recipientKeys', 'routingKeys', 'serviceEndpoint'],
+  required: [ID, TYPE, 'recipientKeys', 'serviceEndpoint'],
 }

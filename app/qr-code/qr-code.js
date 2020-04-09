@@ -372,8 +372,8 @@ export class QRCodeScannerScreen extends Component<
     const { payload, original } = ariesConnectionInvite
 
     const senderAgentKeyDelegationProof = {
-      agentDID: payload.routingKeys[0],
-      agentDelegatedKey: payload.routingKeys[0],
+      agentDID: payload.recipientKeys[0],
+      agentDelegatedKey: payload.recipientKeys[0],
       signature: '<no-signature-supplied>',
     }
 
@@ -381,14 +381,14 @@ export class QRCodeScannerScreen extends Component<
       senderEndpoint: payload.serviceEndpoint,
       requestId: payload[ID],
       senderAgentKeyDelegationProof,
-      senderName: payload.label || 'Anonymous',
+      senderName: payload.label || 'Unknown',
       senderDID: payload.recipientKeys[0],
       // TODO:KS Need to discuss with architects to know how to fulfill this requirement
       senderLogoUrl: 'http://robohash.org/234',
       senderVerificationKey: payload.recipientKeys[0],
-      targetName: payload.label || 'Anonymous',
+      targetName: payload.label || 'Unknown',
       senderDetail: {
-        name: payload.label || 'Anonymous',
+        name: payload.label || 'Unknown',
         agentKeyDlgProof: senderAgentKeyDelegationProof,
         DID: payload.recipientKeys[0],
         logoUrl: 'http://robohash.org/234',

@@ -5,6 +5,7 @@ import type {
   Connection,
 } from '../store/type-connection-store'
 import type { ConnectionHistoryStore } from '../connection-history/type-connection-history'
+import type { MessageDownloadStatus } from '../store/type-config-store'
 
 export type NewConnectionInstructionsProps = {
   usingProductionNetwork: boolean,
@@ -38,6 +39,9 @@ export type MyConnectionsProps = {
   onNewConnectionSeen: (senderDid: string) => void,
   connections: Array<Item>,
   hasNoConnection: boolean,
+  getUnacknowledgedMessages: () => void,
+  messageDownloadStatus: MessageDownloadStatus,
+  snackError: ?string,
 } & ReactNavigation
 
 // TODO: Remove this afterwrds, the lint is failing for some reason.
