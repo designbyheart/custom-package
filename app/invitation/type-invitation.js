@@ -151,7 +151,7 @@ export type AriesConnectionInvitePayload = {
   '@type': AriesConnectionInviteType,
   label?: string,
   recipientKeys: Array<string>,
-  routingKeys?: Array<string>,
+  routingKeys?: ?Array<string>,
   serviceEndpoint: string,
 }
 

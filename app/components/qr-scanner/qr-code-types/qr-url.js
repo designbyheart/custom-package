@@ -39,7 +39,24 @@ export async function getUrlQrCodeData(
   // if we get url qr code, then there are three ways as of now that ConnectMe supports
   // to get data from url qr code
 
-  // 1. download data and get a valid json object
+  // Two ways are to get data directly from URL query params
+
+  // 1. get aries invitation data using url qr code
+  const ariesConnectionInvite = await isAriesConnectionInviteQrCode(parsedUrl)
+  if (ariesConnectionInvite) {
+    return [null, ariesConnectionInvite]
+  }
+
+  // 2. get OIDC authentication data from url
+  const oidcQrCode = isValidOIDCQrCode(parsedUrl)
+  if (oidcQrCode) {
+    return [null, oidcQrCode]
+  }
+
+  // if there is no data available in url params, then try to download data
+  // from the passed url and check if we get data from url
+
+  // 3. download data and get a valid json object
   const [downloadError, downloadedData] = await flatFetch(url)
   if (downloadedData) {
     // we are able to get data from url
@@ -60,22 +77,6 @@ export async function getUrlQrCodeData(
       null,
       { type: QR_CODE_TYPES.URL_NON_JSON_RESPONSE, data: downloadedData },
     ]
-  }
-
-  // if we don't get valid json object from url, then we could have data directly in url
-  // As of now, there are two urls that ConnectMe supports which can have data
-  // in query strings of url
-
-  // 1. get aries invitation data using url qr code
-  const ariesConnectionInvite = await isAriesConnectionInviteQrCode(parsedUrl)
-  if (ariesConnectionInvite) {
-    return [null, ariesConnectionInvite]
-  }
-
-  // 2. get OIDC authentication data from url
-  const oidcQrCode = isValidOIDCQrCode(parsedUrl)
-  if (oidcQrCode) {
-    return [null, oidcQrCode]
   }
 
   // if we reach to this point, that means that we could not get data from url

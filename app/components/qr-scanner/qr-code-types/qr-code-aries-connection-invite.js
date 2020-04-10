@@ -1,6 +1,7 @@
 // @flow
 
 import isUrl from 'validator/lib/isURL'
+import URLParse from 'url-parse'
 
 import type {
   AriesConnectionInvite,
@@ -10,7 +11,6 @@ import type {
 import { CONNECTION_INVITE_TYPES } from '../../../invitation/type-invitation'
 import { schemaValidator } from '../../../services/schema-validator'
 import { ID, TYPE } from '../../../common/type-common'
-import URLParse from 'url-parse'
 import { flattenAsync } from '../../../common/flatten-async'
 import { toUtf8FromBase64 } from '../../../bridge/react-native-cxs/RNCxs'
 
@@ -66,13 +66,15 @@ const ariesConnectionInviteQrSchema = {
   properties: {
     [ID]: { type: 'string' },
     [TYPE]: { type: 'string' },
-    label: { type: 'string' },
+    label: { type: ['null', 'string'] },
     recipientKeys: {
       type: 'array',
+      items: [{ type: 'string' }],
       minItems: 1,
     },
     routingKeys: {
-      type: 'array',
+      type: ['null', 'array'],
+      items: [{ type: 'string' }],
       minItems: 1,
     },
     serviceEndpoint: { type: 'string' },
