@@ -150,7 +150,7 @@ const ephemeralProofRequestSchema = {
       },
       minLength: 1,
     },
-    comment: { type: 'string' },
+    comment: { type: ['null', 'string'] },
     '~service': {
       type: 'object',
       properties: {
@@ -162,7 +162,7 @@ const ephemeralProofRequestSchema = {
           minLength: 1,
         },
         routingKeys: {
-          type: 'array',
+          type: ['null', 'array'],
           items: { type: 'string' },
         },
         serviceEndpoint: { type: 'string', minLength: 10 },

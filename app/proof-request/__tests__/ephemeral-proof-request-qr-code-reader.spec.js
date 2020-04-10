@@ -126,4 +126,33 @@ describe('ephemeral-proof-request-qr-code-reader', () => {
     decodeSpy.mockReset()
     decodeSpy.mockRestore()
   })
+
+  it('should match valid ephemeral proof request with null comment, and null routingKeys', async () => {
+    const decodeSpy = jest.spyOn(vcx, 'toUtf8FromBase64')
+    decodeSpy
+      .mockImplementationOnce(() => Promise.reject('invalid base64 qr code'))
+      .mockImplementationOnce(() =>
+        Promise.resolve(
+          JSON.stringify({
+            ...originalProofRequestData,
+          })
+        )
+      )
+
+    const [_, ephemeralProofRequest] = await validateEphemeralProofQrCode(
+      JSON.stringify({
+        ...mockEphemeralProofRequestQrCode,
+        comment: null,
+        '~service': {
+          ...mockEphemeralProofRequestQrCode['~service'],
+          routingKeys: null,
+        },
+      })
+    )
+
+    expect(ephemeralProofRequest).toMatchSnapshot()
+
+    decodeSpy.mockReset()
+    decodeSpy.mockRestore()
+  })
 })
