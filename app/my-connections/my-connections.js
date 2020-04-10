@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
+import Snackbar from 'react-native-snackbar'
 import { BlurView } from 'react-native-blur'
 
 import type { Store } from '../store/type-store'
@@ -33,12 +34,19 @@ import { scale } from 'react-native-size-matters'
 import { size } from '../components/icon'
 import { externalStyles } from './styles'
 import { NewConnectionInstructions } from './new-connection-instructions'
-import { getEnvironmentName } from '../store/config-store'
-import { SERVER_ENVIRONMENT } from '../store/type-config-store'
+import {
+  getEnvironmentName,
+  getUnacknowledgedMessages,
+} from '../store/config-store'
+import {
+  SERVER_ENVIRONMENT,
+  GET_MESSAGES_LOADING,
+} from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { bindActionCreators } from 'redux'
 import SvgCustomIcon from '../components/svg-custom-icon'
 import { NotificationCard } from '../in-app-notification/in-app-notification-card'
+import { venetianRed } from '../common/styles'
 
 export class MyConnectionsScreen extends Component<
   MyConnectionsProps,
@@ -54,6 +62,19 @@ export class MyConnectionsScreen extends Component<
 
     if (noUnSeenMessages) {
       firebase.notifications().setBadge(0)
+    }
+
+    if (
+      prevProps.snackError !== this.props.snackError &&
+      this.props.snackError
+    ) {
+      Snackbar.dismiss()
+      Snackbar.show({
+        title: this.props.snackError,
+        backgroundColor: venetianRed,
+        fontFamily: 'Lato',
+        duration: Snackbar.LENGTH_LONG,
+      })
     }
   }
 
@@ -149,6 +170,10 @@ export class MyConnectionsScreen extends Component<
             contentContainerStyle={flatListInnerContainer}
             data={this.props.connections}
             renderItem={this.renderItem}
+            onRefresh={this.onRefresh}
+            refreshing={
+              this.props.messageDownloadStatus === GET_MESSAGES_LOADING
+            }
           />
         </View>
         {this.renderBlurForIos()}
@@ -161,6 +186,10 @@ export class MyConnectionsScreen extends Component<
         />
       </View>
     )
+  }
+
+  onRefresh = () => {
+    this.props.getUnacknowledgedMessages()
   }
 }
 
@@ -263,6 +292,8 @@ const mapStateToProps = (state: Store) => {
     environmentName: getEnvironmentName(state.config),
     hasNoConnection,
     connections,
+    messageDownloadStatus: state.config.messageDownloadStatus,
+    snackError: state.config.snackError,
   }
 }
 
@@ -270,6 +301,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       onNewConnectionSeen: newConnectionSeen,
+      getUnacknowledgedMessages,
     },
     dispatch
   )

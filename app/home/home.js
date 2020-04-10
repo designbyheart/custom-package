@@ -10,7 +10,9 @@ import {
   FlatList,
   Dimensions,
 } from 'react-native'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Snackbar from 'react-native-snackbar'
 import { BlurView } from 'react-native-blur'
 
 import type { Store } from '../store/type-store'
@@ -30,8 +32,14 @@ import {
 } from '../common'
 import { getConnections } from '../store/connections-store'
 import { NewConnectionInstructions } from '../my-connections/new-connection-instructions'
-import { getEnvironmentName } from '../store/config-store'
-import { SERVER_ENVIRONMENT } from '../store/type-config-store'
+import {
+  getEnvironmentName,
+  getUnacknowledgedMessages,
+} from '../store/config-store'
+import {
+  SERVER_ENVIRONMENT,
+  GET_MESSAGES_LOADING,
+} from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import {
   primaryHeaderHeight,
@@ -43,6 +51,7 @@ import { NewBannerCard } from './new-banner-card/new-banner-card'
 import { RecentCard } from './recent-card/recent-card'
 import { RecentCardSeparator } from './recent-card-separator'
 import { EmptyViewPlaceholder } from './empty-view-placeholder'
+import { venetianRed } from '../common/styles'
 
 export class HomeScreen extends Component<HomeProps, void> {
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
@@ -189,10 +198,15 @@ export class HomeScreen extends Component<HomeProps, void> {
           <View style={this.applyCorrectStylesForNewBadgeFlatList()}>
             <FlatList
               keyExtractor={this.keyExtractor}
+              style={styles.newBadgeFlatListContainer}
               contentContainerStyle={styles.newBadgeFlatListInnerContainer}
               data={this.props.newBannerConnections}
               renderItem={({ item }) => this.renderNewBannerCard(item)}
               ListEmptyComponent={this.renderEmptyListPlaceholder}
+              onRefresh={this.onRefresh}
+              refreshing={
+                this.props.messageDownloadStatus === GET_MESSAGES_LOADING
+              }
             />
           </View>
 
@@ -214,6 +228,25 @@ export class HomeScreen extends Component<HomeProps, void> {
         />
       </View>
     )
+  }
+
+  onRefresh = () => {
+    this.props.getUnacknowledgedMessages()
+  }
+
+  componentDidUpdate(prevProps: HomeProps) {
+    if (
+      prevProps.snackError !== this.props.snackError &&
+      this.props.snackError
+    ) {
+      Snackbar.dismiss()
+      Snackbar.show({
+        title: this.props.snackError,
+        backgroundColor: venetianRed,
+        fontFamily: 'Lato',
+        duration: Snackbar.LENGTH_LONG,
+      })
+    }
   }
 }
 
@@ -279,12 +312,24 @@ const mapStateToProps = (state: Store) => {
     newBannerConnections,
     recentConnections,
     mappedDidToLogoAndName,
+    messageDownloadStatus: state.config.messageDownloadStatus,
+    snackError: state.config.snackError,
   }
 }
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getUnacknowledgedMessages,
+    },
+    dispatch
+  )
+
 export default createStackNavigator({
   [homeRoute]: {
-    screen: withStatusBar()(connect(mapStateToProps, null)(HomeScreen)),
+    screen: withStatusBar()(
+      connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
+    ),
   },
 })
 
@@ -311,6 +356,9 @@ const styles = StyleSheet.create({
   checkmarkContainer: {
     width: '100%',
     height: height * 0.6,
+  },
+  newBadgeFlatListContainer: {
+    marginTop: primaryHeaderHeight + 20,
   },
   newBadgeFlatListContainer1: {
     width: '100%',
@@ -341,7 +389,6 @@ const styles = StyleSheet.create({
       growDistanceBase * 3,
   },
   newBadgeFlatListInnerContainer: {
-    paddingTop: primaryHeaderHeight + 20,
     paddingBottom: 25,
   },
   recentFlatListContainer: {

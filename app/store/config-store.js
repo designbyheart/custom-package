@@ -65,6 +65,8 @@ import {
   GET_MESSAGES_SUCCESS,
   GET_MESSAGES_LOADING,
   GET_UN_ACKNOWLEDGED_MESSAGES,
+  SHOW_SNACK_ERROR,
+  CLEAR_SNACK_ERROR,
 } from './type-config-store'
 import type {
   ServerEnvironment,
@@ -284,6 +286,8 @@ const initialState: ConfigStore = {
   vcxInitializationState: VCX_INIT_NOT_STARTED,
   vcxInitializationError: null,
   isInitialized: false,
+  messageDownloadStatus: GET_MESSAGES_SUCCESS,
+  snackError: null,
 }
 
 export const hydrated = () => ({
@@ -1353,6 +1357,23 @@ export default function configReducer(
         ...state,
         vcxInitializationState: VCX_INIT_FAIL,
         vcxInitializationError: action.error,
+      }
+    case GET_MESSAGES_FAIL:
+    case GET_MESSAGES_LOADING:
+    case GET_MESSAGES_SUCCESS:
+      return {
+        ...state,
+        messageDownloadStatus: action.type,
+      }
+    case SHOW_SNACK_ERROR:
+      return {
+        ...state,
+        snackError: action.error,
+      }
+    case CLEAR_SNACK_ERROR:
+      return {
+        ...state,
+        snackError: null,
       }
     default:
       return state

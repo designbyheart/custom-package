@@ -104,3 +104,5 @@ export type SendConnectionRedirectAction = {
     identifier: string,
   },
 }
+
+export const SEND_REDIRECT_SUCCESS = 'SEND_REDIRECT_SUCCESS'

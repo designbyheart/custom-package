@@ -5,7 +5,10 @@ import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 
 import { MyConnectionsScreen } from '../my-connections'
-import { SERVER_ENVIRONMENT } from '../../store/type-config-store'
+import {
+  SERVER_ENVIRONMENT,
+  GET_MESSAGES_SUCCESS,
+} from '../../store/type-config-store'
 
 import {
   getNavigation,
@@ -38,6 +41,9 @@ function props(claimOfferStatus, noConnections) {
     unSeenMessagesCount: 0,
     environmentName: SERVER_ENVIRONMENT.PROD,
     onNewConnectionSeen: jest.fn(),
+    getUnacknowledgedMessages: jest.fn(),
+    messageDownloadStatus: GET_MESSAGES_SUCCESS,
+    snackError: null,
     connections: [
       {
         logoUrl: '',

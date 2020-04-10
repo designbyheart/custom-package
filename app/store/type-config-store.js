@@ -136,6 +136,8 @@ export type ConfigAction =
   | VcxInitFailAction
   | VcxInitSuccessAction
   | UseVcxAction
+  | ShowSnackErrorAction
+  | ClearSnackErrorAction
 
 export type VcxInitializationState =
   | typeof VCX_INIT_NOT_STARTED
@@ -158,7 +160,14 @@ export type ConfigStore = {
   vcxInitializationState: VcxInitializationState,
   vcxInitializationError: null | CustomError,
   isInitialized: boolean,
+  messageDownloadStatus: MessageDownloadStatus,
+  snackError: ?string,
 } & AgencyPoolConfig
+
+export type MessageDownloadStatus =
+  | typeof GET_MESSAGES_LOADING
+  | typeof GET_MESSAGES_FAIL
+  | typeof GET_MESSAGES_SUCCESS
 
 export const STORAGE_KEY_SWITCHED_ENVIRONMENT_DETAIL =
   'STORAGE_KEY_SWITCHED_ENVIRONMENT_DETAIL'
@@ -348,4 +357,15 @@ export type GetMessagesFailAction = {
 export type AcknowledgeMessagesFailAction = {
   type: typeof ACKNOWLEDGE_MESSAGES_FAIL,
   error: string,
+}
+
+export const SHOW_SNACK_ERROR = 'SHOW_SNACK_ERROR'
+export type ShowSnackErrorAction = {
+  type: typeof SHOW_SNACK_ERROR,
+  error: string,
+}
+
+export const CLEAR_SNACK_ERROR = 'CLEAR_SNACK_ERROR'
+export type ClearSnackErrorAction = {
+  type: typeof CLEAR_SNACK_ERROR,
 }
