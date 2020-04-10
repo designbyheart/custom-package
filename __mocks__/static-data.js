@@ -844,6 +844,48 @@ export const homeAddressPreparedProof = {
   predicates: {},
 }
 
+export const homeAddressPreparedProofMultipleCreds = {
+  attrs: {
+    attr1_uuid: [
+      {
+        cred_info: {
+          referent: 'claim::ea03d8ca-eeb4-4944-b7d6-5abcf4503d73',
+          attrs: { ['Address 1']: 'Address 1' },
+          cred_def_id: 'V4SGRU86Z58d6TV7PBUe6f:3:CL:24:tag1',
+          schema_id: 'V4SGRU86Z58d6TV7Pf:2:slKljrSQ80tCQ40F:33089',
+        },
+      },
+      {
+        cred_info: {
+          referent: 'claim::ea03d8ca-eeb4-4944-b7d6-5abcf4503d86',
+          attrs: { ['Address 1']: 'Address 1 reverse' },
+          cred_def_id: 'V4SGRU86Z58d6TV7PBUe7f:3:CL:24:tag1',
+          schema_id: 'V4SGRU86Z58d6TV7Pf:2:slKljrSQ80tCQ40F:33089',
+        },
+      },
+    ],
+    attr2_uuid: [
+      {
+        cred_info: {
+          referent: 'claim::6a0f42b4-1210-4bdb-ad53-10ed765276b',
+          attrs: { ['Address 2']: 'Address 2' },
+          cred_def_id: 'V4SGRU86Z58d6TV7PBUe6f:3:CL:24:tag1',
+          schema_id: 'V4SGRU86Z58d6TV7Pf:2:slKljrSQ80tCQ40F:33089',
+        },
+      },
+      {
+        cred_info: {
+          referent: 'claim::6a0f42b4-1210-4bdb-ad53-10ed7652767',
+          attrs: { ['Address 2']: 'Address 2 reverse' },
+          cred_def_id: 'V4SGRU86Z58d6TV7PBUe6f:3:CL:24:tag1',
+          schema_id: 'V4SGRU86Z58d6TV7Pf:2:slKljrSQ80tCQ40F:33089',
+        },
+      },
+    ],
+  },
+  predicates: {},
+}
+
 export const preparedProofWithMissingAttribute = {
   attrs: {
     attr1_uuid: [
