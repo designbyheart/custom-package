@@ -1,6 +1,10 @@
 // @flow
 import renderer from 'react-test-renderer'
 import { put, call, select, take } from 'redux-saga/effects'
+import { expectSaga } from 'redux-saga-test-plan'
+import * as matchers from 'redux-saga-test-plan/matchers'
+import { throwError } from 'redux-saga-test-plan/providers'
+
 import { initialTestAction } from '../../common/type-common'
 import proofReducer, {
   proofSuccess,
@@ -10,6 +14,7 @@ import proofReducer, {
   proofFail,
   convertIndyPreparedProofToAttributes,
   getProof,
+  proofRequestDataToStore,
 } from '../proof-store'
 import {
   acceptProofRequest,
@@ -18,23 +23,19 @@ import {
   sendProof,
   proofRequestShowStart,
 } from '../../proof-request/proof-request-store'
-import { generateProof } from '../../bridge/react-native-cxs/RNCxs'
 import {
   proofRequest,
-  proofRequest10Attributes,
   proof,
-  proofWithMissingAttributes,
-  proofWith10Attributes,
   originalProofRequestData,
   originalProofRequestData10Attributes,
   originalProofRequestDataMissingAttribute,
   preparedProof,
   homeAddressPreparedProof,
+  homeAddressPreparedProofMultipleCreds,
   preparedProofWithMissingAttribute,
   homeAddressPreparedProofWithMissingAttribute,
   selfAttestedAttributes,
   selfAttestedAttributes1,
-  poolConfig,
   originalProofRequestDataWithSpaces,
 } from '../../../__mocks__/static-data'
 import {
@@ -46,7 +47,7 @@ import {
   USER_SELF_ATTESTED_ATTRIBUTES,
   UPDATE_ATTRIBUTE_CLAIM,
 } from '../type-proof'
-import { PROOF_REQUEST_SHOW_START } from '../../proof-request/type-proof-request'
+import { getMatchingCredentials } from '../../bridge/react-native-cxs/RNCxs'
 
 describe('Proof Store', () => {
   const remoteDid = proofRequest.payloadInfo.remotePairwiseDID
@@ -122,6 +123,103 @@ describe('Proof Store', () => {
         })
       )
     ).toMatchSnapshot()
+  })
+
+  it('saga:generateProofSaga, success', () => {
+    const withProofRequestStore = {
+      proofRequest: {
+        [uid]: {
+          ...proofRequest.payload,
+          ...proofRequest.payloadInfo,
+        },
+      },
+    }
+    const requestedAttributes = convertIndyPreparedProofToAttributes(
+      {
+        ...homeAddressPreparedProof,
+        self_attested_attrs: {},
+      },
+      originalProofRequestData.requested_attributes
+    )
+
+    return expectSaga(generateProofSaga, getProof(uid))
+      .withState({
+        ...withProofRequestStore,
+        connections: {
+          data: {
+            userDid1: {
+              myPairwiseDid: 'myPairwiseDid1',
+            },
+            userDid2: { myPairwiseDid: 'myPairwiseDid2' },
+            userDid3: { myPairwiseDid: 'myPairwiseDid3' },
+          },
+        },
+      })
+      .provide([
+        [
+          matchers.call.fn(
+            getMatchingCredentials,
+            proofRequest.payload.proofHandle
+          ),
+          JSON.stringify(homeAddressPreparedProof),
+        ],
+      ])
+
+      .put(proofRequestAutoFill(uid, requestedAttributes))
+      .put(proofRequestDataToStore(uid, proofRequest.payload.proofHandle, {}))
+
+      .run()
+  })
+
+  it('saga:generateProofSaga, success, reversed order credentials', () => {
+    const withProofRequestStore = {
+      proofRequest: {
+        [uid]: {
+          ...proofRequest.payload,
+          ...proofRequest.payloadInfo,
+        },
+      },
+    }
+    const copyHomeAddressPreparedProofMultipleCreds: typeof homeAddressPreparedProofMultipleCreds = JSON.parse(
+      JSON.stringify(homeAddressPreparedProofMultipleCreds)
+    )
+    copyHomeAddressPreparedProofMultipleCreds.attrs.attr1_uuid.reverse()
+    copyHomeAddressPreparedProofMultipleCreds.attrs.attr2_uuid.reverse()
+    const requestedAttributes = convertIndyPreparedProofToAttributes(
+      {
+        ...copyHomeAddressPreparedProofMultipleCreds,
+        self_attested_attrs: {},
+      },
+      originalProofRequestData.requested_attributes
+    )
+
+    return expectSaga(generateProofSaga, getProof(uid))
+      .withState({
+        ...withProofRequestStore,
+        connections: {
+          data: {
+            userDid1: {
+              myPairwiseDid: 'myPairwiseDid1',
+            },
+            userDid2: { myPairwiseDid: 'myPairwiseDid2' },
+            userDid3: { myPairwiseDid: 'myPairwiseDid3' },
+          },
+        },
+      })
+      .provide([
+        [
+          matchers.call.fn(
+            getMatchingCredentials,
+            proofRequest.payload.proofHandle
+          ),
+          JSON.stringify(homeAddressPreparedProofMultipleCreds),
+        ],
+      ])
+
+      .put(proofRequestAutoFill(uid, requestedAttributes))
+      .put(proofRequestDataToStore(uid, proofRequest.payload.proofHandle, {}))
+
+      .run()
   })
 
   // TODO:KS Fix these tests before July 25 and remove the exclusion from .flowconfig

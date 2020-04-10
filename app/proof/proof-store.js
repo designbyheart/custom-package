@@ -397,6 +397,18 @@ export function* generateProofSaga(action: GenerateProofAction): any {
     const matchingCredentials: IndyPreparedProof = JSON.parse(
       matchingCredentialsJson
     )
+    //TODO: this is a hack. Right now we are relying on assumption that libindy always returns
+    //TODO: credentials in the same oldest-first order. In the next release of libindy we will
+    //TODO: include the seq_no of credential and we will sort by it in descendant order
+    for (const key in matchingCredentials.attrs) {
+      if (
+        matchingCredentials.attrs.hasOwnProperty(key) &&
+        matchingCredentials.attrs[key] &&
+        matchingCredentials.attrs[key].reverse
+      ) {
+        matchingCredentials.attrs[key].reverse()
+      }
+    }
     const [
       requestedAttrsJson,
       missingAttributes,

@@ -189,7 +189,7 @@ describe('server environment should change', () => {
       poolConfig,
       paymentMethod,
     }
-    expectSaga(watchSwitchEnvironment)
+    return expectSaga(watchSwitchEnvironment)
       .dispatch(
         changeEnvironment(
           environmentDetails.agencyUrl,
@@ -213,6 +213,7 @@ describe('server environment should change', () => {
       )
       .run()
   })
+
   it('should throw error if hydrate switched environment details fails', () => {
     const errorMessage = 'hydrate switch environment error'
     const failHydrateError = new Error(errorMessage)
@@ -224,7 +225,7 @@ describe('server environment should change', () => {
       poolConfig,
       paymentMethod,
     }
-    expectSaga(hydrateSwitchedEnvironmentDetails)
+    return expectSaga(hydrateSwitchedEnvironmentDetails)
       .dispatch(
         changeEnvironment(
           environmentDetails.agencyUrl,
@@ -388,7 +389,7 @@ describe('server environment should change', () => {
       paymentMethod,
     }
     const pushToken = 'token'
-    expectSaga(watchChangeEnvironmentUrl)
+    return expectSaga(watchChangeEnvironmentUrl)
       .withState({
         pushNotification: { pushToken },
       })
@@ -417,6 +418,7 @@ describe('server environment should change', () => {
       .run()
   })
 })
+
 describe('reducer:config', () => {
   it('action:VCX_INIT_NOT_STARTED', () => {
     const initialState = getConfigStoreInitialState()
