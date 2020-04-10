@@ -39,7 +39,9 @@ public class MyConnectionsPageTestV2 extends IntSetup {
     }
 
     @Test(dependsOnMethods = "checkElementsVisibility")
-    public void checkElementsAvailability() throws Exception {}
+    public void checkElementsAvailability() throws Exception {
+        objMyConnectionsPage.testConnection(driver).click();
+    }
 
     @AfterClass
     public void AfterClass() {

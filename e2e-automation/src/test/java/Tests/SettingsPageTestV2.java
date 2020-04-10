@@ -7,9 +7,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import test.java.appModules.AppInjector;
 import test.java.appModules.AppUtils;
-import test.java.pageObjects.HomePageV2;
-import test.java.pageObjects.MenuPageV2;
-import test.java.pageObjects.SettingsPageV2;
+import test.java.appModules.AppiumUtils;
+import test.java.pageObjects.*;
 import test.java.utility.Config;
 import test.java.utility.IntSetup;
 
@@ -20,6 +19,8 @@ public class SettingsPageTestV2 extends IntSetup {
     HomePageV2 objHomePage = injector.getInstance(HomePageV2.class);
     MenuPageV2 objMenuPage = injector.getInstance(MenuPageV2.class);
     SettingsPageV2 objSettingsPage = injector.getInstance(SettingsPageV2.class);
+    BackupPageV2 objBackupPage = injector.getInstance(BackupPageV2.class);
+    BiometricsPageV2 objBiometricsPage = injector.getInstance(BiometricsPageV2.class);
 
     @BeforeClass
     public void BeforeClassSetup() throws Exception {
@@ -44,7 +45,12 @@ public class SettingsPageTestV2 extends IntSetup {
     }
 
     @Test(dependsOnMethods = "checkElementsVisibility")
-    public void checkElementsAvailability() throws Exception {}
+    public void checkElementsAvailability() throws Exception {
+        objSettingsPage.createBackupButton(driver).click();
+        objBackupPage.closeButton(driver).click();
+        objSettingsPage.biometricsButton(driver).click();
+        objBiometricsPage.cancelButton(driver).click();
+    }
 
     @AfterClass
     public void AfterClass() {
