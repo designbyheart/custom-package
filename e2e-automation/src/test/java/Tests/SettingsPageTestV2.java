@@ -2,6 +2,8 @@ package test.java.Tests;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidKeyCode;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -9,6 +11,7 @@ import test.java.appModules.AppInjector;
 import test.java.appModules.AppUtils;
 import test.java.appModules.AppiumUtils;
 import test.java.pageObjects.*;
+import test.java.pageObjectsAndroid.PasscodePageAndroidV2;
 import test.java.utility.Config;
 import test.java.utility.IntSetup;
 
@@ -21,6 +24,10 @@ public class SettingsPageTestV2 extends IntSetup {
     SettingsPageV2 objSettingsPage = injector.getInstance(SettingsPageV2.class);
     BackupPageV2 objBackupPage = injector.getInstance(BackupPageV2.class);
     BiometricsPageV2 objBiometricsPage = injector.getInstance(BiometricsPageV2.class);
+    PasscodePageV2 objPasscodePage = injector.getInstance(PasscodePageV2.class);
+    ChatPageV2 objChatPage = injector.getInstance(ChatPageV2.class);
+    AboutPageV2 objAboutPage = injector.getInstance(AboutPageV2.class);
+    OnfidoPageV2 objOnfidoPage = injector.getInstance(OnfidoPageV2.class);
 
     @BeforeClass
     public void BeforeClassSetup() throws Exception {
@@ -50,6 +57,14 @@ public class SettingsPageTestV2 extends IntSetup {
         objBackupPage.closeButton(driver).click();
         objSettingsPage.biometricsButton(driver).click();
         objBiometricsPage.cancelButton(driver).click();
+        objSettingsPage.passcodeButton(driver).click();
+        objPasscodePage.backArrow(driver).click();
+        objSettingsPage.chatButton(driver).click();
+        objChatPage.backArrow(driver).click();
+        objSettingsPage.aboutButton(driver).click();
+        objAboutPage.backArrow(driver).click();
+        objSettingsPage.onfidoButton(driver).click();
+        objOnfidoPage.backArrow(driver).click();
     }
 
     @AfterClass

@@ -36,6 +36,14 @@ public class AppPageInjector {
 	@Inject
 	protected BiometricsPageV2 biometricsPageV2;
 	@Inject
+	protected PasscodePageV2 passcodePageV2;
+	@Inject
+	protected ChatPageV2 chatPageV2;
+	@Inject
+	protected AboutPageV2 aboutPageV2;
+	@Inject
+	protected OnfidoPageV2 onfidoPageV2;
+	@Inject
 	protected CredentialPage credentialPage;
 	@Inject
 	protected ChooseLockPage chooseLockPage;
