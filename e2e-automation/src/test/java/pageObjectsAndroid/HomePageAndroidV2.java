@@ -39,4 +39,12 @@ public class HomePageAndroidV2 implements HomePageV2 {
         );
     }
 
+    public WebElement newMessage(AppiumDriver driver) throws Exception {
+        return AppiumUtils.findElement(
+                driver,
+                "//*[@text=\"NEW MESSAGE - TAP TO OPEN\"]",
+                "New Message"
+        );
+    }
+
 }
