@@ -261,6 +261,10 @@ const mapStateToProps = (state: Store) => {
     } else return false
   }
 
+  // This customFlat function already flattens out only the objects based on the actions,
+  // and those objects are then unshifted to newBannerConnections and recentConnections,
+  // which is by default sorted based on the most recent ones, so not sure if we need sort
+  // based on date or something else scrambles the recentConnections array
   // Custom flatten function to avoid flow error for missing flat/flatMap in flow-bin
   // TODO: Replace this with flatMap when we update flow-bin
   const customFlat = (array: Array<Array<Object>>) => [].concat(...array)
@@ -300,6 +304,17 @@ const mapStateToProps = (state: Store) => {
     if (isNewConnection(connection.status)) {
       newBannerConnections.unshift(connection)
     } else recentConnections.unshift(connection)
+  })
+  recentConnections.sort((a, b) => {
+    if (!b.timestamp) {
+      return 0
+    }
+    let bTimestamp = new Date(b.timestamp).getTime()
+    if (!a.timestamp) {
+      return 0
+    }
+    let aTimestamp = new Date(a.timestamp).getTime()
+    return bTimestamp - aTimestamp
   })
 
   const hasNoConnection = state.connections.hydrated
