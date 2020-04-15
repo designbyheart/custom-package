@@ -90,6 +90,10 @@ export class HomeScreen extends Component<HomeProps, void> {
         item.originalPayload.payload.requester.name) ||
       (item.data && item.data.remoteName)
     const formattedTimestamp = this.formatTimestamp(item.timestamp)
+    const logoUrl =
+      this.props.mappedDidToLogoAndName &&
+      this.props.mappedDidToLogoAndName[item.remoteDid] &&
+      this.props.mappedDidToLogoAndName[item.remoteDid].logoUrl
 
     let navigationRoute = ''
     if (item.status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED)
@@ -104,7 +108,7 @@ export class HomeScreen extends Component<HomeProps, void> {
         navigation={this.props.navigation}
         navigationRoute={navigationRoute}
         timestamp={formattedTimestamp}
-        logoUrl={item.originalPayload.payloadInfo.senderLogoUrl}
+        logoUrl={logoUrl}
         uid={item.originalPayload.payloadInfo.uid}
         issuerName={issuerName}
       />
@@ -295,17 +299,7 @@ const mapStateToProps = (state: Store) => {
     )
   })
 
-  const flattenPlaceholderArray = customFlat(placeholderArray)
-
-  // Sorts the newest actions to be on top
-  const newBannerConnections = []
-  const recentConnections = []
-  flattenPlaceholderArray.map(connection => {
-    if (isNewConnection(connection.status)) {
-      newBannerConnections.unshift(connection)
-    } else recentConnections.unshift(connection)
-  })
-  recentConnections.sort((a, b) => {
+  const flattenPlaceholderArray = customFlat(placeholderArray).sort((a, b) => {
     if (!b.timestamp) {
       return 0
     }
@@ -315,6 +309,15 @@ const mapStateToProps = (state: Store) => {
     }
     let aTimestamp = new Date(a.timestamp).getTime()
     return bTimestamp - aTimestamp
+  })
+
+  // Sorts the newest actions to be on top
+  const newBannerConnections = []
+  const recentConnections = []
+  flattenPlaceholderArray.map(connection => {
+    if (isNewConnection(connection.status)) {
+      newBannerConnections.push(connection)
+    } else recentConnections.push(connection)
   })
 
   const hasNoConnection = state.connections.hydrated
@@ -373,7 +376,7 @@ const styles = StyleSheet.create({
     height: height * 0.6,
   },
   newBadgeFlatListContainer: {
-    marginTop: primaryHeaderHeight + 20,
+    marginTop: primaryHeaderHeight,
   },
   newBadgeFlatListContainer1: {
     width: '100%',
@@ -405,6 +408,7 @@ const styles = StyleSheet.create({
   },
   newBadgeFlatListInnerContainer: {
     paddingBottom: 25,
+    paddingTop: 20,
   },
   recentFlatListContainer: {
     flex: 1,
