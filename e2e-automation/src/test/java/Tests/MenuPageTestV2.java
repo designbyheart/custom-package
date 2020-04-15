@@ -59,7 +59,7 @@ public class MenuPageTestV2 extends IntSetup {
         objMenuPage.homeButton(driver).click();
         objMenuPage.myConnectionsButton(driver).click();
         objHomePage.burgerMenuButton(driver).click();
-        objMenuPage.settingsButton(driver).isDisplayed();
+        objMenuPage.settingsButton(driver).click();
     }
 
     @AfterClass
