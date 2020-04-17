@@ -4288,6 +4288,11 @@ detect-newline@^2.1.0:
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-2.1.0.tgz#f41f1c10be4b00e87b5f13da680759f2c5bfd3e2"
   integrity sha1-9B8cEL5LAOh7XxPaaAdZ8sW/0+I=
 
+detox-getprops@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/detox-getprops/-/detox-getprops-0.1.1.tgz#ebb1af60ed61471d6c8e54e990fcbdb5d6ec97e8"
+  integrity sha512-v5qYAsu8yQV+agfkIQUf+NDfgj4kGy+ClNC5nUyLOJG/ml0h2iNZLcT60GPjJrQ6udg+qGhFcxNgpNCpGPdsUw==
+
 detox@^14.4.1:
   version "14.4.1"
   resolved "https://registry.yarnpkg.com/detox/-/detox-14.4.1.tgz#72c56a5a35d91b7e823d84ffdb317b663aecdb19"
@@ -10188,6 +10193,11 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.0, react-lifecycles-com
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-native-alert-async@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-alert-async/-/react-native-alert-async-1.0.5.tgz#f67e3d1f6c877cce8e8cd74cef3d596713f0fdb4"
+  integrity sha512-HeG0zdjtlANl8KkF9AhqgkaEooXip44Fb01dmCnYSYMm6PoRdcV4aIy6l/yAOQmArrl8LTP58APSiuZXBMCbwQ==
 
 react-native-animatable@1.2.4:
   version "1.2.4"

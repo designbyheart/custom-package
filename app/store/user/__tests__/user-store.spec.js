@@ -287,6 +287,9 @@ describe('store: user-store: ', () => {
 
   it('saga: selectUserAvatarSaga => success', () => {
     const gen = selectUserAvatarSaga()
+    gen.next()
+    gen.next()
+    gen.next()
     expect(gen.next().value).toEqual(
       call(ImagePicker.openPicker, { mediaType: 'photo' })
     )
@@ -298,6 +301,9 @@ describe('store: user-store: ', () => {
 
   it('saga: selectUserAvatarSaga => failure', () => {
     const gen = selectUserAvatarSaga()
+    gen.next()
+    gen.next()
+    gen.next()
     expect(gen.next().value).toEqual(
       call(ImagePicker.openPicker, { mediaType: 'photo' })
     )

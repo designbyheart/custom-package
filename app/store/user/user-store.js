@@ -44,6 +44,7 @@ import { uuid } from '../../services/uuid'
 import { getUserAvatarName } from '../../store/store-selector'
 import { VCX_INIT_SUCCESS } from '../type-config-store'
 import { captureError } from '../../services/error/error-handler'
+import AlertAsync from 'react-native-alert-async'
 
 const initialState = {
   isFetching: false,
@@ -231,6 +232,17 @@ export const selectUserAvatarFail = (error: CustomError) => ({
 
 export function* selectUserAvatarSaga(): Generator<*, *, *> {
   try {
+    const previousSelection = yield call(safeGet, 'previousChoiceAvatar')
+    if (!previousSelection) {
+      yield call(
+        AlertAsync,
+        'Add Avatar',
+        'ConnectMe will ask for access to your photo library in order to set your avatar.',
+        [{ text: 'OK' }],
+        { cancelable: true }
+      )
+      yield call(safeSet, 'previousChoiceAvatar', 'ok')
+    }
     const image = yield call(ImagePicker.openPicker, {
       mediaType: 'photo',
     })

@@ -92,31 +92,31 @@
 		</dict>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>ConnectMe uses Apple Music.</string>
+	<string>ConnectMe needs to specify Apple Music due to third party library support.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>ConnectMe uses bluetooth peripherals.</string>
+	<string>ConnectMe needs to specify Bluetooth due to third party library support.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>ConnectMe uses bluetooth always.</string>
+	<string>ConnectMe needs to specify Bluetooth Always due to third party library support.</string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>ConnectMe uses the calendar.</string>
+	<string>ConnectMe needs to specify Calendar due to third party library support.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow us access to Camera so that we can scan QR code</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Enabling Face ID allows you quick and secure access to your app.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>ConnectMe uses the location always.</string>
+	<string>ConnectMe needs to specify Location due to third party library support.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>ConnectMe uses location.</string>
+	<string>ConnectMe needs to specify Location due to third party library support.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>ConnectMe uses your microphone to support audio messages.</string>
 	<key>NSMotionUsageDescription</key>
-	<string>ConnectMe uses motion.</string>
+	<string>ConnectMe needs to specify Motion due to third party library support.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>ConnectMe uses speech recognition.</string>
+	<string>ConnectMe needs to specify Speech Recognition due to third party library support.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>ConnectMe uses audio.</string>
+	<string>Connect.Me needs access to your photo library in order to set your avatar photo.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>ConnectMe uses photo library.</string>
+	<string>Connect.Me needs access to your photo library in order to set your avatar photo.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
