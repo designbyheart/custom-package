@@ -121,4 +121,4 @@ your environment for the Makefile are:
   - RUST_BACKTRACE=1 /Users/norm/Library/Android/sdk/emulator/emulator -writable-system -avd Pixel_API_26 -netdelay none -netspeed full
   - Then run the app in a separate terminal with: make run-android or VARIANT=release make run-android or VARIANT=debug make run-android
 
-trigger build 14
+trigger build 15
