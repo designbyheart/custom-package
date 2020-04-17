@@ -47,6 +47,7 @@
     "query-string": "^6.8.3",
     "react": "16.6.3",
     "react-native": "0.58.6",
+    "react-native-alert-async": "^1.0.5",
     "react-native-animatable": "1.2.4",
     "react-native-blur": "3.2.2",
     "react-native-branch": "2.2.4",
