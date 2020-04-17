@@ -10,6 +10,7 @@ public interface BackupPageV2 {
     public WebElement closeButton(AppiumDriver driver) throws Exception;
     public WebElement verifyHeader(AppiumDriver driver) throws Exception;
     public WebElement verifyPhraseBox(AppiumDriver driver) throws Exception;
+    public WebElement backupFileName(AppiumDriver driver) throws Exception;
     public WebElement zipDownloadButton(AppiumDriver driver) throws Exception;
     public WebElement cloudBackupButton(AppiumDriver driver) throws Exception;
     public WebElement exportEncryptedButton(AppiumDriver driver) throws Exception;

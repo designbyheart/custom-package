@@ -55,6 +55,14 @@ public class BackupPageAndroidV2 implements BackupPageV2 {
         );
     }
 
+    public WebElement backupFileName(AppiumDriver driver) throws Exception {
+        return AppiumUtils.findElement(
+                driver,
+                "//*[contains(@text, \"ConnectMe-2020-\")]",
+                "Backup File Name"
+        );
+    }
+
     public WebElement zipDownloadButton(AppiumDriver driver) throws Exception {
         return AppiumUtils.findElement(
                 driver,

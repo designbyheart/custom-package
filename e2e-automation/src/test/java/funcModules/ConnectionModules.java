@@ -70,7 +70,7 @@ public class ConnectionModules extends AppPageInjector {
 //			final String owner = "/Evernym-Inc";
             final String app = "/QA-MeConnect-Android";
 //			final String app = "/Dev-MeConnect-Android";
-			final String postfix = "/releases/730";
+			final String postfix = "/releases/741";
 			final String token = System.getenv("TOKEN");
             String InstallConnectMeLink = RestAssured
 													.given()
