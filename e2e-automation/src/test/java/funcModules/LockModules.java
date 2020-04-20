@@ -146,9 +146,9 @@ public class LockModules extends AppPageInjector {
 	 */
 	public void navigateRestore(AppiumDriver driver,String deviceType) throws Exception {
 		driver = IntSetup.configureDriver(deviceType,"connectMe");
-		if(Config.Device_Type.equals("android")||(Config.Device_Type.equals("awsAndroid"))) {
-			chooseLockPage.allow_button(driver).click();
-		}
+//		if(Config.Device_Type.equals("android")||(Config.Device_Type.equals("awsAndroid"))) {
+//			chooseLockPage.allow_button(driver).click();
+//		}
 		chooseLockPage.eula_Accept(driver).click();
 	}
 }

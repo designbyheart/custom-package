@@ -62,9 +62,11 @@ public class ConnectionModules extends AppPageInjector {
 //			driver.get(InstallConnectMeLink);
 //			driver.switchTo().alert().accept();
 		} else if (Config.Device_Type.equals("android")) {
-			driver.get(link);
-			Thread.sleep(3000);
-            ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.BACK);
+			if (!link.equals("")) {
+				driver.get(link);
+				Thread.sleep(3000);
+				((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.BACK);
+			}
             RestAssured.baseURI = "https://api.appcenter.ms/v0.1/apps";
             final String owner = "/build-zg6l";
 //			final String owner = "/Evernym-Inc";

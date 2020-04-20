@@ -1,6 +1,8 @@
 package test.java.utility;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -15,8 +17,7 @@ import org.testng.Reporter;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +30,7 @@ public class IntSetup {
 
 	public static AppiumDriver driver;
 	public static String connectionID;
+	public Context ctx = Context.getInstance();
 	public static String schemaSeqId1, schemaSeqId2, credentialDefID1, credentialDefID2;
 	public static String proofID, multipleProofID, selfAttestedProofID, multipleClaimProofID;
 	public static String tokenAddress;
