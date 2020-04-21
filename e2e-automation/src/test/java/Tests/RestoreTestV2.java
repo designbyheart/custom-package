@@ -4,7 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import test.java.appModules.AppInjector;
 import test.java.appModules.AppUtils;
@@ -23,8 +23,8 @@ public class RestoreTestV2 extends IntSetup {
     AppUtils objAppUtlis = injector.getInstance(AppUtils.class);
     HomePageV2 objHomePage = injector.getInstance(HomePageV2.class);
 
-    @BeforeClass
-    public void BeforeClassSetup() throws Exception {
+    @BeforeMethod
+    public void BeforeMethodSetup() throws Exception {
         driver = IntSetup.configureDriver(Config.Device_Type, "connectMe");
         Thread.sleep(3000);
         driver.removeApp("me.connect");
@@ -39,16 +39,26 @@ public class RestoreTestV2 extends IntSetup {
         objRestorePage.restoreHeader(driver).isDisplayed();
         objRestorePage.restoreFromDeviceButton(driver).click();
         objRestorePage.zipFileSelector(driver, ctx.backupFileName).click();
-        objRestorePage.recoveryPhraseBox(driver).sendKeys(ctx.recoveryPhrase);
+        objRestorePage.recoveryPhraseBoxLocal(driver).sendKeys(ctx.recoveryPhrase);
         AndroidDriver androidDriver = (AndroidDriver) driver;
         androidDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
-//        objRestorePage.recoveryWaitingMessage(driver).isDisplayed();
         objRestorePage.enterPasscodeMessage(driver).isDisplayed();
         objAppUtlis.enterPincode(driver);
         objHomePage.homeHeader(driver).isDisplayed();
     }
 
-    @Test(dependsOnMethods = "checkLocalRestore")
-    public void checkCloudRestore() throws Exception {}
+    @Test(dependsOnMethods = "checkLocalRestore", enabled = false) // this feature will be switched off
+    public void checkCloudRestore() throws Exception {
+        ctx.getContext();
+        objConnectionModules.installApp(driver, "");
+        objLockModules.navigateRestore(driver,"android");
+        objRestorePage.restoreFromBackupButton(driver).click();
+        objRestorePage.restoreHeader(driver).isDisplayed();
+        objRestorePage.restoreFromCloudButton(driver).click();
+        objRestorePage.recoveryPhraseBoxCloud(driver).sendKeys(ctx.recoveryPhrase);
+        AndroidDriver androidDriver = (AndroidDriver) driver;
+        androidDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
+        // FIXME I got `Recovery phrase doesn't match here so it looks like env should be switched in the beginning`
+    }
 
 }

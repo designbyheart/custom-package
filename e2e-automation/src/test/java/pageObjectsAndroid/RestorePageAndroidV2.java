@@ -47,11 +47,19 @@ public class RestorePageAndroidV2 implements RestorePageV2 {
         );
     }
 
-    public WebElement recoveryPhraseBox(AppiumDriver driver) throws Exception {
+    public WebElement recoveryPhraseBoxLocal(AppiumDriver driver) throws Exception {
         return AppiumUtils.findElement(
                 driver,
                 "//android.widget.EditText[@content-desc=\"restore-encrypt-phrase-text-input\"]",
-                "Recovery Phrase Box"
+                "Recovery Phrase Box Local"
+        );
+    }
+
+    public WebElement recoveryPhraseBoxCloud(AppiumDriver driver) throws Exception {
+        return AppiumUtils.findElement(
+                driver,
+                "//android.widget.EditText[@content-desc=\"verify-passphrase-container-text-input\"]",
+                "Recovery Phrase Box Cloud"
         );
     }
 

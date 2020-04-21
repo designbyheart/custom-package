@@ -9,7 +9,8 @@ public interface RestorePageV2 {
     public WebElement restoreFromCloudButton(AppiumDriver driver) throws Exception;
     public WebElement restoreFromDeviceButton(AppiumDriver driver) throws Exception;
     public WebElement zipFileSelector(AppiumDriver driver, String fileName) throws Exception;
-    public WebElement recoveryPhraseBox(AppiumDriver driver) throws Exception;
+    public WebElement recoveryPhraseBoxLocal(AppiumDriver driver) throws Exception;
+    public WebElement recoveryPhraseBoxCloud(AppiumDriver driver) throws Exception;
     public WebElement recoveryWaitingMessage(AppiumDriver driver) throws Exception;
     public WebElement enterPasscodeMessage(AppiumDriver driver) throws Exception;
 }
