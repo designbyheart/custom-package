@@ -23,8 +23,11 @@ public class CredentialModules extends AppPageInjector {
 	 */
 
 	public void acceptCredential(AppiumDriver driver) throws Exception {
-		AppiumUtils.findElement(driver, "//*[@text=\"Evernym QA-RC\"]", "Connection Entry", 2).click();
-		AppiumUtils.findElement(driver, "//*[@text=\"View\"]", "View").click();
+//		AppiumUtils.findElement(driver, "//*[@text=\"Evernym QA-RC\"]", "Connection Entry", 2).click();
+//		AppiumUtils.findElement(driver, "//*[@text=\"View\"]", "View").click();
+		homePageV2.newMessage(driver).isEnabled();
+		homePageV2.newMessage(driver).click();
+		credentialPage.accept_Button(driver).isEnabled();
 		credentialPage.accept_Button(driver).click();
 		Thread.sleep(45000);  //  sync issue
 //		credentialPage.continue_Button(driver).click();

@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import test.java.appModules.AppInjector;
@@ -59,6 +60,11 @@ public class RestoreTestV2 extends IntSetup {
         AndroidDriver androidDriver = (AndroidDriver) driver;
         androidDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
         // FIXME I got `Recovery phrase doesn't match here so it looks like env should be switched in the beginning`
+    }
+
+    @AfterClass
+    public void AfterClass() {
+        driver.quit();
     }
 
 }

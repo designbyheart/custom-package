@@ -31,7 +31,7 @@ public class IntSetup {
 	public static AppiumDriver driver;
 	public static String connectionID;
 	public Context ctx = Context.getInstance();
-	public static String schemaSeqId1, schemaSeqId2, credentialDefID1, credentialDefID2;
+	public static String schemaSeqId1, schemaSeqId2, credentialDefID1, credentialDefID2, credentialDefID;
 	public static String proofID, multipleProofID, selfAttestedProofID, multipleClaimProofID;
 	public static String tokenAddress;
 
