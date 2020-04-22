@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.testng.TestNG;
 import org.testng.annotations.Test;
-import test.java.Tests.ConnectionTest;
 
 public class DeviceFarmTests {
 	@Test

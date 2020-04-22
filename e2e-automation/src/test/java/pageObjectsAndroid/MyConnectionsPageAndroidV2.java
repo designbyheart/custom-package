@@ -47,4 +47,12 @@ public class MyConnectionsPageAndroidV2 implements MyConnectionsPageV2 {
         );
     }
 
+    public WebElement viewButton(AppiumDriver driver) throws Exception {
+        return AppiumUtils.findElement(
+                driver,
+                "//*[@text=\"View\"]",
+                "View Button"
+        );
+    }
+
 }

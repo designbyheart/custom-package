@@ -79,7 +79,7 @@ public class NegativeTest extends IntSetup {
 		String credentialID = objAppUtlis.sendCredential(driver, connectionID, credentialDefID2, dataCredential,"0");
 		String data = "{\"name\":\"Name\",\"value\":\"\"},{\"name\":\"PhoneNo\",\"value\":\"\"}";
 		objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID);
-		objAppUtlis.acceptCredential(driver, credentialID);
+		objAppUtlis.acceptCredential(driver, credentialID ,false);
 	}
     
     /**

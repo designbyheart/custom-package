@@ -138,7 +138,9 @@ public class AppUtils extends AppPageInjector{
 	 * @param attribute-attributes for credential	
 	 * @return void
 	 */
-	public void sendCredentialAndAccept(AppiumDriver driver, String connectionID, String credentialDefID, String attribute, String price) throws Exception {
+	public void sendCredentialAndAccept(
+			AppiumDriver driver, String connectionID, String credentialDefID, String attribute, String price, boolean useMyConnections
+	) throws Exception {
 		HashMap<String, String> statusCredential;
 		System.out.println(connectionID+" connectionID");
 		System.out.println(credentialDefID+" credentialDefID");
@@ -146,7 +148,7 @@ public class AppUtils extends AppPageInjector{
 		String credentialID = objRestApi.getKeyValue(sendCredentialDefResponse, "id");
 		checkEmpty(credentialDefID, sendCredentialDefResponse.toString());
 		Thread.sleep(15000);
-		objCredentialModules.acceptCredential(driver);
+		objCredentialModules.acceptCredential(driver, useMyConnections);
 		statusCredential=objRestApi.get("/api/v1/credentials", credentialID);
 		String statusCredentialStr =objRestApi.getKeyValue(statusCredential, "state");
 		objRestApi.poll(statusCredentialStr, "4", credentialID, "credentials");
@@ -257,9 +259,9 @@ public class AppUtils extends AppPageInjector{
 	 * @param credentialID -credential which need to be accepted
 	 * @return void
 	 */
-	public void acceptCredential(AppiumDriver driver, String credentialID) throws Exception {
+	public void acceptCredential(AppiumDriver driver, String credentialID, boolean useMyConnections) throws Exception {
 		HashMap<String, String> statusCredential;
-		objCredentialModules.acceptCredential(driver);
+		objCredentialModules.acceptCredential(driver, useMyConnections);
 		Thread.sleep(5000);
 		statusCredential=objRestApi.get("/api/v1/credentials", credentialID);
 		String statusCredentialStr =objRestApi.getKeyValue(statusCredential, "state");

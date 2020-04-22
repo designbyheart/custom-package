@@ -60,7 +60,7 @@ public class CredentialTest extends IntSetup {
 	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "createCredentialDefTest")
 	public void sendCredentialTest() throws Exception {
 		String data = "{\"name\":\"Name\",\"type\":0,\"value\":\"Alex\"},{\"name\":\"PhoneNo\",\"type\":0,\"value\":\"9177315382\"}";
-		objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID1, data,"0");
+		objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID1, data,"0", false);
 	}
 	
 	/** 
@@ -102,7 +102,7 @@ public class CredentialTest extends IntSetup {
 	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "createMultipleCredentialDefTest")
 	public void sendMultipleCredentialTest1() throws Exception {
 		String data="{\"name\":\"Name\",\"type\":0,\"value\":\"Alex\"},{\"name\":\"Degree\",\"type\":0,\"value\":\"MBA\"},{\"name\":\"Social Security Number\",\"type\":0,\"value\":\"38632362362\"}";
-		objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID2, data,"0");
+		objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID2, data,"0", false);
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public class CredentialTest extends IntSetup {
 	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "sendMultipleCredentialTest1")
 	public void sendMultipleCredentialTest2() throws Exception {
 		String data="{\"name\":\"Name\",\"type\":0,\"value\":\"Alex\"},{\"name\":\"Degree\",\"type\":0,\"value\":\"BE\"},{\"name\":\"Social Security Number\",\"type\":0,\"value\":\"38632362362\"}";
-		objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID2, data,"0");
+		objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID2, data,"0", false);
 	}
 
 	@AfterClass

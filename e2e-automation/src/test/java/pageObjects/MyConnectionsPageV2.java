@@ -9,4 +9,5 @@ public interface MyConnectionsPageV2 {
     public WebElement burgerMenuButton(AppiumDriver driver) throws Exception;
     public WebElement newConnection(AppiumDriver driver) throws Exception;
     public WebElement testConnection(AppiumDriver driver) throws Exception;
+    public WebElement viewButton(AppiumDriver driver) throws Exception;
 }
