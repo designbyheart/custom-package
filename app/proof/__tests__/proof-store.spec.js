@@ -133,6 +133,22 @@ describe('Proof Store', () => {
           ...proofRequest.payloadInfo,
         },
       },
+      claim: {
+        claimMap: {
+          'claim::ea03d8ca-eeb4-4944-b7d6-5abcf4503d73': {
+            issueDate: 80,
+          },
+          'claim::ea03d8ca-eeb4-4944-b7d6-5abcf4503d86': {
+            issueDate: 30,
+          },
+          'claim::6a0f42b4-1210-4bdb-ad53-10ed765276b': {
+            issueDate: 60,
+          },
+          'claim::6a0f42b4-1210-4bdb-ad53-10ed7652767': {
+            issueDate: 70,
+          },
+        },
+      },
     }
     const requestedAttributes = convertIndyPreparedProofToAttributes(
       {
@@ -177,6 +193,22 @@ describe('Proof Store', () => {
         [uid]: {
           ...proofRequest.payload,
           ...proofRequest.payloadInfo,
+        },
+      },
+      claim: {
+        claimMap: {
+          'claim::ea03d8ca-eeb4-4944-b7d6-5abcf4503d73': {
+            issueDate: 10,
+          },
+          'claim::ea03d8ca-eeb4-4944-b7d6-5abcf4503d86': {
+            issueDate: 80,
+          },
+          'claim::6a0f42b4-1210-4bdb-ad53-10ed765276b': {
+            issueDate: 60,
+          },
+          'claim::6a0f42b4-1210-4bdb-ad53-10ed7652767': {
+            issueDate: 70,
+          },
         },
       },
     }

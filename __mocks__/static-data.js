@@ -1573,6 +1573,7 @@ export const claimMap = {
     logoUrl: senderLogoUrl,
     myPairwiseDID: myPairWiseConnectionDetails.myPairwiseDid,
     senderDID: senderDid1,
+    issueDate: 120,
   },
 }
 

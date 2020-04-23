@@ -68,6 +68,7 @@ export type ClaimMap = {
     senderDID: string,
     myPairwiseDID: string,
     logoUrl: string,
+    issueDate: number,
   },
 }
 

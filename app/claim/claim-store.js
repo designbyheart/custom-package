@@ -9,6 +9,7 @@ import {
   takeEvery,
   fork,
 } from 'redux-saga/effects'
+import moment from 'moment'
 import type {
   Claim,
   ClaimStore,
@@ -111,6 +112,16 @@ export function* hydrateClaimMapSaga(): Generator<*, *, *> {
     const fetchedClaimMap = yield call(getHydrationItem, CLAIM_MAP)
     if (fetchedClaimMap) {
       const claimMap: ClaimMap = JSON.parse(fetchedClaimMap)
+      // We added a new field issueDate, and already stored credentials
+      // might not have this field populated, so when app is upgraded
+      // and new code expects issueData, new code will find it undefined
+      // so, here we are iterating on claimMap, and then adding issueDate
+      // as current time
+      for (const key in claimMap) {
+        if (claimMap.hasOwnProperty(key) && !claimMap[key].issueDate) {
+          claimMap[key].issueDate = moment().unix()
+        }
+      }
       yield put(hydrateClaimMap(claimMap))
     }
   } catch (e) {
@@ -293,6 +304,7 @@ export default function claimReducer(
             senderDID,
             myPairwiseDID,
             logoUrl,
+            issueDate: moment().unix(),
           },
         },
       }
