@@ -56,6 +56,7 @@ public class AppInjector extends AbstractModule {
 			bind(ChatPageV2.class).to(ChatPageAndroidV2.class);
 			bind(AboutPageV2.class).to(AboutPageAndroidV2.class);
 			bind(OnfidoPageV2.class).to(OnfidoPageAndroidV2.class);
+			bind(RestorePageV2.class).to(RestorePageAndroidV2.class);
 			bind(CredentialPage.class).to(CredentialPageAndroid.class);
 			bind(ChooseLockPage.class).to(ChooseLockPageAndroid.class);
 			bind(SettingPage.class).to(SettingPageAndroid.class);

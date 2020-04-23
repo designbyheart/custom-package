@@ -39,6 +39,22 @@ public class SettingsPageAndroidV2 implements SettingsPageV2 {
         );
     }
 
+    public WebElement manualBackupButton(AppiumDriver driver) throws Exception {
+        return AppiumUtils.findElement(
+                driver,
+                "//*[@text=\"Manual Backup\"]",
+                "Manual Backup Button"
+        );
+    }
+
+    public WebElement automaticCloudBackupsButton(AppiumDriver driver) throws Exception {
+        return AppiumUtils.findElement(
+                driver,
+                "//*[@text=\"Automatic Cloud Backups\"]",
+                "Automatic Cloud Backups Button"
+        );
+    }
+
     public WebElement biometricsButton(AppiumDriver driver) throws Exception {
         return AppiumUtils.findElement(
                 driver,

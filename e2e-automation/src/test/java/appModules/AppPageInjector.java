@@ -44,6 +44,8 @@ public class AppPageInjector {
 	@Inject
 	protected OnfidoPageV2 onfidoPageV2;
 	@Inject
+	protected RestorePageV2 restorePageV2;
+	@Inject
 	protected CredentialPage credentialPage;
 	@Inject
 	protected ChooseLockPage chooseLockPage;

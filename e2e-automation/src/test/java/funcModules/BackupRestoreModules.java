@@ -43,7 +43,9 @@ public class BackupRestoreModules extends AppPageInjector {
 	 * @return void
 	 */
 	public void navigateBackupWalletScreen(AppiumDriver driver) throws Exception {
-		homePage.setting_Button(driver).click();
+//		homePage.setting_Button(driver).click(); // old design
+		homePageV2.burgerMenuButton(driver).click();
+		menuPageV2.settingsButton(driver).click();
 		settingPage.backupWallet_Button(driver).click();
 		recoveryPhrase = backuprestoreWalletPage.copyRecoveryPhrase(driver).getText(); //To get the recovery phrase that was generated
 		backuprestoreWalletPage.continue_Button(driver).click();	
@@ -90,7 +92,6 @@ public class BackupRestoreModules extends AppPageInjector {
 	/**
 	 * Save the backup wallet to external/internal storage
 	 * @param  driver - appium driver available for session
-	 * @param  storageType-storage to be used
 	 * @return void
 	 */
 	public void saveBackupWallet(AppiumDriver driver) throws Exception {

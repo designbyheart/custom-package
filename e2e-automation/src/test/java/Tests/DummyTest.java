@@ -53,7 +53,7 @@ public class DummyTest extends IntSetup {
         String credentialData = "{\"name\":\"FirstName\",\"type\":0,\"value\":\"Pyotr\"}," +
                                 "{\"name\":\"LastName\",\"type\":0,\"value\":\"Pustota\"}," +
                                 "{\"name\":\"Years\",\"type\":0,\"value\":\"99\"}";
-        objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID, credentialData,"0");
+        objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID, credentialData,"0", false);
 
         // proof
         String proofData = "{\"name\":\"FirstName\"}," +
@@ -76,7 +76,7 @@ public class DummyTest extends IntSetup {
         // credential
         String credentialData = "{\"name\":\"Company\",\"type\":0,\"value\":\"Evernym\"}," +
                                 "{\"name\":\"Position\",\"type\":0,\"value\":\"Developer\"}";
-        objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID, credentialData,"0");
+        objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID, credentialData,"0", false);
 
         // proof
         String proofData = "{\"name\":\"Company\"}," +

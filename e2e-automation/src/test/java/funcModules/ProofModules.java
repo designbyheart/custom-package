@@ -30,8 +30,11 @@ public class ProofModules  extends AppPageInjector{
 	 * @return void
 	 */
 	public void sendProof(AppiumDriver driver) throws Exception {
-		AppiumUtils.findElement(driver, "//*[@text=\"Evernym QA-RC\"]", "Connection Entry", 2).click();
-		AppiumUtils.findElement(driver, "//*[@text=\"View\"]", "View").click();
+//		AppiumUtils.findElement(driver, "//*[@text=\"Evernym QA-RC\"]", "Connection Entry", 2).click();
+//		AppiumUtils.findElement(driver, "//*[@text=\"View\"]", "View").click();
+		homePageV2.newMessage(driver).isEnabled();
+		homePageV2.newMessage(driver).click();
+		proofRequestPage.send_Button(driver).isEnabled();
 		proofRequestPage.send_Button(driver).click();
 		Thread.sleep(45000);  // sync issue
 //		proofRequestPage.continue_Button(driver).click();
