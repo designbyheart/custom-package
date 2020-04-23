@@ -7,10 +7,13 @@ import {
   TextInput,
   Alert,
   Platform,
+  Dimensions,
 } from 'react-native'
 import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import Carousel from 'react-native-snap-carousel'
+
 import {
   Container,
   CustomView,
@@ -78,6 +81,10 @@ import type {
 } from '../../common/type-common'
 import type { Attribute } from '../../push-notification/type-push-notification'
 import type { Store } from '../../store/type-store'
+import { customLogger } from '../../store/custom-logger'
+
+const screenWidth = Dimensions.get('window').width
+const sliderWidth = screenWidth - screenWidth * 0.1
 
 export function generateStateForMissingAttributes(
   missingAttributes: MissingAttributes | {}
@@ -169,14 +176,13 @@ class ProofRequestAttributeList extends Component<
     }
 
     return (
-      <Swiper
-        showsButtons={false}
-        showsPagination={false}
-        height={69}
-        removeClippedSubviews={false}
-        onIndexChanged={swipeIndex => this.onSwipe(items[swipeIndex])}
-      >
-        {items.map((item, itemIndex) => {
+      <Carousel
+        layout={'default'}
+        sliderWidth={sliderWidth}
+        itemWidth={sliderWidth}
+        onSnapToItem={swipeIndex => this.onSwipe(items[swipeIndex])}
+        data={items}
+        renderItem={({ item, index: itemIndex }) => {
           const adjustedLabel = item.label.toLocaleLowerCase()
           const testID = 'proof-request-attribute-item'
 
@@ -240,8 +246,8 @@ class ProofRequestAttributeList extends Component<
               </View>
             </View>
           )
-        })}
-      </Swiper>
+        }}
+      />
     )
   }
 
@@ -702,10 +708,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(ModalContentProof)
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    height: 69,
     backgroundColor: '#f2f2f2',
-    width: '100%',
     paddingTop: 12,
-    position: 'relative',
   },
   textAvatarWrapper: {
     flexDirection: 'row',

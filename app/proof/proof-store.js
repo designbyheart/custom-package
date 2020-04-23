@@ -48,6 +48,7 @@ import {
   CLEAR_ERROR_SEND_PROOF,
 } from './type-proof'
 import type { CustomError, RequestedAttrsJson } from '../common/type-common'
+import type { ClaimMap } from '../claim/type-claim'
 import {
   generateProof,
   getMatchingCredentials,
@@ -69,6 +70,7 @@ import {
   getProofRequesterName,
   getProofRequest,
   getProofData,
+  getClaimMap,
 } from '../store/store-selector'
 import type { Attribute } from '../push-notification/type-push-notification'
 import { RESET } from '../common/type-common'
@@ -78,6 +80,7 @@ import {
 } from '../proof-request/type-proof-request'
 import { captureError } from '../services/error/error-handler'
 import KeepScreenOn from 'react-native-keep-screen-on'
+import { customLogger } from '../store/custom-logger'
 
 export const updateAttributeClaim = (
   uid: string,
@@ -397,18 +400,39 @@ export function* generateProofSaga(action: GenerateProofAction): any {
     const matchingCredentials: IndyPreparedProof = JSON.parse(
       matchingCredentialsJson
     )
+    const claimMap: ClaimMap = yield select(getClaimMap)
     //TODO: this is a hack. Right now we are relying on assumption that libindy always returns
     //TODO: credentials in the same oldest-first order. In the next release of libindy we will
     //TODO: include the seq_no of credential and we will sort by it in descendant order
     for (const key in matchingCredentials.attrs) {
       if (
         matchingCredentials.attrs.hasOwnProperty(key) &&
-        matchingCredentials.attrs[key] &&
-        matchingCredentials.attrs[key].reverse
+        Array.isArray(matchingCredentials.attrs[key])
       ) {
-        matchingCredentials.attrs[key].reverse()
+        matchingCredentials.attrs[key].sort((credA, credB) => {
+          if (!credA) {
+            return -1
+          }
+          if (!credB) {
+            return 1
+          }
+
+          const credAMap = claimMap[credA.cred_info.referent]
+          const credBMap = claimMap[credB.cred_info.referent]
+          if (!credAMap) {
+            return -1
+          }
+          if (!credBMap) {
+            return 1
+          }
+          const credAEpoch = credAMap.issueDate
+          const credBEpoch = credBMap.issueDate
+
+          return credBEpoch - credAEpoch
+        })
       }
     }
+
     const [
       requestedAttrsJson,
       missingAttributes,
