@@ -91,6 +91,7 @@ export type RestoreProps = {
   saveFileToAppDirectory: SaveToAppDirectory => void,
   restore: RestoreStoreType,
   route: string,
+  isCloudBackupEnabled: false,
 } & ReactNavigation
 
 export type RestorePassphraseProps = {

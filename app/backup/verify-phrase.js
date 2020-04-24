@@ -13,6 +13,7 @@ import type {
 } from './type-backup'
 import type { Store } from '../store/type-store'
 
+import { HAS_VERIFIED_RECOVERY_PHRASE } from './type-backup'
 import { CustomView, Icon, CustomHeader } from '../components'
 import {
   verifyRecoveryPhraseRoute,
@@ -33,6 +34,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import VerifyPhrase from '../components/backup-restore-passphrase/backup-restore-passphrase'
 import { getBackupPassphrase } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
+import {
+  hasVerifiedRecoveryPhrase,
+  generateBackupFile,
+} from '../backup/backup-store'
+import { safeSet, walletSet } from '../services/storage'
 
 const transparentBands = require('../images/transparentBands2.png')
 const backImage = require('../images/icon_backArrow_white.png')
@@ -84,9 +90,23 @@ export class VerifyRecoveryPhrase extends Component<
     )
 
     if (recoveryPassphrase.hash === hashedPassphrase) {
-      this.props.navigation.navigate(selectRecoveryMethodRoute, {
-        initialRoute,
-      })
+      if (this.props.isCloudBackupEnabled) {
+        this.props.navigation.navigate(selectRecoveryMethodRoute, {
+          initialRoute,
+        })
+      } else {
+        this.props.hasVerifiedRecoveryPhrase()
+        this.props.generateBackupFile()
+        try {
+          walletSet(HAS_VERIFIED_RECOVERY_PHRASE, 'true')
+          safeSet(HAS_VERIFIED_RECOVERY_PHRASE, 'true')
+        } catch (e) {
+        } finally {
+          this.props.navigation.navigate(exportBackupFileRoute, {
+            initialRoute,
+          })
+        }
+      }
       this.setState({ error: false })
     } else {
       this.setState({ error: true })
@@ -115,10 +135,18 @@ export class VerifyRecoveryPhrase extends Component<
 const mapStateToProps = (state: Store) => {
   return {
     recoveryPassphrase: getBackupPassphrase(state),
+    isCloudBackupEnabled: false,
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      hasVerifiedRecoveryPhrase,
+      generateBackupFile,
+    },
+    dispatch
+  )
 
 export default createStackNavigator({
   [verifyRecoveryPhraseRoute]: {

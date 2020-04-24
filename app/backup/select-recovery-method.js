@@ -150,6 +150,7 @@ export class SelectRecoveryMethod extends Component<
     )
   }
 }
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {

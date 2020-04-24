@@ -353,8 +353,8 @@ export class Settings extends Component<SettingsProps, SettingsState> {
     } else {
       localeInfo = NativeModules.SettingsManager.settings.AppleLocale
     }
-    const countryCodde = localeInfo.split('_')[1]
-    if (['US', 'GB', 'CA'].includes(countryCodde)) {
+    const countryCode = localeInfo.split('_')[1]
+    if (['US', 'GB', 'CA'].includes(countryCode)) {
       this.props.navigation.navigate(onfidoRoute, {})
     } else {
       Alert.alert(
@@ -368,7 +368,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
     }
   }
 
-  openStyleguide = () => {
+  openStyleGuide = () => {
     this.props.navigation.navigate(designStyleGuideRoute, {})
   }
 
@@ -677,37 +677,6 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       )
 
     const settingsItemList = [
-      //{
-      //   id: 1,
-      //   title: 'Download A Backup',
-      //   // subtitle: this.getLastBackupTime(),
-      //   subtitle: 'Choise where to save a .zip backup file',
-      //   avatar: (
-      //     <View style={{ width: 40, alignItems: 'center' }}>
-      //       <SvgCustomIcon name="Backup" fill="#777" width="24" height="24" />
-      //     </View>
-      //   ),
-      //   // rightIcon: <SvgCustomIcon name="ListItemArrow" fill="#A5A5A5" width="8" height="10" />,
-      //   rightIcon: 'spinner',
-      //   onPress: this.onBackup,
-      // },
-      // {
-      //   id: 2,
-      //   title: 'Automatic Cloud Backups',
-      //   subtitle: 'Last backup: Just now',
-      //   avatar: (
-      //     <View style={{ width: 40, alignItems: 'center' }}>
-      //       <SvgCustomIcon
-      //         name="CloudBackup"
-      //         fill="#777"
-      //         width="32"
-      //         height="22"
-      //       />
-      //     </View>
-      //   ),
-      //   rightIcon: <Switch />,
-      //   onPress: null,
-      // },
       {
         id: 1,
         title: this.renderBackupTitleText(),
@@ -879,7 +848,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
             height="10"
           />
         ),
-        onPress: this.openStyleguide,
+        onPress: this.openStyleGuide,
       })
     }
 
@@ -907,6 +876,12 @@ export class Settings extends Component<SettingsProps, SettingsState> {
               ]}
             >
               {settingsItemList.map((item, index) => {
+                if (!this.props.isCloudBackupEnabled) {
+                  if (index === 1) {
+                    // if cloud backup is not enabled, then we hide cloud backup option
+                    return
+                  }
+                }
                 if ((index === 1 || index === 4) && !hasVerifiedRecoveryPhrase)
                   return
                 return (
@@ -977,6 +952,7 @@ const mapStateToProps = (state: Store) => ({
     state.history.data && state.history.data.connectionsUpdated,
   walletBalance: getWalletBalance(state),
   hasVerifiedRecoveryPhrase: getHasVerifiedRecoveryPhrase(state),
+  isCloudBackupEnabled: false,
 })
 
 const mapDispatchToProps = dispatch =>
