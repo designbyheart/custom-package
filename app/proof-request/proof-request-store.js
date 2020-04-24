@@ -1,12 +1,5 @@
 // @flow
-import {
-  put,
-  takeLatest,
-  takeEvery,
-  call,
-  select,
-  all,
-} from 'redux-saga/effects'
+import { put, takeEvery, call, select, all } from 'redux-saga/effects'
 import type { CustomError } from '../common/type-common'
 import type {
   ProofRequestStore,
@@ -288,7 +281,7 @@ function* getConnectionHandle(
 }
 
 export function* watchProofRequestAccepted(): any {
-  yield takeLatest(PROOF_REQUEST_ACCEPTED, proofAccepted)
+  yield takeEvery(PROOF_REQUEST_ACCEPTED, proofAccepted)
 }
 
 export function* watchPersistProofRequests(): any {

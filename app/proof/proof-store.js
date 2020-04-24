@@ -1,14 +1,6 @@
 // @flow
 
-import {
-  put,
-  takeLatest,
-  take,
-  call,
-  all,
-  select,
-  takeEvery,
-} from 'redux-saga/effects'
+import { put, take, call, all, select, takeEvery } from 'redux-saga/effects'
 import type {
   Proof,
   ProofStore,
@@ -546,8 +538,8 @@ export function* updateAttributeClaimAndSendProof(
 }
 
 export function* watchGenerateProof(): any {
-  yield takeLatest(GENERATE_PROOF, generateProofSaga)
-  yield takeLatest(UPDATE_ATTRIBUTE_CLAIM, updateAttributeClaimAndSendProof)
+  yield takeEvery(GENERATE_PROOF, generateProofSaga)
+  yield takeEvery(UPDATE_ATTRIBUTE_CLAIM, updateAttributeClaimAndSendProof)
 }
 
 export function* watchProof(): any {

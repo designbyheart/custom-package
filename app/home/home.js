@@ -167,22 +167,6 @@ export class HomeScreen extends Component<HomeProps, void> {
     } else return null
   }
 
-  // This function replaces flexGrow style property we had before.
-  // FlexGrow is not able to work properly when combined with FlatList
-  // and its content container.
-  applyCorrectStylesForNewBadgeFlatList = () => {
-    if (this.props.newBannerConnections.length === 0)
-      return styles.checkmarkContainer
-    else if (this.props.newBannerConnections.length === 1)
-      return styles.newBadgeFlatListContainer1
-    else if (this.props.newBannerConnections.length === 2)
-      return styles.newBadgeFlatListContainer2
-    else if (this.props.newBannerConnections.length === 3)
-      return styles.newBadgeFlatListContainer3
-    else if (this.props.newBannerConnections.length >= 4)
-      return styles.newBadgeFlatListContainer4
-  }
-
   render() {
     return (
       <View style={styles.outerContainer}>
@@ -199,7 +183,7 @@ export class HomeScreen extends Component<HomeProps, void> {
               }
             />
           )}
-          <View style={this.applyCorrectStylesForNewBadgeFlatList()}>
+          <View style={styles.checkmarkContainer}>
             <FlatList
               keyExtractor={this.keyExtractor}
               style={styles.newBadgeFlatListContainer}
@@ -265,11 +249,6 @@ const mapStateToProps = (state: Store) => {
     } else return false
   }
 
-  // This customFlat function already flattens out only the objects based on the actions,
-  // and those objects are then unshifted to newBannerConnections and recentConnections,
-  // which is by default sorted based on the most recent ones, so not sure if we need sort
-  // based on date or something else scrambles the recentConnections array
-  // Custom flatten function to avoid flow error for missing flat/flatMap in flow-bin
   // TODO: Replace this with flatMap when we update flow-bin
   const customFlat = (array: Array<Array<Object>>) => [].concat(...array)
 
@@ -352,9 +331,6 @@ export default createStackNavigator({
 })
 
 const { height } = Dimensions.get('screen')
-const growHeightBase = newBannerCardSizes.height
-const growDistanceBase = newBannerCardSizes.distance
-const growPaddingBase = 50 // 25 pixels padding from the top header and the bottom list
 
 const styles = StyleSheet.create({
   outerContainer: {
@@ -377,34 +353,6 @@ const styles = StyleSheet.create({
   },
   newBadgeFlatListContainer: {
     marginTop: primaryHeaderHeight,
-  },
-  newBadgeFlatListContainer1: {
-    width: '100%',
-    height: primaryHeaderHeight + growHeightBase + growPaddingBase,
-  },
-  newBadgeFlatListContainer2: {
-    width: '100%',
-    height:
-      primaryHeaderHeight +
-      growHeightBase * 2 +
-      growPaddingBase +
-      growDistanceBase,
-  },
-  newBadgeFlatListContainer3: {
-    width: '100%',
-    height:
-      primaryHeaderHeight +
-      growHeightBase * 3 +
-      growPaddingBase +
-      growDistanceBase * 2,
-  },
-  newBadgeFlatListContainer4: {
-    width: '100%',
-    height:
-      primaryHeaderHeight +
-      growHeightBase * 4 +
-      growPaddingBase +
-      growDistanceBase * 3,
   },
   newBadgeFlatListInnerContainer: {
     paddingBottom: 25,
