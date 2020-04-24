@@ -50,6 +50,9 @@ describe('<VerifyRecoveryPhrase />', () => {
             resetError={() => {}}
             error={false}
             status="none"
+            isCloudBackupEnabled={false}
+            generateBackupFile={() => {}}
+            hasVerifiedRecoveryPhrase={() => {}}
           />
         </Provider>
       )

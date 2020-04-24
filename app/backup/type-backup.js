@@ -64,6 +64,9 @@ export type VerifyRecoveryPhraseProps = {
   status: string,
   restoreStatus: string => void,
   error: boolean,
+  isCloudBackupEnabled: false,
+  hasVerifiedRecoveryPhrase: () => any,
+  generateBackupFile: () => void,
 } & ReactNavigationBackup
 
 export type VerifyRecoveryPhraseState = {
@@ -107,6 +110,7 @@ export type CloudBackupScreenProps = {
   message: string,
   connectionHistoryBackedUp: () => void,
   isAutoBackupEnabled?: boolean,
+  isCloudBackupEnabled: false,
 } & ReactNavigation
 
 export const PREPARE_BACK_IDLE = 'PREPARE_BACKUP_IDLE'

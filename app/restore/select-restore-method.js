@@ -112,32 +112,45 @@ export class SelectRestoreMethod extends Component<RestoreProps, void> {
             Where is your backup?
           </CustomText>
         </CustomView>
-        <Container spaceBetween style={[styles.selectContainer]}>
-          <CustomView
-            onPress={this.cloudRestore}
-            spaceAround
-            center
-            style={[styles.selectMethod, { backgroundColor: '#86B93B' }]}
-          >
-            <Icon iconStyle={[{ marginBottom: 10 }]} mediumLarge src={backup} />
-            <CustomText center transparentBg style={[styles.title2]}>
-              In the Evernym Cloud
-            </CustomText>
-            <CustomText
-              size="14"
+        <Container
+          {...(this.props.isCloudBackupEnabled
+            ? { spaceBetween: true }
+            : { center: true })}
+          style={[styles.selectContainer]}
+        >
+          {this.props.isCloudBackupEnabled && (
+            <CustomView
+              onPress={this.cloudRestore}
+              spaceAround
               center
-              transparentBg
-              style={{ color: 'white' }}
+              style={[styles.selectMethod, { backgroundColor: '#86B93B' }]}
             >
-              You have a backup in the Evernym Cloud and you have your Recovery
-              Phrase.
-            </CustomText>
-          </CustomView>
-          <CustomView center>
-            <CustomText primary transparentBg center style={[styles.title1]}>
-              or
-            </CustomText>
-          </CustomView>
+              <Icon
+                iconStyle={[{ marginBottom: 10 }]}
+                mediumLarge
+                src={backup}
+              />
+              <CustomText center transparentBg style={[styles.title2]}>
+                In the Evernym Cloud
+              </CustomText>
+              <CustomText
+                size="14"
+                center
+                transparentBg
+                style={{ color: 'white' }}
+              >
+                You have a backup in the Evernym Cloud and you have your
+                Recovery Phrase.
+              </CustomText>
+            </CustomView>
+          )}
+          {this.props.isCloudBackupEnabled && (
+            <CustomView center>
+              <CustomText primary transparentBg center style={[styles.title1]}>
+                or
+              </CustomText>
+            </CustomView>
+          )}
           <CustomView
             onPress={this.zipRestore}
             spaceAround
@@ -173,6 +186,7 @@ const mapStateToProps = (state: Store) => {
   return {
     restore: state.restore,
     route: state.route.currentScreen,
+    isCloudBackupEnabled: false,
   }
 }
 

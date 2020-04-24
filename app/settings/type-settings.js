@@ -25,6 +25,7 @@ export type SettingsProps = {
   hasVerifiedRecoveryPhrase?: boolean,
   cloudBackupError?: string | null,
   hasViewedWalletError?: boolean,
+  isCloudBackupEnabled: false,
   selectUserAvatar: () => void,
   setAutoCloudBackupEnabled: (switchState: boolean) => any,
   generateRecoveryPhrase: () => any | null,

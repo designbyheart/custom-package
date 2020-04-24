@@ -15,6 +15,7 @@ describe('Restore screen', () => {
       route: restorePassphraseRoute,
       updateStatusBarTheme: jest.fn(),
       saveFileToAppDirectory: jest.fn(),
+      isCloudBackupEnabled: false,
     }
   }
 
