@@ -78,7 +78,7 @@ public class NegativeTest extends IntSetup {
         String dataCredential = "{\"name\":\"Name\",\"value\":\"Alex\"},{\"name\":\"Degree\",\"value\":\"MBA\"},{\"name\":\"Social Security Number\",\"value\":\"38632362362\"}";
 		String credentialID = objAppUtlis.sendCredential(driver, connectionID, credentialDefID2, dataCredential,"0");
 		String data = "{\"name\":\"Name\",\"value\":\"\"},{\"name\":\"PhoneNo\",\"value\":\"\"}";
-		objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID);
+		objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID, false);
 		objAppUtlis.acceptCredential(driver, credentialID ,false);
 	}
     
@@ -92,8 +92,8 @@ public class NegativeTest extends IntSetup {
 		String dataProof1 = "{\"name\":\"Name\",\"value\":\"\"},{\"name\":\"PhoneNo\",\"value\":\"\"}";
 		String sendProofID1=objAppUtlis.sendProof(driver, connectionID, proofID);
 		String dataProof2 = "{\"name\":\"Name\",\"value\":\"\"},{\"name\":\"SSN\",\"value\":\"\"},{\"name\":\"Degree\",\"value\":\"\"},{\"name\":\"PhoneNo\",\"value\":\"\"}";
-		objAppUtlis.sendAndAcceptProof(driver, connectionID, multipleProofID);
-		objAppUtlis.AcceptProof(driver, sendProofID1);
+		objAppUtlis.sendAndAcceptProof(driver, connectionID, multipleProofID, false);
+		objAppUtlis.AcceptProof(driver, sendProofID1, false);
 	}	
 
 

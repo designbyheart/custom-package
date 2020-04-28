@@ -147,7 +147,7 @@ public class AppUtils extends AppPageInjector{
 		HashMap<String, String> sendCredentialDefResponse = objRestApi.sendCredential(connectionID, credentialDefID, attribute, price);
 		String credentialID = objRestApi.getKeyValue(sendCredentialDefResponse, "id");
 		checkEmpty(credentialDefID, sendCredentialDefResponse.toString());
-		Thread.sleep(15000);
+		Thread.sleep(30000);
 		objCredentialModules.acceptCredential(driver, useMyConnections);
 		statusCredential=objRestApi.get("/api/v1/credentials", credentialID);
 		String statusCredentialStr =objRestApi.getKeyValue(statusCredential, "state");
@@ -171,12 +171,14 @@ public class AppUtils extends AppPageInjector{
 	 * @param proofID-proof which need to be send
 	 * @return void
 	 */
-	public void sendAndAcceptProof(AppiumDriver driver, String connectionID, String proofID) throws Exception {
+	public void sendAndAcceptProof(
+			AppiumDriver driver, String connectionID, String proofID, boolean useMyConnections
+	) throws Exception {
 		HashMap<String, String> sendProofResponse = objRestApi.sendProof(connectionID, proofID);
 		String sendProofID = objRestApi.getKeyValue(sendProofResponse, "id");
 		checkEmpty(sendProofID, sendProofResponse.toString());
-		Thread.sleep(15000);
-		objProofModules.sendProof(driver); 
+		Thread.sleep(30000);
+		objProofModules.sendProof(driver, useMyConnections);
 		HashMap<String, String> statusProof = objRestApi.get("/api/v1/proofs",sendProofID);
 		String statusProofStr = objRestApi.getKeyValue(statusProof, "state");
 		objRestApi.poll(statusProofStr, "4", sendProofID, "proofs");
@@ -200,8 +202,8 @@ public class AppUtils extends AppPageInjector{
 	 * @param sendProofID -proof which need to be send
 	 * @return void
 	 */
-	public void AcceptProof(AppiumDriver driver, String sendProofID) throws Exception {
-        objProofModules.sendProof(driver); 
+	public void AcceptProof(AppiumDriver driver, String sendProofID, boolean useMyConnections) throws Exception {
+        objProofModules.sendProof(driver, useMyConnections);
 		HashMap<String, String> statusProof=objRestApi.get("/api/v1/proofs",sendProofID);
 		String statusProofStr =objRestApi.getKeyValue(statusProof, "state");
 		objRestApi.poll(statusProofStr, "4", sendProofID, "proofs");

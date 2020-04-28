@@ -29,16 +29,20 @@ public class ProofModules  extends AppPageInjector{
 	 * @param  driver - appium driver available for session
 	 * @return void
 	 */
-	public void sendProof(AppiumDriver driver) throws Exception {
-//		AppiumUtils.findElement(driver, "//*[@text=\"Evernym QA-RC\"]", "Connection Entry", 2).click();
-//		AppiumUtils.findElement(driver, "//*[@text=\"View\"]", "View").click();
-		homePageV2.newMessage(driver).isEnabled();
-		homePageV2.newMessage(driver).click();
+	public void sendProof(AppiumDriver driver, boolean useMyConnections) throws Exception {
+		if (useMyConnections) {
+			homePageV2.burgerMenuButton(driver).click();
+			menuPageV2.myConnectionsButton(driver).click();
+			myConnectionsPageV2.testConnection(driver).click();
+			myConnectionsPageV2.viewButton(driver).click();
+		}
+		else {
+			homePageV2.newMessage(driver).isEnabled();
+			homePageV2.newMessage(driver).click();
+		}
 		proofRequestPage.send_Button(driver).isEnabled();
 		proofRequestPage.send_Button(driver).click();
 		Thread.sleep(45000);  // sync issue
-//		proofRequestPage.continue_Button(driver).click();
-
 	}
 	
 	/**
@@ -77,7 +81,8 @@ public class ProofModules  extends AppPageInjector{
 	 */
 	public void sendSelfAttestedProof(AppiumDriver driver) throws Exception {
 		Thread.sleep(5000);  //  sync issue while sending proof
-		AppiumUtils.findElement(driver, "//*[@text=\"View\"]", "View").click();
+		homePageV2.newMessage(driver).isEnabled();
+		homePageV2.newMessage(driver).click();
 		proofRequestPage.ok_Button(driver).click();
 		proofRequestPage.age_TextBox(driver).sendKeys("29");
 		if((Config.Device_Type.equals("iOS")||Config.Device_Type.equals("awsiOS")))

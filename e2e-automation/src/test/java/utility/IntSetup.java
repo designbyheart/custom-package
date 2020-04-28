@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import test.java.appModules.RestApi;
 import test.java.utility.Config;
 
@@ -19,6 +20,7 @@ import org.testng.annotations.BeforeSuite;
 
 import java.io.*;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -128,6 +130,25 @@ public class IntSetup {
 				driver = new AndroidDriver(new URL(Config.Appium_Server), capabilities);
 				driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 				System.out.println("connectMe application launched successfully in android");
+				// ----- headless config
+//				capabilities.setCapability("deviceReadyTimeout", 30);
+//				capabilities.setCapability("avdLaunchTimeout", 600000);
+//				capabilities.setCapability("avdReadyTimeout", 600000);
+//				capabilities.setCapability("adbExecTimeout", 600000);
+//				capabilities.setCapability("uiautomator2ServerInstallTimeout", 600000);
+//				capabilities.setCapability("uiautomator2ServerLaunchTimeout", 600000);
+//				capabilities.setCapability("androidInstallTimeout", 100000);
+//				capabilities.setCapability("isHeadless", true);
+//				capabilities.setCapability("automationName", "UiAutomator2");
+//				capabilities.setCapability("platformName", "Android");
+//				capabilities.setCapability("noReset", "true");// newCommandTimeout
+//				capabilities.setCapability("newCommandTimeout", 1800);
+//				capabilities.setCapability("appPackage", "me.connect");
+//				capabilities.setCapability("appActivity", ".MainActivity");// appActivity
+//				capabilities.setCapability("deviceName", Config.Device_Name);// device
+//				driver = new AndroidDriver(new URL(Config.Appium_Server), capabilities);
+//				driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
+//				System.out.println("connectMe application launched successfully in android");
 
 			} else if (deviceType.equals("android") && appType.equals("chrome")) {
 				capabilities.setCapability("browserName", "Chrome");
@@ -141,6 +162,38 @@ public class IntSetup {
 				driver = new AndroidDriver(new URL(Config.Appium_Server), capabilities);
 				driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 				System.out.println("chrome browser launched successfully in Android");
+				// ----- headless config
+//				capabilities.setCapability("deviceReadyTimeout", 30);
+//				capabilities.setCapability("avdLaunchTimeout", 600000);
+//				capabilities.setCapability("avdReadyTimeout", 600000);
+//				capabilities.setCapability("adbExecTimeout", 600000);
+//				ChromeOptions co = new ChromeOptions();
+//				co.addArguments("no-sandbox");
+//				co.addArguments("disable-fre");
+//				co.addArguments("enable-remote-debugging");
+////				co.addArguments("headless");
+////				co.addArguments("disable-features=VizDisplayCompositor");
+//				co.addArguments("disable-setuid-sandbox");
+////				co.setExperimentalOption("androidProcess", "**");
+//				co.setExperimentalOption("w3c", false);
+//				capabilities.setCapability("chromedriverArgs", Arrays.asList("--no-sandbox"));
+//				capabilities.setCapability("showChromedriverLog", true);
+//				capabilities.setCapability("uiautomator2ServerInstallTimeout", 600000);
+//				capabilities.setCapability("uiautomator2ServerLaunchTimeout", 600000);
+//				capabilities.setCapability("androidInstallTimeout", 100000);
+//				capabilities.setCapability("isHeadless", true);
+//				capabilities.setCapability("browserName", "Chrome");
+//				capabilities.setCapability("automationName", "UiAutomator2");
+//				capabilities.setCapability("platformName", "Android");
+//				capabilities.setCapability("newCommandTimeout", 1800);
+//				capabilities.setCapability("deviceName", Config.Device_Name);// device
+//				capabilities.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
+//				capabilities.setCapability("autoAcceptAlerts", true);
+//				capabilities.setCapability("appium:chromeOptions", co);
+//				driver = new AndroidDriver(new URL(Config.Appium_Server), capabilities);
+//				driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
+//				System.out.println("chrome browser launched successfully in Android");
+
 			}
 
 			else if (deviceType.equals("awsAndroid") && appType.equals("chrome")) {

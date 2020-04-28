@@ -10,6 +10,7 @@
             <class name="test.java.Tests.BackupTestV2"/>
             <class name="test.java.Tests.RestoreTestV2"/>
             <class name="test.java.Tests.CredentialTest"/>
+            <class name="test.java.Tests.ProofTest"/>
         </classes>
     </test>
 </suite>

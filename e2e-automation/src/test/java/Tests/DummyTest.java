@@ -60,7 +60,7 @@ public class DummyTest extends IntSetup {
                            "{\"name\":\"LastName\"}," +
                            "{\"name\":\"Years\"}";
         String proofID = objAppUtlis.createProof(proofData);
-        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID);
+        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID, false);
     }
 
     @Test(invocationCount = 2)
@@ -82,7 +82,7 @@ public class DummyTest extends IntSetup {
         String proofData = "{\"name\":\"Company\"}," +
                            "{\"name\":\"Position\"}";
         String proofID = objAppUtlis.createProof(proofData);
-        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID);
+        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID, false);
     }
 
     @Test(dependsOnMethods = {"oneCredentialHappyPath", "anotherCredentialHappyPath"}, invocationCount = 3)
@@ -94,7 +94,7 @@ public class DummyTest extends IntSetup {
                            "{\"name\":\"Company\"}," +
                            "{\"name\":\"Position\"}";
         String proofID = objAppUtlis.createProof(proofData);
-        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID);
+        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID, false);
     }
 
     @AfterMethod
