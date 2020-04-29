@@ -18,6 +18,11 @@ public class CredentialPageAndroid implements CredentialPage {
 		return AppiumUtils.findElement(driver, "//*[@text=\"Accept\"]", "Accept Button");
 	}
 
+
+	public WebElement ignore_Button(AppiumDriver driver) throws Exception {
+		return AppiumUtils.findElement(driver, "//*[@text=\"Ignore\"]", "Ignore Button");
+	}
+
 	
 	public WebElement continue_Button(AppiumDriver driver) throws Exception {
 		return AppiumUtils.findElement(driver,

@@ -139,7 +139,7 @@ public class AppUtils extends AppPageInjector{
 	 * @return void
 	 */
 	public void sendCredentialAndAccept(
-			AppiumDriver driver, String connectionID, String credentialDefID, String attribute, String price, boolean useMyConnections
+			AppiumDriver driver, String connectionID, String credentialDefID, String attribute, String price, boolean useMyConnections, boolean ignore
 	) throws Exception {
 		HashMap<String, String> statusCredential;
 		System.out.println(connectionID+" connectionID");
@@ -148,10 +148,12 @@ public class AppUtils extends AppPageInjector{
 		String credentialID = objRestApi.getKeyValue(sendCredentialDefResponse, "id");
 		checkEmpty(credentialDefID, sendCredentialDefResponse.toString());
 		Thread.sleep(30000);
-		objCredentialModules.acceptCredential(driver, useMyConnections);
-		statusCredential=objRestApi.get("/api/v1/credentials", credentialID);
-		String statusCredentialStr =objRestApi.getKeyValue(statusCredential, "state");
-		objRestApi.poll(statusCredentialStr, "4", credentialID, "credentials");
+		objCredentialModules.acceptCredential(driver, useMyConnections, ignore);
+		if (!ignore) {
+			statusCredential = objRestApi.get("/api/v1/credentials", credentialID);
+			String statusCredentialStr = objRestApi.getKeyValue(statusCredential, "state");
+			objRestApi.poll(statusCredentialStr, "4", credentialID, "credentials");
+		}
 	}
 	
 	/**
@@ -172,16 +174,18 @@ public class AppUtils extends AppPageInjector{
 	 * @return void
 	 */
 	public void sendAndAcceptProof(
-			AppiumDriver driver, String connectionID, String proofID, boolean useMyConnections
+			AppiumDriver driver, String connectionID, String proofID, boolean useMyConnections, boolean ignore
 	) throws Exception {
 		HashMap<String, String> sendProofResponse = objRestApi.sendProof(connectionID, proofID);
 		String sendProofID = objRestApi.getKeyValue(sendProofResponse, "id");
 		checkEmpty(sendProofID, sendProofResponse.toString());
 		Thread.sleep(30000);
-		objProofModules.sendProof(driver, useMyConnections);
-		HashMap<String, String> statusProof = objRestApi.get("/api/v1/proofs",sendProofID);
-		String statusProofStr = objRestApi.getKeyValue(statusProof, "state");
-		objRestApi.poll(statusProofStr, "4", sendProofID, "proofs");
+		objProofModules.sendProof(driver, useMyConnections, ignore);
+		if (!ignore) {
+			HashMap<String, String> statusProof = objRestApi.get("/api/v1/proofs", sendProofID);
+			String statusProofStr = objRestApi.getKeyValue(statusProof, "state");
+			objRestApi.poll(statusProofStr, "4", sendProofID, "proofs");
+		}
 	}
 	
 	/**
@@ -202,8 +206,8 @@ public class AppUtils extends AppPageInjector{
 	 * @param sendProofID -proof which need to be send
 	 * @return void
 	 */
-	public void AcceptProof(AppiumDriver driver, String sendProofID, boolean useMyConnections) throws Exception {
-        objProofModules.sendProof(driver, useMyConnections);
+	public void AcceptProof(AppiumDriver driver, String sendProofID, boolean useMyConnections, boolean ignore) throws Exception {
+        objProofModules.sendProof(driver, useMyConnections, ignore);
 		HashMap<String, String> statusProof=objRestApi.get("/api/v1/proofs",sendProofID);
 		String statusProofStr =objRestApi.getKeyValue(statusProof, "state");
 		objRestApi.poll(statusProofStr, "4", sendProofID, "proofs");
@@ -261,9 +265,9 @@ public class AppUtils extends AppPageInjector{
 	 * @param credentialID -credential which need to be accepted
 	 * @return void
 	 */
-	public void acceptCredential(AppiumDriver driver, String credentialID, boolean useMyConnections) throws Exception {
+	public void acceptCredential(AppiumDriver driver, String credentialID, boolean useMyConnections, boolean ignore) throws Exception {
 		HashMap<String, String> statusCredential;
-		objCredentialModules.acceptCredential(driver, useMyConnections);
+		objCredentialModules.acceptCredential(driver, useMyConnections, ignore);
 		Thread.sleep(5000);
 		statusCredential=objRestApi.get("/api/v1/credentials", credentialID);
 		String statusCredentialStr =objRestApi.getKeyValue(statusCredential, "state");

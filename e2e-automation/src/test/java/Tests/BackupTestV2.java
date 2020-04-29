@@ -47,7 +47,7 @@ public class BackupTestV2 extends IntSetup {
             objBackupPage.verifyPhraseBox(driver).sendKeys(ctx.recoveryPhrase);
             AndroidDriver androidDriver = (AndroidDriver) driver;
             androidDriver.pressKeyCode(AndroidKeyCode.KEYCODE_ENTER);
-            objBackupPage.zipDownloadButton(driver).click();
+//            objBackupPage.zipDownloadButton(driver).click(); // this button disappeared in the latest build
             ctx.backupFileName = objBackupPage.backupFileName(driver).getText();
             System.out.println(ctx.backupFileName);
             ctx.dumpContext();
@@ -67,7 +67,7 @@ public class BackupTestV2 extends IntSetup {
         }
     }
 
-    @Test(dependsOnMethods = "checkLocalBackup")
+    @Test(dependsOnMethods = "checkLocalBackup", enabled = false) // this feature is switched off
     public void checkOneCloudBackup() throws Exception {
         objSettingsPage.automaticCloudBackupsButton(driver).click();
         try {
@@ -82,7 +82,7 @@ public class BackupTestV2 extends IntSetup {
         }
     }
 
-    @Test(dependsOnMethods = "checkOneCloudBackup")
+    @Test(dependsOnMethods = "checkOneCloudBackup", enabled = false) // this feature is switched off
     public void enableAutomaticCloudBackup() throws Exception {
         objSettingsPage.automaticCloudBackupsButton(driver).click();
         try {
@@ -97,7 +97,7 @@ public class BackupTestV2 extends IntSetup {
         }
     }
 
-    @Test(dependsOnMethods = "enableAutomaticCloudBackup", enabled = false)
+    @Test(dependsOnMethods = "enableAutomaticCloudBackup", enabled = false) // this feature is switched off
     public void disableAutomaticCloudBackup() throws Exception {
         new TouchAction(driver)
                 // FIXME

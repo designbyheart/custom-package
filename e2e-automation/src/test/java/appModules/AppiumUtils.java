@@ -1,7 +1,10 @@
 package test.java.appModules;
 
 import java.util.HashMap;
+import java.util.List;
 
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidKeyCode;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -26,6 +29,7 @@ import static java.time.Duration.ofSeconds;
 
 public class AppiumUtils {
 	private static WebElement element = null;
+	private static List<WebElement> elements = null;
 
 	/**
 	 * clicks on a webelement n times
@@ -65,6 +69,19 @@ public class AppiumUtils {
 			element = driver.findElement(By.xpath(expression));
 			System.out.println(elementName + " is displayed");
 			return element;
+		} catch (Exception e) {
+			System.out.println(elementName + " is not displayed");
+			Reporter.log(elementName + " is not displayed");
+			throw (e);
+		}
+
+	}
+
+	public static List<WebElement> findElements (AppiumDriver driver, String expression, String elementName) throws Exception {
+		try {
+			elements = driver.findElements(By.xpath(expression));
+			System.out.println(elementName + " is displayed");
+			return elements;
 		} catch (Exception e) {
 			System.out.println(elementName + " is not displayed");
 			Reporter.log(elementName + " is not displayed");
@@ -181,6 +198,13 @@ public class AppiumUtils {
 
 		scroll(driver, startx, starty, endx, starty);
 
+	}
+
+	public static void tapBack(AppiumDriver driver, int n) {
+		AndroidDriver androidDriver = (AndroidDriver) driver;
+		for (int i = 0; i < n; i++) {
+			androidDriver.pressKeyCode(AndroidKeyCode.BACK);
+		}
 	}
 
 }

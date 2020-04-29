@@ -11,6 +11,8 @@
             <class name="test.java.Tests.RestoreTestV2"/>
             <class name="test.java.Tests.CredentialTest"/>
             <class name="test.java.Tests.ProofTest"/>
+            <class name="test.java.Tests.CredentialTestV2"/>
+            <class name="test.java.Tests.ProofTestV2"/>
         </classes>
     </test>
 </suite>

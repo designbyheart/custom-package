@@ -1,19 +1,17 @@
 package test.java.funcModules;
 
 import java.util.HashMap;
-
+import java.util.List;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
-
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import test.java.appModules.AppPageInjector;
-import test.java.appModules.AppiumUtils;
 import test.java.appModules.RestApi;
 import test.java.utility.Config;
-import test.java.utility.IntSetup;
 
 
 /**
@@ -29,20 +27,27 @@ public class ProofModules  extends AppPageInjector{
 	 * @param  driver - appium driver available for session
 	 * @return void
 	 */
-	public void sendProof(AppiumDriver driver, boolean useMyConnections) throws Exception {
+	public void sendProof(AppiumDriver driver, boolean useMyConnections, boolean ignore) throws Exception {
 		if (useMyConnections) {
 			homePageV2.burgerMenuButton(driver).click();
 			menuPageV2.myConnectionsButton(driver).click();
 			myConnectionsPageV2.testConnection(driver).click();
-			myConnectionsPageV2.viewButton(driver).click();
+			List<WebElement> viewButtons = myConnectionsPageV2.viewButtonsList(driver);
+			viewButtons.get(viewButtons.size() - 1).click(); // click the last one
 		}
 		else {
 			homePageV2.newMessage(driver).isEnabled();
 			homePageV2.newMessage(driver).click();
 		}
-		proofRequestPage.send_Button(driver).isEnabled();
-		proofRequestPage.send_Button(driver).click();
-		Thread.sleep(45000);  // sync issue
+		if (ignore) {
+			proofRequestPage.ignore_Button(driver).isEnabled();
+			proofRequestPage.ignore_Button(driver).click();
+		}
+		else {
+			proofRequestPage.send_Button(driver).isEnabled();
+			proofRequestPage.send_Button(driver).click();
+			Thread.sleep(45000);  // sync issue - just for sending
+		}
 	}
 	
 	/**

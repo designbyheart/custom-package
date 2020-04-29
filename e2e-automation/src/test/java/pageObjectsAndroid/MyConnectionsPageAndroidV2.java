@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import test.java.appModules.AppiumUtils;
 import test.java.pageObjects.MyConnectionsPageV2;
 
+import java.util.List;
+
 public class MyConnectionsPageAndroidV2 implements MyConnectionsPageV2 {
 
     public WebElement myConnectionsContainer(AppiumDriver driver) throws Exception {
@@ -47,8 +49,8 @@ public class MyConnectionsPageAndroidV2 implements MyConnectionsPageV2 {
         );
     }
 
-    public WebElement viewButton(AppiumDriver driver) throws Exception {
-        return AppiumUtils.findElement(
+    public List<WebElement> viewButtonsList(AppiumDriver driver) throws Exception {
+        return AppiumUtils.findElements(
                 driver,
                 "//*[@text=\"View\"]",
                 "View Button"
