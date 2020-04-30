@@ -34,7 +34,7 @@ public class MenuPageAndroidV2 implements MenuPageV2 {
     public WebElement okButton(AppiumDriver driver) throws Exception {
         return AppiumUtils.findElement(
                 driver,
-                "//*[@text=\"OK\"]",
+                "//*[@resource-id=\"android:id/button1\"]",
                 "OK Button"
         );
     }
