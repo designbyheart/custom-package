@@ -42,6 +42,7 @@ export { default as Keyboard } from './keyboard/keyboard'
 export { default as CustomHeader } from './custom-header/custom-header'
 export { default as Loader } from './loader/loader'
 export { PrimaryHeader } from './primary-header/primary-header'
+export { FlatHeader } from './flat-header/flat-header'
 export {
   ConnectionCard,
 } from '../my-connections/connection-card/connection-card'

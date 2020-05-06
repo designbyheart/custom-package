@@ -33,13 +33,13 @@ PODS:
   - nanopb/encode (0.3.9011)
   - Onfido (10.0.0)
   - Protobuf (3.11.2)
-  - vcx (0.0.151)
+  - vcx (0.0.157)
 
 DEPENDENCIES:
   - apptentive-ios (= 5.2.2)
   - Firebase/Messaging (= 4.8.0)
   - Onfido (= 10.0.0)
-  - vcx (= 0.0.151)
+  - vcx (= 0.0.157)
 
 SPEC REPOS:
   "git@gitlab.corp.evernym.com:dev/vcx/indy-sdk.git":
@@ -67,8 +67,8 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Onfido: eb3bde6295f0dc6dd334b9eb01626d2bad5d3c1d
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
-  vcx: 2b6e8390b6f392b7189cff58606b71f6e87f0abb
+  vcx: ca977acc062444215bada88835da8e9b7bd5797f
 
-PODFILE CHECKSUM: c2646d14223d98a54bb90f6c853c79ca4e672aca
+PODFILE CHECKSUM: e9fcd16676e04867124ff368224b19bf418d7052
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
