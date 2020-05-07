@@ -5,6 +5,9 @@ import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import {
   SEND_CLAIM_REQUEST_SUCCESS,
   CLAIM_OFFER_RECEIVED,
+  CLAIM_OFFER_ACCEPTED,
+  SEND_CLAIM_REQUEST_FAIL,
+  PAID_CREDENTIAL_REQUEST_FAIL,
 } from '../claim-offer/type-claim-offer'
 import { CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
 import {
@@ -18,6 +21,7 @@ import {
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
 } from '../question/type-question'
+import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 
 const actionToRecord = [
   // removing invitation received from record array
@@ -35,6 +39,11 @@ const actionToRecord = [
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
   DENY_PROOF_REQUEST_SUCCESS,
+  CLAIM_OFFER_ACCEPTED,
+  SEND_CLAIM_REQUEST_FAIL,
+  PAID_CREDENTIAL_REQUEST_FAIL,
+  UPDATE_ATTRIBUTE_CLAIM,
+  ERROR_SEND_PROOF,
 ]
 
 // TODO:KS Fix any type using `redux` provided Generic Types

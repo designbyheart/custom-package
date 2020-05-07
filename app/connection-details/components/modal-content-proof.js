@@ -556,7 +556,11 @@ class ModalContentProof extends Component<
   }
 
   onRetry = () => {
-    this.props.updateAttributeClaim(this.props.uid, this.state.selectedClaims)
+    this.props.updateAttributeClaim(
+      this.props.uid,
+      this.props.remotePairwiseDID,
+      this.state.selectedClaims
+    )
   }
 
   onDeny = () => {
@@ -577,7 +581,11 @@ class ModalContentProof extends Component<
         disableSendButton: true,
       })
       this.props.newConnectionSeen(this.props.remotePairwiseDID)
-      this.props.updateAttributeClaim(this.props.uid, this.state.selectedClaims)
+      this.props.updateAttributeClaim(
+        this.props.uid,
+        this.props.remotePairwiseDID,
+        this.state.selectedClaims
+      )
       this.props.hideModal()
     } else {
       this.setState({

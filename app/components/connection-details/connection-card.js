@@ -1,6 +1,5 @@
 // @flow
 import React, { PureComponent } from 'react'
-import SvgCustomIcon from '../../components/svg-custom-icon'
 import {
   Text,
   View,
@@ -9,6 +8,10 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import SvgCustomIcon from '../../components/svg-custom-icon'
 import CredentialPriceInfo from '../../components/labels/credential-price-info'
 import { Border } from '../../components/connection-details/border'
 import {
@@ -17,10 +20,37 @@ import {
   modalContentProofShared,
   modalScreenRoute,
 } from '../../common'
+import {
+  SEND_CLAIM_REQUEST_FAIL,
+  PAID_CREDENTIAL_REQUEST_FAIL,
+} from '../../claim-offer/type-claim-offer'
+import { acceptClaimOffer } from '../../claim-offer/claim-offer-store'
+import { reTrySendProof } from '../../proof/proof-store'
+import { ERROR_SEND_PROOF } from '../../proof/type-proof'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
-class ConnectionCard extends PureComponent<any, {}> {
+class ConnectionCardComponent extends PureComponent<any, {}> {
   updateAndShowModal = () => {
+    const { data: event } = this.props
+    if (
+      event.action === SEND_CLAIM_REQUEST_FAIL ||
+      event.action === PAID_CREDENTIAL_REQUEST_FAIL
+    ) {
+      this.props.acceptClaimOffer(
+        event.originalPayload.uid,
+        event.originalPayload.remoteDid
+      )
+      return
+    }
+
+    if (event.action === ERROR_SEND_PROOF) {
+      this.props.reTrySendProof(
+        event.originalPayload.selfAttestedAttributes,
+        event.originalPayload
+      )
+      return
+    }
+
     if (this.props.proof) {
       this.props.navigation.navigate(modalContentProofShared, {
         uid: this.props.uid,
@@ -37,6 +67,7 @@ class ConnectionCard extends PureComponent<any, {}> {
       })
     }
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -105,7 +136,18 @@ class ConnectionCard extends PureComponent<any, {}> {
   }
 }
 
-export { ConnectionCard }
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      acceptClaimOffer,
+      reTrySendProof,
+    },
+    dispatch
+  )
+
+export const ConnectionCard = connect(null, mapDispatchToProps)(
+  ConnectionCardComponent
+)
 
 const styles = StyleSheet.create({
   container: {

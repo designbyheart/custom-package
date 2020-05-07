@@ -50,6 +50,7 @@ import {
   PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND,
   DENY_PROOF_REQUEST,
   DENY_PROOF_REQUEST_SUCCESS,
+  DENY_PROOF_REQUEST_FAIL,
 } from './type-proof-request'
 import type {
   NotificationPayloadInfo,
@@ -227,7 +228,9 @@ export function* proofAccepted(
   } catch (e) {
     KeepScreenOn.setKeepScreenOn(false)
     captureError(e)
-    yield put(errorSendProofFail(uid, ERROR_SEND_PROOF(e.message)))
+    yield put(
+      errorSendProofFail(uid, remotePairwiseDID, ERROR_SEND_PROOF(e.message))
+    )
   }
 }
 
@@ -246,7 +249,7 @@ function* getConnectionHandle(
       // then we raise error and tell user that sending proof failed
       captureError(new Error('OCS-002 No pairwise connection found'))
       yield put(
-        errorSendProofFail(uid, {
+        errorSendProofFail(uid, remoteDid, {
           code: 'OCS-002',
           message: 'No pairwise connection found',
         })
@@ -262,7 +265,7 @@ function* getConnectionHandle(
     if (!connection.vcxSerializedConnection) {
       captureError(new Error('OCS-002 No pairwise connection found'))
       yield put(
-        errorSendProofFail(uid, {
+        errorSendProofFail(uid, remoteDid, {
           code: 'OCS-002',
           message: 'No pairwise connection found',
         })
@@ -378,16 +381,25 @@ function* denyProofRequestSaga(
         yield call(proofReject, proofHandle, connectionHandle)
         yield put(denyProofRequestSuccess(uid))
       } catch (e) {
+        yield put({
+          type: DENY_PROOF_REQUEST_FAIL,
+        })
         customLogger.log(
           'error calling vcx deny API while denying proof request.'
         )
       }
     } catch (e) {
+      yield put({
+        type: DENY_PROOF_REQUEST_FAIL,
+      })
       customLogger.log(
         'connection handle not found while denying proof request.'
       )
     }
   } catch (e) {
+    yield put({
+      type: DENY_PROOF_REQUEST_FAIL,
+    })
     customLogger.log('something went wrong trying to deny proof request.')
   }
 }

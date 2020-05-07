@@ -17,6 +17,7 @@ import type {
   NotificationPayloadInfo,
 } from '../push-notification/type-push-notification'
 import type { ClaimMap } from '../claim/type-claim'
+import { updateAttributeClaim } from '../proof/proof-store'
 
 export type RequestedAttribute = {|
   name: string,
@@ -181,10 +182,7 @@ export type ProofRequestProps = {
   rejectProofRequest: (uid: string) => void,
   acceptProofRequest: (uid: string) => void,
   proofRequestShown: (uid: string) => void,
-  updateAttributeClaim: (
-    uid: string,
-    requestedAttrsJson: RequestedAttrsJson
-  ) => void,
+  updateAttributeClaim: typeof updateAttributeClaim,
   getProof: (uid: string) => void,
   uid: string,
   proofGenerationError?: ?CustomError,
@@ -358,6 +356,11 @@ export type DenyProofRequestAction = {
   uid: string,
 }
 
+export const DENY_PROOF_REQUEST_FAIL = 'DENY_PROOF_REQUEST_FAIL'
+export type DenyProofRequestFailAction = {
+  type: typeof DENY_PROOF_REQUEST_FAIL,
+}
+
 export const DENY_PROOF_REQUEST_SUCCESS: 'DENY_PROOF_REQUEST_SUCCESS' =
   'DENY_PROOF_REQUEST_SUCCESS'
 export type DenyProofRequestSuccessAction = {
@@ -384,6 +387,7 @@ export type ProofRequestAction =
   | ProofRequestDissatisfiedAttributesFoundAction
   | DenyProofRequestAction
   | DenyProofRequestSuccessAction
+  | DenyProofRequestFailAction
 
 export type ProofRequestStore = {
   +[string]: ProofRequestPayload,

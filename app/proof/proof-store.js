@@ -1,6 +1,14 @@
 // @flow
 
-import { put, take, call, all, select, takeEvery } from 'redux-saga/effects'
+import {
+  put,
+  take,
+  call,
+  all,
+  select,
+  takeEvery,
+  race,
+} from 'redux-saga/effects'
 import type {
   Proof,
   ProofStore,
@@ -16,6 +24,7 @@ import type {
   IndyRequestedProof,
   RequestedClaimsJson,
   VcxSelectedCredentials,
+  RetrySendProofAction,
 } from './type-proof'
 import type {
   ProofRequestData,
@@ -38,6 +47,7 @@ import {
   RESET_TEMP_PROOF_DATA,
   ERROR_SEND_PROOF,
   CLEAR_ERROR_SEND_PROOF,
+  RETRY_SEND_PROOF,
 } from './type-proof'
 import type { CustomError, RequestedAttrsJson } from '../common/type-common'
 import type { ClaimMap } from '../claim/type-claim'
@@ -69,6 +79,8 @@ import { RESET } from '../common/type-common'
 import {
   PROOF_REQUEST_SHOW_START,
   NO_SELF_ATTEST,
+  MISSING_ATTRIBUTES_FOUND,
+  PROOF_REQUEST_AUTO_FILL,
 } from '../proof-request/type-proof-request'
 import { captureError } from '../services/error/error-handler'
 import KeepScreenOn from 'react-native-keep-screen-on'
@@ -76,10 +88,12 @@ import { customLogger } from '../store/custom-logger'
 
 export const updateAttributeClaim = (
   uid: string,
+  remoteDid: string,
   requestedAttrsJson: RequestedAttrsJson
 ): UpdateAttributeClaimAction => ({
   type: UPDATE_ATTRIBUTE_CLAIM,
   uid,
+  remoteDid,
   requestedAttrsJson,
 })
 
@@ -131,9 +145,14 @@ export const resetTempProofData = (uid: string) => ({
   uid,
 })
 
-export const errorSendProofFail = (uid: string, error: CustomError) => ({
+export const errorSendProofFail = (
+  uid: string,
+  remoteDid: string,
+  error: CustomError
+) => ({
   type: ERROR_SEND_PROOF,
   uid,
+  remoteDid,
   error,
 })
 
@@ -481,7 +500,7 @@ export function* generateProofSaga(action: GenerateProofAction): any {
 }
 
 export function* updateAttributeClaimAndSendProof(
-  action: any
+  action: UpdateAttributeClaimAction
 ): Generator<*, *, *> {
   try {
     yield put(clearSendProofFail(action.uid))
@@ -533,13 +552,58 @@ export function* updateAttributeClaimAndSendProof(
   } catch (e) {
     KeepScreenOn.setKeepScreenOn(false)
     // captureError(e)
-    yield put(errorSendProofFail(action.uid, e))
+    yield put(errorSendProofFail(action.uid, action.remoteDid, e))
   }
+}
+
+export const reTrySendProof = (
+  selfAttestedAttributes: $PropertyType<
+    RetrySendProofAction,
+    'selfAttestedAttributes'
+  >,
+  updateAttributeClaimAction: UpdateAttributeClaimAction
+) => ({
+  type: RETRY_SEND_PROOF,
+  selfAttestedAttributes,
+  updateAttributeClaimAction,
+})
+
+function* reTrySendProofSaga(action: RetrySendProofAction): Generator<*, *, *> {
+  const {
+    uid,
+    remoteDid,
+    requestedAttrsJson,
+  } = action.updateAttributeClaimAction
+  // start proof generation
+  yield put(getProof(uid))
+  const [missingAttributeFound, proofRequestAutofill] = yield race([
+    take(
+      missingAttributeAction =>
+        missingAttributeAction.type === MISSING_ATTRIBUTES_FOUND &&
+        missingAttributeAction.uid === uid
+    ),
+    take(
+      proofRequestAutofillAction =>
+        proofRequestAutofillAction.type === PROOF_REQUEST_AUTO_FILL &&
+        proofRequestAutofillAction.uid === uid
+    ),
+  ])
+
+  if (missingAttributeFound) {
+    yield put(userSelfAttestedAttributes(action.selfAttestedAttributes, uid))
+  }
+  yield take(
+    proofRequestDataStoreAction =>
+      proofRequestDataStoreAction.type === PROOF_REQUEST_SEND_PROOF_HANDLE &&
+      proofRequestDataStoreAction.uid === uid
+  )
+  yield put(updateAttributeClaim(uid, remoteDid, requestedAttrsJson))
 }
 
 export function* watchGenerateProof(): any {
   yield takeEvery(GENERATE_PROOF, generateProofSaga)
   yield takeEvery(UPDATE_ATTRIBUTE_CLAIM, updateAttributeClaimAndSendProof)
+  yield takeEvery(RETRY_SEND_PROOF, reTrySendProofSaga)
 }
 
 export function* watchProof(): any {

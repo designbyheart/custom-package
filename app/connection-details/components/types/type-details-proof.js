@@ -107,6 +107,7 @@ export const ERROR_SEND_PROOF = 'ERROR_SEND_PROOF'
 export type errorSendProofFailAction = {
   type: typeof ERROR_SEND_PROOF,
   uid: string,
+  remoteDid: string,
   error: CustomError,
 }
 

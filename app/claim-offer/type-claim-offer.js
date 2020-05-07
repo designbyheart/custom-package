@@ -73,6 +73,7 @@ export const CLAIM_OFFER_ACCEPTED = 'CLAIM_OFFER_ACCEPTED'
 export type ClaimOfferAcceptedAction = {
   type: typeof CLAIM_OFFER_ACCEPTED,
   uid: string,
+  remoteDid: string,
 }
 
 export const CLAIM_OFFER_REJECTED = 'CLAIM_OFFER_REJECTED'
@@ -105,6 +106,8 @@ export const SEND_CLAIM_REQUEST_FAIL = 'SEND_CLAIM_REQUEST_FAIL'
 export type SendClaimRequestFailAction = {
   type: typeof SEND_CLAIM_REQUEST_FAIL,
   uid: string,
+  remoteDid: string,
+  error: CustomError,
 }
 
 export const CLAIM_REQUEST_SUCCESS = 'CLAIM_REQUEST_SUCCESS'
@@ -136,6 +139,7 @@ export const PAID_CREDENTIAL_REQUEST_FAIL = 'PAID_CREDENTIAL_REQUEST_FAIL'
 export type PaidCredentialRequestFailAction = {
   type: typeof PAID_CREDENTIAL_REQUEST_FAIL,
   uid: string,
+  remoteDid: string,
 }
 
 export const CLAIM_REQUEST_FAIL = 'CLAIM_REQUEST_FAIL'
@@ -210,7 +214,7 @@ export type ClaimOfferPayload = AdditionalDataPayload & {
   remotePairwiseDID: string,
   status: ClaimOfferStatus,
   claimRequestStatus: ClaimRequestStatus,
-  payTokenValue?: ?string,
+  payTokenValue?: string,
 }
 
 export type SerializedClaimOffer = {

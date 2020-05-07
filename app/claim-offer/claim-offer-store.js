@@ -148,9 +148,10 @@ export const sendClaimRequestSuccess = (
   payload,
 })
 
-export const sendClaimRequestFail = (uid: string) => ({
+export const sendClaimRequestFail = (uid: string, remoteDid: string) => ({
   type: SEND_CLAIM_REQUEST_FAIL,
   uid,
+  remoteDid,
 })
 
 export const claimRequestSuccess = (uid: string) => ({
@@ -183,14 +184,16 @@ export const paidCredentialRequestSuccess = (uid: string) => ({
   uid,
 })
 
-export const paidCredentialRequestFail = (uid: string) => ({
+export const paidCredentialRequestFail = (uid: string, remoteDid: string) => ({
   type: PAID_CREDENTIAL_REQUEST_FAIL,
   uid,
+  remoteDid,
 })
 
-export const acceptClaimOffer = (uid: string) => ({
+export const acceptClaimOffer = (uid: string, remoteDid: string) => ({
   type: CLAIM_OFFER_ACCEPTED,
   uid,
+  remoteDid,
 })
 
 export function convertClaimRequestToEdgeClaimRequest(
@@ -305,10 +308,11 @@ export function* claimOfferAccepted(
     } catch (e) {
       captureError(e)
       if (isPaidCredential) {
-        yield put(paidCredentialRequestFail(messageId))
+        yield put(paidCredentialRequestFail(messageId, remoteDid))
       } else {
-        yield put(sendClaimRequestFail(messageId))
+        yield put(sendClaimRequestFail(messageId, remoteDid))
       }
+      return
     }
 
     // since we have sent claim request, state of claim offer in vcx is changed
@@ -324,7 +328,7 @@ export function* claimOfferAccepted(
   } catch (e) {
     captureError(e)
     if (isPaidCredential) {
-      yield put(paidCredentialRequestFail(messageId))
+      yield put(paidCredentialRequestFail(messageId, remoteDid))
     } else {
       yield put(
         claimRequestFail(messageId, ERROR_SEND_CLAIM_REQUEST(e.message))

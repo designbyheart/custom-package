@@ -14,7 +14,13 @@ import { CheckmarkBadge } from '../../components/connection-details/checkmark-ba
 // TODO: Fix the <any, void> to be the correct types for props and state
 class ModalHeader extends PureComponent<any, void> {
   render() {
-    const { institutialName, credentialName, credentialText, imageUrl, colorBackground } = this.props
+    const {
+      institutialName,
+      credentialName,
+      credentialText,
+      imageUrl,
+      colorBackground,
+    } = this.props
 
     return (
       <View style={styles.container}>
@@ -35,7 +41,13 @@ class ModalHeader extends PureComponent<any, void> {
           </View>
         </View>
         <View style={styles.bottomSection}>
-          <Text numberOfLines={2} ellipsizeMode='tail' style={styles.credentialProofQuestionText}>{credentialName}</Text>
+          <Text
+            numberOfLines={2}
+            ellipsizeMode="tail"
+            style={styles.credentialProofQuestionText}
+          >
+            {credentialName}
+          </Text>
         </View>
       </View>
     )
@@ -62,17 +74,17 @@ const styles = StyleSheet.create({
   topSection: {
     flexDirection: 'row',
     height: '50%',
-    width: '100%'
+    width: '100%',
   },
   imageSection: {
     height: '100%',
     width: 64,
     paddingTop: 16,
-    paddingLeft: 16
+    paddingLeft: 16,
   },
   issuerAndInfoSection: {
     flex: 1,
-    paddingTop: 10
+    paddingTop: 10,
   },
   checkmarkSection: {
     height: '100%',
@@ -95,7 +107,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 32,
-    height: 32
+    height: 32,
   },
   checkmark: {
     width: 23,
@@ -106,13 +118,13 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingLeft: 16,
     paddingRight: 16,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   credentialProofQuestionText: {
     fontSize: 21,
     fontWeight: '400',
     color: '#505050',
     fontFamily: 'Lato',
-    marginBottom: 4
-  }
+    marginBottom: 4,
+  },
 })

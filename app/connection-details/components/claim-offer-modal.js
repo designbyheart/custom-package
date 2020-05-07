@@ -282,7 +282,10 @@ class ClaimOfferModal extends Component<any, *> {
   }
 
   onConfirmAndPay = (shouldHideModal = false) => {
-    this.props.acceptClaimOffer(this.props.uid)
+    this.props.acceptClaimOffer(
+      this.props.uid,
+      this.props.claimOfferData.issuer.did
+    )
     if (shouldHideModal === true) {
       this.hideModal()
     } else {
