@@ -65,6 +65,7 @@ export const UPDATE_ATTRIBUTE_CLAIM = 'UPDATE_ATTRIBUTE_CLAIM'
 export type UpdateAttributeClaimAction = {
   type: typeof UPDATE_ATTRIBUTE_CLAIM,
   uid: string,
+  remoteDid: string,
   requestedAttrsJson: RequestedAttrsJson,
 }
 
@@ -103,9 +104,10 @@ export type resetTempProofDataAction = {
 }
 
 export const ERROR_SEND_PROOF = 'ERROR_SEND_PROOF'
-export type errorSendProofFailAction = {
+export type ErrorSendProofFailAction = {
   type: typeof ERROR_SEND_PROOF,
   uid: string,
+  remoteDid: string,
   error: CustomError,
 }
 
@@ -135,6 +137,13 @@ export type UserSelfAttestedAttributesAction = {
   uid: string,
 }
 
+export const RETRY_SEND_PROOF = 'RETRY_SEND_PROOF'
+export type RetrySendProofAction = {
+  type: typeof RETRY_SEND_PROOF,
+  selfAttestedAttributes: SelfAttestedAttributes,
+  updateAttributeClaimAction: UpdateAttributeClaimAction,
+}
+
 export type IndyPreparedProof = {
   attrs: {
     [attributeName: string]: ?Array<MatchingCredential | null>,
@@ -144,7 +153,7 @@ export type IndyPreparedProof = {
 }
 
 export type IndyRequestedAttributes = {
-  [attributeName: string]: [string, boolean, MatchingCredential],
+  +[attributeName: string]: [string, boolean, MatchingCredential],
 }
 
 export type VcxSelectedCredentials = {
@@ -166,7 +175,7 @@ export type ProofAction =
   | ResetAction
   | proofRequestDataToStoreAction
   | resetTempProofDataAction
-  | errorSendProofFailAction
+  | ErrorSendProofFailAction
   | clearSendProofFailAction
 
 export type ProofStore = {

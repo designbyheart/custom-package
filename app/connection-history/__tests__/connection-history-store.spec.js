@@ -79,6 +79,7 @@ import { getHydrationItem } from '../../services/storage'
 import {
   CLAIM_OFFER_RECEIVED,
   SEND_CLAIM_REQUEST_SUCCESS,
+  CLAIM_OFFER_ACCEPTED,
 } from './../../claim-offer/type-claim-offer'
 import { RESET } from '../../common/type-common'
 import { PROOF_REQUEST_RECEIVED } from '../../proof-request/type-proof-request'
@@ -127,7 +128,10 @@ function getHistoryData() {
   )
 
   return {
-    [senderDid1]: sender1History,
+    connections: {
+      [senderDid1]: { data: sender1History, newBadge: false },
+    },
+    connectionsUpdated: true,
   }
 }
 
@@ -211,10 +215,10 @@ describe('Store: ConnectionHistory', () => {
     )
     expect(gen.next().value).toEqual(
       select(
-        getHistoryEvent,
+        getPendingHistory,
         historyEvent.originalPayload.uid,
         historyEvent.remoteDid,
-        CLAIM_OFFER_RECEIVED
+        CLAIM_OFFER_ACCEPTED
       )
     )
     expect(gen.next().value).toEqual(

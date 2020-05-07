@@ -183,7 +183,7 @@ export class LockPinSetup extends PureComponent<
     )
     this.keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
-      (e) => {
+      e => {
         this.onKeyboardHide(false, e)
       }
     )
@@ -208,7 +208,7 @@ export class LockPinSetup extends PureComponent<
         )
         this.keyboardDidShowListener = Keyboard.addListener(
           'keyboardDidShow',
-          (e) => {
+          e => {
             this.onKeyboardHide(false, e)
           }
         )
@@ -283,7 +283,7 @@ export class LockPinSetup extends PureComponent<
         </CustomView>
         <CustomView center>
           <PinCodeBox
-            ref={(pinCodeBox) => {
+            ref={pinCodeBox => {
               this.pinCodeBox = pinCodeBox
             }}
             onPinComplete={this.onPinComplete}
@@ -295,7 +295,7 @@ export class LockPinSetup extends PureComponent<
   }
 }
 
-const mapDispatchToProps = (dispatch) =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setPinAction,

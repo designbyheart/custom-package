@@ -17,6 +17,7 @@ import type {
   NotificationPayloadInfo,
 } from '../../../push-notification/type-push-notification'
 import type { ClaimMap } from './type-details-claim'
+import { updateAttributeClaim } from '../../../proof/proof-store'
 
 export type RequestedAttribute = {|
   name: string,
@@ -161,7 +162,7 @@ export type ProofRequestProps = {
   rejectProofRequest: (uid: string) => void,
   acceptProofRequest: (uid: string) => void,
   proofRequestShown: (uid: string) => void,
-  updateAttributeClaim: (requestedAttrsJson: RequestedAttrsJson) => void,
+  updateAttributeClaim: typeof updateAttributeClaim,
   getProof: (uid: string) => void,
   uid: string,
   proofGenerationError?: ?CustomError,

@@ -37,10 +37,16 @@ import type {
 import { CONNECTION_ALREADY_EXIST } from './type-connection-details'
 import { getConnection, getConnectionTheme } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
-import { isIphoneX, isIphoneXR } from '../common/styles/constant'
+import { isIphoneX, isIphoneXR, cmRed } from '../common/styles/constant'
 import { DENY_PROOF_REQUEST_SUCCESS } from '../proof-request/type-proof-request'
 import { proofRequestRoute, claimOfferRoute, questionRoute } from '../common'
 import { MESSAGE_TYPE } from '../api/api-constants'
+import {
+  CLAIM_OFFER_ACCEPTED,
+  SEND_CLAIM_REQUEST_FAIL,
+  PAID_CREDENTIAL_REQUEST_FAIL,
+} from '../claim-offer/type-claim-offer'
+import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 
 let ScreenWidth = Dimensions.get('window').width
 
@@ -131,6 +137,25 @@ class ConnectionDetails extends Component<
           showButtons={false}
         />
       )
+    } else if (item.action === ERROR_SEND_PROOF) {
+      return (
+        <ConnectionCard
+          messageDate={formattedTime}
+          headerText={item.name}
+          infoType={'FAILED TO SEND'}
+          infoDate={formattedTime}
+          noOfAttributes={item.data.length}
+          buttonText={'RETRY'}
+          showBadge={false}
+          colorBackground={cmRed}
+          uid={item.originalPayload.uid}
+          proof={true}
+          navigation={this.props.navigation}
+          claimMap={this.props.claimMap}
+          data={item}
+          type={item.action}
+        />
+      )
     } else if (item.action === 'SHARED') {
       return (
         <ConnectionCard
@@ -171,12 +196,46 @@ class ConnectionDetails extends Component<
           colorBackground={this.props.activeConnectionThemePrimary}
         />
       )
-    } else if (item.action === 'PENDING') {
+    } else if (item.action === UPDATE_ATTRIBUTE_CLAIM) {
+      return (
+        <ConnectionPending
+          date={formattedTime}
+          title={item.name}
+          content={'SENDING - PLEASE WAIT'}
+        />
+      )
+    } else if (
+      item.action === 'PENDING' ||
+      item.action === CLAIM_OFFER_ACCEPTED
+    ) {
       return (
         <ConnectionPending
           date={formattedTime}
           title={item.name}
           content={'ISSUING - PLEASE WAIT'}
+        />
+      )
+    } else if (
+      item.action === SEND_CLAIM_REQUEST_FAIL ||
+      item.action === PAID_CREDENTIAL_REQUEST_FAIL
+    ) {
+      return (
+        <ConnectionCard
+          messageDate={formattedTime}
+          headerText={item.name}
+          infoType={'FAILED TO ACCEPT'}
+          infoDate={formattedDate}
+          noOfAttributes={item.data.length}
+          buttonText={'RETRY'}
+          showBadge={false}
+          colorBackground={cmRed}
+          navigation={this.props.navigation}
+          received={true}
+          data={item}
+          imageUrl={this.props.navigation.state.params.image}
+          institutialName={this.props.navigation.state.params.senderName}
+          colorBackground={cmRed}
+          secondColorBackground={cmRed}
         />
       )
     } else if (item.action === 'RECEIVED') {

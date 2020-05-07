@@ -1,9 +1,5 @@
-/* eslint-disable */
-// Disabling linting for this because we need to fix type issues with this file
-// whenever we get some time for code refactoring, then we need to fix it
-// we were not running flow on this file even before because we had added $FlowFixMe
-// So, get some time from product and fix Flow errors and enable Flow for this file
-// $FlowFixMe
+// @flow
+
 import {
   all,
   takeLatest,
@@ -41,6 +37,7 @@ import type {
   HistoryEventOccurredEventType,
   DeleteHistoryEventAction,
   ShowUserBackupAlertAction,
+  RecordHistoryEventAction,
 } from './type-connection-history'
 import type { Connection } from '../store/type-connection-store'
 import type {
@@ -58,25 +55,44 @@ import type {
   SendClaimRequestSuccessAction,
   ClaimOfferPayload,
   ClaimOfferReceivedAction,
+  ClaimOfferAcceptedAction,
+  SendClaimRequestFailAction,
+  PaidCredentialRequestFailAction,
 } from '../claim-offer/type-claim-offer'
 import type { ClaimStorageSuccessAction } from '../claim/type-claim'
-import type { Proof } from '../proof/type-proof'
-import { SEND_CLAIM_REQUEST_SUCCESS } from '../claim-offer/type-claim-offer'
+import type {
+  Proof,
+  UpdateAttributeClaimAction,
+  ErrorSendProofFailAction,
+} from '../proof/type-proof'
+import type { Store } from '../store/type-store'
+import {
+  SEND_CLAIM_REQUEST_SUCCESS,
+  CLAIM_OFFER_ACCEPTED,
+  SEND_CLAIM_REQUEST_FAIL,
+  PAID_CREDENTIAL_REQUEST_FAIL,
+} from '../claim-offer/type-claim-offer'
+import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 import type {
   ProofRequestReceivedAction,
   SendProofSuccessAction,
   ProofRequestPayload,
   DenyProofRequestSuccessAction,
+  SelfAttestedAttributes,
 } from '../proof-request/type-proof-request'
 import type {
   QuestionReceivedAction,
   QuestionPayload,
   UpdateQuestionAnswerAction,
 } from '../question/type-question'
+import type { Item } from '../components/custom-list/type-custom-list'
 import {
   PROOF_REQUEST_RECEIVED,
   SEND_PROOF_SUCCESS,
   DENY_PROOF_REQUEST_SUCCESS,
+  DENY_PROOF_REQUEST,
+  PROOF_REQUEST_ACCEPTED,
+  DENY_PROOF_REQUEST_FAIL,
 } from '../proof-request/type-proof-request'
 import { secureSet, getHydrationItem } from '../services/storage'
 import {
@@ -144,9 +160,9 @@ export function* loadHistorySaga(): Generator<*, *, *> {
     )
 
     if (historyEvents) {
-      oldHistory = JSON.parse(historyEvents) // IMPORTANT: This is history.data, not just history object.
-      oldHistoryKeys = Object.keys(oldHistory)
-      newHistory = {
+      const oldHistory = JSON.parse(historyEvents) // IMPORTANT: This is history.data, not just history object.
+      const oldHistoryKeys = Object.keys(oldHistory)
+      let newHistory = {
         connections: { data: null, newBadge: false },
         connectionsUpdated: false,
       }
@@ -158,9 +174,10 @@ export function* loadHistorySaga(): Generator<*, *, *> {
           ...newHistory,
           connections: oldHistory,
         }
+        // $FlowFixMe Need to fix the type error here
         yield put(loadHistorySuccess(newHistory))
       } else {
-        modifiedData = {}
+        const modifiedData = {}
         for (let i = 0; i < oldHistoryKeys.length; i++) {
           modifiedData[oldHistoryKeys[i]] = {
             data: oldHistory[oldHistoryKeys[i]].data,
@@ -232,6 +249,7 @@ export function convertSendClaimRequestSuccessToHistoryEvent(
 ): ConnectionHistoryEvent {
   return {
     action: HISTORY_EVENT_STATUS[SEND_CLAIM_REQUEST_SUCCESS],
+    // $FlowFixMe
     data: action.payload.data && action.payload.data.revealedAttributes,
     id: uuid(),
     name: action.payload.data && action.payload.data.name,
@@ -243,15 +261,13 @@ export function convertSendClaimRequestSuccessToHistoryEvent(
   }
 }
 
-// TODO:KS Add claim accepted
-//export function convertClaimAcceptedToHistoryEvent(): ConnectionHistoryEvent {}
-
 export function convertClaimStorageSuccessToHistoryEvent(
   action: ClaimStorageSuccessAction,
   claim: ClaimOfferPayload
 ): ConnectionHistoryEvent {
   return {
     action: HISTORY_EVENT_STATUS[CLAIM_STORAGE_SUCCESS],
+    // $FlowFixMe
     data: claim.data && claim.data.revealedAttributes,
     id: uuid(),
     name: claim.data && claim.data.name,
@@ -267,12 +283,12 @@ export function convertClaimStorageSuccessToHistoryEvent(
   }
 }
 
-// TODO:KS Add proof request received
 export function convertProofRequestToHistoryEvent(
   action: ProofRequestReceivedAction
 ): ConnectionHistoryEvent {
   return {
     action: HISTORY_EVENT_STATUS[PROOF_REQUEST_RECEIVED],
+    // $FlowFixMe
     data: action.payload.data.requestedAttributes,
     id: uuid(),
     name: action.payload.data.name,
@@ -284,12 +300,12 @@ export function convertProofRequestToHistoryEvent(
   }
 }
 
-// TODO:SC change the action type from any to appropriate type
 export function convertClaimOfferToHistoryEvent(
   action: ClaimOfferReceivedAction
 ): ConnectionHistoryEvent {
   return {
     action: HISTORY_EVENT_STATUS[CLAIM_OFFER_RECEIVED],
+    // $FlowFixMe
     data: action.payload.data.revealedAttributes,
     id: uuid(),
     name: action.payload.data.name,
@@ -301,28 +317,108 @@ export function convertClaimOfferToHistoryEvent(
   }
 }
 
+export function convertClaimOfferAcceptedToHistoryEvent(
+  action: ClaimOfferAcceptedAction,
+  credentialOfferReceivedHistoryEvent: ConnectionHistoryEvent
+): ConnectionHistoryEvent {
+  return {
+    action: HISTORY_EVENT_STATUS[CLAIM_OFFER_ACCEPTED],
+    data: credentialOfferReceivedHistoryEvent.data,
+    id: uuid(),
+    name: credentialOfferReceivedHistoryEvent.name,
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.CLAIM,
+    remoteDid: credentialOfferReceivedHistoryEvent.remoteDid,
+    originalPayload: action,
+    status: HISTORY_EVENT_STATUS[CLAIM_OFFER_ACCEPTED],
+  }
+}
+
+export function convertCredentialRequestFailToHistoryEvent(
+  action: SendClaimRequestFailAction | PaidCredentialRequestFailAction,
+  credentialOfferAcceptedHistoryEvent: ConnectionHistoryEvent
+): ConnectionHistoryEvent {
+  return {
+    action: HISTORY_EVENT_STATUS[action.type],
+    data: credentialOfferAcceptedHistoryEvent.data,
+    id: uuid(),
+    name: credentialOfferAcceptedHistoryEvent.name,
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.CLAIM,
+    remoteDid: credentialOfferAcceptedHistoryEvent.remoteDid,
+    originalPayload: action,
+    status: HISTORY_EVENT_STATUS[action.type],
+  }
+}
+
+function convertUpdateAttributeToHistoryEvent(
+  action: UpdateAttributeClaimAction,
+  proofReceivedEvent: ConnectionHistoryEvent,
+  selfAttestedAttributes: *
+): ConnectionHistoryEvent {
+  return {
+    action: HISTORY_EVENT_STATUS[action.type],
+    data: proofReceivedEvent.data,
+    id: uuid(),
+    name: proofReceivedEvent.name,
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.PROOF,
+    remoteDid: proofReceivedEvent.remoteDid,
+    originalPayload: { ...action, selfAttestedAttributes },
+    status: HISTORY_EVENT_STATUS[action.type],
+  }
+}
+
+function convertErrorSendProofToHistoryEvent(
+  action: ErrorSendProofFailAction,
+  storedUpdateAttributeEvent: ConnectionHistoryEvent
+): ConnectionHistoryEvent {
+  return {
+    action: HISTORY_EVENT_STATUS[action.type],
+    data: storedUpdateAttributeEvent.data,
+    id: uuid(),
+    name: storedUpdateAttributeEvent.name,
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.PROOF,
+    remoteDid: storedUpdateAttributeEvent.remoteDid,
+    originalPayload: {
+      ...storedUpdateAttributeEvent.originalPayload,
+      type: action.type,
+    },
+    status: HISTORY_EVENT_STATUS[action.type],
+  }
+}
+
 function mapSentAttributes(
-  revealedAttributes: Array<GenericStringObject>,
-  selfAttestedAttributes: Array<GenericStringObject>,
-  requestedAttributes: Array<Array<Attribute>>
-): Array<Attribute> {
+  revealedAttributes: *,
+  selfAttestedAttributes: *,
+  requestedAttributes: *
+): Array<Item> {
   let sentAttributes = []
   if (revealedAttributes) {
     const revealedAttributeKeys = Object.keys(revealedAttributes)
-    Object.values(revealedAttributes).forEach((revealedAttribute, index) => {
-      sentAttributes.push({
-        label: requestedAttributes[revealedAttributeKeys[index]].name,
-        key: revealedAttributeKeys[index],
-        data: revealedAttribute[1],
-        claimUuid: revealedAttribute[0],
-      })
-    })
+    const revealedAttributeValues: Array<any> = Object.values(
+      revealedAttributes
+    )
+    revealedAttributeValues.forEach(
+      (revealedAttribute: Array<string>, index: number) => {
+        sentAttributes.push({
+          label: requestedAttributes[revealedAttributeKeys[index]].name,
+          key: revealedAttributeKeys[index],
+          data: revealedAttribute[1],
+          claimUuid: revealedAttribute[0],
+        })
+      }
+    )
   }
 
   if (selfAttestedAttributes) {
     const selfAttestedAttributesKeys = Object.keys(selfAttestedAttributes)
-    Object.values(selfAttestedAttributes).forEach(
-      (selfAttestedAttribute, index) => {
+    const selfAttestedAttributesValues: Array<any> = Object.values(
+      selfAttestedAttributes
+    )
+    selfAttestedAttributesValues.forEach(
+      (selfAttestedAttribute: string, index: number) => {
         sentAttributes.push({
           label: requestedAttributes[selfAttestedAttributesKeys[index]].name,
           key: selfAttestedAttributesKeys[index],
@@ -455,13 +551,80 @@ export function* historyEventOccurredSaga(
       historyEvent = convertConnectionSuccessToHistoryEvent(event)
     }
 
-    if (event.type === SEND_CLAIM_REQUEST_SUCCESS) {
-      historyEvent = convertSendClaimRequestSuccessToHistoryEvent(event)
-      const claimOfferReceivedEvent = yield select(
+    if (event.type === CLAIM_OFFER_RECEIVED) {
+      historyEvent = convertClaimOfferToHistoryEvent(event)
+      const existingEvent = yield select(
         getHistoryEvent,
-        historyEvent.originalPayload.uid,
+        historyEvent.originalPayload.payloadInfo.uid,
         historyEvent.remoteDid,
         CLAIM_OFFER_RECEIVED
+      )
+      if (existingEvent) historyEvent = null
+    }
+
+    if (event.type === CLAIM_OFFER_ACCEPTED) {
+      const existingCredentialOfferReceivedEvent: ConnectionHistoryEvent = yield select(
+        getHistoryEvent,
+        event.uid,
+        event.remoteDid,
+        CLAIM_OFFER_RECEIVED
+      )
+      // if sending credential request fails, then history store will delete credential offer accepted event, and add send_credential_request_fail event
+      // Now, if user re-try to send credential request, then CLAIM_OFFER_ACCEPTED event will be raised again. But this time, history store won't have any CLAIM_OFFER_RECEIVED event, because it was deleted when user accepted credential offer first time
+      // We need to check if history store already had SEND_CLAIM_REQUEST_FAIL or PAID_CREDENTIAL_REQUEST_FAIL
+      const existingCredRequestFailEvent: ConnectionHistoryEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        event.remoteDid,
+        SEND_CLAIM_REQUEST_FAIL
+      )
+      const existingPaidCredRequestFailEvent: ConnectionHistoryEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        event.remoteDid,
+        PAID_CREDENTIAL_REQUEST_FAIL
+      )
+      const existingEvent =
+        existingCredentialOfferReceivedEvent ||
+        existingCredRequestFailEvent ||
+        existingPaidCredRequestFailEvent
+      const credentialOfferAcceptedEvent = convertClaimOfferAcceptedToHistoryEvent(
+        event,
+        existingEvent
+      )
+      if (existingEvent) {
+        yield put(deleteHistoryEvent(existingEvent))
+      }
+      historyEvent = credentialOfferAcceptedEvent
+    }
+
+    if (
+      event.type === SEND_CLAIM_REQUEST_FAIL ||
+      event.type === PAID_CREDENTIAL_REQUEST_FAIL
+    ) {
+      const existingCredentialOfferAcceptedEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        event.remoteDid,
+        CLAIM_OFFER_ACCEPTED
+      )
+      const credentialRequestFailEvent = convertCredentialRequestFailToHistoryEvent(
+        event,
+        existingCredentialOfferAcceptedEvent
+      )
+      if (existingCredentialOfferAcceptedEvent) {
+        yield put(deleteHistoryEvent(existingCredentialOfferAcceptedEvent))
+      }
+      historyEvent = credentialRequestFailEvent
+    }
+
+    if (event.type === SEND_CLAIM_REQUEST_SUCCESS) {
+      historyEvent = convertSendClaimRequestSuccessToHistoryEvent(event)
+      const claimOfferAcceptedEvent = yield select(
+        getPendingHistory,
+        historyEvent.originalPayload.uid,
+        historyEvent.remoteDid,
+        CLAIM_OFFER_ACCEPTED
       )
 
       const existingEvent = yield select(
@@ -471,8 +634,9 @@ export function* historyEventOccurredSaga(
         SEND_CLAIM_REQUEST_SUCCESS
       )
       if (existingEvent) historyEvent = null
-      if (claimOfferReceivedEvent)
-        yield put(deleteHistoryEvent(claimOfferReceivedEvent))
+      if (claimOfferAcceptedEvent) {
+        yield put(deleteHistoryEvent(claimOfferAcceptedEvent))
+      }
     }
 
     if (event.type === CLAIM_STORAGE_SUCCESS) {
@@ -504,15 +668,55 @@ export function* historyEventOccurredSaga(
       if (existingEvent) historyEvent = null
     }
 
-    if (event.type === CLAIM_OFFER_RECEIVED) {
-      historyEvent = convertClaimOfferToHistoryEvent(event)
-      const existingEvent = yield select(
+    if (event.type === UPDATE_ATTRIBUTE_CLAIM) {
+      // get proof request received event
+      const storedProofReceivedEvent = yield select(
         getHistoryEvent,
-        historyEvent.originalPayload.payloadInfo.uid,
-        historyEvent.remoteDid,
-        CLAIM_OFFER_RECEIVED
+        event.uid,
+        event.remoteDid,
+        PROOF_REQUEST_RECEIVED
       )
-      if (existingEvent) historyEvent = null
+      const storedErrorSendProofEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        event.remoteDid,
+        ERROR_SEND_PROOF
+      )
+      const selfAttestedAttributes: SelfAttestedAttributes = yield select(
+        (store: Store, uid: string) =>
+          store.proof[uid].proofData
+            ? store.proof[uid].proofData.selfAttestedAttributes
+            : {},
+        event.uid
+      )
+      const existingEvent =
+        storedProofReceivedEvent || storedErrorSendProofEvent
+      const updateAttributeClaimEvent = convertUpdateAttributeToHistoryEvent(
+        event,
+        existingEvent,
+        selfAttestedAttributes
+      )
+      if (existingEvent) {
+        yield put(deleteHistoryEvent(existingEvent))
+      }
+      historyEvent = updateAttributeClaimEvent
+    }
+
+    if (event.type === ERROR_SEND_PROOF) {
+      const storedUpdateAttributeEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        event.remoteDid,
+        UPDATE_ATTRIBUTE_CLAIM
+      )
+      const errorSendProofEvent = convertErrorSendProofToHistoryEvent(
+        event,
+        storedUpdateAttributeEvent
+      )
+      if (storedUpdateAttributeEvent) {
+        yield put(deleteHistoryEvent(storedUpdateAttributeEvent))
+      }
+      historyEvent = errorSendProofEvent
     }
 
     if (event.type === SEND_PROOF_SUCCESS) {
@@ -520,15 +724,23 @@ export function* historyEventOccurredSaga(
         getProofRequest,
         event.uid
       )
-      const proof: ProofRequestPayload = yield select(getProof, event.uid)
+      const proof: Proof = yield select(getProof, event.uid)
       historyEvent = convertProofSendToHistoryEvent(event, proofRequest, proof)
       const oldHistoryEvent = yield select(
-        getHistoryEvent,
+        getPendingHistory,
         historyEvent.originalPayload.uid,
         historyEvent.remoteDid,
-        PROOF_REQUEST_RECEIVED
+        UPDATE_ATTRIBUTE_CLAIM
       )
       if (oldHistoryEvent) yield put(deleteHistoryEvent(oldHistoryEvent))
+    }
+
+    if (event.type === DENY_PROOF_REQUEST) {
+      // TODO:KS Handle case where we need to show loader when user denies proof request
+    }
+
+    if (event.type === DENY_PROOF_REQUEST_FAIL) {
+      // TODO:KS Handle case where we need to show loader when user denies proof request
     }
 
     if (event.type === DENY_PROOF_REQUEST_SUCCESS) {
@@ -591,7 +803,7 @@ export function* watchConnectionHistoryBackedUp(): any {
   yield takeEvery(CONNECTION_HISTORY_BACKED_UP, persistHistory)
 }
 
-export function* persistHistory(action): any {
+export function* persistHistory(action: RecordHistoryEventAction): any {
   // if we get action to record history event
   // that means our history store is updated with data
   // we can now store history data to secure storage
@@ -627,7 +839,7 @@ export function* watchConnectionHistory(): any {
 
 export default function connectionHistoryReducer(
   state: ConnectionHistoryStore = initialState,
-  action: HistoryEventOccurredEventType
+  action: ConnectionHistoryAction
 ) {
   switch (action.type) {
     case LOAD_HISTORY:
@@ -687,6 +899,7 @@ export default function connectionHistoryReducer(
         state.data.connections[remoteDid] &&
         state.data.connections[remoteDid].data
           ? state.data.connections[remoteDid].data.filter(item => {
+              // $FlowFixMe
               return item !== action.historyEvent
             })
           : []

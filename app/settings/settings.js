@@ -183,7 +183,6 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 0,
     paddingBottom: 0,
-    paddingRight: 0,
     paddingRight: 10,
   },
   titleStyle: {
@@ -830,7 +829,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       },
     ]
     if (__DEV__ === true) {
-      settingsItemList.concat({
+      settingsItemList.push({
         id: 9,
         title: 'Design styleguide',
         subtitle: 'Development only',

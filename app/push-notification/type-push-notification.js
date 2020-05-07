@@ -103,7 +103,7 @@ export type Attribute = {
   key?: string,
   data?: string,
   logoUrl?: string,
-  claimUuid?: ?string,
+  claimUuid?: string,
   cred_info?: MatchingCredential,
   self_attest_allowed?: boolean,
 }

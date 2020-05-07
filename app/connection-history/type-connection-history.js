@@ -10,14 +10,22 @@ import type {
 import type { InvitationReceivedAction } from '../invitation/type-invitation'
 import type { NewConnectionAction } from '../store/type-connection-store'
 import type { SendClaimRequestAction } from '../claim-offer/type-claim-offer'
-import type { ClaimReceivedAction } from '../claim/type-claim'
-import type { ClaimOfferReceivedAction } from '../claim-offer/type-claim-offer'
+import type {
+  ClaimReceivedAction,
+  ClaimStorageSuccessAction,
+} from '../claim/type-claim'
+import type {
+  ClaimOfferReceivedAction,
+  ClaimOfferAcceptedAction,
+  SendClaimRequestFailAction,
+} from '../claim-offer/type-claim-offer'
 import type { Connection } from '../connection/type-connection'
 import type {
   ProofRequestReceivedAction,
   SendProofSuccessAction,
   AdditionalProofDataPayload,
 } from '../proof-request/type-proof-request'
+import type { UpdateAttributeClaimAction } from '../proof/type-proof'
 import type {
   Attribute,
   AdditionalDataPayload,
@@ -36,6 +44,8 @@ import {
   CLAIM_OFFER_REJECTED,
   SEND_CLAIM_REQUEST,
   SEND_CLAIM_REQUEST_SUCCESS,
+  SEND_CLAIM_REQUEST_FAIL,
+  PAID_CREDENTIAL_REQUEST_FAIL,
 } from '../claim-offer/type-claim-offer'
 import { CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
 import {
@@ -47,7 +57,11 @@ import {
   DENY_PROOF_REQUEST_SUCCESS,
 } from '../proof-request/type-proof-request'
 import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
-import { PROOF_SUCCESS } from '../proof/type-proof'
+import {
+  PROOF_SUCCESS,
+  UPDATE_ATTRIBUTE_CLAIM,
+  ERROR_SEND_PROOF,
+} from '../proof/type-proof'
 import {
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
@@ -59,7 +73,7 @@ export const HISTORY_EVENT_STATUS = {
   [INVITATION_REJECTED]: 'CONNECTION REJECTED',
   [SEND_CLAIM_REQUEST_SUCCESS]: 'PENDING',
   [CLAIM_OFFER_RECEIVED]: 'CLAIM OFFER RECEIVED',
-  [CLAIM_OFFER_ACCEPTED]: 'ACCEPTED OFFER',
+  [CLAIM_OFFER_ACCEPTED]: CLAIM_OFFER_ACCEPTED,
   [CLAIM_OFFER_IGNORED]: 'IGNORED OFFER',
   [CLAIM_OFFER_REJECTED]: 'REJECTED OFFER',
   [CLAIM_STORAGE_SUCCESS]: 'RECEIVED',
@@ -70,6 +84,10 @@ export const HISTORY_EVENT_STATUS = {
   [QUESTION_RECEIVED]: QUESTION_RECEIVED,
   [UPDATE_QUESTION_ANSWER]: UPDATE_QUESTION_ANSWER,
   [DENY_PROOF_REQUEST_SUCCESS]: DENY_PROOF_REQUEST_SUCCESS,
+  [SEND_CLAIM_REQUEST_FAIL]: SEND_CLAIM_REQUEST_FAIL,
+  [PAID_CREDENTIAL_REQUEST_FAIL]: PAID_CREDENTIAL_REQUEST_FAIL,
+  [UPDATE_ATTRIBUTE_CLAIM]: UPDATE_ATTRIBUTE_CLAIM,
+  [ERROR_SEND_PROOF]: ERROR_SEND_PROOF,
 }
 
 export type HistoryEventStatus = $Keys<typeof HISTORY_EVENT_STATUS>
@@ -96,6 +114,8 @@ export const EventTypeToEventStatusMap = {
     CLAIM_OFFER_IGNORED,
     CLAIM_OFFER_REJECTED,
     CLAIM_STORAGE_SUCCESS,
+    PAID_CREDENTIAL_REQUEST_FAIL,
+    SEND_CLAIM_REQUEST_FAIL,
   ],
   PROOF: [
     PROOF_REQUEST_RECEIVED,
@@ -103,6 +123,7 @@ export const EventTypeToEventStatusMap = {
     PROOF_REQUEST_IGNORED,
     PROOF_REQUEST_REJECTED,
     DENY_PROOF_REQUEST_SUCCESS,
+    UPDATE_ATTRIBUTE_CLAIM,
   ],
   QUESTION: [QUESTION_RECEIVED, UPDATE_QUESTION_ANSWER],
 }
@@ -185,7 +206,6 @@ export type LoadHistoryFailAction = {
 
 export const HISTORY_EVENT_OCCURRED = 'HISTORY_EVENT_OCCURRED'
 
-//TODO : add ClaimReceivedAction
 export type HistoryEventOccurredEventType =
   | InvitationReceivedAction
   | NewConnectionAction
@@ -193,7 +213,11 @@ export type HistoryEventOccurredEventType =
   | ProofRequestReceivedAction
   | SendProofSuccessAction
   | SendClaimRequestAction
+  | ClaimStorageSuccessAction
+  | ClaimOfferAcceptedAction
+  | SendClaimRequestFailAction
   | ResetAction
+  | UpdateAttributeClaimAction
 
 export type HistoryEventOccurredAction = {
   type: typeof HISTORY_EVENT_OCCURRED,

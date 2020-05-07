@@ -113,7 +113,10 @@ describe('claim offer store', () => {
   })
 
   it('claim offer is accepted', () => {
-    newState = claimOfferStore(newState, acceptClaimOffer(uid))
+    newState = claimOfferStore(
+      newState,
+      acceptClaimOffer(uid, claimOffer.payload.issuer.did)
+    )
     expect(newState).toMatchSnapshot()
   })
 
@@ -283,7 +286,10 @@ describe('claim offer store', () => {
     const connectionHandle = 1
     const paymentHandle = 0
 
-    return expectSaga(claimOfferAccepted, acceptClaimOffer(uid))
+    return expectSaga(
+      claimOfferAccepted,
+      acceptClaimOffer(uid, claimOfferPayload.issuer.did)
+    )
       .withState(stateWithClaimOfferAndSerialized)
       .provide([
         [

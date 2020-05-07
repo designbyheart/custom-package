@@ -52,6 +52,11 @@ import { RecentCard } from './recent-card/recent-card'
 import { RecentCardSeparator } from './recent-card-separator'
 import { EmptyViewPlaceholder } from './empty-view-placeholder'
 import { venetianRed } from '../common/styles'
+import {
+  SEND_CLAIM_REQUEST_FAIL,
+  PAID_CREDENTIAL_REQUEST_FAIL,
+} from '../claim-offer/type-claim-offer'
+import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 
 export class HomeScreen extends Component<HomeProps, void> {
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
@@ -139,8 +144,19 @@ export class HomeScreen extends Component<HomeProps, void> {
       statusMessage = `${action}.`
     else if (status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST_SUCCESS)
       statusMessage = `You denied "${action}".`
-    else if (status === HISTORY_EVENT_STATUS.SEND_CLAIM_REQUEST_SUCCESS)
+    else if (
+      status === HISTORY_EVENT_STATUS.SEND_CLAIM_REQUEST_SUCCESS ||
+      status === HISTORY_EVENT_STATUS.CLAIM_OFFER_ACCEPTED
+    )
       statusMessage = `"${action}" will be issued to you shortly.`
+    else if (
+      status === SEND_CLAIM_REQUEST_FAIL ||
+      status === PAID_CREDENTIAL_REQUEST_FAIL
+    )
+      statusMessage = `Failed to accept "${action}"`
+    else if (status === UPDATE_ATTRIBUTE_CLAIM) statusMessage = `Sending...`
+    else if (status === ERROR_SEND_PROOF)
+      statusMessage = `Failed to send "${action}"`
 
     return (
       <RecentCard
@@ -149,6 +165,7 @@ export class HomeScreen extends Component<HomeProps, void> {
         statusMessage={statusMessage}
         issuerName={issuerName}
         logoUrl={logoUrl}
+        item={item}
       />
     )
   }
@@ -256,7 +273,7 @@ const mapStateToProps = (state: Store) => {
     state.connections.data
   ): any)
 
-  // Once the credential is accepted or prood is shared, that object does not contain logoUrl and issuerName
+  // Once the credential is accepted or proof is shared, that object does not contain logoUrl and issuerName
   // so we need to store them here.
   const mappedDidToLogoAndName = {}
   receivedConnections.map(connection => {

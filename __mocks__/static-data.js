@@ -1276,7 +1276,7 @@ export const proofRequestAutofillEvent = proofRequestAutoFill(
 export const proofSharedEvent = sendProofSuccess(proofRequestId)
 
 export const proofRequestAutofill = {
-  status: 'proofRequestStatus',
+  status: 'RECEIVED',
   proofStatus: 'NONE',
   uid: proofRequestId,
   senderLogoUrl,
@@ -1291,6 +1291,7 @@ export const proofRequestAutofill = {
   },
   originalProofRequestData,
   statusMsg: 'statusMsg',
+  proofHandle: 0,
 }
 
 export { userOneTimeInfo } from './data/user-store-mock-data'

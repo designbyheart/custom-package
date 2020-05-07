@@ -99,6 +99,7 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
         'You accepted ' +
         credentialName +
         '. They will issue it to you shortly.',
+      CLAIM_OFFER_ACCEPTED: `Accepting ${credentialName} ...`,
       CONNECTED: 'You connected with ' + senderName + '.',
       RECEIVED: senderName + ' issued you ' + credentialName + '.',
       'ACCEPTED & SAVED': 'Accepted on',
@@ -108,6 +109,10 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
       QUESTION_RECEIVED: question,
       UPDATE_QUESTION_ANSWER: question,
       DENY_PROOF_REQUEST_SUCCESS: `You denied ${credentialName}`,
+      SEND_CLAIM_REQUEST_FAIL: `Failed to accept ${credentialName}`,
+      PAID_CREDENTIAL_REQUEST_FAIL: `Failed to accept "${credentialName}"`,
+      ERROR_SEND_PROOF: `Failed to send "${credentialName}"`,
+      UPDATE_ATTRIBUTE_CLAIM: `Sending "${credentialName}" ...`,
     }
 
     return statusMsg[status]

@@ -144,7 +144,7 @@ export type Styles =
   | Object
 
 export type RequestedAttrsJson = {
-  +[string]: [string, boolean],
+  +[string]: [string, boolean, MatchingCredential],
 }
 
 export type MatchingCredential = {
