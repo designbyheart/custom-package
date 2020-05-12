@@ -123,7 +123,7 @@ public class IntSetup {
 				capabilities.setCapability("automationName", "UiAutomator2");
 				capabilities.setCapability("platformName", "Android");
 				capabilities.setCapability("noReset", "true");// newCommandTimeout
-				capabilities.setCapability("newCommandTimeout", "1800");
+				capabilities.setCapability("newCommandTimeout", "5000");
 				capabilities.setCapability("appPackage", "me.connect");
 				capabilities.setCapability("appActivity", ".MainActivity");// appActivity
 				capabilities.setCapability("deviceName", Config.Device_Name);// device
@@ -211,10 +211,9 @@ public class IntSetup {
 
 			else if (deviceType.equals("awsAndroid") && appType.equals("connectMe")) {
 				capabilities.setCapability("automationName", "UiAutomator2");
-				capabilities.setCapability("automationName", "UiAutomator2");
 				capabilities.setCapability("platformName", "Android");
 				capabilities.setCapability("noReset", "true");// newCommandTimeout
-				capabilities.setCapability("newCommandTimeout", "1800");
+				capabilities.setCapability("newCommandTimeout", "5000");
 				capabilities.setCapability("appPackage", "me.connect");
 				capabilities.setCapability("appActivity", ".MainActivity");// appActivity
 				capabilities.setCapability("deviceName", Config.Device_Name);// device

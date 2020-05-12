@@ -4,6 +4,7 @@ package test.java.Tests;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import test.java.appModules.AppInjector;
+import test.java.appModules.AppPageInjector;
 import test.java.appModules.AppUtils;
 import test.java.appModules.AppiumUtils;
 import test.java.appModules.ReadMail;
@@ -39,7 +40,7 @@ public class ConnectionTest extends IntSetup {
 	 * Test to install ConnectMe App
 	 * @return void
 	 */
-	@Test(groups = { "Smoke", "Regression" })
+	@Test(groups = { "Smoke", "Regression" }, enabled = false)
 	public void getInvitationLinkTest() throws Exception {
 		System.out.println("Get invitation link for installing ConnectMe app");
 		HashMap<String, String> sendConnectionInviteResponse = objRestApi.sendConnectionInvite();
@@ -69,9 +70,8 @@ public class ConnectionTest extends IntSetup {
 	 * Test to switch environment in ConnectMe App
 	 * @return void
 	 */
-	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "getInvitationLinkTest")
+	@Test(groups = { "Smoke", "Regression" }, enabled = false)
 	public void switchEnvTest() throws Exception {
-		Thread.sleep(5000);  // sleep to get app installed
 		driver = IntSetup.configureDriver(Config.Device_Type, "connectMe");
 		System.out.println("Switch The Environment Tc");
 		objLockModules.navigateswitchEnv(driver);
@@ -82,8 +82,12 @@ public class ConnectionTest extends IntSetup {
 	 * Test for setting up the pincode in ConnectMe App
 	 * @return void
 	 */
-	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "switchEnvTest")
+	@Test(groups = { "Smoke", "Regression" })
 	public void pincodeSetupTest() throws Exception {
+		// ---
+		driver = IntSetup.configureDriver(Config.Device_Type, "connectMe");
+		objLockModules.navigateSetupPincode(driver);
+		// ---
 		objLockModules.pinCodeSetup(driver);
 	}
 
@@ -91,7 +95,7 @@ public class ConnectionTest extends IntSetup {
 	 * Test for accepting connection in ConnectMe App
 	 * @return void
 	 */
-	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "pincodeSetupTest")
+	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "pincodeSetupTest", enabled = false)
 	public void acceptConnectionTest() throws Exception {
 		try {
 			objConnectionModules.appProvisioningRequest("Accept", driver, "allow");
@@ -132,8 +136,7 @@ public class ConnectionTest extends IntSetup {
 
 	@AfterClass
 	public void AfterClass() {
-//		driver.removeApp("me.connect");
-		driverBrowser.quit();
+//		driverBrowser.quit();
 		driver.quit();
 	}
 

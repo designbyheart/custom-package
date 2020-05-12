@@ -126,6 +126,11 @@ public class LockModules extends AppPageInjector {
 		}
 	}
 
+	public void navigateSetupPincode(AppiumDriver driver) throws Exception {
+		chooseLockPage.eula_Accept(driver).click();
+		backuprestoreWalletPage.startFresh_Button(driver).click();
+	}
+
 	/**
 	 * toggling the Enable Touch ID for connectme app
 	 * @param driver - appium driver available for session

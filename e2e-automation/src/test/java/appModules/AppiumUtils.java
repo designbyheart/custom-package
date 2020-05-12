@@ -40,6 +40,7 @@ public class AppiumUtils {
 	public static void nClick(int n, WebElement element) throws Exception {
 
 		for (int i = 0; i < n; i++) {
+			Thread.sleep(500);
 			element.click();// click action on element
 		}
 	}
