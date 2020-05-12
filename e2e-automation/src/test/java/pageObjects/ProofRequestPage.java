@@ -13,6 +13,7 @@ public interface ProofRequestPage {
 
 	public  WebElement generate_Button(AppiumDriver driver) throws Exception;
 	public  WebElement send_Button(AppiumDriver driver) throws Exception;
+	public  WebElement ignore_Button(AppiumDriver driver) throws Exception;
 	public  WebElement continue_Button(AppiumDriver driver) throws Exception;
 	public  WebElement age_TextBox(AppiumDriver driver) throws Exception ;
 	public  WebElement ok_Button(AppiumDriver driver) throws Exception;

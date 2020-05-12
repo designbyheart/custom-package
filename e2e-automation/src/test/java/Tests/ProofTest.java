@@ -77,7 +77,7 @@ public class ProofTest extends IntSetup {
 	 */
 	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "createProofTest")
 	public void sendProofTest() throws Exception {
-		objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID);
+		objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID, false, false);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class ProofTest extends IntSetup {
 	 */
 	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "createMultipleProofTest")
 	public void sendMultipleProofTest() throws Exception {
-		objAppUtlis.sendAndAcceptProof(driver, connectionID, multipleProofID);
+		objAppUtlis.sendAndAcceptProof(driver, connectionID, multipleProofID, false, false);
 	}
 	
 

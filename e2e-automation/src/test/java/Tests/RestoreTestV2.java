@@ -48,7 +48,7 @@ public class RestoreTestV2 extends IntSetup {
         objHomePage.homeHeader(driver).isDisplayed();
     }
 
-    @Test(dependsOnMethods = "checkLocalRestore", enabled = false) // this feature will be switched off
+    @Test(dependsOnMethods = "checkLocalRestore", enabled = false) // this feature is switched off
     public void checkCloudRestore() throws Exception {
         ctx.getContext();
         objConnectionModules.installApp(driver, "");

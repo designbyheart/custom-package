@@ -47,6 +47,7 @@ public class MenuPageTestV2 extends IntSetup {
     public void checkElementsAvailability() throws Exception {
         objMenuPage.userAvatar(driver).click();
         try {
+            objMenuPage.okButton(driver).click();
             objMenuPage.menuAllowButton(driver).click();
         }
         catch (NoSuchElementException e) {

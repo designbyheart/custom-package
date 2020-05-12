@@ -53,14 +53,14 @@ public class DummyTest extends IntSetup {
         String credentialData = "{\"name\":\"FirstName\",\"type\":0,\"value\":\"Pyotr\"}," +
                                 "{\"name\":\"LastName\",\"type\":0,\"value\":\"Pustota\"}," +
                                 "{\"name\":\"Years\",\"type\":0,\"value\":\"99\"}";
-        objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID, credentialData,"0", false);
+        objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID, credentialData,"0", false, false);
 
         // proof
         String proofData = "{\"name\":\"FirstName\"}," +
                            "{\"name\":\"LastName\"}," +
                            "{\"name\":\"Years\"}";
         String proofID = objAppUtlis.createProof(proofData);
-        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID);
+        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID, false, false);
     }
 
     @Test(invocationCount = 2)
@@ -76,13 +76,13 @@ public class DummyTest extends IntSetup {
         // credential
         String credentialData = "{\"name\":\"Company\",\"type\":0,\"value\":\"Evernym\"}," +
                                 "{\"name\":\"Position\",\"type\":0,\"value\":\"Developer\"}";
-        objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID, credentialData,"0", false);
+        objAppUtlis.sendCredentialAndAccept(driver, connectionID, credentialDefID, credentialData,"0", false, false);
 
         // proof
         String proofData = "{\"name\":\"Company\"}," +
                            "{\"name\":\"Position\"}";
         String proofID = objAppUtlis.createProof(proofData);
-        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID);
+        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID, false, false);
     }
 
     @Test(dependsOnMethods = {"oneCredentialHappyPath", "anotherCredentialHappyPath"}, invocationCount = 3)
@@ -94,7 +94,7 @@ public class DummyTest extends IntSetup {
                            "{\"name\":\"Company\"}," +
                            "{\"name\":\"Position\"}";
         String proofID = objAppUtlis.createProof(proofData);
-        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID);
+        objAppUtlis.sendAndAcceptProof(driver, connectionID, proofID, false, false);
     }
 
     @AfterMethod

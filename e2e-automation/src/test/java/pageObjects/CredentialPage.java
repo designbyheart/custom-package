@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 public interface CredentialPage {
 	
 	public  WebElement accept_Button(AppiumDriver driver) throws Exception;
+	public  WebElement ignore_Button(AppiumDriver driver) throws Exception;
 	public  WebElement continue_Button(AppiumDriver driver) throws Exception;
 	public  WebElement nsf_Button(AppiumDriver driver) throws Exception;
 

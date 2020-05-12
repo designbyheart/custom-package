@@ -7,6 +7,7 @@ public interface MenuPageV2 {
     public WebElement menuContainer(AppiumDriver driver) throws Exception;
     public WebElement connectMeBanner(AppiumDriver driver) throws Exception;
     public WebElement userAvatar(AppiumDriver driver) throws Exception;
+    public WebElement okButton(AppiumDriver driver) throws Exception;
     public WebElement menuAllowButton(AppiumDriver driver) throws Exception;
     public WebElement homeButton(AppiumDriver driver) throws Exception;
     public WebElement myConnectionsButton(AppiumDriver driver) throws Exception;

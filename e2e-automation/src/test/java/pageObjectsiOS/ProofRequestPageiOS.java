@@ -24,6 +24,12 @@ public class ProofRequestPageiOS implements ProofRequestPage {
 
 	}
 
+	public  WebElement ignore_Button(AppiumDriver driver) throws Exception {
+	// FIXME
+		return AppiumUtils.findElement(driver, "", "Ignore Button");
+
+	}
+
 	public  WebElement continue_Button(AppiumDriver driver) throws Exception {
 
 		return AppiumUtils.findElement(driver, "//XCUIElementTypeOther[@name='send-proof-success-continue']",

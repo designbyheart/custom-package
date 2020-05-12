@@ -18,9 +18,16 @@ public class ProofRequestPageAndroid implements ProofRequestPage {
 		return AppiumUtils.findElement(driver, "//*[@text=\"Generate\"]", "Generate Button");
 	}
 
+
 	public WebElement send_Button(AppiumDriver driver) throws Exception {
 
 		return AppiumUtils.findElement(driver, "//*[@text=\"Send\"]", "Send Button");
+	}
+
+
+	public WebElement ignore_Button(AppiumDriver driver) throws Exception {
+
+		return AppiumUtils.findElement(driver, "//*[@text=\"Ignore\"]", "Ignore Button");
 	}
 
 	

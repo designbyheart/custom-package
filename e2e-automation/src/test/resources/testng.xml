@@ -3,13 +3,15 @@
 <suite name="Default Suite">
     <test name="test" preserve-order="true">
         <classes>
-            <class name="test.java.Tests.ConnectionTest"/>
             <class name="test.java.Tests.MenuPageTestV2"/>
             <class name="test.java.Tests.HomePageTestV2"/>
             <class name="test.java.Tests.MyConnectionsPageTestV2"/>
             <class name="test.java.Tests.BackupTestV2"/>
             <class name="test.java.Tests.RestoreTestV2"/>
             <class name="test.java.Tests.CredentialTest"/>
+            <class name="test.java.Tests.ProofTest"/>
+            <class name="test.java.Tests.CredentialTestV2"/>
+            <class name="test.java.Tests.ProofTestV2"/>
         </classes>
     </test>
 </suite>
