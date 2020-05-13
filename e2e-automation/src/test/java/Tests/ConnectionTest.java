@@ -135,7 +135,7 @@ public class ConnectionTest extends IntSetup {
 	}
 
 	@AfterClass
-	public void AfterClass() {
+	public void AfterClass() throws  Exception{
 //		driverBrowser.quit();
 		driver.quit();
 	}

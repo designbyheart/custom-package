@@ -32,7 +32,7 @@ public class SettingsPageTestV2 extends IntSetup {
     @BeforeClass
     public void BeforeClassSetup() throws Exception {
         driver = IntSetup.configureDriver(Config.Device_Type, "connectMe");
-        Thread.sleep(3000);
+//        Thread.sleep(5000);
         objAppUtils.enterPincode(driver);
         objHomePage.burgerMenuButton(driver).click(); // go to Menu
         objMenuPage.settingsButton(driver).click(); // go to Settings

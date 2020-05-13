@@ -24,7 +24,6 @@ public class OnfidoPageAndroidV2 implements OnfidoPageV2 {
         );
     }
 
-    @Override
     public WebElement acceptButton(AppiumDriver driver) throws Exception {
         return AppiumUtils.findElement(
                 driver,
