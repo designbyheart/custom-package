@@ -40,7 +40,7 @@ public class ConnectionTest extends IntSetup {
 	 * Test to install ConnectMe App
 	 * @return void
 	 */
-	@Test(groups = { "Smoke", "Regression" }, enabled = false)
+	@Test(groups = { "Smoke", "Regression" })
 	public void getInvitationLinkTest() throws Exception {
 		System.out.println("Get invitation link for installing ConnectMe app");
 		HashMap<String, String> sendConnectionInviteResponse = objRestApi.sendConnectionInvite();
@@ -70,7 +70,7 @@ public class ConnectionTest extends IntSetup {
 	 * Test to switch environment in ConnectMe App
 	 * @return void
 	 */
-	@Test(groups = { "Smoke", "Regression" }, enabled = false)
+	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "getInvitationLinkTest")
 	public void switchEnvTest() throws Exception {
 		driver = IntSetup.configureDriver(Config.Device_Type, "connectMe");
 		System.out.println("Switch The Environment Tc");
@@ -82,12 +82,8 @@ public class ConnectionTest extends IntSetup {
 	 * Test for setting up the pincode in ConnectMe App
 	 * @return void
 	 */
-	@Test(groups = { "Smoke", "Regression" })
+	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "switchEnvTest")
 	public void pincodeSetupTest() throws Exception {
-		// ---
-		driver = IntSetup.configureDriver(Config.Device_Type, "connectMe");
-		objLockModules.navigateSetupPincode(driver);
-		// ---
 		objLockModules.pinCodeSetup(driver);
 	}
 
@@ -95,7 +91,7 @@ public class ConnectionTest extends IntSetup {
 	 * Test for accepting connection in ConnectMe App
 	 * @return void
 	 */
-	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "pincodeSetupTest", enabled = false)
+	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "pincodeSetupTest")
 	public void acceptConnectionTest() throws Exception {
 		try {
 			objConnectionModules.appProvisioningRequest("Accept", driver, "allow");
@@ -136,7 +132,7 @@ public class ConnectionTest extends IntSetup {
 
 	@AfterClass
 	public void AfterClass() throws  Exception{
-//		driverBrowser.quit();
+		driverBrowser.quit();
 		driver.quit();
 	}
 

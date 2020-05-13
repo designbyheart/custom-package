@@ -147,12 +147,13 @@ public class DeviceFarmSessionTest extends IntSetup {
         objBiometricsPage.okButton(driver).click();
 //        objSettingsPage.passcodeButton(driver).click();
 //        objPasscodePage.backArrow(driver).click();
+//        // CM-2616
 //        objSettingsPage.chatButton(driver).click();
 //        objChatPage.backArrow(driver).click();
         objSettingsPage.aboutButton(driver).click();
         objAboutPage.backArrow(driver).click();
-//        objSettingsPage.onfidoButton(driver).click();
-//        objOnfidoPage.backArrow(driver).click();
+        objSettingsPage.onfidoButton(driver).click();
+        ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.BACK);
     }
 
     @AfterClass
