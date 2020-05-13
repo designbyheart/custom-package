@@ -4,6 +4,7 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
 <View
   style={
     Object {
+      "backgroundColor": "rgba(255, 255, 255, 255)",
       "flexDirection": "row",
       "height": 40,
       "marginLeft": 20,
