@@ -17,6 +17,9 @@ const FlatHeader = (props: FlatHeaderProps) => {
           navigation.state.params.existingPin === true && (
             <TouchableOpacity
               style={styles.backButton}
+              testID="back-arrow"
+              accessible={true}
+              accessibilityLabel="back-arrow"
               hitSlop={{ top: 70, left: 70, bottom: 70, right: 70 }}
               onPress={() => navigation.goBack(null)}
             >
