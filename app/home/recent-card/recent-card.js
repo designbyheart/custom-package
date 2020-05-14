@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import * as React from 'react'
 import {
   Text,
   View,
@@ -7,8 +7,11 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  LayoutAnimation,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { SwipeRow } from 'react-native-swipe-list-view'
 import {
   mediumGray,
   white,
@@ -16,6 +19,7 @@ import {
   recentCardSizes,
   isiPhone5,
   cmRed,
+  whiteSolid,
 } from '../../common/styles/constant'
 
 import type { RecentCardProps } from './type-recent-card'
@@ -31,6 +35,80 @@ import {
   ERROR_SEND_PROOF,
 } from '../../proof/type-proof'
 import { reTrySendProof } from '../../proof/proof-store'
+import { deleteHistoryEvent } from '../../connection-history/connection-history-store'
+import { scale } from 'react-native-size-matters'
+import { safeGet, safeSet } from '../../services/storage'
+
+class RecentCardComponent extends React.Component<RecentCardProps, void> {
+  render() {
+    const props = this.props
+    const isRetryCard = getRetryStatus(props.item)
+    const isLoading = getLoadingStatus(props.status)
+
+    const cardContent = (
+      <View style={styles.container}>
+        <View style={styles.iconSection}>
+          {renderImageOrText(props.logoUrl, props.issuerName)}
+        </View>
+        <View style={styles.textSection}>
+          <View style={styles.textMessageSection}>
+            <Text
+              style={
+                isRetryCard
+                  ? [styles.textMessage, styles.retryText]
+                  : styles.textMessage
+              }
+              ellipsizeMode="tail"
+              numberOfLines={1}
+            >
+              {props.statusMessage}
+            </Text>
+          </View>
+          <View style={styles.textIssuerSection}>
+            <Text
+              style={
+                isRetryCard
+                  ? [styles.textIssuer, styles.retryText]
+                  : styles.textIssuer
+              }
+              ellipsizeMode="tail"
+              numberOfLines={1}
+            >
+              {props.issuerName}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.textDateSection}>
+          {isRetryCard ? (
+            <Text style={[styles.textDate, styles.retryText]}>
+              Tap to retry
+            </Text>
+          ) : isLoading ? (
+            <ActivityIndicator size="small" />
+          ) : (
+            <Text style={styles.textDate}>{props.timestamp}</Text>
+          )}
+        </View>
+      </View>
+    )
+
+    if (isRetryCard) {
+      const onRetry = getRetryFunction(props)
+      return (
+        <SwipeableRetry onDelete={this.onDelete} onRetry={onRetry}>
+          {cardContent}
+        </SwipeableRetry>
+      )
+    }
+
+    return cardContent
+  }
+
+  onDelete = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+    this.props.deleteHistoryEvent(this.props.item)
+  }
+}
 
 const renderPlaceholderIfNoImage = (character: string) => (
   <View style={styles.placeholderIfNoImage}>
@@ -46,65 +124,63 @@ const renderImageOrText = (logoUrl: string, issuerName: string) => {
   )
 }
 
-// TODO:KS Use React.useCallback and React.useState
-const RecentCardComponent = (props: RecentCardProps) => {
-  const isRetryCard = getRetryStatus(props.item)
-  const isLoading = getLoadingStatus(props.status)
-
-  const cardContent = (
-    <View style={styles.container}>
-      <View style={styles.iconSection}>
-        {renderImageOrText(props.logoUrl, props.issuerName)}
-      </View>
-      <View style={styles.textSection}>
-        <View style={styles.textMessageSection}>
-          <Text
-            style={
-              isRetryCard
-                ? [styles.textMessage, styles.retryText]
-                : styles.textMessage
-            }
-            ellipsizeMode="tail"
-            numberOfLines={1}
-          >
-            {props.statusMessage}
-          </Text>
-        </View>
-        <View style={styles.textIssuerSection}>
-          <Text
-            style={
-              isRetryCard
-                ? [styles.textIssuer, styles.retryText]
-                : styles.textIssuer
-            }
-            ellipsizeMode="tail"
-            numberOfLines={1}
-          >
-            {props.issuerName}
-          </Text>
-        </View>
-      </View>
-      <View style={styles.textDateSection}>
-        {isRetryCard ? (
-          <Text style={[styles.textDate, styles.retryText]}>Tap to retry</Text>
-        ) : isLoading ? (
-          <ActivityIndicator size="small" />
-        ) : (
-          <Text style={styles.textDate}>{props.timestamp}</Text>
-        )}
-      </View>
-    </View>
-  )
-
-  if (isRetryCard) {
-    const onRetry = getRetryFunction(props)
-    return <TouchableOpacity onPress={onRetry}>{cardContent}</TouchableOpacity>
+class SwipeableRetry extends React.PureComponent<
+  { onDelete: () => void, onRetry: () => void, children: React.Element<any> },
+  { showPreview: boolean }
+> {
+  state = {
+    showPreview: false,
   }
 
-  return cardContent
+  render() {
+    const { onDelete, onRetry, children } = this.props
+    const { showPreview } = this.state
+
+    // show preview to user for deleting only 2 times in app lifetime
+    return (
+      <SwipeRow
+        disableRightSwipe={true}
+        preview={showPreview}
+        rightOpenValue={-scale(100)}
+      >
+        <TouchableWithoutFeedback onPress={onDelete}>
+          <View style={styles.deleteButton}>
+            <Text style={styles.deleteButtonText}>Delete</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={onRetry}>
+          {children}
+        </TouchableWithoutFeedback>
+      </SwipeRow>
+    )
+  }
+
+  async componentDidMount() {
+    try {
+      const DELETE_MESSAGE_PREVIEW_COUNT = 'DELETE_MESSAGE_PREVIEW_COUNT'
+      const previewCount: string | null = await safeGet(
+        DELETE_MESSAGE_PREVIEW_COUNT
+      )
+      const previewCounter = parseInt(previewCount, 10)
+      // if count is not zero or null
+      if (!previewCount || isNaN(previewCounter)) {
+        this.setState({ showPreview: true })
+        // user has never seen delete button preview
+        // set count that user has seen it once
+        await safeSet(DELETE_MESSAGE_PREVIEW_COUNT, '1')
+        return
+      }
+
+      if (previewCounter < 3) {
+        this.setState({ showPreview: true })
+        await safeSet(DELETE_MESSAGE_PREVIEW_COUNT, `${previewCounter + 1}`)
+        return
+      }
+    } catch (e) {}
+  }
 }
 
-const reTryActions = [
+export const reTryActions = [
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
   ERROR_SEND_PROOF,
@@ -156,18 +232,24 @@ const mapDispatchToProps = dispatch =>
     {
       acceptClaimOffer,
       reTrySendProof,
+      deleteHistoryEvent,
     },
     dispatch
   )
 
 export const RecentCard = connect(null, mapDispatchToProps)(RecentCardComponent)
 
+const commonCardStyles = {
+  height: recentCardSizes.height,
+  marginLeft: 20,
+  marginRight: 20,
+}
 const styles = StyleSheet.create({
+  messageContainer: { flex: 1 },
   container: {
+    backgroundColor: whiteSolid,
     flexDirection: 'row',
-    height: recentCardSizes.height,
-    marginLeft: 20,
-    marginRight: 20,
+    ...commonCardStyles,
   },
   iconSection: {
     height: '100%',
@@ -232,5 +314,21 @@ const styles = StyleSheet.create({
   },
   retryText: {
     color: cmRed,
+    marginRight: scale(3),
+  },
+  deleteButton: {
+    flex: 1,
+    backgroundColor: cmRed,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    flexDirection: 'row',
+    ...commonCardStyles,
+  },
+  deleteButtonText: {
+    color: whiteSolid,
+    alignItems: 'center',
+    marginRight: scale(30),
+    fontFamily: font.family,
+    fontSize: scale(font.size.XS),
   },
 })

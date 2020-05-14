@@ -792,7 +792,7 @@ export function* historyEventOccurredSaga(
 }
 
 export function* watchRecordHistoryEvent(): any {
-  yield takeEvery(RECORD_HISTORY_EVENT, persistHistory)
+  yield takeEvery([RECORD_HISTORY_EVENT, DELETE_HISTORY_EVENT], persistHistory)
 }
 
 export function* watchNewConnectionSeen(): any {

@@ -4900,42 +4900,51 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                   </Text>
                 </View>
                 <View
-                  accessible={true}
-                  isTVSelectable={true}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
                   style={
                     Object {
                       "backgroundColor": "transparent",
                       "borderRadius": 5,
+                      "flexDirection": "row",
+                      "justifyContent": "space-between",
                       "marginBottom": -8,
                       "marginLeft": -8,
-                      "opacity": 1,
                       "padding": 8,
                       "paddingRight": 25,
                     }
                   }
                 >
-                  <Text
+                  <View
+                    accessible={true}
+                    isTVSelectable={true}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
                     style={
-                      Array [
-                        Object {
-                          "fontFamily": "Lato",
-                          "fontSize": 14,
-                          "fontWeight": "700",
-                        },
-                        Object {
-                          "color": "rgba(119, 119, 119, 1.0)",
-                        },
-                      ]
+                      Object {
+                        "opacity": 1,
+                      }
                     }
                   >
-                    VIEW CREDENTIAL
-                  </Text>
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "fontFamily": "Lato",
+                            "fontSize": 14,
+                            "fontWeight": "700",
+                          },
+                          Object {
+                            "color": "rgba(119, 119, 119, 1.0)",
+                          },
+                        ]
+                      }
+                    >
+                      VIEW CREDENTIAL
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -7369,42 +7378,51 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                   </Text>
                 </View>
                 <View
-                  accessible={true}
-                  isTVSelectable={true}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
                   style={
                     Object {
                       "backgroundColor": "transparent",
                       "borderRadius": 5,
+                      "flexDirection": "row",
+                      "justifyContent": "space-between",
                       "marginBottom": -8,
                       "marginLeft": -8,
-                      "opacity": 1,
                       "padding": 8,
                       "paddingRight": 25,
                     }
                   }
                 >
-                  <Text
+                  <View
+                    accessible={true}
+                    isTVSelectable={true}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
                     style={
-                      Array [
-                        Object {
-                          "fontFamily": "Lato",
-                          "fontSize": 14,
-                          "fontWeight": "700",
-                        },
-                        Object {
-                          "color": "rgba(119, 119, 119, 1.0)",
-                        },
-                      ]
+                      Object {
+                        "opacity": 1,
+                      }
                     }
                   >
-                    VIEW REQUEST DETAILS
-                  </Text>
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "fontFamily": "Lato",
+                            "fontSize": 14,
+                            "fontWeight": "700",
+                          },
+                          Object {
+                            "color": "rgba(119, 119, 119, 1.0)",
+                          },
+                        ]
+                      }
+                    >
+                      VIEW REQUEST DETAILS
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>

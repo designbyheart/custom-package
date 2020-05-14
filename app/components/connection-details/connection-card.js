@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Platform,
+  LayoutAnimation,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -27,9 +28,14 @@ import {
 import { acceptClaimOffer } from '../../claim-offer/claim-offer-store'
 import { reTrySendProof } from '../../proof/proof-store'
 import { ERROR_SEND_PROOF } from '../../proof/type-proof'
+import { reTryActions } from '../../home/recent-card/recent-card'
+import { deleteHistoryEvent } from '../../connection-history/connection-history-store'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
-class ConnectionCardComponent extends PureComponent<any, {}> {
+class ConnectionCardComponent extends PureComponent<
+  any & { deleteHistoryEvent: typeof deleteHistoryEvent },
+  {}
+> {
   updateAndShowModal = () => {
     const { data: event } = this.props
     if (
@@ -69,6 +75,8 @@ class ConnectionCardComponent extends PureComponent<any, {}> {
   }
 
   render() {
+    const canDelete = reTryActions.includes(this.props.data.action)
+
     return (
       <View style={styles.container}>
         <Text style={styles.messageDate}>{this.props.messageDate}</Text>
@@ -114,25 +122,40 @@ class ConnectionCardComponent extends PureComponent<any, {}> {
                 </Text>
                 <Text style={styles.attributesText}> Attributes</Text>
               </View>
-              <TouchableOpacity
-                onPress={this.updateAndShowModal}
-                style={styles.button}
-              >
-                <Text
-                  style={[
-                    styles.buttonText,
-                    { color: this.props.colorBackground },
-                  ]}
-                >
-                  {this.props.buttonText}
-                </Text>
-              </TouchableOpacity>
+              <View style={styles.button}>
+                <TouchableOpacity onPress={this.updateAndShowModal}>
+                  <Text
+                    style={[
+                      styles.buttonText,
+                      { color: this.props.colorBackground },
+                    ]}
+                  >
+                    {this.props.buttonText}
+                  </Text>
+                </TouchableOpacity>
+                {canDelete && (
+                  <Text
+                    style={[
+                      styles.buttonText,
+                      { color: this.props.colorBackground },
+                    ]}
+                    onPress={this.onDelete}
+                  >
+                    DELETE
+                  </Text>
+                )}
+              </View>
             </View>
           </View>
         </View>
         <View style={styles.helperView} />
       </View>
     )
+  }
+
+  onDelete = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+    this.props.deleteHistoryEvent(this.props.data)
   }
 }
 
@@ -141,6 +164,7 @@ const mapDispatchToProps = dispatch =>
     {
       acceptClaimOffer,
       reTrySendProof,
+      deleteHistoryEvent,
     },
     dispatch
   )
@@ -257,6 +281,8 @@ const styles = StyleSheet.create({
     marginLeft: -8,
     marginBottom: -8,
     borderRadius: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   buttonText: {
     fontSize: 14,
