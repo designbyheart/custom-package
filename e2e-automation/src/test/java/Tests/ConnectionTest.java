@@ -4,6 +4,7 @@ package test.java.Tests;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import test.java.appModules.AppInjector;
+import test.java.appModules.AppPageInjector;
 import test.java.appModules.AppUtils;
 import test.java.appModules.AppiumUtils;
 import test.java.appModules.ReadMail;
@@ -71,7 +72,6 @@ public class ConnectionTest extends IntSetup {
 	 */
 	@Test(groups = { "Smoke", "Regression" }, dependsOnMethods = "getInvitationLinkTest")
 	public void switchEnvTest() throws Exception {
-		Thread.sleep(5000);  // sleep to get app installed
 		driver = IntSetup.configureDriver(Config.Device_Type, "connectMe");
 		System.out.println("Switch The Environment Tc");
 		objLockModules.navigateswitchEnv(driver);
@@ -131,8 +131,7 @@ public class ConnectionTest extends IntSetup {
 	}
 
 	@AfterClass
-	public void AfterClass() {
-//		driver.removeApp("me.connect");
+	public void AfterClass() throws  Exception{
 		driverBrowser.quit();
 		driver.quit();
 	}

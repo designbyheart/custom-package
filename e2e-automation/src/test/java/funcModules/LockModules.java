@@ -43,7 +43,7 @@ public class LockModules extends AppPageInjector {
 			for (int i = 0; i < 2; i++) {
 				Thread.sleep(1000);
 				objAppUtlis.enterPincode(driver);			}
-			Thread.sleep(10000);
+			Thread.sleep(1000);
 			pincodePage.close_Button(driver).click();
 		}
 	}
@@ -124,6 +124,11 @@ public class LockModules extends AppPageInjector {
 		} else {
 			chooseLockPage.ok_button(driver).click();
 		}
+	}
+
+	public void navigateSetupPincode(AppiumDriver driver) throws Exception {
+		chooseLockPage.eula_Accept(driver).click();
+		backuprestoreWalletPage.startFresh_Button(driver).click();
 	}
 
 	/**
