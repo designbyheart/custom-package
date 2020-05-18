@@ -8,7 +8,7 @@ import { element, by, waitFor } from 'detox'
 import { getText } from 'detox-getprops'
 
 describe('Backup test suite', () => {
-  it.skip('Case 1: positive backup tests', async () => {
+  it('Case 1: positive backup tests', async () => {
     await waitFor(element(by.id('burger-menu')))
       .toBeVisible()
       .withTimeout(5000)
@@ -45,10 +45,10 @@ describe('Backup test suite', () => {
       phrase + '\n'
     )
 
-    await waitFor(element(by.text('Downloaded .zip Backup')))
-      .toBeVisible()
-      .withTimeout(5000)
-    await element(by.text('Downloaded .zip Backup')).tap()
+    // await waitFor(element(by.text('Downloaded .zip Backup')))
+    //   .toBeVisible()
+    //   .withTimeout(5000)
+    // await element(by.text('Downloaded .zip Backup')).tap()
 
     await waitFor(element(by.id('export-encrypted-backup')))
       .toBeVisible()

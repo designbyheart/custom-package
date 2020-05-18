@@ -11,6 +11,8 @@ import R from 'ramda'
 import https from 'https'
 import fs from 'fs'
 
+require('tls').DEFAULT_ECDH_CURVE = 'auto'
+
 const httpsConfig = {
   timeout: 150000,
   httpsAgent: new https.Agent({
