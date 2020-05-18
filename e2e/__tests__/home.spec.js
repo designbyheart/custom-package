@@ -31,4 +31,12 @@ describe('Home screen', () => {
       .toBeVisible()
       .withTimeout(5000)
   })
+
+  it('open and close menu and scanner', async () => {
+    await element(by.id('burger-menu')).tap()
+    // await element(by.id(HOME_CONTAINER)).swipe('left', 'slow') // it doesn't work
+    await element(by.text('Scan')).tap()
+    await element(by.text('Scan')).tap()
+    await element(by.id('close-qr-scanner-icon')).tap()
+  })
 })
