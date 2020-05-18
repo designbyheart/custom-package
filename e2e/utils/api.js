@@ -11,6 +11,7 @@ import R from 'ramda'
 import https from 'https'
 import fs from 'fs'
 
+//$FlowFixMe
 require('tls').DEFAULT_ECDH_CURVE = 'auto'
 
 const httpsConfig = {
