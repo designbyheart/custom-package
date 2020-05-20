@@ -143,7 +143,7 @@ export async function getInvitation() {
     // let jsonData = stdout.substr(8)
     // exports.jsonData = jsonData
     console.log(`STDOUT: ${stdout}`)
-    console.log(`jsonData: ${jsonData}`)
+    console.log(`jsonData: ${global.jsonData}`)
     console.log(`STDERR: ${stderr}`)
   })
 
