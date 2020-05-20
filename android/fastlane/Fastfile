@@ -31,7 +31,7 @@ lane :alpha do
   # versionNameMinorNumber = nameArray.pop().to_i+1
   # versionName = nameArray.join('.')
   # newVersionName = "\"" + versionName.to_s + "." + versionNameMinorNumber.to_s + "\""
-  newVersionName = "\"1.2.1\""
+  newVersionName = "\"1.2.2\""
   puts 'new version number: ' + newVersionName.to_s
   androidBuildGradleFileContent[reVersionName, 1] = newVersionName
   androidBuildGradleFile = File.new(path, 'w')
