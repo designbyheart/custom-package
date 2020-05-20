@@ -87,8 +87,8 @@ const emailFetchOptions = {
   bodies: ['TEXT', 'HEADER'],
 }
 
-export async function getInvitation() {
-  const invitationId = await post(
+export function getInvitationSync() {
+  const qrCode =  post(
     `${verityBaseUrl}/connections`,
     {
       name: 'Alex',
@@ -105,8 +105,47 @@ export async function getInvitation() {
         password: 'ktjo6iKiJsn7EGlCCZj07qKw3',
       },
     }
-  ).then(res => res.data.id)
+  ).then(res => res.data.qrCode)
+  console.log(qrCode)
+  fs.writeFileSync('e2e/qrcode.base64', qrCode)
+  return qrCode
+}
+
+export async function getInvitation() {
+  const [invitationId, qrCode] = await post(
+    `${verityBaseUrl}/connections`,
+    {
+      name: 'Alex',
+      phone: '8327364896',
+      sms: true,
+    },
+    {
+      timeout: 150000,
+      httpsAgent: new https.Agent({
+        ca: fs.readFileSync('devops/ca.crt'),
+      }),
+      auth: {
+        username: 'demo',
+        password: 'ktjo6iKiJsn7EGlCCZj07qKw3',
+      },
+    }
+  ).then(res => [res.data.id, res.data.qrCode])
   console.log(invitationId)
+  console.log(qrCode)
+
+  const { exec } = require('child_process')
+  exec(`echo "${qrCode}" | cut -c 23- | base64 --decode > tmp.png && zbarimg tmp.png && rm tmp.png`, (err, stdout, stderr) => {
+    if (err) {
+      console.log(err)
+      return
+    }
+    global.jsonData = stdout.substr(8)
+    // let jsonData = stdout.substr(8)
+    // exports.jsonData = jsonData
+    console.log(`STDOUT: ${stdout}`)
+    console.log(`jsonData: ${jsonData}`)
+    console.log(`STDERR: ${stderr}`)
+  })
 
   await new Promise(r => setTimeout(r, 30000)) // wait before fetching latest message
 
@@ -142,7 +181,7 @@ export async function getInvitation() {
     .then(R.compose(get, R.path(['data', 'url'])))
     .catch(console.error)
   console.log(fetchingInvitation)
-  return [token, invitationId, fetchingInvitation, `${appLink}${token}`]
+  return [token, invitationId, fetchingInvitation, `${appLink}${token}`, qrCode]
 }
 
 export const CLAIM_OFFER_PROFILE_INFO = 'Profile Info'

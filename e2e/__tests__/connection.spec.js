@@ -58,18 +58,19 @@ export const addConnections = async (noOfConnectionsToAdd: number = 1) => {
         invitationId,
         fetchingInvitation,
         invitationUrl,
+        qrCode
       ] = await getInvitation()
       connections.push([token, invitationId, fetchingInvitation, invitationUrl])
       console.log(invitationUrl)
 
-      // option 1: close app and then open with url
-      await device.terminateApp()
-      await device.launchApp({
-        // // uncomment to remove and install app again and then open with url
-        // delete: true,
-        newInstance: true,
-        url: invitationUrl,
-      })
+      // // option 1: close app and then open with url
+      // await device.terminateApp()
+      // await device.launchApp({
+      //   // // uncomment to remove and install app again and then open with url
+      //   // delete: true,
+      //   newInstance: true,
+      //   url: invitationUrl,
+      // })
 
       // // option 2: mock opening url on launched app
       // await device.openURL({
@@ -77,7 +78,9 @@ export const addConnections = async (noOfConnectionsToAdd: number = 1) => {
       //   sourceApp: 'com.evernym.connectme.callcenter'
       // })
 
-      await unlock()
+      // await unlock()
+
+      await element(by.text('Scan')).tap()
 
       await waitFor(element(by.id(INVITATION_ACCEPT)))
         .toBeVisible()

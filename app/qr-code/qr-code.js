@@ -308,6 +308,18 @@ export class QRCodeScannerScreen extends Component<
       // so for the first time mount as well we need to check camera permission
       this.checkCameraAuthorization()
     }
+
+    if (true) {
+      setTimeout(() => {
+        // let myModule = require('../../e2e/utils/api')
+        this.onRead(
+          // myModule.jsonData
+          global.jsonData
+          // {"id":"9954082f-e337-4366-b59a-3b398281b959","s":{"d":"CrSru3bi3SarMxLKZ6tCfj","dp":{"d":"4Jd7dtvVVuYWxJRZmHvWTA","k":"2oSa4t4jkMEcydGpMUqcug7u21qmTC8jG5yLe85NLiPQ","s":"R5IgeUhTBhZs1X+A1FprN5bynLYMRpv5EP5LftbquTQ3CrAJK7GTh1d69X+BZLWgtUk7SNZ2WzDHZGT9nJyaAA=="},"l":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjimxZbcvZzPcPvHd_y7f0tc5d8QoC9DOPecb8JTOChmS1IoDq","n":"Evernym QA-RC","publicDID":"4CZXFbfD8fnT45ZibYXS1a","v":"7TgX7CawJCXA7VBd9MEk6wVD6vJTUvkdFg9251U3wcrK"},"sa":{"d":"QreyffsPPLCUqetQbahYNu","e":"eas.pqa.evernym.com:80/agency/msg","v":"E194CfHi5GGRiy1nThMorPf3jBEm4tvcAgcb65JFfxc7"},"sc":"MS-101","sm":"message created","t":"there","threadId":null,"version":"1.0"}
+        )
+      }, 2000)
+    }
+
     AppState.addEventListener('change', this._handleAppStateChange)
   }
 
