@@ -22,10 +22,13 @@ export const NATIVE_ALERT_OK_MATCHER = () =>
 export const TEST_PASS_CODE = '000000'
 export const USER_AVATAR = 'user-avatar'
 export const BACK_ARROW = 'back-arrow-touchable'
+export const BURGER_MENU = 'burger-menu'
+export const SCAN_BUTTON = 'Scan'
 
 // home
 export const HOME_FEEDBACK_BUTTON = 'home-feedback-id-label'
 export const HOME_CONTAINER = 'home-container'
+export const HOME_HEADER = 'Home'
 
 // claim offer
 export const CLAIM_OFFER_ICON_CLOSE = 'claim-offer-icon-close-touchable'
@@ -70,11 +73,18 @@ export const QR_CODE_INPUT_ENV_SWITCH = 'qr-code-text-input-env-switch'
 export const QR_CODE_ENV_SWITCH_URL =
   'https://s3-us-west-2.amazonaws.com/vcx-env/dev'
 export const QR_CODE_NATIVE_ALERT_SWITCH_TEXT = 'Switch'
+export const QR_CODE_SCANNER_CLOSE_BUTTON = 'close-qr-scanner-icon'
 
 // settings
-export const SETTINGS_PASS_CODE = 'settings-pass-code-label-touchable'
-export const SETTINGS_TOUCH_ID = 'settings-touch-id-label-touchable'
-export const SETTINGS_CHAT = 'settings-chat-id-label-touchable'
+// export const SETTINGS_PASS_CODE = 'settings-pass-code-label-touchable'
+// export const SETTINGS_TOUCH_ID = 'settings-touch-id-label-touchable'
+// export const SETTINGS_CHAT = 'settings-chat-id-label-touchable'
+export const SETTINGS_CONTAINER = 'settings-container'
+export const SETTINGS_HEADER = 'Settings'
+export const SETTINGS_CREATE_BACKUP = 'Create a Backup'
+export const BACKUP_CLOSE = 'recovery-header-close-image'
+export const SETTINGS_BIOMETRICS = 'Biometrics'
+export const BIOMETRICS_OK = 'Ok'
 
 // switch environment screen
 export const SWITCH_ENVIRONMENT_DEV_BUTTON = 'switch-environment-dev'

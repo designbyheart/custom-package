@@ -78,11 +78,12 @@ const args = yargs
     'Run e2e with update, build release mode, on simulators, with detox config as -r, and test file to run'
   )
   .help().argv
-;(async function() {
+;(async function(done) {
   await runBuildIfNeeded(args)
   const exitCode = await runTests(args)
-  console.log("Result exit code: " + exitCode)
+  console.log('Result exit code: ' + exitCode)
   process.exit(exitCode)
+  done()
 })()
 
 async function runBuildIfNeeded(args) {
@@ -177,7 +178,7 @@ async function runTests(args) {
       const { stdout, stderr, exitCode } = await initialTestRun
 
       if (exitCode) {
-		return exitCode
+        return exitCode
       }
     }
 
@@ -215,6 +216,6 @@ async function runTests(args) {
     // wait for test run to finish
     const { stdout, stderr, exitCode } = await testRun
 
-   	return exitCode
+    return exitCode
   }
 }

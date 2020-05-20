@@ -11,7 +11,7 @@ const config = require('../../package.json').detox
 beforeAll(async done => {
   // await detox.init(config)
   await detox.init(config, { launchApp: false })
-  await device.launchApp({ permissions: { camera: 'YES' } })
+  await device.launchApp({ permissions: { camera: 'YES', photos: 'YES' } })
   await storeBootedDeviceId()
   setDeviceType(device.getPlatform())
   done()
@@ -22,6 +22,7 @@ beforeEach(async () => {
 })
 
 afterAll(async done => {
+  // await device.terminateApp()
   await detox.cleanup()
   done()
 })

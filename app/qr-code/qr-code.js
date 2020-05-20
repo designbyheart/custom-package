@@ -309,7 +309,7 @@ export class QRCodeScannerScreen extends Component<
       this.checkCameraAuthorization()
     }
 
-    if (true) {
+    if (false) {
       setTimeout(() => {
         // let myModule = require('../../e2e/utils/api')
         this.onRead(

@@ -8,7 +8,7 @@ import { element, by, waitFor } from 'detox'
 import { getText } from 'detox-getprops'
 
 describe('Backup test suite', () => {
-  it('Case 1: positive backup tests', async () => {
+  it.skip('Case 1: positive backup tests', async () => {
     await waitFor(element(by.id('burger-menu')))
       .toBeVisible()
       .withTimeout(5000)
