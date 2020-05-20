@@ -875,6 +875,11 @@ export class Settings extends Component<SettingsProps, SettingsState> {
               ]}
             >
               {settingsItemList.map((item, index) => {
+                // disable manual backup as well. Remove below line to enable manual backup in ConnectMe
+                if (index === 0) {
+                  return
+                }
+
                 if (!this.props.isCloudBackupEnabled) {
                   if (index === 1) {
                     // if cloud backup is not enabled, then we hide cloud backup option
