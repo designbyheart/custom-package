@@ -30,8 +30,9 @@ async function setEnvironment() {
   const acceptButton = element(by.id('eula-accept'))
   await acceptButton.tap()
 
-  const startFreshButton = element(by.id('start-fresh'))
-  await startFreshButton.tap()
+  // We have hidden start-fresh button for now, Once we enable it then we can add this line again
+  // const startFreshButton = element(by.id('start-fresh'))
+  // await startFreshButton.tap()
   const orText = element(by.id(LOCK_SELECTION_OR_TEXT))
 
   await orText.longPress()
