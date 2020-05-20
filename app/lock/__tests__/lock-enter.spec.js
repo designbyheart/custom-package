@@ -14,6 +14,10 @@ describe('<LockEnter />', () => {
       onSuccess: jest.fn(),
       message: ENTER_YOUR_PASS_CODE_MESSAGE,
       checkPinStatus: CHECK_PIN_IDLE,
+      numberOfFailedPinAttempts: 1,
+      recordedTimeOfPinFailedAttempt: '2020-01-01',
+      isAppLocked: true,
+      putPinFailData: jest.fn(),
     }
   }
 
@@ -22,7 +26,7 @@ describe('<LockEnter />', () => {
   let cleared
 
   const options = {
-    createNodeMock: element => {
+    createNodeMock: (element) => {
       return {
         clear: () => {
           cleared = true
