@@ -51,6 +51,8 @@ const initialState: LockStore = {
   isTouchIdEnabled: false,
   inRecovery: 'false',
   pendingRedirectionParams: {},
+  numberOfFailedPinAttempts: 1,
+  recordedTimeOfPinFailedAttempt: '2018-01-10T04:32:43+05:30',
 }
 
 describe('LockStore', () => {
@@ -93,8 +95,9 @@ describe('LockStore', () => {
     const pin = '123456'
     const salt = 'salt'
     const expectedPinHash = 'expectedPinHash'
+    const isAppLocked = true
 
-    return expectSaga(checkPin, checkPinAction(pin))
+    return expectSaga(checkPin, checkPinAction(pin, isAppLocked))
       .provide([
         [matchers.call.fn(safeGet, IN_RECOVERY), null],
         [call(getHydrationItem, SALT), salt],
@@ -109,8 +112,9 @@ describe('LockStore', () => {
     const pin = '123456'
     const salt = 'salt'
     const expectedPinHash = 'expectedPinHash'
+    const isAppLocked = true
 
-    return expectSaga(checkPin, checkPinAction(pin))
+    return expectSaga(checkPin, checkPinAction(pin, isAppLocked))
       .withState({ config: configStoreHydratedInstalledVcxInitSuccess })
       .provide([
         [matchers.call.fn(safeGet, IN_RECOVERY), 'true'],
@@ -129,15 +133,18 @@ describe('LockStore', () => {
     const salt = 'salt'
     const expectedPinHash = 'expectedPinHash'
     const enteredPinHash = 'enteredPinHash'
+    const isAppLocked = true
+    const numberOfFailedPinAttempts = 1
+    const recordedTimeOfPinFailedAttempt = '2018-01-10T04:32:43+05:30'
 
-    return expectSaga(checkPin, checkPinAction(pin))
+    return expectSaga(checkPin, checkPinAction(pin, isAppLocked))
       .provide([
         [matchers.call.fn(safeGet, IN_RECOVERY), null],
         [call(getHydrationItem, SALT), salt],
         [call(getHydrationItem, PIN_HASH), expectedPinHash],
         [matchers.call.fn(pinHash, pin, salt), enteredPinHash],
       ])
-      .put(checkPinFail())
+      .put(checkPinFail(numberOfFailedPinAttempts, recordedTimeOfPinFailedAttempt))
       .run()
   })
 

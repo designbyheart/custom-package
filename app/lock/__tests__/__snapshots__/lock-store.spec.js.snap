@@ -7,12 +7,14 @@ Object {
   "isAppLocked": true,
   "isLockEnabled": "false",
   "isTouchIdEnabled": false,
+  "numberOfFailedPinAttempts": 1,
   "pendingRedirection": Array [
     Object {
       "routeName": "home",
     },
   ],
   "pendingRedirectionParams": Object {},
+  "recordedTimeOfPinFailedAttempt": "2018-01-10T04:32:43+05:30",
   "showDevMode": false,
 }
 `;
@@ -24,8 +26,10 @@ Object {
   "isAppLocked": true,
   "isLockEnabled": "false",
   "isTouchIdEnabled": false,
+  "numberOfFailedPinAttempts": 1,
   "pendingRedirection": null,
   "pendingRedirectionParams": Object {},
+  "recordedTimeOfPinFailedAttempt": "2018-01-10T04:32:43+05:30",
   "showDevMode": false,
 }
 `;
@@ -37,8 +41,10 @@ Object {
   "isAppLocked": true,
   "isLockEnabled": "false",
   "isTouchIdEnabled": false,
+  "numberOfFailedPinAttempts": undefined,
   "pendingRedirection": null,
   "pendingRedirectionParams": Object {},
+  "recordedTimeOfPinFailedAttempt": undefined,
   "showDevMode": false,
 }
 `;
@@ -50,8 +56,10 @@ Object {
   "isAppLocked": true,
   "isLockEnabled": "false",
   "isTouchIdEnabled": false,
+  "numberOfFailedPinAttempts": undefined,
   "pendingRedirection": null,
   "pendingRedirectionParams": Object {},
+  "recordedTimeOfPinFailedAttempt": undefined,
   "showDevMode": false,
 }
 `;

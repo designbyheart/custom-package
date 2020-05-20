@@ -1,4 +1,5 @@
 // @flow
+import moment from 'moment'
 import { put, takeLatest, take, select, call, all } from 'redux-saga/effects'
 import type { CustomError } from '../common/type-common'
 import {
@@ -24,7 +25,11 @@ import {
   PIN_ENABLED_KEY,
   IN_RECOVERY,
   PIN_HASH,
+  PUT_PIN_FAIL_DATA,
+  PUT_PIN_FAIL_DATA_SUCCESS,
   SALT,
+  NUMBER_OF_FAILED_PIN_ATTEMPTS,
+  RECORDED_TIME_OF_PIN_FAILED_ATTEMPT,
 } from './type-lock'
 import type {
   PendingRedirection,
@@ -49,6 +54,7 @@ import type {
   CheckTouchIdAction,
   EnableTouchIdAction,
   DisableTouchIdAction,
+  PutPinFailDataAction,
 } from './type-lock'
 import {
   walletGet,
@@ -68,6 +74,8 @@ import { captureError } from '../services/error/error-handler'
 const initialState: LockStore = {
   pendingRedirection: null,
   checkPinStatus: CHECK_PIN_IDLE,
+  numberOfFailedPinAttempts: 0,
+  recordedTimeOfPinFailedAttempt: '',
   // we are assuming that app will be locked by default
   // and it will be unlocked either when user set security first time
   // or user unlock the app every time user opens the app
@@ -117,6 +125,10 @@ export const lockFail = (error: CustomError): LockFail => ({
   error,
 })
 
+export const putPinFailData = (): PutPinFailDataAction => ({
+  type: PUT_PIN_FAIL_DATA,
+})
+
 export function* setPin(action: SetPinAction): Generator<*, *, *> {
   try {
     const salt: string = yield call(generateSalt, true)
@@ -159,6 +171,34 @@ export function* disableTouchId(
   }
 }
 
+export function* getPinFailDataSaga(
+  action: PutPinFailDataAction
+): Generator<*, *, *> {
+  const numberOfFailedPinAttemptsString: string = yield call(
+    safeGet,
+    NUMBER_OF_FAILED_PIN_ATTEMPTS
+  )
+  const numberOfFailedPinAttempts: number = parseInt(
+    numberOfFailedPinAttemptsString
+  )
+  const recordedTimeOfPinFailedAttempt = yield call(
+    safeGet,
+    RECORDED_TIME_OF_PIN_FAILED_ATTEMPT
+  )
+
+  if (!isNaN(numberOfFailedPinAttempts)) {
+    yield put({
+      type: PUT_PIN_FAIL_DATA_SUCCESS,
+      numberOfFailedPinAttempts,
+      recordedTimeOfPinFailedAttempt,
+    })
+  } else return
+}
+
+export function* watchGetPinFailData(): any {
+  yield takeLatest(PUT_PIN_FAIL_DATA, getPinFailDataSaga)
+}
+
 export function* watchEnableTouchId(): any {
   yield takeLatest(ENABLE_TOUCHID, enableTouchId)
 }
@@ -174,13 +214,22 @@ export const checkPinSuccess = (): CheckPinSuccessAction => ({
   type: CHECK_PIN_SUCCESS,
 })
 
-export const checkPinFail = (): CheckPinFailAction => ({
+export const checkPinFail = (
+  numberOfFailedPinAttempts?: number,
+  recordedTimeOfPinFailedAttempt?: string
+): CheckPinFailAction => ({
   type: CHECK_PIN_FAIL,
+  numberOfFailedPinAttempts,
+  recordedTimeOfPinFailedAttempt,
 })
 
-export const checkPinAction = (pin: string): CheckPinAction => ({
+export const checkPinAction = (
+  pin: string,
+  isAppLocked: boolean
+): CheckPinAction => ({
   type: CHECK_PIN,
   pin,
+  isAppLocked,
 })
 
 export const enableDevMode = (): EnableDevMode => ({
@@ -204,7 +253,25 @@ export function* checkPin(action: CheckPinAction): Generator<*, *, *> {
   const expectedPinHash: string = yield call(getHydrationItem, PIN_HASH)
   const enteredPinHash: string = yield call(pinHash, action.pin, salt)
 
+  let numberOfFailedPinAttemptsString: string = ''
+  let numberOfFailedPinAttempts: number = 0
+  const recordedTimeOfPinFailedAttempt = moment().format()
+  if (action.isAppLocked) {
+    numberOfFailedPinAttemptsString = yield call(
+      safeGet,
+      NUMBER_OF_FAILED_PIN_ATTEMPTS
+    )
+    numberOfFailedPinAttempts = parseInt(numberOfFailedPinAttemptsString)
+    if (isNaN(numberOfFailedPinAttempts)) {
+      numberOfFailedPinAttempts = 0
+    }
+  }
+
   if (expectedPinHash === enteredPinHash) {
+    if (action.isAppLocked) {
+      yield call(safeSet, NUMBER_OF_FAILED_PIN_ATTEMPTS, '0')
+      yield call(safeSet, RECORDED_TIME_OF_PIN_FAILED_ATTEMPT, '')
+    }
     yield put(checkPinSuccess())
     if (inRecovery == 'true') {
       yield call(safeSet, IN_RECOVERY, 'false')
@@ -212,7 +279,26 @@ export function* checkPin(action: CheckPinAction): Generator<*, *, *> {
     }
   } else {
     captureError(new Error('Check pin fail'))
-    yield put(checkPinFail())
+    if (action.isAppLocked) {
+      yield call(
+        safeSet,
+        NUMBER_OF_FAILED_PIN_ATTEMPTS,
+        (numberOfFailedPinAttempts + 1).toString()
+      )
+      yield call(
+        safeSet,
+        RECORDED_TIME_OF_PIN_FAILED_ATTEMPT,
+        recordedTimeOfPinFailedAttempt
+      )
+      yield put(
+        checkPinFail(
+          numberOfFailedPinAttempts + 1,
+          recordedTimeOfPinFailedAttempt
+        )
+      )
+    } else {
+      yield put(checkPinFail())
+    }
   }
 }
 
@@ -268,6 +354,7 @@ export function* watchLock(): any {
     watchSetPin(),
     watchEnableTouchId(),
     watchDisableTouchId(),
+    watchGetPinFailData(),
   ])
 }
 
@@ -311,6 +398,8 @@ export default function lockReducer(
       return {
         ...state,
         checkPinStatus: CHECK_PIN_FAIL,
+        numberOfFailedPinAttempts: action.numberOfFailedPinAttempts,
+        recordedTimeOfPinFailedAttempt: action.recordedTimeOfPinFailedAttempt,
       }
     case CHECK_PIN_IDLE:
       return {
@@ -346,6 +435,12 @@ export default function lockReducer(
       return {
         ...state,
         isTouchIdEnabled: action.isTouchIdEnabled,
+      }
+    case PUT_PIN_FAIL_DATA_SUCCESS:
+      return {
+        ...state,
+        numberOfFailedPinAttempts: action.numberOfFailedPinAttempts,
+        recordedTimeOfPinFailedAttempt: action.recordedTimeOfPinFailedAttempt,
       }
     default:
       return state

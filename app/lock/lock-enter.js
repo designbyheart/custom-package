@@ -1,11 +1,14 @@
 // @flow
 import React, { Component } from 'react'
+import moment from 'moment'
 import {
   InteractionManager,
   StyleSheet,
   Platform,
   Dimensions,
   Image,
+  Text,
+  View,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -31,7 +34,11 @@ import type {
   CheckPinStatus,
   LockEnterProps,
 } from './type-lock'
-import { checkPinAction, checkPinStatusIdle } from './lock-store'
+import {
+  checkPinAction,
+  checkPinStatusIdle,
+  putPinFailData,
+} from './lock-store'
 import { switchErrorAlerts } from '../store/config-store'
 import type { Store } from '../store/type-store'
 import { ENTER_YOUR_PASS_CODE_MESSAGE } from '../common/message-constants'
@@ -41,6 +48,7 @@ import {
   isBiggerThanShortDevice,
   grey,
   matterhornSecondary,
+  cmRed,
 } from '../common/styles/constant'
 
 const lockImage = require('../images/lockCombo.png')
@@ -76,7 +84,7 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
   }
 
   onPinComplete = (pin: string) => {
-    this.props.checkPinAction(pin)
+    this.props.checkPinAction(pin, this.props.isAppLocked)
   }
 
   componentWillReceiveProps(nextProps: LockEnterProps) {
@@ -93,9 +101,104 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
   }
 
   componentDidMount() {
+    this.props.putPinFailData()
     if (this.props.checkPinStatus === CHECK_PIN_SUCCESS) {
       this.clearFailStatus()
     }
+  }
+
+  getPinFailedMessageAndShouldHideKeyboard = () => {
+    const {
+      numberOfFailedPinAttempts,
+      recordedTimeOfPinFailedAttempt,
+    } = this.props
+    const now = moment().valueOf()
+    const recordedTime = moment(recordedTimeOfPinFailedAttempt).valueOf()
+    const lockdownMinutesPassed = (now - recordedTime) / 1000 / 60
+
+    console.log('lockdownMinutesPassed: ', lockdownMinutesPassed)
+
+    if (
+      (numberOfFailedPinAttempts > 0 && numberOfFailedPinAttempts < 4) ||
+      numberOfFailedPinAttempts === 5 ||
+      numberOfFailedPinAttempts === 7
+    ) {
+      return {
+        message1: `${numberOfFailedPinAttempts} failed attempt${
+          numberOfFailedPinAttempts > 1 ? 's' : ''
+        }`,
+        message2: '',
+        shouldHideKeyboard: false,
+      }
+    } else if (numberOfFailedPinAttempts === 4) {
+      return {
+        message1: `${numberOfFailedPinAttempts} failed attempts.`,
+        message2: 'App is locked for 1 minute.',
+        shouldHideKeyboard: lockdownMinutesPassed < 1 ? true : false,
+      }
+    } else if (numberOfFailedPinAttempts === 6) {
+      return {
+        message1: `${numberOfFailedPinAttempts} failed attempts.`,
+        message2: 'App is locked for 3 minutes.',
+        shouldHideKeyboard: lockdownMinutesPassed < 3 ? true : false,
+      }
+    } else if (numberOfFailedPinAttempts === 8) {
+      return {
+        message1: `${numberOfFailedPinAttempts} failed attempts.`,
+        message2: 'App is locked for 15 minutes.',
+        shouldHideKeyboard: lockdownMinutesPassed < 15 ? true : false,
+      }
+    } else if (numberOfFailedPinAttempts === 9) {
+      return {
+        message1: `${numberOfFailedPinAttempts} failed attempts.`,
+        message2: 'App is locked for 1 hour.',
+        shouldHideKeyboard: lockdownMinutesPassed < 60 ? true : false,
+      }
+    } else if (numberOfFailedPinAttempts === 10) {
+      return {
+        message1: `Too many failed attempts.`,
+        message2: 'App is locked for 24 hours.',
+        shouldHideKeyboard: lockdownMinutesPassed < 1440 ? true : false,
+      }
+    } else if (numberOfFailedPinAttempts > 10) {
+      return {
+        message1: `Too many failed attempts.`,
+        message2: 'App is permanently locked.',
+        shouldHideKeyboard: true,
+      }
+    } else {
+      return {
+        message1: '',
+        message2: '',
+        shouldHideKeyboard: false,
+      }
+    }
+  }
+
+  renderFailMessages = () => {
+    if (
+      this.getPinFailedMessageAndShouldHideKeyboard().shouldHideKeyboard &&
+      this.getPinFailedMessageAndShouldHideKeyboard().message2
+    ) {
+      return (
+        <CustomView center>
+          <Text style={stylesRecovery.failedAttemptsText}>
+            {this.getPinFailedMessageAndShouldHideKeyboard().message1}
+          </Text>
+          <Text style={stylesRecovery.failedAttemptsText}>
+            {this.getPinFailedMessageAndShouldHideKeyboard().message2}
+          </Text>
+        </CustomView>
+      )
+    } else if (!this.getPinFailedMessageAndShouldHideKeyboard().message2) {
+      return (
+        <CustomView center>
+          <Text style={stylesRecovery.failedAttemptsText}>
+            {this.getPinFailedMessageAndShouldHideKeyboard().message1}
+          </Text>
+        </CustomView>
+      )
+    } else return null
   }
 
   render() {
@@ -149,7 +252,7 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
             </CustomView>
             <CustomView center>
               <PinCodeBox
-                ref={pinCodeBox => {
+                ref={(pinCodeBox) => {
                   this.pinCodeBox = pinCodeBox
                 }}
                 onPinComplete={this.onPinComplete}
@@ -182,12 +285,17 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
               {checkPinStatus === CHECK_PIN_FAIL && WrongPinText}
             </CustomView>
             <CustomView center>
+              {this.renderFailMessages()}
               <PinCodeBox
-                ref={pinCodeBox => {
+                ref={(pinCodeBox) => {
                   this.pinCodeBox = pinCodeBox
                 }}
                 onPinComplete={this.onPinComplete}
                 enableCustomKeyboard={this.props.enableCustomKeyboard}
+                disableKeyboard={
+                  this.getPinFailedMessageAndShouldHideKeyboard()
+                    .shouldHideKeyboard
+                }
               />
             </CustomView>
           </Container>
@@ -198,6 +306,12 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
 }
 
 const stylesRecovery = StyleSheet.create({
+  failedAttemptsText: {
+    color: cmRed,
+    fontSize: 17,
+    fontWeight: '500',
+    fontFamily: 'Lato',
+  },
   backgroundImg: {
     position: 'absolute',
     transform: [{ rotate: '-180deg' }],
@@ -251,15 +365,19 @@ const stylesRecovery = StyleSheet.create({
 })
 
 const mapStateToProps = (state: Store) => ({
+  isAppLocked: state.lock.isAppLocked,
   checkPinStatus: state.lock.checkPinStatus,
+  numberOfFailedPinAttempts: state.lock.numberOfFailedPinAttempts,
+  recordedTimeOfPinFailedAttempt: state.lock.recordedTimeOfPinFailedAttempt,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       checkPinAction,
       checkPinStatusIdle,
       switchErrorAlerts,
+      putPinFailData,
     },
     dispatch
   )

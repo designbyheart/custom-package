@@ -8,6 +8,7 @@ export type PinCodeDigitProps = {
 export type PinCodeBoxProps = {
   onPinComplete: (pin: string) => void,
   enableCustomKeyboard?: boolean,
+  disableKeyboard?: boolean,
 }
 
 export type PinCodeBoxState = {
