@@ -2584,7 +2584,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ConnectMe/Pods-ConnectMe-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-ConnectMe/Pods-ConnectMe-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${PODS_ROOT}/Onfido/Onfido.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework",
@@ -2603,7 +2603,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ConnectMe/Pods-ConnectMe-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ConnectMe/Pods-ConnectMe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F893A954E15E54EE89E43407 /* [CP] Check Pods Manifest.lock */ = {
@@ -2812,7 +2812,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development: Evernym Automation (3XVZBU8VAE)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 70016;
+				CURRENT_PROJECT_VERSION = 70017;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = ES8QU3D2A4;
 				ENABLE_BITCODE = NO;
@@ -2868,7 +2868,7 @@
 				CODE_SIGN_ENTITLEMENTS = ConnectMe/ConnectMe.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: EVERNYM, INC. (ES8QU3D2A4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 70016;
+				CURRENT_PROJECT_VERSION = 70017;
 				DEVELOPMENT_TEAM = ES8QU3D2A4;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
