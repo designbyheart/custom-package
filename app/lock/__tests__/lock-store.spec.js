@@ -53,6 +53,9 @@ const initialState: LockStore = {
   pendingRedirectionParams: {},
   numberOfFailedPinAttempts: 1,
   recordedTimeOfPinFailedAttempt: '2018-01-10T04:32:43+05:30',
+  numberOfAttemptsMessage: '1 failed attempt.',
+  lockdownTimeMessage: 'App is locked for 1 minute.',
+  shouldLockApp: false,
 }
 
 describe('LockStore', () => {
@@ -144,7 +147,9 @@ describe('LockStore', () => {
         [call(getHydrationItem, PIN_HASH), expectedPinHash],
         [matchers.call.fn(pinHash, pin, salt), enteredPinHash],
       ])
-      .put(checkPinFail(numberOfFailedPinAttempts, recordedTimeOfPinFailedAttempt))
+      .put(
+        checkPinFail(numberOfFailedPinAttempts, recordedTimeOfPinFailedAttempt)
+      )
       .run()
   })
 

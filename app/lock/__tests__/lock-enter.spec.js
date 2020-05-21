@@ -14,10 +14,11 @@ describe('<LockEnter />', () => {
       onSuccess: jest.fn(),
       message: ENTER_YOUR_PASS_CODE_MESSAGE,
       checkPinStatus: CHECK_PIN_IDLE,
-      numberOfFailedPinAttempts: 1,
-      recordedTimeOfPinFailedAttempt: '2020-01-01',
       isAppLocked: true,
       putPinFailData: jest.fn(),
+      lockdownTimeMessage: 'App is locked for 1 minute.',
+      numberOfAttemptsMessage: '1 failed attempt.',
+      shouldLockApp: false,
     }
   }
 

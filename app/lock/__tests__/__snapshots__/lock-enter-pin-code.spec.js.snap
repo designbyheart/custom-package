@@ -98,28 +98,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
       }
     >
       <View
-        center={true}
-        style={
-          Object {
-            "alignItems": "center",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Object {
-              "color": "#CE0B24",
-              "fontFamily": "Lato",
-              "fontSize": 17,
-              "fontWeight": "500",
-            }
-          }
-        >
-          
-        </Text>
-      </View>
-      <View
         style={Object {}}
       >
         <View
@@ -458,28 +436,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
         }
       }
     >
-      <View
-        center={true}
-        style={
-          Object {
-            "alignItems": "center",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Object {
-              "color": "#CE0B24",
-              "fontFamily": "Lato",
-              "fontSize": 17,
-              "fontWeight": "500",
-            }
-          }
-        >
-          
-        </Text>
-      </View>
       <View
         style={Object {}}
       >
@@ -820,28 +776,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
       }
     >
       <View
-        center={true}
-        style={
-          Object {
-            "alignItems": "center",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Object {
-              "color": "#CE0B24",
-              "fontFamily": "Lato",
-              "fontSize": 17,
-              "fontWeight": "500",
-            }
-          }
-        >
-          
-        </Text>
-      </View>
-      <View
         style={Object {}}
       >
         <View
@@ -1180,28 +1114,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
         }
       }
     >
-      <View
-        center={true}
-        style={
-          Object {
-            "alignItems": "center",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Object {
-              "color": "#CE0B24",
-              "fontFamily": "Lato",
-              "fontSize": 17,
-              "fontWeight": "500",
-            }
-          }
-        >
-          
-        </Text>
-      </View>
       <View
         style={Object {}}
       >

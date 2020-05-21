@@ -119,7 +119,7 @@ export default class PinCodeBox extends PureComponent<
         <TextInput
           editable={!this.props.disableKeyboard}
           autoCorrect={false}
-          autoFocus={!this.props.disableKeyboard}
+          autoFocus={true}
           blurOnSubmit={false}
           enablesReturnKeyAutomatically={false}
           keyboardType={keyboard}

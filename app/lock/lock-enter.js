@@ -88,6 +88,10 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
   }
 
   componentWillReceiveProps(nextProps: LockEnterProps) {
+    if (this.props.shouldLockApp !== nextProps.shouldLockApp) {
+      this.props.putPinFailData()
+    }
+
     if (this.props.checkPinStatus !== nextProps.checkPinStatus) {
       if (nextProps.checkPinStatus === CHECK_PIN_SUCCESS) {
         this.pinCodeBox && this.pinCodeBox.hideKeyboard()
@@ -107,94 +111,26 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
     }
   }
 
-  getPinFailedMessageAndShouldHideKeyboard = () => {
-    const {
-      numberOfFailedPinAttempts,
-      recordedTimeOfPinFailedAttempt,
-    } = this.props
-    const now = moment().valueOf()
-    const recordedTime = moment(recordedTimeOfPinFailedAttempt).valueOf()
-    const lockdownMinutesPassed = (now - recordedTime) / 1000 / 60
-
-    console.log('lockdownMinutesPassed: ', lockdownMinutesPassed)
-
-    if (
-      (numberOfFailedPinAttempts > 0 && numberOfFailedPinAttempts < 4) ||
-      numberOfFailedPinAttempts === 5 ||
-      numberOfFailedPinAttempts === 7
-    ) {
-      return {
-        message1: `${numberOfFailedPinAttempts} failed attempt${
-          numberOfFailedPinAttempts > 1 ? 's' : ''
-        }`,
-        message2: '',
-        shouldHideKeyboard: false,
-      }
-    } else if (numberOfFailedPinAttempts === 4) {
-      return {
-        message1: `${numberOfFailedPinAttempts} failed attempts.`,
-        message2: 'App is locked for 1 minute.',
-        shouldHideKeyboard: lockdownMinutesPassed < 1 ? true : false,
-      }
-    } else if (numberOfFailedPinAttempts === 6) {
-      return {
-        message1: `${numberOfFailedPinAttempts} failed attempts.`,
-        message2: 'App is locked for 3 minutes.',
-        shouldHideKeyboard: lockdownMinutesPassed < 3 ? true : false,
-      }
-    } else if (numberOfFailedPinAttempts === 8) {
-      return {
-        message1: `${numberOfFailedPinAttempts} failed attempts.`,
-        message2: 'App is locked for 15 minutes.',
-        shouldHideKeyboard: lockdownMinutesPassed < 15 ? true : false,
-      }
-    } else if (numberOfFailedPinAttempts === 9) {
-      return {
-        message1: `${numberOfFailedPinAttempts} failed attempts.`,
-        message2: 'App is locked for 1 hour.',
-        shouldHideKeyboard: lockdownMinutesPassed < 60 ? true : false,
-      }
-    } else if (numberOfFailedPinAttempts === 10) {
-      return {
-        message1: `Too many failed attempts.`,
-        message2: 'App is locked for 24 hours.',
-        shouldHideKeyboard: lockdownMinutesPassed < 1440 ? true : false,
-      }
-    } else if (numberOfFailedPinAttempts > 10) {
-      return {
-        message1: `Too many failed attempts.`,
-        message2: 'App is permanently locked.',
-        shouldHideKeyboard: true,
-      }
-    } else {
-      return {
-        message1: '',
-        message2: '',
-        shouldHideKeyboard: false,
-      }
-    }
-  }
-
   renderFailMessages = () => {
-    if (
-      this.getPinFailedMessageAndShouldHideKeyboard().shouldHideKeyboard &&
-      this.getPinFailedMessageAndShouldHideKeyboard().message2
-    ) {
+    if (this.props.shouldLockApp && this.props.lockdownTimeMessage) {
       return (
         <CustomView center>
           <Text style={stylesRecovery.failedAttemptsText}>
-            {this.getPinFailedMessageAndShouldHideKeyboard().message1}
+            {this.props.numberOfAttemptsMessage}
           </Text>
           <Text style={stylesRecovery.failedAttemptsText}>
-            {this.getPinFailedMessageAndShouldHideKeyboard().message2}
+            {this.props.lockdownTimeMessage}
           </Text>
         </CustomView>
       )
-    } else if (!this.getPinFailedMessageAndShouldHideKeyboard().message2) {
+    } else if (
+      !this.props.shouldLockApp &&
+      this.props.numberOfAttemptsMessage
+    ) {
       return (
         <CustomView center>
           <Text style={stylesRecovery.failedAttemptsText}>
-            {this.getPinFailedMessageAndShouldHideKeyboard().message1}
+            {this.props.numberOfAttemptsMessage}
           </Text>
         </CustomView>
       )
@@ -292,10 +228,7 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
                 }}
                 onPinComplete={this.onPinComplete}
                 enableCustomKeyboard={this.props.enableCustomKeyboard}
-                disableKeyboard={
-                  this.getPinFailedMessageAndShouldHideKeyboard()
-                    .shouldHideKeyboard
-                }
+                disableKeyboard={this.props.shouldLockApp}
               />
             </CustomView>
           </Container>
@@ -367,8 +300,9 @@ const stylesRecovery = StyleSheet.create({
 const mapStateToProps = (state: Store) => ({
   isAppLocked: state.lock.isAppLocked,
   checkPinStatus: state.lock.checkPinStatus,
-  numberOfFailedPinAttempts: state.lock.numberOfFailedPinAttempts,
-  recordedTimeOfPinFailedAttempt: state.lock.recordedTimeOfPinFailedAttempt,
+  shouldLockApp: state.lock.shouldLockApp,
+  numberOfAttemptsMessage: state.lock.numberOfAttemptsMessage,
+  lockdownTimeMessage: state.lock.lockdownTimeMessage,
 })
 
 const mapDispatchToProps = (dispatch) =>

@@ -116,7 +116,7 @@ exports[`<LockEnter /> should match snapshot 1`] = `
             }
           }
         >
-          1 failed attempt
+          1 failed attempt.
         </Text>
       </View>
       <View
