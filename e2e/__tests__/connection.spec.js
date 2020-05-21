@@ -20,7 +20,7 @@ import { device, element, by, waitFor } from 'detox'
 import { getInvitation } from '../utils/api'
 import { unlock } from '../utils/lock-unlock'
 
-describe.skip('Connection via QR Code', () => {
+describe('Connection via QR Code', () => {
   it('User should be able to establish connection via scanning QR code', async () => {
     // await device.launchApp({ permissions: { camera: 'YES' } })
     // await element(by.id(PIN_CODE_INPUT_BOX)).replaceText(TEST_PASS_CODE)
@@ -87,16 +87,12 @@ export const addConnections = async (noOfConnectionsToAdd: number = 1) => {
         .withTimeout(15000)
       await element(by.id(INVITATION_ACCEPT)).tap()
 
-      await waitFor(element(by.id(PIN_CODE_INPUT_BOX).and(by.text(''))))
+      await waitFor(element(by.id(PIN_CODE_INPUT_BOX)).atIndex(1))
         .toBeVisible()
         .withTimeout(15000)
-      await element(by.id(PIN_CODE_INPUT_BOX).and(by.text(''))).replaceText(
-        TEST_PASS_CODE
-      )
-      await waitFor(element(by.id(INVITATION_SUCCESS_MODAL_CONTINUE)))
-        .toBeVisible()
-        .withTimeout(50000)
-      await element(by.id(INVITATION_SUCCESS_MODAL_CONTINUE)).tap()
+      await element(by.id(PIN_CODE_INPUT_BOX))
+        .atIndex(1)
+        .replaceText(TEST_PASS_CODE)
     }
   }
   return connections

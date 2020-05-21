@@ -64,7 +64,7 @@ const inboxConfig = {
     host: 'imap.mail.yahoo.com',
     port: 993,
     tls: true,
-    authTimeout: 3000,
+    authTimeout: 5000,
   },
 }
 
@@ -88,7 +88,7 @@ const emailFetchOptions = {
 }
 
 export function getInvitationSync() {
-  const qrCode =  post(
+  const qrCode = post(
     `${verityBaseUrl}/connections`,
     {
       name: 'Alex',
@@ -133,21 +133,28 @@ export async function getInvitation() {
   console.log(invitationId)
   console.log(qrCode)
 
-  const { exec } = require('child_process')
-  exec(`echo "${qrCode}" | cut -c 23- | base64 --decode > tmp.png && zbarimg tmp.png && rm tmp.png`, (err, stdout, stderr) => {
-    if (err) {
-      console.log(err)
-      return
-    }
-    global.jsonData = stdout.substr(8)
-    // let jsonData = stdout.substr(8)
-    // exports.jsonData = jsonData
-    console.log(`STDOUT: ${stdout}`)
-    console.log(`jsonData: ${global.jsonData}`)
-    console.log(`STDERR: ${stderr}`)
-  })
+  await new Promise(r => setTimeout(r, 15000)) // wait before decoding qr code and starting server
 
-  await new Promise(r => setTimeout(r, 30000)) // wait before fetching latest message
+  let jsonData = null
+
+  const { exec } = require('child_process')
+  await exec(
+    `echo "${qrCode}" | cut -c 23- | base64 --decode > tmp.png && zbarimg tmp.png && rm tmp.png`,
+    (err, stdout, stderr) => {
+      if (err) {
+        console.log(err)
+        return
+      }
+      // global.jsonData = stdout.substr(8)
+      jsonData = stdout.substr(8)
+      // exports.jsonData = jsonData
+      console.log(`STDOUT: ${stdout}`)
+      console.log(`jsonData: ${jsonData}`)
+      console.log(`STDERR: ${stderr}`)
+    }
+  )
+
+  await new Promise(r => setTimeout(r, 15000)) // wait before fetching latest message
 
   const [connection, openingInbox] = await waitingInbox
   await openingInbox
@@ -172,12 +179,27 @@ export async function getInvitation() {
   console.log(latestEmailBody)
   console.log(token)
 
+  // ---
+  const net = require('net')
+
+  let server = await net.createServer(function(socket) {
+    socket.write(jsonData)
+    socket.pipe(socket)
+    console.log('server has been created')
+  })
+
+  await server.listen(1337, '127.0.0.1')
+  console.log('server is listening')
+  // ---
+
   // no need to wait for invitation to be fetched
   // we can call this function only to get invitation token
   // and when we need actual invitation data, then we can resolve for
   // fetchingInvitation or use await to get invitation data
   // this can be used directly by qr-code screen
-  const fetchingInvitation = get(`${devAgencyUrl}/agency/url-mapper/${token}`)
+  const fetchingInvitation = await get(
+    `${devAgencyUrl}/agency/url-mapper/${token}`
+  )
     .then(R.compose(get, R.path(['data', 'url'])))
     .catch(console.error)
   console.log(fetchingInvitation)
