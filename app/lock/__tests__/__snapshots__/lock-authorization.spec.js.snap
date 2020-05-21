@@ -98,28 +98,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
       }
     >
       <View
-        center={true}
-        style={
-          Object {
-            "alignItems": "center",
-            "justifyContent": "center",
-          }
-        }
-      >
-        <Text
-          style={
-            Object {
-              "color": "#CE0B24",
-              "fontFamily": "Lato",
-              "fontSize": 17,
-              "fontWeight": "500",
-            }
-          }
-        >
-          
-        </Text>
-      </View>
-      <View
         style={Object {}}
       >
         <View

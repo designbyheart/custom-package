@@ -1,5 +1,6 @@
 // @flow
 import moment from 'moment'
+import delay from '@redux-saga/delay-p'
 import { put, takeLatest, take, select, call, all } from 'redux-saga/effects'
 import type { CustomError } from '../common/type-common'
 import {
@@ -76,6 +77,9 @@ const initialState: LockStore = {
   checkPinStatus: CHECK_PIN_IDLE,
   numberOfFailedPinAttempts: 0,
   recordedTimeOfPinFailedAttempt: '',
+  numberOfAttemptsMessage: '',
+  lockdownTimeMessage: '',
+  shouldLockApp: false,
   // we are assuming that app will be locked by default
   // and it will be unlocked either when user set security first time
   // or user unlock the app every time user opens the app
@@ -171,28 +175,88 @@ export function* disableTouchId(
   }
 }
 
-export function* getPinFailDataSaga(
-  action: PutPinFailDataAction
-): Generator<*, *, *> {
-  const numberOfFailedPinAttemptsString: string = yield call(
-    safeGet,
-    NUMBER_OF_FAILED_PIN_ATTEMPTS
-  )
-  const numberOfFailedPinAttempts: number = parseInt(
-    numberOfFailedPinAttemptsString
-  )
-  const recordedTimeOfPinFailedAttempt = yield call(
-    safeGet,
-    RECORDED_TIME_OF_PIN_FAILED_ATTEMPT
-  )
+export function* getPinFailDataSaga(): Generator<*, *, *> {
+  while (true) {
+    const numberOfFailedPinAttemptsString: string = yield call(
+      safeGet,
+      NUMBER_OF_FAILED_PIN_ATTEMPTS
+    )
+    const numberOfFailedPinAttempts: number = parseInt(
+      numberOfFailedPinAttemptsString
+    )
+    const recordedTimeOfPinFailedAttempt = yield call(
+      safeGet,
+      RECORDED_TIME_OF_PIN_FAILED_ATTEMPT
+    )
 
-  if (!isNaN(numberOfFailedPinAttempts)) {
-    yield put({
-      type: PUT_PIN_FAIL_DATA_SUCCESS,
-      numberOfFailedPinAttempts,
-      recordedTimeOfPinFailedAttempt,
-    })
-  } else return
+    const now = moment().valueOf()
+    const timePassed =
+      (now - moment(recordedTimeOfPinFailedAttempt).valueOf()) / 1000 / 60
+
+    const failedPinAttemptsToLockdownTimes = {
+      '4': 1,
+      '6': 3,
+      '8': 15,
+      '9': 60,
+      '10': 1440,
+    }
+
+    if (!isNaN(numberOfFailedPinAttempts)) {
+      if (numberOfFailedPinAttempts === 0) return
+
+      if (
+        numberOfFailedPinAttempts === 1 ||
+        numberOfFailedPinAttempts === 2 ||
+        numberOfFailedPinAttempts === 3 ||
+        numberOfFailedPinAttempts === 5 ||
+        numberOfFailedPinAttempts === 7
+      ) {
+        yield put({
+          type: PUT_PIN_FAIL_DATA_SUCCESS,
+          numberOfAttemptsMessage: `${numberOfFailedPinAttempts} failed attempt${
+            numberOfFailedPinAttempts > 1 ? 's.' : '.'
+          }`,
+          lockdownTimeMessage: '',
+          shouldLockApp: false,
+        })
+        return
+      } else if (
+        (numberOfFailedPinAttempts === 4 && timePassed >= 1) ||
+        (numberOfFailedPinAttempts === 6 && timePassed >= 3) ||
+        (numberOfFailedPinAttempts === 8 && timePassed >= 15) ||
+        (numberOfFailedPinAttempts === 9 && timePassed >= 60) ||
+        (numberOfFailedPinAttempts === 10 && timePassed >= 1440)
+      ) {
+        yield put({
+          type: PUT_PIN_FAIL_DATA_SUCCESS,
+          numberOfAttemptsMessage: '',
+          lockdownTimeMessage: '',
+          shouldLockApp: false,
+        })
+        return
+      } else if (numberOfFailedPinAttempts === 11) {
+        yield put({
+          type: PUT_PIN_FAIL_DATA_SUCCESS,
+          numberOfAttemptsMessage: 'Too many failed attempts.',
+          lockdownTimeMessage: 'App is permanently locked.',
+          shouldLockApp: true,
+        })
+      } else {
+        yield put({
+          type: PUT_PIN_FAIL_DATA_SUCCESS,
+          numberOfAttemptsMessage: `${numberOfFailedPinAttempts} failed attempts.`,
+          lockdownTimeMessage: `App is locked for ${
+            failedPinAttemptsToLockdownTimes[
+              numberOfFailedPinAttempts.toString()
+            ]
+          } minute${numberOfFailedPinAttempts > 1 ? 's.' : '.'}`,
+          shouldLockApp: true,
+        })
+      }
+    }
+
+    yield call(delay, 60000)
+  }
 }
 
 export function* watchGetPinFailData(): any {
@@ -296,6 +360,7 @@ export function* checkPin(action: CheckPinAction): Generator<*, *, *> {
           recordedTimeOfPinFailedAttempt
         )
       )
+      yield* getPinFailDataSaga()
     } else {
       yield put(checkPinFail())
     }
@@ -439,8 +504,9 @@ export default function lockReducer(
     case PUT_PIN_FAIL_DATA_SUCCESS:
       return {
         ...state,
-        numberOfFailedPinAttempts: action.numberOfFailedPinAttempts,
-        recordedTimeOfPinFailedAttempt: action.recordedTimeOfPinFailedAttempt,
+        numberOfAttemptsMessage: action.numberOfAttemptsMessage,
+        lockdownTimeMessage: action.lockdownTimeMessage,
+        shouldLockApp: action.shouldLockApp,
       }
     default:
       return state

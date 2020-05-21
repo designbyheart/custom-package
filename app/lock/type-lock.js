@@ -149,6 +149,9 @@ export type LockStore = {
   pendingRedirectionParams?: {},
   numberOfFailedPinAttempts: number,
   recordedTimeOfPinFailedAttempt: string,
+  shouldLockApp: boolean,
+  numberOfAttemptsMessage: string,
+  lockdownTimeMessage: string,
 }
 
 export type LockSelectionProps = {
@@ -250,8 +253,9 @@ export type LockEnterProps = {
   fromRecovery: boolean,
   setupNewPassCode?: () => void,
   enableCustomKeyboard?: boolean,
-  numberOfFailedPinAttempts: number,
-  recordedTimeOfPinFailedAttempt: string,
+  shouldLockApp: boolean,
+  numberOfAttemptsMessage: string,
+  lockdownTimeMessage: string,
 }
 
 export type LockAuthorizationNavigation = {
