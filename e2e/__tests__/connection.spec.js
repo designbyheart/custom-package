@@ -58,10 +58,23 @@ export const addConnections = async (noOfConnectionsToAdd: number = 1) => {
         invitationId,
         fetchingInvitation,
         invitationUrl,
-        qrCode,
+        jsonData,
       ] = await getInvitation()
       connections.push([token, invitationId, fetchingInvitation, invitationUrl])
       console.log(invitationUrl)
+
+      // ---
+      const net = require('net')
+
+      let server = await net.createServer(function(socket) {
+        socket.write(JSON.stringify(jsonData))
+        socket.pipe(socket)
+        console.log('server has pushed data')
+      })
+
+      await server.listen(1337, 'localhost')
+      console.log('server is listening')
+      // ---
 
       // // option 1: close app and then open with url
       // await device.terminateApp()
@@ -81,6 +94,8 @@ export const addConnections = async (noOfConnectionsToAdd: number = 1) => {
       // await unlock()
 
       await element(by.text('Scan')).tap()
+
+      await new Promise(r => setTimeout(r, 60000))
 
       await waitFor(element(by.id(INVITATION_ACCEPT)))
         .toBeVisible()

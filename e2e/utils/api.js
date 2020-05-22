@@ -135,7 +135,7 @@ export async function getInvitation() {
 
   await new Promise(r => setTimeout(r, 15000)) // wait before decoding qr code and starting server
 
-  let jsonData = null
+  let jsonData
 
   const { exec } = require('child_process')
   await exec(
@@ -179,18 +179,18 @@ export async function getInvitation() {
   console.log(latestEmailBody)
   console.log(token)
 
-  // ---
-  const net = require('net')
+  // // ---
+  // const net = require('net')
 
-  let server = await net.createServer(function(socket) {
-    socket.write(jsonData)
-    socket.pipe(socket)
-    console.log('server has been created')
-  })
+  // let server = await net.createServer(function(socket) {
+  //   socket.write(JSON.stringify(jsonData))
+  //   socket.pipe(socket)
+  //   console.log('server has been created')
+  // })
 
-  await server.listen(1337, '127.0.0.1')
-  console.log('server is listening')
-  // ---
+  // await server.listen(1337, '127.0.0.1')
+  // console.log('server is listening')
+  // // ---
 
   // no need to wait for invitation to be fetched
   // we can call this function only to get invitation token
@@ -203,7 +203,13 @@ export async function getInvitation() {
     .then(R.compose(get, R.path(['data', 'url'])))
     .catch(console.error)
   console.log(fetchingInvitation)
-  return [token, invitationId, fetchingInvitation, `${appLink}${token}`, qrCode]
+  return [
+    token,
+    invitationId,
+    fetchingInvitation,
+    `${appLink}${token}`,
+    jsonData,
+  ]
 }
 
 export const CLAIM_OFFER_PROFILE_INFO = 'Profile Info'

@@ -310,35 +310,39 @@ export class QRCodeScannerScreen extends Component<
     }
 
     // ---!!!---
-    if (true) {
+    if (false) {
+      // switch to true to mock scanning
       setTimeout(() => {
         // let myModule = require('../../e2e/utils/api')
 
-        const net = require('react-native-tcp')
-        let client = new net.Socket()
-        let jsonData = null
+        const getData = () => {
+          const net = require('react-native-tcp')
+          let client = new net.Socket()
+          let jsonData
 
-        client.connect(1337, '127.0.0.1', function() {
-          console.log('Connected')
-        })
+          client.connect(1337, 'localhost', function() {
+            console.log('Connected')
+          })
 
-        client.on('data', function(data) {
-          console.log('Received: ' + data)
-          jsonData = data
-          client.destroy()
-        })
+          client.on('data', function(data) {
+            console.log('Received: ' + data)
+            jsonData = JSON.parse(data)
+            // client.destroy()
+          })
 
-        client.on('close', function() {
-          console.log('Connection closed')
-        })
+          client.on('close', function() {
+            console.log('Connection closed')
+          })
 
+          return jsonData
+        }
         this.onRead(
-          jsonData
+          getData()
           // myModule.jsonData
           // global.jsonData
           // {"id":"41ed308e-9026-4e9e-8927-a0f084927a77","s":{"d":"RtJooR58zXJuFMUFsCJbXd","dp":{"d":"F4udr8GY8BhVFcy4srAh73","k":"8fhSnz35VEbuNCpGuW2Vp3kcZ9BCiqoUUdCBiLso56yH","s":"Vq+YC68NPpi3q6QoudDMMEKQWv6jfbG1hZrE38hz6GS7a4ntB60ydxtezwYDrfb2UJNDosT4yKFbnCiiW4RhBA=="},"l":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjimxZbcvZzPcPvHd_y7f0tc5d8QoC9DOPecb8JTOChmS1IoDq","n":"Evernym QA-RC","publicDID":"4CZXFbfD8fnT45ZibYXS1a","v":"EZenFBQrMTcmkM2SjeS1hjhHyy3ZsUa4KZWWEaSjsXpb"},"sa":{"d":"QreyffsPPLCUqetQbahYNu","e":"eas.pqa.evernym.com:80/agency/msg","v":"E194CfHi5GGRiy1nThMorPf3jBEm4tvcAgcb65JFfxc7"},"sc":"MS-101","sm":"message created","t":"there","threadId":null,"version":"1.0"}
         )
-      }, 2000)
+      }, 1000)
     }
     // ---!!!---
 
