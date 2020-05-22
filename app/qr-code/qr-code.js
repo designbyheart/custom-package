@@ -322,6 +322,7 @@ export class QRCodeScannerScreen extends Component<
           let client = new net.Socket()
           let jsonData
 
+          //$FlowFixMe
           client.connect(1337, 'localhost', function() {
             console.log('Connected')
           })
@@ -339,6 +340,7 @@ export class QRCodeScannerScreen extends Component<
           return jsonData
         }
         this.onRead(
+          //$FlowFixMe
           getData()
           // myModule.jsonData
           // global.jsonData
