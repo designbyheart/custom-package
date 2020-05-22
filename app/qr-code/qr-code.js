@@ -316,7 +316,9 @@ export class QRCodeScannerScreen extends Component<
         // let myModule = require('../../e2e/utils/api')
 
         const getData = () => {
+          //$FlowFixMe
           const net = require('react-native-tcp')
+          //$FlowFixMe
           let client = new net.Socket()
           let jsonData
 

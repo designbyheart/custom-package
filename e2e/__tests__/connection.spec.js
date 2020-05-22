@@ -66,12 +66,14 @@ export const addConnections = async (noOfConnectionsToAdd: number = 1) => {
       // ---
       const net = require('net')
 
+      //$FlowFixMe
       let server = await net.createServer(function(socket) {
         socket.write(JSON.stringify(jsonData))
         socket.pipe(socket)
         console.log('server has pushed data')
       })
 
+      //$FlowFixMe
       await server.listen(1337, 'localhost')
       console.log('server is listening')
       // ---

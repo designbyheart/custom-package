@@ -11,6 +11,15 @@ import {
   BACKUP_CLOSE,
   SETTINGS_BIOMETRICS,
   BIOMETRICS_OK,
+  SETTINGS_PASSCODE,
+  PASSCODE_BACK_ARROW,
+  SETTINGS_CHAT,
+  CHAT_CANCEL,
+  CHAT_CLOSE,
+  SETTINGS_ABOUT,
+  ABOUT_BACK_ARROW,
+  SETTINGS_ONFIDO,
+  ONFIDO_BACK_ARROW,
 } from '../utils/test-constants'
 
 describe('Settings screen', () => {
@@ -38,12 +47,20 @@ describe('Settings screen', () => {
       .toBeVisible()
       .withTimeout(5000)
   })
-  it('Case 2: open and close all available options', async () => {
+  it('Case 2: check all available buttons', async () => {
     await element(by.text(SCAN_BUTTON)).tap()
     await element(by.id(QR_CODE_SCANNER_CLOSE_BUTTON)).tap()
     await element(by.text(SETTINGS_CREATE_BACKUP)).tap()
     await element(by.id(BACKUP_CLOSE)).tap()
     await element(by.text(SETTINGS_BIOMETRICS)).tap()
     await element(by.text(BIOMETRICS_OK)).tap()
+    await element(by.text(SETTINGS_PASSCODE)).tap()
+    await element(by.id(PASSCODE_BACK_ARROW)).tap()
+    await element(by.text(SETTINGS_CHAT)).tap()
+    await element(by.text(CHAT_CANCEL)).tap()
+    await element(by.text(SETTINGS_ABOUT)).tap()
+    await element(by.id(ABOUT_BACK_ARROW)).tap()
+    await element(by.text(SETTINGS_ONFIDO)).tap()
+    await element(by.id(ONFIDO_BACK_ARROW)).tap()
   })
 })

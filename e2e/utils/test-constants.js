@@ -85,6 +85,15 @@ export const SETTINGS_CREATE_BACKUP = 'Create a Backup'
 export const BACKUP_CLOSE = 'recovery-header-close-image'
 export const SETTINGS_BIOMETRICS = 'Biometrics'
 export const BIOMETRICS_OK = 'Ok'
+export const SETTINGS_PASSCODE = 'Passcode'
+export const PASSCODE_BACK_ARROW = 'back-arrow'
+export const SETTINGS_CHAT = 'Chat With Us'
+export const CHAT_CANCEL = 'Cancel'
+export const CHAT_CLOSE = 'Close'
+export const SETTINGS_ABOUT = 'About'
+export const ABOUT_BACK_ARROW = 'back-arrow-touchable'
+export const SETTINGS_ONFIDO = 'ONFIDO'
+export const ONFIDO_BACK_ARROW = 'header-back'
 
 // switch environment screen
 export const SWITCH_ENVIRONMENT_DEV_BUTTON = 'switch-environment-dev'
@@ -96,3 +105,8 @@ export const SWITCH_ENVIRONMENT_SAVE_BUTTON = 'switch-environment-footer-accept'
 
 // screenshot names
 export const SCREENSHOT_HOME = 'home.jpg'
+
+// menu
+export const MENU_HOME = 'Home 0'
+export const MENU_MY_CONNECTIONS = 'My Connections'
+export const MENU_SETTINGS = 'Settings'
