@@ -241,15 +241,16 @@ export function* getPinFailDataSaga(): Generator<*, *, *> {
           lockdownTimeMessage: 'App is permanently locked.',
           shouldLockApp: true,
         })
+        return
       } else {
+        const lockdownTime =
+          failedPinAttemptsToLockdownTimes[numberOfFailedPinAttempts.toString()]
         yield put({
           type: PUT_PIN_FAIL_DATA_SUCCESS,
           numberOfAttemptsMessage: `${numberOfFailedPinAttempts} failed attempts.`,
-          lockdownTimeMessage: `App is locked for ${
-            failedPinAttemptsToLockdownTimes[
-              numberOfFailedPinAttempts.toString()
-            ]
-          } minute${numberOfFailedPinAttempts > 1 ? 's.' : '.'}`,
+          lockdownTimeMessage: `App is locked for ${lockdownTime} minute${
+            lockdownTime > 1 ? 's.' : '.'
+          }`,
           shouldLockApp: true,
         })
       }
