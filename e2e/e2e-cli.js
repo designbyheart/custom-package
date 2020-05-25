@@ -13,7 +13,8 @@ const shell = require('shelljs')
 const readFile = promisify(fs.readFile)
 const readDir = promisify(fs.readdir)
 // this is the path relative to package.json
-const testsDirectory = 'e2e/__tests__'
+// const testsDirectory = 'e2e/__tests__' // removed due to `-d` parameter
+let testsDirectory
 
 const detoxConfig = require('../package.json').detox.configurations
 
@@ -41,6 +42,12 @@ const args = yargs
     alias: 'testToRun',
     describe: 'which test to run',
     string: true,
+  })
+  .option('d', {
+    alias: 'draft',
+    describe: 'run tests from __draft__ folder',
+    default: false,
+    boolean: true,
   })
   .option('e', {
     alias: 'environment',
@@ -79,6 +86,7 @@ const args = yargs
   )
   .help().argv
 ;(async function(done) {
+  testsDirectory = args.draft ? 'e2e/__draft__' : 'e2e/__tests__'
   await runBuildIfNeeded(args)
   const exitCode = await runTests(args)
   console.log('Result exit code: ' + exitCode)
@@ -171,7 +179,7 @@ async function runTests(args) {
     if (!args.skip) {
       const initialTestRun = spawn(
         'detox',
-        [...initialTestArgs, `${testsDirectory}/initial.spec.js`],
+        [...initialTestArgs, 'e2e/__tests__/initial.spec.js'], // path to initila test is absolute - we must use it for any test folder
         { stdio: 'inherit' }
       )
       // wait for initial test run to finish

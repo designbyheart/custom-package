@@ -17,7 +17,7 @@ let token = ''
 let agencyBaseUrl = 'https://agency.pqa.evernym.com'
 
 describe('Dummy test suite', () => {
-  it.skip('Case 1: VerityUI connection', async () => {
+  it('Case 1: VerityUI connection', async () => {
     async function connectVerity() {
       let res = await post(
         `${verityBaseUrl}/connections`,
@@ -46,7 +46,7 @@ describe('Dummy test suite', () => {
     await new Promise(r => setTimeout(r, 30000)) // wait before fetching latest message
   })
 
-  it.skip('Case 2: Mail connection', async () => {
+  it('Case 2: Mail connection', async () => {
     const inboxConfig = {
       imap: {
         user: 'number.2018@yahoo.com',
@@ -97,7 +97,7 @@ describe('Dummy test suite', () => {
     console.log(token)
   })
 
-  it.skip('Case 3: Agency connection', async () => {
+  it('Case 3: Agency connection', async () => {
     async function connectAgency() {
       const fetchingInvitation = await get(
         `${agencyBaseUrl}/agency/url-mapper/${token}`

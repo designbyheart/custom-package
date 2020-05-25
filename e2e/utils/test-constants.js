@@ -107,6 +107,7 @@ export const SWITCH_ENVIRONMENT_SAVE_BUTTON = 'switch-environment-footer-accept'
 export const SCREENSHOT_HOME = 'home.jpg'
 
 // menu
-export const MENU_HOME = 'Home 0'
+export const MENU_CONTAINER = 'menu-container'
+export const MENU_HOME = 'Home'
 export const MENU_MY_CONNECTIONS = 'My Connections'
 export const MENU_SETTINGS = 'Settings'
