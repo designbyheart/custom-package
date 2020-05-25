@@ -9,7 +9,7 @@ import { color } from '../../common/styles/constant'
 
 const keyboard = Platform.OS === 'ios' ? 'number-pad' : 'numeric'
 
-const isDigit = text => {
+const isDigit = (text) => {
   if (isNaN(parseInt(text))) {
     return false
   }
@@ -44,7 +44,7 @@ export default class PinCodeBox extends PureComponent<
     )
   }
 
-  componentWillUnMount = () => {
+  componentWillUnmount = () => {
     this.keyboardDidHideListener && this.keyboardDidHideListener.remove()
   }
 
@@ -117,6 +117,7 @@ export default class PinCodeBox extends PureComponent<
         </CustomView>
         {this.customKeyboard()}
         <TextInput
+          editable={!this.props.disableKeyboard}
           autoCorrect={false}
           autoFocus={true}
           blurOnSubmit={false}
@@ -125,7 +126,7 @@ export default class PinCodeBox extends PureComponent<
           keyboardAppearance="dark"
           maxLength={this.maxLength}
           onChangeText={this.onPinChange}
-          ref={inputBox => {
+          ref={(inputBox) => {
             this.inputBox = inputBox
           }}
           style={styles.input}

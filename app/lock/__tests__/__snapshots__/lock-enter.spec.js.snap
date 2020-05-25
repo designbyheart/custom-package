@@ -98,6 +98,28 @@ exports[`<LockEnter /> should match snapshot 1`] = `
       }
     >
       <View
+        center={true}
+        style={
+          Object {
+            "alignItems": "center",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#CE0B24",
+              "fontFamily": "Lato",
+              "fontSize": 17,
+              "fontWeight": "500",
+            }
+          }
+        >
+          1 failed attempt.
+        </Text>
+      </View>
+      <View
         style={Object {}}
       >
         <View
@@ -316,6 +338,7 @@ exports[`<LockEnter /> should match snapshot 1`] = `
           autoCorrect={false}
           autoFocus={true}
           blurOnSubmit={false}
+          editable={true}
           enablesReturnKeyAutomatically={false}
           keyboardAppearance="dark"
           keyboardType="number-pad"
@@ -734,6 +757,7 @@ exports[`<LockEnter /> should match snapshot for recovery flow 1`] = `
           autoCorrect={false}
           autoFocus={true}
           blurOnSubmit={false}
+          editable={true}
           enablesReturnKeyAutomatically={false}
           keyboardAppearance="dark"
           keyboardType="number-pad"

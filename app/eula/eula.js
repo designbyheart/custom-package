@@ -21,7 +21,7 @@ import {
   FooterActions,
   CustomHeader,
 } from '../components'
-import { eulaRoute, restoreRoute } from '../common'
+import { eulaRoute, restoreRoute, lockSelectionRoute } from '../common'
 import { eulaAccept } from './eula-store'
 import { EULA_URL, localEulaSource } from './type-eula'
 import { color } from '../common/styles/constant'
@@ -63,7 +63,8 @@ export class EulaScreen extends Component<*, EulaScreenState> {
 
   onAccept = () => {
     this.props.eulaAccept(true)
-    this.props.navigation.navigate(restoreRoute)
+    // if we have to enable choice for restore and start fresh screen, then redirect user to restoreRoute instead of lockSelectionRoute
+    this.props.navigation.navigate(lockSelectionRoute)
   }
 
   render() {

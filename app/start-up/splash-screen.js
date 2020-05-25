@@ -231,7 +231,9 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
         if (!this.props.eula.isEulaAccept) {
           this.props.navigation.navigate(eulaRoute)
         } else {
-          this.props.navigation.navigate(restoreRoute)
+          // if we need to enable choice of restore or start fresh, then un-comment below line and remove line after commented line
+          // this.props.navigation.navigate(restoreRoute)
+          this.props.navigation.navigate(lockSelectionRoute)
         }
       } else {
         // not the first time user is opening app

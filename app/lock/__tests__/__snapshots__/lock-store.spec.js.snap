@@ -7,12 +7,17 @@ Object {
   "isAppLocked": true,
   "isLockEnabled": "false",
   "isTouchIdEnabled": false,
+  "lockdownTimeMessage": "App is locked for 1 minute.",
+  "numberOfAttemptsMessage": "1 failed attempt.",
+  "numberOfFailedPinAttempts": 1,
   "pendingRedirection": Array [
     Object {
       "routeName": "home",
     },
   ],
   "pendingRedirectionParams": Object {},
+  "recordedTimeOfPinFailedAttempt": "2018-01-10T04:32:43+05:30",
+  "shouldLockApp": false,
   "showDevMode": false,
 }
 `;
@@ -24,8 +29,13 @@ Object {
   "isAppLocked": true,
   "isLockEnabled": "false",
   "isTouchIdEnabled": false,
+  "lockdownTimeMessage": "App is locked for 1 minute.",
+  "numberOfAttemptsMessage": "1 failed attempt.",
+  "numberOfFailedPinAttempts": 1,
   "pendingRedirection": null,
   "pendingRedirectionParams": Object {},
+  "recordedTimeOfPinFailedAttempt": "2018-01-10T04:32:43+05:30",
+  "shouldLockApp": false,
   "showDevMode": false,
 }
 `;
@@ -37,8 +47,13 @@ Object {
   "isAppLocked": true,
   "isLockEnabled": "false",
   "isTouchIdEnabled": false,
+  "lockdownTimeMessage": "App is locked for 1 minute.",
+  "numberOfAttemptsMessage": "1 failed attempt.",
+  "numberOfFailedPinAttempts": undefined,
   "pendingRedirection": null,
   "pendingRedirectionParams": Object {},
+  "recordedTimeOfPinFailedAttempt": undefined,
+  "shouldLockApp": false,
   "showDevMode": false,
 }
 `;
@@ -50,8 +65,13 @@ Object {
   "isAppLocked": true,
   "isLockEnabled": "false",
   "isTouchIdEnabled": false,
+  "lockdownTimeMessage": "App is locked for 1 minute.",
+  "numberOfAttemptsMessage": "1 failed attempt.",
+  "numberOfFailedPinAttempts": undefined,
   "pendingRedirection": null,
   "pendingRedirectionParams": Object {},
+  "recordedTimeOfPinFailedAttempt": undefined,
+  "shouldLockApp": false,
   "showDevMode": false,
 }
 `;

@@ -1,11 +1,14 @@
 // @flow
 import React, { Component } from 'react'
+import moment from 'moment'
 import {
   InteractionManager,
   StyleSheet,
   Platform,
   Dimensions,
   Image,
+  Text,
+  View,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -31,7 +34,11 @@ import type {
   CheckPinStatus,
   LockEnterProps,
 } from './type-lock'
-import { checkPinAction, checkPinStatusIdle } from './lock-store'
+import {
+  checkPinAction,
+  checkPinStatusIdle,
+  putPinFailData,
+} from './lock-store'
 import { switchErrorAlerts } from '../store/config-store'
 import type { Store } from '../store/type-store'
 import { ENTER_YOUR_PASS_CODE_MESSAGE } from '../common/message-constants'
@@ -41,6 +48,7 @@ import {
   isBiggerThanShortDevice,
   grey,
   matterhornSecondary,
+  cmRed,
 } from '../common/styles/constant'
 
 const lockImage = require('../images/lockCombo.png')
@@ -76,10 +84,14 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
   }
 
   onPinComplete = (pin: string) => {
-    this.props.checkPinAction(pin)
+    this.props.checkPinAction(pin, this.props.isAppLocked)
   }
 
   componentWillReceiveProps(nextProps: LockEnterProps) {
+    if (this.props.shouldLockApp !== nextProps.shouldLockApp) {
+      this.props.putPinFailData()
+    }
+
     if (this.props.checkPinStatus !== nextProps.checkPinStatus) {
       if (nextProps.checkPinStatus === CHECK_PIN_SUCCESS) {
         this.pinCodeBox && this.pinCodeBox.hideKeyboard()
@@ -93,9 +105,36 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
   }
 
   componentDidMount() {
+    this.props.putPinFailData()
     if (this.props.checkPinStatus === CHECK_PIN_SUCCESS) {
       this.clearFailStatus()
     }
+  }
+
+  renderFailMessages = () => {
+    if (this.props.shouldLockApp && this.props.lockdownTimeMessage) {
+      return (
+        <CustomView center>
+          <Text style={stylesRecovery.failedAttemptsText}>
+            {this.props.numberOfAttemptsMessage}
+          </Text>
+          <Text style={stylesRecovery.failedAttemptsText}>
+            {this.props.lockdownTimeMessage}
+          </Text>
+        </CustomView>
+      )
+    } else if (
+      !this.props.shouldLockApp &&
+      this.props.numberOfAttemptsMessage
+    ) {
+      return (
+        <CustomView center>
+          <Text style={stylesRecovery.failedAttemptsText}>
+            {this.props.numberOfAttemptsMessage}
+          </Text>
+        </CustomView>
+      )
+    } else return null
   }
 
   render() {
@@ -149,7 +188,7 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
             </CustomView>
             <CustomView center>
               <PinCodeBox
-                ref={pinCodeBox => {
+                ref={(pinCodeBox) => {
                   this.pinCodeBox = pinCodeBox
                 }}
                 onPinComplete={this.onPinComplete}
@@ -182,12 +221,14 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
               {checkPinStatus === CHECK_PIN_FAIL && WrongPinText}
             </CustomView>
             <CustomView center>
+              {this.renderFailMessages()}
               <PinCodeBox
-                ref={pinCodeBox => {
+                ref={(pinCodeBox) => {
                   this.pinCodeBox = pinCodeBox
                 }}
                 onPinComplete={this.onPinComplete}
                 enableCustomKeyboard={this.props.enableCustomKeyboard}
+                disableKeyboard={this.props.shouldLockApp}
               />
             </CustomView>
           </Container>
@@ -198,6 +239,12 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
 }
 
 const stylesRecovery = StyleSheet.create({
+  failedAttemptsText: {
+    color: cmRed,
+    fontSize: 17,
+    fontWeight: '500',
+    fontFamily: 'Lato',
+  },
   backgroundImg: {
     position: 'absolute',
     transform: [{ rotate: '-180deg' }],
@@ -251,15 +298,20 @@ const stylesRecovery = StyleSheet.create({
 })
 
 const mapStateToProps = (state: Store) => ({
+  isAppLocked: state.lock.isAppLocked,
   checkPinStatus: state.lock.checkPinStatus,
+  shouldLockApp: state.lock.shouldLockApp,
+  numberOfAttemptsMessage: state.lock.numberOfAttemptsMessage,
+  lockdownTimeMessage: state.lock.lockdownTimeMessage,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       checkPinAction,
       checkPinStatusIdle,
       switchErrorAlerts,
+      putPinFailData,
     },
     dispatch
   )

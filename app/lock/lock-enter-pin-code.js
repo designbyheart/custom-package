@@ -142,7 +142,7 @@ export class LockEnterPin extends PureComponent<
     //This will set isAppLocked to false
     props.unlockApp()
     if (props.pendingRedirection) {
-      props.pendingRedirection.map(pendingRedirection => {
+      props.pendingRedirection.map((pendingRedirection) => {
         props.navigation.navigate(
           pendingRedirection.routeName,
           pendingRedirection.params || {}
@@ -207,19 +207,21 @@ export class LockEnterPin extends PureComponent<
 const mapStateToProps = (state: Store, { navigation }: ReactNavigation) => ({
   pendingRedirection: state.lock.pendingRedirection,
   isFetchingInvitation: Object.keys(state.smsPendingInvitation).some(
-    smsToken =>
+    (smsToken) =>
       state.smsPendingInvitation[smsToken] &&
       state.smsPendingInvitation[smsToken].isFetching === true
   ),
   existingPin: navigation.state
-    ? navigation.state.params ? navigation.state.params.existingPin : false
+    ? navigation.state.params
+      ? navigation.state.params.existingPin
+      : false
     : false,
   isAppLocked: state.lock.isAppLocked,
   inRecovery: state.lock.inRecovery,
   currentScreen: state.route.currentScreen,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       clearPendingRedirect,

@@ -35,6 +35,15 @@ export const PIN_ENABLED_KEY = 'APP_PIN_LOCK_ENABLED'
 export const IN_RECOVERY = 'IN_RECOVERY'
 export const IN_CLOUD_RECOVERY = 'IN_CLOUD_RECOVERY'
 
+export const NUMBER_OF_FAILED_PIN_ATTEMPTS = 'NUMBER_OF_FAILED_PIN_ATTEMPTS'
+export const RECORDED_TIME_OF_PIN_FAILED_ATTEMPT =
+  'RECORDED_TIME_OF_PIN_FAILED_ATTEMPT'
+export const PUT_PIN_FAIL_DATA_SUCCESS = 'PUT_PIN_FAIL_DATA_SUCCESS'
+export const PUT_PIN_FAIL_DATA = 'PUT_PIN_FAIL_DATA'
+export type PutPinFailDataAction = {
+  type: typeof PUT_PIN_FAIL_DATA,
+}
+
 export type InRecovery = {
   type: typeof IN_RECOVERY,
   inRecovery: string,
@@ -77,6 +86,7 @@ export const CHECK_PIN = 'CHECK_PIN'
 export type CheckPinAction = {
   type: typeof CHECK_PIN,
   pin: string,
+  isAppLocked: boolean,
 }
 
 export const CHECK_PIN_SUCCESS = 'CHECK_PIN_SUCCESS'
@@ -87,6 +97,8 @@ export type CheckPinSuccessAction = {
 export const CHECK_PIN_FAIL = 'CHECK_PIN_FAIL'
 export type CheckPinFailAction = {
   type: typeof CHECK_PIN_FAIL,
+  numberOfFailedPinAttempts?: number,
+  recordedTimeOfPinFailedAttempt?: string,
 }
 
 export const CHECK_PIN_IDLE = 'CHECK_PIN_IDLE'
@@ -135,6 +147,11 @@ export type LockStore = {
   inRecovery: string,
   biometricsAvaliable?: string,
   pendingRedirectionParams?: {},
+  numberOfFailedPinAttempts: number,
+  recordedTimeOfPinFailedAttempt: string,
+  shouldLockApp: boolean,
+  numberOfAttemptsMessage: string,
+  lockdownTimeMessage: string,
 }
 
 export type LockSelectionProps = {
@@ -225,7 +242,9 @@ export type DisableDevMode = {
 }
 
 export type LockEnterProps = {
-  checkPinAction: (pin: string) => void,
+  isAppLocked: boolean,
+  putPinFailData: () => void,
+  checkPinAction: (pin: string, isAppLocked: boolean) => void,
   checkPinStatusIdle: () => void,
   switchErrorAlerts: () => void,
   onSuccess: () => void,
@@ -234,6 +253,9 @@ export type LockEnterProps = {
   fromRecovery: boolean,
   setupNewPassCode?: () => void,
   enableCustomKeyboard?: boolean,
+  shouldLockApp: boolean,
+  numberOfAttemptsMessage: string,
+  lockdownTimeMessage: string,
 }
 
 export type LockAuthorizationNavigation = {

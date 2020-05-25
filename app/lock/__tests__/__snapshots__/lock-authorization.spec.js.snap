@@ -316,6 +316,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
           autoCorrect={false}
           autoFocus={true}
           blurOnSubmit={false}
+          editable={true}
           enablesReturnKeyAutomatically={false}
           keyboardAppearance="dark"
           keyboardType="number-pad"
