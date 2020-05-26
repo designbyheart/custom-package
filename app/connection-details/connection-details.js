@@ -38,7 +38,11 @@ import { CONNECTION_ALREADY_EXIST } from './type-connection-details'
 import { getConnection, getConnectionTheme } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { isIphoneX, isIphoneXR, cmRed } from '../common/styles/constant'
-import { DENY_PROOF_REQUEST_SUCCESS } from '../proof-request/type-proof-request'
+import {
+  DENY_PROOF_REQUEST_SUCCESS,
+  DENY_PROOF_REQUEST,
+  DENY_PROOF_REQUEST_FAIL,
+} from '../proof-request/type-proof-request'
 import { proofRequestRoute, claimOfferRoute, questionRoute } from '../common'
 import { MESSAGE_TYPE } from '../api/api-constants'
 import {
@@ -300,6 +304,33 @@ class ConnectionDetails extends Component<
           requestStatus={'YOU DENIED'}
           requestAction={'"' + item.name + '"'}
           navigation={this.props.navigation}
+        />
+      )
+    } else if (item.action === DENY_PROOF_REQUEST) {
+      return (
+        <ConnectionPending
+          date={formattedTime}
+          title={item.name}
+          content={'DENYING - PLEASE WAIT'}
+        />
+      )
+    } else if (item.action === DENY_PROOF_REQUEST_FAIL) {
+      return (
+        <ConnectionCard
+          messageDate={formattedTime}
+          headerText={item.name}
+          infoType={'FAILED TO DENY'}
+          infoDate={formattedDate}
+          buttonText={'RETRY'}
+          showBadge={false}
+          colorBackground={cmRed}
+          navigation={this.props.navigation}
+          received={true}
+          data={item}
+          imageUrl={this.props.navigation.state.params.image}
+          institutialName={this.props.navigation.state.params.senderName}
+          colorBackground={cmRed}
+          secondColorBackground={cmRed}
         />
       )
     }

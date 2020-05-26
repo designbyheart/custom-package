@@ -359,6 +359,7 @@ export type DenyProofRequestAction = {
 export const DENY_PROOF_REQUEST_FAIL = 'DENY_PROOF_REQUEST_FAIL'
 export type DenyProofRequestFailAction = {
   type: typeof DENY_PROOF_REQUEST_FAIL,
+  uid: string,
 }
 
 export const DENY_PROOF_REQUEST_SUCCESS: 'DENY_PROOF_REQUEST_SUCCESS' =

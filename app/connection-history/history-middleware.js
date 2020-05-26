@@ -14,6 +14,8 @@ import {
   PROOF_REQUEST_RECEIVED,
   SEND_PROOF_SUCCESS,
   DENY_PROOF_REQUEST_SUCCESS,
+  DENY_PROOF_REQUEST,
+  DENY_PROOF_REQUEST_FAIL,
 } from '../proof-request/type-proof-request'
 import { RECORD_HISTORY_EVENT } from './type-connection-history'
 import { historyEventOccurred } from './connection-history-store'
@@ -38,6 +40,8 @@ const actionToRecord = [
   SEND_PROOF_SUCCESS,
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
+  DENY_PROOF_REQUEST,
+  DENY_PROOF_REQUEST_FAIL,
   DENY_PROOF_REQUEST_SUCCESS,
   CLAIM_OFFER_ACCEPTED,
   SEND_CLAIM_REQUEST_FAIL,
