@@ -6,9 +6,9 @@ source 'git@gitlab.corp.evernym.com:dev/vcx/indy-sdk.git'
 
 def vcx_version_for_debug_or_release
     if ENV['CONNECTME_DEBUG'] == "true"
-        '0.0.158'
+        '0.0.160'
     else
-        '0.0.157'
+        '0.0.159'
     end
 end
 

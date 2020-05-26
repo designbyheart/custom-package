@@ -79,6 +79,8 @@ import type {
   ProofRequestPayload,
   DenyProofRequestSuccessAction,
   SelfAttestedAttributes,
+  DenyProofRequestAction,
+  DenyProofRequestFailAction,
 } from '../proof-request/type-proof-request'
 import type {
   QuestionReceivedAction,
@@ -457,15 +459,18 @@ export function convertProofSendToHistoryEvent(
 }
 
 export function convertProofDenyToHistoryEvent(
-  action: DenyProofRequestSuccessAction,
+  action:
+    | DenyProofRequestSuccessAction
+    | DenyProofRequestAction
+    | DenyProofRequestFailAction,
   proofRequest: ProofRequestPayload
 ): ConnectionHistoryEvent {
   return {
-    action: HISTORY_EVENT_STATUS[DENY_PROOF_REQUEST_SUCCESS],
+    action: HISTORY_EVENT_STATUS[action.type],
     data: proofRequest,
     id: uuid(),
     name: proofRequest.data.name,
-    status: HISTORY_EVENT_STATUS[DENY_PROOF_REQUEST_SUCCESS],
+    status: HISTORY_EVENT_STATUS[action.type],
     timestamp: moment().format(),
     type: HISTORY_EVENT_TYPE.PROOF,
     remoteDid: proofRequest.remotePairwiseDID,
@@ -736,11 +741,40 @@ export function* historyEventOccurredSaga(
     }
 
     if (event.type === DENY_PROOF_REQUEST) {
-      // TODO:KS Handle case where we need to show loader when user denies proof request
+      const proofRequest: ProofRequestPayload = yield select(
+        getProofRequest,
+        event.uid
+      )
+      historyEvent = convertProofDenyToHistoryEvent(event, proofRequest)
+      const proofRequestReceivedEvent = yield select(
+        getHistoryEvent,
+        event.uid,
+        historyEvent.remoteDid,
+        PROOF_REQUEST_RECEIVED
+      )
+      const proofDenyFailedEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        historyEvent.remoteDid,
+        DENY_PROOF_REQUEST_FAIL
+      )
+      const oldHistoryEvent = proofRequestReceivedEvent || proofDenyFailedEvent
+      if (oldHistoryEvent) yield put(deleteHistoryEvent(oldHistoryEvent))
     }
 
     if (event.type === DENY_PROOF_REQUEST_FAIL) {
-      // TODO:KS Handle case where we need to show loader when user denies proof request
+      const proofRequest: ProofRequestPayload = yield select(
+        getProofRequest,
+        event.uid
+      )
+      historyEvent = convertProofDenyToHistoryEvent(event, proofRequest)
+      const oldHistoryEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        historyEvent.remoteDid,
+        DENY_PROOF_REQUEST
+      )
+      if (oldHistoryEvent) yield put(deleteHistoryEvent(oldHistoryEvent))
     }
 
     if (event.type === DENY_PROOF_REQUEST_SUCCESS) {
@@ -750,10 +784,10 @@ export function* historyEventOccurredSaga(
       )
       historyEvent = convertProofDenyToHistoryEvent(event, proofRequest)
       const oldHistoryEvent = yield select(
-        getHistoryEvent,
+        getPendingHistory,
         event.uid,
         historyEvent.remoteDid,
-        PROOF_REQUEST_RECEIVED
+        DENY_PROOF_REQUEST
       )
       if (oldHistoryEvent) yield put(deleteHistoryEvent(oldHistoryEvent))
     }

@@ -30,10 +30,15 @@ import { reTrySendProof } from '../../proof/proof-store'
 import { ERROR_SEND_PROOF } from '../../proof/type-proof'
 import { reTryActions } from '../../home/recent-card/recent-card'
 import { deleteHistoryEvent } from '../../connection-history/connection-history-store'
+import { DENY_PROOF_REQUEST_FAIL } from '../../proof-request/type-proof-request'
+import { denyProofRequest } from '../../proof-request/proof-request-store'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
 class ConnectionCardComponent extends PureComponent<
-  any & { deleteHistoryEvent: typeof deleteHistoryEvent },
+  any & {
+    deleteHistoryEvent: typeof deleteHistoryEvent,
+    denyProofRequest: typeof denyProofRequest,
+  },
   {}
 > {
   updateAndShowModal = () => {
@@ -54,6 +59,11 @@ class ConnectionCardComponent extends PureComponent<
         event.originalPayload.selfAttestedAttributes,
         event.originalPayload
       )
+      return
+    }
+
+    if (event.action === DENY_PROOF_REQUEST_FAIL) {
+      this.props.denyProofRequest(event.originalPayload.uid)
       return
     }
 
@@ -116,12 +126,14 @@ class ConnectionCardComponent extends PureComponent<
             </View>
             <Border borderColor={'#eaeaea'} />
             <View style={styles.bottom}>
-              <View style={styles.attributesWrapper}>
-                <Text style={styles.attributesText}>
-                  {this.props.noOfAttributes}
-                </Text>
-                <Text style={styles.attributesText}> Attributes</Text>
-              </View>
+              {!!this.props.noOfAttributes && (
+                <View style={styles.attributesWrapper}>
+                  <Text style={styles.attributesText}>
+                    {this.props.noOfAttributes}
+                  </Text>
+                  <Text style={styles.attributesText}> Attributes</Text>
+                </View>
+              )}
               <View style={styles.button}>
                 <TouchableOpacity onPress={this.updateAndShowModal}>
                   <Text
@@ -165,6 +177,7 @@ const mapDispatchToProps = dispatch =>
       acceptClaimOffer,
       reTrySendProof,
       deleteHistoryEvent,
+      denyProofRequest,
     },
     dispatch
   )

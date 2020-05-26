@@ -61,6 +61,7 @@ import {
   getHandleBySerializedConnection,
   proofSerialize,
   proofReject,
+  proofDeserialize,
 } from '../bridge/react-native-cxs/RNCxs'
 import type { Connection } from '../store/type-connection-store'
 import type { UserOneTimeInfo } from '../store/user/type-user-store'
@@ -378,11 +379,24 @@ function* denyProofRequestSaga(
         connection.vcxSerializedConnection
       )
       try {
-        yield call(proofReject, proofHandle, connectionHandle)
+        try {
+          yield call(proofReject, proofHandle, connectionHandle)
+        } catch (e) {
+          // user can kill app or memory might have re-assigned
+          // get proof handle again, if previous one gets error
+          const newProofHandle = yield call(
+            proofDeserialize,
+            proofRequestPayload.vcxSerializedProofRequest || ''
+          )
+          // update proof handle in store, because it would be used by proof-request store
+          yield put(updateProofHandle(newProofHandle, uid))
+          yield call(proofReject, newProofHandle, connectionHandle)
+        }
         yield put(denyProofRequestSuccess(uid))
       } catch (e) {
         yield put({
           type: DENY_PROOF_REQUEST_FAIL,
+          uid,
         })
         customLogger.log(
           'error calling vcx deny API while denying proof request.'
@@ -391,6 +405,7 @@ function* denyProofRequestSaga(
     } catch (e) {
       yield put({
         type: DENY_PROOF_REQUEST_FAIL,
+        uid,
       })
       customLogger.log(
         'connection handle not found while denying proof request.'
@@ -399,6 +414,7 @@ function* denyProofRequestSaga(
   } catch (e) {
     yield put({
       type: DENY_PROOF_REQUEST_FAIL,
+      uid: action.uid,
     })
     customLogger.log('something went wrong trying to deny proof request.')
   }

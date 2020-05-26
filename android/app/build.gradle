@@ -270,7 +270,7 @@ dependencies {
     // android custom logging ENABLED -- 0.4.53980513-bd81815
     // android custom logging DISABLED -- 0.4.54375765-111929a
     // current libvcx aar
-    implementation 'com.evernym:vcx:0.8.73265346-4ed63ac@aar'
+    implementation 'com.evernym:vcx:0.8.74666888-1a9098f@aar'
     implementation 'net.sourceforge.streamsupport:android-retrofuture:1.6.2'
     implementation 'net.sourceforge.streamsupport:android-retrostreams:1.6.2'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.59'
