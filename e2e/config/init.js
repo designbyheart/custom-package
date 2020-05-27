@@ -26,6 +26,6 @@ afterEach(async () => {
 })
 
 afterAll(async () => {
-  await device.terminateApp()
+  // await device.terminateApp()
   await detox.cleanup()
 })

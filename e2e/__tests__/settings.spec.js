@@ -50,8 +50,8 @@ describe('Settings screen', () => {
   it('Case 2: check all available buttons', async () => {
     await element(by.text(SCAN_BUTTON)).tap()
     await element(by.id(QR_CODE_SCANNER_CLOSE_BUTTON)).tap()
-    await element(by.text(SETTINGS_CREATE_BACKUP)).tap()
-    await element(by.id(BACKUP_CLOSE)).tap()
+    // await element(by.text(SETTINGS_CREATE_BACKUP)).tap()
+    // await element(by.id(BACKUP_CLOSE)).tap()
     await element(by.text(SETTINGS_BIOMETRICS)).tap()
     await element(by.text(BIOMETRICS_OK)).tap()
     await element(by.text(SETTINGS_PASSCODE)).tap()

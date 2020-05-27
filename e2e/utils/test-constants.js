@@ -20,6 +20,7 @@ export const NATIVE_ALERT_OK_MATCHER = () =>
     ? by.label(OK_TEXT_ALERT).and(by.type(NATIVE_ALERT_TYPE()))
     : by.text(OK_TEXT_ALERT).and(by.type(NATIVE_ALERT_TYPE()))
 export const TEST_PASS_CODE = '000000'
+export const TEST_PASS_CODE_CHANGED = '111111'
 export const USER_AVATAR = 'user-avatar'
 export const BACK_ARROW = 'back-arrow-touchable'
 export const BURGER_MENU = 'burger-menu'
