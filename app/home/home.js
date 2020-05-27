@@ -144,6 +144,10 @@ export class HomeScreen extends Component<HomeProps, void> {
       statusMessage = `${action}.`
     else if (status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST_SUCCESS)
       statusMessage = `You denied "${action}".`
+    else if (status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST)
+      statusMessage = `Denying "${action}"`
+    else if (status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST_FAIL)
+      statusMessage = `Failed to deny "${action}"`
     else if (
       status === HISTORY_EVENT_STATUS.SEND_CLAIM_REQUEST_SUCCESS ||
       status === HISTORY_EVENT_STATUS.CLAIM_OFFER_ACCEPTED

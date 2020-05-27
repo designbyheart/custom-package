@@ -38,6 +38,11 @@ import { reTrySendProof } from '../../proof/proof-store'
 import { deleteHistoryEvent } from '../../connection-history/connection-history-store'
 import { scale } from 'react-native-size-matters'
 import { safeGet, safeSet } from '../../services/storage'
+import {
+  DENY_PROOF_REQUEST_FAIL,
+  DENY_PROOF_REQUEST,
+} from '../../proof-request/type-proof-request'
+import { denyProofRequest } from '../../proof-request/proof-request-store'
 
 class RecentCardComponent extends React.Component<RecentCardProps, void> {
   render() {
@@ -184,13 +189,19 @@ export const reTryActions = [
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
   ERROR_SEND_PROOF,
+  DENY_PROOF_REQUEST_FAIL,
 ]
 
 function getRetryStatus(event: *): boolean {
   return reTryActions.includes(event.action)
 }
 
-const loadingActions = ['PENDING', CLAIM_OFFER_ACCEPTED, UPDATE_ATTRIBUTE_CLAIM]
+const loadingActions = [
+  'PENDING',
+  CLAIM_OFFER_ACCEPTED,
+  UPDATE_ATTRIBUTE_CLAIM,
+  DENY_PROOF_REQUEST,
+]
 function getLoadingStatus(status: string) {
   return loadingActions.includes(status)
 }
@@ -200,6 +211,7 @@ function getRetryFunction({
   item: event,
   acceptClaimOffer,
   reTrySendProof,
+  denyProofRequest,
 }: *): () => void {
   if (
     event.action === SEND_CLAIM_REQUEST_FAIL ||
@@ -222,7 +234,11 @@ function getRetryFunction({
     }
   }
 
-  // TODO:KS Add handle for DENY_PROOF_REQUEST_FAIL
+  if (event.action === DENY_PROOF_REQUEST_FAIL) {
+    return () => {
+      denyProofRequest(event.originalPayload.uid)
+    }
+  }
 
   return () => {}
 }
@@ -233,6 +249,7 @@ const mapDispatchToProps = dispatch =>
       acceptClaimOffer,
       reTrySendProof,
       deleteHistoryEvent,
+      denyProofRequest,
     },
     dispatch
   )

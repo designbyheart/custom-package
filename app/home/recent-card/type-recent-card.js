@@ -3,6 +3,7 @@ import type { ConnectionHistoryEvent } from '../../connection-history/type-conne
 import { acceptClaimOffer } from '../../claim-offer/claim-offer-store'
 import { reTrySendProof } from '../../proof/proof-store'
 import { deleteHistoryEvent } from '../../connection-history/connection-history-store'
+import { denyProofRequest } from '../../proof-request/proof-request-store'
 
 export type RecentCardProps = {
   timestamp: string,
@@ -14,4 +15,5 @@ export type RecentCardProps = {
   acceptClaimOffer: typeof acceptClaimOffer,
   reTrySendProof: typeof reTrySendProof,
   deleteHistoryEvent: typeof deleteHistoryEvent,
+  denyProofRequest: typeof denyProofRequest,
 }

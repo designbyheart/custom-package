@@ -30,5 +30,6 @@
     "statusBar.border": "#68217a",
     "titleBar.border": "#68217a"
   },
-  "peacock.color": "#68217A"
+  "peacock.color": "#68217A",
+  "java.configuration.updateBuildConfiguration": "disabled"
 }
