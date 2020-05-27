@@ -66,7 +66,7 @@ const args = yargs
       'devteam3',
       'devrc',
     ],
-    default: ['qatest1'],
+    default: ['qa'],
   })
   .option('k', {
     alias: 'skip',
