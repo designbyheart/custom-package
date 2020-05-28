@@ -90,6 +90,10 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
   componentWillReceiveProps(nextProps: LockEnterProps) {
     if (this.props.shouldLockApp !== nextProps.shouldLockApp) {
       this.props.putPinFailData()
+
+      if (!this.props.shouldLockApp) {
+        this.pinCodeBox && this.pinCodeBox.showKeyboard()
+      }
     }
 
     if (this.props.checkPinStatus !== nextProps.checkPinStatus) {
@@ -221,7 +225,7 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
               {checkPinStatus === CHECK_PIN_FAIL && WrongPinText}
             </CustomView>
             <CustomView center>
-              {this.renderFailMessages()}
+              {this.props.isAppLocked && this.renderFailMessages()}
               <PinCodeBox
                 ref={(pinCodeBox) => {
                   this.pinCodeBox = pinCodeBox
