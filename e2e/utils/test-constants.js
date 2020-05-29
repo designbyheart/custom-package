@@ -89,12 +89,8 @@ export const BIOMETRICS_OK = 'Ok'
 export const SETTINGS_PASSCODE = 'Passcode'
 export const PASSCODE_BACK_ARROW = 'back-arrow'
 export const SETTINGS_CHAT = 'Chat With Us'
-export const CHAT_CANCEL = 'Cancel'
-export const CHAT_CLOSE = 'Close'
 export const SETTINGS_ABOUT = 'About'
-export const ABOUT_BACK_ARROW = 'back-arrow-touchable'
 export const SETTINGS_ONFIDO = 'ONFIDO'
-export const ONFIDO_BACK_ARROW = 'header-back'
 
 // switch environment screen
 export const SWITCH_ENVIRONMENT_DEV_BUTTON = 'switch-environment-dev'
@@ -112,3 +108,23 @@ export const MENU_CONTAINER = 'menu-container'
 export const MENU_HOME = 'Home'
 export const MENU_MY_CONNECTIONS = 'My Connections'
 export const MENU_SETTINGS = 'Settings'
+
+// chat
+export const CHAT_CANCEL = 'Cancel'
+export const CHAT_CLOSE = 'Close'
+export const CHAT_HEADER = 'Chat with Evernym'
+export const CHAT_NEW_MESSAGE = 'New Message'
+export const CHAT_TEXT_VIEW = 'UITextView'
+export const CHAT_SEND_BUTTON = 'Send'
+export const CHAT_SUCCESS_MESSAGE = 'We will respond to your message soon.'
+
+// about
+export const ABOUT_BACK_ARROW = 'back-arrow-touchable'
+export const ABOUT_HEADER = 'About this App'
+export const ABOUT_TAC_BUTTON_HEADER = 'Terms and Conditions'
+export const ABOUT_PP_BUTTON_HEADER = 'Privacy Policy'
+
+// onfido
+export const ONFIDO_BACK_ARROW = 'header-back'
+export const ONFIDO_CUSTOM_BACK_ARROW = 'back'
+export const ONFIDO_ACCEPT_BUTTON = 'I accept'

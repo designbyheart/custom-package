@@ -57,7 +57,11 @@ describe('Settings screen', () => {
     await element(by.text(SETTINGS_PASSCODE)).tap()
     await element(by.id(PASSCODE_BACK_ARROW)).tap()
     await element(by.text(SETTINGS_CHAT)).tap()
-    await element(by.text(CHAT_CANCEL)).tap()
+    try {
+      await element(by.text(CHAT_CANCEL)).tap() // open first time
+    } catch (e) {
+      await element(by.text(CHAT_CLOSE)).tap()
+    }
     await element(by.text(SETTINGS_ABOUT)).tap()
     await element(by.id(ABOUT_BACK_ARROW)).tap()
     await element(by.text(SETTINGS_ONFIDO)).tap()
