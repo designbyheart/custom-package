@@ -15,10 +15,12 @@ beforeAll(async () => {
   })
   await storeBootedDeviceId()
   setDeviceType(device.getPlatform())
+
+  await unlock() // moved here to run before each `describe` only, not before each `it`
 })
 
 beforeEach(async () => {
-  await unlock()
+  // await unlock()
 })
 
 afterEach(async () => {
