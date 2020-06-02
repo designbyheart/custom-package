@@ -5,7 +5,7 @@ devicefarm-test-launch:
     - .build-android
     - devicefarm-buildtools
   rules:
-    - if: '${CI_PIPELINE_SOURCE} != "schedule"'
+    - if: '$CI_PIPELINE_SOURCE != "schedule"'
       when: never
   script:
     - mkdir ~/.aws

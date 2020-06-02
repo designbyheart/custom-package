@@ -57,5 +57,5 @@ devicefarm-buildtools:
     DOCKERFILE_PATH: ci/images/devicefarm.dockerfile
     DOCKER_IMAGE_NAME: devicefarm
   rules:
-    - if: '${CI_PIPELINE_SOURCE} != "schedule"'
+    - if: '$CI_PIPELINE_SOURCE != "schedule"'
       when: never
