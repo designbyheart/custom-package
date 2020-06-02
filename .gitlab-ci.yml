@@ -1,7 +1,14 @@
 ---
 stages:
+  - pre-build
   - test
   - build
+  - devicefarm-test
+
+### - Pre-build - ###
+include:
+  local: '/ci/prebuild.yml'
+
 
 ### - Test - ###
 
@@ -51,7 +58,7 @@ detox-ios-test:
       - e2e/screenshots
     expire_in: 1 week
 
-      ### - iOS - ###
+### - iOS - ###
 .build-ios:
   stage: build
   tags:
@@ -167,3 +174,7 @@ build-android-stable:
   only:
     refs:
       - stable@dev/connectme/ConnectMe
+
+### - Devicefarm-test - ###
+include:
+  local: "/ci/devicefarm-test.yml"

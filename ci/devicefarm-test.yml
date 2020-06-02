@@ -1,0 +1,16 @@
+devicefarm-test-launch:
+  stage: devicefarm-test
+  image: ${CI_REGISTRY_IMAGE}/devicefarm:latest
+  dependencies:
+    - .build-android
+    - devicefarm-buildtools
+  rules:
+    - if: ${CI_PIPELINE_SOURCE} != "schedule"
+      when: never
+  script:
+    - mkdir ~/.aws
+    - cp ${AWS_DEVICEFARM_CONFIG} ~/.aws/config
+    - cp ${AWS_DEVICEFARM_CREDENTIALS} ~/.aws/credentials
+    - cd e2e-automation
+    - mvn -Dmaven.test.skip=true package
+    - python script.py --test_file_path target/zip-with-dependencies.zip --app_file_path ../android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk
