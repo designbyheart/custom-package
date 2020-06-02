@@ -1,6 +1,6 @@
 ---
 stages:
-  - pre-build
+  - prebuild
   - test
   - build
   - devicefarm-test
@@ -53,9 +53,6 @@ detox-ios-test:
     - yarn pod:update
     - yarn pod:dev:install
     - yarn e2e -b release -e qa -s iphone7 -t home
-  only:
-    refs:
-      - @dev/connectme/ConnectMe
   artifacts:
     paths:
       - e2e/screenshots
