@@ -53,6 +53,9 @@ detox-ios-test:
     - yarn pod:update
     - yarn pod:dev:install
     - yarn e2e -b release -e qa -s iphone7 -t home
+  only:
+    refs:
+      - @dev/connectme/ConnectMe
   artifacts:
     paths:
       - e2e/screenshots
@@ -162,6 +165,7 @@ build-android-master:
   only:
     refs:
       - master@dev/connectme/ConnectMe
+      - test-appium@dev/connectme/ConnectMe
 
 build-android-stage:
   extends: .build-android
