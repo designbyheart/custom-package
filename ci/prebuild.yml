@@ -56,6 +56,10 @@ devicefarm-buildtools:
   variables:
     DOCKERFILE_PATH: ci/images/devicefarm.dockerfile
     DOCKER_IMAGE_NAME: devicefarm
+  only:
+    changes:
+      - ci/prebuild.yml
+      - ci/images/devicefarm.dockerfile
   # rules:
     # - if: '$CI_PIPELINE_SOURCE != "schedule"'
       # when: never
