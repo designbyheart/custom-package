@@ -3,7 +3,6 @@ devicefarm-test-launch:
   image: ${CI_REGISTRY_IMAGE}/devicefarm:latest
   dependencies:
     - build-android-master
-    - devicefarm-buildtools
   rules:
     - if: '$CI_PIPELINE_SOURCE != "schedule"'
       when: never
