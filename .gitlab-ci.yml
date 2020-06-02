@@ -6,6 +6,7 @@ stages:
   - devicefarm-test
 
 ### - Pre-build - ###
+
 include:
   local: '/ci/prebuild.yml'
 
