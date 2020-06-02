@@ -51,8 +51,8 @@
 # there is no `changes` on this job because it is ran only in scheduled pipeline. and there changes will always resolve to `true`
 # https://docs.gitlab.com/ee/ci/yaml/README.html#using-onlychanges-with-scheduled-pipelines
 devicefarm-buildtools:
-  extends: .kaniko_build
   stage: prebuild
+  extends: .kaniko_build
   variables:
     DOCKERFILE_PATH: ci/images/devicefarm.dockerfile
     DOCKER_IMAGE_NAME: devicefarm
