@@ -3,6 +3,9 @@ devicefarm-test-launch:
   image: ${CI_REGISTRY_IMAGE}/devicefarm:latest
   dependencies:
     - build-android-master
+  tags:
+    - docker-machine
+    - micro
   # rules:
   #   - if: '$CI_PIPELINE_SOURCE != "schedule"'
   #     when: never
