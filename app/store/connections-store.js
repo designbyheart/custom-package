@@ -66,6 +66,7 @@ import {
   NEW_CONNECTION_SUCCESS,
   saveNewConnectionSuccess,
 } from './new-connection-success'
+import { ensureVcxInitSuccess } from './route-store'
 
 const initialState: ConnectionStore = {
   data: {},
@@ -344,6 +345,11 @@ function* sendConnectionRedirectSaga(
   action: SendConnectionRedirectAction
 ): Generator<*, *, *> {
   try {
+    const vcxResult = yield* ensureVcxInitSuccess()
+    if (vcxResult && vcxResult.fail) {
+      throw new Error(vcxResult.fail.message)
+    }
+
     try {
       // get redirect connection handle
       const [connection]: Array<Connection> = yield select(
