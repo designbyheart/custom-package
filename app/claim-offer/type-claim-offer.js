@@ -82,6 +82,16 @@ export type ClaimOfferRejectedAction = {
   uid: string,
 }
 
+export const DENY_CLAIM_OFFER = 'DENY_CLAIM_OFFER'
+export type ClaimOfferDenyAction = {
+  type: typeof DENY_CLAIM_OFFER,
+  uid: string,
+}
+
+export const DENY_CLAIM_OFFER_SUCCESS = 'DENY_CLAIM_OFFER_SUCCESS'
+
+export const DENY_CLAIM_OFFER_FAIL = 'DENY_CLAIM_OFFER_FAIL'
+
 export const CLAIM_OFFER_IGNORED = 'CLAIM_OFFER_IGNORED'
 export type ClaimOfferIgnoredAction = {
   type: typeof CLAIM_OFFER_IGNORED,
@@ -322,7 +332,7 @@ export type ClaimOfferResponse = {
       typ: string,
       statusMsg: string,
       uid: string,
-    },
+    }
   ],
 }
 

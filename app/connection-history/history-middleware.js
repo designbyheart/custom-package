@@ -8,6 +8,9 @@ import {
   CLAIM_OFFER_ACCEPTED,
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
+  DENY_CLAIM_OFFER,
+  DENY_CLAIM_OFFER_FAIL,
+  DENY_CLAIM_OFFER_SUCCESS,
 } from '../claim-offer/type-claim-offer'
 import { CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
 import {
@@ -48,6 +51,9 @@ const actionToRecord = [
   PAID_CREDENTIAL_REQUEST_FAIL,
   UPDATE_ATTRIBUTE_CLAIM,
   ERROR_SEND_PROOF,
+  DENY_CLAIM_OFFER,
+  DENY_CLAIM_OFFER_FAIL,
+  DENY_CLAIM_OFFER_SUCCESS,
 ]
 
 // TODO:KS Fix any type using `redux` provided Generic Types

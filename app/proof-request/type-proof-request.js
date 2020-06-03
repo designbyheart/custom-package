@@ -445,7 +445,7 @@ export const MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_DESCRIPTION = (
 - Some of the attributes ${connectionName} is requesting come from credentials you own that have been revoked or expired
 
 Specifically, you are missing credentials with the following attributes:
-- ${attributes.map(attribute => attribute.name).join('\n- ')}
+- ${attributes.map((attribute) => attribute.name).join('\n- ')}
 
 Contact ${connectionName} for more information.
 

@@ -102,7 +102,7 @@ export function isInvalidValues(
   missingAttributes: MissingAttributes | {},
   userFilledValues: GenericObject
 ): boolean {
-  return Object.keys(missingAttributes).some(attributeName => {
+  return Object.keys(missingAttributes).some((attributeName) => {
     const userFilledValue = userFilledValues[attributeName]
 
     if (!userFilledValue) {
@@ -147,7 +147,7 @@ class ProofRequestAttributeList extends Component<
   // this form is needed to fix flow error
   // because methods of a class are by default covariant
   // so we need an invariance to tell method signature
-  canEnableGenerateProof = function() {
+  canEnableGenerateProof = function () {
     const isInvalid = isInvalidValues(this.props.missingAttributes, this.state)
     this.props.canEnablePrimaryAction(!isInvalid, this.state)
   }
@@ -180,7 +180,7 @@ class ProofRequestAttributeList extends Component<
         layout={'default'}
         sliderWidth={sliderWidth}
         itemWidth={sliderWidth}
-        onSnapToItem={swipeIndex => this.onSwipe(items[swipeIndex])}
+        onSnapToItem={(swipeIndex) => this.onSwipe(items[swipeIndex])}
         data={items}
         renderItem={({ item, index: itemIndex }) => {
           const adjustedLabel = item.label.toLocaleLowerCase()
@@ -221,7 +221,7 @@ class ProofRequestAttributeList extends Component<
                       testID={`${testID}-input-${adjustedLabel}`}
                       accessible={true}
                       accessibilityLabel={`${testID}-input-${adjustedLabel}`}
-                      onChange={e => this.onTextChange(e, adjustedLabel)}
+                      onChange={(e) => this.onTextChange(e, adjustedLabel)}
                       editable={!this.props.disableUserInputs}
                       underlineColorAndroid="transparent"
                     />
@@ -644,11 +644,11 @@ class ModalContentProof extends Component<
           />
         </View>
         <ModalButtons
-          onPress={() => this.onSend()}
-          onIgnore={() => this.onIgnore()}
+          onPress={this.onSend}
+          onIgnore={this.onDeny}
           colorBackground={this.props.colorBackground}
           secondColorBackground={this.props.secondColorBackground}
-          leftBtnText={'Ignore'}
+          leftBtnText={'Reject'}
           rightBtnText={primaryActionText}
           disableAccept={
             !enablePrimaryActionStatus || this.state.disableSendButton
@@ -695,7 +695,7 @@ const mapStateToProps = (state: Store, mergeProps) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       proofRequestShown,
