@@ -49,6 +49,9 @@ import {
   CLAIM_OFFER_ACCEPTED,
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
+  DENY_CLAIM_OFFER,
+  DENY_CLAIM_OFFER_FAIL,
+  DENY_CLAIM_OFFER_SUCCESS,
 } from '../claim-offer/type-claim-offer'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 
@@ -296,30 +299,39 @@ class ConnectionDetails extends Component<
           colorBackground={this.props.activeConnectionThemePrimary}
         />
       )
-    } else if (item.action === DENY_PROOF_REQUEST_SUCCESS) {
+    } else if (
+      item.action === DENY_PROOF_REQUEST_SUCCESS ||
+      item.action === DENY_CLAIM_OFFER_SUCCESS
+    ) {
       return (
         <QuestionViewCard
           messageDate={formattedTime}
           uid={item.data.uid}
-          requestStatus={'YOU DENIED'}
+          requestStatus={'YOU REJECTED'}
           requestAction={'"' + item.name + '"'}
           navigation={this.props.navigation}
         />
       )
-    } else if (item.action === DENY_PROOF_REQUEST) {
+    } else if (
+      item.action === DENY_PROOF_REQUEST ||
+      item.action === DENY_CLAIM_OFFER
+    ) {
       return (
         <ConnectionPending
           date={formattedTime}
           title={item.name}
-          content={'DENYING - PLEASE WAIT'}
+          content={'REJECTING - PLEASE WAIT'}
         />
       )
-    } else if (item.action === DENY_PROOF_REQUEST_FAIL) {
+    } else if (
+      item.action === DENY_PROOF_REQUEST_FAIL ||
+      item.action === DENY_CLAIM_OFFER_FAIL
+    ) {
       return (
         <ConnectionCard
           messageDate={formattedTime}
           headerText={item.name}
-          infoType={'FAILED TO DENY'}
+          infoType={'FAILED TO REJECT'}
           infoDate={formattedDate}
           buttonText={'RETRY'}
           showBadge={false}
@@ -419,7 +431,7 @@ class ConnectionDetails extends Component<
             )}
           </Animated.View>
           <FlatList
-            ref={ref => {
+            ref={(ref) => {
               this.flatList = ref
             }}
             keyExtractor={this.keyExtractor}
@@ -468,7 +480,7 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateStatusBarTheme,

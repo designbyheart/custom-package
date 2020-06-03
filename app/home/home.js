@@ -142,12 +142,21 @@ export class HomeScreen extends Component<HomeProps, void> {
       statusMessage = `You shared "${action}".`
     else if (status === HISTORY_EVENT_STATUS.UPDATE_QUESTION_ANSWER)
       statusMessage = `${action}.`
-    else if (status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST_SUCCESS)
-      statusMessage = `You denied "${action}".`
-    else if (status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST)
-      statusMessage = `Denying "${action}"`
-    else if (status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST_FAIL)
-      statusMessage = `Failed to deny "${action}"`
+    else if (
+      status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST_SUCCESS ||
+      status === HISTORY_EVENT_STATUS.DENY_CLAIM_OFFER_SUCCESS
+    )
+      statusMessage = `You rejected "${action}".`
+    else if (
+      status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST ||
+      status === HISTORY_EVENT_STATUS.DENY_CLAIM_OFFER
+    )
+      statusMessage = `Rejecting "${action}"`
+    else if (
+      status === HISTORY_EVENT_STATUS.DENY_PROOF_REQUEST_FAIL ||
+      status === HISTORY_EVENT_STATUS.DENY_CLAIM_OFFER_FAIL
+    )
+      statusMessage = `Failed to reject "${action}"`
     else if (
       status === HISTORY_EVENT_STATUS.SEND_CLAIM_REQUEST_SUCCESS ||
       status === HISTORY_EVENT_STATUS.CLAIM_OFFER_ACCEPTED
@@ -280,7 +289,7 @@ const mapStateToProps = (state: Store) => {
   // Once the credential is accepted or proof is shared, that object does not contain logoUrl and issuerName
   // so we need to store them here.
   const mappedDidToLogoAndName = {}
-  receivedConnections.map(connection => {
+  receivedConnections.map((connection) => {
     mappedDidToLogoAndName[connection.senderDID] = {
       logoUrl: connection.logoUrl,
       issuerName: connection.senderName,
@@ -314,7 +323,7 @@ const mapStateToProps = (state: Store) => {
   // Sorts the newest actions to be on top
   const newBannerConnections = []
   const recentConnections = []
-  flattenPlaceholderArray.map(connection => {
+  flattenPlaceholderArray.map((connection) => {
     if (isNewConnection(connection.status)) {
       newBannerConnections.push(connection)
     } else recentConnections.push(connection)
@@ -335,7 +344,7 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       getUnacknowledgedMessages,

@@ -22,7 +22,7 @@ class ModalButtons extends PureComponent<any, {}> {
   }
 
   debounceButtonPress = debounce(
-    event => {
+    (event) => {
       const { primaryActionValue, onPress } = this.props
       if (primaryActionValue) {
         onPress(primaryActionValue)

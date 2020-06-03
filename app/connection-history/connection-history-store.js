@@ -54,6 +54,7 @@ import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import type {
   SendClaimRequestSuccessAction,
   ClaimOfferPayload,
+  ClaimOfferDenyAction,
   ClaimOfferReceivedAction,
   ClaimOfferAcceptedAction,
   SendClaimRequestFailAction,
@@ -71,6 +72,9 @@ import {
   CLAIM_OFFER_ACCEPTED,
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
+  DENY_CLAIM_OFFER,
+  DENY_CLAIM_OFFER_SUCCESS,
+  DENY_CLAIM_OFFER_FAIL,
 } from '../claim-offer/type-claim-offer'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 import type {
@@ -336,6 +340,23 @@ export function convertClaimOfferAcceptedToHistoryEvent(
   }
 }
 
+export function convertClaimOfferDenyToHistoryEvent(
+  action: ClaimOfferDenyAction,
+  claimOffer: any
+) {
+  return {
+    action: HISTORY_EVENT_STATUS[action.type],
+    data: claimOffer.data.revealedAttributes,
+    id: uuid(),
+    name: claimOffer.data.name,
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.CLAIM,
+    remoteDid: claimOffer.remotePairwiseDID,
+    originalPayload: { ...action, claimOffer },
+    status: HISTORY_EVENT_STATUS[action.type],
+  }
+}
+
 export function convertCredentialRequestFailToHistoryEvent(
   action: SendClaimRequestFailAction | PaidCredentialRequestFailAction,
   credentialOfferAcceptedHistoryEvent: ConnectionHistoryEvent
@@ -565,6 +586,50 @@ export function* historyEventOccurredSaga(
         CLAIM_OFFER_RECEIVED
       )
       if (existingEvent) historyEvent = null
+    }
+
+    if (event.type === DENY_CLAIM_OFFER) {
+      const claimOffer = yield select(getClaimOffer, event.uid)
+      historyEvent = convertClaimOfferDenyToHistoryEvent(event, claimOffer)
+      const claimOfferReceivedEvent = yield select(
+        getHistoryEvent,
+        event.uid,
+        historyEvent.remoteDid,
+        CLAIM_OFFER_RECEIVED
+      )
+      const claimOfferDenyFailedEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        historyEvent.remoteDid,
+        DENY_CLAIM_OFFER_FAIL
+      )
+      const oldHistoryEvent =
+        claimOfferReceivedEvent || claimOfferDenyFailedEvent
+      if (oldHistoryEvent) yield put(deleteHistoryEvent(oldHistoryEvent))
+    }
+
+    if (event.type === DENY_CLAIM_OFFER_FAIL) {
+      const claimOffer = yield select(getClaimOffer, event.uid)
+      historyEvent = convertClaimOfferDenyToHistoryEvent(event, claimOffer)
+      const oldHistoryEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        historyEvent.remoteDid,
+        DENY_CLAIM_OFFER
+      )
+      if (oldHistoryEvent) yield put(deleteHistoryEvent(oldHistoryEvent))
+    }
+
+    if (event.type === DENY_CLAIM_OFFER_SUCCESS) {
+      const claimOffer = yield select(getClaimOffer, event.uid)
+      historyEvent = convertClaimOfferDenyToHistoryEvent(event, claimOffer)
+      const oldHistoryEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        historyEvent.remoteDid,
+        DENY_CLAIM_OFFER
+      )
+      if (oldHistoryEvent) yield put(deleteHistoryEvent(oldHistoryEvent))
     }
 
     if (event.type === CLAIM_OFFER_ACCEPTED) {
@@ -932,7 +997,7 @@ export default function connectionHistoryReducer(
         state.data.connections &&
         state.data.connections[remoteDid] &&
         state.data.connections[remoteDid].data
-          ? state.data.connections[remoteDid].data.filter(item => {
+          ? state.data.connections[remoteDid].data.filter((item) => {
               // $FlowFixMe
               return item !== action.historyEvent
             })

@@ -28,7 +28,10 @@ import lock, {
 import smsPendingInvitation, {
   watchSmsPendingInvitationSaga,
 } from '../sms-pending-invitation/sms-pending-invitation-store'
-import claimOffer, { watchClaimOffer } from '../claim-offer/claim-offer-store'
+import claimOffer, {
+  watchClaimOffer,
+  watchClaimOfferDeny,
+} from '../claim-offer/claim-offer-store'
 import proofRequest, {
   watchProofRequestAccepted,
   watchPersistProofRequests,
@@ -120,13 +123,14 @@ middlewares.push(sagaMiddleware)
 const store = createStore(appReducer, applyMiddleware(...middlewares))
 
 // $FlowFixMe Don't know how to fix polymorphic type coercion
-sagaMiddleware.run(function*() {
+sagaMiddleware.run(function* () {
   return yield all([
     watchConnection(),
     watchConfig(),
     watchLock(),
     watchSmsPendingInvitationSaga(),
     watchClaimOffer(),
+    watchClaimOfferDeny(),
     watchPushNotification(),
     watchInvitation(),
     watchClaim(),
