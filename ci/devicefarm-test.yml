@@ -15,4 +15,4 @@ devicefarm-test-launch:
     # - cp ${AWS_DEVICEFARM_CREDENTIALS} ~/.aws/credentials
     - cd e2e-automation
     - mvn -Dmaven.test.skip=true package
-    - python script.py --test_file_path target/zip-with-dependencies.zip --app_file_path ../android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk
+    - python appium-launcher/script.py --test_file_path target/zip-with-dependencies.zip --app_file_path ../android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk
