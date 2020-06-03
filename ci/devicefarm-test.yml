@@ -1,6 +1,6 @@
 devicefarm-test-launch:
   stage: devicefarm-test
-  image: ${CI_REGISTRY_IMAGE}/devicefarm:latest
+  image: ${CI_REGISTRY_IMAGE}/devicefarm:${CI_COMMIT_REF_SLUG}
   dependencies:
     - build-android-master
   tags:
