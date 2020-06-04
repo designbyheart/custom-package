@@ -258,7 +258,7 @@ function getRetryFunction({
   return () => {}
 }
 
-const mapDispatchToProps = (dispatch) =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       acceptClaimOffer,

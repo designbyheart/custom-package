@@ -501,3 +501,5 @@ export const getConnectionByProp = (
 
 export const getDIDFromFullyQualifiedDID = (did: string) =>
   did.split(':').slice(-1)[0]
+
+export const getPushNotificationStore = (state: Store) => state.pushNotification

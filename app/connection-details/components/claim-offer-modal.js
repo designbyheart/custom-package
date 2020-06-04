@@ -125,13 +125,14 @@ class ClaimOfferModal extends Component<any, *> {
           // after TAA is accepted
           // so if shouldShowTransactionInfo == true, then TAA is also set
         }
-        {shouldShowTransactionInfo && !isClaimOfferAccepted && (
-          <LedgerFees
-            render={this.renderLedgerFeesPhases}
-            onStateChange={this.updateState}
-            transferAmount={this.props.claimPrice}
-          />
-        )}
+        {shouldShowTransactionInfo &&
+          !isClaimOfferAccepted && (
+            <LedgerFees
+              render={this.renderLedgerFeesPhases}
+              onStateChange={this.updateState}
+              transferAmount={this.props.claimPrice}
+            />
+          )}
 
         {
           // Above code block was dealing with ledger fees is user
@@ -141,18 +142,19 @@ class ClaimOfferModal extends Component<any, *> {
           // then we need to show user the status of payment as well
           // so, will keep modal open till user sees success payment
         }
-        {shouldShowTransactionInfo && isClaimOfferAccepted && (
-          <PaymentTransactionInfo
-            claimThemePrimary={this.props.claimThemePrimary}
-            claimThemeSecondary={this.props.claimThemeSecondary}
-            onConfirmAndPay={this.onConfirmAndPay}
-            onCancel={this.onIgnore}
-            credentialPrice={this.props.claimPrice}
-            claimRequestStatus={claimRequestStatus}
-            onSuccess={this.onPaymentSuccess}
-            onRetry={this.onConfirmAndPay}
-          />
-        )}
+        {shouldShowTransactionInfo &&
+          isClaimOfferAccepted && (
+            <PaymentTransactionInfo
+              claimThemePrimary={this.props.claimThemePrimary}
+              claimThemeSecondary={this.props.claimThemeSecondary}
+              onConfirmAndPay={this.onConfirmAndPay}
+              onCancel={this.onIgnore}
+              credentialPrice={this.props.claimPrice}
+              claimRequestStatus={claimRequestStatus}
+              onSuccess={this.onPaymentSuccess}
+              onRetry={this.onConfirmAndPay}
+            />
+          )}
 
         {
           // if user has not accepted TAA
@@ -304,11 +306,7 @@ class ClaimOfferModal extends Component<any, *> {
 
 const mapStateToProps = (
   state: Store,
-  {
-    navigation: {
-      state: { params },
-    },
-  }: ClaimProofNavigation
+  { navigation: { state: { params } } }: ClaimProofNavigation
 ) => {
   const { claimOffer } = state
   const { uid } = params || { uid: '' }
@@ -339,7 +337,7 @@ const mapStateToProps = (
   }
 }
 
-const mapDispatchToProps = (dispatch) =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       acceptClaimOffer,

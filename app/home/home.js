@@ -289,7 +289,7 @@ const mapStateToProps = (state: Store) => {
   // Once the credential is accepted or proof is shared, that object does not contain logoUrl and issuerName
   // so we need to store them here.
   const mappedDidToLogoAndName = {}
-  receivedConnections.map((connection) => {
+  receivedConnections.map(connection => {
     mappedDidToLogoAndName[connection.senderDID] = {
       logoUrl: connection.logoUrl,
       issuerName: connection.senderName,
@@ -323,7 +323,7 @@ const mapStateToProps = (state: Store) => {
   // Sorts the newest actions to be on top
   const newBannerConnections = []
   const recentConnections = []
-  flattenPlaceholderArray.map((connection) => {
+  flattenPlaceholderArray.map(connection => {
     if (isNewConnection(connection.status)) {
       newBannerConnections.push(connection)
     } else recentConnections.push(connection)
@@ -344,7 +344,7 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getUnacknowledgedMessages,

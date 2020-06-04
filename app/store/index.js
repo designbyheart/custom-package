@@ -123,7 +123,7 @@ middlewares.push(sagaMiddleware)
 const store = createStore(appReducer, applyMiddleware(...middlewares))
 
 // $FlowFixMe Don't know how to fix polymorphic type coercion
-sagaMiddleware.run(function* () {
+sagaMiddleware.run(function*() {
   return yield all([
     watchConnection(),
     watchConfig(),

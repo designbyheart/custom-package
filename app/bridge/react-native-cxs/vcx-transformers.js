@@ -30,6 +30,7 @@ export async function convertAgencyConfigToVcxProvision(
   walletPoolName: WalletPoolName
 ): Promise<VcxProvision> {
   const wallet_key = await getWalletKey()
+
   return {
     agency_url: config.agencyUrl,
     agency_did: config.agencyDID,

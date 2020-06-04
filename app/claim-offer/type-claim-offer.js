@@ -332,7 +332,7 @@ export type ClaimOfferResponse = {
       typ: string,
       statusMsg: string,
       uid: string,
-    }
+    },
   ],
 }
 
