@@ -192,7 +192,7 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
             </CustomView>
             <CustomView center>
               <PinCodeBox
-                ref={(pinCodeBox) => {
+                ref={pinCodeBox => {
                   this.pinCodeBox = pinCodeBox
                 }}
                 onPinComplete={this.onPinComplete}
@@ -227,7 +227,7 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
             <CustomView center>
               {this.props.isAppLocked && this.renderFailMessages()}
               <PinCodeBox
-                ref={(pinCodeBox) => {
+                ref={pinCodeBox => {
                   this.pinCodeBox = pinCodeBox
                 }}
                 onPinComplete={this.onPinComplete}
@@ -309,7 +309,7 @@ const mapStateToProps = (state: Store) => ({
   lockdownTimeMessage: state.lock.lockdownTimeMessage,
 })
 
-const mapDispatchToProps = (dispatch) =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       checkPinAction,

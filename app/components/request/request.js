@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react'
 import { View, Alert } from 'react-native'
-import firebase from 'react-native-firebase'
 import { bindActionCreators } from 'redux'
 import { Container, TouchId } from '../../components'
 import { connect } from 'react-redux'
@@ -12,7 +11,6 @@ import type { RequestProps, RequestState, ResponseTypes } from './type-request'
 import { captureError } from '../../services/error/error-handler'
 import { lockAuthorizationRoute } from '../../common/route-constants'
 import type { Store } from '../../store/type-store'
-import { pushNotificationPermissionAction } from '../../push-notification/push-notification-store'
 import {
   ERROR_ALREADY_EXIST,
   ERROR_INVITATION_RESPONSE_FAILED,
@@ -75,26 +73,7 @@ export class Request extends Component<RequestProps, RequestState> {
   }
 
   onAction = (response: ResponseTypes) => {
-    return firebase
-      .messaging()
-      .requestPermission()
-      .then(() => {
-        this.props.pushNotificationPermissionAction(true)
-        this.checkIfTouchIdEnabled(response)
-      })
-      .catch(error => {
-        // astute readers will notice that we are calling authenticate
-        // in success and fail both, so we can move it outside of promise
-        // but we need to authenticate after user take allow/deny action
-        // for push notification, after user allows/denies push notification
-        // we need to authenticate user either with TouchId or passcode
-        // unfortunately React-Native's (ES6's as well) Promise implementation
-        // does not have finally block
-        this.checkIfTouchIdEnabled(response)
-        // TODO: we did not get push token
-        // now what should we do?
-        captureError(error, this.props.showErrorAlerts)
-      })
+    this.checkIfTouchIdEnabled(response)
   }
 
   componentDidUpdate(prevProps: RequestProps) {
@@ -136,18 +115,10 @@ export class Request extends Component<RequestProps, RequestState> {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      pushNotificationPermissionAction,
-    },
-    dispatch
-  )
-
 const mapStateToProps = ({ lock }: Store) => {
   return {
     isTouchIdEnabled: lock.isTouchIdEnabled,
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Request)
+export default connect(mapStateToProps)(Request)

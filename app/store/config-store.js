@@ -10,6 +10,8 @@ import {
   takeLatest,
   takeLeading,
 } from 'redux-saga/effects'
+import uniqueId from 'react-native-unique-id'
+import firebase from 'react-native-firebase'
 
 import { secureSet, getHydrationItem } from '../services/storage'
 import {
@@ -28,6 +30,7 @@ import {
   getClaimOffers,
   getAgencyUrl,
   getConnectionByProp,
+  getPushNotificationStore,
 } from '../store/store-selector'
 import {
   SERVER_ENVIRONMENT,
@@ -98,7 +101,8 @@ import { schemaValidator } from '../services/schema-validator'
 import type { EnvironmentDetailUrlDownloaded } from '../api/type-api'
 import {
   init,
-  createOneTimeInfo,
+  createOneTimeInfoWithToken,
+  getProvisionToken,
   simpleInit,
   vcxShutdown,
   downloadMessages,
@@ -128,6 +132,7 @@ import { GENESIS_FILE_NAME } from '../api/api-constants'
 import type {
   ClaimOfferMessagePayload,
   ClaimPushPayload,
+  PushNotificationStore,
 } from './../push-notification/type-push-notification'
 import type {
   ProofRequestPushPayload,
@@ -155,11 +160,15 @@ import { claimReceivedVcx, claimReceivedVcxSaga } from './../claim/claim-store'
 import type { SerializedClaimOffer } from '../claim-offer/type-claim-offer'
 import { SEND_CLAIM_REQUEST } from '../claim-offer/type-claim-offer'
 import { getPendingFetchAdditionalDataKey } from './store-selector'
-import firebase from 'react-native-firebase'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import { ensureVcxInitSuccess } from './route-store'
 import { convertSovrinAtomsToSovrinTokens } from '../sovrin-token/sovrin-token-converter'
+import { flattenAsync } from '../common/flatten-async'
+import {
+  registerCloudAgentWithToken,
+  registerCloudAgentWithoutToken,
+} from './user/cloud-agent'
 
 /**
  * this file contains configuration which is changed only from user action
@@ -624,11 +633,44 @@ export function* initVcx(findingWallet?: any): Generator<*, *, *> {
     poolConfig,
     paymentMethod,
   }
+
   if (!userOneTimeInfo) {
     // app is hydrated, but we haven't got user one time info
     // so now we go ahead and create user one time info
     try {
-      userOneTimeInfo = yield call(createOneTimeInfo, agencyConfig)
+      // Creating user one time info is also called as creating cloud agent
+      // For one app installation, there is one cloud agent provisioned
+      // Later on, when we have multiple devices per user, then
+      // we plan to have one cloud agent for every device per user
+      // for now, One cloud agent for one app installation
+
+      // There are two ways to register/provision cloud agent on agency
+      // 1. Create cloud agent with token
+      // 2. Create cloud agent without token
+
+      // We prefer to create cloud agent with token
+      const [
+        registerWithTokenError,
+        userOneTimeInfoWithToken,
+      ] = yield* registerCloudAgentWithToken(agencyConfig)
+
+      if (registerWithTokenError || !userOneTimeInfoWithToken) {
+        yield put({
+          type: 'REGISTER_CLOUD_AGENT_WITH_TOKEN_FAIL',
+          error: registerWithTokenError,
+        })
+
+        // if agency does not yet support creating cloud agent with token
+        // then we try second option to try creating cloud agent without token
+        const [
+          registerWithoutTokenError,
+          userOneTimeInfoWithoutToken,
+        ] = yield* registerCloudAgentWithoutToken(agencyConfig)
+        userOneTimeInfo = userOneTimeInfoWithoutToken
+      } else {
+        userOneTimeInfo = userOneTimeInfoWithToken
+      }
+
       if (findingWallet !== true) {
         yield put(connectRegisterCreateAgentDone(userOneTimeInfo))
       }

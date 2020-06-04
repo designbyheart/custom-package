@@ -465,7 +465,7 @@ export default function proofRequestReducer(
           missingAttributes: {},
           data: {
             ...data,
-            requestedAttributes: data.requestedAttributes.map((attribute) => {
+            requestedAttributes: data.requestedAttributes.map(attribute => {
               if (Array.isArray(attribute) && attribute.length > 0) {
                 return {
                   label: attribute[0].label,

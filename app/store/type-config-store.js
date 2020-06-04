@@ -154,6 +154,15 @@ export type AgencyPoolConfig = {
   paymentMethod: string,
 }
 
+export type ProvisionToken = {
+  id: string,
+  sponsor: string,
+  nonce: string,
+  timestamp: string,
+  sig: string,
+  sponsorVerKey: string,
+}
+
 export type ConfigStore = {
   isAlreadyInstalled: boolean,
   isHydrated: boolean,

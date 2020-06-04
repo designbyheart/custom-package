@@ -431,7 +431,7 @@ class ConnectionDetails extends Component<
             )}
           </Animated.View>
           <FlatList
-            ref={(ref) => {
+            ref={ref => {
               this.flatList = ref
             }}
             keyExtractor={this.keyExtractor}
@@ -480,7 +480,7 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) =>
+const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       updateStatusBarTheme,

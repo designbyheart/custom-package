@@ -208,6 +208,7 @@ preBuild.doFirst {
 }
 
 dependencies {
+    implementation project(':react-native-check-notification-permission')
     implementation project(':react-native-file-viewer')
     implementation project(':react-native-screens')
     implementation project(':react-native-reanimated')

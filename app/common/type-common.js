@@ -96,6 +96,7 @@ export type NotificationPayload = {
   senderLogoUrl?: ?string,
   pushNotifMsgText?: ?string,
   pushNotifMsgTitle?: ?string,
+  msg?: ?string,
 }
 
 export type ImmutableGenericStringObject = {

@@ -997,7 +997,7 @@ export default function connectionHistoryReducer(
         state.data.connections &&
         state.data.connections[remoteDid] &&
         state.data.connections[remoteDid].data
-          ? state.data.connections[remoteDid].data.filter((item) => {
+          ? state.data.connections[remoteDid].data.filter(item => {
               // $FlowFixMe
               return item !== action.historyEvent
             })

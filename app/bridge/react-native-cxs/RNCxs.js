@@ -39,7 +39,10 @@ import {
   convertVcxConnectionV2ToCMConnection,
 } from './vcx-transformers'
 import type { UserOneTimeInfo } from '../../store/user/type-user-store'
-import type { AgencyPoolConfig } from '../../store/type-config-store'
+import type {
+  AgencyPoolConfig,
+  ProvisionToken,
+} from '../../store/type-config-store'
 import type { MyPairwiseInfo } from '../../store/type-connection-store'
 import type {
   ClaimOfferPushPayload,
@@ -144,17 +147,67 @@ export async function sendTokenAmount(
 
 export async function createOneTimeInfo(
   agencyConfig: AgencyPoolConfig
-): Promise<UserOneTimeInfo> {
-  const walletPoolName = await getWalletPoolName()
-  const vcxProvisionConfig: VcxProvision = await convertAgencyConfigToVcxProvision(
-    agencyConfig,
-    walletPoolName
-  )
-  const provisionVcxResult: string = await RNIndy.createOneTimeInfo(
-    JSON.stringify(vcxProvisionConfig)
-  )
-  const provisionResult: VcxProvisionResult = JSON.parse(provisionVcxResult)
-  return convertVcxProvisionResultToUserOneTimeInfo(provisionResult)
+): Promise<[null | string, null | UserOneTimeInfo]> {
+  try {
+    const walletPoolName = await getWalletPoolName()
+    const vcxProvisionConfig: VcxProvision = await convertAgencyConfigToVcxProvision(
+      agencyConfig,
+      walletPoolName
+    )
+    const provisionVcxResult: string = await RNIndy.createOneTimeInfo(
+      JSON.stringify(vcxProvisionConfig)
+    )
+    const provisionResult: VcxProvisionResult = JSON.parse(provisionVcxResult)
+    return [null, convertVcxProvisionResultToUserOneTimeInfo(provisionResult)]
+  } catch (e) {
+    return [`${e}`, null]
+  }
+}
+
+export async function getProvisionToken(
+  agencyConfig: AgencyPoolConfig,
+  comMethod: { type: 1, id: string, value: string }
+): Promise<[null | string, null | void]> {
+  try {
+    const walletPoolName = await getWalletPoolName()
+    const vcxConfig: VcxProvision = await convertAgencyConfigToVcxProvision(
+      agencyConfig,
+      walletPoolName
+    )
+    const vcxProvisionConfig = {
+      vcx_config: vcxConfig,
+      source_id: 'someSourceId',
+      com_method: comMethod,
+    }
+    const provisionTokenResult = await RNIndy.getProvisionToken(
+      JSON.stringify(vcxProvisionConfig)
+    )
+
+    return [null, provisionTokenResult]
+  } catch (e) {
+    return [`${e}`, null]
+  }
+}
+
+export async function createOneTimeInfoWithToken(
+  agencyConfig: AgencyPoolConfig,
+  token: string
+): Promise<[null | string, null | UserOneTimeInfo]> {
+  try {
+    const walletPoolName = await getWalletPoolName()
+    const vcxProvisionConfig: VcxProvision = await convertAgencyConfigToVcxProvision(
+      agencyConfig,
+      walletPoolName
+    )
+    const provisionVcxResult: string = await RNIndy.createOneTimeInfoWithToken(
+      JSON.stringify(vcxProvisionConfig),
+      token
+    )
+    const provisionResult: VcxProvisionResult = JSON.parse(provisionVcxResult)
+    return [null, convertVcxProvisionResultToUserOneTimeInfo(provisionResult)]
+  } catch (e) {
+    return [`${e}`, null]
+  }
 }
 
 export async function init(
