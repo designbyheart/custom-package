@@ -6,15 +6,13 @@ devicefarm-test-launch:
   tags:
     - docker-machine
     - micro
-  # rules:
-  #   - if: '$CI_PIPELINE_SOURCE != "schedule"'
-  #     when: never
+  rules:
+    - if: '$CI_PIPELINE_SOURCE != "schedule"'
+      when: never
   script:
     - mkdir ~/.aws
-    # - cp ${AWS_DEVICEFARM_CONFIG} ~/.aws/config
-    # - cp ${AWS_DEVICEFARM_CREDENTIALS} ~/.aws/credentials
+    - cp ${AWS_DEVICEFARM_CONFIG} ~/.aws/config
+    - cp ${AWS_DEVICEFARM_CREDENTIALS} ~/.aws/credentials
     - cd e2e-automation
     - mvn install -DskipTests
-    - ls -l target/zip-with-dependencies.zip
-    - ls -l ../android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk
     - python appium-launcher/script.py --test_file_path target/zip-with-dependencies.zip --app_file_path ../android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk
