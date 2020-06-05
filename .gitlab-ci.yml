@@ -81,6 +81,8 @@ yarn-test:
     variables:
       - $CI_COMMIT_MESSAGE =~ /[[Cc][Ii]\s[Ss][Kk][Ii][Pp]]/
   script:
+    - echo ${CI_PIPELINE_SOURCE}
+    - echo ${CI_PIPELINE_SOURCE} == "schedule"
     - yarn install
     - yarn lint
     - yarn test
