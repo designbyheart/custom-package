@@ -65,7 +65,7 @@ devicefarm-buildtools:
     DOCKERFILE_PATH: ci/images/devicefarm.dockerfile
     DOCKER_IMAGE_NAME: devicefarm
   rules:
-    - if: '$SCHEDULED_RUN == "true"'
+    - if: '$SCHEDULED_RUN != "true"'
       when: never
 
 
