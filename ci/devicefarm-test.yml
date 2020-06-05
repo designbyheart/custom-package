@@ -7,8 +7,8 @@ devicefarm-test-launch:
     - docker-machine
     - micro
   rules:
-    - if: '$CI_PIPELINE_SOURCE != "schedule"'
-      when: never
+    - if: '$SCHEDULED_RUN == "true"'
+      when: always
   script:
     - mkdir ~/.aws
     - cp ${AWS_DEVICEFARM_CONFIG} ~/.aws/config

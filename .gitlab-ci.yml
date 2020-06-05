@@ -221,7 +221,6 @@ build-android-master:
   only:
     refs:
       - master@dev/connectme/ConnectMe
-      - test-appium@dev/connectme/ConnectMe
 
 build-android-stage:
   extends: .build-android
