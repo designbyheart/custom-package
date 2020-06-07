@@ -3,7 +3,6 @@ package me.connect;
 import android.app.Application;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.facebook.react.ReactApplication;
-import com.peel.react.TcpSocketsModule;
 import com.vinzscam.reactnativefileviewer.RNFileViewerPackage;
 import com.swmansion.rnscreens.RNScreensPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
@@ -59,7 +58,6 @@ public class MainApplication extends Application implements ShareApplication, Re
       return Arrays.<ReactPackage>asList(
         new RNDeviceInfo(),
         new MainReactPackage(),
-            new TcpSocketsModule(),
             new RNFileViewerPackage(),
             new RNScreensPackage(),
             new ReanimatedPackage(),

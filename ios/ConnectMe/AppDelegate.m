@@ -79,12 +79,7 @@
   [[RNFirebaseMessaging instance] didRegisterUserNotificationSettings:notificationSettings];
 }
 
-// methods to open connect me from SMS and from an custom URI and universal link
-// Respond to URI scheme links
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-  if (![RNBranch.branch application:application openURL:url sourceApplication:sourceApplication annotation:annotation]) {
-    // do other deep link routing
-  }
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
   return YES;
 }
 

@@ -1,8 +1,7 @@
+// @flow
 /**
  * @jest-environment node
  */
-
-// @flow
 
 import { post, get } from 'axios'
 import imap from 'imap-simple'
@@ -10,6 +9,7 @@ import moment from 'moment'
 import R from 'ramda'
 import https from 'https'
 import fs from 'fs'
+import { exec } from 'child-process-async'
 
 //$FlowFixMe
 require('tls').DEFAULT_ECDH_CURVE = 'auto'
@@ -21,12 +21,14 @@ const httpsConfig = {
   }),
   auth: {
     username: 'demo',
+    // TODO: Remove hardcoded password
     password: 'ktjo6iKiJsn7EGlCCZj07qKw3',
   },
 }
 
 function getVerityApi() {
   // let api = process.env.VERITY_API || null
+  // TODO: Remove hardcoded url, instead url should be as per environment selected to run tests
   let api = 'https://vui.pqa.evernym.com'
   if (!api) {
     return null
@@ -43,7 +45,6 @@ function getVerityApi() {
 }
 
 const verityBaseUrl = getVerityApi()
-console.log(verityBaseUrl)
 
 if (!verityBaseUrl) {
   throw new Error(
@@ -60,6 +61,7 @@ if (!verityBaseUrl) {
 const inboxConfig = {
   imap: {
     user: 'number.2018@yahoo.com',
+    // TODO Remove hardcoded password from git and take it from environment variable
     password: 'Evernym123',
     host: 'imap.mail.yahoo.com',
     port: 993,
@@ -68,6 +70,7 @@ const inboxConfig = {
   },
 }
 
+// TODO It should not be hardcoded
 const devAgencyUrl = 'https://agency.pqa.evernym.com'
 
 // not putting `await` here because we don't want to block here
@@ -106,7 +109,6 @@ export function getInvitationSync() {
       },
     }
   ).then(res => res.data.qrCode)
-  console.log(qrCode)
   fs.writeFileSync('e2e/qrcode.base64', qrCode)
   return qrCode
 }
@@ -126,88 +128,55 @@ export async function getInvitation() {
       }),
       auth: {
         username: 'demo',
+        // TODO Remove password from git. We should take every password from environment variables
         password: 'ktjo6iKiJsn7EGlCCZj07qKw3',
       },
     }
   ).then(res => [res.data.id, res.data.qrCode])
-  console.log(invitationId)
-  console.log(qrCode)
 
-  await new Promise(r => setTimeout(r, 15000)) // wait before decoding qr code and starting server
-
-  let jsonData
-
-  const { exec } = require('child_process')
-  await exec(
-    `echo "${qrCode}" | cut -c 23- | base64 --decode > tmp.png && zbarimg tmp.png && rm tmp.png`,
-    (err, stdout, stderr) => {
-      if (err) {
-        console.log(err)
-        return
-      }
-      // global.jsonData = stdout.substr(8)
-      jsonData = stdout.substr(8)
-      // exports.jsonData = jsonData
-      console.log(`STDOUT: ${stdout}`)
-      console.log(`jsonData: ${jsonData}`)
-      console.log(`STDERR: ${stderr}`)
-    }
+  const { stdout } = await exec(
+    `echo "${qrCode}" | cut -c 23- | base64 --decode > tmp.png && zbarimg tmp.png && rm tmp.png`
   )
+  const jsonData = stdout.substr(8)
 
-  await new Promise(r => setTimeout(r, 15000)) // wait before fetching latest message
+  // await new Promise(r => setTimeout(r, 30000)) // wait before fetching latest message
 
-  const [connection, openingInbox] = await waitingInbox
-  await openingInbox
-  const emails = await connection.search(emailSearchCriteria, emailFetchOptions)
-  const latestEmailBody = R.compose(
-    R.prop('body'),
-    R.head,
-    R.filter(R.eqProps('which', { which: 'TEXT' })),
-    R.flatten,
-    R.prop('parts'),
-    R.head,
-    R.sortWith([R.descend(R.prop('seqNo'))])
-  )(emails)
-  const appLink = 'https://link.comect.me/?t='
-  const appLinkIndex = latestEmailBody.indexOf(appLink)
-  const tokenSize = 8
-  const token = latestEmailBody.slice(
-    appLinkIndex + appLink.length,
-    appLinkIndex + appLink.length + tokenSize
-  )
+  // const [connection, openingInbox] = await waitingInbox
+  // await openingInbox
+  // const emails = await connection.search(emailSearchCriteria, emailFetchOptions)
+  // const latestEmailBody = R.compose(
+  //   R.prop('body'),
+  //   R.head,
+  //   R.filter(R.eqProps('which', { which: 'TEXT' })),
+  //   R.flatten,
+  //   R.prop('parts'),
+  //   R.head,
+  //   R.sortWith([R.descend(R.prop('seqNo'))])
+  // )(emails)
+  // const appLink = 'https://link.comect.me/?t='
+  // const appLinkIndex = latestEmailBody.indexOf(appLink)
+  // const tokenSize = 8
+  // const token = latestEmailBody.slice(
+  //   appLinkIndex + appLink.length,
+  //   appLinkIndex + appLink.length + tokenSize
+  // )
 
-  console.log(latestEmailBody)
-  console.log(token)
+  // // no need to wait for invitation to be fetched
+  // // we can call this function only to get invitation token
+  // // and when we need actual invitation data, then we can resolve for
+  // // fetchingInvitation or use await to get invitation data
+  // // this can be used directly by qr-code screen
+  // const fetchingInvitation = await get(
+  //   `${devAgencyUrl}/agency/url-mapper/${token}`
+  // )
+  //   .then(R.compose(get, R.path(['data', 'url'])))
+  //   .catch(console.error)
 
-  // // ---
-  // const net = require('net')
-
-  // let server = await net.createServer(function(socket) {
-  //   socket.write(JSON.stringify(jsonData))
-  //   socket.pipe(socket)
-  //   console.log('server has been created')
-  // })
-
-  // await server.listen(1337, '127.0.0.1')
-  // console.log('server is listening')
-  // // ---
-
-  // no need to wait for invitation to be fetched
-  // we can call this function only to get invitation token
-  // and when we need actual invitation data, then we can resolve for
-  // fetchingInvitation or use await to get invitation data
-  // this can be used directly by qr-code screen
-  const fetchingInvitation = await get(
-    `${devAgencyUrl}/agency/url-mapper/${token}`
-  )
-    .then(R.compose(get, R.path(['data', 'url'])))
-    .catch(console.error)
-  console.log(fetchingInvitation)
   return [
-    token,
+    // token,
     invitationId,
-    fetchingInvitation,
-    `${appLink}${token}`,
+    // fetchingInvitation,
+    // `${appLink}${token}`,
     jsonData,
   ]
 }

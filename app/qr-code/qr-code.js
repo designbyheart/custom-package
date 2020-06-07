@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux'
 import { RNCamera } from 'react-native-camera'
 import Permissions from 'react-native-permissions'
 import { Alert, Platform, PermissionsAndroid, AppState } from 'react-native'
+import { detox } from 'react-native-dotenv'
+
 import { Container, QRScanner } from '../components'
 import {
   color,
@@ -309,46 +311,17 @@ export class QRCodeScannerScreen extends Component<
       this.checkCameraAuthorization()
     }
 
-    // ---!!!---
-    if (false) {
-      // switch to true to mock scanning
-      setTimeout(() => {
-        // let myModule = require('../../e2e/utils/api')
-
-        const getData = () => {
-          //$FlowFixMe
-          const net = require('react-native-tcp')
-          //$FlowFixMe
-          let client = new net.Socket()
-          let jsonData
-
-          //$FlowFixMe
-          client.connect(1337, 'localhost', function() {
-            console.log('Connected')
-          })
-
-          client.on('data', function(data) {
-            console.log('Received: ' + data)
-            jsonData = JSON.parse(data)
-            // client.destroy()
-          })
-
-          client.on('close', function() {
-            console.log('Connection closed')
-          })
-
-          return jsonData
+    if (detox === 'yes') {
+      setTimeout(async () => {
+        try {
+          // get invitation from server running inside detox test
+          const invitation = await (await fetch('http://localhost:1337')).json()
+          this.onRead(invitation)
+        } catch (e) {
+          console.log('error')
         }
-        this.onRead(
-          //$FlowFixMe
-          getData()
-          // myModule.jsonData
-          // global.jsonData
-          // {"id":"41ed308e-9026-4e9e-8927-a0f084927a77","s":{"d":"RtJooR58zXJuFMUFsCJbXd","dp":{"d":"F4udr8GY8BhVFcy4srAh73","k":"8fhSnz35VEbuNCpGuW2Vp3kcZ9BCiqoUUdCBiLso56yH","s":"Vq+YC68NPpi3q6QoudDMMEKQWv6jfbG1hZrE38hz6GS7a4ntB60ydxtezwYDrfb2UJNDosT4yKFbnCiiW4RhBA=="},"l":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjimxZbcvZzPcPvHd_y7f0tc5d8QoC9DOPecb8JTOChmS1IoDq","n":"Evernym QA-RC","publicDID":"4CZXFbfD8fnT45ZibYXS1a","v":"EZenFBQrMTcmkM2SjeS1hjhHyy3ZsUa4KZWWEaSjsXpb"},"sa":{"d":"QreyffsPPLCUqetQbahYNu","e":"eas.pqa.evernym.com:80/agency/msg","v":"E194CfHi5GGRiy1nThMorPf3jBEm4tvcAgcb65JFfxc7"},"sc":"MS-101","sm":"message created","t":"there","threadId":null,"version":"1.0"}
-        )
-      }, 1000)
+      })
     }
-    // ---!!!---
 
     AppState.addEventListener('change', this._handleAppStateChange)
   }

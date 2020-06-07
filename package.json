@@ -145,9 +145,7 @@
     "remotedev-rn-debugger": "0.8.3",
     "shelljs": "^0.8.3",
     "yargs": "^14.2.0",
-    "yarnhook": "^0.4.0",
-    "react-native-tcp": "3.3.1",
-    "stream-browserify": "2.0.2"
+    "yarnhook": "^0.4.0"
   },
   "rnpm": {
     "assets": [

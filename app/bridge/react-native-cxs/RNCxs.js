@@ -719,7 +719,7 @@ export async function toUtf8FromBase64(
   data: string,
   base64EncodingOption: string = 'NO_WRAP'
 ) {
-  return RNIndy.toUtf8FromBase64(data, base64EncodingOption)
+  return await RNIndy.toUtf8FromBase64(data, base64EncodingOption)
 }
 
 export async function generateThumbprint(

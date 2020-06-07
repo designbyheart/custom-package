@@ -40,8 +40,6 @@ describe('Home screen', () => {
 
   it('open and close menu and scanner', async () => {
     await element(by.id(BURGER_MENU)).tap()
-    // await element(by.id(HOME_CONTAINER)).swipe('left', 'slow') // it doesn't work
-    await element(by.text(SCAN_BUTTON)).tap()
     await element(by.text(SCAN_BUTTON)).tap()
     await element(by.id(QR_CODE_SCANNER_CLOSE_BUTTON)).tap()
   })
