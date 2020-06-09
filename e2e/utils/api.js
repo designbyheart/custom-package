@@ -26,6 +26,7 @@ const httpsConfig = {
 }
 
 function getVerityApi() {
+  //$FlowFixMe
   let api = `https://vui.p${process.env.environment}.evernym.com` // we don't use any environment except `qa` and `dev`
   console.log(api)
   if (!api) {
@@ -67,6 +68,7 @@ const inboxConfig = {
   },
 }
 
+//$FlowFixMe
 const devAgencyUrl = `https://agency.p${process.env.environment}.evernym.com`
 
 // not putting `await` here because we don't want to block here
