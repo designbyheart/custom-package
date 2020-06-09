@@ -19,13 +19,9 @@ beforeAll(async () => {
   await unlock() // moved here to run before each `describe` only, not before each `it`
 })
 
-beforeEach(async () => {
-  // await unlock()
-})
+beforeEach(async () => {})
 
-afterEach(async () => {
-  // await device.terminateApp()
-})
+afterEach(async () => {})
 
 afterAll(async () => {
   // await device.terminateApp()
