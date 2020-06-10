@@ -56,13 +56,13 @@ brew uninstall applesimutils
 brew install applesimutils
 ```
 
-> If tests still does not find simulator/device, then make sure that simulator is running before running tests. Run command `$ xcrun instruments -w "iPhone 7 (12.1)"` to launch simulator
+> If tests still does not find simulator/device, then make sure that simulator is running before running tests. Run command `$ xcrun simctl boot "iPhone 7"` to launch simulator
 
 > If our tests start running and installs the app on simulator/device and then app does not proceed further and hangs/crash. Then try to run `$ detox clean-framework-cache && detox build-framework-cache`. Also, go to node_modules/detox/ios and unzip the source files and try to run tests again.
 
 #### Running simulators
 
-* `$ xcrun instruments -w "iPhone 7 (12.1)"` - this command can launch a simulator directly
+* `$ xcrun simctl boot "iPhone 7"` - this command can launch a simulator directly
 * If the xcrun command does not launch the iOS simulator then launch it from XCode. From menu `XCode -> Open Developer tool -> Simulators`
 
 ## Running tests

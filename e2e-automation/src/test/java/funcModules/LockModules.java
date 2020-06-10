@@ -116,7 +116,7 @@ public class LockModules extends AppPageInjector {
 	 */
 	public void navigateswitchEnv(AppiumDriver driver) throws Exception {
 		chooseLockPage.eula_Accept(driver).click();
-		backuprestoreWalletPage.startFresh_Button(driver).click();
+//		backuprestoreWalletPage.startFresh_Button(driver).click();
 		AppiumUtils.longPress(driver, chooseLockPage.or_Text(driver));
 		AppiumUtils.nClick(10, chooseLockPage.or_Text(driver));
 		if((Config.Device_Type.equals("iOS")||Config.Device_Type.equals("awsiOS"))) {

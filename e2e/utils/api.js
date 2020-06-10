@@ -1,8 +1,7 @@
+// @flow
 /**
  * @jest-environment node
  */
-
-// @flow
 
 import { post, get } from 'axios'
 import imap from 'imap-simple'
@@ -10,6 +9,10 @@ import moment from 'moment'
 import R from 'ramda'
 import https from 'https'
 import fs from 'fs'
+import { exec } from 'child-process-async'
+
+//$FlowFixMe
+require('tls').DEFAULT_ECDH_CURVE = 'auto'
 
 const httpsConfig = {
   timeout: 150000,
@@ -18,13 +21,14 @@ const httpsConfig = {
   }),
   auth: {
     username: 'demo',
-    password: 'ktjo6iKiJsn7EGlCCZj07qKw3',
+    password: process.env.VUI_PWD,
   },
 }
 
 function getVerityApi() {
-  // let api = process.env.VERITY_API || null
-  let api = 'https://vui.pqa.evernym.com'
+  //$FlowFixMe
+  let api = `https://vui.p${process.env.environment}.evernym.com` // we don't use any environment except `qa` and `dev`
+  console.log(api)
   if (!api) {
     return null
   }
@@ -40,7 +44,6 @@ function getVerityApi() {
 }
 
 const verityBaseUrl = getVerityApi()
-console.log(verityBaseUrl)
 
 if (!verityBaseUrl) {
   throw new Error(
@@ -57,15 +60,16 @@ if (!verityBaseUrl) {
 const inboxConfig = {
   imap: {
     user: 'number.2018@yahoo.com',
-    password: 'Evernym123',
+    password: process.env.MAIL_PWD,
     host: 'imap.mail.yahoo.com',
     port: 993,
     tls: true,
-    authTimeout: 3000,
+    authTimeout: 5000,
   },
 }
 
-const devAgencyUrl = 'https://agency.pqa.evernym.com'
+//$FlowFixMe
+const devAgencyUrl = `https://agency.p${process.env.environment}.evernym.com`
 
 // not putting `await` here because we don't want to block here
 // it should run asynchronously, we will wait for inbox to open
@@ -85,7 +89,7 @@ const emailFetchOptions = {
 }
 
 export async function getInvitation() {
-  const invitationId = await post(
+  const [invitationId, qrCode] = await post(
     `${verityBaseUrl}/connections`,
     {
       name: 'Alex',
@@ -99,11 +103,15 @@ export async function getInvitation() {
       }),
       auth: {
         username: 'demo',
-        password: 'ktjo6iKiJsn7EGlCCZj07qKw3',
+        password: process.env.VUI_PWD,
       },
     }
-  ).then(res => res.data.id)
-  console.log(invitationId)
+  ).then(res => [res.data.id, res.data.qrCode])
+
+  const { stdout } = await exec(
+    `echo "${qrCode}" | cut -c 23- | base64 --decode > tmp.png && zbarimg tmp.png && rm tmp.png`
+  )
+  const jsonData = stdout.substr(8)
 
   await new Promise(r => setTimeout(r, 30000)) // wait before fetching latest message
 
@@ -127,9 +135,6 @@ export async function getInvitation() {
     appLinkIndex + appLink.length + tokenSize
   )
 
-  console.log(latestEmailBody)
-  console.log(token)
-
   // no need to wait for invitation to be fetched
   // we can call this function only to get invitation token
   // and when we need actual invitation data, then we can resolve for
@@ -138,8 +143,14 @@ export async function getInvitation() {
   const fetchingInvitation = get(`${devAgencyUrl}/agency/url-mapper/${token}`)
     .then(R.compose(get, R.path(['data', 'url'])))
     .catch(console.error)
-  console.log(fetchingInvitation)
-  return [token, invitationId, fetchingInvitation, `${appLink}${token}`]
+
+  return [
+    token,
+    invitationId,
+    fetchingInvitation,
+    `${appLink}${token}`,
+    jsonData,
+  ]
 }
 
 export const CLAIM_OFFER_PROFILE_INFO = 'Profile Info'

@@ -145,8 +145,8 @@ public class DeviceFarmSessionTest extends IntSetup {
 //        objBackupPage.closeButton(driver).click();
         objSettingsPage.biometricsButton(driver).click();
         objBiometricsPage.okButton(driver).click();
-//        objSettingsPage.passcodeButton(driver).click();
-//        objPasscodePage.backArrow(driver).click();
+        objSettingsPage.passcodeButton(driver).click();
+        objPasscodePage.backArrow(driver).click();
 //        // CM-2616
 //        objSettingsPage.chatButton(driver).click();
 //        objChatPage.backArrow(driver).click();

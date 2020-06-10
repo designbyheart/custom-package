@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux'
 import { RNCamera } from 'react-native-camera'
 import Permissions from 'react-native-permissions'
 import { Alert, Platform, PermissionsAndroid, AppState } from 'react-native'
+import { detox } from 'react-native-dotenv'
+
 import { Container, QRScanner } from '../components'
 import {
   color,
@@ -308,6 +310,19 @@ export class QRCodeScannerScreen extends Component<
       // so for the first time mount as well we need to check camera permission
       this.checkCameraAuthorization()
     }
+
+    if (detox === 'yes') {
+      setTimeout(async () => {
+        try {
+          // get invitation from server running inside detox test
+          const invitation = await (await fetch('http://localhost:1337')).json()
+          this.onRead(invitation)
+        } catch (e) {
+          console.log('error')
+        }
+      })
+    }
+
     AppState.addEventListener('change', this._handleAppStateChange)
   }
 

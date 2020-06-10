@@ -13,7 +13,8 @@ const shell = require('shelljs')
 const readFile = promisify(fs.readFile)
 const readDir = promisify(fs.readdir)
 // this is the path relative to package.json
-const testsDirectory = 'e2e/__tests__'
+// const testsDirectory = 'e2e/__tests__' // removed due to `-d` parameter
+let testsDirectory
 
 const detoxConfig = require('../package.json').detox.configurations
 
@@ -42,6 +43,12 @@ const args = yargs
     describe: 'which test to run',
     string: true,
   })
+  .option('d', {
+    alias: 'draft',
+    describe: 'run tests from __draft__ folder',
+    default: false,
+    boolean: true,
+  })
   .option('e', {
     alias: 'environment',
     describe: 'which environment to use QA Test1 or DEV-RC',
@@ -59,7 +66,7 @@ const args = yargs
       'devteam3',
       'devrc',
     ],
-    default: ['qatest1'],
+    default: ['qa'],
   })
   .option('k', {
     alias: 'skip',
@@ -78,11 +85,13 @@ const args = yargs
     'Run e2e with update, build release mode, on simulators, with detox config as -r, and test file to run'
   )
   .help().argv
-;(async function() {
+;(async function(done) {
+  testsDirectory = args.draft ? 'e2e/__draft__' : 'e2e/__tests__'
   await runBuildIfNeeded(args)
   const exitCode = await runTests(args)
-  console.log("Result exit code: " + exitCode)
+  console.log('Result exit code: ' + exitCode)
   process.exit(exitCode)
+  done()
 })()
 
 async function runBuildIfNeeded(args) {
@@ -170,14 +179,14 @@ async function runTests(args) {
     if (!args.skip) {
       const initialTestRun = spawn(
         'detox',
-        [...initialTestArgs, `${testsDirectory}/initial.spec.js`],
+        [...initialTestArgs, 'e2e/__tests__/initial.spec.js'], // path to initila test is absolute - we must use it for any test folder
         { stdio: 'inherit' }
       )
       // wait for initial test run to finish
       const { stdout, stderr, exitCode } = await initialTestRun
 
       if (exitCode) {
-		return exitCode
+        return exitCode
       }
     }
 
@@ -215,6 +224,6 @@ async function runTests(args) {
     // wait for test run to finish
     const { stdout, stderr, exitCode } = await testRun
 
-   	return exitCode
+    return exitCode
   }
 }

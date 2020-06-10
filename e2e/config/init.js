@@ -8,20 +8,22 @@ import { unlock } from '../utils/lock-unlock'
 jest.setTimeout(120000)
 const config = require('../../package.json').detox
 
-beforeAll(async done => {
-  // await detox.init(config)
+beforeAll(async () => {
   await detox.init(config, { launchApp: false })
-  await device.launchApp({ permissions: { camera: 'YES' } })
+  await device.launchApp({
+    permissions: { camera: 'YES', photos: 'YES', notifications: 'YES' },
+  })
   await storeBootedDeviceId()
   setDeviceType(device.getPlatform())
-  done()
+
+  await unlock() // moved here to run before each `describe` only, not before each `it`
 })
 
-beforeEach(async () => {
-  await unlock()
-})
+beforeEach(async () => {})
 
-afterAll(async done => {
+afterEach(async () => {})
+
+afterAll(async () => {
+  // await device.terminateApp()
   await detox.cleanup()
-  done()
 })

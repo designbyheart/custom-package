@@ -23,7 +23,7 @@ public class PasscodePageAndroidV2 implements PasscodePageV2 {
         // FIXME
         return AppiumUtils.findElement(
                 driver,
-                "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup",
+                "//android.view.ViewGroup[@content-desc=\"back-arrow\"]",
                 "Back Arrow"
         );
     }

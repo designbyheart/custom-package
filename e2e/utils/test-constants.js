@@ -20,12 +20,16 @@ export const NATIVE_ALERT_OK_MATCHER = () =>
     ? by.label(OK_TEXT_ALERT).and(by.type(NATIVE_ALERT_TYPE()))
     : by.text(OK_TEXT_ALERT).and(by.type(NATIVE_ALERT_TYPE()))
 export const TEST_PASS_CODE = '000000'
+export const TEST_PASS_CODE_CHANGED = '111111'
 export const USER_AVATAR = 'user-avatar'
 export const BACK_ARROW = 'back-arrow-touchable'
+export const BURGER_MENU = 'burger-menu'
+export const SCAN_BUTTON = 'Scan'
 
 // home
 export const HOME_FEEDBACK_BUTTON = 'home-feedback-id-label'
 export const HOME_CONTAINER = 'home-container'
+export const HOME_HEADER = 'Home'
 
 // claim offer
 export const CLAIM_OFFER_ICON_CLOSE = 'claim-offer-icon-close-touchable'
@@ -70,19 +74,57 @@ export const QR_CODE_INPUT_ENV_SWITCH = 'qr-code-text-input-env-switch'
 export const QR_CODE_ENV_SWITCH_URL =
   'https://s3-us-west-2.amazonaws.com/vcx-env/dev'
 export const QR_CODE_NATIVE_ALERT_SWITCH_TEXT = 'Switch'
+export const QR_CODE_SCANNER_CLOSE_BUTTON = 'close-qr-scanner-icon'
 
 // settings
-export const SETTINGS_PASS_CODE = 'settings-pass-code-label-touchable'
-export const SETTINGS_TOUCH_ID = 'settings-touch-id-label-touchable'
-export const SETTINGS_CHAT = 'settings-chat-id-label-touchable'
+// export const SETTINGS_PASS_CODE = 'settings-pass-code-label-touchable'
+// export const SETTINGS_TOUCH_ID = 'settings-touch-id-label-touchable'
+// export const SETTINGS_CHAT = 'settings-chat-id-label-touchable'
+export const SETTINGS_CONTAINER = 'settings-container'
+export const SETTINGS_HEADER = 'Settings'
+export const SETTINGS_CREATE_BACKUP = 'Create a Backup'
+export const BACKUP_CLOSE = 'recovery-header-close-image'
+export const SETTINGS_BIOMETRICS = 'Biometrics'
+export const BIOMETRICS_OK = 'Ok'
+export const SETTINGS_PASSCODE = 'Passcode'
+export const PASSCODE_BACK_ARROW = 'back-arrow'
+export const SETTINGS_CHAT = 'Chat With Us'
+export const SETTINGS_ABOUT = 'About'
+export const SETTINGS_ONFIDO = 'ONFIDO'
 
 // switch environment screen
 export const SWITCH_ENVIRONMENT_DEV_BUTTON = 'switch-environment-dev'
 export const SWITCH_ENVIRONMENT_QA_TEST1_BUTTON = 'switch-environment-qatest1'
 export const SWITCH_ENVIRONMENT_DEV_TEAM1_BUTTON = 'switch-environment-devteam1'
 export const APP_ENVIRONMENT = `switch-environment-${process.env.environment ||
-  'qatest1'}`
+  'qa'}`
 export const SWITCH_ENVIRONMENT_SAVE_BUTTON = 'switch-environment-footer-accept'
 
 // screenshot names
 export const SCREENSHOT_HOME = 'home.jpg'
+
+// menu
+export const MENU_CONTAINER = 'menu-container'
+export const MENU_HOME = 'Home'
+export const MENU_MY_CONNECTIONS = 'My Connections'
+export const MENU_SETTINGS = 'Settings'
+
+// chat
+export const CHAT_CANCEL = 'Cancel'
+export const CHAT_CLOSE = 'Close'
+export const CHAT_HEADER = 'Chat with Evernym'
+export const CHAT_NEW_MESSAGE = 'New Message'
+export const CHAT_TEXT_VIEW = 'UITextView'
+export const CHAT_SEND_BUTTON = 'Send'
+export const CHAT_SUCCESS_MESSAGE = 'We will respond to your message soon.'
+
+// about
+export const ABOUT_BACK_ARROW = 'back-arrow-touchable'
+export const ABOUT_HEADER = 'About this App'
+export const ABOUT_TAC_BUTTON_HEADER = 'Terms and Conditions'
+export const ABOUT_PP_BUTTON_HEADER = 'Privacy Policy'
+
+// onfido
+export const ONFIDO_BACK_ARROW = 'header-back'
+export const ONFIDO_CUSTOM_BACK_ARROW = 'back'
+export const ONFIDO_ACCEPT_BUTTON = 'I accept'
