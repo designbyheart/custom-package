@@ -27,9 +27,15 @@ import {
   CLAIM_OFFER_ACCEPTED,
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
+  DENY_CLAIM_OFFER,
+  DENY_CLAIM_OFFER_FAIL,
+  DENY_CLAIM_OFFER_SUCCESS,
 } from '../../claim-offer/type-claim-offer'
 import { bindActionCreators } from 'redux'
-import { acceptClaimOffer } from '../../claim-offer/claim-offer-store'
+import {
+  acceptClaimOffer,
+  denyClaimOffer,
+} from '../../claim-offer/claim-offer-store'
 import {
   UPDATE_ATTRIBUTE_CLAIM,
   ERROR_SEND_PROOF,
@@ -190,6 +196,7 @@ export const reTryActions = [
   PAID_CREDENTIAL_REQUEST_FAIL,
   ERROR_SEND_PROOF,
   DENY_PROOF_REQUEST_FAIL,
+  // DENY_CLAIM_OFFER_FAIL, --> Uncomment this when we have vcx deny claim offer functions in place.
 ]
 
 function getRetryStatus(event: *): boolean {
@@ -201,6 +208,7 @@ const loadingActions = [
   CLAIM_OFFER_ACCEPTED,
   UPDATE_ATTRIBUTE_CLAIM,
   DENY_PROOF_REQUEST,
+  DENY_CLAIM_OFFER,
 ]
 function getLoadingStatus(status: string) {
   return loadingActions.includes(status)
@@ -212,6 +220,7 @@ function getRetryFunction({
   acceptClaimOffer,
   reTrySendProof,
   denyProofRequest,
+  denyClaimOffer,
 }: *): () => void {
   if (
     event.action === SEND_CLAIM_REQUEST_FAIL ||
@@ -240,6 +249,12 @@ function getRetryFunction({
     }
   }
 
+  if (event.action === DENY_CLAIM_OFFER_FAIL) {
+    return () => {
+      denyClaimOffer(event.originalPayload.uid)
+    }
+  }
+
   return () => {}
 }
 
@@ -250,6 +265,7 @@ const mapDispatchToProps = dispatch =>
       reTrySendProof,
       deleteHistoryEvent,
       denyProofRequest,
+      denyClaimOffer,
     },
     dispatch
   )

@@ -27,6 +27,7 @@ import { addPendingRedirection } from '../lock/lock-store'
 import {
   getSmsPendingInvitation,
   safeToDownloadSmsInvitation,
+  convertSmsPayloadToInvitation,
 } from '../sms-pending-invitation/sms-pending-invitation-store'
 import type { SplashScreenProps } from './type-splash-screen'
 import type { Store } from '../store/type-store'
@@ -160,6 +161,7 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
                 identifier,
                 backRedirectRoute: homeDrawerRoute,
                 showExistingConnectionSnack: true,
+                qrCodeInvitationPayload: convertSmsPayloadToInvitation(payload),
               }
             }
 

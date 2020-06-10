@@ -114,6 +114,36 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void getProvisionToken(String agencyConfig, Promise promise) {
+        try {
+            UtilsApi.vcxGetProvisionToken(agencyConfig).exceptionally((t) -> {
+                Log.e(TAG, "getProvisionToken: ", t);
+                promise.reject("FutureException", t.getMessage());
+                return null;
+            }).thenAccept(result -> {
+                Log.d(TAG, "Success response provisionn token");
+                BridgeUtils.resolveIfValid(promise, result);
+            });
+        } catch (VcxException e) {
+            promise.reject("VCXException", e.getMessage());
+        }
+    }
+
+    @ReactMethod 
+    public void createOneTimeInfoWithToken(String agencyConfig, String token, Promise promise) {
+        Log.d(TAG, "createOneTimeInfoWithToken() called with: agencyConfig = [" + agencyConfig + "], token = [" + token + "]");
+        BridgeUtils.writeCACert(this.getReactApplicationContext());
+
+        try {
+            String result = UtilsApi.vcxAgentProvisionWithToken(agencyConfig, token);
+            BridgeUtils.resolveIfValid(promise, result);
+        } catch (VcxException e) {
+            promise.reject("VCXException", e.getMessage());
+            e.printStackTrace();
+        }
+    } 
+
+    @ReactMethod
     public void getGenesisPathWithConfig(String poolConfig, String fileName, Promise promise) {
         Log.d(TAG, "getGenesisPathWithConfig() called with: poolConfig = [" + poolConfig + "], promise = [" + promise
                 + "]");

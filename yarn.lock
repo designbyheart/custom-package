@@ -10240,6 +10240,11 @@ react-native-camera@^1.12.0:
   dependencies:
     prop-types "^15.6.2"
 
+react-native-check-notification-permission@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-check-notification-permission/-/react-native-check-notification-permission-1.0.5.tgz#d7de26eba92c1fb775737e218b659fce345d3eed"
+  integrity sha512-p6knr3bE1bU1zyPO7FqKOTB8FQGpcHJA1vAT3sOTOiD6ojuhwNip/AyvrJKZ9QvVtxzEc6JPB94R2urT0VYFJw==
+
 react-native-device-info@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-2.2.2.tgz#777388b8cff4594c8db2ea3a53f2f1f9e2c611a1"

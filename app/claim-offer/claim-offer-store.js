@@ -43,10 +43,14 @@ import {
   RESET_CLAIM_REQUEST_STATUS,
   SEND_CLAIM_REQUEST_SUCCESS,
   SEND_CLAIM_REQUEST_FAIL,
+  DENY_CLAIM_OFFER,
+  DENY_CLAIM_OFFER_SUCCESS,
+  DENY_CLAIM_OFFER_FAIL,
 } from './type-claim-offer'
 import type {
   ClaimOfferStore,
   ClaimOfferAction,
+  ClaimOfferDenyAction,
   ClaimOfferShownAction,
   ClaimOfferAcceptedAction,
   ClaimOfferResponse,
@@ -99,6 +103,7 @@ import type {
 import type { LedgerFeesData } from '../ledger/type-ledger-store'
 import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
+import { customLogger } from '../store/custom-logger'
 
 const claimOfferInitialState = {
   vcxSerializedClaimOffers: {},
@@ -120,6 +125,21 @@ export const claimOfferReceived = (
 // we set claim offer status as shown, so another code path doesn't show it
 export const claimOfferShown = (uid: string) => ({
   type: CLAIM_OFFER_SHOWN,
+  uid,
+})
+
+export const denyClaimOffer = (uid: string) => ({
+  type: DENY_CLAIM_OFFER,
+  uid,
+})
+
+export const denyClaimOfferSuccess = (uid: string) => ({
+  type: DENY_CLAIM_OFFER_SUCCESS,
+  uid,
+})
+
+export const denyClaimOfferFail = (uid: string) => ({
+  type: DENY_CLAIM_OFFER_FAIL,
   uid,
 })
 
@@ -212,6 +232,31 @@ export function convertClaimRequestToEdgeClaimRequest(
     from_did: claimRequest.userPairwiseDid,
     tid: '1',
     mid: '1',
+  }
+}
+
+export function* denyClaimOfferSaga(
+  action: ClaimOfferDenyAction
+): Generator<*, *, *> {
+  const { uid } = action
+  const claimOffer = yield select(getClaimOffer, uid)
+  const remoteDid: string = claimOffer.remotePairwiseDID
+  const userPairwiseDid: string | null = yield select(
+    getUserPairwiseDid,
+    remoteDid
+  )
+
+  if (!userPairwiseDid) {
+    customLogger.log('Connection not found while trying to deny proof request.')
+    return
+  }
+
+  try {
+    yield call(delay, 1500)
+    yield put(denyClaimOfferSuccess(uid))
+  } catch (e) {
+    yield put(denyClaimOfferFail(uid))
+    customLogger.log('something went wrong trying to deny proof request.')
   }
 }
 
@@ -346,6 +391,10 @@ function* claimStorageSuccessSaga(
 
 export function* watchClaimStorageSuccess(): any {
   yield takeEvery(CLAIM_STORAGE_SUCCESS, claimStorageSuccessSaga)
+}
+
+export function* watchClaimOfferDeny(): any {
+  yield takeEvery(DENY_CLAIM_OFFER, denyClaimOfferSaga)
 }
 
 function* claimStorageFailSaga(

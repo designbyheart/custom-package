@@ -644,11 +644,11 @@ class ModalContentProof extends Component<
           />
         </View>
         <ModalButtons
-          onPress={() => this.onSend()}
-          onIgnore={() => this.onIgnore()}
+          onPress={this.onSend}
+          onIgnore={this.onDeny}
           colorBackground={this.props.colorBackground}
           secondColorBackground={this.props.secondColorBackground}
-          leftBtnText={'Ignore'}
+          leftBtnText={'Reject'}
           rightBtnText={primaryActionText}
           disableAccept={
             !enablePrimaryActionStatus || this.state.disableSendButton

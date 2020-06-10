@@ -53,9 +53,10 @@ jest.mock('react-native-firebase', () => ({
     removeAllDeliveredNotifications: jest.fn(),
   })),
   messaging: jest.fn(() => ({
-    requestPermission: jest.fn(() => Promise.resolve()),
-    onTokenRefresh: jest.fn(() => Promise.resolve()),
-    getToken: jest.fn(() => Promise.resolve()),
+    requestPermission: jest.fn(() => Promise.resolve(true)),
+    onTokenRefresh: jest.fn(() => Promise.resolve('refreshed-token-value')),
+    getToken: jest.fn(() => Promise.resolve('token-value')),
+    hasPermission: jest.fn(() => Promise.resolve(true)),
   })),
 }))
 
@@ -259,6 +260,7 @@ NativeModules.RNIndy = {
   encryptVcxLog: jest.fn(),
   exitAppAndroid: jest.fn(),
   updateMessages: jest.fn(),
+  shutdownVcx: jest.fn(() => true),
 }
 
 NativeModules.I18nManager = {
@@ -334,4 +336,8 @@ jest.mock('react-native-snackbar', () => ({
 
 jest.mock('react-native-file-viewer', () => ({
   open: jest.fn((path, options) => Promise.resolve()),
+}))
+
+jest.mock('react-native-check-notification-permission', () => ({
+  changeNotificationSetting: jest.fn(),
 }))

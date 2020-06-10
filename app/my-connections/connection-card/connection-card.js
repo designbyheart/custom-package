@@ -108,13 +108,16 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
       'CLAIM OFFER RECEIVED': 'Offering ' + credentialName,
       QUESTION_RECEIVED: question,
       UPDATE_QUESTION_ANSWER: question,
-      DENY_PROOF_REQUEST_SUCCESS: `You denied ${credentialName}`,
-      DENY_PROOF_REQUEST: `Denying "${credentialName}"`,
-      DENY_PROOF_REQUEST_FAIL: `Failed to deny "${credentialName}"`,
+      DENY_PROOF_REQUEST_SUCCESS: `You rejected ${credentialName}`,
+      DENY_PROOF_REQUEST: `Rejecting "${credentialName}"`,
+      DENY_PROOF_REQUEST_FAIL: `Failed to reject "${credentialName}"`,
       SEND_CLAIM_REQUEST_FAIL: `Failed to accept ${credentialName}`,
       PAID_CREDENTIAL_REQUEST_FAIL: `Failed to accept "${credentialName}"`,
       ERROR_SEND_PROOF: `Failed to send "${credentialName}"`,
       UPDATE_ATTRIBUTE_CLAIM: `Sending "${credentialName}" ...`,
+      DENY_CLAIM_OFFER: `Rejecting "${credentialName}"`,
+      DENY_CLAIM_OFFER_SUCCESS: `You rejected ${credentialName}`,
+      DENY_CLAIM_OFFER_FAIL: `Failed to reject "${credentialName}"`,
     }
 
     return statusMsg[status]

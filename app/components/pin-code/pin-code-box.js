@@ -9,7 +9,7 @@ import { color } from '../../common/styles/constant'
 
 const keyboard = Platform.OS === 'ios' ? 'number-pad' : 'numeric'
 
-const isDigit = (text) => {
+const isDigit = text => {
   if (isNaN(parseInt(text))) {
     return false
   }
@@ -126,7 +126,7 @@ export default class PinCodeBox extends PureComponent<
           keyboardAppearance="dark"
           maxLength={this.maxLength}
           onChangeText={this.onPinChange}
-          ref={(inputBox) => {
+          ref={inputBox => {
             this.inputBox = inputBox
           }}
           style={styles.input}
