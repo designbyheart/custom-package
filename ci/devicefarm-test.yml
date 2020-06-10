@@ -1,0 +1,18 @@
+devicefarm-test-launch:
+  stage: devicefarm-test
+  image: ${CI_REGISTRY_IMAGE}/devicefarm:${CI_COMMIT_REF_SLUG}
+  dependencies:
+    - build-android-master
+  tags:
+    - docker-machine
+    - micro
+  rules:
+    - if: '$SCHEDULED_RUN == "true"'
+      when: always
+  script:
+    - mkdir ~/.aws
+    - cp ${AWS_DEVICEFARM_CONFIG} ~/.aws/config
+    - cp ${AWS_DEVICEFARM_CREDENTIALS} ~/.aws/credentials
+    - cd e2e-automation
+    - mvn install -DskipTests
+    - python appium-launcher/script.py --test_file_path target/zip-with-dependencies.zip --app_file_path ../android/app/build/outputs/apk/release/app-armeabi-v7a-release.apk

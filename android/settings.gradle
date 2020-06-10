@@ -1,4 +1,6 @@
 rootProject.name = 'ConnectMe'
+include ':react-native-check-notification-permission'
+project(':react-native-check-notification-permission').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-check-notification-permission/android')
 include ':react-native-file-viewer'
 project(':react-native-file-viewer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-file-viewer/android')
 include ':react-native-screens'

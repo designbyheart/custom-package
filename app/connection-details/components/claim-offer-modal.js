@@ -33,6 +33,7 @@ import {
   claimOfferIgnored,
   claimOfferShowStart,
   resetClaimRequestStatus,
+  denyClaimOffer,
 } from '../../claim-offer/claim-offer-store'
 import { withBottomUpSliderScreen } from '../../components/bottom-up-slider-screen/bottom-up-slider-screen'
 import { txnAuthorAgreementRoute } from '../../common'
@@ -181,10 +182,10 @@ class ClaimOfferModal extends Component<any, *> {
           !isClaimOfferAccepted && (
             <ModalButtons
               onPress={this.onAccept}
-              onIgnore={this.onIgnore}
+              onIgnore={this.onDeny}
               colorBackground={this.props.claimThemePrimary}
               secondColorBackground={this.props.claimThemeSecondary}
-              leftBtnText={'Ignore'}
+              leftBtnText={'Reject'}
               rightBtnText={acceptButtonText}
               buttonsWrapperStyles={{
                 borderTopLeftRadius: 0,
@@ -241,6 +242,11 @@ class ClaimOfferModal extends Component<any, *> {
 
   onIgnore = () => {
     this.props.claimOfferIgnored(this.props.uid)
+    this.hideModal()
+  }
+
+  onDeny = () => {
+    this.props.denyClaimOffer(this.props.uid)
     this.hideModal()
   }
 
@@ -339,6 +345,7 @@ const mapDispatchToProps = dispatch =>
       claimOfferShowStart,
       resetClaimRequestStatus,
       newConnectionSeen,
+      denyClaimOffer,
     },
     dispatch
   )

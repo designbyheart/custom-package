@@ -36,6 +36,7 @@ export const remoteMessageParser = (message: RemoteMessage) => {
       pushNotifMsgText,
       pushNotifMsgTitle,
       senderLogoUrl,
+      msg,
     },
   } = message
 
@@ -47,6 +48,7 @@ export const remoteMessageParser = (message: RemoteMessage) => {
     senderLogoUrl,
     pushNotifMsgText,
     pushNotifMsgTitle,
+    msg,
   }
 }
 
@@ -61,7 +63,16 @@ export class PushNotification extends Component<PushNotificationProps, void> {
   // Because the type returned from Notification for data is: { [string]: string }, we're parsing it in order to have proper type checks
   notificationParser(notification: Notification) {
     const {
-      data: { forDID, uid, type, remotePairwiseDID, senderLogoUrl },
+      data: {
+        forDID,
+        uid,
+        type,
+        remotePairwiseDID,
+        senderLogoUrl,
+        pushNotifMsgText,
+        pushNotifMsgTitle,
+        msg,
+      },
     } = notification
 
     return {
@@ -70,6 +81,9 @@ export class PushNotification extends Component<PushNotificationProps, void> {
       type,
       remotePairwiseDID,
       senderLogoUrl,
+      pushNotifMsgText,
+      pushNotifMsgTitle,
+      msg,
     }
   }
 
@@ -172,7 +186,6 @@ export class PushNotification extends Component<PushNotificationProps, void> {
         if (token) {
           // user has a device token
           this.saveDeviceToken(token)
-          this.listenForTokenUpdate()
         } else {
           // user doesn't have a device token
         }
@@ -185,6 +198,7 @@ export class PushNotification extends Component<PushNotificationProps, void> {
         // or we need to retry getToken function a few times
         // TODO:KS Don't know what to do for now
       })
+    this.listenForTokenUpdate()
   }
 
   componentDidUpdate(prevProps: PushNotificationProps) {

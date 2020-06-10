@@ -9,7 +9,6 @@ import type {
 } from '../common/type-common'
 import type { InvitationReceivedAction } from '../invitation/type-invitation'
 import type { NewConnectionAction } from '../store/type-connection-store'
-import type { SendClaimRequestAction } from '../claim-offer/type-claim-offer'
 import type {
   ClaimReceivedAction,
   ClaimStorageSuccessAction,
@@ -18,6 +17,7 @@ import type {
   ClaimOfferReceivedAction,
   ClaimOfferAcceptedAction,
   SendClaimRequestFailAction,
+  SendClaimRequestAction,
 } from '../claim-offer/type-claim-offer'
 import type { Connection } from '../connection/type-connection'
 import type {
@@ -46,6 +46,9 @@ import {
   SEND_CLAIM_REQUEST_SUCCESS,
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
+  DENY_CLAIM_OFFER,
+  DENY_CLAIM_OFFER_SUCCESS,
+  DENY_CLAIM_OFFER_FAIL,
 } from '../claim-offer/type-claim-offer'
 import { CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
 import {
@@ -78,6 +81,9 @@ export const HISTORY_EVENT_STATUS = {
   [CLAIM_OFFER_ACCEPTED]: CLAIM_OFFER_ACCEPTED,
   [CLAIM_OFFER_IGNORED]: 'IGNORED OFFER',
   [CLAIM_OFFER_REJECTED]: 'REJECTED OFFER',
+  [DENY_CLAIM_OFFER]: DENY_CLAIM_OFFER,
+  [DENY_CLAIM_OFFER_SUCCESS]: DENY_CLAIM_OFFER_SUCCESS,
+  [DENY_CLAIM_OFFER_FAIL]: DENY_CLAIM_OFFER_FAIL,
   [CLAIM_STORAGE_SUCCESS]: 'RECEIVED',
   [PROOF_REQUEST_RECEIVED]: 'PROOF RECEIVED',
   [PROOF_REQUEST_IGNORED]: 'IGNORED',

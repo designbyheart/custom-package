@@ -28,7 +28,10 @@ import lock, {
 import smsPendingInvitation, {
   watchSmsPendingInvitationSaga,
 } from '../sms-pending-invitation/sms-pending-invitation-store'
-import claimOffer, { watchClaimOffer } from '../claim-offer/claim-offer-store'
+import claimOffer, {
+  watchClaimOffer,
+  watchClaimOfferDeny,
+} from '../claim-offer/claim-offer-store'
 import proofRequest, {
   watchProofRequestAccepted,
   watchPersistProofRequests,
@@ -127,6 +130,7 @@ sagaMiddleware.run(function*() {
     watchLock(),
     watchSmsPendingInvitationSaga(),
     watchClaimOffer(),
+    watchClaimOfferDeny(),
     watchPushNotification(),
     watchInvitation(),
     watchClaim(),

@@ -345,7 +345,7 @@ export function* makeConnectionWithOnfidoSaga(
       )
       return
     }
-    yield fork(askPushNotificationPermission)
+
     yield put(onfidoConnectionEstablished(onfidoDid))
     yield put(
       updateOnfidoConnectionStatus(onfidoConnectionStatus.CONNECTION_SUCCESS)
@@ -385,43 +385,6 @@ export function* getOnfidoDidSaga(): Generator<*, *, *> {
   yield put(removeOnfidoDid())
   yield* removePersistedOnfidoDidSaga()
   return null
-}
-
-export function* askPushNotificationPermission(): Generator<*, *, *> {
-  const onfidoStatus: OnfidoProcessStatus = yield select(selectOnfidoStatus)
-  const {
-    CHECK_UUID_SUCCESS,
-    CHECK_UUID_ERROR,
-    SDK_ERROR,
-  } = onfidoProcessStatus
-  const validStatesToAskPermission = [
-    CHECK_UUID_SUCCESS,
-    CHECK_UUID_ERROR,
-    SDK_ERROR,
-  ]
-  if (!validStatesToAskPermission.includes(onfidoStatus)) {
-    // if we don't have onfido process in any of the valid states
-    // then we wait for onfido process to go into any of these states
-    // and then we will move ahead with permission
-    while (true) {
-      const { status }: UpdateOnfidoProcessStatusAction = yield take(
-        UPDATE_ONFIDO_PROCESS_STATUS
-      )
-      if (validStatesToAskPermission.includes(status)) {
-        break
-      }
-    }
-  }
-
-  try {
-    // ask permission and update store about it
-    yield call(() => firebase.messaging().requestPermission())
-    yield put(pushNotificationPermissionAction(true))
-  } catch (e) {
-    // not sure what can be done if we get error while asking
-    // for push permission, for now just ignore and let user continue
-    console.log(e)
-  }
 }
 
 export function* getOnfidoToken(): Generator<*, *, *> {

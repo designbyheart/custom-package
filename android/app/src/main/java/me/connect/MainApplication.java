@@ -3,6 +3,7 @@ package me.connect;
 import android.app.Application;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.facebook.react.ReactApplication;
+import com.reactlibrary.RNCheckNotificationPermissionPackage;
 import com.vinzscam.reactnativefileviewer.RNFileViewerPackage;
 import com.swmansion.rnscreens.RNScreensPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
@@ -58,6 +59,7 @@ public class MainApplication extends Application implements ShareApplication, Re
       return Arrays.<ReactPackage>asList(
         new RNDeviceInfo(),
         new MainReactPackage(),
+            new RNCheckNotificationPermissionPackage(),
             new RNFileViewerPackage(),
             new RNScreensPackage(),
             new ReanimatedPackage(),

@@ -683,6 +683,32 @@ RCT_EXPORT_METHOD(createOneTimeInfo: (NSString *)config
   }];
 }
 
+RCT_EXPORT_METHOD(getProvisionToken: (NSString *)config
+                                      resolver: (RCTPromiseResolveBlock) resolve
+                                      rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] getProvisionToken:config
+                                completion:^(NSError *error) {
+    NSLog(@"CONFIG OBJECT", config);
+    if (error != nil && error.code != 0)
+    {
+      NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+      reject(indyErrorCode, @"Error occurred while getting provision token", error);
+    } else {
+      resolve(@{});
+    }
+  }];
+}
+
+RCT_EXPORT_METHOD(createOneTimeInfoWithToken: (NSString *)config
+                                        token: (NSString *)token
+                                        resolver: (RCTPromiseResolveBlock) resolve
+                                        rejecter: (RCTPromiseRejectBlock) reject)
+{
+  resolve([NSString stringWithUTF8String:[[[ConnectMeVcx alloc] init] agentProvisionWithToken:config
+                                        token: token]]);
+}
+
 RCT_EXPORT_METHOD(createConnectionWithInvite: (NSString *)invitationId
                                inviteDetails: (NSString *)inviteDetails
                                     resolver: (RCTPromiseResolveBlock) resolve

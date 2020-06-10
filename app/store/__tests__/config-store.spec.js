@@ -62,6 +62,7 @@ import {
   paymentMethod,
   validQrCodeEnvironmentSwitchUrl,
   userOneTimeInfo,
+  getStore,
 } from '../../../__mocks__/static-data'
 import { downloadEnvironmentDetails } from '../../api/api'
 import {
@@ -80,11 +81,17 @@ import {
   getHandleBySerializedConnection,
   proofDeserialize,
   updateMessages,
+  getProvisionToken,
+  createOneTimeInfoWithToken,
 } from '../../bridge/react-native-cxs/RNCxs'
 import { updatePushToken } from '../../push-notification/push-notification-store'
 import { getPushToken, getAgencyUrl } from '../../store/store-selector'
 import { connectRegisterCreateAgentDone } from '../user/user-store'
-import { homeRoute, splashScreenRoute } from '../../common/route-constants'
+import {
+  homeRoute,
+  splashScreenRoute,
+  invitationRoute,
+} from '../../common/route-constants'
 import {
   walletGet,
   walletSet,
@@ -98,6 +105,8 @@ import { addSerializedClaimOffer } from './../../claim-offer/claim-offer-store'
 import { claimReceivedVcx } from './../../claim/claim-store'
 import { NativeModules } from 'react-native'
 import { Promise } from 'es6-promise'
+import { FETCH_ADDITIONAL_DATA } from '../../push-notification/type-push-notification'
+import AlertAsync from 'react-native-alert-async'
 
 const getConfigStoreInitialState = () =>
   configReducer(undefined, { type: 'INITIAL_TEST_ACTION' })
@@ -450,7 +459,17 @@ describe('config-store:saga', () => {
     },
     user: {},
     route: {
-      currentScreen: homeRoute,
+      currentScreen: invitationRoute,
+    },
+    pushNotification: {
+      ...getStore().getState().pushNotification,
+      pushToken: 'some push token',
+    },
+    lock: {
+      isAppLocked: false,
+    },
+    offline: {
+      offline: false,
     },
   }
   const agencyConfig = {
@@ -466,9 +485,21 @@ describe('config-store:saga', () => {
       .withState(notHydratedNoOneTimeInfoState)
       .dispatch({ type: HYDRATED })
       .provide([
-        [matchers.call.fn(createOneTimeInfo, agencyConfig), userOneTimeInfo],
+        [
+          matchers.call.fn(createOneTimeInfo, agencyConfig),
+          [null, userOneTimeInfo],
+        ],
         [matchers.call.fn(init, { ...userOneTimeInfo, ...agencyConfig }), true],
+        [matchers.call.fn(getProvisionToken), [null, true]],
+        [matchers.call.fn(createOneTimeInfoWithToken), [null, userOneTimeInfo]],
+        [matchers.call.fn(AlertAsync), 'Allow'],
       ])
+      .dispatch({
+        type: FETCH_ADDITIONAL_DATA,
+        notificationPayload: {
+          msg: 'token-msg',
+        },
+      })
       .put(connectRegisterCreateAgentDone(userOneTimeInfo))
       .put(vcxInitSuccess())
       .run()
@@ -486,6 +517,8 @@ describe('config-store:saga', () => {
           matchers.call.fn(createOneTimeInfo, agencyConfig),
           throwError(failProvisionError),
         ],
+        [matchers.call.fn(AlertAsync), 'Allow'],
+        [matchers.call.fn(getProvisionToken), ['error', null]],
         [matchers.call.fn(vcxShutdown, false), true],
       ])
       .put(vcxInitFail(ERROR_VCX_PROVISION_FAIL(errorMessage)))
@@ -500,11 +533,16 @@ describe('config-store:saga', () => {
       .withState(notHydratedNoOneTimeInfoState)
       .dispatch({ type: HYDRATED })
       .provide([
-        [matchers.call.fn(createOneTimeInfo, agencyConfig), userOneTimeInfo],
+        [matchers.call.fn(getProvisionToken), ['error', null]],
+        [
+          matchers.call.fn(createOneTimeInfo, agencyConfig),
+          [null, userOneTimeInfo],
+        ],
         [
           matchers.call.fn(init, { ...userOneTimeInfo, ...agencyConfig }),
           throwError(failInitError),
         ],
+        [matchers.call.fn(AlertAsync), 'Allow'],
       ])
       .put(connectRegisterCreateAgentDone(userOneTimeInfo))
       .put(vcxInitFail(ERROR_VCX_INIT_FAIL(errorMessage)))
@@ -583,7 +621,10 @@ describe('config-store:saga', () => {
       })
       .dispatch({ type: HYDRATED })
       .provide([
-        [matchers.call.fn(createOneTimeInfo, agencyConfig), userOneTimeInfo],
+        [
+          matchers.call.fn(createOneTimeInfo, agencyConfig),
+          [null, userOneTimeInfo],
+        ],
         [matchers.call.fn(init, { ...userOneTimeInfo, ...agencyConfig }), true],
       ])
       .not.put(vcxInitSuccess())
