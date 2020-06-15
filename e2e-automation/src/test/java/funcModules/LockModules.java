@@ -128,7 +128,7 @@ public class LockModules extends AppPageInjector {
 
 	public void navigateSetupPincode(AppiumDriver driver) throws Exception {
 		chooseLockPage.eula_Accept(driver).click();
-		backuprestoreWalletPage.startFresh_Button(driver).click();
+// 		backuprestoreWalletPage.startFresh_Button(driver).click();
 	}
 
 	/**
