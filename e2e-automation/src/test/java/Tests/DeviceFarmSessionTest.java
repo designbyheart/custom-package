@@ -131,7 +131,7 @@ public class DeviceFarmSessionTest extends IntSetup {
         objSettingsPage.settingsContainer(driver).isDisplayed();
         objSettingsPage.settingsHeader(driver).isDisplayed();
         objSettingsPage.burgerMenuButton(driver).isDisplayed();
-        objSettingsPage.createBackupButton(driver).isDisplayed();
+        // objSettingsPage.createBackupButton(driver).isDisplayed();
         objSettingsPage.biometricsButton(driver).isDisplayed();
         objSettingsPage.passcodeButton(driver).isDisplayed();
         objSettingsPage.chatButton(driver).isDisplayed();
