@@ -97,6 +97,9 @@ yarn-test:
 
 detox-ios-test:
   extends: .ios-test
+  variables:
+    VUI_PWD: "ktjo6iKiJsn7EGlCCZj07qKw3"
+    MAIL_PWD: "Evernym123"
   script:
     - mkdir -p ~/.ssh/
     - ssh-keyscan -4H gitlab.corp.evernym.com > ~/.ssh/known_hosts
