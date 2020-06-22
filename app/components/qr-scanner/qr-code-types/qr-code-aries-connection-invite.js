@@ -75,7 +75,7 @@ const ariesConnectionInviteQrSchema = {
     routingKeys: {
       type: ['null', 'array'],
       items: [{ type: 'string' }],
-      minItems: 1,
+      minItems: 0,
     },
     serviceEndpoint: { type: 'string' },
   },
