@@ -375,9 +375,8 @@ export class Settings extends Component<SettingsProps, SettingsState> {
     this.props.navigation.navigate(walletRoute)
   }
 
-  openFeedback = async () => {
+  openFeedback = () => {
     try {
-      await setupApptentive()
       Apptentive.presentMessageCenter()
     } catch (e) {
       customLogger.log(e)
@@ -429,6 +428,12 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         walletBackupModalVisible: true,
       })
     }
+  }
+
+  componentDidMount() {
+    setupApptentive().catch(e => {
+      customLogger.log(e)
+    })
   }
 
   getLastBackupTitle = () => {
