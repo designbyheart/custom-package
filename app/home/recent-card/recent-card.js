@@ -49,6 +49,7 @@ import {
   DENY_PROOF_REQUEST,
 } from '../../proof-request/type-proof-request'
 import { denyProofRequest } from '../../proof-request/proof-request-store'
+import { DefaultLogo } from '../../components/default-logo/default-logo'
 
 class RecentCardComponent extends React.Component<RecentCardProps, void> {
   render() {
@@ -121,17 +122,15 @@ class RecentCardComponent extends React.Component<RecentCardProps, void> {
   }
 }
 
-const renderPlaceholderIfNoImage = (character: string) => (
-  <View style={styles.placeholderIfNoImage}>
-    <Text style={styles.placeholderTextIfNoImage}>{character}</Text>
-  </View>
-)
-
 const renderImageOrText = (logoUrl: string, issuerName: string) => {
   return typeof logoUrl === 'string' ? (
     <Image source={{ uri: logoUrl }} style={styles.issuerLogo} />
   ) : (
-    renderPlaceholderIfNoImage(issuerName[0])
+    <DefaultLogo
+      text={issuerName}
+      size={recentCardSizes.logoSize}
+      fontSize={isiPhone5 ? font.size.S : font.size.M}
+    />
   )
 }
 
@@ -330,20 +329,6 @@ const styles = StyleSheet.create({
     fontFamily: font.family,
     fontStyle: 'italic',
     color: mediumGray,
-  },
-  placeholderIfNoImage: {
-    width: recentCardSizes.logoSize,
-    height: recentCardSizes.logoSize,
-    borderRadius: recentCardSizes.logoSize / 2,
-    backgroundColor: mediumGray,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  placeholderTextIfNoImage: {
-    fontFamily: font.family,
-    fontSize: isiPhone5 ? font.size.S : font.size.M,
-    fontWeight: 'bold',
-    color: white,
   },
   retryText: {
     color: cmRed,

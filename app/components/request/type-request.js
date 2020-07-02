@@ -12,6 +12,7 @@ export type RequestDetailTextPropsText = {
 export type RequestDetailTextProps = RequestDetailTextPropsText
 
 export type RequestDetailAvatarProps = {
+  senderName?: ?string,
   senderLogoUrl?: ?string,
 }
 

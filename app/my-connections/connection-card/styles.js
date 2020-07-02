@@ -1,6 +1,6 @@
 // @flow
 import { StyleSheet, Platform } from 'react-native'
-import { color } from '../../common/styles/constant'
+import { color, grey, white } from '../../common/styles/constant'
 
 const styles = StyleSheet.create({
   animatedContainer: {
@@ -17,21 +17,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: color.border.primary,
-  },
-  initialsContainer: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: color.border.primary,
-  },
-  initialsText: {
-    fontFamily: 'Lato',
-    fontSize: 17,
-    fontWeight: 'bold',
-    color: color.textColor.darkgray,
   },
   newCardContainer: {
     backgroundColor: color.bg.sixteenth.color,

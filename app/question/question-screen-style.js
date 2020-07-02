@@ -13,7 +13,7 @@ import {
   color,
   cmRed,
   deviceHeight,
-  primaryGreen,
+  primaryGreen, grey,
 } from '../common/styles'
 
 const QUESTION_SENDER_LOGO_DIMENSION = 100
@@ -184,6 +184,10 @@ export const getQuestionStylesObject = (
   },
   transparentBack: {
     backgroundColor: 'transparent',
+  },
+  placeholderIfNoImage: {
+    width: QUESTION_SENDER_LOGO_DIMENSION,
+    fontSize: font.size.L,
   },
 })
 

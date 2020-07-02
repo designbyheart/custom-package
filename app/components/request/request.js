@@ -89,7 +89,7 @@ export class Request extends Component<RequestProps, RequestState> {
   }
 
   render() {
-    const { title, message, senderLogoUrl, testID }: RequestProps = this.props
+    const { title, message, senderLogoUrl, testID, senderName }: RequestProps = this.props
 
     return (
       <Container testID="request-container">
@@ -97,6 +97,7 @@ export class Request extends Component<RequestProps, RequestState> {
           <RequestDetail
             title={title}
             message={message}
+            senderName={senderName}
             senderLogoUrl={senderLogoUrl}
             testID={testID}
           />

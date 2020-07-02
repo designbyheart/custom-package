@@ -14,12 +14,7 @@ import {
 } from '../../common/styles/constant'
 
 import type { NewBannerCardProps } from './type-new-banner-card'
-
-const renderPlaceholderIfNoImage = (character: string) => (
-  <View style={styles.placeholderIfNoImage}>
-    <Text style={styles.placeholderTextIfNoImage}>{character}</Text>
-  </View>
-)
+import { DefaultLogo } from '../../components/default-logo/default-logo'
 
 export const NewBannerCard = (props: NewBannerCardProps) => {
   return (
@@ -33,7 +28,11 @@ export const NewBannerCard = (props: NewBannerCardProps) => {
         {typeof props.logoUrl === 'string' ? (
           <Image source={{ uri: props.logoUrl }} style={styles.issuerLogo} />
         ) : (
-          renderPlaceholderIfNoImage(props.issuerName[0].toUpperCase())
+          <DefaultLogo
+            text={params.issuerName[0]}
+            size={newBannerCardSizes.logoSize}
+            fontSize={isiPhone5 ? font.size.M : font.size.ML}
+          />
         )}
       </View>
       <View style={styles.textSection}>
@@ -119,19 +118,5 @@ const styles = StyleSheet.create({
     color: darkGray,
     marginTop: 8,
     marginRight: 8,
-  },
-  placeholderIfNoImage: {
-    width: newBannerCardSizes.logoSize,
-    height: newBannerCardSizes.logoSize,
-    borderRadius: newBannerCardSizes.logoSize / 2,
-    backgroundColor: grey,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  placeholderTextIfNoImage: {
-    fontFamily: font.family,
-    fontSize: isiPhone5 ? font.size.M : font.size.ML,
-    fontWeight: 'bold',
-    color: white,
   },
 })

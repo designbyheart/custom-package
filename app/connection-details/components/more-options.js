@@ -15,6 +15,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserAvatarSource } from '../../store/store-selector'
 import type { Store } from '../../store/type-store'
+import { grey, white } from '../../common/styles'
+import { DefaultLogo } from '../../components/default-logo/default-logo'
 
 const defaultAvatar = require('../../images/UserAvatar.png')
 // TODO: Fix the <any, void> to be the correct types for props and state
@@ -38,7 +40,17 @@ class MoreOptions extends Component<any, void> {
         <View style={styles.smallSquare} />
         <View style={styles.contentWrapper}>
           <View style={styles.row}>
-            <Image style={styles.image} source={{ uri: params.image }} />
+            {typeof params.image === 'string' ? (
+                <Image style={styles.image} source={{ uri: params.image }} />
+              ) :
+              <View style={{marginRight: 5}}>
+                <DefaultLogo
+                  text={params.senderName[0]}
+                  size={24}
+                  fontSize={12}
+                />
+              </View>
+            }
             <Text style={styles.text}>did: {params.senderDID}</Text>
           </View>
           <View style={styles.row}>

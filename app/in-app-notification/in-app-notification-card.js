@@ -228,21 +228,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
   },
-  initialsContainer: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: color.border.primary,
-  },
-  initialsText: {
-    fontFamily: 'Lato',
-    fontSize: 17,
-    fontWeight: 'bold',
-    color: color.textColor.darkgray,
-  },
   avatarSection: {
     height: '100%',
     width: 64,

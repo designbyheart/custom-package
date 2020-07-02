@@ -10,6 +10,8 @@ import {
 } from 'react-native'
 import { ImageColorPicker } from '../../components'
 import { CheckmarkBadge } from '../../components/connection-details/checkmark-badge'
+import { font, grey, isiPhone5, newBannerCardSizes, white } from '../../common/styles'
+import { DefaultLogo } from '../../components/default-logo/default-logo'
 
 // TODO: Fix the <any, void> to be the correct types for props and state
 class ModalHeader extends PureComponent<any, void> {
@@ -26,11 +28,15 @@ class ModalHeader extends PureComponent<any, void> {
       <View style={styles.container}>
         <View style={styles.topSection}>
           <View style={styles.imageSection}>
-            <Image
-              style={styles.image}
-              source={{ uri: imageUrl }}
-              resizeMode="cover"
-            />
+            {typeof imageUrl === 'string' ? (
+              <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
+            ) :
+              <DefaultLogo
+                text={institutialName[0]}
+                size={32}
+                fontSize={21}
+              />
+            }
           </View>
           <View style={styles.issuerAndInfoSection}>
             <Text style={styles.issuerNameText}>{institutialName}</Text>
@@ -81,6 +87,8 @@ const styles = StyleSheet.create({
     width: 64,
     paddingTop: 16,
     paddingLeft: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   issuerAndInfoSection: {
     flex: 1,
