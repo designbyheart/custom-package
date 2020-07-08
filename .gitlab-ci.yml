@@ -110,16 +110,18 @@ detox-ios-test:
     - brew update
     - brew tap wix/brew && brew install applesimutils
     - brew install imagemagick && brew install GraphicsMagick
+    - brew install zbar
     - yarn global add detox-cli
     - yarn
     - yarn pod:update
     - yarn pod:dev:install
     - echo "detox=yes" > .env
+    - echo "detox=yes" > .env.production
     - yarn e2e -b release -e qa -s iphone7
   artifacts:
     paths:
       - e2e/screenshots
-    expire_in: 1 week
+    expire_in: 52 week
 
 ### - iOS - ###
 .build-ios:

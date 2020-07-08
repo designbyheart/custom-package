@@ -16,7 +16,7 @@ export const unlock = async () => {
   try {
     await waitFor(element(by.id(PIN_CODE_INPUT_BOX)))
       .toExist()
-      .withTimeout(2000)
+      .withTimeout(30000)
     // If lock is already setup, then just unlock the app
     await unlockAppViaPassCode()
   } catch (e) {

@@ -2,6 +2,7 @@ package test.java.Tests;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
 import org.openqa.selenium.NoSuchElementException;
@@ -27,7 +28,7 @@ public class DeviceFarmSessionTest extends IntSetup {
     MenuPageV2 objMenuPage = injector.getInstance(MenuPageV2.class);
     MyConnectionsPageV2 objMyConnectionsPage = injector.getInstance(MyConnectionsPageV2.class);
     SettingsPageV2 objSettingsPage = injector.getInstance(SettingsPageV2.class);
-    BackupPageV2 objBackupPage = injector.getInstance(BackupPageV2.class);
+//    BackupPageV2 objBackupPage = injector.getInstance(BackupPageV2.class); // this feature is turned off
     BiometricsPageV2 objBiometricsPage = injector.getInstance(BiometricsPageV2.class);
     PasscodePageV2 objPasscodePage = injector.getInstance(PasscodePageV2.class);
     ChatPageV2 objChatPage = injector.getInstance(ChatPageV2.class);
@@ -48,16 +49,20 @@ public class DeviceFarmSessionTest extends IntSetup {
     @Test(dependsOnMethods = "pincodeSetupTest")
     public void checkMenuElementsVisibility() throws Exception {
         objHomePage.burgerMenuButton(driver).click();
-
-        objMenuPage.menuContainer(driver).isDisplayed();
-        objMenuPage.connectMeBanner(driver).isDisplayed();
-        objMenuPage.userAvatar(driver).isDisplayed();
-        objMenuPage.homeButton(driver).isDisplayed();
-        objMenuPage.myConnectionsButton(driver).isDisplayed();
-        objMenuPage.settingsButton(driver).isDisplayed();
-        objMenuPage.connectMeLogo(driver).isDisplayed();
-        objMenuPage.builtByFooter(driver).isDisplayed();
-        objMenuPage.versionFooter(driver).isDisplayed();
+        if (Config.Device_Type == "iOS") {
+            new TouchAction(driver).tap(43, 100).perform(); // ios workaround
+        }
+        if (Config.Device_Type != "iOS") { // CM-2657
+            objMenuPage.menuContainer(driver).isDisplayed();
+            objMenuPage.connectMeBanner(driver).isDisplayed();
+            objMenuPage.userAvatar(driver).isDisplayed();
+            objMenuPage.homeButton(driver).isDisplayed();
+            objMenuPage.myConnectionsButton(driver).isDisplayed();
+            objMenuPage.settingsButton(driver).isDisplayed();
+            objMenuPage.connectMeLogo(driver).isDisplayed();
+            objMenuPage.builtByFooter(driver).isDisplayed();
+            objMenuPage.versionFooter(driver).isDisplayed();
+        }
     }
 
     @Test(dependsOnMethods = "checkMenuElementsVisibility")
@@ -74,10 +79,21 @@ public class DeviceFarmSessionTest extends IntSetup {
 //            Thread.sleep(1000);
 //            ((AndroidDriver) driver).pressKeyCode(AndroidKeyCode.BACK);
 //        }
-        objMenuPage.homeButton(driver).click();
-        objMenuPage.myConnectionsButton(driver).click();
-        objHomePage.burgerMenuButton(driver).click();
-        objMenuPage.settingsButton(driver).click();
+        if (Config.Device_Type == "iOS") { // CM-2657
+            new TouchAction(driver).tap(70, 290).perform();
+            new TouchAction(driver).tap(70, 345).perform();
+
+            objHomePage.burgerMenuButton(driver).click();
+            new TouchAction(driver).tap(43, 100).perform(); // ios workaround
+
+            new TouchAction(driver).tap(70, 400).perform();
+        }
+        else {
+            objMenuPage.homeButton(driver).click();
+            objMenuPage.myConnectionsButton(driver).click();
+            objHomePage.burgerMenuButton(driver).click();
+            objMenuPage.settingsButton(driver).click();
+        }
     }
 
     @Test(dependsOnMethods = "checkMenuElementsAvailability")
@@ -131,7 +147,7 @@ public class DeviceFarmSessionTest extends IntSetup {
         objSettingsPage.settingsContainer(driver).isDisplayed();
         objSettingsPage.settingsHeader(driver).isDisplayed();
         objSettingsPage.burgerMenuButton(driver).isDisplayed();
-        // objSettingsPage.createBackupButton(driver).isDisplayed();
+//        objSettingsPage.createBackupButton(driver).isDisplayed();
         objSettingsPage.biometricsButton(driver).isDisplayed();
         objSettingsPage.passcodeButton(driver).isDisplayed();
         objSettingsPage.chatButton(driver).isDisplayed();

@@ -4,7 +4,7 @@ import detox from 'detox'
 import { exec } from 'child-process-async'
 import { getBootedDeviceId } from './screenshot'
 
-const { element, by, expect, device } = detox
+const { element, by, expect, device, waitFor } = detox
 
 export const tapOn = async (id: string) => {
   const fetchedElement = element(by.id(id))
@@ -44,4 +44,40 @@ export function wait(delay: *): Promise<void> {
   return new Promise(function(resolve) {
     setTimeout(resolve, delay)
   })
+}
+
+export const ID_MATCHER = 'id'
+export const TEXT_MATCHER = 'text'
+export const TYPE_MATCHER = 'type'
+
+type MatcherType = typeof ID_MATCHER | typeof TEXT_MATCHER | typeof TYPE_MATCHER
+
+export const waitForElementAndTap = async (
+  matcher_type: MatcherType,
+  matcher_data: string,
+  timeout: number
+) => {
+  switch (matcher_type) {
+    case 'id':
+      const e1 = element(by.id(matcher_data))
+      await waitFor(e1)
+        .toBeVisible()
+        .withTimeout(timeout)
+      await e1.tap()
+      break
+    case 'text':
+      const e2 = element(by.text(matcher_data))
+      await waitFor(e2)
+        .toBeVisible()
+        .withTimeout(timeout)
+      await e2.tap()
+      break
+    case 'type':
+      const e3 = element(by.type(matcher_data))
+      await waitFor(e3)
+        .toBeVisible()
+        .withTimeout(timeout)
+      await e3.tap()
+      break
+  }
 }

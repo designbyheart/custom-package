@@ -1,5 +1,5 @@
 // @flow
-import { by } from 'detox'
+import { device, element, by, waitFor } from 'detox'
 
 export const IOS = 'ios'
 export const ANDROID = 'android'
@@ -25,16 +25,20 @@ export const USER_AVATAR = 'user-avatar'
 export const BACK_ARROW = 'back-arrow-touchable'
 export const BURGER_MENU = 'burger-menu'
 export const SCAN_BUTTON = 'Scan'
+export const ALLOW_BUTTON = 'Allow'
 
 // home
 export const HOME_FEEDBACK_BUTTON = 'home-feedback-id-label'
 export const HOME_CONTAINER = 'home-container'
 export const HOME_HEADER = 'Home'
+export const HOME_NEW_MESSAGE = 'NEW MESSAGE - TAP TO OPEN'
 
 // claim offer
 export const CLAIM_OFFER_ICON_CLOSE = 'claim-offer-icon-close-touchable'
-export const CLAIM_OFFER_ACCEPT = 'claim-offer-footer-accept'
-export const CLAIM_OFFER_DENY = 'claim-offer-footer-deny'
+// export const CLAIM_OFFER_ACCEPT = 'claim-offer-footer-accept'
+// export const CLAIM_OFFER_DENY = 'claim-offer-footer-deny'
+export const CLAIM_OFFER_ACCEPT = 'Accept'
+export const CLAIM_OFFER_REJECT = 'Reject'
 export const CLAIM_OFFER_SUCCESS_MODAL_CONTINUE =
   'claim-request-success-continue'
 
@@ -64,10 +68,16 @@ export const LOCK_SETUP_SUCCESS_CLOSE_BUTTON = 'close-button'
 export const PIN_CODE_INPUT_BOX = 'pin-code-input-box'
 
 // proof request
-export const PROOF_REQUEST_ACCEPT = 'proof-request-accept'
-export const PROOF_REQUEST_DENY = 'proof-request-deny'
+// export const PROOF_REQUEST_ACCEPT = 'proof-request-accept'
+// export const PROOF_REQUEST_DENY = 'proof-request-deny'
+export const PROOF_REQUEST_SEND = 'Send'
+export const PROOF_REQUEST_REJECT = 'Reject'
+export const PROOF_REQUEST_GENERATE = 'Generate'
 export const PROOF_REQUEST_ICON_CLOSE = 'proof-request-icon-close-touchable'
 export const PROOF_REQUEST_MODAL_CONTINUE = 'send-proof-success-continue'
+export const GENERAL_SCROLL_VIEW = 'RCTCustomScrollView'
+export const PROOF_REQUEST_MISSING_ATTRIBUTE_BASE =
+  'proof-request-attribute-item-input-missing attribute '
 
 // qr-code
 export const QR_CODE_INPUT_ENV_SWITCH = 'qr-code-text-input-env-switch'
@@ -101,13 +111,34 @@ export const APP_ENVIRONMENT = `switch-environment-${process.env.environment ||
 export const SWITCH_ENVIRONMENT_SAVE_BUTTON = 'switch-environment-footer-accept'
 
 // screenshot names
-export const SCREENSHOT_HOME = 'home.jpg'
+export const SCREENSHOT_HOME = 'home.png'
+export const SCREENSHOT_CONNECTIONS = 'connections.png'
+export const SCREENSHOT_SETTINGS = 'settings.png'
+export const SCREENSHOT_MENU = 'menu.png'
+export const SCREENSHOT_INVITATION = 'invitation.png'
+export const SCREENSHOT_CLAIM_OFFER_PROFILE_INFO = 'claim_offer_1.png'
+export const SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED =
+  'proof_request_1.png'
+export const SCREENSHOT_TEST_CONNECTION = 'test_connection.png'
+export const SCREENSHOT_EMPTY_CHAT = 'empty_chat.png'
+export const SCREENSHOT_ONFIDO_DOC_SELECTION = 'onfido_doc_selection.png'
 
 // menu
 export const MENU_CONTAINER = 'menu-container'
 export const MENU_HOME = 'Home'
 export const MENU_MY_CONNECTIONS = 'My Connections'
 export const MENU_SETTINGS = 'Settings'
+
+// my connections
+export const MY_CONNECTIONS_CONTAINER = 'my-connections-container'
+export const MY_CONNECTIONS_HEADER = 'My Connections'
+export const MY_CONNECTIONS_CONNECTION = 'Evernym QA-RC'
+export const CONNECTION_ENTRY_HEADER = 'Added Connection'
+export const VIEW_CREDENTIAL = 'VIEW CREDENTIAL'
+export const CREDENTIAL_HEADER = 'Accepted Credential'
+export const VIEW_PROOF = 'VIEW REQUEST DETAILS'
+export const PROOF_HEADER = 'You shared this information'
+export const CLOSE_BUTTON = 'Close'
 
 // chat
 export const CHAT_CANCEL = 'Cancel'

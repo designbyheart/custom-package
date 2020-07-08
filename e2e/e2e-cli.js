@@ -25,10 +25,16 @@ const args = yargs
     choices: ['debug', 'release'],
     string: true,
   })
+  .option('a', {
+    alias: 'android',
+    describe: 'run tests against android',
+    default: false,
+    boolean: true,
+  })
   .option('s', {
     alias: 'simulators',
     describe: 'simulators on which tests need to run',
-    choices: ['iphone5s', 'iphone7', 'iphonex', 'iphonexsmax'],
+    choices: ['iphone5s', 'iphone7', 'iphonex', 'iphonexsmax', 'nexus'], // android check
     default: ['iphonexsmax'],
     array: true,
   })
@@ -96,9 +102,16 @@ const args = yargs
 
 async function runBuildIfNeeded(args) {
   // TODO:KS Need to consider android as well
-  const debugBuildPath = detoxConfig['ios.sim.debug'].binaryPath
+  // const debugBuildPath = detoxConfig['ios.sim.debug'].binaryPath
+  const debugBuildPath = args.android
+    ? detoxConfig['android.emu.debug'].binaryPath
+    : detoxConfig['ios.sim.debug'].binaryPath // check android
+  console.log(debugBuildPath)
   // TODO:KS Need to consider android as well
-  const releaseBuildPath = detoxConfig['ios.sim.release'].binaryPath
+  const releaseBuildPath = args.android
+    ? detoxConfig['android.emu.release'].binaryPath
+    : detoxConfig['ios.sim.release'].binaryPath // check android
+  console.log(debugBuildPath)
   const releaseBuildExist = await pathExists(releaseBuildPath)
   const debugBuildExist = await pathExists(debugBuildPath)
   let needToGenerateBuild = args.build ? true : !debugBuildExist
@@ -124,7 +137,10 @@ async function runBuildIfNeeded(args) {
 
     const buildType = args.build ? args.build : 'debug'
     // TODO:KS Need to consider android as well
-    const buildConfig = `ios.sim.${buildType}`
+    // const buildConfig = `ios.sim.${buildType}`
+    const buildConfig = args.android
+      ? `android.emu.${buildType}`
+      : `ios.sim.${buildType}` // android check
     const detoxArgs = ['build', `-c`, `${buildConfig}`]
     const detoxCommand = `detox ${detoxArgs.join(' ')}`
     console.log(chalk.green(`Running command ${detoxCommand}`))
@@ -156,6 +172,7 @@ async function runTests(args) {
     iphone7: 'iPhone 7',
     iphonex: 'iPhone X',
     iphonexsmax: 'iPhone XS Max',
+    nexus: 'connectme', // android check
   }
 
   // set environment variables that are going to be used by our tests
@@ -168,7 +185,10 @@ async function runTests(args) {
   for (const sim of args.simulators) {
     // TODO:KS Need to consider android as well
     // config to run from package.json
-    const detoxConfig = `ios.sim.${args.build || 'debug'}`
+    // const detoxConfig = `ios.sim.${args.build || 'debug'}`
+    const detoxConfig = args.android
+      ? `android.emu.${args.build || 'debug'}`
+      : `ios.sim.${args.build || 'debug'}` // android check
     // simulator name for OS
     const simName = simCommandNameMap[sim]
     // set env variable so that our tests can identify running simulator
