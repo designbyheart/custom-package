@@ -5,7 +5,7 @@ import { storeBootedDeviceId } from '../utils/screenshot'
 import { setDeviceType } from '../utils/test-constants'
 import { unlock } from '../utils/lock-unlock'
 
-jest.setTimeout(120000)
+jest.setTimeout(360000)
 const config = require('../../package.json').detox
 
 beforeAll(async () => {

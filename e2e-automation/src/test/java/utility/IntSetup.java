@@ -56,7 +56,7 @@ public class IntSetup {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			if (deviceType.equals("iOS") && appType.equals("connectMe")) {
 				capabilities.setCapability("automationName", "XCUITest");
-				capabilities.setCapability("platformVersion", "11.2");
+				capabilities.setCapability("platformVersion", "12.0");
 				capabilities.setCapability("platformName", "iOS");
 				capabilities.setCapability("bundleId", "com.evernym.connectme.callcenter");
 				capabilities.setCapability("deviceName", Config.Device_Name); // name

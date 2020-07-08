@@ -1,6 +1,17 @@
 // @flow
 
+import { element, by, waitFor, expect } from 'detox'
 import { unlock } from '../utils/lock-unlock'
+import { matchScreenshot } from '../utils/screenshot'
+import {
+  SCREENSHOT_HOME,
+  SCREENSHOT_CONNECTIONS,
+  SCREENSHOT_SETTINGS,
+  SCREENSHOT_MENU,
+  BURGER_MENU,
+  MENU_MY_CONNECTIONS,
+  MENU_SETTINGS,
+} from '../utils/test-constants'
 
 // PLEASE DO NOT REMOVE or RENAME this file
 // We are using this file to run initial setup of tests
@@ -36,8 +47,28 @@ import { unlock } from '../utils/lock-unlock'
 // - run app setup once, where we set environment, choose lock, and go to home
 // - start running all other tests, by not uninstalling app and saving time
 
-describe('One time initial setup', () => {
-  it('set environment, set lock, go to home', async () => {
+describe('One time initial setup and base screenshots check', () => {
+  it('Set environment, set lock, go to home', async () => {
     await unlock()
+  })
+
+  it('Home screenshot check', async () => {
+    await matchScreenshot(SCREENSHOT_HOME)
+  })
+
+  it('Menu screenshot check', async () => {
+    await element(by.id(BURGER_MENU)).tap()
+    await matchScreenshot(SCREENSHOT_MENU)
+  })
+
+  it('My connections screenshot check', async () => {
+    await element(by.text(MENU_MY_CONNECTIONS)).tap()
+    await matchScreenshot(SCREENSHOT_CONNECTIONS)
+  })
+
+  it('Settings screenshot check', async () => {
+    await element(by.id(BURGER_MENU)).tap()
+    await element(by.text(MENU_SETTINGS)).tap()
+    await matchScreenshot(SCREENSHOT_SETTINGS)
   })
 })

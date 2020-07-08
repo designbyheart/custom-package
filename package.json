@@ -127,6 +127,9 @@
     "fs-extra": "^8.1.0",
     "glow": "^1.2.2",
     "gm": "^1.23.1",
+    "pixelmatch": "5.2.0",
+    "pngjs": "4.0.0",
+    "jpeg-js": "0.4.1",
     "husky": "3.1.0",
     "imap-simple": "^4.0.0",
     "jest": "24.7.1",
@@ -189,10 +192,16 @@
         "name": "<pass name from command line flag>"
       },
       "android.emu.debug": {
-        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+        "binaryPath": "android/app/build/outputs/apk/debug/app-x86_64-debug.apk",
         "build": "pushd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && popd",
         "type": "android.emulator",
-        "name": "Nexus_5X_API_26"
+        "name": "<pass name from command line flag>"
+      },
+      "android.emu.release": {
+        "binaryPath": "android/app/build/outputs/apk/release/app-x86_64-release.apk",
+        "build": "pushd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=release && popd",
+        "type": "android.emulator",
+        "name": "<pass name from command line flag>"
       }
     },
     "test-runner": "jest",

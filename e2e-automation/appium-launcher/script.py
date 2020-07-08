@@ -83,11 +83,15 @@ start_time = datetime.datetime.now()
 print(f"Run {unique} is scheduled as arn {run_arn} ")
 
 try:
-
     while True:
         response = client.get_run(arn=run_arn)
         state = response['run']['status']
+        result = response['run']['result']
         if state == 'COMPLETED' or state == 'ERRORED':
+            print(f"Finished with status {state}")
+            if result == 'FAILED' or result == 'ERRORED':
+                print(f"Finished with result {result}")
+                raise Exception('Some tests failed!')
             break
         else:
             print(f" Run {unique} in state {state}, total time "+str(datetime.datetime.now()-start_time))
@@ -96,7 +100,7 @@ except:
     # If something goes wrong in this process, we stop the run and exit. 
 
     client.stop_run(arn=run_arn)
-    exit(1)
+    raise Exception('Something went wrong!')
 print(f"Tests finished in state {state} after "+str(datetime.datetime.now() - start_time))
 # # now, we pull all the logs.
 # jobs_response = client.list_jobs(arn=run_arn)

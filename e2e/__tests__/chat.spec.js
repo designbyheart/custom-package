@@ -1,6 +1,7 @@
 // @flow
 
 import { element, by, waitFor, expect } from 'detox'
+import { matchScreenshot } from '../utils/screenshot'
 import {
   BURGER_MENU,
   MENU_SETTINGS,
@@ -12,10 +13,11 @@ import {
   CHAT_TEXT_VIEW,
   CHAT_SEND_BUTTON,
   CHAT_SUCCESS_MESSAGE,
+  SCREENSHOT_EMPTY_CHAT,
 } from '../utils/test-constants'
 
 describe('Chat', () => {
-  it('chat with support', async () => {
+  it('Open chat, check elements, match screenshot', async () => {
     await element(by.id(BURGER_MENU)).tap()
     await element(by.text(MENU_SETTINGS)).tap()
     await element(by.text(SETTINGS_CHAT)).tap() // CM-2628
@@ -27,7 +29,10 @@ describe('Chat', () => {
     await element(by.text(SETTINGS_CHAT)).tap()
     await expect(element(by.text(CHAT_HEADER))).toBeVisible() // header
     await expect(element(by.text(CHAT_NEW_MESSAGE))).toBeVisible()
+    await matchScreenshot(SCREENSHOT_EMPTY_CHAT) // screenshot
+  })
 
+  it('Type and send some messages', async () => {
     await element(by.type(CHAT_TEXT_VIEW)).typeText('test message')
     await element(by.type(CHAT_TEXT_VIEW)).tapReturnKey()
     await element(by.text(CHAT_SEND_BUTTON)).tap()

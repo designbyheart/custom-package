@@ -28,6 +28,18 @@ public class AppInjector extends AbstractModule {
 			bind(HockeyAppPage.class).to(HockeyAppPageiOS.class);
 			bind(AppCenterPage.class).to(AppCenterPageiOS.class);
 			bind(HomePage.class).to(HomePageiOS.class);
+			bind(HomePageV2.class).to(HomePageiOSV2.class);
+			bind(ScannerPageV2.class).to(ScannerPageiOSV2.class);
+			bind(MenuPageV2.class).to(MenuPageiOSV2.class);
+			bind(MyConnectionsPageV2.class).to(MyConnectionsPageiOSV2.class);
+			bind(SettingsPageV2.class).to(SettingsPageiOSV2.class);
+			bind(BackupPageV2.class).to(BackupPageiOSV2.class);
+			bind(BiometricsPageV2.class).to(BiometricsPageiOSV2.class);
+			bind(PasscodePageV2.class).to(PasscodePageiOSV2.class);
+			bind(ChatPageV2.class).to(ChatPageiOSV2.class);
+			bind(AboutPageV2.class).to(AboutPageiOSV2.class);
+			bind(OnfidoPageV2.class).to(OnfidoPageiOSV2.class);
+			bind(RestorePageV2.class).to(RestorePageiOSV2.class);
 			bind(CredentialPage.class).to(CredentialPageiOS.class);
 			bind(ChooseLockPage.class).to(ChooseLockPageiOS.class);
 			bind(SettingPage.class).to(SettingPageiOS.class);

@@ -38,7 +38,8 @@ public class LockModules extends AppPageInjector {
 		chooseLockPage.pinCodeLock_Button(driver).click();
 		if((Config.Device_Type.equals("iOS")||Config.Device_Type.equals("awsiOS"))) {
 			pincodePage.pinCodeSe_TextBox(driver).sendKeys("000000");
-			pincodePage.pinCodeRe_TextBox(driver).sendKeys("000000");
+			pincodePage.pinCodeSe_TextBox(driver).sendKeys("000000");
+			pincodePage.close_Button(driver).click();
 		} else {
 			for (int i = 0; i < 2; i++) {
 				Thread.sleep(1000);
@@ -128,7 +129,7 @@ public class LockModules extends AppPageInjector {
 
 	public void navigateSetupPincode(AppiumDriver driver) throws Exception {
 		chooseLockPage.eula_Accept(driver).click();
-// 		backuprestoreWalletPage.startFresh_Button(driver).click();
+//		backuprestoreWalletPage.startFresh_Button(driver).click();
 	}
 
 	/**

@@ -1,16 +1,25 @@
 // @flow
 import gm from 'gm'
+import pixelmatch from 'pixelmatch'
 import { promisify } from 'util'
 import { exec } from 'child-process-async'
+import fs from 'fs'
 import { pathExists, move, remove } from 'fs-extra'
 import chalk from 'chalk'
 import { flatten, compose, values, filter, prop, tap, head } from 'ramda'
 import { getDeviceType, ANDROID } from './test-constants'
 
+const PNG = require('pngjs').PNG
+const JPEG = require('jpeg-js')
+
 const iPhone7 = 'iPhone7'.toLowerCase()
 const iPhoneX = 'iPhoneX'.toLowerCase()
 const iPhone5s = 'iPhone5s'.toLowerCase()
 const iPhoneXSMax = 'iPhoneXSMax'.toLowerCase()
+
+// all images are switched from JPG to PNG because pixelmatch works with PNG only and GraphicsMagick works with both
+
+const usePixelmatch = true // set to false to use GraphicsMagick
 
 const SIZE = {
   [iPhoneX]: {
@@ -112,8 +121,25 @@ function getDiffPath(name: string) {
 const diff = promisify(gm.compare)
 const diffOptions = file => ({ file, tolerance: COMPARE_ERROR_TOLERANCE })
 
+// it uses GraphicsMagick and it is async
 const areSame = async (image1: string, image2: string, diffImagePath: string) =>
   await diff(image1, image2, diffOptions(diffImagePath))
+
+// it uses pixelmatch and it is sync
+const areSameNew = (image1: string, image2: string, diffImagePath: string) => {
+  const img1 = PNG.sync.read(fs.readFileSync(image1))
+  const img2 = PNG.sync.read(fs.readFileSync(image2))
+  const { width, height } = img1
+  const delta = new PNG({ width, height })
+
+  let res = pixelmatch(img1.data, img2.data, delta.data, width, height, {
+    threshold: 0.7,
+  })
+
+  fs.writeFileSync(diffImagePath, PNG.sync.write(delta))
+
+  return res
+}
 
 // removes header of simulator that contains date and battery icon
 // which messes up our screenshot comparison
@@ -208,8 +234,20 @@ export async function matchScreenshot(
   }
 
   const diffImagePath = getDiffPath(name)
-  const result = await areSame(existingScreenshot, newScreenshot, diffImagePath)
-  if (!result) {
+
+  let numDiffPixels
+  let result
+
+  if (usePixelmatch) {
+    numDiffPixels = areSameNew(existingScreenshot, newScreenshot, diffImagePath)
+    console.log(chalk.cyan(numDiffPixels))
+  } else {
+    result = await areSame(existingScreenshot, newScreenshot, diffImagePath)
+    console.log(chalk.cyan(result))
+  }
+
+  // $FlowFixMe
+  if (usePixelmatch ? numDiffPixels > 0 : !result) {
     console.log(
       chalk.red(
         `Existing screenshot at '${existingScreenshot}' and new screenshot at '${newScreenshot}' are not same. Please see difference at ${diffImagePath}. \nIf you want to keep new screenshot, then run test command with -u flag.`

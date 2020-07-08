@@ -25,15 +25,19 @@ public class PincodePageiOS implements PincodePage {
 
 	public  WebElement close_Button(AppiumDriver driver) throws Exception {
 
-		return AppiumUtils.findElement(driver, "//*[@name='Close']", "Close Button");
+		return AppiumUtils.findElement(driver, "(//XCUIElementTypeOther[@name=\"close-button\"])[3]", "Close Button");
 
 	}
 	
+//	public  WebElement pinCodeSe_TextBox(AppiumDriver driver) throws Exception {
+//
+//		return AppiumUtils.findElement(driver, "(//XCUIElementTypeOther[@name='Set up a pass code'])[3]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther", "Pincode TextBox");
+//	}
+
 	public  WebElement pinCodeSe_TextBox(AppiumDriver driver) throws Exception {
-
-		return AppiumUtils.findElement(driver, "(//XCUIElementTypeOther[@name='Set up a pass code'])[3]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther", "Pincode TextBox");
+		return AppiumUtils.findElement(driver, "//XCUIElementTypeOther[@name=\"pin-code-digit-0-touchable pin-code-digit-1-touchable pin-code-digit-2-touchable pin-code-digit-3-touchable pin-code-digit-4-touchable pin-code-digit-5-touchable\"]", "Passcode Textbox");
 	}
-	
+
 	public  WebElement pinCodeSeNew_TextBox(AppiumDriver driver) throws Exception {
 
 		return AppiumUtils.findElement(driver, "(//XCUIElementTypeOther[@name='Set up a new pass code'])[3]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther", "Pincode TextBox");
