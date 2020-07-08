@@ -10,7 +10,8 @@ import {
 } from 'react-native'
 import type { ConnectionCardProps } from './type-connection-card'
 import { styles } from './styles'
-import { mediumGray } from '../../common/styles/constant'
+import { font, isiPhone5, mediumGray, recentCardSizes } from '../../common/styles/constant'
+import { DefaultLogo } from '../../components/default-logo/default-logo'
 
 class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
   pad = (dateOrMonth: number) => {
@@ -180,8 +181,6 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
     } = this.props
     const {
       container,
-      initialsContainer,
-      initialsText,
       newCardContainer,
       avatarSection,
       infoSection,
@@ -202,9 +201,11 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
           {typeof image === 'string' ? (
             <Avatar radius={16} src={{ uri: image }} />
           ) : (
-            <View style={initialsContainer}>
-              <Text style={initialsText}>{senderName[0]}</Text>
-            </View>
+            <DefaultLogo
+              text={senderName}
+              size={32}
+              fontSize={17}
+            />
           )}
         </View>
         <View style={infoSection}>

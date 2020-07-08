@@ -399,14 +399,14 @@ export class QRCodeScannerScreen extends Component<
       senderName: payload.label || 'Unknown',
       senderDID: payload.recipientKeys[0],
       // TODO:KS Need to discuss with architects to know how to fulfill this requirement
-      senderLogoUrl: 'http://robohash.org/234',
+      senderLogoUrl: null,
       senderVerificationKey: payload.recipientKeys[0],
       targetName: payload.label || 'Unknown',
       senderDetail: {
         name: payload.label || 'Unknown',
         agentKeyDlgProof: senderAgentKeyDelegationProof,
         DID: payload.recipientKeys[0],
-        logoUrl: 'http://robohash.org/234',
+        logoUrl: null,
         verKey: payload.recipientKeys[0],
         publicDID: payload.recipientKeys[0],
       },

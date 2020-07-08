@@ -1,8 +1,11 @@
 // @flow
 import React from 'react'
-import { Image } from 'react-native'
+import { Image, Platform, StyleSheet, Text, View } from 'react-native'
 import { CustomView } from '../../../components/layout'
 import QuestionScreenText from './question-screen-text'
+import { measurements } from '../../../common/styles/measurements'
+import { grey, white } from '../../../common/styles'
+import { DefaultLogo } from '../../../components/default-logo/default-logo'
 
 const QuestionSenderDetail = (props: {
   source: number | { uri: string },
@@ -15,11 +18,21 @@ const QuestionSenderDetail = (props: {
       style={props.questionStyles.questionSenderContainer}
       center
     >
-      <Image
-        style={[props.questionStyles.questionSenderLogo]}
-        source={props.source}
-        resizeMode="cover"
-      />
+      {props.source.uri ? (
+          <Image
+            style={[props.questionStyles.questionSenderLogo]}
+            source={props.source}
+            resizeMode="cover"
+          />
+        ) :
+        (
+          <DefaultLogo
+            text={props.senderName}
+            size={props.questionStyles.placeholderIfNoImage.width}
+            fontSize={props.questionStyles.placeholderIfNoImage.fontSize}
+          />
+        )
+      }
       <QuestionScreenText size="h4b" numberOfLines={2} color={'#A5A5A5'}>
         {props.senderName}
       </QuestionScreenText>

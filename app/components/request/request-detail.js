@@ -21,7 +21,10 @@ export default class RequestDetail extends PureComponent<
           />
         </Container>
         <Container testID={`${testID}-text-container-avatars`}>
-          <RequestDetailAvatars senderLogoUrl={this.props.senderLogoUrl} />
+          <RequestDetailAvatars
+            senderName={this.props.senderName}
+            senderLogoUrl={this.props.senderLogoUrl}
+          />
         </Container>
       </Container>
     )

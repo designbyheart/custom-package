@@ -2,11 +2,12 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, Image } from 'react-native'
 import { View as AnimatedView } from 'react-native-animatable'
-import { Container, CustomView, UserAvatar, Avatar } from '../../components'
+import { CustomView, UserAvatar, Avatar } from '../../components'
 import { getConnectionLogo } from '../../store/connections-store'
 import type { RequestDetailAvatarProps } from './type-request'
 import { OFFSET_4X, OFFSET_1X } from '../../common/styles'
 import type { ImageSource } from '../../common/type-common'
+import { DefaultLogo } from '../default-logo/default-logo'
 
 export default class RequestDetailAvatars extends PureComponent<
   RequestDetailAvatarProps,
@@ -22,8 +23,6 @@ export default class RequestDetailAvatars extends PureComponent<
   )
 
   render() {
-    const senderAvatar = getConnectionLogo(this.props.senderLogoUrl)
-
     return (
       <AnimatedView
         animation="bounceInUp"
@@ -46,12 +45,21 @@ export default class RequestDetailAvatars extends PureComponent<
               style={styles.forwardArrow}
               source={require('../../images/connectDots.png')}
             />
-            <Avatar
-              medium
-              shadow
-              src={senderAvatar}
-              testID={'invitation-text-avatars-inviter'}
-            />
+            {typeof this.props.senderLogoUrl === 'string' ? (
+              <Avatar
+                medium
+                shadow
+                src={getConnectionLogo(this.props.senderLogoUrl)}
+                testID={'invitation-text-avatars-inviter'}
+              />
+            ) : (
+              <DefaultLogo
+                text={this.props.senderName}
+                size={76}
+                fontSize={38}
+                shadow={true}
+              />
+            )}
           </CustomView>
         </CustomView>
       </AnimatedView>

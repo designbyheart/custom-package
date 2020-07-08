@@ -10,6 +10,8 @@ import {
   Platform,
 } from 'react-native'
 import { measurements } from '../../../app/common/styles/measurements'
+import { color, font, grey, isiPhone5, newBannerCardSizes, white } from '../../common/styles'
+import { DefaultLogo } from '../../components/default-logo/default-logo'
 
 // TODO: Fix the <any, void> to be the correct types for props and state
 class ConnectionDetailsNav extends PureComponent<any, void> {
@@ -31,13 +33,21 @@ class ConnectionDetailsNav extends PureComponent<any, void> {
         </View>
         <View style={styles.iconAndNameWrapper}>
           <View style={styles.headerImageOuterWrapper}>
-            <View style={styles.headerImageWrapper}>
-              <Image
-                style={styles.headerIcon}
-                source={{ uri: params.image }}
-                resizeMode={'cover'}
+            {typeof params.image === 'string' ? (
+              <View style={styles.headerImageWrapper}>
+                <Image
+                  style={styles.headerIcon}
+                  source={{ uri: params.image }}
+                  resizeMode={'cover'}
+                />
+              </View>
+              ) :
+              <DefaultLogo
+                text={params.senderName[0]}
+                size={32}
+                fontSize={17}
               />
-            </View>
+            }
           </View>
           <View style={styles.headerTitleWrapper}>
             <Text
