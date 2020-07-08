@@ -106,3 +106,17 @@ export type SendConnectionRedirectAction = {
 }
 
 export const SEND_REDIRECT_SUCCESS = 'SEND_REDIRECT_SUCCESS'
+
+export const UPDATE_CONNECTION_FAIL: 'UPDATE_CONNECTION_FAIL' =
+  'UPDATE_CONNECTION_FAIL'
+
+export const connectionFail = (error: CustomError, senderDID: string) => ({
+  type: UPDATE_CONNECTION_FAIL,
+  error,
+  senderDID,
+})
+
+export const ERROR_CONNECTION = (message: string) => ({
+  code: 'CONNECTION-001',
+  message: `Error while establishing a connection: ${message}`,
+})

@@ -49,6 +49,7 @@ import {
   UPDATE_SERIALIZE_CONNECTION_FAIL,
   UPDATE_CONNECTION_SERIALIZED_STATE,
   SEND_REDIRECT_SUCCESS,
+  UPDATE_CONNECTION_FAIL,
 } from './type-connection-store'
 import {
   deleteConnection,
@@ -499,6 +500,12 @@ export default function connections(
             vcxSerializedConnection: action.vcxSerializedConnection,
           },
         },
+      }
+    case UPDATE_CONNECTION_FAIL:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.error,
       }
     case RESET:
       return initialState

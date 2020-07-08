@@ -1,5 +1,4 @@
 // @flow
-import { Platform } from 'react-native'
 import { put, takeLatest, call, all, select, fork } from 'redux-saga/effects'
 import {
   INVITATION_RECEIVED,
@@ -7,26 +6,16 @@ import {
   INVITATION_RESPONSE_SUCCESS,
   INVITATION_RESPONSE_FAIL,
   INVITATION_REJECTED,
-  ERROR_INVITATION_VCX_INIT,
   ERROR_INVITATION_CONNECT,
   ERROR_INVITATION_SERIALIZE_UPDATE,
 } from './type-invitation'
 import { ResponseType } from '../components/request/type-request'
 import {
   ERROR_ALREADY_EXIST,
-  ERROR_INVITATION_RESPONSE_PARSE_CODE,
-  ERROR_INVITATION_RESPONSE_PARSE,
-  SERVER_ERROR_CODE,
 } from '../api/api-constants'
 import {
-  getAgencyUrl,
-  getAgencyDID,
-  getAgencyVerificationKey,
-  getPushToken,
   getInvitationPayload,
   isDuplicateConnection,
-  getUserOneTimeInfo,
-  getPoolConfig,
 } from '../store/store-selector'
 import {
   saveNewConnection,
@@ -39,8 +28,7 @@ import {
   acceptInvitationVcx,
   serializeConnection,
   createConnectionWithAriesInvite,
-  connectionGetState,
-  connectionUpdateState,
+  connectionUpdateState, getHandleBySerializedConnection, connectionGetState,
 } from '../bridge/react-native-cxs/RNCxs'
 import type {
   InvitationResponseSendData,
@@ -52,21 +40,11 @@ import type {
 } from './type-invitation'
 import type { CustomError } from '../common/type-common'
 import { captureError } from '../services/error/error-handler'
-import type {
-  ConnectAgencyResponse,
-  RegisterAgencyResponse,
-  CreateOneTimeAgentResponse,
-  CreatePairwiseAgentResponse,
-  AcceptInvitationResponse,
-} from '../bridge/react-native-cxs/type-cxs'
-import type { UserOneTimeInfo } from '../store/user/type-user-store'
-import { connectRegisterCreateAgentDone } from '../store/user/user-store'
 import { RESET } from '../common/type-common'
 import { ensureVcxInitSuccess } from '../store/route-store'
-import { VCX_INIT_SUCCESS } from '../store/type-config-store'
 import type { MyPairwiseInfo } from '../store/type-connection-store'
-import { safeSet, safeGet } from '../services/storage'
 import { flattenAsync } from '../common/flatten-async'
+import { connectionFail, ERROR_CONNECTION } from '../store/type-connection-store'
 
 export const invitationInitialState = {}
 
@@ -128,15 +106,6 @@ export function* sendResponse(
       connectionHandle
     )
 
-    if (isAriesInvite) {
-      yield fork(
-        updateAriesInviteState,
-        payload,
-        connectionHandle,
-        pairwiseInfo
-      )
-    }
-
     yield put(invitationSuccess(senderDID))
 
     // once the connection is successful, we need to save serialized connection
@@ -159,6 +128,7 @@ export function* sendResponse(
         myPairwisePeerVerKey: pairwiseInfo.myPairwisePeerVerKey,
         vcxSerializedConnection,
         publicDID: payload.senderDetail.publicDID,
+        isCompleted: !isAriesInvite,
         ...payload,
       },
     }
@@ -169,51 +139,59 @@ export function* sendResponse(
   }
 }
 
-function* updateAriesInviteState(
-  payload: InvitationPayload,
-  connectionHandle: number,
-  pairwiseInfo: MyPairwiseInfo
+export function* updateAriesConnectionState(
+  identifier: string,
+  vcxSerializedConnection: string,
+  message: string, // TODO: must be used since we replace connectionUpdateState
 ): Generator<*, *, *> {
-  const flatConnectionGetState = flattenAsync(connectionGetState)
-  const flatConnectionUpdateState = flattenAsync(connectionUpdateState)
+  const connectionHandle = yield call(
+    getHandleBySerializedConnection,
+    vcxSerializedConnection
+  )
 
-  // if we receive an aries invite
-  // then we need to keep calling connection update state
-  // till connection state becomes accepted on vcx side
-  let done = false
-  while (!done) {
-    const [updateStateError]: [typeof Error] = yield call(
-      flatConnectionUpdateState,
-      connectionHandle
+  const [updateStateError]: [typeof Error] = yield call(
+    // TODO: use connectionUpdateStateWithMessage function instead
+    // TODO: connectionUpdateStateWithMessage is missed in VCX Objective-C wrapper
+    flattenAsync(connectionUpdateState),
+    connectionHandle
+  )
+  if (updateStateError) {
+    yield put(
+      connectionFail(
+        ERROR_CONNECTION(updateStateError.message),
+        identifier
+      )
     )
-    if (updateStateError) {
-      continue
-    }
-    const [getStateError, connectionState]: [typeof Error, number] = yield call(
-      flatConnectionGetState,
-      connectionHandle
-    )
-    if (getStateError) {
-      continue
-    }
-    if (connectionState !== 4) {
-      continue
-    }
-    done = true
+    return
   }
 
-  // now we know that connection state is in accepted
+  const [getStateError, connectionState]: [typeof Error, number] = yield call(
+    flattenAsync(connectionGetState),
+    connectionHandle
+  )
+
+  if (getStateError) {
+    yield put(
+      connectionFail(
+        ERROR_CONNECTION(getStateError.message),
+        identifier
+      )
+    )
+    return
+  }
+
   // we need to take serialized connection state again
   // and update serialized state on connectme side
-  const [serializedStateError, vcxSerializedConnection]: [
+  const [serializedStateError, updateVcxSerializedConnection]: [
     typeof Error,
     string,
   ] = yield call(flattenAsync(serializeConnection), connectionHandle)
 
+
   if (serializedStateError) {
     yield put(
       updateSerializedConnectionFail({
-        identifier: pairwiseInfo.myPairwiseDid,
+        identifier: identifier,
         error: ERROR_INVITATION_SERIALIZE_UPDATE(
           serializedStateError.toString()
         ),
@@ -222,10 +200,25 @@ function* updateAriesInviteState(
     return
   }
 
+  if (connectionState === 1) {
+    // if connection object moved into state = 1 it means connection failed
+    // TODO: update VCX Null state to contain details about connection failure reason
+    yield put(
+      connectionFail(
+        ERROR_CONNECTION("Connection Problem Report was received"), // TODO: use VCX state reason
+        identifier
+      )
+
+    )
+  }
+
+  const isCompleted = connectionState === 4
+
   yield put(
     updateConnectionSerializedState({
-      identifier: pairwiseInfo.myPairwiseDid,
-      vcxSerializedConnection,
+      identifier: identifier,
+      vcxSerializedConnection: updateVcxSerializedConnection,
+      isCompleted: isCompleted,
     })
   )
   // once we have update our connection store

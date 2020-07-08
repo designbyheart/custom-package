@@ -169,6 +169,7 @@ import {
   registerCloudAgentWithToken,
   registerCloudAgentWithoutToken,
 } from './user/cloud-agent'
+import { updateAriesConnectionState } from '../invitation/invitation-store'
 
 /**
  * this file contains configuration which is changed only from user action
@@ -823,7 +824,7 @@ export function* processMessages(
       }
 
       let { myPairwiseDid: pairwiseDID, senderDID } =
-        connection && connection[0]
+      connection && connection[0]
 
       if (
         !(
@@ -1184,6 +1185,27 @@ function* handleMessage(
 
       if (payloadType && payloadType.name === 'aries' && payload['@msg']) {
         const payloadMessageType = JSON.parse(payload['@msg'])['@type']
+
+        if (payloadMessageType && payloadMessageType.includes("connections") &&
+          (payloadMessageType.endsWith('response') || 
+          payloadMessageType.endsWith('problem_report'))) {
+
+          // if we receive connection response message or connection problem report 
+          // we need to update state of related corresponding connection object
+          yield call(
+            updateAriesConnectionState,
+            forDID,
+            vcxSerializedConnection,
+            payload['@msg'],
+          )
+
+          // as we handled the received message we need to update its status
+          // to read
+          yield fork(updateMessageStatus, [
+            { pairwiseDID: forDID, uids: [uid] },
+          ])
+        }
+
         if (payloadMessageType && payloadMessageType.endsWith('ack')) {
           // if we have just ack data then for now send acknowledge to server
           // so that we don't download it again
