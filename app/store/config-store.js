@@ -107,12 +107,11 @@ import {
   vcxShutdown,
   downloadMessages,
   updateMessages,
-  downloadProofRequest,
   getHandleBySerializedConnection,
   getClaimHandleBySerializedClaimOffer,
   proofDeserialize,
-  createAriesCredentialOffer,
-  credentialCreateWithOffer,
+  createCredentialWithProprietaryOffer,
+  createCredentialWithAriesOffer,
   proofCreateWithRequest,
 } from '../bridge/react-native-cxs/RNCxs'
 import { RESET } from '../common/type-common'
@@ -834,9 +833,9 @@ export function* processMessages(
         )
       ) {
         if (isAries) {
-          yield fork(handleMessage, { ...messages[i], senderDID }, isAries)
+          yield fork(handleAriesMessage, { ...messages[i], senderDID })
         } else {
-          yield fork(handleMessage, messages[i], isAries)
+          yield fork(handleProprietaryMessage, messages[i])
         }
       }
     } catch (e) {
@@ -1031,9 +1030,8 @@ const convertDecryptedPayloadToSerializedProofRequest = (
   return JSON.stringify(stringifiableProofRequest)
 }
 
-function* handleMessage(
-  message: DownloadedMessage,
-  isAries: boolean
+function* handleProprietaryMessage(
+  message: DownloadedMessage
 ): Generator<*, *, *> {
   const { senderDID, uid, type, decryptedPayload } = message
   const remotePairwiseDID = senderDID
@@ -1050,6 +1048,11 @@ function* handleMessage(
   )
 
   try {
+    if (!decryptedPayload) {
+      // received message doesn't contain any payload, so just return
+      return
+    }
+
     let additionalData:
       | ClaimOfferMessagePayload
       | ProofRequestPushPayload
@@ -1057,60 +1060,9 @@ function* handleMessage(
       | ClaimPushPayloadVcx
       | QuestionPayload
       | null = null
-    if (type === MESSAGE_TYPE.CLAIM_OFFER) {
-      // convert message decrypted payload to claim serialized claimOffer
-      if (decryptedPayload) {
-        // TODO:KS It should not be with serialized claim offer
-        // we should be calling createCredentialWithOffer
-        // and vcx should take care of converting to it's own internal format
-        // connect.me should not change any of these offer to vcx's state
-        const convertedSerializedClaimOffer = convertToSerializedClaimOffer(
-          decryptedPayload,
-          uid
-        )
 
-        const vcxSerializedClaimOffer: SerializedClaimOffer | null = yield select(
-          getSerializedClaimOffer,
-          forDID,
-          uid
-        )
-        if (!vcxSerializedClaimOffer) {
-          const credentialHandle: number = yield call(
-            credentialCreateWithOffer,
-            uid,
-            addMessageRefId(decryptedPayload, uid)
-          )
-          additionalData = convertSerializedCredentialOfferToAditionalData(
-            convertedSerializedClaimOffer,
-            senderName,
-            senderDID
-          )
-          yield fork(saveSerializedClaimOffer, credentialHandle, forDID, uid)
-        }
-      }
-    }
-
-    if (type === MESSAGE_TYPE.CLAIM) {
-      additionalData = {
-        connectionHandle,
-        decryptedPayload,
-      }
-    }
-
-    if (type === MESSAGE_TYPE.PROOF_REQUEST) {
-      if (!decryptedPayload) return
-      const serializedProof = convertDecryptedPayloadToSerializedProofRequest(
-        decryptedPayload,
-        uid
-      )
-      const proofHandle = yield call(proofDeserialize, serializedProof)
-      additionalData = convertDecryptedPayloadToAdditionalPayload(
-        decryptedPayload,
-        uid,
-        senderName,
-        proofHandle
-      )
-    }
+    let messageType = null
+    
     // toLowerCase here to handle type 'question' and 'Question'
     if (type.toLowerCase() === MESSAGE_TYPE.QUESTION.toLowerCase()) {
       if (!decryptedPayload) return
@@ -1125,62 +1077,186 @@ function* handleMessage(
       )
     }
 
-    let ariesMessageType = null
+    // proprietary credential offer 
+    if (type === MESSAGE_TYPE.CLAIM_OFFER) {
+    // TODO: remove once https://gitlab.corp.evernym.com/dev/vcx/indy-sdk/-/merge_requests/220 get merged
+      const message = addClaimOfferMessageRefId(decryptedPayload, uid)
+
+      // update type so that messages can be processed and added
+      messageType = MESSAGE_TYPE.CLAIM_OFFER
+
+      const { claimHandle, claimOffer } = yield call(
+        createCredentialWithProprietaryOffer,
+        uid,
+        message
+      )
+      yield fork(saveSerializedClaimOffer, claimHandle, forDID, uid)
+
+      additionalData = {
+        ...claimOffer,
+        remoteName: senderName,
+        issuer_did: senderDID,
+        from_did: senderDID,
+        to_did: forDID,
+      }
+      yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
+    }
+
+    // proprietary credential 
+    if (type === MESSAGE_TYPE.CLAIM) {
+      messageType = MESSAGE_TYPE.CLAIM
+      additionalData = {
+        connectionHandle,
+        decryptedPayload,
+      }
+    }
+
+    // proprietary proof request 
+    if (type === MESSAGE_TYPE.PROOF_REQUEST) {
+    // TODO: remove once https://gitlab.corp.evernym.com/dev/vcx/indy-sdk/-/merge_requests/220 get merged
+      const message = addProofRequestMessageRefId(decryptedPayload, uid)
+
+      messageType = MESSAGE_TYPE.PROOF_REQUEST
+      
+      const proofHandle = yield call(
+        proofCreateWithRequest,
+        uid,
+        message
+      )
+
+      additionalData = {
+        ...JSON.parse(message),
+        proofHandle,
+      }
+
+      // acknowledge proof request because existing acknowledge saga
+      // does not acknowledge aries based proof request
+      yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
+    }
+
+    if (!additionalData) {
+      // we did not get any data or either push notification type is not supported
+      return
+    }
+
+    yield* updatePayloadToRelevantStoreSaga({
+      type: messageType || type,
+      additionalData: {
+        remoteName: senderName,
+        ...additionalData,
+      },
+      uid,
+      senderLogoUrl,
+      remotePairwiseDID,
+      forDID,
+      notificationOpenOptions: null,
+    })
+  } catch (e) {
+    captureError(e)
+    yield put(
+      fetchAdditionalDataError({
+        code: 'OCS-000',
+        message: `Invalid additional data: ${e}`,
+      })
+    )
+  }
+}
+
+function* handleAriesMessage(
+  message: DownloadedMessage,
+): Generator<*, *, *> {
+  const { senderDID, uid, type, decryptedPayload } = message
+  const remotePairwiseDID = senderDID
+  const connection: Connection[] = yield select(getConnection, senderDID)
+  const {
+    identifier: forDID,
+    vcxSerializedConnection,
+    logoUrl: senderLogoUrl,
+    senderName,
+  }: Connection = connection[0]
+  const connectionHandle = yield call(
+    getHandleBySerializedConnection,
+    vcxSerializedConnection
+  )
+
+  try {
+    if (!decryptedPayload) {
+      // received message doesn't contain any payload, so just return
+      return
+    }
+
+    let additionalData:
+      | ClaimOfferMessagePayload
+      | ProofRequestPushPayload
+      | ClaimPushPayload
+      | ClaimPushPayloadVcx
+      | QuestionPayload
+      | null = null
+
+    let messageType = null
+    
     // if we don't find any matching type, then our type can be expected from aries
     // now we can try to look inside decryptedpayload
-    if (isAries && decryptedPayload) {
-      const payload = JSON.parse(decryptedPayload)
-      const payloadType = payload['@type']
-      if (
-        payloadType.name === 'CRED_OFFER' ||
-        payloadType.name === 'credential-offer'
-      ) {
-        // update type so that aries messages can be processed and added
-        ariesMessageType = MESSAGE_TYPE.CLAIM_OFFER
-        const { claimHandle, claimOffer } = yield call(
-          createAriesCredentialOffer,
-          uid,
-          payload['@msg']
-        )
-        yield fork(saveSerializedClaimOffer, claimHandle, forDID, uid)
+    const payload = JSON.parse(decryptedPayload)
+    const payloadType = payload['@type']
 
-        additionalData = {
-          ...claimOffer,
-          remoteName: senderName,
-          issuer_did: senderDID,
-          from_did: senderDID,
-          to_did: forDID,
-        }
-        yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
+    if (
+      payloadType.name === 'CRED_OFFER' ||
+      payloadType.name === 'credential-offer'
+    ) {
+      const message = payload['@msg']
+
+      // update type so that messages can be processed and added
+      messageType = MESSAGE_TYPE.CLAIM_OFFER
+
+      const { claimHandle, claimOffer } = yield call(
+        createCredentialWithAriesOffer,
+        uid,
+        message
+      )
+      yield fork(saveSerializedClaimOffer, claimHandle, forDID, uid)
+
+      additionalData = {
+        ...claimOffer,
+        remoteName: senderName,
+        issuer_did: senderDID,
+        from_did: senderDID,
+        to_did: forDID,
       }
+      yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
+    }
 
-      if (payloadType.name === 'CRED' || payloadType.name === 'credential') {
-        ariesMessageType = MESSAGE_TYPE.CLAIM
-        additionalData = {
-          connectionHandle,
-          decryptedPayload,
-        }
+    if (
+      type === MESSAGE_TYPE.CLAIM ||
+      payloadType.name === 'CRED' || 
+      payloadType.name === 'credential'
+    ) {
+      messageType = MESSAGE_TYPE.CLAIM
+      additionalData = {
+        connectionHandle,
+        decryptedPayload,
       }
+    }
 
-      if (
-        ['proof_request', 'proof-request', 'presentation-request'].includes(
-          payloadType.name.toLowerCase()
-        )
-      ) {
-        ariesMessageType = MESSAGE_TYPE.PROOF_REQUEST
-        const proofHandle = yield call(
-          proofCreateWithRequest,
-          uid,
-          payload['@msg']
-        )
-        additionalData = {
-          ...JSON.parse(payload['@msg']),
-          proofHandle,
-        }
+    if (
+      type === MESSAGE_TYPE.PROOF_REQUEST || 
+      ['proof_request', 'proof-request', 'presentation-request'].includes(
+        payloadType.name.toLowerCase()
+      )
+    ) {
+      const message = payload['@msg']
 
-        // acknowledge proof request because existing acknowledge saga
-        // does not acknowledge aries based proof request
-        yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
+      messageType = MESSAGE_TYPE.PROOF_REQUEST
+      
+      const proofHandle = yield call(
+        proofCreateWithRequest,
+        uid,
+        message
+      )
+
+      additionalData = {
+        ...JSON.parse(message),
+        proofHandle,
       }
 
       if (payloadType && payloadType.name === 'aries' && payload['@msg']) {
@@ -1222,7 +1298,7 @@ function* handleMessage(
     }
 
     yield* updatePayloadToRelevantStoreSaga({
-      type: ariesMessageType || type,
+      type: messageType || type,
       additionalData: {
         remoteName: senderName,
         ...additionalData,
@@ -1250,7 +1326,6 @@ export function* acknowledgeServer(
 ): Generator<*, *, *> {
   // toLowerCase here to handle type 'question' and 'Question'
   const msgTypes = [
-    MESSAGE_TYPE.PROOF_REQUEST,
     MESSAGE_TYPE.QUESTION,
     MESSAGE_TYPE.QUESTION.toLowerCase(),
   ]
@@ -1300,7 +1375,7 @@ export function* updateMessageStatus(
   }
 }
 
-function addMessageRefId(decryptedPayload: string, uid: string): string {
+function addClaimOfferMessageRefId(decryptedPayload: string, uid: string): string {
   return JSON.stringify(
     JSON.parse(JSON.parse(decryptedPayload)['@msg']).map(message => {
       if (message.hasOwnProperty('msg_ref_id')) {
@@ -1309,6 +1384,14 @@ function addMessageRefId(decryptedPayload: string, uid: string): string {
       return message
     })
   )
+}
+
+function addProofRequestMessageRefId(decryptedPayload: string, uid: string): string {
+  let message = JSON.parse(JSON.parse(decryptedPayload)['@msg'])
+  if (message.hasOwnProperty('msg_ref_id')) {
+    message.msg_ref_id = uid
+  }
+  return JSON.stringify(message)
 }
 
 export function* watchOnHydrationDownloadMessages(): any {

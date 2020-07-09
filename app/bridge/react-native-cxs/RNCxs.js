@@ -42,6 +42,7 @@ import type { UserOneTimeInfo } from '../../store/user/type-user-store'
 import type {
   AgencyPoolConfig,
   ProvisionToken,
+  MessagePaymentDetails,
 } from '../../store/type-config-store'
 import type { MyPairwiseInfo } from '../../store/type-connection-store'
 import type {
@@ -304,30 +305,24 @@ export const getHandleBySerializedConnection = memoize(async function(
   return connectionHandle
 })
 
-export async function downloadClaimOffer(
-  connectionHandle: number,
+export async function createCredentialWithProprietaryOffer(
   sourceId: string,
-  messageId: string
+  credentialOffer: string
 ): Promise<CxsCredentialOfferResult> {
-  const {
-    credential_offer,
-    credential_handle,
-  }: VcxCredentialOfferResult = await RNIndy.credentialCreateWithMsgId(
+  const credential_handle = await credentialCreateWithOffer(
     sourceId,
-    connectionHandle,
-    messageId
+    credentialOffer
   )
 
-  const {
-    credential_offer: vcxCredentialOffer,
-    price,
-  }: { credential_offer: VcxCredentialOffer, price: number } = JSON.parse(
-    credential_offer
-  )
+  const [vcxCredentialOffer, paymentDetails]: [
+    VcxCredentialOffer,
+    MessagePaymentDetails,
+  ] = JSON.parse(credentialOffer)
 
-  vcxCredentialOffer.price = price
-    ? convertSovrinAtomsToSovrinTokens(price)
-    : null
+  vcxCredentialOffer.price =
+    paymentDetails && paymentDetails.price
+      ? convertSovrinAtomsToSovrinTokens(paymentDetails.price)
+      : null
 
   return {
     claimHandle: credential_handle,
@@ -335,7 +330,7 @@ export async function downloadClaimOffer(
   }
 }
 
-export async function createAriesCredentialOffer(
+export async function createCredentialWithAriesOffer(
   sourceId: string,
   credentialOffer: string
 ): Promise<CxsCredentialOfferResult> {
@@ -389,27 +384,6 @@ export async function sendClaimRequest(
     connectionHandle,
     paymentHandle
   )
-}
-
-export async function downloadProofRequest(
-  sourceId: string,
-  connectionHandle: number,
-  messageId: string
-): Promise<VcxProofRequest> {
-  const {
-    proofHandle,
-    proofRequest,
-  }: {
-    proofHandle: number,
-    proofRequest: string,
-  } = await RNIndy.proofCreateWithMsgId(sourceId, connectionHandle, messageId)
-
-  const vcxProofRequest: VcxProofRequest = JSON.parse(proofRequest)
-
-  return {
-    ...vcxProofRequest,
-    proofHandle,
-  }
 }
 
 export async function getWalletBalance(): Promise<string> {
