@@ -26,6 +26,7 @@ import { Avatar } from '../components/avatar/avatar'
 import { mediumGray, color } from '../common/styles/constant'
 import { scheduleClearInAppNotification } from './in-app-notification-actions'
 import { connectionHistRoute } from '../common'
+import { DefaultLogo } from '../components/default-logo/default-logo'
 
 class NotificationCardComponent extends Component<NotificationCardProps, void> {
   translateY = new Animated.Value(0)
@@ -53,8 +54,6 @@ class NotificationCardComponent extends Component<NotificationCardProps, void> {
     const { senderName, senderImage: image, text } = notification
     const {
       container,
-      initialsContainer,
-      initialsText,
       avatarSection,
       infoSection,
       companyNameSection,
@@ -92,11 +91,11 @@ class NotificationCardComponent extends Component<NotificationCardProps, void> {
                 {typeof image === 'string' ? (
                   <Avatar radius={16} src={{ uri: image }} />
                 ) : (
-                  <View style={initialsContainer}>
-                    <Text style={initialsText}>
-                      {senderName ? senderName[0] : null}
-                    </Text>
-                  </View>
+                  <DefaultLogo
+                    text={senderName}
+                    size={32}
+                    fontSize={17}
+                  />
                 )}
               </View>
               <View style={infoSection}>
@@ -227,6 +226,21 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 10,
     flexDirection: 'row',
+  },
+  initialsContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: color.border.primary,
+  },
+  initialsText: {
+    fontFamily: 'Lato',
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: color.textColor.darkgray,
   },
   avatarSection: {
     height: '100%',

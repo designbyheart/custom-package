@@ -26,7 +26,7 @@ export type InvitationPayload = {
   senderAgentKeyDelegationProof: AgentKeyDelegationProof,
   senderName: string,
   senderDID: string,
-  senderLogoUrl?: string,
+  senderLogoUrl?: ?string,
   senderVerificationKey: string,
   targetName: string,
   senderDetail: InvitationSenderDetail,

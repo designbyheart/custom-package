@@ -188,6 +188,7 @@ describe('Invitation Store', () => {
               ...successConnectionData.newConnection,
               vcxSerializedConnection,
               publicDID: undefined,
+              isCompleted: true,
             },
           })
         )

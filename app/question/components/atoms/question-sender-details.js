@@ -8,7 +8,7 @@ import { grey, white } from '../../../common/styles'
 import { DefaultLogo } from '../../../components/default-logo/default-logo'
 
 const QuestionSenderDetail = (props: {
-  source: number | { uri: string },
+  source?: null | number | { uri: string },
   senderName: string,
   questionStyles: any,
 }) => {
@@ -18,21 +18,19 @@ const QuestionSenderDetail = (props: {
       style={props.questionStyles.questionSenderContainer}
       center
     >
-      {props.source.uri ? (
-          <Image
-            style={[props.questionStyles.questionSenderLogo]}
-            source={props.source}
-            resizeMode="cover"
-          />
-        ) :
-        (
-          <DefaultLogo
-            text={props.senderName}
-            size={props.questionStyles.placeholderIfNoImage.width}
-            fontSize={props.questionStyles.placeholderIfNoImage.fontSize}
-          />
-        )
-      }
+      {props.source ? (
+        <Image
+          style={[props.questionStyles.questionSenderLogo]}
+          source={props.source}
+          resizeMode="cover"
+        />
+      ) : (
+        <DefaultLogo
+          text={props.senderName}
+          size={props.questionStyles.placeholderIfNoImage.width}
+          fontSize={props.questionStyles.placeholderIfNoImage.fontSize}
+        />
+      )}
       <QuestionScreenText size="h4b" numberOfLines={2} color={'#A5A5A5'}>
         {props.senderName}
       </QuestionScreenText>

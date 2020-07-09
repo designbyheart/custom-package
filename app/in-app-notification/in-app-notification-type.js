@@ -8,7 +8,7 @@ import type {
 import { MESSAGE_TYPE } from '../api/api-constants'
 
 export type InAppNotification = {
-  senderName: ?string,
+  senderName: string,
   senderImage: ?string,
   senderDID: string,
   identifier: string,

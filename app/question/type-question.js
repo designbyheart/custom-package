@@ -22,7 +22,7 @@ export type QuestionScreenProps = {
     answer: QuestionResponse
   ) => SendAnswerToQuestionAction,
   question?: QuestionStoreMessage,
-  senderLogoUrl?: number | GenericObject,
+  senderLogoUrl?: null | number | GenericObject,
   senderName: string,
   questionStyles?: any,
 } & ReactNavigation

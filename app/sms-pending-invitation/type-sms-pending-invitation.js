@@ -30,7 +30,7 @@ export type InvitationSenderDetail = {
   name: string,
   agentKeyDlgProof: AgentKeyDelegationProof,
   DID: string,
-  logoUrl: string,
+  logoUrl?: ?string,
   verKey: string,
   publicDID?: string,
 }

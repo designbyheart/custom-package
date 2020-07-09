@@ -10,9 +10,7 @@ import {
   ERROR_INVITATION_SERIALIZE_UPDATE,
 } from './type-invitation'
 import { ResponseType } from '../components/request/type-request'
-import {
-  ERROR_ALREADY_EXIST,
-} from '../api/api-constants'
+import { ERROR_ALREADY_EXIST } from '../api/api-constants'
 import {
   getInvitationPayload,
   isDuplicateConnection,
@@ -28,7 +26,9 @@ import {
   acceptInvitationVcx,
   serializeConnection,
   createConnectionWithAriesInvite,
-  connectionUpdateState, getHandleBySerializedConnection, connectionGetState,
+  connectionUpdateState,
+  getHandleBySerializedConnection,
+  connectionGetState,
 } from '../bridge/react-native-cxs/RNCxs'
 import type {
   InvitationResponseSendData,
@@ -44,7 +44,10 @@ import { RESET } from '../common/type-common'
 import { ensureVcxInitSuccess } from '../store/route-store'
 import type { MyPairwiseInfo } from '../store/type-connection-store'
 import { flattenAsync } from '../common/flatten-async'
-import { connectionFail, ERROR_CONNECTION } from '../store/type-connection-store'
+import {
+  connectionFail,
+  ERROR_CONNECTION,
+} from '../store/type-connection-store'
 
 export const invitationInitialState = {}
 
@@ -142,14 +145,14 @@ export function* sendResponse(
 export function* updateAriesConnectionState(
   identifier: string,
   vcxSerializedConnection: string,
-  message: string, // TODO: must be used since we replace connectionUpdateState
+  message: string // TODO: must be used since we replace connectionUpdateState
 ): Generator<*, *, *> {
   const connectionHandle = yield call(
     getHandleBySerializedConnection,
     vcxSerializedConnection
   )
 
-  const [updateStateError]: [typeof Error] = yield call(
+  const [updateStateError]: [Error] = yield call(
     // TODO: use connectionUpdateStateWithMessage function instead
     // TODO: connectionUpdateStateWithMessage is missed in VCX Objective-C wrapper
     flattenAsync(connectionUpdateState),
@@ -157,25 +160,19 @@ export function* updateAriesConnectionState(
   )
   if (updateStateError) {
     yield put(
-      connectionFail(
-        ERROR_CONNECTION(updateStateError.message),
-        identifier
-      )
+      connectionFail(ERROR_CONNECTION(updateStateError.message), identifier)
     )
     return
   }
 
-  const [getStateError, connectionState]: [typeof Error, number] = yield call(
+  const [getStateError, connectionState]: [Error, number] = yield call(
     flattenAsync(connectionGetState),
     connectionHandle
   )
 
   if (getStateError) {
     yield put(
-      connectionFail(
-        ERROR_CONNECTION(getStateError.message),
-        identifier
-      )
+      connectionFail(ERROR_CONNECTION(getStateError.message), identifier)
     )
     return
   }
@@ -186,7 +183,6 @@ export function* updateAriesConnectionState(
     typeof Error,
     string,
   ] = yield call(flattenAsync(serializeConnection), connectionHandle)
-
 
   if (serializedStateError) {
     yield put(
@@ -205,10 +201,9 @@ export function* updateAriesConnectionState(
     // TODO: update VCX Null state to contain details about connection failure reason
     yield put(
       connectionFail(
-        ERROR_CONNECTION("Connection Problem Report was received"), // TODO: use VCX state reason
+        ERROR_CONNECTION('Connection Problem Report was received'), // TODO: use VCX state reason
         identifier
       )
-
     )
   }
 
