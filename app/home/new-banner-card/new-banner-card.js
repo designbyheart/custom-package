@@ -29,7 +29,7 @@ export const NewBannerCard = (props: NewBannerCardProps) => {
           <Image source={{ uri: props.logoUrl }} style={styles.issuerLogo} />
         ) : (
           <DefaultLogo
-            text={params.issuerName[0]}
+            text={props.issuerName[0]}
             size={newBannerCardSizes.logoSize}
             fontSize={isiPhone5 ? font.size.M : font.size.ML}
           />
