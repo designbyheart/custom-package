@@ -673,36 +673,6 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void credentialCreateWithMsgId(String sourceId, int connectionHandle, String messageId, Promise promise) {
-        // TODO call vcx_credential_create_with_msgid
-        // pass sourceId, connectionHandle, & messageId
-        // it would return an error code, an integer credential handle, a json string of
-        // credential offer in callback
-        // notice that we are returning a Map from here, not string or error code
-        // JavaScript layer is expecting a map with two keys defined below
-        // with one as an integer and another as json string of claim offer received
-        // from vcx
-
-        try {
-            CredentialApi.credentialCreateWithMsgid(sourceId, connectionHandle, messageId).exceptionally((t) -> {
-                Log.e(TAG, "credentialCreateWithMsgId: ", t);
-                promise.reject("FutureException", t.getMessage());
-                return null;
-            }).thenAccept(result -> {
-                GetCredentialCreateMsgidResult typedResult = (GetCredentialCreateMsgidResult) result;
-                WritableMap vcxCredentialCreateResult = Arguments.createMap();
-                vcxCredentialCreateResult.putInt("credential_handle", typedResult.getCredential_handle());
-                vcxCredentialCreateResult.putString("credential_offer", typedResult.getOffer());
-                BridgeUtils.resolveIfValid(promise, vcxCredentialCreateResult);
-            });
-        } catch (VcxException e) {
-            promise.reject("VCXException", e.getMessage());
-            e.printStackTrace();
-        }
-
-    }
-
-    @ReactMethod
     public void credentialCreateWithOffer(String sourceId, String credOffer, Promise promise) {
         try {
             CredentialApi.credentialCreateWithOffer(sourceId, credOffer).exceptionally((t) -> {
@@ -1065,32 +1035,10 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
             promise.reject("VcxException", e.getMessage());
         }
     }         
-        
 
     @ReactMethod
     public void exitAppAndroid() {
         android.os.Process.killProcess(android.os.Process.myPid());
-    }
-
-    @ReactMethod
-    public void proofCreateWithMsgId(String sourceId, int connectionHandle, String messageId, Promise promise) {
-        try {
-            DisclosedProofApi.proofCreateWithMsgId(sourceId, connectionHandle, messageId).exceptionally((t) -> {
-                Log.e(TAG, "proofCreateWithMsgId: ", t);
-                promise.reject("FutureException: ", t.getMessage());
-                return null;
-            }).thenAccept(result -> {
-                if (result != null) {
-                    CreateProofMsgIdResult typedResult = (CreateProofMsgIdResult) result;
-                    WritableMap vcxProofCreateResult = Arguments.createMap();
-                    vcxProofCreateResult.putInt("proofHandle", typedResult.proofHandle);
-                    vcxProofCreateResult.putString("proofRequest", typedResult.proofRequest);
-                    BridgeUtils.resolveIfValid(promise, vcxProofCreateResult);
-                }
-            });
-        } catch (VcxException e) {
-            promise.reject("VCXException", e.getMessage());
-        }
     }
 
     @ReactMethod

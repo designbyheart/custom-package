@@ -553,30 +553,6 @@ RCT_EXPORT_METHOD(generateThumbprint: (NSString *)data
   }
 }
 
-RCT_EXPORT_METHOD(credentialCreateWithMsgId: (NSString *) sourceId
-                  withConnectionHandle: (NSInteger) connectionHandle
-                  withMessageId: (NSString *) messageId
-                  resolver: (RCTPromiseResolveBlock) resolve
-                  rejecter: (RCTPromiseRejectBlock) reject)
-{
-    [[[ConnectMeVcx alloc] init] credentialCreateWithMsgid:sourceId
-                                          connectionHandle:connectionHandle
-                                                     msgId:messageId
-                                                completion:^(NSError *error, NSInteger credentialHandle, NSString* credentialOffer) {
-      if (error != nil && error.code != 0)
-      {
-        NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
-        reject(indyErrorCode, @"Error occurred while creating credential handle", error);
-      } else {
-        NSDictionary* vcxCredentialCreateResult = @{
-                                              @"credential_handle": @(credentialHandle),
-                                              @"credential_offer": credentialOffer
-                                              };
-        resolve(vcxCredentialCreateResult);
-      }
-    }];
-}
-
 RCT_EXPORT_METHOD(credentialCreateWithOffer: (NSString *) sourceId
                   withCredOffer: (NSString *) credOffer
                   resolver: (RCTPromiseResolveBlock) resolve
@@ -1054,31 +1030,6 @@ RCT_EXPORT_METHOD(deserializeBackupWallet: (NSString *) message
      } else {
        resolve(@(walletBackupHandle));
      }
-  }];
-}
-
-
-RCT_EXPORT_METHOD(proofCreateWithMsgId: (NSString *)sourceId
-                  withConnectionHandle: (NSInteger)connectionHandle
-                  withMsgId: (NSString *)msgId
-                  resolver: (RCTPromiseResolveBlock) resolve
-                  rejecter: (RCTPromiseRejectBlock) reject)
-{
-  [[[ConnectMeVcx alloc] init] proofCreateWithMsgId:sourceId
-                               withConnectionHandle:connectionHandle
-                                          withMsgId:msgId
-                                     withCompletion:^(NSError *error, vcx_proof_handle_t proofHandle, NSString *proofRequest)
-  {
-    if (error != nil && error.code != 0) {
-      NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
-      reject(indyErrorCode, @"Error occurred while downloading proof request", error);
-    }
-    else {
-      resolve(@{
-                @"proofHandle": @(proofHandle),
-                @"proofRequest": proofRequest
-                });
-    }
   }];
 }
 

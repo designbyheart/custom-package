@@ -69,8 +69,6 @@ import type { Connections } from '../connection/type-connection'
 import type { UserOneTimeInfo } from '../store/user/type-user-store'
 import {
   updatePushTokenVcx,
-  downloadClaimOffer,
-  downloadProofRequest,
   getHandleBySerializedConnection,
   serializeClaimOffer,
   downloadMessages,
@@ -361,6 +359,22 @@ export function* fetchAdditionalDataSaga(
     return
   }
 
+  if (
+    type === MESSAGE_TYPE.CLAIM_OFFER ||
+    type === MESSAGE_TYPE.PROOF_REQUEST
+  ) {
+    // if we get notification about received `claimOffer` / `proofReuqest` message, 
+    // we need to download that message and process 
+    // we can download and process that messages same way for `proprietary` and `aries` protocols.
+    // so we are raising this action to run downloadMessagesSaga
+    yield put({
+      type: GET_UN_ACKNOWLEDGED_MESSAGES,
+    })
+    // once we start processing message, we don't to run any other logic
+    // so we return from here
+    return
+  }
+
   if (forDID && uid) {
     const fetchDataAlreadyExists = yield select(
       getPendingFetchAdditionalDataKey
@@ -536,27 +550,6 @@ export function* fetchAdditionalDataSaga(
       | QuestionPayload
       | null = null
 
-    if (type === MESSAGE_TYPE.CLAIM_OFFER) {
-      const vcxSerializedClaimOffer: SerializedClaimOffer | null = yield select(
-        getSerializedClaimOffer,
-        forDID,
-        uid
-      )
-      if (!vcxSerializedClaimOffer) {
-        const {
-          claimHandle,
-          claimOffer,
-        }: CxsCredentialOfferResult = yield call(
-          downloadClaimOffer,
-          connectionHandle,
-          uid,
-          uid
-        )
-        additionalData = claimOffer
-        yield fork(saveSerializedClaimOffer, claimHandle, forDID, uid)
-      }
-    }
-
     if (type === MESSAGE_TYPE.CLAIM) {
       // as per vcx apis we are not downloading claim
       // we will update state of existing claim offer instance
@@ -564,15 +557,6 @@ export function* fetchAdditionalDataSaga(
       additionalData = {
         connectionHandle,
       }
-    }
-
-    if (type === MESSAGE_TYPE.PROOF_REQUEST) {
-      additionalData = yield call(
-        downloadProofRequest,
-        uid,
-        connectionHandle,
-        uid
-      )
     }
 
     // toLowerCase here to handle type 'question' and 'Question'
@@ -693,7 +677,6 @@ function* watchUpdateRelevantPushPayloadStoreAndRedirect(): any {
     yield* redirectToRelevantScreen({ ...notification, uiType: null })
     const { forDID: pairwiseDID, uid } = notification
     const directStatusUpdateMessageTypes = [
-      MESSAGE_TYPE.PROOF_REQUEST,
       MESSAGE_TYPE.QUESTION,
       MESSAGE_TYPE.QUESTION.toLowerCase(),
     ]
