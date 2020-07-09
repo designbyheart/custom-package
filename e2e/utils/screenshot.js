@@ -133,7 +133,7 @@ const areSameNew = (image1: string, image2: string, diffImagePath: string) => {
   const delta = new PNG({ width, height })
 
   let res = pixelmatch(img1.data, img2.data, delta.data, width, height, {
-    threshold: 0.7,
+    threshold: 1,
   })
 
   fs.writeFileSync(diffImagePath, PNG.sync.write(delta))
