@@ -1062,7 +1062,7 @@ function* handleProprietaryMessage(
       | null = null
 
     let messageType = null
-    
+
     // toLowerCase here to handle type 'question' and 'Question'
     if (type.toLowerCase() === MESSAGE_TYPE.QUESTION.toLowerCase()) {
       if (!decryptedPayload) return
@@ -1077,7 +1077,7 @@ function* handleProprietaryMessage(
       )
     }
 
-    // proprietary credential offer 
+    // proprietary credential offer
     if (type === MESSAGE_TYPE.CLAIM_OFFER) {
     // TODO: remove once https://gitlab.corp.evernym.com/dev/vcx/indy-sdk/-/merge_requests/220 get merged
       const message = addClaimOfferMessageRefId(decryptedPayload, uid)
@@ -1102,7 +1102,7 @@ function* handleProprietaryMessage(
       yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
     }
 
-    // proprietary credential 
+    // proprietary credential
     if (type === MESSAGE_TYPE.CLAIM) {
       messageType = MESSAGE_TYPE.CLAIM
       additionalData = {
@@ -1111,13 +1111,13 @@ function* handleProprietaryMessage(
       }
     }
 
-    // proprietary proof request 
+    // proprietary proof request
     if (type === MESSAGE_TYPE.PROOF_REQUEST) {
     // TODO: remove once https://gitlab.corp.evernym.com/dev/vcx/indy-sdk/-/merge_requests/220 get merged
       const message = addProofRequestMessageRefId(decryptedPayload, uid)
 
       messageType = MESSAGE_TYPE.PROOF_REQUEST
-      
+
       const proofHandle = yield call(
         proofCreateWithRequest,
         uid,
@@ -1194,7 +1194,7 @@ function* handleAriesMessage(
       | null = null
 
     let messageType = null
-    
+
     // if we don't find any matching type, then our type can be expected from aries
     // now we can try to look inside decryptedpayload
     const payload = JSON.parse(decryptedPayload)
@@ -1228,7 +1228,7 @@ function* handleAriesMessage(
 
     if (
       type === MESSAGE_TYPE.CLAIM ||
-      payloadType.name === 'CRED' || 
+      payloadType.name === 'CRED' ||
       payloadType.name === 'credential'
     ) {
       messageType = MESSAGE_TYPE.CLAIM
@@ -1239,7 +1239,7 @@ function* handleAriesMessage(
     }
 
     if (
-      type === MESSAGE_TYPE.PROOF_REQUEST || 
+      type === MESSAGE_TYPE.PROOF_REQUEST ||
       ['proof_request', 'proof-request', 'presentation-request'].includes(
         payloadType.name.toLowerCase()
       )
@@ -1247,7 +1247,7 @@ function* handleAriesMessage(
       const message = payload['@msg']
 
       messageType = MESSAGE_TYPE.PROOF_REQUEST
-      
+
       const proofHandle = yield call(
         proofCreateWithRequest,
         uid,
@@ -1258,37 +1258,37 @@ function* handleAriesMessage(
         ...JSON.parse(message),
         proofHandle,
       }
+    }
 
-      if (payloadType && payloadType.name === 'aries' && payload['@msg']) {
-        const payloadMessageType = JSON.parse(payload['@msg'])['@type']
+    if (payloadType && payloadType.name === 'aries' && payload['@msg']) {
+      const payloadMessageType = JSON.parse(payload['@msg'])['@type']
 
-        if (payloadMessageType && payloadMessageType.includes("connections") &&
+      if (payloadMessageType && payloadMessageType.includes("connections") &&
           (payloadMessageType.endsWith('response') || 
           payloadMessageType.endsWith('problem_report'))) {
 
           // if we receive connection response message or connection problem report 
           // we need to update state of related corresponding connection object
           yield call(
-            updateAriesConnectionState,
-            forDID,
-            vcxSerializedConnection,
-            payload['@msg'],
-          )
+          updateAriesConnectionState,
+          forDID,
+          vcxSerializedConnection,
+          payload['@msg'],
+        )
 
-          // as we handled the received message we need to update its status
-          // to read
-          yield fork(updateMessageStatus, [
-            { pairwiseDID: forDID, uids: [uid] },
-          ])
-        }
+        // as we handled the received message we need to update its status
+        // to read
+        yield fork(updateMessageStatus, [
+          { pairwiseDID: forDID, uids: [uid] },
+        ])
+      }
 
-        if (payloadMessageType && payloadMessageType.endsWith('ack')) {
-          // if we have just ack data then for now send acknowledge to server
-          // so that we don't download it again
-          yield fork(updateMessageStatus, [
-            { pairwiseDID: forDID, uids: [uid] },
-          ])
-        }
+      if (payloadMessageType && payloadMessageType.endsWith('ack')) {
+        // if we have just ack data then for now send acknowledge to server
+        // so that we don't download it again
+        yield fork(updateMessageStatus, [
+          { pairwiseDID: forDID, uids: [uid] },
+        ])
       }
     }
 
