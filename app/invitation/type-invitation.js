@@ -150,6 +150,7 @@ export type AriesConnectionInvitePayload = {
   '@id': string,
   '@type': AriesConnectionInviteType,
   label?: string,
+  profileUrl?: string,
   recipientKeys: Array<string>,
   routingKeys?: ?Array<string>,
   serviceEndpoint: string,

@@ -182,7 +182,6 @@ function isValidInvitation(
   if (invitation && invitation.payload) {
     const { payload } = invitation
     senderName = payload.senderName || senderName
-    title = payload.targetName ? `Hi ${payload.targetName}` : title
     message = `${senderName} wants to connect with you.`
     return {
       isValid: true,
