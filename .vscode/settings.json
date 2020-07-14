@@ -5,7 +5,9 @@
     "IPHONEXSMAX",
     "OIDC",
     "Onfido",
+    "checkmark",
     "connectme",
+    "ellipsize",
     "jwks"
   ],
   "flow.useLSP": false,

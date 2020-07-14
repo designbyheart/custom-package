@@ -14,9 +14,7 @@ import { bindActionCreators } from 'redux'
 
 import SvgCustomIcon from '../../components/svg-custom-icon'
 import CredentialPriceInfo from '../../components/labels/credential-price-info'
-import { Border } from '../../components/connection-details/border'
 import {
-  proofRequestRoute,
   claimOfferRoute,
   modalContentProofShared,
   modalScreenRoute,
@@ -32,6 +30,8 @@ import { reTryActions } from '../../home/recent-card/recent-card'
 import { deleteHistoryEvent } from '../../connection-history/connection-history-store'
 import { DENY_PROOF_REQUEST_FAIL } from '../../proof-request/type-proof-request'
 import { denyProofRequest } from '../../proof-request/proof-request-store'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
 class ConnectionCardComponent extends PureComponent<
@@ -77,7 +77,7 @@ class ConnectionCardComponent extends PureComponent<
       this.props.navigation.navigate(modalScreenRoute, {
         data: this.props.data,
         imageUrl: this.props.imageUrl,
-        institutialName: this.props.institutialName,
+        institutionalName: this.props.institutionalName,
         colorBackground: this.props.colorBackground,
         secondColorBackground: this.props.secondColorBackground,
       })
@@ -108,9 +108,9 @@ class ConnectionCardComponent extends PureComponent<
                 <View style={styles.iconWrapper}>
                   <SvgCustomIcon
                     name="CheckmarkBadge"
-                    fill={'#505050'}
-                    width={22}
-                    height={33}
+                    fill={colors.cmGray1}
+                    width={moderateScale(22)}
+                    height={moderateScale(33)}
                   />
                 </View>
               </View>
@@ -124,7 +124,7 @@ class ConnectionCardComponent extends PureComponent<
                 </View>
               </View>
             </View>
-            <Border borderColor={'#eaeaea'} />
+
             <View style={styles.bottom}>
               {!!this.props.noOfAttributes && (
                 <View style={styles.attributesWrapper}>
@@ -171,7 +171,7 @@ class ConnectionCardComponent extends PureComponent<
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       acceptClaimOffer,
@@ -182,9 +182,10 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export const ConnectionCard = connect(null, mapDispatchToProps)(
-  ConnectionCardComponent
-)
+export const ConnectionCard = connect(
+  null,
+  mapDispatchToProps
+)(ConnectionCardComponent)
 
 const styles = StyleSheet.create({
   container: {
@@ -194,15 +195,15 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingLeft: '7%',
     paddingRight: '7%',
-    paddingTop: 15,
+    paddingTop: moderateScale(15),
     flexDirection: 'column',
     alignItems: 'stretch',
   },
   innerWrapper: {
-    marginTop: 15,
-    borderBottomColor: '#ccc',
-    backgroundColor: 'white',
-    shadowColor: '#000000',
+    marginTop: moderateScale(15),
+    borderBottomColor: colors.cmGray4,
+    backgroundColor: colors.cmWhite,
+    shadowColor: colors.cmBlack,
     shadowOpacity: 0.2,
     shadowRadius: 7,
     shadowOffset: {
@@ -210,31 +211,32 @@ const styles = StyleSheet.create({
       width: 0,
     },
     elevation: Platform.OS === 'android' ? 4 : 0,
-    marginBottom: 15,
+    marginBottom: moderateScale(15),
     borderRadius: 6,
   },
   innerWrapperPadding: {
-    padding: 15,
+    padding: moderateScale(15),
   },
   messageDate: {
-    color: '#777',
-    fontSize: 11,
-    lineHeight: 13,
+    color: colors.cmGray2,
+    fontSize: moderateScale(fontSizes.size9),
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   top: {
     flexDirection: 'row',
     alignItems: 'stretch',
-    paddingBottom: 15,
+    paddingBottom: moderateScale(15),
+    borderBottomColor: colors.cmGray3,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   badge: {
-    height: 38,
-    width: 35,
+    height: moderateScale(38),
+    width: moderateScale(35),
   },
   badgeImage: {
-    width: 23,
-    height: 34.5,
+    width: moderateScale(23),
+    height: moderateScale(34),
   },
   headerWrapper: {
     flex: 1,
@@ -244,37 +246,36 @@ const styles = StyleSheet.create({
   },
   headerText: {
     textAlign: 'left',
-    fontSize: 14,
+    fontSize: moderateScale(fontSizes.size7),
     fontWeight: '700',
-    color: '#505050',
-    fontFamily: 'Lato',
+    color: colors.cmGray1,
+    fontFamily: fontFamily,
   },
   infoWrapper: {
     flexDirection: 'row',
     alignItems: 'stretch',
     width: '100%',
-    paddingTop: 4,
+    paddingTop: moderateScale(4),
   },
   infoType: {
     textAlign: 'left',
-    fontSize: 11,
+    fontSize: moderateScale(fontSizes.size9),
     fontWeight: '500',
-    color: '#777777',
+    color: colors.cmGray2,
     flex: 1,
-    fontFamily: 'Lato',
-    lineHeight: 13,
+    fontFamily: fontFamily,
   },
   infoDate: {
     textAlign: 'right',
-    fontSize: 11,
+    fontSize: moderateScale(fontSizes.size9),
     fontWeight: '500',
-    color: '#505050',
-    fontFamily: 'Lato',
+    color: colors.cmGray1,
+    fontFamily: fontFamily,
   },
   bottom: {
     width: '100%',
-    paddingTop: 15,
-    backgroundColor: 'white',
+    paddingTop: moderateScale(15),
+    backgroundColor: colors.cmWhite,
   },
   attributesWrapper: {
     flexDirection: 'row',
@@ -282,25 +283,18 @@ const styles = StyleSheet.create({
   },
   attributesText: {
     textAlign: 'left',
-    fontSize: 14,
+    fontSize: moderateScale(fontSizes.size7),
     fontWeight: '400',
-    color: '#505050',
-    fontFamily: 'Lato',
+    color: colors.cmGray1,
+    fontFamily: fontFamily,
   },
   button: {
     backgroundColor: 'transparent',
-    padding: 8,
-    paddingRight: 25,
-    marginLeft: -8,
-    marginBottom: -8,
-    borderRadius: 5,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   buttonText: {
-    fontSize: 14,
+    fontSize: moderateScale(fontSizes.size7),
     fontWeight: '700',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   iconWrapper: {
     width: '100%',
@@ -310,8 +304,8 @@ const styles = StyleSheet.create({
   },
   helperView: {
     borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
+    borderBottomColor: colors.cmGray5,
     width: '100%',
-    paddingTop: 15,
+    paddingTop: moderateScale(15),
   },
 })

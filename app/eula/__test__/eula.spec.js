@@ -14,10 +14,16 @@ describe('Eula screen', () => {
     const eula = {
       isEulaAccept: false,
     }
+    const dispatch = jest.fn()
     const tree = renderer
       .create(
         <Provider store={store}>
-          <EulaScreen eula={eula} navigation={navigation} />
+          <EulaScreen
+            eula={eula}
+            navigation={navigation}
+            route={navigation.route}
+            dispatch={dispatch}
+          />
         </Provider>
       )
       .toJSON()

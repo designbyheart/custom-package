@@ -77,15 +77,29 @@ class CustomText extends React.Component<GenericObject, void> {
     const colorType = color
       ? capitalizeFirstLetter(color)
       : quaternary
-        ? 'Quaternary'
-        : secondary ? 'Secondary' : tertiary ? 'Tertiary' : 'Primary'
+      ? 'Quaternary'
+      : secondary
+      ? 'Secondary'
+      : tertiary
+      ? 'Tertiary'
+      : 'Primary'
     // preference is given to size prop, so if user pass both size and h3-h7
     // value of size will override other values
     const sizeStyle = size
       ? size
       : h3
-        ? 'h3'
-        : h3a ? 'h3a' : h4 ? 'h4' : h4a ? 'h4a' : h6 ? 'h6' : h7 ? 'h7' : 'h5'
+      ? 'h3'
+      : h3a
+      ? 'h3a'
+      : h4
+      ? 'h4'
+      : h4a
+      ? 'h4a'
+      : h6
+      ? 'h6'
+      : h7
+      ? 'h7'
+      : 'h5'
     const fontFamily = 'fontLato'
     const textStyles = [
       styles[sizeStyle],
@@ -95,12 +109,16 @@ class CustomText extends React.Component<GenericObject, void> {
       bold
         ? styles.bold
         : semiBold
-          ? styles.semiBold
-          : thick
-            ? styles.thick
-            : demiBold
-              ? styles.demiBold
-              : heavy ? styles.heavy : medium ? styles.medium : null,
+        ? styles.semiBold
+        : thick
+        ? styles.thick
+        : demiBold
+        ? styles.demiBold
+        : heavy
+        ? styles.heavy
+        : medium
+        ? styles.medium
+        : null,
       center ? styles.center : null,
       transparentBg ? styles.transparentBg : null,
       quinaryText ? styles.orangeText : null,
@@ -131,7 +149,7 @@ class CustomText extends React.Component<GenericObject, void> {
     }
     if (typeof onPress !== 'undefined') {
       filteredProps.onPress = debounce(
-        event => {
+        (event) => {
           onPress(event)
         },
         300,
@@ -165,7 +183,7 @@ class CustomText extends React.Component<GenericObject, void> {
         <TextComponent
           style={textStyles}
           {...filteredProps}
-          ref={textRef => (this.textRef = textRef)}
+          ref={(textRef) => (this.textRef = textRef)}
           onLayout={this.onLayout}
         >
           {textChild}

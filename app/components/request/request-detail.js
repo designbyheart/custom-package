@@ -1,9 +1,13 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Container, CustomText, CustomView } from '../../components'
-import RequestDetailText from './request-detail-text'
-import RequestDetailAvatars from './request-detail-avatars'
+
 import type { RequestDetailProps } from './type-request'
+
+import { Container } from '../layout/container'
+import { CustomView } from '../layout/custom-view'
+import CustomText from '../text'
+import { RequestDetailText } from './request-detail-text'
+import RequestDetailAvatars from './request-detail-avatars'
 
 export default class RequestDetail extends PureComponent<
   RequestDetailProps,

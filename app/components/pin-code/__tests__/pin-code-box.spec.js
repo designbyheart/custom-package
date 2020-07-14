@@ -2,6 +2,7 @@
 import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
+
 import PinCodeBox from '../pin-code-box'
 import type { PinCodeBoxProps } from '../type-pin-code-box'
 

@@ -133,7 +133,11 @@ export function convertVcxConnectionV2ToCMConnection(
 ): MyPairwiseInfo {
   const {
     agent_info,
-    state: { Invitee: { Requested: { remote_info } } },
+    state: {
+      Invitee: {
+        Requested: { remote_info },
+      },
+    },
   } = vcxConnection.state
 
   return {

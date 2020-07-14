@@ -1,6 +1,6 @@
 // @flow
 
-import urlParse from 'url-parse'
+import urlParse, { type Url } from 'url-parse'
 import isUrl from 'validator/lib/isURL'
 import { stringify } from 'query-string'
 
@@ -14,7 +14,7 @@ import { toUtf8FromBase64 } from '../../../bridge/react-native-cxs/RNCxs'
 import { addBase64Padding } from '../../../common/base64-padding'
 import { flatTryCatch } from '../../../common/flat-try-catch'
 
-export function isValidOIDCQrCode(parsedUrl: urlParse): QrCodeOIDC | false {
+export function isValidOIDCQrCode(parsedUrl: Url): QrCodeOIDC | false {
   const { protocol, query, hostname } = parsedUrl
 
   if (!validInvitationUrlScheme.includes(protocol)) {

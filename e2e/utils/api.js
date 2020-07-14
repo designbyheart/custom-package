@@ -88,7 +88,7 @@ export async function getInvitation() {
       sms: true,
     },
     httpsConfig
-  ).then(res => [res.data.id, res.data.qrCode])
+  ).then((res) => [res.data.id, res.data.qrCode])
 
   console.log(chalk.cyan(invitationId))
   console.log(chalk.cyan(qrCode))
@@ -414,7 +414,7 @@ function addCreatedClaimDef({ data: claimDef }) {
   return claimDefs
 }
 // put await on claimDefsWaiting and get the array of claim defs
-const claimDefsWaiting = rawSchemas.map(rawSchema =>
+const claimDefsWaiting = rawSchemas.map((rawSchema) =>
   createSchema(rawSchema)
     .then(R.partial(createClaimDef, [rawSchema.name]))
     .then(addCreatedClaimDef)
@@ -533,7 +533,7 @@ const proofTemplateCreated = ({ data }) => {
   return proofTemplates
 }
 
-let proofTemplatesWaiting = proofTemplateData.map(proofTemplate =>
+let proofTemplatesWaiting = proofTemplateData.map((proofTemplate) =>
   post(`${verityBaseUrl}/proof-defs`, proofTemplate, httpsConfig)
     .then(proofTemplateCreated)
     .catch(console.error)

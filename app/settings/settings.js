@@ -12,10 +12,15 @@ import {
   Image,
   View,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native'
-import { measurements } from '../common/styles/measurements'
-import { BlurView } from 'react-native-blur'
-import { createStackNavigator } from 'react-navigation'
+import * as RNLocalize from 'react-native-localize'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { Apptentive } from 'apptentive-react-native'
+import moment from 'moment'
+import { ListItem } from 'react-native-elements'
+import get from 'lodash.get'
+
 import {
   UserAvatar,
   CustomText,
@@ -38,25 +43,13 @@ import {
   walletRoute,
   exportBackupFileRoute,
   qrCodeScannerTabRoute,
+  lockAuthorizationHomeRoute,
+  lockPinSetupRoute,
 } from '../common/route-constants'
 import ToggleSwitch from 'react-native-flip-toggle-button'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  white,
-  mantis,
-  OFFSET_1X,
-  color,
-  grey,
-  maroonRed,
-  font,
-  lightDarkGray,
-  lightWhite,
-  gainsBoro,
-  isIphoneX,
-  isIphoneXR,
-  isiPhone5,
-} from '../common/styles/constant'
+import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 import {
   EDIT_ICON_DIMENSIONS,
   PASS_CODE_ASTERISK_TOP_OFFSET,
@@ -79,35 +72,24 @@ import type { SettingsProps, SettingsState } from './type-settings'
 import type { ImageSource, ReactNavigation } from '../common/type-common'
 import { selectUserAvatar } from '../store/user/user-store'
 import {
-  setAutoCloudBackupEnabled,
   exportBackup,
   generateBackupFile,
   generateRecoveryPhrase,
+} from '../backup/backup-store'
+import {
+  setAutoCloudBackupEnabled,
   cloudBackupFailure,
   viewedWalletError,
-} from '../backup/backup-store'
-import { Apptentive } from 'apptentive-react-native'
-import AboutApp from '../about-app/about-app'
-import DesignStyleguide from '../design-styleguide/design-styleguide'
-import Onfido from '../onfido/onfido'
-import { PrivacyTNC } from '../privacy-tnc/privacy-tnc-screen'
-import { WalletBalance } from '../wallet/wallet-balance'
-import { size } from '../components/icon'
-import { Dimensions } from 'react-native'
-import { darkGray } from '../common/styles/constant'
-import { List, ListItem } from 'react-native-elements'
+} from '../backup/backup-actions'
 
-import get from 'lodash.get'
+import { WalletBalance } from '../wallet/wallet-balance'
 import {
   getWalletBalance,
   getAutoCloudBackupEnabled,
   getHasVerifiedRecoveryPhrase,
 } from '../store/store-selector'
-import { tokenAmountSize } from '../my-connections/my-connections'
-
 import SvgCustomIcon from '../components/svg-setting-icons'
 import { withStatusBar } from '../components/status-bar/status-bar'
-import moment from 'moment'
 import {
   CLOUD_BACKUP_LOADING,
   CLOUD_BACKUP_FAILURE,
@@ -123,7 +105,6 @@ import { setupApptentive } from '../feedback'
 import { customLogger } from '../store/custom-logger'
 import { getConnections } from '../store/connections-store'
 import type { Connection } from '../store/type-connection-store'
-
 import { NotificationCard } from '../in-app-notification/in-app-notification-card'
 
 // Use this variable to show/hide token amount
@@ -139,15 +120,15 @@ const hideTokenScreen = true
 // positioned fine as well.
 // And now we have to show token balance in settings view, so we need to
 // take token height as well into consideration for height and padding
-let headerHeight = 120
+let headerHeight = verticalScale(90)
 if (!hideTokenScreen) {
-  headerHeight += 40
+  headerHeight += moderateScale(40)
 }
-let listTopPadding = headerHeight
+let listTopPadding = headerHeight + verticalScale(2)
 
 const style = StyleSheet.create({
   secondaryContainer: {
-    backgroundColor: lightDarkGray,
+    backgroundColor: colors.cmGray5,
   },
   userAvatarContainer: {
     height: headerHeight,
@@ -155,9 +136,8 @@ const style = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     top: 0,
-    backgroundColor:
-      Platform.OS === 'ios' ? 'rgba(255, 255, 255, 0.8)' : '#fff',
-    shadowColor: '#000',
+    backgroundColor: colors.cmWhite,
+    shadowColor: colors.cmBlack,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 10,
@@ -172,53 +152,54 @@ const style = StyleSheet.create({
   listContainer: {
     borderBottomWidth: 0,
     borderTopWidth: 0,
-    backgroundColor: lightDarkGray,
+    backgroundColor: colors.cmGray5,
     padding: 0,
   },
   listItemContainer: {
     borderBottomWidth: 1,
     borderTopWidth: 0,
-    borderBottomColor: gainsBoro,
-    minHeight: isiPhone5 ? 52 : 64,
+    borderBottomColor: colors.cmGray4,
+    backgroundColor: colors.cmGray5,
+    minHeight: verticalScale(52),
     justifyContent: 'center',
     paddingTop: 0,
     paddingBottom: 0,
-    paddingRight: 10,
+    paddingRight: moderateScale(10),
   },
   titleStyle: {
-    fontFamily: font.family,
-    fontSize: font.size.M1,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: 'bold',
-    color: grey,
+    color: colors.cmGray2,
   },
   walletNotBackedUpTitleStyle: {
-    fontFamily: font.family,
-    fontSize: font.size.M1,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: 'bold',
-    color: maroonRed,
+    color: colors.cmRed,
   },
   subtitleStyle: {
-    fontFamily: font.family,
-    fontSize: font.size.XXS,
-    color: grey,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size8),
+    color: colors.cmGray2,
   },
   walletNotBackedUpSubtitleStyle: {
-    fontFamily: font.family,
-    fontSize: font.size.XXS,
-    color: maroonRed,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size8),
+    color: colors.cmRed,
   },
   subtitleFail: {
-    color: maroonRed,
+    color: colors.cmRed,
   },
-  avatarStyle: { backgroundColor: lightDarkGray, padding: 5 },
+  avatarStyle: { backgroundColor: colors.cmGray5, padding: moderateScale(5) },
   username: {
-    fontSize: font.size.ML1,
+    fontSize: verticalScale(fontSizes.size4),
     padding: '3%',
   },
   tokenText: {
-    fontSize: font.size.XXS,
-    paddingTop: 5,
-    paddingBottom: 5,
+    fontSize: verticalScale(fontSizes.size8),
+    paddingTop: moderateScale(5),
+    paddingBottom: moderateScale(5),
     textAlign: 'center',
   },
   editIcon: {
@@ -226,25 +207,25 @@ const style = StyleSheet.create({
     height: EDIT_ICON_DIMENSIONS,
   },
   labelImage: {
-    marginRight: OFFSET_1X,
+    marginRight: moderateScale(10),
   },
   floatTokenAmount: {
-    color: darkGray,
-    paddingHorizontal: 8,
+    color: colors.cmGray1,
+    paddingHorizontal: moderateScale(8),
   },
   backupTimeSubtitleStyle: {
-    marginLeft: 10,
-    color: grey,
-    fontFamily: font.family,
+    marginLeft: moderateScale(10),
+    color: colors.cmGray2,
+    fontFamily: fontFamily,
   },
   subtitleColor: {
-    color: grey,
-    fontFamily: font.family,
+    color: colors.cmGray2,
+    fontFamily: fontFamily,
   },
   onfidoIcon: {
-    width: 24,
-    height: 24,
-    marginHorizontal: 10,
+    width: verticalScale(24),
+    height: verticalScale(24),
+    marginHorizontal: moderateScale(10),
   },
 })
 
@@ -253,20 +234,18 @@ export class Settings extends Component<SettingsProps, SettingsState> {
     walletBackupModalVisible: false,
     disableTouchIdSwitch: false,
   }
-  onChangePinClick = () => {
-    const { navigation } = this.props
-    if (navigation.isFocused()) {
-      navigation.push &&
-        navigation.push(lockEnterPinRoute, {
-          existingPin: true,
-        })
-    }
+
+  onAuthSuccess = () => {
+    this.props.navigation.push(lockPinSetupRoute, {
+      existingPin: true,
+    })
   }
 
-  renderBlurForIos = (style: Object) => {
-    if (Platform.OS === 'ios') {
-      return <BlurView style={style} blurType="light" blurAmount={8} />
-    } else return null
+  onChangePinClick = () => {
+    const { navigation } = this.props
+    navigation.navigate(lockAuthorizationHomeRoute, {
+      onSuccess: this.onAuthSuccess,
+    })
   }
 
   onChangeTouchId = (switchState: boolean) => {
@@ -346,16 +325,21 @@ export class Settings extends Component<SettingsProps, SettingsState> {
   }
 
   openOnfido = () => {
-    let localeInfo = ''
-    if (Platform.OS === 'android') {
-      localeInfo = NativeModules.I18nManager.localeIdentifier
+    const locales = RNLocalize.getLocales()
+    let showComingSoonAlert = false
+
+    if (locales.length > 0) {
+      const countryCode = locales[0].countryCode
+      if (['US', 'GB', 'CA'].includes(countryCode)) {
+        this.props.navigation.navigate(onfidoRoute, {})
+      } else {
+        showComingSoonAlert = true
+      }
     } else {
-      localeInfo = NativeModules.SettingsManager.settings.AppleLocale
+      showComingSoonAlert = true
     }
-    const countryCode = localeInfo.split('_')[1]
-    if (['US', 'GB', 'CA'].includes(countryCode)) {
-      this.props.navigation.navigate(onfidoRoute, {})
-    } else {
+
+    if (showComingSoonAlert) {
       Alert.alert(
         'Coming Soon',
         'The Onfido digital credential feature is not yet available in your region',
@@ -387,10 +371,10 @@ export class Settings extends Component<SettingsProps, SettingsState> {
     header: null,
   }
 
-  renderAvatarWithSource = (avatarSource: number | ImageSource) => {
-    let medium = isIphoneXR || isIphoneX
-    return <Avatar medium={medium} small={!medium} round src={avatarSource} />
-  }
+  // renderAvatarWithSource = (avatarSource: number | ImageSource) => {
+  //   let medium = isIphoneXR || isIphoneX
+  //   return <Avatar medium={medium} small={!medium} round src={avatarSource} />
+  // }
 
   hideWalletPopupModal = () => {
     this.setState({
@@ -398,7 +382,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
     })
   }
 
-  componentWillReceiveProps(nextProps: SettingsProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: SettingsProps) {
     if (
       !this.props.hasViewedWalletError &&
       this.props.cloudBackupError !== null &&
@@ -431,7 +415,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
   }
 
   componentDidMount() {
-    setupApptentive().catch(e => {
+    setupApptentive().catch((e) => {
       customLogger.log(e)
     })
   }
@@ -506,7 +490,9 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       this.props.cloudBackupStart()
       return
     }
-    const { navigation: { navigate, state, goBack } } = this.props
+    const {
+      navigation: { navigate, state, goBack },
+    } = this.props
     navigate(cloudBackupRoute, {})
   }
 
@@ -588,7 +574,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       <CustomView center style={[style.userAvatarContainer]}>
         <CustomView verticalSpace>
           <UserAvatar testID={USER_AVATAR_TEST_ID} userCanChange>
-            {this.renderAvatarWithSource}
+            {/* {this.renderAvatarWithSource} */}
           </UserAvatar>
         </CustomView>
         {!hideTokenScreen && (
@@ -634,7 +620,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       Platform.OS === 'ios' ? (
         <Switch
           disabled={this.state.disableTouchIdSwitch}
-          trackColor={{ true: mantis }}
+          trackColor={{ true: colors.cmGreen1 }}
           onValueChange={this.onChangeTouchId}
           value={this.props.touchIdActive}
         />
@@ -642,23 +628,23 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         <ToggleSwitch
           onToggle={this.onChangeTouchId}
           value={this.props.touchIdActive}
-          buttonWidth={55}
-          buttonHeight={30}
-          buttonRadius={30}
-          sliderWidth={28}
-          sliderHeight={28}
-          sliderRadius={58}
-          buttonOnColor={mantis}
-          buttonOffColor={lightWhite}
-          sliderOnColor={white}
-          sliderOffColor={white}
+          buttonWidth={moderateScale(55)}
+          buttonHeight={moderateScale(30)}
+          buttonRadius={moderateScale(30)}
+          sliderWidth={moderateScale(28)}
+          sliderHeight={moderateScale(28)}
+          sliderRadius={moderateScale(58)}
+          buttonOnColor={colors.cmGreen1}
+          buttonOffColor={colors.cmGray4}
+          sliderOnColor={colors.cmWhite}
+          sliderOffColor={colors.cmWhite}
         />
       )
     const cloudToggleSwitch =
       Platform.OS === 'ios' ? (
         <Switch
           disabled={this.state.disableTouchIdSwitch}
-          trackColor={{ true: mantis }}
+          trackColor={{ true: colors.cmGreen1 }}
           onValueChange={this.toggleAutoCloudBackupEnabled}
           value={this.props.autoCloudBackupEnabled}
         />
@@ -667,16 +653,16 @@ export class Settings extends Component<SettingsProps, SettingsState> {
           isOn={true}
           onToggle={this.toggleAutoCloudBackupEnabled}
           value={this.props.autoCloudBackupEnabled}
-          buttonWidth={55}
-          buttonHeight={30}
-          buttonRadius={30}
-          sliderWidth={28}
-          sliderHeight={28}
-          sliderRadius={58}
-          buttonOnColor={mantis}
-          buttonOffColor={lightWhite}
-          sliderOnColor={white}
-          sliderOffColor={white}
+          buttonWidth={moderateScale(55)}
+          buttonHeight={moderateScale(30)}
+          buttonRadius={moderateScale(30)}
+          sliderWidth={moderateScale(28)}
+          sliderHeight={moderateScale(28)}
+          sliderRadius={moderateScale(58)}
+          buttonOnColor={colors.cmGreen1}
+          buttonOffColor={colors.cmGray4}
+          sliderOnColor={colors.cmWhite}
+          sliderOffColor={colors.cmWhite}
         />
       )
 
@@ -690,8 +676,8 @@ export class Settings extends Component<SettingsProps, SettingsState> {
             fill={
               this.props.connectionsUpdated && !this.props.isAutoBackupEnabled
                 ? // || (this.props.connectionsUpdated && this.props.isAutoBackupEnabled && hasCloudBackupFailed)
-                  maroonRed
-                : '#777'
+                  colors.cmRed
+                : colors.cmGray2
             }
             name="Backup"
           />
@@ -705,7 +691,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: this.getCloudBackupSubtitle(),
         avatar: (
           <SvgCustomIcon
-            fill={hasCloudBackupFailed ? maroonRed : '#777'}
+            fill={hasCloudBackupFailed ? colors.cmRed : colors.cmGray2}
             name="CloudBackup"
           />
         ),
@@ -724,7 +710,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         id: 3,
         title: 'Biometrics',
         subtitle: 'Use your finger or face to secure app',
-        avatar: <SvgCustomIcon fill="#777" name="Biometrics" />,
+        avatar: <SvgCustomIcon fill={colors.cmGray2} name="Biometrics" />,
         rightIcon: toggleSwitch,
         onPress: this.onChangeTouchId,
       },
@@ -734,15 +720,20 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: 'View/Change your Connect.Me passcode',
         avatar: (
           <View style={styles.avatarView}>
-            <SvgCustomIcon name="Passcode" fill="#777" width="32" height="19" />
+            <SvgCustomIcon
+              name="Passcode"
+              fill={colors.cmGray2}
+              width={verticalScale(32)}
+              height={verticalScale(19)}
+            />
           </View>
         ),
         rightIcon: (
           <SvgCustomIcon
             name="ListItemArrow"
-            fill="#A5A5A5"
-            width="8"
-            height="10"
+            fill={colors.cmGray3}
+            width={verticalScale(8)}
+            height={verticalScale(9)}
           />
         ),
         onPress: this.onChangePinClick,
@@ -755,18 +746,18 @@ export class Settings extends Component<SettingsProps, SettingsState> {
           <View style={styles.avatarView}>
             <SvgCustomIcon
               name="ViewPassPhrase"
-              fill="#777"
-              width="27"
-              height="27"
+              fill={colors.cmGray2}
+              width={verticalScale(27)}
+              height={verticalScale(27)}
             />
           </View>
         ),
         rightIcon: (
           <SvgCustomIcon
             name="ListItemArrow"
-            fill="#A5A5A5"
-            width="8"
-            height="10"
+            fill={colors.cmGray3}
+            width={verticalScale(8)}
+            height={verticalScale(9)}
           />
         ),
         onPress: this.viewRecoveryPhrase,
@@ -777,15 +768,20 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: 'Tell us what you think of Connect.Me',
         avatar: (
           <View style={styles.avatarView}>
-            <SvgCustomIcon name="Chat" fill="#777" width="27" height="27" />
+            <SvgCustomIcon
+              name="Chat"
+              fill={colors.cmGray2}
+              width={verticalScale(27)}
+              height={verticalScale(27)}
+            />
           </View>
         ),
         rightIcon: (
           <SvgCustomIcon
             name="ListItemArrow"
-            fill="#A5A5A5"
-            width="8"
-            height="10"
+            fill={colors.cmGray3}
+            width={verticalScale(8)}
+            height={verticalScale(9)}
           />
         ),
         onPress: this.openFeedback,
@@ -796,15 +792,20 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: 'Legal, Version, and Network Information',
         avatar: (
           <View style={styles.avatarView}>
-            <SvgCustomIcon name="About" fill="#777" width="27" height="27" />
+            <SvgCustomIcon
+              name="About"
+              fill={colors.cmGray2}
+              width={verticalScale(27)}
+              height={verticalScale(27)}
+            />
           </View>
         ),
         rightIcon: (
           <SvgCustomIcon
             name="ListItemArrow"
-            fill="#A5A5A5"
-            width="8"
-            height="10"
+            fill={colors.cmGray3}
+            width={verticalScale(8)}
+            height={verticalScale(9)}
           />
         ),
         onPress: this.openAboutApp,
@@ -825,9 +826,9 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         rightIcon: (
           <SvgCustomIcon
             name="ListItemArrow"
-            fill="#A5A5A5"
-            width="8"
-            height="10"
+            fill={colors.cmGray3}
+            width={verticalScale(8)}
+            height={verticalScale(9)}
           />
         ),
         onPress: this.openOnfido,
@@ -840,16 +841,21 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: 'Development only',
         avatar: (
           <View style={styles.avatarView}>
-            <SvgCustomIcon name="About" fill="#777" width="27" height="27" />
+            <SvgCustomIcon
+              name="About"
+              fill={colors.cmGray2}
+              width={verticalScale(27)}
+              height={verticalScale(27)}
+            />
           </View>
         ),
 
         rightIcon: (
           <SvgCustomIcon
             name="ListItemArrow"
-            fill="#A5A5A5"
-            width="8"
-            height="10"
+            fill={colors.cmGray3}
+            width={verticalScale(8)}
+            height={verticalScale(9)}
           />
         ),
         onPress: this.openStyleGuide,
@@ -868,14 +874,14 @@ export class Settings extends Component<SettingsProps, SettingsState> {
           accessibilityLabel="settings-container"
         >
           <ScrollView>
-            <List
-              containerStyle={[
+            <CustomView
+              style={[
                 style.secondaryContainer,
                 style.listContainer,
                 {
                   height: Dimensions.get('window').height,
                   paddingTop: listTopPadding,
-                  paddingBottom: measurements.bottomNavBarHeight,
+                  paddingBottom: moderateScale(50),
                 },
               ]}
             >
@@ -916,25 +922,19 @@ export class Settings extends Component<SettingsProps, SettingsState> {
                     key={index}
                     title={item && item.title}
                     subtitle={item && item.subtitle}
-                    avatarStyle={[style.avatarStyle]}
-                    avatar={item && item.avatar}
+                    leftAvatar={item && item.avatar}
                     rightIcon={
                       item.rightIcon !== ''
                         ? item.rightIcon
                         : { name: 'chevron-right' }
                     }
-                    hideChevron={item && item.rightIcon === ''}
                     onPress={item && item.onPress}
                   />
                 )
               })}
-            </List>
+            </CustomView>
           </ScrollView>
-          {this.renderBlurForIos(style.userAvatarContainerBlur)}
-          <PrimaryHeader
-            headline="Settings"
-            navigation={this.props.navigation}
-          />
+          <PrimaryHeader headline="Settings" />
         </CustomView>
         <CameraButton
           onPress={() => this.props.navigation.navigate(qrCodeScannerTabRoute)}
@@ -964,7 +964,7 @@ const mapStateToProps = (state: Store) => ({
   isCloudBackupEnabled: false,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       cloudBackupFailure,
@@ -980,63 +980,44 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export const SettingStack: any = createStackNavigator({
-  [settingsRoute]: {
-    screen: withStatusBar()(
-      connect(mapStateToProps, mapDispatchToProps)(Settings)
-    ),
-  },
-  [aboutAppRoute]: {
-    screen: AboutApp,
-  },
-  [designStyleGuideRoute]: {
-    screen: DesignStyleguide,
-  },
-  [onfidoRoute]: {
-    screen: Onfido,
-  },
-  [privacyTNCRoute]: {
-    screen: PrivacyTNC,
-  },
-})
-
-SettingStack.navigationOptions = ({ navigation }: ReactNavigation) => {
-  let tabBarVisible = true
-  let swipeEnabled = true
-  if (navigation.state.index > 0) {
-    tabBarVisible = false
-    swipeEnabled = false
-  }
-  return {
-    tabBarVisible,
-    swipeEnabled,
-  }
-}
-
-export default SettingStack
+export const SettingsScreen = withStatusBar()(
+  connect(mapStateToProps, mapDispatchToProps)(Settings)
+)
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'stretch',
     justifyContent: 'flex-start',
-    backgroundColor: '#fff',
+    backgroundColor: colors.cmWhite,
   },
   subtitleColor: {
-    color: grey,
-    fontFamily: font.family,
+    color: colors.cmGray2,
+    fontFamily: fontFamily,
   },
   backupTimeSubtitleStyle: {
-    marginLeft: 10,
-    color: grey,
-    fontFamily: font.family,
+    marginLeft: moderateScale(10),
+    color: colors.cmGray2,
+    fontFamily: fontFamily,
   },
   onfidoIcon: {
-    width: 27,
-    height: 27,
+    width: verticalScale(22),
+    height: verticalScale(22),
   },
   avatarView: {
-    width: 40,
+    width: moderateScale(40),
     alignItems: 'center',
   },
 })
+
+export const tokenAmountSize = (tokenAmountLength: number): number => {
+  // this resizing logic is different than wallet tabs header
+  switch (true) {
+    case tokenAmountLength < 16:
+      return verticalScale(26)
+    case tokenAmountLength < 20:
+      return verticalScale(20)
+    default:
+      return verticalScale(19)
+  }
+}

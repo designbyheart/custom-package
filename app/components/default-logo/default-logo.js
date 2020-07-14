@@ -6,12 +6,7 @@ import { grey, white } from '../../common/styles'
 
 export class DefaultLogo extends PureComponent<DefaultLogoProps, void> {
   render() {
-    const {
-      text,
-      size,
-      fontSize,
-      shadow,
-    } = this.props
+    const { text, size, fontSize, shadow } = this.props
 
     const customStyles = {
       container: {
@@ -19,8 +14,7 @@ export class DefaultLogo extends PureComponent<DefaultLogoProps, void> {
         width: size,
         height: size,
         borderRadius: size / 2,
-        ...shadow ? styles.shadow : {},
-
+        ...(shadow ? styles.shadow : {}),
       },
       text: {
         ...styles.defaultText,
@@ -30,7 +24,9 @@ export class DefaultLogo extends PureComponent<DefaultLogoProps, void> {
 
     return (
       <View style={customStyles.container}>
-        <Text style={customStyles.text}>{text.length > 0 ? text[0].toUpperCase() : ''}</Text>
+        <Text style={customStyles.text}>
+          {text ? text[0].toUpperCase() : ''}
+        </Text>
       </View>
     )
   }

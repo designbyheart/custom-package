@@ -1,5 +1,6 @@
 // @flow
-import { AsyncStorage, NativeModules } from 'react-native'
+import { NativeModules } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import memoize from 'lodash.memoize'
 import { call, select } from 'redux-saga/effects'
 import RNSensitiveInfo from 'react-native-sensitive-info'

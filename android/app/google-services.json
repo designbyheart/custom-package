@@ -19,18 +19,7 @@
     "api_key": [{
       "current_key": "AIzaSyBAHeSoFamwu3XhQ13snjZYJ08vclnj-Cs"
     }],
-    "services": {
-      "analytics_service": {
-        "status": 1
-      },
-      "appinvite_service": {
-        "status": 1,
-        "other_platform_oauth_client": []
-      },
-      "ads_service": {
-        "status": 2
-      }
-    }
+    "services": {}
   }],
   "configuration_version": "1"
 }

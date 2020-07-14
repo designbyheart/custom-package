@@ -2,7 +2,8 @@
 import React from 'react'
 import SvgCustomIcon from '../svg-custom-icon'
 import { TouchableOpacity, StyleSheet, Text, Platform } from 'react-native'
-import { isiPhone5 } from '../../common/styles/constant'
+import { colors, fontFamily } from '../../common/styles/constant'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 import type { CameraButtonProps } from './type-camera-button'
 
@@ -11,9 +12,9 @@ export const CameraButton = (props: CameraButtonProps) => {
     <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
       <SvgCustomIcon
         name="Camera"
-        width={isiPhone5 ? 22 : 26}
-        height={isiPhone5 ? 22 : 26}
-        fill={'#777'}
+        width={moderateScale(22)}
+        height={moderateScale(22)}
+        fill={colors.cmGray2}
       />
       <Text style={styles.text}>Scan</Text>
     </TouchableOpacity>
@@ -22,12 +23,12 @@ export const CameraButton = (props: CameraButtonProps) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    width: isiPhone5 ? 50 : 60,
-    height: isiPhone5 ? 50 : 60,
+    width: moderateScale(42, 3),
+    height: moderateScale(42, 3),
     borderRadius: 30,
-    backgroundColor: '#FFF',
+    backgroundColor: colors.cmWhite,
     position: 'absolute',
-    shadowColor: '#000',
+    shadowColor: colors.cmBlack,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 5,
@@ -39,8 +40,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontFamily: 'Lato',
-    fontSize: isiPhone5 ? 9 : 10,
-    color: '#777',
+    fontFamily: fontFamily,
+    fontSize: moderateScale(9, 0.1),
+    color: colors.cmGray2,
   },
 })

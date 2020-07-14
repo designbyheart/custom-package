@@ -3,7 +3,7 @@
 import type {
   NavigationScreenProp,
   NavigationLeafRoute,
-} from 'react-navigation'
+} from '@react-navigation/native'
 import type { Item } from '../components/custom-list/type-custom-list'
 import type {
   ReactNavigation,
@@ -144,19 +144,18 @@ export type ConnectionHistoryItem = {
 }
 
 export type ConnectionHistoryDetailsProps = {
-  navigation: {
-    state: {
-      params: {
-        type: string,
-        id?: string,
-        type?: string,
-        icon?: string,
-        action?: string,
-        status?: string,
-        timestamp?: string,
-        data?: Array<Item>,
-        claimMap?: ?ClaimMap,
-      },
+  navigation: {},
+  route: {
+    params: {
+      type: string,
+      id?: string,
+      type?: string,
+      icon?: string,
+      action?: string,
+      status?: string,
+      timestamp?: string,
+      data?: Array<Item>,
+      claimMap?: ?ClaimMap,
     },
   },
 }
@@ -253,6 +252,8 @@ export type ConnectionHistoryState = {
 export type ConnectionHistoryNavigation = {
   navigation: NavigationScreenProp<{|
     ...NavigationLeafRoute,
+  |}>,
+  route: {
     params: {|
       showExistingConnectionSnack: boolean,
       senderName: string,
@@ -264,7 +265,7 @@ export type ConnectionHistoryNavigation = {
       notificationOpenOptions: ?NotificationOpenOptions,
       uid: ?string,
     |},
-  |}>,
+  },
 }
 
 export type ConnectionHistoryProps = {

@@ -72,7 +72,7 @@ Tests can be run by `yarn e2e`. There are few options to customize while running
 | Option | Default | Description |
 | --- | --- | --- |
 | -b, --build | - | build connectme first, and then run tests. By default e2e script checks that if we already have a build in `build` folder, if build does not exist, then it runs debug build first and then run tests. However, we can pass this option to generate new build. We might need this option if we want to test release build or if we have made some native changes or included new libVcx build, then we would have to build again and then run tests, so in those cases we can use this option |
-| -s, --simulators | iphonexsmax | specify on which simulator tests should run. We can specify multiple values with this option. If we specify more than one simulator, then it would run tests on all those passed simulator in parallel. Possible values that we can pass are `iphone5s iphone7 iphonex iphonexsmax`. The way we can pass multiple value on command line `-s iphone5s iphone7` |
+| -s, --simulators | iphonexsmax | specify on which simulator tests should run. We can specify multiple values with this option. If we specify more than one simulator, then it would run tests on all those passed simulator in parallel. Possible values that we can pass are `iphone5s iphone7 iphone8 iphonex iphonexsmax`. The way we can pass multiple value on command line `-s iphone5s iphone7` |
 | -u, --update | false | whether to update failing screenshots with new ones |
 | -t, --testToRun | all tests under \__tests__ | we can pass specific test file which we need to run. For example: if we just need to run token tests, then we can run `yarn e2e -t token`. Do not add `.spec.js` to the test file name that we need to run. If we have to run tests only from  connection.spec.js, then command would be `yarn e2e -t connection`|
 | -e, --environment | QA Test 1 | select environment which should be used to run end-to-end tests. Possible options are `dev, sandbox, staging, prod, demo, qatest1, qa, devteam1, devteam2, devteam3, devrc` |
@@ -253,6 +253,12 @@ For purpose of dynamic area ignorance, we are using below mechanism.
         height: 131,
       },
       iphone7: {
+        top: 272,
+        left: 19,
+        width: 337,
+        height: 106,
+      },
+      iphone8: {
         top: 272,
         left: 19,
         width: 337,

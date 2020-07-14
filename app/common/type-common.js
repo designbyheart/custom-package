@@ -2,9 +2,11 @@
 
 import type { Element } from 'react'
 import type {
-  NavigationScreenProp,
-  NavigationStateRoute,
-} from 'react-navigation'
+  NavigationStackProp,
+  NavigationRoute as _NavigationRoute,
+  NavigationState as _NavigationState,
+  NavigationLeafRoute as _NavigationLeafRoute,
+} from '@react-navigation/native'
 
 export type CustomError = {
   code: string,
@@ -39,21 +41,14 @@ export const initialTestAction = () => ({
 export type NavigationParams = {
   [string]: any,
 }
-export type NavigationRoute = NavigationLeafRoute & NavigationState
-export type NavigationState = {
-  index: number,
-  routes: Array<NavigationRoute>,
-}
 
-export type NavigationLeafRoute = {|
-  key: string,
-  routeName: string,
-  path?: string,
-  params?: NavigationParams,
-|}
+export type NavigationRoute = _NavigationRoute
+export type NavigationState = _NavigationState
+export type NavigationLeafRoute = _NavigationLeafRoute
 
 export type ReactNavigation = {
-  navigation: NavigationScreenProp<NavigationStateRoute>,
+  navigation: NavigationStackProp<NavigationRoute>,
+  route: NavigationRoute,
 }
 
 export type GenericObject = {

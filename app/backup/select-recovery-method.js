@@ -2,7 +2,13 @@
 
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+import type {
+  ReactNavigationBackup,
+  SelectRecoveryMethodProps,
+} from './type-backup'
 
 import {
   selectRecoveryMethodRoute,
@@ -11,11 +17,6 @@ import {
   cloudBackupRoute,
 } from '../common'
 import { withStatusBar } from '../components/status-bar/status-bar'
-import type {
-  ReactNavigationBackup,
-  SelectRecoveryMethodProps,
-} from './type-backup'
-
 import {
   Container,
   CustomView,
@@ -26,27 +27,25 @@ import {
 } from '../components'
 import { color } from '../common/styles/constant'
 import styles from './styles'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import {
   hasVerifiedRecoveryPhrase,
   generateBackupFile,
 } from '../backup/backup-store'
 import { safeSet, secureSet, walletSet } from '../services/storage'
 import { HAS_VERIFIED_RECOVERY_PHRASE } from './type-backup'
+
 const closeImage = require('../images/icon-Close.png')
 const backup = require('../images/upload13x.png')
 const download = require('../images/download3x.png')
 
 export class SelectRecoveryMethod extends Component<
-  // ReactNavigationBackup,
   SelectRecoveryMethodProps,
   void
 > {
   static navigationOptions = ({
-    navigation: { navigate, state: { params } },
+    navigation: { navigate },
   }: ReactNavigationBackup) => ({
-    header: (
+    header: () => (
       <CustomHeader
         backgroundColor={color.bg.fifth.color}
         largeHeader
@@ -63,7 +62,8 @@ export class SelectRecoveryMethod extends Component<
         </CustomView>
       </CustomHeader>
     ),
-    gesturesEnabled: false,
+    gestureEnabled: false,
+    headerShown: true,
   })
 
   componentDidMount() {
@@ -74,7 +74,7 @@ export class SelectRecoveryMethod extends Component<
 
   backup = () => {
     this.props.generateBackupFile()
-    const { initialRoute } = this.props.navigation.state.params
+    const { initialRoute } = this.props.route.params
     this.props.navigation.navigate(exportBackupFileRoute, {
       initialRoute,
     })
@@ -151,7 +151,7 @@ export class SelectRecoveryMethod extends Component<
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       hasVerifiedRecoveryPhrase,
@@ -160,10 +160,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default createStackNavigator({
-  [selectRecoveryMethodRoute]: {
-    screen: withStatusBar({ color: 'white' })(
-      connect(null, mapDispatchToProps)(SelectRecoveryMethod)
-    ),
-  },
-})
+export const selectRecoveryMethodScreen = {
+  routeName: selectRecoveryMethodRoute,
+  screen: withStatusBar({ color: 'white' })(
+    connect(null, mapDispatchToProps)(SelectRecoveryMethod)
+  ),
+}

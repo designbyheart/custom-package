@@ -12,7 +12,10 @@ import type {
 } from './type-qr-scanner'
 import type { SMSPendingInvitationPayload } from '../../sms-pending-invitation/type-sms-pending-invitation'
 
-import { CustomView, Container, CustomText, Icon } from '../../components/'
+import { Container } from '../layout/container'
+import { CustomView } from '../layout/custom-view'
+import CustomText from '../text'
+import Icon from '../icon'
 import {
   color,
   OFFSET_2X,
@@ -36,6 +39,10 @@ import {
   fetchValidateJWT,
 } from './qr-code-types/qr-code-oidc'
 import { uuid } from '../../services/uuid'
+import {
+  MESSAGE_NO_CAMERA_PERMISSION,
+  MESSAGE_ALLOW_CAMERA_PERMISSION,
+} from '../../qr-code/type-qr-code'
 import {
   isAriesConnectionInviteQrCode,
   isValidAriesV1InviteData,
@@ -242,14 +249,40 @@ export default class QRScanner extends PureComponent<
           onBarCodeRead={this.onRead}
           style={[cameraStyle.camera]}
           captureAudio={false}
+          androidCameraPermissionOptions={this.androidCameraPermissionOptions}
         >
-          <CameraMarker
-            status={this.state.scanStatus}
-            onClose={this.props.onClose}
-          />
+          {({ status }) => {
+            if (status === 'PENDING_AUTHORIZATION') {
+              return <CustomText>Checking camera permission....</CustomText>
+            }
+
+            if (status === 'NOT_AUTHORIZED') {
+              return (
+                <CustomView>
+                  <CustomText>{MESSAGE_NO_CAMERA_PERMISSION}</CustomText>
+                  <CustomText>{MESSAGE_ALLOW_CAMERA_PERMISSION}</CustomText>
+                </CustomView>
+              )
+            }
+
+            return (
+              <CameraMarker
+                status={this.state.scanStatus}
+                onClose={this.props.onClose}
+              />
+            )
+          }}
         </RNCamera>
       </Container>
     )
+  }
+
+  androidCameraPermissionOptions = {
+    title: 'Permission to use camera',
+    message:
+      'App needs access to your camera so you can scan QR codes and form connections.',
+    buttonPositive: 'Ok',
+    buttonNegative: 'Cancel',
   }
 }
 
@@ -312,8 +345,8 @@ export class CornerBox extends PureComponent<CornerBoxProps, void> {
     const borderStyle = SUCCESS_STYLE_STATES.includes(status)
       ? cameraMarkerStyles.borderSuccess
       : FAILURE_STYLE_STATES.includes(status)
-        ? cameraMarkerStyles.borderFail
-        : cameraMarkerStyles.border
+      ? cameraMarkerStyles.borderFail
+      : cameraMarkerStyles.border
 
     return (
       <CustomView

@@ -216,8 +216,8 @@ function promisifyOnfidoStartSDK(applicantId: string, token: string) {
     NativeModules.OnfidoSDK.startSDK(
       applicantId,
       token,
-      id => resolve(id),
-      error => reject(new Error(error))
+      (id) => resolve(id),
+      (error) => reject(new Error(error))
     )
   })
 }

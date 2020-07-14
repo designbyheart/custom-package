@@ -3,7 +3,8 @@ import * as React from 'react'
 import type {
   NavigationScreenProp,
   NavigationLeafRoute,
-} from 'react-navigation'
+} from '@react-navigation/native'
+
 import type {
   CustomError,
   ResetAction,
@@ -251,10 +252,12 @@ export type ClaimOfferStore = {
 export type ClaimProofNavigation = {
   navigation: NavigationScreenProp<{|
     ...NavigationLeafRoute,
+  |}>,
+  route: {
     params: {|
       uid: string,
     |},
-  |}>,
+  },
 }
 
 export type ClaimOfferProps = {
@@ -332,7 +335,7 @@ export type ClaimOfferResponse = {
       typ: string,
       statusMsg: string,
       uid: string,
-    },
+    }
   ],
 }
 

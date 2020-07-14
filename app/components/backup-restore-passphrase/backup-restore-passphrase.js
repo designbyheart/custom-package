@@ -113,7 +113,7 @@ export class BackupRestorePassphrase extends Component<
               <ErrorBanner
                 bannerTitle={'Recovery Phrase does not match!'}
                 bannerSubtext={'Try entering it again or go back and verify'}
-                style={[styles.dangerBannerBox]}
+                style={styles.dangerBannerBox}
                 testID={'verify-passphrase-error-banner'}
               />
             ) : null}
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       changeEnvironment,

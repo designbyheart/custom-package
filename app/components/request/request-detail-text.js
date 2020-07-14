@@ -1,53 +1,47 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { StyleSheet } from 'react-native'
-import { View as AnimatedView } from 'react-native-animatable'
-import { CustomText, CustomView } from '../../components'
-import { OFFSET_1X, OFFSET_3X } from '../../common/styles'
-import { noop } from '../../common'
+import { StyleSheet, View } from 'react-native'
+
 import type { RequestDetailTextProps } from './type-request'
 
-export default class RequestDetailText extends PureComponent<
-  RequestDetailTextProps,
-  void
-> {
-  render() {
-    const { testID } = this.props
-    return (
-      <AnimatedView
-        testID={`${testID}-text-container-animation`}
-        accessible={true}
-        accessibilityLabel={`${testID}-text-container-animation`}
-        animation="bounceInDown"
-        duration={1500}
-        delay={100}
-      >
-        <CustomView center testID={`${testID}-text-container-message-title`}>
-          <CustomText
-            testID={`${testID}-text-title`}
-            h4
-            center
-            thick
-            bg="fifth"
-            style={[styles.textTitle]}
-            testID={`${testID}-text-container-title`}
-          >
-            {this.props.title}
-          </CustomText>
-          <CustomText
-            h5
-            center
-            bold
-            bg="fifth"
-            style={[styles.textMessage]}
-            testID={`${testID}-text-container-message`}
-          >
-            {this.props.message}
-          </CustomText>
-        </CustomView>
-      </AnimatedView>
-    )
-  }
+import { CustomView } from '../layout/custom-view'
+import CustomText from '../text'
+import { OFFSET_1X, OFFSET_3X } from '../../common/styles'
+import { noop } from '../../common'
+
+export const RequestDetailText = (props: RequestDetailTextProps) => {
+  const { testID } = props
+  return (
+    <View
+      testID={`${testID}-text-container-animation`}
+      accessible={true}
+      accessibilityLabel={`${testID}-text-container-animation`}
+    >
+      <CustomView center testID={`${testID}-text-container-message-title`}>
+        <CustomText
+          testID={`${testID}-text-title`}
+          h4
+          center
+          thick
+          bg="fifth"
+          style={[styles.textTitle]}
+          testID={`${testID}-text-container-title`}
+        >
+          {props.title}
+        </CustomText>
+        <CustomText
+          h5
+          center
+          bold
+          bg="fifth"
+          style={[styles.textMessage]}
+          testID={`${testID}-text-container-message`}
+        >
+          {props.message}
+        </CustomText>
+      </CustomView>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

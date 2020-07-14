@@ -16,16 +16,17 @@ import {
   RectButton,
 } from 'react-native-gesture-handler'
 import { connect } from 'react-redux'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '@react-navigation/compat'
 
 import type { NotificationCardProps } from './in-app-notification-type'
 import type { Store } from '../store/type-store'
 
 import SvgCustomIcon from '../components/svg-custom-icon'
 import { Avatar } from '../components/avatar/avatar'
-import { mediumGray, color } from '../common/styles/constant'
+import { color, colors, fontFamily, fontSizes } from '../common/styles/constant'
 import { scheduleClearInAppNotification } from './in-app-notification-actions'
 import { connectionHistRoute } from '../common'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 import { DefaultLogo } from '../components/default-logo/default-logo'
 
 class NotificationCardComponent extends Component<NotificationCardProps, void> {
@@ -89,7 +90,11 @@ class NotificationCardComponent extends Component<NotificationCardProps, void> {
             <RectButton style={buttonContainer} onPress={this.onCardPress}>
               <View style={avatarSection}>
                 {typeof image === 'string' ? (
-                  <Avatar radius={16} src={{ uri: image }} />
+                  <Avatar
+                    radius={16}
+                    src={{ uri: image }}
+                    testID="in-app-notification-card"
+                  />
                 ) : (
                   <DefaultLogo
                     text={senderName}
@@ -205,13 +210,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1000,
     width: '100%',
-    height: 96,
+    height: moderateScale(80, 0.2),
     alignItems: 'center',
     justifyContent: 'center',
     elevation: Platform.OS === 'android' ? 9 : 0,
   },
   container: {
-    width: 343,
+    width: moderateScale(330, 0.1),
     height: '100%',
     borderRadius: 10,
     flexDirection: 'row',
@@ -277,20 +282,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   companyNameText: {
-    fontFamily: 'Lato',
-    fontSize: 17,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: 'bold',
-    color: color.textColor.darkgray,
+    color: colors.cmGray1,
   },
   descriptionText: {
-    fontFamily: 'Lato',
-    fontSize: 14,
-    color: color.textColor.grey,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size8),
+    color: colors.cmGray2,
   },
   dateText: {
-    fontFamily: 'Lato',
-    fontSize: 11,
-    color: color.textColor.mediumGray,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size9),
+    color: colors.cmGray3,
     marginBottom: 5,
   },
 })

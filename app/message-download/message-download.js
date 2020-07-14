@@ -159,7 +159,7 @@ export function* infiniteDownloadSaga(action: {
 }
 
 function* downloadErrorSaga(): Generator<*, *, *> {
-  const connectionsCount = yield select(getConnectionsCount)
+  const connectionsCount: number = yield select(getConnectionsCount)
   if (connectionsCount === 0) {
     // if there are no connections, then we wait for a new connection
     yield take(NEW_CONNECTION_SUCCESS)
@@ -169,7 +169,7 @@ function* downloadErrorSaga(): Generator<*, *, *> {
   while (true) {
     let failCount = 0
     for (let i = 0; i < failCountToShowError; i++) {
-      const { fail, success } = yield race({
+      const { fail, success }: { fail?: any, success?: any } = yield race({
         success: take(GET_MESSAGES_SUCCESS),
         fail: take(GET_MESSAGES_FAIL),
       })

@@ -10,3 +10,7 @@ export const LoaderGif = (
     <ActivityIndicator size="large" color={color.bg.eighth.color} />
   </Container>
 )
+
+export const OrangeLoader = (
+  <ActivityIndicator size="large" color={color.bg.eighth.color} />
+)

@@ -1,6 +1,5 @@
 // @flow
 
-import RNFetchBlob from 'rn-fetch-blob'
 import {
   put,
   takeLatest,

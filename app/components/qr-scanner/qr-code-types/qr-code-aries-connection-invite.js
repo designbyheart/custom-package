@@ -1,7 +1,7 @@
 // @flow
 
 import isUrl from 'validator/lib/isURL'
-import URLParse from 'url-parse'
+import URLParse, { type Url } from 'url-parse'
 
 import type {
   AriesConnectionInvite,
@@ -15,7 +15,7 @@ import { flattenAsync } from '../../../common/flatten-async'
 import { toUtf8FromBase64 } from '../../../bridge/react-native-cxs/RNCxs'
 
 export async function isAriesConnectionInviteQrCode(
-  parsedUrl: URLParse
+  parsedUrl: Url
 ): Promise<AriesConnectionInvite | false> {
   const { query } = parsedUrl
 

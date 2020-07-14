@@ -3,7 +3,9 @@
 exports[`<NewBannerCard /> should render NewBannerCard component and match snapshot 1`] = `
 <View
   accessible={true}
+  focusable={true}
   isTVSelectable={true}
+  onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
@@ -17,10 +19,10 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
       "borderRadius": 8,
       "borderWidth": 1,
       "flexDirection": "row",
-      "height": 70,
-      "marginLeft": 8,
-      "marginRight": 8,
-      "marginTop": 8,
+      "height": 69.28,
+      "marginLeft": 6.9399999999999995,
+      "marginRight": 6.9399999999999995,
+      "marginTop": 6.9399999999999995,
       "opacity": 1,
     }
   }
@@ -31,7 +33,7 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
         "alignItems": "center",
         "height": "100%",
         "justifyContent": "center",
-        "width": 64,
+        "width": 63.885714285714286,
       }
     }
   >
@@ -43,9 +45,9 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
       }
       style={
         Object {
-          "borderRadius": 17,
-          "height": 34,
-          "width": 34,
+          "borderRadius": 16.78142857142857,
+          "height": 33.56285714285714,
+          "width": 33.56285714285714,
         }
       }
     />
@@ -72,9 +74,9 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
           Object {
             "color": "#505050",
             "fontFamily": "Lato",
-            "fontSize": 15,
+            "fontSize": 14.871428571428572,
             "fontWeight": "bold",
-            "marginBottom": 3,
+            "marginBottom": 2.974285714285714,
           }
         }
       >
@@ -94,9 +96,9 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
           Object {
             "color": "#505050",
             "fontFamily": "Lato",
-            "fontSize": 11,
+            "fontSize": 10.905714285714286,
             "fontWeight": "bold",
-            "marginTop": 3,
+            "marginTop": 2.974285714285714,
           }
         }
       >
@@ -110,7 +112,7 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
         "alignItems": "flex-end",
         "height": "100%",
         "justifyContent": "flex-start",
-        "width": 65,
+        "width": 63.885714285714286,
       }
     }
   >
@@ -119,11 +121,11 @@ exports[`<NewBannerCard /> should render NewBannerCard component and match snaps
         Object {
           "color": "#505050",
           "fontFamily": "Lato",
-          "fontSize": 9,
+          "fontSize": 9.914285714285715,
           "fontStyle": "italic",
           "fontWeight": "500",
-          "marginRight": 8,
-          "marginTop": 8,
+          "marginRight": 7.9314285714285715,
+          "marginTop": 7.9314285714285715,
         }
       }
     >

@@ -99,7 +99,6 @@ import {
   WALLET_KEY,
 } from '../common/secure-storage-constants'
 import {
-  serializeBackupWallet,
   deserializeBackupWallet,
   encryptWallet,
   createWalletBackup,
@@ -132,6 +131,7 @@ import { pushNotificationPermissionAction } from '../push-notification/push-noti
 import firebase from 'react-native-firebase'
 import { PUSH_NOTIFICATION_RECEIVED } from '../push-notification/type-push-notification'
 import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
+import { cloudBackupFailure } from './backup-actions'
 
 const initialState = {
   passphrase: { phrase: '', salt: 's', hash: 'h' },
@@ -152,7 +152,7 @@ const initialState = {
   hasViewedWalletError: false,
 }
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 export function* cloudBackupSaga(
@@ -356,7 +356,7 @@ export function* prepareBackupSaga(
     if (Platform.OS === 'android') {
       if (secureStorage) {
         yield all(
-          Object.keys(secureStorage).map(key => {
+          Object.keys(secureStorage).map((key) => {
             if (skipItems.indexOf(key) === -1) {
               return call(walletSet, key, secureStorage[key])
             }
@@ -368,7 +368,7 @@ export function* prepareBackupSaga(
     } else {
       if (secureStorage && secureStorage.length > 0) {
         yield all(
-          secureStorage[0].map(item => {
+          secureStorage[0].map((item) => {
             const { key, value } = item
             // check for things we don't want stored in the wallet
             if (skipItems.indexOf(key) === -1) {
@@ -809,34 +809,9 @@ export const cloudBackupStart = () => ({
   type: CLOUD_BACKUP_START,
 })
 
-export const cloudBackupSuccess = (lastSuccessfulCloudBackup: string) => ({
-  type: CLOUD_BACKUP_SUCCESS,
-  cloudBackupStatus: CLOUD_BACKUP_COMPLETE,
-  lastSuccessfulCloudBackup,
-})
-
-export const cloudBackupFailure = (cloudBackupError: string) => ({
-  type: CLOUD_BACKUP_FAILURE,
-  cloudBackupStatus:
-    cloudBackupError === WALLET_BACKUP_FAILURE
-      ? WALLET_BACKUP_FAILURE
-      : CLOUD_BACKUP_FAILURE,
-  cloudBackupError,
-})
-
-export const viewedWalletError = (viewedWalletError: boolean) => ({
-  type: VIEWED_WALLET_ERROR,
-  viewedWalletError,
-})
-
 export const startAutomaticCloudBackup = (action: any) => ({
   type: START_AUTOMATIC_CLOUD_BACKUP,
   action,
-})
-
-export const setAutoCloudBackupEnabled = (autoCloudBackupEnabled: boolean) => ({
-  type: SET_AUTO_CLOUD_BACKUP_ENABLED,
-  autoCloudBackupEnabled,
 })
 
 export const setWalletHandle = (walletHandle: number) => ({

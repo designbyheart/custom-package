@@ -1,7 +1,7 @@
 // @flow
 import { NativeModules } from 'react-native'
 const { RNRandomBytes } = NativeModules
-import diceware from './eff.js'
+import { getDiceware } from './eff.js'
 
 export const base64Chars =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
@@ -64,12 +64,12 @@ export const Base64 = {
 // removed then it might have to loop a few times. So it saves a
 // couple of micro seconds.
 export const secureRandom = async (count: number = 6) => {
-  const skip = 0x7fffffff - 0x7fffffff % count
+  const skip = 0x7fffffff - (0x7fffffff % count)
   let result
   const numBytes = 64
 
   const secureRandomBytes = () => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       RNRandomBytes.randomBytes(numBytes, (err: any, bytes: string) => {
         if (err) {
           reject(err)
@@ -99,7 +99,7 @@ export const getWords = async (
   numWords: number = 12,
   numRollsPerWord: number = 5
 ) => {
-  //'use strict'
+  const diceware = getDiceware()
 
   let i, j, words, rollResults, rollResultsJoined
 

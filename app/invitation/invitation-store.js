@@ -181,7 +181,7 @@ export function* updateAriesConnectionState(
   // and update serialized state on connectme side
   const [serializedStateError, updateVcxSerializedConnection]: [
     typeof Error,
-    string,
+    string
   ] = yield call(flattenAsync(serializeConnection), connectionHandle)
 
   if (serializedStateError) {

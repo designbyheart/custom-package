@@ -11,6 +11,8 @@ exports[`<Badge /> should render dark colored badge 1`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -18,7 +20,11 @@ exports[`<Badge /> should render dark colored badge 1`] = `
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     resizeMode="contain"
-    source={1}
+    source={
+      Object {
+        "default": "RelativeImageStub",
+      }
+    }
     style={
       Object {
         "height": 26,
@@ -27,8 +33,6 @@ exports[`<Badge /> should render dark colored badge 1`] = `
     }
   />
   <Text
-    center={true}
-    secondary={false}
     style={
       Array [
         Object {
@@ -45,7 +49,6 @@ exports[`<Badge /> should render dark colored badge 1`] = `
         Object {},
       ]
     }
-    text={10}
   >
     10
   </Text>
@@ -63,6 +66,8 @@ exports[`<Badge /> should render light colored badge 1`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -70,7 +75,11 @@ exports[`<Badge /> should render light colored badge 1`] = `
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
     resizeMode="contain"
-    source={1}
+    source={
+      Object {
+        "default": "RelativeImageStub",
+      }
+    }
     style={
       Object {
         "height": 26,
@@ -79,8 +88,6 @@ exports[`<Badge /> should render light colored badge 1`] = `
     }
   />
   <Text
-    center={true}
-    secondary={false}
     style={
       Array [
         Object {
@@ -97,7 +104,6 @@ exports[`<Badge /> should render light colored badge 1`] = `
         Object {},
       ]
     }
-    text={10}
   >
     10
   </Text>

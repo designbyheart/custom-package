@@ -108,6 +108,7 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-export default withStatusBar()(
-  connect(mapStateToProps, null)(RestoreWaitScreen)
-)
+export const restoreWaitRouteScreen = {
+  routeName: restoreWaitRoute,
+  screen: withStatusBar()(connect(mapStateToProps, null)(RestoreWaitScreen)),
+}

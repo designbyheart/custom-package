@@ -9,7 +9,7 @@ import type {
 import type {
   NavigationScreenProp,
   NavigationLeafRoute,
-} from 'react-navigation'
+} from '@react-navigation/native'
 
 export type QuestionScreenProps = {
   updateQuestionStatus: (
@@ -114,10 +114,12 @@ export type ExternalLink = {
 export type QuestionScreenNavigation = {
   navigation: NavigationScreenProp<{|
     ...NavigationLeafRoute,
+  |}>,
+  route: {
     params: {|
       uid: string,
     |},
-  |}>,
+  },
 }
 
 export const QUESTION_STATUS = {

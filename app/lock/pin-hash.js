@@ -11,7 +11,7 @@ const generateKey = (password: string, salt: string) =>
 
 export const generateSalt = async (isRealSalt: boolean) => {
   const numBytes = 32
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     if (isRealSalt) {
       RNRandomBytes.randomBytes(numBytes, (err: any, bytes: string) => {
         if (err) {
@@ -32,16 +32,20 @@ export const generateSalt = async (isRealSalt: boolean) => {
 
 export async function pinHash(pin: string, salt: string) {
   try {
-    const fullkey = await generateKey(pin, salt)
+    let fullkey = await generateKey(pin, salt)
+    if (fullkey.startsWith('{length=64,bytes=0x') && fullkey.endsWith('}')) {
+      fullkey = fullkey.split('{length=64,bytes=0x')[1].slice(0, -1)
+    }
     const key = fullkey.substring(0, 16)
     if (__DEV__) {
       customLogger.log('pinHash: salt: ', salt)
       customLogger.log('pinHash: fullkey: ', fullkey)
       customLogger.log('pinHash: key: ', key)
     }
-    //TODO: This is hack due to android
+
     return key
   } catch (e) {
+    console.log('error')
     customLogger.error(`pinHash: ${e}`)
     captureError(new Error(`pinHash: ${e}`))
     return null

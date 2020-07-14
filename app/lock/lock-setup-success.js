@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { StyleSheet, InteractionManager } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -18,30 +18,28 @@ import {
   settingsTabRoute,
   homeDrawerRoute,
   settingsDrawerRoute,
+  lockSetupSuccessRoute,
+  homeRoute,
 } from '../common'
 import { unlockApp, clearPendingRedirect } from './lock-store'
 import { OFFSET_1X, OFFSET_2X, OFFSET_4X, color } from '../common/styles'
 import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
-import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class LockSetupSuccess extends Component<
   LockSetupSuccessProps,
   LockSetupSuccessState
 > {
-  state = {
-    interactionsDone: false,
-  }
   onClose = () => {
     this.props.unlockApp()
     if (
-      this.props.navigation.state &&
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.changePin === true
+      this.props.route &&
+      this.props.route.params &&
+      this.props.route.params.changePin === true
     ) {
-      this.props.navigation.navigate(settingsDrawerRoute)
+      this.props.navigation.pop(2)
     } else if (this.props.pendingRedirection) {
       // if there is a redirection pending, then redirect and clear it
-      this.props.pendingRedirection.map(pendingRedirection => {
+      this.props.pendingRedirection.map((pendingRedirection) => {
         this.props.navigation.navigate(
           pendingRedirection.routeName,
           pendingRedirection.params || {}
@@ -49,22 +47,16 @@ export class LockSetupSuccess extends Component<
       })
       this.props.clearPendingRedirect()
     } else {
-      this.props.navigation.navigate(homeDrawerRoute)
+      this.props.navigation.navigate(homeRoute)
     }
-  }
-
-  componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({ interactionsDone: true })
-    })
   }
 
   render() {
     const { isFetchingInvitation } = this.props
     let message =
-      this.props.navigation.state &&
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.changePin === true
+      this.props.route &&
+      this.props.route.params &&
+      this.props.route.params.changePin === true
         ? 'Your connect.me app is secured.'
         : 'Your connect.me app is now secured'
 
@@ -73,7 +65,7 @@ export class LockSetupSuccess extends Component<
     }
 
     return (
-      <Container tertiary>
+      <Container tertiary safeArea>
         <Container clearBg center style={[style.successContainer]}>
           <Icon
             extraLarge
@@ -99,14 +91,14 @@ export class LockSetupSuccess extends Component<
             center
             style={[style.successMessage]}
           >
-            {this.props.navigation.state &&
-            this.props.navigation.state.params &&
-            this.props.navigation.state.params.changePin
+            {this.props.route &&
+            this.props.route.params &&
+            this.props.route.params.changePin
               ? "From now on you'll need to use your passcode to unlock this app."
               : ' '}
           </CustomText>
         </Container>
-        <CustomView>
+        <View style={style.buttonContainer}>
           <CustomButton
             primary
             raised
@@ -117,7 +109,7 @@ export class LockSetupSuccess extends Component<
             title="Close"
             onPress={this.onClose}
           />
-        </CustomView>
+        </View>
       </Container>
     )
   }
@@ -127,17 +119,15 @@ const mapStateToProps = (state: Store, props) => ({
   pendingRedirection: state.lock.pendingRedirection,
   pendingRedirectionParams: state.lock.pendingRedirectionParams || {},
   isFetchingInvitation: Object.keys(state.smsPendingInvitation).some(
-    smsToken =>
+    (smsToken) =>
       state.smsPendingInvitation[smsToken] &&
       state.smsPendingInvitation[smsToken].isFetching === true
   ),
   changePin:
-    props.navigation.state.params !== undefined
-      ? props.navigation.state.params.changePin
-      : false,
+    props.route.params !== undefined ? props.route.params.changePin : false,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       clearPendingRedirect,
@@ -146,9 +136,10 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default withStatusBar()(
-  connect(mapStateToProps, mapDispatchToProps)(LockSetupSuccess)
-)
+export const lockSetupSuccessScreen = {
+  routeName: lockSetupSuccessRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(LockSetupSuccess),
+}
 
 const style = StyleSheet.create({
   successContainer: {
@@ -159,5 +150,8 @@ const style = StyleSheet.create({
   },
   successInfo: {
     paddingHorizontal: OFFSET_1X,
+  },
+  buttonContainer: {
+    marginHorizontal: '2%',
   },
 })

@@ -27,7 +27,7 @@ describe('<LockEnter />', () => {
   let cleared
 
   const options = {
-    createNodeMock: element => {
+    createNodeMock: (element) => {
       return {
         clear: () => {
           cleared = true

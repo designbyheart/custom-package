@@ -1,50 +1,30 @@
 package me.connect;
 
 import android.app.Application;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import android.content.Context;
+
+import androidx.multidex.MultiDex;
+
+import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.reactlibrary.RNCheckNotificationPermissionPackage;
-import com.vinzscam.reactnativefileviewer.RNFileViewerPackage;
-import com.swmansion.rnscreens.RNScreensPackage;
-import com.swmansion.reanimated.ReanimatedPackage;
-import com.azendoo.reactnativesnackbar.SnackbarPackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.airbnb.android.react.lottie.LottiePackage;
-import com.chirag.RNMail.RNMail;
-import com.clipsub.RNShake.RNShakeEventPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import io.invertase.firebase.RNFirebasePackage;
-import com.apptentive.android.sdk.reactlibrary.RNApptentivePackage;
-import com.gijoehosaphat.keepscreenon.KeepScreenOnPackage;
-import com.horcrux.svg.SvgPackage;
-import rnpbkdf2.PBKDF2Package;
-import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
-import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
-import com.rnziparchive.RNZipArchivePackage;
-import com.bitgo.randombytes.RandomBytesPackage;
-import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
-import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
-import cl.json.RNSharePackage;
-import cl.json.ShareApplication;
-import com.apsl.versionnumber.RNVersionNumberPackage;
-import fr.bamlab.rnimageresizer.ImageResizerPackage;
-import com.rnfingerprint.FingerprintAuthPackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
-import org.reactnative.camera.RNCameraPackage;
-import io.branch.rnbranch.RNBranchPackage;
-import io.branch.referral.Branch;
-import com.oblador.vectoricons.VectorIconsPackage;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import me.connect.rnindy.RNIndyPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.shell.MainReactPackage;
+
+import cl.json.ShareApplication;
+
 import com.facebook.soloader.SoLoader;
 
-import java.util.Arrays;
 import java.util.List;
 
-//import com.oblador.vectoricons.VectorIconsPackage;
+// add vcx react native package
+import me.connect.rnindy.RNIndyPackage;
+
+// Firebase needs to be manually linked
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+
+// branch needs to have a referral in initializing
+import io.branch.referral.Branch;
 
 public class MainApplication extends Application implements ShareApplication, ReactApplication {
 
@@ -56,53 +36,29 @@ public class MainApplication extends Application implements ShareApplication, Re
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-        new RNDeviceInfo(),
-        new MainReactPackage(),
-            new RNCheckNotificationPermissionPackage(),
-            new RNFileViewerPackage(),
-            new RNScreensPackage(),
-            new ReanimatedPackage(),
-            new SnackbarPackage(),
-            new RNGestureHandlerPackage(),
-        new LottiePackage(),
-            new RNMail(),
-            new RNShakeEventPackage(),
-            new PickerPackage(),
-            new RNFirebasePackage(),
-            new RNApptentivePackage(),
-            new KeepScreenOnPackage(),
-            new SvgPackage(),
-            new PBKDF2Package(),
-        new RNFirebaseNotificationsPackage(),
-        new RNFirebaseMessagingPackage(),
-        new RNZipArchivePackage(),
-        new RandomBytesPackage(),
-        new ReactNativeDocumentPicker(),
-        new RNSensitiveInfoPackage(),
-        new RNSharePackage(),
-        new RNVersionNumberPackage(),
-        new ImageResizerPackage(),
-        new FingerprintAuthPackage(),
-        new RNFetchBlobPackage(),
-        new RNCameraPackage(),
-        new RNBranchPackage(),
-        new VectorIconsPackage(),
-        new SplashScreenReactPackage(),
-        new RNIndyPackage()
-      );
+      @SuppressWarnings("UnnecessaryLocalVariable")
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+      
+      // Packages that cannot be auto linked yet can be added manually here:
+
+      // firebase packages
+      packages.add(new RNFirebaseNotificationsPackage());
+      packages.add(new RNFirebaseMessagingPackage());
+      
+      // vcx package
+      packages.add(new RNIndyPackage());
+
+      return packages;
     }
 
     @Override
     protected String getJSMainModuleName() {
-
       return "index";
     }
   };
 
   @Override
   public ReactNativeHost getReactNativeHost() {
-
     return mReactNativeHost;
   }
 
@@ -116,5 +72,11 @@ public class MainApplication extends Application implements ShareApplication, Re
   @Override
   public String getFileProviderAuthority() {
     return "me.connect.provider";
+  }
+
+  @Override
+  protected void attachBaseContext(Context base) {
+    super.attachBaseContext(base);
+    MultiDex.install(this);
   }
 }

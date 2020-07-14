@@ -3,16 +3,14 @@ import React, { Component } from 'react'
 import { Image, TouchableWithoutFeedback, View, Platform } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import RNFetchBlob from 'rn-fetch-blob'
+
 import type { ImageSource } from '../../common/type-common'
-
-import { Icon } from '../index'
-
-import { selectUserAvatar } from '../../store/user/user-store'
-import { getUserAvatarSource } from '../../store/store-selector'
-
 import type { UserAvatarProps } from './type-user-avatar'
 import type { Store } from '../../store/type-store'
+
+import Icon from '../icon'
+import { selectUserAvatar } from '../../store/user/user-store'
+import { getUserAvatarSource } from '../../store/store-selector'
 
 const defaultAvatar = require('../../images/UserAvatar.png')
 
@@ -64,7 +62,7 @@ const mapStateToProps = (state: Store) => ({
   avatarName: getUserAvatarSource(state.user.avatarName),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ selectUserAvatar }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserAvatar)

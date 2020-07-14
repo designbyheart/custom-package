@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import moment from 'moment'
 import {
   InteractionManager,
   StyleSheet,
@@ -87,8 +86,8 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
     this.props.checkPinAction(pin, this.props.isAppLocked)
   }
 
-  componentWillReceiveProps(nextProps: LockEnterProps) {
-    if (this.props.shouldLockApp !== nextProps.shouldLockApp) {
+  componentDidUpdate(prevProps: LockEnterProps) {
+    if (prevProps.shouldLockApp !== this.props.shouldLockApp) {
       this.props.putPinFailData()
 
       if (!this.props.shouldLockApp) {
@@ -96,11 +95,11 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
       }
     }
 
-    if (this.props.checkPinStatus !== nextProps.checkPinStatus) {
-      if (nextProps.checkPinStatus === CHECK_PIN_SUCCESS) {
+    if (this.props.checkPinStatus !== prevProps.checkPinStatus) {
+      if (this.props.checkPinStatus === CHECK_PIN_SUCCESS) {
         this.pinCodeBox && this.pinCodeBox.hideKeyboard()
         this.props.onSuccess()
-      } else if (nextProps.checkPinStatus === CHECK_PIN_FAIL) {
+      } else if (this.props.checkPinStatus === CHECK_PIN_FAIL) {
         this.pinCodeBox && this.pinCodeBox.clear && this.pinCodeBox.clear()
         // set status back to idle so we can come to this else again
         this.clearFailStatusDelayed()
@@ -192,7 +191,7 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
             </CustomView>
             <CustomView center>
               <PinCodeBox
-                ref={pinCodeBox => {
+                ref={(pinCodeBox) => {
                   this.pinCodeBox = pinCodeBox
                 }}
                 onPinComplete={this.onPinComplete}
@@ -227,7 +226,7 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
             <CustomView center>
               {this.props.isAppLocked && this.renderFailMessages()}
               <PinCodeBox
-                ref={pinCodeBox => {
+                ref={(pinCodeBox) => {
                   this.pinCodeBox = pinCodeBox
                 }}
                 onPinComplete={this.onPinComplete}
@@ -309,7 +308,7 @@ const mapStateToProps = (state: Store) => ({
   lockdownTimeMessage: state.lock.lockdownTimeMessage,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       checkPinAction,

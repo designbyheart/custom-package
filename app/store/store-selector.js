@@ -108,7 +108,7 @@ export const getPendingHistoryEvent = (
     state.history && state.history.data && state.history.data.connections
       ? state.history.data.connections[claim.remotePairwiseDID].data
       : []
-  return historyItems.filter(item => {
+  return historyItems.filter((item) => {
     return item.action === 'PENDING' && item.originalPayload.uid === claim.uid
   })[0]
 }
@@ -123,7 +123,7 @@ export const getHistoryEvent = (
     state.history && state.history.data && state.history.data.connections
       ? state.history.data.connections[remoteDid].data
       : []
-  return historyItems.filter(item => {
+  return historyItems.filter((item) => {
     return (
       item.originalPayload &&
       item.originalPayload.type === type &&
@@ -143,7 +143,7 @@ export const getPendingHistory = (
     state.history && state.history.data && state.history.data.connections
       ? state.history.data.connections[remoteDid].data
       : []
-  return historyItems.filter(item => {
+  return historyItems.filter((item) => {
     return (
       item.originalPayload &&
       item.originalPayload.type === type &&
@@ -162,7 +162,7 @@ export const getClaimReceivedHistory = (
     state.history && state.history.data && state.history.data.connections
       ? state.history.data.connections[remoteDid].data
       : []
-  return historyItems.filter(item => {
+  return historyItems.filter((item) => {
     return (
       item.originalPayload &&
       item.originalPayload.type === type &&
@@ -310,10 +310,8 @@ export const getAllConnectionsPairwiseDid = (state: Store) => {
   const connections = getAllConnection(state)
 
   if (connections) {
-    return (
-      Object.keys(connections).map <
-      string >
-      (userDID => connections[userDID].myPairwiseDid)
+    return Object.keys(connections).map<string>(
+      (userDID) => connections[userDID].myPairwiseDid
     )
   }
   return null
@@ -376,9 +374,9 @@ const addUidsWithStatusToConnections = (
   events: ProofRequestStore | ClaimOfferStore | QuestionStoreData,
   filterStatus,
   obj,
-  getRemotePairwiseDid: any => string
+  getRemotePairwiseDid: (any) => string
 ) => {
-  ;(Object.keys(events): Array<string>).map(uid => {
+  ;(Object.keys(events): Array<string>).map((uid) => {
     if (events[uid].status === filterStatus) {
       const remoteDid: string = getRemotePairwiseDid(events[uid])
       obj[remoteDid] = obj[remoteDid] || []
@@ -492,7 +490,7 @@ export const getConnectionByProp = (
     // with which we will make connections
     const savedConnections: Array<any> = Object.values(connections)
     return savedConnections.filter(
-      connection => connection[property] === valueToMatch
+      (connection) => connection[property] === valueToMatch
     )
   }
 

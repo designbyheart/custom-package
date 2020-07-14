@@ -1,6 +1,6 @@
 // @flow
 export type UnreadMessagesBadgeProps = {
-  numberOfNewMessages: number,
+  numberOfNewMessages?: number,
   absolutePosition?: boolean,
   customContainerStyle?: Object,
 }

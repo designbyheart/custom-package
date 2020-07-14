@@ -73,7 +73,6 @@ import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import { resetTempProofData, errorSendProofFail } from '../proof/proof-store'
 import { secureSet, getHydrationItem } from '../services/storage'
-import KeepScreenOn from 'react-native-keep-screen-on'
 
 const proofRequestInitialState = {}
 
@@ -224,10 +223,7 @@ export function* proofAccepted(
     yield call(sendProofApi, proofHandle, connectionHandle)
     yield put(sendProofSuccess(uid))
     yield put(resetTempProofData(uid))
-    // turn off screen awake that was activated by generate-proof
-    KeepScreenOn.setKeepScreenOn(false)
   } catch (e) {
-    KeepScreenOn.setKeepScreenOn(false)
     captureError(e)
     yield put(
       errorSendProofFail(uid, remotePairwiseDID, ERROR_SEND_PROOF(e.message))
@@ -465,7 +461,7 @@ export default function proofRequestReducer(
           missingAttributes: {},
           data: {
             ...data,
-            requestedAttributes: data.requestedAttributes.map(attribute => {
+            requestedAttributes: data.requestedAttributes.map((attribute) => {
               if (Array.isArray(attribute) && attribute.length > 0) {
                 return {
                   label: attribute[0].label,

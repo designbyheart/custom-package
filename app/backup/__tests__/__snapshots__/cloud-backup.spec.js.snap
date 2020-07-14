@@ -53,6 +53,7 @@ exports[`<CloudBackup /> should match snapshot 1`] = `
           >
             <View
               accessible={true}
+              focusable={true}
               hitSlop={
                 Object {
                   "bottom": 20,
@@ -61,6 +62,7 @@ exports[`<CloudBackup /> should match snapshot 1`] = `
                   "top": 20,
                 }
               }
+              onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
@@ -94,6 +96,7 @@ exports[`<CloudBackup /> should match snapshot 1`] = `
             </View>
             <View
               accessible={true}
+              focusable={true}
               hitSlop={
                 Object {
                   "bottom": 20,
@@ -102,6 +105,7 @@ exports[`<CloudBackup /> should match snapshot 1`] = `
                   "top": 20,
                 }
               }
+              onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
@@ -149,7 +153,11 @@ exports[`<CloudBackup /> should match snapshot 1`] = `
           >
             <Image
               resizeMode="cover"
-              source={1}
+              source={
+                Object {
+                  "default": "RelativeImageStub",
+                }
+              }
               style={
                 Array [
                   Object {
@@ -217,7 +225,11 @@ exports[`<CloudBackup /> should match snapshot 1`] = `
           >
             <Image
               resizeMode="cover"
-              source={1}
+              source={
+                Object {
+                  "default": "RelativeImageStub",
+                }
+              }
               style={
                 Array [
                   Object {
@@ -363,23 +375,26 @@ exports[`<CloudBackup /> should match snapshot 1`] = `
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "marginLeft": 15,
-                        "marginRight": 15,
-                      },
-                      undefined,
-                      Object {
-                        "marginLeft": 0,
-                        "marginRight": 0,
-                      },
-                      undefined,
-                    ]
+                    Object {
+                      "borderRadius": 3,
+                      "marginLeft": 0,
+                      "marginRight": 0,
+                      "overflow": "hidden",
+                    }
                   }
                 >
                   <View
+                    accessibilityRole="button"
+                    accessibilityState={
+                      Object {
+                        "busy": false,
+                        "disabled": false,
+                      }
+                    }
                     accessible={true}
+                    focusable={true}
                     isTVSelectable={true}
+                    onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
                     onResponderRelease={[Function]}
@@ -387,89 +402,39 @@ exports[`<CloudBackup /> should match snapshot 1`] = `
                     onResponderTerminationRequest={[Function]}
                     onStartShouldSetResponder={[Function]}
                     style={
-                      Array [
-                        Object {
-                          "borderRadius": 5,
-                          "borderWidth": 1,
-                        },
-                        Object {
-                          "borderColor": "#A5A5A5",
-                        },
-                      ]
+                      Object {
+                        "borderColor": "#A5A5A5",
+                        "borderRadius": 5,
+                        "borderWidth": 1,
+                        "opacity": 1,
+                      }
                     }
                   >
                     <View
-                      pointerEvents="box-only"
                       style={
-                        Array [
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#9E9E9E",
-                            "flexDirection": "row",
-                            "justifyContent": "center",
-                            "padding": 19,
-                          },
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          Object {
-                            "backgroundColor": "#ffffff",
-                          },
-                          undefined,
-                          Object {
-                            "padding": 12,
-                          },
-                          undefined,
-                          undefined,
-                          undefined,
-                          Array [
-                            null,
-                            Object {
-                              "borderRadius": 5,
-                              "borderWidth": 1,
-                            },
-                            Object {
-                              "borderColor": "#A5A5A5",
-                            },
-                          ],
-                          undefined,
-                          undefined,
-                        ]
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#ffffff",
+                          "borderColor": "#A5A5A5",
+                          "borderRadius": 5,
+                          "borderWidth": 1,
+                          "color": "#777777",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "padding": 8,
+                          "textAlign": "center",
+                        }
                       }
                     >
                       <Text
                         style={
-                          Array [
-                            Object {},
-                            undefined,
-                            undefined,
-                            undefined,
-                            undefined,
-                            undefined,
-                            undefined,
-                            undefined,
-                            undefined,
-                            undefined,
-                            Array [
-                              Object {
-                                "color": "white",
-                                "fontSize": 16,
-                              },
-                              Object {
-                                "color": "#777777",
-                              },
-                              Object {
-                                "fontSize": 14,
-                              },
-                              undefined,
-                              undefined,
-                              undefined,
-                              undefined,
-                              undefined,
-                            ],
-                          ]
+                          Object {
+                            "color": "white",
+                            "fontSize": 18,
+                            "paddingBottom": 1,
+                            "paddingTop": 2,
+                            "textAlign": "center",
+                          }
                         }
                       >
                         Just One Cloud Backup
@@ -486,23 +451,26 @@ exports[`<CloudBackup /> should match snapshot 1`] = `
                 >
                   <View
                     style={
-                      Array [
-                        Object {
-                          "marginLeft": 15,
-                          "marginRight": 15,
-                        },
-                        undefined,
-                        Object {
-                          "marginLeft": 0,
-                          "marginRight": 0,
-                        },
-                        undefined,
-                      ]
+                      Object {
+                        "borderRadius": 3,
+                        "marginLeft": 0,
+                        "marginRight": 0,
+                        "overflow": "hidden",
+                      }
                     }
                   >
                     <View
+                      accessibilityRole="button"
+                      accessibilityState={
+                        Object {
+                          "busy": false,
+                          "disabled": false,
+                        }
+                      }
                       accessible={true}
+                      focusable={true}
                       isTVSelectable={true}
+                      onClick={[Function]}
                       onResponderGrant={[Function]}
                       onResponderMove={[Function]}
                       onResponderRelease={[Function]}
@@ -510,91 +478,40 @@ exports[`<CloudBackup /> should match snapshot 1`] = `
                       onResponderTerminationRequest={[Function]}
                       onStartShouldSetResponder={[Function]}
                       style={
-                        Array [
-                          Object {
-                            "borderRadius": 5,
-                            "borderWidth": 1,
-                          },
-                          Object {
-                            "backgroundColor": "#86B93B",
-                            "borderColor": "#86B93B",
-                          },
-                        ]
+                        Object {
+                          "backgroundColor": "#86B93B",
+                          "borderColor": "#86B93B",
+                          "borderRadius": 5,
+                          "borderWidth": 1,
+                          "opacity": 1,
+                        }
                       }
                     >
                       <View
-                        pointerEvents="box-only"
                         style={
-                          Array [
-                            Object {
-                              "alignItems": "center",
-                              "backgroundColor": "#9E9E9E",
-                              "flexDirection": "row",
-                              "justifyContent": "center",
-                              "padding": 19,
-                            },
-                            undefined,
-                            undefined,
-                            undefined,
-                            undefined,
-                            undefined,
-                            Object {
-                              "backgroundColor": "#777777",
-                            },
-                            undefined,
-                            Object {
-                              "padding": 12,
-                            },
-                            undefined,
-                            undefined,
-                            undefined,
-                            Array [
-                              null,
-                              Object {
-                                "borderRadius": 5,
-                                "borderWidth": 1,
-                              },
-                              Object {
-                                "backgroundColor": "#86B93B",
-                                "borderColor": "#86B93B",
-                              },
-                            ],
-                            undefined,
-                            undefined,
-                          ]
+                          Object {
+                            "alignItems": "center",
+                            "backgroundColor": "#777777",
+                            "borderColor": "#86B93B",
+                            "borderRadius": 5,
+                            "borderWidth": 1,
+                            "color": "#ffffff",
+                            "flexDirection": "row",
+                            "justifyContent": "center",
+                            "padding": 8,
+                            "textAlign": "center",
+                          }
                         }
                       >
                         <Text
                           style={
-                            Array [
-                              Object {},
-                              undefined,
-                              undefined,
-                              undefined,
-                              undefined,
-                              undefined,
-                              undefined,
-                              undefined,
-                              undefined,
-                              undefined,
-                              Array [
-                                Object {
-                                  "color": "white",
-                                  "fontSize": 16,
-                                },
-                                Object {
-                                  "color": "#ffffff",
-                                },
-                                Object {
-                                  "fontSize": 14,
-                                },
-                                undefined,
-                                undefined,
-                                undefined,
-                                undefined,
-                                undefined,
-                              ],
-                            ]
+                            Object {
+                              "color": "white",
+                              "fontSize": 18,
+                              "paddingBottom": 1,
+                              "paddingTop": 2,
+                              "textAlign": "center",
+                            }
                           }
                         >
                           Enable Automatic Backups

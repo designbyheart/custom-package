@@ -42,8 +42,8 @@ class WalletSendAmount extends Component<
       accessibleLabel: SEND_TAB_TEST_ID,
       accessibilityLabel: SEND_TAB_TEST_ID,
     },
-    tabBarOnPress: onPressEvent => {
-      navEvent.navigation.state.params.onTabPress(onPressEvent, navEvent)
+    tabBarOnPress: (onPressEvent) => {
+      navEvent.route.params.onTabPress(onPressEvent, navEvent)
     },
   })
 
@@ -86,7 +86,7 @@ class WalletSendAmount extends Component<
     }
   }
 
-  saveTokenKeyboardRef = tokenKeyboard => {
+  saveTokenKeyboardRef = (tokenKeyboard) => {
     this._tokenKeyboard = tokenKeyboard
   }
 
@@ -212,7 +212,7 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       selectTokenAmount,

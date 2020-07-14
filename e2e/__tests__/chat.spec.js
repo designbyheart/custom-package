@@ -38,15 +38,11 @@ describe('Chat', () => {
     await element(by.text(CHAT_SEND_BUTTON)).tap()
     await expect(element(by.text(CHAT_SUCCESS_MESSAGE))).toBeVisible()
 
-    await element(by.text(CHAT_NEW_MESSAGE))
-      .atIndex(0)
-      .tap()
+    await element(by.text(CHAT_NEW_MESSAGE)).atIndex(0).tap()
     await element(by.type(CHAT_TEXT_VIEW))
       .atIndex(2)
       .typeText('one more test message')
-    await element(by.type(CHAT_TEXT_VIEW))
-      .atIndex(2)
-      .tapReturnKey()
+    await element(by.type(CHAT_TEXT_VIEW)).atIndex(2).tapReturnKey()
     await element(by.text(CHAT_SEND_BUTTON)).tap()
     await expect(element(by.text(CHAT_SUCCESS_MESSAGE))).toBeVisible()
 

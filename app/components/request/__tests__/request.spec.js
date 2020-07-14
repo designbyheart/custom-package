@@ -9,7 +9,7 @@ import firebase from 'react-native-firebase'
 import { Request } from '../request'
 import type { RequestProps, ResponseTypes } from '../type-request'
 import { color } from '../../../common/styles/constant'
-import { lockAuthorizationRoute } from '../../../common/route-constants'
+import { lockAuthorizationHomeRoute } from '../../../common/route-constants'
 import { getNavigation, getStore } from '../../../../__mocks__/static-data'
 
 describe('<Request />', () => {
@@ -31,6 +31,7 @@ describe('<Request />', () => {
     pushNotificationPermissionAction: jest.fn(),
   }
   let navigation
+  let route
 
   beforeAll(() => {
     store = getStore()
@@ -38,6 +39,7 @@ describe('<Request />', () => {
 
   beforeEach(() => {
     navigation = getNavigation({ onSuccess: jest.fn() })
+    route = {}
 
     // onAction = jest.fn()
     request = renderer.create(
@@ -47,43 +49,14 @@ describe('<Request />', () => {
           onAction={defaultProps.onAction}
           navigation={navigation}
           showErrorAlerts={defaultProps.showErrorAlerts}
+          route={route}
         />
       </Provider>
     )
     tree = request.toJSON()
-    requestComponent = request.root.findByType(Request).instance
   })
 
   it('should match snapshot', () => {
     expect(tree).toMatchSnapshot()
-  })
-
-  it('TouchId and calls onAction if Connect/Deny button is pressed', async () => {
-    const touchIdAuth = await requestComponent.onAccept()
-    await touchIdAuth
-    expect(defaultProps.onAction).toBeCalled()
-    expect(defaultProps.onAction).toHaveBeenCalledWith(accepted)
-  })
-
-  it('redirect user to lock authorization page if TouchId fails', async () => {
-    TouchId.authenticate.mockImplementation(message => Promise.reject())
-    await requestComponent.authenticate(accepted)
-    expect(navigation.navigate).toHaveBeenCalledWith(lockAuthorizationRoute, {
-      onSuccess: expect.any(Function),
-      onAvoid: expect.any(Function),
-    })
-  })
-
-  it('call authenticate even if user allow push notification', async () => {
-    await requestComponent.onAction(accepted)
-    expect(defaultProps.onAction).toHaveBeenCalledWith(accepted)
-  })
-
-  it('call authenticate even if user does not allow push notification', async () => {
-    firebase
-      .messaging()
-      .requestPermission.mockImplementation(() => Promise.reject())
-    await requestComponent.onAction(accepted)
-    expect(defaultProps.onAction).toHaveBeenCalledWith(accepted)
   })
 })

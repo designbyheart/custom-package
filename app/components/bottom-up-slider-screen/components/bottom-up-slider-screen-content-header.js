@@ -1,13 +1,14 @@
 // @flow
 
 import React from 'react'
+import type { ImageURISource } from 'react-native/Libraries/Image/ImageSource'
 import { Image, StyleSheet } from 'react-native'
 
 import { CustomView, Container } from '../../layout/'
 import { BottomUpSliderText } from './bottom-up-slider-screen-text'
 
 export function BottomUpSliderContentHeader(props: {
-  source: number | { uri: string } | string,
+  source: number | ImageURISource,
   senderName: string,
 }) {
   return (

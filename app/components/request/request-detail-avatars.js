@@ -1,13 +1,16 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { StyleSheet, Image } from 'react-native'
+import { StyleSheet, Image, View } from 'react-native'
+
 import { View as AnimatedView } from 'react-native-animatable'
 import { CustomView, UserAvatar, Avatar } from '../../components'
-import { getConnectionLogo } from '../../store/connections-store'
 import type { RequestDetailAvatarProps } from './type-request'
-import { OFFSET_4X, OFFSET_1X } from '../../common/styles'
 import type { ImageSource } from '../../common/type-common'
 import { DefaultLogo } from '../default-logo/default-logo'
+
+import { Container } from '../layout/container'
+import { getConnectionLogo } from '../../store/connections-store'
+import { OFFSET_4X, OFFSET_1X } from '../../common/styles'
 
 export default class RequestDetailAvatars extends PureComponent<
   RequestDetailAvatarProps,
@@ -24,10 +27,7 @@ export default class RequestDetailAvatars extends PureComponent<
 
   render() {
     return (
-      <AnimatedView
-        animation="bounceInUp"
-        delay={300}
-        duration={1500}
+      <View
         testID={'invitation-text-container-avatars-animation'}
         accessible={true}
         accessibilityLabel={'invitation-text-container-avatars-animation'}
@@ -62,7 +62,7 @@ export default class RequestDetailAvatars extends PureComponent<
             )}
           </CustomView>
         </CustomView>
-      </AnimatedView>
+      </View>
     )
   }
 }

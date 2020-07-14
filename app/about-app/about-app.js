@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Image } from 'react-native'
 import { connect } from 'react-redux'
-import { createStackNavigator } from 'react-navigation'
 import VersionNumber from 'react-native-version-number'
 import { ListItem } from 'react-native-elements'
 
@@ -26,11 +25,10 @@ import {
   dimGray,
   lightGray,
 } from '../common/styles'
-import { tertiaryHeaderStyles } from '../components/layout/header-styles'
 import { aboutAppRoute, privacyTNCRoute } from '../common'
 import { PrivacyTNC } from '../privacy-tnc/privacy-tnc-screen'
 import { getEnvironmentName } from '../store/config-store'
-import { withStatusBar } from '../components/status-bar/status-bar'
+import { headerNavigationOptions } from '../navigation/navigation-header-config'
 
 const styles = StyleSheet.create({
   headerLeft: {
@@ -50,27 +48,29 @@ const styles = StyleSheet.create({
   },
 })
 
-export class AboutAppListItem extends Component<AboutAppListItemProps, void> {
-  render() {
-    return (
-      <ListItem
-        title={
-          <CustomView>
-            <CustomText h5 semiBold bg="fifth">
-              {this.props.titleValue}
-            </CustomText>
-          </CustomView>
-        }
-        onPress={this.props.onPress}
-        rightIcon={{
-          name: 'chevron-right',
-          color: dimGray,
-        }}
-      />
-    )
-  }
+export const AboutAppListItem = ({
+  titleValue,
+  onPress,
+}: AboutAppListItemProps) => {
+  return (
+    <ListItem
+      title={
+        <CustomView>
+          <CustomText h5 semiBold bg="fifth">
+            {titleValue}
+          </CustomText>
+        </CustomView>
+      }
+      onPress={onPress}
+      rightIcon={rightIconConfig}
+    />
+  )
 }
 
+const rightIconConfig = {
+  name: 'chevron-right',
+  color: dimGray,
+}
 const logoConnectMe = <Image source={require('../images/logo_connectme.png')} />
 const logoEvernym = <Image source={require('../images/logo_evernym.png')} />
 const logoSovrin = <Image source={require('../images/logo_sovrin.png')} />
@@ -87,31 +87,6 @@ export class AboutApp extends Component<AboutAppProps, void> {
       PrivacyTNC.INFO_TYPE.PRIVACY
     )
   }
-
-  static navigationOptions = ({ navigation }: ReactNavigation) => ({
-    header: (
-      <CustomHeader
-        backgroundColor={color.bg.tertiary.color}
-        outerContainerStyles={{ borderBottomWidth: 0 }}
-        leftComponent={
-          <Icon
-            testID={'back-arrow'}
-            iconStyle={[styles.headerLeft]}
-            src={require('../images/icon_backArrow.png')}
-            resizeMode="contain"
-            onPress={() => navigation.goBack()}
-            small
-          />
-        }
-        centerComponent={
-          <CustomText bg="tertiary" tertiary transparentBg semiBold>
-            About this App
-          </CustomText>
-        }
-      />
-    ),
-    swipeEnabled: false,
-  })
 
   render() {
     return (
@@ -174,4 +149,12 @@ const mapStateToProps = (state: Store) => ({
   environmentName: getEnvironmentName(state.config),
 })
 
-export default withStatusBar()(connect(mapStateToProps)(AboutApp))
+const AboutAppScreen = connect(mapStateToProps)(AboutApp)
+
+export const aboutAppScreen = {
+  routeName: aboutAppRoute,
+  screen: AboutAppScreen,
+  options: {
+    ...headerNavigationOptions({ title: 'About this App' }),
+  },
+}

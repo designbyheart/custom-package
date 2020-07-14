@@ -3,7 +3,7 @@ import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
-import ConnectedInvitation, { Invitation } from '../invitation'
+import { Invitation, invitationScreen } from '../invitation'
 
 import { color } from '../../common/styles'
 import { ResponseType } from '../../components/request/type-request'
@@ -12,10 +12,12 @@ import { getNavigation, smsToken } from '../../../__mocks__/static-data'
 import { Container } from '../../components'
 
 describe('<Invitation />', () => {
+  const ConnectedInvitation = invitationScreen.screen
   let store
   let dispatch
   let subscribe
   let navigation
+  let route
   let sendInvitationResponse
   let smsPendingInvitationSeen
   let invitationRejected
@@ -84,6 +86,7 @@ describe('<Invitation />', () => {
     lock: {
       isTouchIdEnabled: false,
     },
+    smsPendingInvitation: {},
   })
 
   beforeEach(() => {
@@ -104,6 +107,12 @@ describe('<Invitation />', () => {
         smsToken,
       }),
     }
+    route = {
+      params: {
+        senderDID: firstInvitation.senderDID,
+        token: smsToken,
+      },
+    }
     const state = getState()
     invitation = state.invitation.senderDID1
     const showErrorAlerts = state.config.showErrorAlerts
@@ -115,6 +124,7 @@ describe('<Invitation />', () => {
       invitation,
       showErrorAlerts,
       navigation,
+      route,
       sendInvitationResponse,
       smsPendingInvitationSeen,
       invitationRejected,
@@ -141,11 +151,12 @@ describe('<Invitation />', () => {
     subscribe.mockReset()
     subscribe.mockRestore()
   })
+
   it('should match snapshot', () => {
     const tree = renderer
       .create(
         <Provider store={store}>
-          <ConnectedInvitation navigation={navigation} />
+          <ConnectedInvitation navigation={navigation} route={route} />
         </Provider>
       )
       .toJSON()

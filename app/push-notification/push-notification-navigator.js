@@ -29,7 +29,7 @@ export class PushNotificationNavigator extends PureComponent<
   PushNotificationNavigatorProps,
   void
 > {
-  componentWillReceiveProps(nextProps: PushNotificationNavigatorProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: PushNotificationNavigatorProps) {
     if (
       nextProps.pushNotification.notification &&
       nextProps.pushNotification.notification !==
@@ -68,6 +68,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  PushNotificationNavigator
-)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PushNotificationNavigator)

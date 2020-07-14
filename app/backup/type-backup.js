@@ -2,25 +2,22 @@
 import type { ReactNavigation } from '../common/type-common'
 import type { CustomError } from '../common/type-common'
 import type { IsValid } from '../components/input-control/type-input-control'
-import type {
-  RestoreStoreType,
-  SaveToAppDirectory,
-} from '../restore/type-restore'
+import type { RestoreStore, SaveToAppDirectory } from '../restore/type-restore'
 import type { RestoreCloudSubmitPassphraseAction } from '../cloud-restore/cloud-restore-type'
 
 export type ReactNavigationBackup = {
   navigation: {
     setParams: any,
-    getParam: any,
     navigate: (route: string, params?: any) => void,
     goBack: (route?: ?string) => void,
-    state: {
-      params: {
-        recoveryPassphrase?: string,
-        initialRoute: string,
-        hideBtn?: boolean,
-        viewOnlyMode?: boolean,
-      },
+  },
+  route: {
+    params: {
+      recoveryPassphrase?: string,
+      initialRoute: string,
+      hideBtn?: boolean,
+      viewOnlyMode?: boolean,
+      navigateBack: () => void,
     },
   },
   hydrateCloudBackup: (lastSuccessfulCloudBackup: string) => any,
@@ -59,10 +56,10 @@ export type PassphraseErrorProps = {
 
 export type VerifyRecoveryPhraseProps = {
   recoveryPassphrase: Passphrase,
-  submitPassphrase: string => void,
+  submitPassphrase: (string) => void,
   resetError: () => void,
   status: string,
-  restoreStatus: string => void,
+  restoreStatus: (string) => void,
   error: boolean,
   isCloudBackupEnabled: false,
   hasVerifiedRecoveryPhrase: () => any,
@@ -80,7 +77,7 @@ export type ExportBackupFileProps = {
 } & ReactNavigationBackup
 
 export type BackupErrorProps = {
-  updateStatusBarTheme: string => void,
+  updateStatusBarTheme: (string) => void,
   generateBackupFile: () => void,
 } & ReactNavigationBackup
 
@@ -102,10 +99,10 @@ export type CloudBackupScreenProps = {
   ) => SetAutoCloudBackupEnabledAction,
   cloudBackupStatus: () => string,
   cloudBackupStart: () => any,
-  restore: RestoreStoreType,
+  restore: RestoreStore,
   route: string,
-  saveFileToAppDirectory: SaveToAppDirectory => void,
-  updateStatusBarTheme: string => void,
+  saveFileToAppDirectory: (SaveToAppDirectory) => void,
+  updateStatusBarTheme: (string) => void,
   error: string,
   message: string,
   connectionHistoryBackedUp: () => void,

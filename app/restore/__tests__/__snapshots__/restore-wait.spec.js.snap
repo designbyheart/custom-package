@@ -23,7 +23,11 @@ exports[`RestoreWait screen should render properly and match the snapshot 1`] = 
     }
   >
     <Image
-      source={1}
+      source={
+        Object {
+          "default": "RelativeImageStub",
+        }
+      }
       style={
         Array [
           Object {
@@ -56,7 +60,11 @@ exports[`RestoreWait screen should render properly and match the snapshot 1`] = 
       />
       <View
         clearBg={true}
-        src={1}
+        src={
+          Object {
+            "default": "RelativeImageStub",
+          }
+        }
         style={
           Object {
             "backgroundColor": "#505050",
@@ -71,7 +79,11 @@ exports[`RestoreWait screen should render properly and match the snapshot 1`] = 
         >
           <Image
             resizeMode="contain"
-            source={1}
+            source={
+              Object {
+                "default": "RelativeImageStub",
+              }
+            }
             style={
               Array [
                 Object {

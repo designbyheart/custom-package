@@ -13,6 +13,7 @@ import {
   lockSelectionRoute,
   settingsTabRoute,
   settingsRoute,
+  lockTouchIdSetupRoute,
 } from '../common'
 
 import {
@@ -30,10 +31,9 @@ import {
   touchIDNotSupportAlertAndroid,
 } from './type-lock'
 import type { LockFingerprintSetupProps } from './type-lock'
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import { safeSet } from '../services/storage'
 import { getBiometricError } from '../bridge/react-native-cxs/RNCxs'
-import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class LockFingerprintSetup extends PureComponent<
   LockFingerprintSetupProps,
@@ -90,14 +90,14 @@ export class LockFingerprintSetup extends PureComponent<
       (this.props.fromSettings && this.props.currentScreen === settingsRoute)
     )
       return TouchId.isSupported()
-        .then(success => {
+        .then((success) => {
           return TouchId.authenticate('', this.handleTouchID)
-            .then(success => {
+            .then((success) => {
               this.props.fromSettings
                 ? this.goToSettingsScreen()
                 : this.goToPinSetupScreen()
             })
-            .catch(error => {
+            .catch((error) => {
               // captureError(error)
               if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
                 if (error.code === LAErrorTouchIDTooManyAttempts) {
@@ -110,7 +110,7 @@ export class LockFingerprintSetup extends PureComponent<
               }
             })
         })
-        .catch(error => {
+        .catch((error) => {
           captureError(error)
           if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
             let alertMessage = touchIDAlerts.notSupportedBiometrics
@@ -120,7 +120,7 @@ export class LockFingerprintSetup extends PureComponent<
               }
               this.popUpNativeAlert(alertMessage)
             } else {
-              return getBiometricError().catch(err => {
+              return getBiometricError().catch((err) => {
                 if (err.code === 'BiometricsLockOut') {
                   alertMessage = touchIDAlerts.biometricsExceedAlert
                 } else if (err.code === 'BiometricsNotEnrolled') {
@@ -148,12 +148,10 @@ const mapStateToProps = (state: Store, props) => ({
   touchIdActive: state.lock.isTouchIdEnabled,
   currentScreen: state.route.currentScreen,
   fromSettings:
-    props.navigation.state.params !== undefined
-      ? props.navigation.state.params.fromSettings
-      : false,
+    props.route.params !== undefined ? props.route.params.fromSettings : false,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       disableTouchIdAction,
@@ -170,6 +168,7 @@ const style = StyleSheet.create({
   },
 })
 
-export default withStatusBar()(
-  connect(mapStateToProps, mapDispatchToProps)(LockFingerprintSetup)
-)
+export const lockTouchIdSetupScreen = {
+  routeName: lockTouchIdSetupRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(LockFingerprintSetup),
+}

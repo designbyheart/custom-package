@@ -1,7 +1,6 @@
 // @flow
 import React, { Component, PureComponent } from 'react'
 import EnterPassphrase from '../components/backup-restore-passphrase/backup-restore-passphrase'
-import { createStackNavigator } from 'react-navigation'
 import { color } from '../common/styles/constant'
 import { restorePassphraseRoute, restoreWaitRoute } from '../common'
 import { connect } from 'react-redux'
@@ -87,13 +86,12 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ submitPassphrase }, dispatch)
 
-export default createStackNavigator({
-  [restorePassphraseRoute]: {
-    screen: withStatusBar({ color: color.bg.twelfth.color })(
-      connect(mapStateToProps, mapDispatchToProps)(RestorePassphrase)
-    ),
-  },
-})
+export const restorePassphraseScreen = {
+  routeName: restorePassphraseRoute,
+  screen: withStatusBar({ color: color.bg.twelfth.color })(
+    connect(mapStateToProps, mapDispatchToProps)(RestorePassphrase)
+  ),
+}

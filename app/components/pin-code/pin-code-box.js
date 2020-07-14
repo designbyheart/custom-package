@@ -1,15 +1,18 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { TextInput, StyleSheet, Platform, Keyboard, Text } from 'react-native'
+
+import type { PinCodeBoxProps, PinCodeBoxState } from './type-pin-code-box'
+
 import { PIN_SETUP_STATE } from '../../lock/type-lock'
 import PinCodeDigit from './pin-code-digit'
-import { CustomView, Keyboard as CustomKeyboard } from '../../components'
-import type { PinCodeBoxProps, PinCodeBoxState } from './type-pin-code-box'
+import { CustomView } from '../layout/custom-view'
+import CustomKeyboard from '../keyboard/keyboard'
 import { color } from '../../common/styles/constant'
 
 const keyboard = Platform.OS === 'ios' ? 'number-pad' : 'numeric'
 
-const isDigit = text => {
+const isDigit = (text) => {
   if (isNaN(parseInt(text))) {
     return false
   }
@@ -126,7 +129,7 @@ export default class PinCodeBox extends PureComponent<
           keyboardAppearance="dark"
           maxLength={this.maxLength}
           onChangeText={this.onPinChange}
-          ref={inputBox => {
+          ref={(inputBox) => {
             this.inputBox = inputBox
           }}
           style={styles.input}

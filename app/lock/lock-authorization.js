@@ -3,81 +3,61 @@
  * Intend to verify user actions
  * we will ask authorize user for some actions in app
  * either by asking for TouchId or asking user to enter pin code
- * we will ask for authorization while accepting invitation
- * accepting claim offer, sharing proof for now
  */
-import React, { PureComponent } from 'react'
-import { StyleSheet } from 'react-native'
-import type {
-  LockAuthorizationProps,
-  LockAuthorizationNavigation,
-} from './type-lock'
+import React, { useCallback } from 'react'
+import { HeaderBackButton } from '@react-navigation/stack'
+
+import type { StackHeaderLeftButtonProps } from '@react-navigation/stack'
+import type { LockAuthorizationProps } from './type-lock'
+import type { ReactNavigation } from '../common/type-common'
 
 import LockEnter from './lock-enter'
-import { Icon } from '../components'
-import { CustomView, CustomHeader } from '../components'
-import { OFFSET_2X, color } from '../common/styles'
-import { tertiaryHeaderStyles } from '../components/layout/header-styles'
 import { lockAuthorizationHomeRoute } from '../common'
-import { createStackNavigator } from 'react-navigation'
-import { withStatusBar } from '../components/status-bar/status-bar'
+import { BackButton } from '../components/back-button/back-button'
+import { headerTitleStyle } from '../components/header-title/header-title'
+import { useInteractionDone } from '../hooks/use-interactions-done'
+import { OrangeLoader, LoaderGif } from '../components/loader-gif/loader-gif'
 
-const styles = StyleSheet.create({
-  headerLeft: {
-    width: OFFSET_2X,
-  },
-})
+export const LockAuthorization = ({
+  navigation,
+  route,
+}: LockAuthorizationProps) => {
+  const [interactionDone] = useInteractionDone()
+  const onSuccess = useCallback(() => {
+    navigation.goBack()
+    const { params } = route
+    params && params.onSuccess && params.onSuccess()
+  }, [])
 
-export class LockAuthorization extends PureComponent<
-  LockAuthorizationProps,
-  void
-> {
-  static navigationOptions = ({ navigation }: LockAuthorizationNavigation) => ({
-    header: (
-      <CustomHeader flatHeader backgroundColor={color.bg.tertiary.color}>
-        <CustomView>
-          <Icon
-            small
-            testID={'back-arrow'}
-            iconStyle={[styles.headerLeft]}
-            src={require('../images/icon_backArrow.png')}
-            resizeMode="contain"
+  if (!interactionDone) {
+    return LoaderGif
+  }
+
+  return <LockEnter onSuccess={onSuccess} />
+}
+
+export const lockAuthorizationScreen = {
+  routeName: lockAuthorizationHomeRoute,
+  screen: LockAuthorization,
+  options({ route, navigation }: ReactNavigation) {
+    return {
+      headerShown: true,
+      headerTitle: 'App Security',
+      gestureEnabled: false,
+      headerLeft(props: StackHeaderLeftButtonProps) {
+        return (
+          <BackButton
+            {...props}
             onPress={() => {
               navigation.goBack(null)
-              const { params } = navigation.state
+              const { params } = route
               params && params.onAvoid && params.onAvoid()
             }}
           />
-        </CustomView>
-      </CustomHeader>
-    ),
-  })
-
-  onSuccess = () => {
-    const { navigation } = this.props
-    navigation.goBack(null)
-    setTimeout(() => {
-      const { params } = navigation.state
-      params && params.onSuccess && params.onSuccess()
-    })
-  }
-
-  onClose = () => {
-    const { navigation } = this.props
-    navigation.goBack(null)
-    setTimeout(() => {
-      const { params } = navigation.state
-      params && params.onAvoid && params.onAvoid()
-    })
-  }
-
-  render() {
-    return <LockEnter onSuccess={this.onSuccess} />
-  }
-}
-
-export default createStackNavigator({
-  [lockAuthorizationHomeRoute]: {
-    screen: withStatusBar()(LockAuthorization),
+        )
+      },
+      headerTitleStyle: headerTitleStyle.title,
+      headerHideShadow: true,
+    }
   },
-})
+}

@@ -76,24 +76,27 @@ yarn-test:
   tags:
     - macos
     - mojave
-    - xcode10-1
+    - xcode-11-3
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /[[Cc][Ii]\s[Ss][Kk][Ii][Pp]]/
   script:
+    - nvm use
+    - yarn config set ignore-engines true
     - yarn install
     - yarn lint
     - yarn test
 
 .ios-test:
-  stage: test
+  # stage: test
   tags:
     - macos
     - mojave
-    - xcode10-1
+    - xcode-11-3
   before_script:
-    - xcrun simctl boot 2D6426B4-A64F-4513-B141-0F0153239DCA
-    - xcrun simctl list | grep "iPhone 7"
+    - brew install jq
+    - UDID=$(xcrun simctl list --json | jq '.devices["com.apple.CoreSimulator.SimRuntime.iOS-13-3"] | map(select(.name == "iPhone 8")) | .[0].udid' | sed -e 's/^"//' -e 's/"$//')
+    - xcrun simctl boot $UDID
 
 detox-ios-test:
   extends: .ios-test
@@ -101,23 +104,29 @@ detox-ios-test:
     VUI_PWD: "ktjo6iKiJsn7EGlCCZj07qKw3"
     MAIL_PWD: "Evernym123"
   script:
+    - xcversion select --verbose --symlink 11.3
+    - xcversion selected
+    - sudo xcodebuild -license accept
+    - cd ios
+    - gem uninstall bundler
+    - gem install bundler
+    - bundler update --bundler
+    - gem install cocoapods
+    - cd ..
     - mkdir -p ~/.ssh/
     - ssh-keyscan -4H gitlab.corp.evernym.com > ~/.ssh/known_hosts
     - eval $(ssh-agent -s)
     - echo "$CALLCENTER_CERTS_DEPLOY_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - echo "$IOSDEV_EVERNYM_RSA_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - chmod 644 ~/.ssh/known_hosts
-    - brew update
-    - brew tap wix/brew && brew install applesimutils
-    - brew install imagemagick && brew install GraphicsMagick
-    - brew install zbar
-    - yarn global add detox-cli
+    - security -v unlock-keychain -p ${VAGRANT_USER_PASS} ~/Library/Keychains/login.keychain-db
+    - nvm use
     - yarn
     - yarn pod:update
     - yarn pod:dev:install
     - echo "detox=yes" > .env
     - echo "detox=yes" > .env.production
-    - yarn e2e -b release -e qa -s iphone7
+    - yarn e2e -b release -e qa -s iphone8
   artifacts:
     paths:
       - e2e/screenshots
@@ -129,7 +138,7 @@ detox-ios-test:
   tags:
     - macos
     - mojave
-    - xcode10-1
+    - xcode-11-3
   artifacts:
     paths:
       - ios/ConnectMe.ipa
@@ -137,12 +146,22 @@ detox-ios-test:
     variables:
       - $CI_COMMIT_MESSAGE =~ /[[Cc][Ii]\s[Ss][Kk][Ii][Pp]]/
   script:
+    - xcversion select --verbose --symlink 11.3
+    - xcversion selected
+    - sudo xcodebuild -license accept
+    - cd ios
+    - gem uninstall bundler
+    - gem install bundler
+    - bundler update --bundler
+    - gem install cocoapods
+    - cd ..
     - mkdir -p ~/.ssh/
     - ssh-keyscan -4H gitlab.corp.evernym.com > ~/.ssh/known_hosts
     - eval $(ssh-agent -s)
     - echo "$CALLCENTER_CERTS_DEPLOY_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - echo "$IOSDEV_EVERNYM_RSA_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - chmod 644 ~/.ssh/known_hosts
+    - nvm use
     - yarn install
     - security -v unlock-keychain -p ${VAGRANT_USER_PASS} ~/Library/Keychains/login.keychain-db
     - git config --global user.name 'Gitlab'
@@ -210,6 +229,16 @@ build-ios-stable:
     - mkdir -p $HOME/keystores/
     - echo ${ANDROID_KEYSTORE_B64} | base64 -d > $HOME/keystores/my_keystore.jks
     - yes | sdkmanager --licenses || true
+    - node --version
+    - sudo apt-get remove -y nodejs
+    - curl -sL https://deb.nodesource.com/setup_12.x | bash -
+    - apt-get install -y nodejs
+    - node --version
+    - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+    - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    - sudo apt-get update && sudo apt-get install -y yarn
+    - yarn config set ignore-engines true
+    - yarn config set ignore-platforms true
     - yarn
     - gem install fastlane
     - cd android

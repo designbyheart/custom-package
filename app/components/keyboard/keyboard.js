@@ -2,7 +2,10 @@
 
 import React, { Component } from 'react'
 import { Animated, TouchableWithoutFeedback } from 'react-native'
-import { CustomView, CustomText, Container } from '../../components'
+
+import { Container } from '../layout/container'
+import { CustomView } from '../layout/custom-view'
+import CustomText from '../text'
 import type { KeyboardProps } from './type-keyboard'
 import {
   KEYBOARD_TEST_ID,
@@ -64,6 +67,8 @@ export default class Keyboard extends Component<KeyboardProps, void> {
       toValue: 1,
       bounciness: 10,
       overshootClamping: false,
+      // TODO:KS need to use native driver, had to fix fontSize Animation issue on nativeDriver by setting it to false
+      useNativeDriver: false,
     }).start(() => {
       this._animation[animationKey].setValue(0)
     })
@@ -201,7 +206,9 @@ export default class Keyboard extends Component<KeyboardProps, void> {
     } else if (key === DECIMAL) {
       // only allow one decimal place
       const updatedText = HAS_INPUT
-        ? NO_DECIMAL ? (curText += key) : curText
+        ? NO_DECIMAL
+          ? (curText += key)
+          : curText
         : SPECIAL_DECIMAL_FORMAT
       const animate = HAS_INPUT ? (NO_DECIMAL ? false : true) : false
 

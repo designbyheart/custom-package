@@ -2,7 +2,7 @@
 import type {
   NavigationScreenProp,
   NavigationLeafRoute,
-} from 'react-navigation'
+} from '@react-navigation/native'
 import type { QuestionResponse } from '../question/type-question'
 import type { ReactNavigation } from '../common/type-common'
 export const TAA_STATUS = {
@@ -74,8 +74,10 @@ export type TxnAuthorAgreementAction =
 export type TxnAuthorAgreementScreenNavigation = {
   navigation: NavigationScreenProp<{|
     ...NavigationLeafRoute,
+  |}>,
+  route: {
     params: {|
       uid: string,
     |},
-  |}>,
+  },
 }

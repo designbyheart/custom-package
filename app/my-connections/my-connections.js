@@ -9,9 +9,10 @@ import {
   AppState,
 } from 'react-native'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import firebase from 'react-native-firebase'
+import { BlurView } from '@react-native-community/blur'
 import Snackbar from 'react-native-snackbar'
-import { BlurView } from 'react-native-blur'
 
 import type { Store } from '../store/type-store'
 import type {
@@ -25,13 +26,10 @@ import type { ReactNavigation } from '../common/type-common'
 import { newConnectionSeen } from '../connection-history/connection-history-store'
 import { PrimaryHeader, CameraButton } from '../components'
 import { ConnectionCard } from './connection-card/connection-card'
-import { createStackNavigator, NavigationActions } from 'react-navigation'
-import { myConnectionsRoute, qrCodeScannerTabRoute } from '../common'
+import { qrCodeScannerTabRoute } from '../common'
 import { getConnections } from '../store/connections-store'
 import { connectionHistRoute } from '../common/route-constants'
 import { getUnseenMessages } from '../store/store-selector'
-import { scale } from 'react-native-size-matters'
-import { size } from '../components/icon'
 import { externalStyles } from './styles'
 import { NewConnectionInstructions } from './new-connection-instructions'
 import {
@@ -43,19 +41,14 @@ import {
   GET_MESSAGES_LOADING,
 } from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
-import { bindActionCreators } from 'redux'
 import SvgCustomIcon from '../components/svg-custom-icon'
 import { NotificationCard } from '../in-app-notification/in-app-notification-card'
-import { venetianRed } from '../common/styles'
+import { colors, fontFamily } from '../common/styles/constant'
 
-export class MyConnectionsScreen extends Component<
+export class MyConnections extends Component<
   MyConnectionsProps,
   MyConnectionsState
 > {
-  static navigationOptions = ({ navigation }: ReactNavigation) => ({
-    header: null,
-  })
-
   componentDidUpdate(prevProps: MyConnectionsProps) {
     const noUnSeenMessages =
       prevProps.unSeenMessagesCount && !this.props.unSeenMessagesCount
@@ -71,8 +64,8 @@ export class MyConnectionsScreen extends Component<
       Snackbar.dismiss()
       Snackbar.show({
         title: this.props.snackError,
-        backgroundColor: venetianRed,
-        fontFamily: 'Lato',
+        backgroundColor: colors.cmRed,
+        fontFamily: fontFamily,
         duration: Snackbar.LENGTH_LONG,
       })
     }
@@ -92,18 +85,6 @@ export class MyConnectionsScreen extends Component<
       senderDID,
       identifier,
     })
-  }
-
-  renderBlurForIos = () => {
-    if (Platform.OS === 'ios') {
-      return (
-        <BlurView
-          style={externalStyles.blurContainer}
-          blurType="light"
-          blurAmount={8}
-        />
-      )
-    } else return null
   }
 
   renderItem = ({ item }: { item: Object }) => {
@@ -176,11 +157,7 @@ export class MyConnectionsScreen extends Component<
             }
           />
         </View>
-        {this.renderBlurForIos()}
-        <PrimaryHeader
-          headline="My Connections"
-          navigation={this.props.navigation}
-        />
+        <PrimaryHeader headline="My Connections" />
         <CameraButton
           onPress={() => this.props.navigation.navigate(qrCodeScannerTabRoute)}
         />
@@ -297,7 +274,7 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onNewConnectionSeen: newConnectionSeen,
@@ -306,22 +283,6 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default createStackNavigator({
-  [myConnectionsRoute]: {
-    screen: withStatusBar()(
-      connect(mapStateToProps, mapDispatchToProps)(MyConnectionsScreen)
-    ),
-  },
-})
-
-export const tokenAmountSize = (tokenAmountLength: number): number => {
-  // this resizing logic is different than wallet tabs header
-  switch (true) {
-    case tokenAmountLength < 16:
-      return scale(26)
-    case tokenAmountLength < 20:
-      return scale(20)
-    default:
-      return scale(19)
-  }
-}
+export const MyConnectionsScreen = withStatusBar()(
+  connect(mapStateToProps, mapDispatchToProps)(MyConnections)
+)

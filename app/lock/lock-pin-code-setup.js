@@ -1,10 +1,8 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { StyleSheet, Keyboard, Platform, TouchableOpacity } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import SvgCustomIcon from '../components/svg-custom-icon'
 
 import type { LockPinSetupState, LockPinCodeSetupProps } from './type-lock'
 import type { ReactNavigation } from '../common/type-common'
@@ -25,6 +23,7 @@ import {
   lockSetupSuccessRoute,
   settingsTabRoute,
   lockEnterPinRoute,
+  lockPinSetupRoute,
   settingsDrawerRoute,
 } from '../common'
 import {
@@ -34,11 +33,12 @@ import {
   OFFSET_2X,
   OFFSET_6X,
   OFFSET_7X,
+  font,
 } from '../common/styles'
 import { setPinAction, enableTouchIdAction } from './lock-store'
 import { PIN_SETUP_STATE } from './type-lock'
 import { tertiaryHeaderStyles } from '../components/layout/header-styles'
-import { withStatusBar } from '../components/status-bar/status-bar'
+import { headerNavigationOptions } from '../navigation/navigation-header-config'
 
 const styles = StyleSheet.create({
   headerLeft: {
@@ -77,16 +77,6 @@ export class LockPinSetup extends PureComponent<
   keyboardDidHideListener = null
   keyboardDidShowListener = null
 
-  static navigationOptions = ({ navigation }: ReactNavigation) => ({
-    header: (
-      <FlatHeader
-        navigation={navigation}
-        svgIconName="Arrow"
-        label="App Security"
-      />
-    ),
-  })
-
   setPinSetupStateToInitial = () => {
     this.setState({ pinSetupState: PIN_SETUP_STATE.INITIAL })
   }
@@ -97,9 +87,9 @@ export class LockPinSetup extends PureComponent<
 
   onPinSetup = (pin: string) => {
     this.props.setPinAction(pin)
-    this.props.navigation.state &&
-    this.props.navigation.state.params &&
-    this.props.navigation.state.params.existingPin === true
+    this.props.route &&
+    this.props.route.params &&
+    this.props.route.params.existingPin === true
       ? this.props.navigation.navigate(lockSetupSuccessRoute, {
           changePin: true,
         })
@@ -183,7 +173,7 @@ export class LockPinSetup extends PureComponent<
     )
     this.keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
-      e => {
+      (e) => {
         this.onKeyboardHide(false, e)
       }
     )
@@ -208,7 +198,7 @@ export class LockPinSetup extends PureComponent<
         )
         this.keyboardDidShowListener = Keyboard.addListener(
           'keyboardDidShow',
-          e => {
+          (e) => {
             this.onKeyboardHide(false, e)
           }
         )
@@ -234,9 +224,9 @@ export class LockPinSetup extends PureComponent<
   render() {
     const { pinSetupState } = this.state
     const passCodeSetupText =
-      this.props.navigation.state &&
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.touchIdActive === true
+      this.props.route &&
+      this.props.route.params &&
+      this.props.route.params.touchIdActive === true
         ? 'Set up a passcode in case Biometrics fails'
         : 'Set up a passcode'
 
@@ -249,9 +239,9 @@ export class LockPinSetup extends PureComponent<
         tertiary
         thick
       >
-        {this.props.navigation.state &&
-        this.props.navigation.state.params &&
-        this.props.navigation.state.params.existingPin === true
+        {this.props.route &&
+        this.props.route.params &&
+        this.props.route.params.existingPin === true
           ? 'Set up a new passcode'
           : passCodeSetupText}
       </CustomText>
@@ -265,9 +255,9 @@ export class LockPinSetup extends PureComponent<
         tertiary
         thick
       >
-        {this.props.navigation.state &&
-        this.props.navigation.state.params &&
-        this.props.navigation.state.params.existingPin === true
+        {this.props.route &&
+        this.props.route.params &&
+        this.props.route.params.existingPin === true
           ? 'Re-enter new passcode'
           : 'Re-enter passcode'}
       </CustomText>
@@ -283,7 +273,7 @@ export class LockPinSetup extends PureComponent<
         </CustomView>
         <CustomView center>
           <PinCodeBox
-            ref={pinCodeBox => {
+            ref={(pinCodeBox) => {
               this.pinCodeBox = pinCodeBox
             }}
             onPinComplete={this.onPinComplete}
@@ -295,7 +285,7 @@ export class LockPinSetup extends PureComponent<
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       setPinAction,
@@ -304,8 +294,12 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default createStackNavigator({
-  [lockPinSetupHomeRoute]: {
-    screen: withStatusBar()(connect(null, mapDispatchToProps)(LockPinSetup)),
+export const lockPinSetupScreen = {
+  routeName: lockPinSetupRoute,
+  screen: connect(null, mapDispatchToProps)(LockPinSetup),
+  options: {
+    ...headerNavigationOptions({
+      title: 'App Security',
+    }),
   },
-})
+}

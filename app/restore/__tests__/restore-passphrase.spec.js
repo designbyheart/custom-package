@@ -12,6 +12,7 @@ describe('Restore Passphrase screen', () => {
       navigation: getNavigation(),
       submitPassphrase: jest.fn(),
       restore: getStore().getState().restore,
+      route: {},
     }
   }
 

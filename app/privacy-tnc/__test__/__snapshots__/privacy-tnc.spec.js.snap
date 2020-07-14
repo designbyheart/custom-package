@@ -1,15 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Privacy and TNC screen should render properly and snapshot should match 1`] = `
-<WebView
-  onError={[Function]}
-  renderError={[Function]}
-  renderLoading={[Function]}
-  source={
-    Object {
-      "uri": "https://www.connect.me/privacy.html",
-    }
-  }
-  startInLoadingState={true}
-/>
-`;
+exports[`Privacy and TNC screen should render properly and snapshot should match 1`] = `null`;

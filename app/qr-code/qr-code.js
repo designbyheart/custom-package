@@ -1,10 +1,8 @@
 // @flow
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { RNCamera } from 'react-native-camera'
-import Permissions from 'react-native-permissions'
 import { Alert, Platform, PermissionsAndroid, AppState } from 'react-native'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { detox } from 'react-native-dotenv'
 
 import { Container, QRScanner } from '../components'
@@ -124,8 +122,7 @@ export class QRCodeScannerScreen extends Component<
 > {
   state = {
     appState: AppState.currentState,
-    isCameraAuthorized: false,
-    isCameraEnabled: false,
+    isCameraEnabled: true,
   }
 
   permissionCheckIntervalId: ?IntervalID = undefined
@@ -212,105 +209,9 @@ export class QRCodeScannerScreen extends Component<
 
   onClose = () => {
     this.props.navigation.goBack(null)
-    this.setState({ isCameraEnabled: false })
-  }
-
-  allowCameraPermissionAcknowledged = () => {
-    this.props.navigation.goBack()
-  }
-
-  setHasCameraAccessPermission = () => {
-    this.setState({ isCameraAuthorized: true })
-  }
-
-  setNoCameraAccessPermission = () => {
-    Alert.alert(MESSAGE_NO_CAMERA_PERMISSION, MESSAGE_ALLOW_CAMERA_PERMISSION, [
-      { text: 'OK', onPress: this.allowCameraPermissionAcknowledged },
-    ])
-    this.setState({ isCameraAuthorized: false })
-  }
-
-  checkCameraAuthorization = () => {
-    if (Platform.OS === 'ios') {
-      Permissions.request('camera').then(response => {
-        if (response === 'authorized') {
-          this.setHasCameraAccessPermission()
-        } else {
-          this.setNoCameraAccessPermission()
-        }
-      })
-    } else {
-      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-        title: 'App Camera Permission',
-        message:
-          'App needs access to your camera ' +
-          'so you can scan QR codes and form connections.',
-      })
-        .then(result => {
-          if (result === 'granted') {
-            this.setHasCameraAccessPermission()
-          } else {
-            this.setNoCameraAccessPermission()
-          }
-        })
-        .catch(this.setNoCameraAccessPermission)
-    }
-  }
-
-  componentWillReceiveProps(nextProps: QRCodeScannerScreenProps) {
-    if (
-      nextProps.currentScreen !== this.props.currentScreen &&
-      nextProps.currentScreen === qrCodeScannerTabRoute
-    ) {
-      // whenever user navigates to this screen, we have to check permission
-      // every time, although we should have this logic in componentDidMount
-      // but in the router (react navigation) that we are using
-      // it caches a component and does not unmount it, and hence
-      // componentDidMount is not called every time user comes to this screen
-      // so, the option we have now is to use one of other life cycle events
-      // such as `cwrp` or `cdu`, we are `cwrp` to check the status every time
-      // also, we check status only on the basis of screen switching
-      // and only check status if user is redirecting to QrCodeScanScreen
-      if (nextProps.navigation.isFocused()) {
-        this.setState({ isCameraEnabled: true })
-      }
-
-      if (Platform.OS === 'android') {
-        this.permissionCheckIntervalId = setInterval(() => {
-          PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA)
-            .then(result => {
-              if (result) {
-                this.checkCameraAuthorization()
-                this.permissionCheckIntervalId &&
-                  clearInterval(this.permissionCheckIntervalId)
-              } else {
-                if (!this.checkPermission) {
-                  this.checkCameraAuthorization()
-                }
-                this.checkPermission = true
-              }
-            })
-            .catch(err => {
-              captureError(err)
-            })
-        }, 1000)
-      } else {
-        this.checkCameraAuthorization()
-      }
-    } else {
-      this.permissionCheckIntervalId &&
-        clearInterval(this.permissionCheckIntervalId)
-      this.checkPermission = false
-    }
   }
 
   componentDidMount() {
-    if (this.props.navigation.isFocused()) {
-      // when this component is mounted first time, `cwrp` will not be called
-      // so for the first time mount as well we need to check camera permission
-      this.checkCameraAuthorization()
-    }
-
     if (detox === 'yes') {
       setTimeout(async () => {
         try {
@@ -330,7 +231,7 @@ export class QRCodeScannerScreen extends Component<
     AppState.removeEventListener('change', this._handleAppStateChange)
   }
 
-  _handleAppStateChange = nextAppState => {
+  _handleAppStateChange = (nextAppState) => {
     if (
       this.state.appState &&
       this.state.appState.match(/inactive|background/) &&
@@ -349,13 +250,8 @@ export class QRCodeScannerScreen extends Component<
 
   render() {
     return (
-      //Till the time camera authorization is checked
-      //empty black screen will be returned
-      //so that it doesn't look odd
       <Container dark collapsable={true} testID="qr-code-tab-container">
-        {this.state.isCameraAuthorized &&
-        this.state.isCameraEnabled &&
-        this.props.currentScreen === qrCodeScannerTabRoute ? (
+        {this.state.isCameraEnabled && this.props.navigation.isFocused() ? (
           <QRScanner
             onRead={this.onRead}
             onClose={this.onClose}
@@ -443,7 +339,7 @@ const mapStateToProps = (state: Store) => ({
   publicDIDs: getAllPublicDid(state.connections),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       invitationReceived,
@@ -454,6 +350,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default withStatusBar({ color: color.bg.sixth.color })(
-  connect(mapStateToProps, mapDispatchToProps)(QRCodeScannerScreen)
-)
+export const qrCodeScannerScreen = {
+  routeName: qrCodeScannerTabRoute,
+  screen: withStatusBar({ color: color.bg.sixth.color })(
+    connect(mapStateToProps, mapDispatchToProps)(QRCodeScannerScreen)
+  ),
+}

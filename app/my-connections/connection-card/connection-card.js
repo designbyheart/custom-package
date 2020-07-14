@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import type { ConnectionCardProps } from './type-connection-card'
 import { styles } from './styles'
-import { font, isiPhone5, mediumGray, recentCardSizes } from '../../common/styles/constant'
+import { colors } from '../../common/styles/constant'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 
 class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
@@ -142,7 +142,7 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
             <Text style={dateText}>{this.getCorrectDateLabel(date)}</Text>
           </View>
           <View style={buttonSection}>
-            <SvgCustomIcon name="ChevronRight" fill={mediumGray} />
+            <SvgCustomIcon name="ChevronRight" fill={colors.cmGray3} />
           </View>
         </View>
       )
@@ -199,13 +199,13 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
       >
         <View style={avatarSection}>
           {typeof image === 'string' ? (
-            <Avatar radius={16} src={{ uri: image }} />
-          ) : (
-            <DefaultLogo
-              text={senderName}
-              size={32}
-              fontSize={17}
+            <Avatar
+              radius={16}
+              src={{ uri: image }}
+              testID={`${senderDID}-avatar`}
             />
+          ) : (
+            <DefaultLogo text={senderName} size={32} fontSize={17} />
           )}
         </View>
         <View style={infoSection}>

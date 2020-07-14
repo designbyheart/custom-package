@@ -1,57 +1,57 @@
 // @flow
-import React, { Component } from 'react'
+import React, { Component, useCallback } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { withNavigation } from 'react-navigation'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 import type { Store } from '../../store/type-store'
 import type { ClaimProofNavigation } from '../../claim-offer/type-claim-offer'
+
 import { CustomListProofRequest } from '../../components'
 import { ModalHeader } from './modal-header'
 import { ModalButton } from '../../components/connection-details/modal-button'
-import { measurements } from '../../../app/common/styles/measurements'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import {
   getConnectionLogoUrl,
   getConnectionTheme,
 } from '../../store/store-selector'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import { modalContentProofShared } from '../../common/route-constants'
-import { withBottomUpSliderScreen } from '../../components/bottom-up-slider-screen/bottom-up-slider-screen'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
-class ProofRequestModal extends Component<any, any> {
-  hideModal = () => {
-    this.props.navigation.goBack(null)
-  }
+// TODO: Fix any type
+const ProofRequestModal = (props: any) => {
+  const hideModal = useCallback(() => {
+    props.navigation.goBack(null)
+  }, [])
 
-  render() {
-    const { data, claimMap } = this.props.navigation.state.params
+  const { data, claimMap } = props.route.params
 
-    return (
-      <View style={styles.modalWrapper}>
-        <ModalHeader
-          institutialName={this.props.name}
-          credentialName={this.props.data.name}
-          credentialText={'You shared this information'}
-          imageUrl={this.props.logoUrl}
-          colorBackground={this.props.claimThemePrimary}
-        />
-        <View style={styles.outerModalWrapper}>
-          <View style={styles.innerModalWrapper}>
-            <CustomListProofRequest items={data} claimMap={claimMap} />
-          </View>
+  return (
+    <View style={styles.modalWrapper}>
+      <ModalHeader
+        institutionalName={props.name}
+        credentialName={props.data.name}
+        credentialText={'You shared this information'}
+        imageUrl={props.logoUrl}
+        colorBackground={props.claimThemePrimary}
+      />
+      <View style={styles.outerModalWrapper}>
+        <View style={styles.innerModalWrapper}>
+          <CustomListProofRequest items={data} claimMap={claimMap} />
         </View>
-        <ModalButton
-          onClose={this.hideModal}
-          colorBackground={this.props.claimThemePrimary}
-        />
       </View>
-    )
-  }
+      <ModalButton
+        onClose={hideModal}
+        colorBackground={props.claimThemePrimary}
+      />
+    </View>
+  )
 }
 
 const mapStateToProps = (state: Store, props: ClaimProofNavigation) => {
   const { proofRequest } = state
-  const { uid } = props.navigation.state.params
+  const { uid } = props.route.params
   const proofRequestData = proofRequest[uid] || {}
   const { data, requester = {}, remotePairwiseDID } = proofRequestData
   const { name } = requester
@@ -68,17 +68,14 @@ const mapStateToProps = (state: Store, props: ClaimProofNavigation) => {
   }
 }
 
-export default withBottomUpSliderScreen(
-  { routeName: modalContentProofShared },
-  withNavigation(connect(mapStateToProps, null)(ProofRequestModal))
-)
+export const proofScreen = {
+  routeName: modalContentProofShared,
+  screen: connect(mapStateToProps, null)(ProofRequestModal),
+}
 
 const styles = StyleSheet.create({
   modalWrapper: {
-    width: '100%',
-    borderRadius: 10,
-    overflow: 'hidden',
-    height: measurements.WINDOW_HEIGHT * 0.85,
+    flex: 1,
   },
   outerModalWrapper: {
     width: '100%',
@@ -86,7 +83,7 @@ const styles = StyleSheet.create({
   },
   innerModalWrapper: {
     flex: 1,
-    backgroundColor: '#f2f2f2',
-    paddingTop: 5,
+    backgroundColor: colors.cmGray5,
+    paddingTop: moderateScale(5),
   },
 })

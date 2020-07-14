@@ -20,6 +20,7 @@ import {
   lockPinSetupRoute,
   lockTouchIdSetupRoute,
   switchEnvironmentRoute,
+  lockSelectionRoute,
 } from '../common/'
 import type { LockSelectionProps } from './type-lock'
 import {
@@ -49,12 +50,11 @@ import {
 } from './lock-store'
 import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
-import { withStatusBar } from '../components/status-bar/status-bar'
+import { headerOptionsWithNoBack } from '../navigation/navigation-header-config'
 
 export class LockSelection extends Component<LockSelectionProps, *> {
   constructor(props: LockSelectionProps) {
     super(props)
-    Keyboard.dismiss()
     this.state = {
       devMode: false,
     }
@@ -97,38 +97,9 @@ export class LockSelection extends Component<LockSelectionProps, *> {
     }
   }
 
-  componentWillReceiveProps(nextProps: LockSelectionProps) {
-    if (nextProps.showDevMode) {
-      Alert.alert(
-        'Developer Mode',
-        'you are enabling developer mode and it will delete all existing data. Are you sure?',
-        [
-          {
-            text: 'Cancel',
-            style: 'cancel',
-            onPress: () => nextProps.disableDevMode(),
-          },
-          {
-            text: 'OK',
-            onPress: () =>
-              nextProps.navigation.navigate(switchEnvironmentRoute),
-          },
-        ]
-      )
-    }
-  }
-
   render() {
     return (
       <Container tertiary style={[style.pinSelectionContainer]}>
-        <CustomView
-          onPress={this.props.switchErrorAlerts}
-          onLongPress={this._onLongPressButton}
-        >
-          <CustomText h5 bg="tertiary" tertiary semiBold center>
-            Choose how to unlock App
-          </CustomText>
-        </CustomView>
         <CustomView style={[style.messageText]}>
           <CustomText h5 bg="tertiary" tertiary bold center>
             This application must be protected by Biometrics or a passcode at
@@ -268,6 +239,30 @@ export class LockSelection extends Component<LockSelectionProps, *> {
       </Container>
     )
   }
+
+  componentDidUpdate(prevProps: LockSelectionProps) {
+    if (
+      prevProps.showDevMode !== this.props.showDevMode &&
+      this.props.showDevMode
+    ) {
+      Alert.alert(
+        'Developer Mode',
+        'you are enabling developer mode and it will delete all existing data. Are you sure?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+            onPress: () => this.props.disableDevMode(),
+          },
+          {
+            text: 'OK',
+            onPress: () =>
+              this.props.navigation.navigate(switchEnvironmentRoute),
+          },
+        ]
+      )
+    }
+  }
 }
 
 const mapStateToProps = ({ lock }: Store) => {
@@ -276,7 +271,7 @@ const mapStateToProps = ({ lock }: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       switchErrorAlerts,
@@ -289,9 +284,13 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default withStatusBar()(
-  connect(mapStateToProps, mapDispatchToProps)(LockSelection)
-)
+export const lockSelectionScreen = {
+  routeName: lockSelectionRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(LockSelection),
+  options: headerOptionsWithNoBack({
+    title: 'Choose how to unlock App',
+  }),
+}
 
 const style = StyleSheet.create({
   pinSelectionContainer: {
@@ -301,7 +300,6 @@ const style = StyleSheet.create({
   },
   messageText: {
     paddingHorizontal: isiPhone5 ? 0 : OFFSET_5X / 2,
-    paddingTop: isiPhone5 ? OFFSET_5X / 2 : OFFSET_5X,
     paddingBottom: isiPhone5 ? OFFSET_3X / 2 : OFFSET_7X / 2,
   },
   touchIdPinContainer: {

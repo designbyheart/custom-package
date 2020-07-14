@@ -7,7 +7,7 @@ import debounce from 'lodash.debounce'
 
 const empty = []
 
-const getButtonProps = type => ({
+const getButtonProps = (type) => ({
   backgroundColor: color.actions[type],
   color: color.actions.font[type],
   textAlign: 'center',
@@ -16,7 +16,7 @@ const getButtonProps = type => ({
 // TODO:KS Add specific prop that are needed and used by Button
 export default class CustomButton extends PureComponent<*, void> {
   debounceButtonPress = debounce(
-    event => {
+    (event) => {
       if (this.props.onPress) {
         this.props.onPress(event)
       }
@@ -49,18 +49,22 @@ export default class CustomButton extends PureComponent<*, void> {
     const buttonType = primary
       ? 'sixth'
       : secondary
-        ? 'secondary'
-        : tertiary
-          ? 'tertiary'
-          : quaternary
-            ? 'quaternary'
-            : dangerous
-              ? 'dangerous'
-              : fifth
-                ? 'eighth'
-                : ninth
-                  ? 'ninth'
-                  : eleventh ? 'eleventh' : twelfth ? 'twelfth' : 'fifth'
+      ? 'secondary'
+      : tertiary
+      ? 'tertiary'
+      : quaternary
+      ? 'quaternary'
+      : dangerous
+      ? 'dangerous'
+      : fifth
+      ? 'eighth'
+      : ninth
+      ? 'ninth'
+      : eleventh
+      ? 'eleventh'
+      : twelfth
+      ? 'twelfth'
+      : 'fifth'
     const buttonProps = {
       ...getButtonProps(buttonType),
       ...customColor,
@@ -76,11 +80,10 @@ export default class CustomButton extends PureComponent<*, void> {
       <Button
         {...this.props}
         onPress={this.debounceButtonPress}
-        {...buttonProps}
         accessible={true}
         accessibilityLabel={this.props.testID}
-        buttonStyle={style}
-        containerViewStyle={styles.buttonContainer}
+        buttonStyle={[style, buttonProps]}
+        containerStyle={styles.buttonContainer}
         disabledStyle={disabledStyles}
       />
     )

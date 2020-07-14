@@ -6,8 +6,7 @@ import type { ReactNavigation } from '../common/type-common'
 
 import { Container, CustomView, CustomText, CustomButton } from '../components'
 import { isBiggerThanShortDevice, grey, color } from '../common/styles'
-import { homeRoute } from '../common'
-import { withStatusBar } from '../components/status-bar/status-bar'
+import { homeRoute, expiredTokenRoute } from '../common'
 
 class ExpiredToken extends PureComponent<ReactNavigation, void> {
   onOk = () => {
@@ -51,7 +50,10 @@ class ExpiredToken extends PureComponent<ReactNavigation, void> {
   }
 }
 
-export default withStatusBar({ color: color.bg.fifth.color })(ExpiredToken)
+export const expiredTokenScreen = {
+  routeName: expiredTokenRoute,
+  screen: ExpiredToken,
+}
 
 const styles = StyleSheet.create({
   expiredTokenContainer: {

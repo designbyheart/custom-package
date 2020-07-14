@@ -104,7 +104,6 @@ import * as errorHandler from './../../services/error/error-handler'
 import { addSerializedClaimOffer } from './../../claim-offer/claim-offer-store'
 import { claimReceivedVcx } from './../../claim/claim-store'
 import { NativeModules } from 'react-native'
-import { Promise } from 'es6-promise'
 import { FETCH_ADDITIONAL_DATA } from '../../push-notification/type-push-notification'
 import AlertAsync from 'react-native-alert-async'
 
@@ -585,9 +584,7 @@ describe('config-store:saga', () => {
   })
 
   it('resetStore, should fire RESET action', () => {
-    return expectSaga(resetStore)
-      .put(reset())
-      .run()
+    return expectSaga(resetStore).put(reset()).run()
   })
 
   it("poolconfig should not have '\\n' after calling changeEnvironment", () => {

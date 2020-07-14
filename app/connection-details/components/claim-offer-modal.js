@@ -1,10 +1,10 @@
 // @flow
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '@react-navigation/compat'
 import { bindActionCreators } from 'redux'
-import { claimOfferNewRoute } from '../../common/route-constants'
+import { claimOfferRoute } from '../../common/route-constants'
 import { BigNumber } from 'bignumber.js'
 
 import type { Store } from '../../store/type-store'
@@ -13,6 +13,7 @@ import type {
   ClaimProofNavigation,
   TokenFeesData,
 } from '../../claim-offer/type-claim-offer'
+import type { LedgerFeesStateEnum } from '../../ledger/components/ledger-fees/ledger-fees-type'
 
 import CredentialPriceInfo from '../../components/labels/credential-price-info'
 import { ModalHeader } from './modal-header'
@@ -35,7 +36,6 @@ import {
   resetClaimRequestStatus,
   denyClaimOffer,
 } from '../../claim-offer/claim-offer-store'
-import { withBottomUpSliderScreen } from '../../components/bottom-up-slider-screen/bottom-up-slider-screen'
 import { txnAuthorAgreementRoute } from '../../common'
 import {
   CLAIM_OFFER_STATUS,
@@ -43,8 +43,8 @@ import {
 } from '../../claim-offer/type-claim-offer'
 import { animateLayout } from '../../common/layout-animation'
 
-class ClaimOfferModal extends Component<any, *> {
-  constructor(props) {
+export class ClaimOfferModal extends Component<any, *> {
+  constructor(props: any) {
     super(props)
     if (props.uid) {
       props.claimOfferShowStart(props.uid)
@@ -88,7 +88,7 @@ class ClaimOfferModal extends Component<any, *> {
     return (
       <View style={styles.modalWrapper}>
         <ModalHeader
-          institutialName={claimOfferData.issuer.name}
+          institutionalName={claimOfferData.issuer.name}
           credentialName={
             hasNotAcceptedTAA
               ? 'Please sign the Transaction Author Agreement before continuing'
@@ -125,14 +125,13 @@ class ClaimOfferModal extends Component<any, *> {
           // after TAA is accepted
           // so if shouldShowTransactionInfo == true, then TAA is also set
         }
-        {shouldShowTransactionInfo &&
-          !isClaimOfferAccepted && (
-            <LedgerFees
-              render={this.renderLedgerFeesPhases}
-              onStateChange={this.updateState}
-              transferAmount={this.props.claimPrice}
-            />
-          )}
+        {shouldShowTransactionInfo && !isClaimOfferAccepted && (
+          <LedgerFees
+            render={this.renderLedgerFeesPhases}
+            onStateChange={this.updateState}
+            transferAmount={this.props.claimPrice}
+          />
+        )}
 
         {
           // Above code block was dealing with ledger fees is user
@@ -142,19 +141,18 @@ class ClaimOfferModal extends Component<any, *> {
           // then we need to show user the status of payment as well
           // so, will keep modal open till user sees success payment
         }
-        {shouldShowTransactionInfo &&
-          isClaimOfferAccepted && (
-            <PaymentTransactionInfo
-              claimThemePrimary={this.props.claimThemePrimary}
-              claimThemeSecondary={this.props.claimThemeSecondary}
-              onConfirmAndPay={this.onConfirmAndPay}
-              onCancel={this.onIgnore}
-              credentialPrice={this.props.claimPrice}
-              claimRequestStatus={claimRequestStatus}
-              onSuccess={this.onPaymentSuccess}
-              onRetry={this.onConfirmAndPay}
-            />
-          )}
+        {shouldShowTransactionInfo && isClaimOfferAccepted && (
+          <PaymentTransactionInfo
+            claimThemePrimary={this.props.claimThemePrimary}
+            claimThemeSecondary={this.props.claimThemeSecondary}
+            onConfirmAndPay={this.onConfirmAndPay}
+            onCancel={this.onIgnore}
+            credentialPrice={this.props.claimPrice}
+            claimRequestStatus={claimRequestStatus}
+            onSuccess={this.onPaymentSuccess}
+            onRetry={this.onConfirmAndPay}
+          />
+        )}
 
         {
           // if user has not accepted TAA
@@ -199,7 +197,11 @@ class ClaimOfferModal extends Component<any, *> {
     )
   }
 
-  renderLedgerFeesPhases = (txnFeesStatus, feesData, retry) => (
+  renderLedgerFeesPhases = (
+    txnFeesStatus: LedgerFeesStateEnum,
+    feesData?: TokenFeesData,
+    retry: () => void
+  ) => (
     <PaymentTransactionInfo
       claimThemePrimary={this.props.claimThemePrimary}
       claimThemeSecondary={this.props.claimThemeSecondary}
@@ -287,7 +289,7 @@ class ClaimOfferModal extends Component<any, *> {
     }
   }
 
-  onConfirmAndPay = (shouldHideModal = false) => {
+  onConfirmAndPay = (shouldHideModal: boolean = false) => {
     this.props.acceptClaimOffer(
       this.props.uid,
       this.props.claimOfferData.issuer.did
@@ -306,7 +308,7 @@ class ClaimOfferModal extends Component<any, *> {
 
 const mapStateToProps = (
   state: Store,
-  { navigation: { state: { params } } }: ClaimProofNavigation
+  { navigation, route: { params } }: ClaimProofNavigation
 ) => {
   const { claimOffer } = state
   const { uid } = params || { uid: '' }
@@ -337,7 +339,7 @@ const mapStateToProps = (
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       acceptClaimOffer,
@@ -350,16 +352,13 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default withBottomUpSliderScreen(
-  { routeName: claimOfferNewRoute },
-  withNavigation(connect(mapStateToProps, mapDispatchToProps)(ClaimOfferModal))
-)
+export const claimOfferScreen = {
+  routeName: claimOfferRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(ClaimOfferModal),
+}
 
 const styles = StyleSheet.create({
   modalWrapper: {
-    width: '100%',
-    borderRadius: 10,
-    overflow: 'hidden',
-    height: measurements.WINDOW_HEIGHT * 0.85,
+    flex: 1,
   },
 })

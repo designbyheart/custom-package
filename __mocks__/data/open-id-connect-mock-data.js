@@ -14,6 +14,8 @@ export const mockOpenIdConnectRequestData1 = {
       nonce: 'GKSYeFnP2bSPBMvX8CFlg99lA_u_HQwC3xtbULY17ew',
       registration: {
         id_token_signed_response_alg: ['Ed25519'],
+        jwks_uri: null,
+        request_object_signing_alg: 'none',
       },
       response_mode: 'form_post',
       response_type: 'id_token',

@@ -4,11 +4,11 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
 <View
   style={
     Object {
-      "backgroundColor": "rgba(255, 255, 255, 255)",
+      "backgroundColor": "#FFFFFF",
       "flexDirection": "row",
-      "height": 40,
-      "marginLeft": 20,
-      "marginRight": 20,
+      "height": 31.76470588235294,
+      "marginLeft": 19.142857142857142,
+      "marginRight": 19.142857142857142,
     }
   }
 >
@@ -29,10 +29,10 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
       }
       style={
         Object {
-          "borderRadius": 12,
-          "height": 24,
+          "borderRadius": 14.357142857142858,
+          "height": 28.714285714285715,
           "opacity": 0.5,
-          "width": 24,
+          "width": 28.714285714285715,
         }
       }
     />
@@ -57,9 +57,9 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
         numberOfLines={1}
         style={
           Object {
-            "color": "#a5a5a5",
+            "color": "#A5A5A5",
             "fontFamily": "Lato",
-            "fontSize": 13,
+            "fontSize": 8.735294117647058,
             "fontWeight": "normal",
           }
         }
@@ -80,9 +80,9 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
         numberOfLines={1}
         style={
           Object {
-            "color": "#a5a5a5",
+            "color": "#A5A5A5",
             "fontFamily": "Lato",
-            "fontSize": 10,
+            "fontSize": 7.147058823529411,
             "fontWeight": "normal",
           }
         }
@@ -97,16 +97,16 @@ exports[`<RecentCard /> should render RecentCard component and match snapshot 1`
         "alignItems": "flex-end",
         "height": "100%",
         "justifyContent": "center",
-        "width": 48,
+        "width": 45.94285714285714,
       }
     }
   >
     <Text
       style={
         Object {
-          "color": "#a5a5a5",
+          "color": "#A5A5A5",
           "fontFamily": "Lato",
-          "fontSize": 8,
+          "fontSize": 6.352941176470588,
           "fontStyle": "italic",
           "fontWeight": "normal",
         }

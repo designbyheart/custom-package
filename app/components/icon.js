@@ -30,10 +30,14 @@ const Icon = (props: GenericObject) => {
   const size = small
     ? 'small'
     : medium
-      ? 'medium'
-      : extraLarge
-        ? 'extraLarge'
-        : mediumLarge ? 'mediumLarge' : xxLarge ? 'xxLarge' : 'large'
+    ? 'medium'
+    : extraLarge
+    ? 'extraLarge'
+    : mediumLarge
+    ? 'mediumLarge'
+    : xxLarge
+    ? 'xxLarge'
+    : 'large'
   const roundImageStyle =
     halo || round
       ? // $FlowFixMe flow does not support dynamic object key

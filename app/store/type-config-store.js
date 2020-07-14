@@ -268,9 +268,7 @@ export type DownloadedConnectionMessages = {
   pairwiseDID: string,
   msgs: Array<DownloadedMessage>,
 }
-export type DownloadedConnectionsWithMessages = Array<
-  DownloadedConnectionMessages
->
+export type DownloadedConnectionsWithMessages = Array<DownloadedConnectionMessages>
 export type AcknowledgeServerData = Array<{
   pairwiseDID: string,
   uids: Array<string>,

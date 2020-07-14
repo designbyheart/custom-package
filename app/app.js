@@ -1,4 +1,5 @@
 // @flow
+import 'react-native-gesture-handler'
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import {
@@ -7,8 +8,13 @@ import {
   ToastAndroid,
   Platform,
   UIManager,
+  StatusBar,
 } from 'react-native'
 import { detox } from 'react-native-dotenv'
+import { enableScreens } from 'react-native-screens'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { CommonActions, NavigationContainer } from '@react-navigation/native'
+import { useScreens } from 'react-native-screens'
 
 import store from './store'
 import { ROUTE_UPDATE } from './store/route-store'
@@ -16,8 +22,8 @@ import { getStatusBarTheme } from './store/store-selector'
 import { Container } from './components'
 import { PushNotification } from './push-notification'
 import DeepLink from './deep-link'
-import { barStyleDark, whiteSmokeSecondary } from './common/styles/constant'
-import ConnectMeAppNavigator from './navigator'
+import { colors } from './common/styles/constant'
+import { ConnectMeAppNavigator } from './navigation/navigator'
 import {
   qrCodeScannerTabRoute,
   homeRoute,
@@ -38,8 +44,7 @@ import {
   expiredTokenRoute,
   sendLogsRoute,
 } from './common'
-import { NavigationActions } from 'react-navigation'
-import { useScreens } from 'react-native-screens'
+
 import type { AppProps } from './type-app'
 import type {
   NavigationState,
@@ -52,8 +57,11 @@ import RNShake from 'react-native-shake'
 import Offline from './offline/offline'
 
 if (Platform.Version < 29) {
+  // enable react-native-screens
+  // TODO:KS Investigate why enableScreens break modals on Android
+  // we can't tap anything on screen after modal is opened, but modal renders fine
   // Disable react-native-screens for android 10 and 11 (API level 29 and 30)
-  useScreens()
+  //useScreens()
 }
 
 if (detox === 'yes') {
@@ -106,8 +114,15 @@ const backButtonConditionalRoutes = [
 export class ConnectMeApp extends Component<AppProps, void> {
   currentRouteKey: string = ''
   currentRoute: string = ''
-  navigatorRef = null
-  currentRouteParams = null
+  navigatorRef = React.createRef<NavigationContainer>()
+  currentRouteParams:
+    | {
+        onAvoid?: () => void,
+        existingPin?: boolean,
+        [key: string]: mixed,
+      }
+    | null
+    | typeof undefined = null
   exitTimeout: number = 0
 
   componentDidMount() {
@@ -147,18 +162,21 @@ export class ConnectMeApp extends Component<AppProps, void> {
         switch (this.currentRoute) {
           case lockPinSetupHomeRoute:
             this.currentRouteParams &&
+            typeof this.currentRouteParams.existingPin === 'boolean' &&
             this.currentRouteParams.existingPin === true
-              ? (navigateAction = NavigationActions.navigate({
-                  routeName: settingsTabRoute,
+              ? (navigateAction = CommonActions.navigate({
+                  name: settingsTabRoute,
                 }))
-              : (navigateAction = NavigationActions.navigate({
-                  routeName: lockSelectionRoute,
+              : (navigateAction = CommonActions.navigate({
+                  name: lockSelectionRoute,
                 }))
-            this.navigatorRef && this.navigatorRef.dispatch(navigateAction)
+            this.navigatorRef.current &&
+              this.navigatorRef.current.dispatch(navigateAction)
             return true
           case lockAuthorizationHomeRoute:
             this.currentRouteParams &&
               this.currentRouteParams.onAvoid &&
+              typeof this.currentRouteParams.onAvoid === 'function' &&
               this.currentRouteParams.onAvoid()
             return false
         }
@@ -185,53 +203,59 @@ export class ConnectMeApp extends Component<AppProps, void> {
     const route: NavigationRoute = navigationState.routes[navigationState.index]
 
     // dive into nested navigators
-    if (route.routes) {
-      return this.getCurrentRoute(route)
+    if (route.state) {
+      return this.getCurrentRoute(route.state)
     }
 
     return route
   }
 
-  navigationChangeHandler = (
-    previousState: NavigationState,
-    currentState: NavigationState
-  ) => {
-    if (currentState) {
-      const { routeName, key, params } = this.getCurrentRoute(currentState)
-      const currentScreen = routeName
+  navigationChangeHandler = (navigationState: NavigationState) => {
+    const { name, key, params } = this.navigatorRef.current
+      ? this.navigatorRef.current.getCurrentRoute()
+      : {}
+    const currentScreen = name
 
-      this.currentRoute = routeName
-      this.currentRouteKey = key
-      this.currentRouteParams = params
+    this.currentRoute = name
+    this.currentRouteKey = key
+    this.currentRouteParams = params
 
-      store.dispatch({
-        type: ROUTE_UPDATE,
-        currentScreen,
-      })
-    }
+    store.dispatch({
+      type: ROUTE_UPDATE,
+      currentScreen,
+    })
   }
 
-  navigateToRoute = (routeName: string, params: NavigationParams = {}) => {
-    const navigateAction = NavigationActions.navigate({
-      routeName,
+  navigateToRoute = (name: string, params: NavigationParams = {}) => {
+    const navigateAction = CommonActions.navigate({
+      name,
       params,
     })
-    this.navigatorRef && this.navigatorRef.dispatch(navigateAction)
+    this.navigatorRef.current &&
+      this.navigatorRef.current.dispatch(navigateAction)
   }
 
   render() {
     return (
       <Provider store={store}>
-        <Container>
-          <PushNotification navigateToRoute={this.navigateToRoute} />
-          <DeepLink />
-          <AppStatus />
-          <ConnectMeAppNavigator
-            ref={navigatorRef => (this.navigatorRef = navigatorRef)}
-            onNavigationStateChange={this.navigationChangeHandler}
-          />
-          <Offline overlay />
-        </Container>
+        <SafeAreaProvider>
+          <Container>
+            <StatusBar
+              backgroundColor={colors.cmWhite}
+              barStyle="dark-content"
+            />
+            <PushNotification navigateToRoute={this.navigateToRoute} />
+            <DeepLink />
+            <AppStatus />
+            <NavigationContainer
+              ref={this.navigatorRef}
+              onStateChange={this.navigationChangeHandler}
+            >
+              <ConnectMeAppNavigator />
+            </NavigationContainer>
+            <Offline overlay />
+          </Container>
+        </SafeAreaProvider>
       </Provider>
     )
   }

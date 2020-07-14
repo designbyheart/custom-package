@@ -3,13 +3,7 @@
 import React, { Component } from 'react'
 import {
   StyleSheet,
-  Image,
-  NativeModules,
-  View,
-  Text,
-  Button,
   Platform,
-  TextInput,
   Alert,
   Dimensions,
   PermissionsAndroid,
@@ -20,28 +14,9 @@ import type { SendLogsProps } from './type-send-logs'
 import type { Store } from '../store/type-store'
 import type { ReactNavigation } from '../common/type-common'
 
-import {
-  Container,
-  CustomView,
-  CustomHeader,
-  Icon,
-  CustomText,
-  CustomButton,
-} from '../components'
-import {
-  color,
-  OFFSET_1X,
-  OFFSET_2X,
-  OFFSET_6X,
-  OFFSET_7X,
-  dimGray,
-  lightGray,
-  grey,
-} from '../common/styles'
-import { bindActionCreators } from 'redux'
-import { selectUserAvatar } from '../store/user/user-store'
-import { createStackNavigator, NavigationActions } from 'react-navigation'
-import { homeRoute, sendLogsRoute } from '../common/route-constants'
+import { Container, CustomView, CustomText, CustomButton } from '../components'
+import { atlantis } from '../common/styles'
+import { sendLogsRoute } from '../common/route-constants'
 import Mailer from 'react-native-mail'
 import { customLogger } from '../store/custom-logger'
 import { Loader } from '../components'
@@ -51,40 +26,11 @@ import {
   ENCRYPT_LOG_FILE,
 } from '../send-logs/type-send-logs'
 import store from '../store'
-import { withStatusBar } from '../components/status-bar/status-bar'
+import { BackButton } from '../components/back-button/back-button'
+import { headerNavigationOptions } from '../navigation/navigation-header-config'
 
 const width = Dimensions.get('window').width //full width
 const height = Dimensions.get('window').height //full height
-
-const styles = StyleSheet.create({
-  headerLeft: {
-    width: OFFSET_2X,
-  },
-  headerRight: {
-    width: OFFSET_2X,
-  },
-  inputBox: {
-    backgroundColor: lightGray,
-    padding: 10,
-    textAlignVertical: 'top',
-    fontSize: 18,
-    borderColor: grey,
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    height: height * 0.4,
-    width: width * 0.8,
-  },
-  buttonContainer: {
-    marginTop: 20,
-  },
-  startTutorialButton: {
-    borderRadius: 5,
-    backgroundColor: '#86B93B',
-    marginHorizontal: '6%',
-  },
-})
 
 export class SendLogs extends Component<SendLogsProps, any> {
   constructor(props: SendLogsProps) {
@@ -99,7 +45,7 @@ export class SendLogs extends Component<SendLogsProps, any> {
       PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
       )
-        .then(granted => {
+        .then((granted) => {
           if (granted) {
             store.dispatch({
               type: ENCRYPT_LOG_FILE,
@@ -109,7 +55,7 @@ export class SendLogs extends Component<SendLogsProps, any> {
             this.setState({ deniedPermission: true })
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.setState({ deniedPermission: true })
           console.log(error)
         })
@@ -126,7 +72,7 @@ export class SendLogs extends Component<SendLogsProps, any> {
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
     )
-      .then(granted => {
+      .then((granted) => {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           store.dispatch({
             type: ENCRYPT_LOG_FILE,
@@ -135,7 +81,7 @@ export class SendLogs extends Component<SendLogsProps, any> {
           this.setState({ deniedPermission: true })
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ deniedPermission: true })
         console.log('error', error)
       })
@@ -206,32 +152,9 @@ export class SendLogs extends Component<SendLogsProps, any> {
     SendLogs.goBack(navigation)
   }
 
-  static navigationOptions = ({ navigation }: ReactNavigation) => {
-    const { params = {} } = navigation.state
-    return {
-      header: (
-        <CustomHeader
-          backgroundColor={color.bg.tertiary.color}
-          outerContainerStyles={{ borderBottomWidth: 0 }}
-        >
-          <Icon
-            testID={'send-logs-close-icon'}
-            iconStyle={[styles.headerLeft]}
-            src={require('../images/icon_close.png')}
-            resizeMode="contain"
-            onPress={() => SendLogs.goBack(navigation)}
-            small
-          />
-          <CustomView />
-        </CustomHeader>
-      ),
-      swipeEnabled: false,
-    }
-  }
-
   render() {
     return this.props.logIsEncrypted ? (
-      <Container tertiary>
+      <Container tertiary center>
         <CustomView pad center>
           <CustomText bg="secondary" secondary transparentBg semiBold>
             Send error logs to cmsupport@evernym.com?
@@ -278,16 +201,32 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-export const SendLogsStack = createStackNavigator({
-  [sendLogsRoute]: {
-    screen: withStatusBar()(connect(mapStateToProps)(SendLogs)),
+const styles = StyleSheet.create({
+  buttonContainer: {
+    marginTop: 20,
+  },
+  startTutorialButton: {
+    borderRadius: 5,
+    color: 'white',
+    marginHorizontal: '6%',
   },
 })
 
-export default SendLogsStack
-
 const buttonColor = {
-  color: 'white',
   fontWeight: '600',
   fontSize: 18,
+  backgroundColor: atlantis,
+}
+
+export const sendLogsScreen = {
+  routeName: sendLogsRoute,
+  screen: connect(mapStateToProps)(SendLogs),
+  options({ navigation }: *) {
+    return headerNavigationOptions({
+      title: 'Send logs',
+      headerLeft: () => {
+        return <BackButton onPress={SendLogs.goBack} />
+      },
+    })
+  },
 }

@@ -25,6 +25,7 @@ describe('<LockPinCodeEnter />', () => {
     navigation: {
       ...getNavigation(),
     },
+    route: {},
     clearPendingRedirect: jest.fn(),
     unlockApp: jest.fn(),
     isFetchingInvitation: false,
@@ -40,7 +41,7 @@ describe('<LockPinCodeEnter />', () => {
   let componentInstance
 
   const options = {
-    createNodeMock: element => {
+    createNodeMock: (element) => {
       return {
         clear: () => {
           cleared = true

@@ -17,10 +17,10 @@ exports[`<ClaimRequestStatusModal /> should hideModal if continue is clicked 1`]
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#FFFFFF",
         "elevation": 10,
         "justifyContent": "center",
-        "marginHorizontal": 30,
+        "marginHorizontal": 28.714285714285715,
         "shadowColor": "rgba(0, 0, 0, 0.2)",
         "shadowOffset": Object {
           "height": 10,
@@ -36,10 +36,10 @@ exports[`<ClaimRequestStatusModal /> should hideModal if continue is clicked 1`]
       style={
         Object {
           "alignItems": "center",
-          "borderBottomColor": "#3f3f3f",
-          "borderBottomWidth": 0.2,
+          "borderBottomColor": "#505050",
+          "borderBottomWidth": 0.23928571428571427,
           "justifyContent": "center",
-          "padding": 20,
+          "padding": 19.142857142857142,
           "paddingVertical": 8,
         }
       }
@@ -79,7 +79,7 @@ exports[`<ClaimRequestStatusModal /> should hideModal if continue is clicked 1`]
             null,
             null,
             Object {
-              "marginBottom": 5,
+              "marginBottom": 4.785714285714286,
             },
           ]
         }
@@ -90,99 +90,63 @@ exports[`<ClaimRequestStatusModal /> should hideModal if continue is clicked 1`]
     </View>
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={null}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-              ],
-              undefined,
-              undefined,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderColor": "#2089dc",
+              "borderRadius": 3,
+              "borderWidth": 0,
+              "color": "#4A8FE3",
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#4A8FE3",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  undefined,
-                  Object {
-                    "color": "#85BF43",
-                    "fontWeight": "bold",
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Continue
@@ -211,10 +175,10 @@ exports[`<ClaimRequestStatusModal /> should match paid credential success, if se
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#FFFFFF",
         "elevation": 10,
         "justifyContent": "center",
-        "marginHorizontal": 30,
+        "marginHorizontal": 28.714285714285715,
         "shadowColor": "rgba(0, 0, 0, 0.2)",
         "shadowOffset": Object {
           "height": 10,
@@ -230,10 +194,10 @@ exports[`<ClaimRequestStatusModal /> should match paid credential success, if se
       style={
         Object {
           "alignItems": "center",
-          "borderBottomColor": "#3f3f3f",
-          "borderBottomWidth": 0.2,
+          "borderBottomColor": "#505050",
+          "borderBottomWidth": 0.23928571428571427,
           "justifyContent": "center",
-          "padding": 20,
+          "padding": 19.142857142857142,
           "paddingVertical": 8,
         }
       }
@@ -273,7 +237,7 @@ exports[`<ClaimRequestStatusModal /> should match paid credential success, if se
             null,
             null,
             Object {
-              "marginBottom": 5,
+              "marginBottom": 4.785714285714286,
             },
           ]
         }
@@ -284,99 +248,63 @@ exports[`<ClaimRequestStatusModal /> should match paid credential success, if se
     </View>
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={null}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-              ],
-              undefined,
-              undefined,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderColor": "#2089dc",
+              "borderRadius": 3,
+              "borderWidth": 0,
+              "color": "#4A8FE3",
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#4A8FE3",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  undefined,
-                  Object {
-                    "color": "#85BF43",
-                    "fontWeight": "bold",
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Continue
@@ -451,7 +379,7 @@ exports[`<ClaimRequestStatusModal /> should match snapshot when pending popOver 
             null,
             null,
             Object {
-              "marginBottom": 5,
+              "marginBottom": 4.785714285714286,
             },
           ]
         }
@@ -542,10 +470,10 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and accepting text,
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#FFFFFF",
         "elevation": 10,
         "justifyContent": "center",
-        "marginHorizontal": 30,
+        "marginHorizontal": 28.714285714285715,
         "shadowColor": "rgba(0, 0, 0, 0.2)",
         "shadowOffset": Object {
           "height": 10,
@@ -561,10 +489,10 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and accepting text,
       style={
         Object {
           "alignItems": "center",
-          "borderBottomColor": "#3f3f3f",
-          "borderBottomWidth": 0.2,
+          "borderBottomColor": "#505050",
+          "borderBottomWidth": 0.23928571428571427,
           "justifyContent": "center",
-          "padding": 20,
+          "padding": 19.142857142857142,
           "paddingVertical": 8,
         }
       }
@@ -604,7 +532,7 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and accepting text,
             null,
             null,
             Object {
-              "marginBottom": 5,
+              "marginBottom": 4.785714285714286,
             },
           ]
         }
@@ -615,99 +543,63 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and accepting text,
     </View>
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={null}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-              ],
-              undefined,
-              undefined,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderColor": "#2089dc",
+              "borderRadius": 3,
+              "borderWidth": 0,
+              "color": "#4A8FE3",
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#4A8FE3",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  undefined,
-                  Object {
-                    "color": "#85BF43",
-                    "fontWeight": "bold",
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Continue
@@ -782,7 +674,7 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and only Paying tex
             null,
             null,
             Object {
-              "marginBottom": 5,
+              "marginBottom": 4.785714285714286,
             },
           ]
         }
@@ -873,10 +765,10 @@ exports[`<ClaimRequestStatusModal /> should show check mark, token amount, if pa
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#FFFFFF",
         "elevation": 10,
         "justifyContent": "center",
-        "marginHorizontal": 30,
+        "marginHorizontal": 28.714285714285715,
         "shadowColor": "rgba(0, 0, 0, 0.2)",
         "shadowOffset": Object {
           "height": 10,
@@ -892,10 +784,10 @@ exports[`<ClaimRequestStatusModal /> should show check mark, token amount, if pa
       style={
         Object {
           "alignItems": "center",
-          "borderBottomColor": "#3f3f3f",
-          "borderBottomWidth": 0.2,
+          "borderBottomColor": "#505050",
+          "borderBottomWidth": 0.23928571428571427,
           "justifyContent": "center",
-          "padding": 20,
+          "padding": 19.142857142857142,
           "paddingVertical": 8,
         }
       }
@@ -935,7 +827,7 @@ exports[`<ClaimRequestStatusModal /> should show check mark, token amount, if pa
             null,
             null,
             Object {
-              "marginBottom": 5,
+              "marginBottom": 4.785714285714286,
             },
           ]
         }
@@ -946,99 +838,63 @@ exports[`<ClaimRequestStatusModal /> should show check mark, token amount, if pa
     </View>
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={null}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-              ],
-              undefined,
-              undefined,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderColor": "#2089dc",
+              "borderRadius": 3,
+              "borderWidth": 0,
+              "color": "#4A8FE3",
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#4A8FE3",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  undefined,
-                  Object {
-                    "color": "#85BF43",
-                    "fontWeight": "bold",
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Continue
@@ -1067,10 +923,10 @@ exports[`<ClaimRequestStatusModal /> should show check mark, you accepted text, 
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#FFFFFF",
         "elevation": 10,
         "justifyContent": "center",
-        "marginHorizontal": 30,
+        "marginHorizontal": 28.714285714285715,
         "shadowColor": "rgba(0, 0, 0, 0.2)",
         "shadowOffset": Object {
           "height": 10,
@@ -1086,10 +942,10 @@ exports[`<ClaimRequestStatusModal /> should show check mark, you accepted text, 
       style={
         Object {
           "alignItems": "center",
-          "borderBottomColor": "#3f3f3f",
-          "borderBottomWidth": 0.2,
+          "borderBottomColor": "#505050",
+          "borderBottomWidth": 0.23928571428571427,
           "justifyContent": "center",
-          "padding": 20,
+          "padding": 19.142857142857142,
           "paddingVertical": 8,
         }
       }
@@ -1129,7 +985,7 @@ exports[`<ClaimRequestStatusModal /> should show check mark, you accepted text, 
             null,
             null,
             Object {
-              "marginBottom": 5,
+              "marginBottom": 4.785714285714286,
             },
           ]
         }
@@ -1140,99 +996,63 @@ exports[`<ClaimRequestStatusModal /> should show check mark, you accepted text, 
     </View>
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={null}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-              ],
-              undefined,
-              undefined,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderColor": "#2089dc",
+              "borderRadius": 3,
+              "borderWidth": 0,
+              "color": "#4A8FE3",
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#4A8FE3",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  undefined,
-                  Object {
-                    "color": "#85BF43",
-                    "fontWeight": "bold",
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Continue

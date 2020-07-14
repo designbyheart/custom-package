@@ -14,64 +14,10 @@ exports[`app lock selection page should render properly 1`] = `
   tertiary={true}
 >
   <View
-    accessible={true}
-    hitSlop={
-      Object {
-        "bottom": 20,
-        "left": 20,
-        "right": 20,
-        "top": 20,
-      }
-    }
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={Object {}}
-  >
-    <Text
-      allowFontScaling={false}
-      style={
-        Array [
-          Object {
-            "fontSize": 17,
-          },
-          Object {
-            "fontFamily": "Lato",
-          },
-          Object {
-            "backgroundColor": "#ffffff",
-            "color": "#777777",
-          },
-          Object {
-            "fontWeight": "600",
-          },
-          Object {
-            "textAlign": "center",
-          },
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-        ]
-      }
-    >
-      Choose how to unlock App
-    </Text>
-  </View>
-  <View
     style={
       Object {
         "paddingBottom": 15,
         "paddingHorizontal": 0,
-        "paddingTop": 25,
       }
     }
   >
@@ -124,6 +70,7 @@ exports[`app lock selection page should render properly 1`] = `
       accessible={false}
       center={true}
       fifth={true}
+      focusable={true}
       hitSlop={
         Object {
           "bottom": 20,
@@ -132,6 +79,7 @@ exports[`app lock selection page should render properly 1`] = `
           "top": 20,
         }
       }
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -162,7 +110,11 @@ exports[`app lock selection page should render properly 1`] = `
       testID="touch-id-selection-touchable"
     >
       <Image
-        source={1}
+        source={
+          Object {
+            "default": "RelativeImageStub",
+          }
+        }
         style={
           Object {
             "height": 60,
@@ -217,6 +169,7 @@ exports[`app lock selection page should render properly 1`] = `
       accessibilityLabel="lock-selection-or-text-touchable"
       accessible={false}
       debounceAction={false}
+      focusable={true}
       hitSlop={
         Object {
           "bottom": 20,
@@ -225,6 +178,7 @@ exports[`app lock selection page should render properly 1`] = `
           "top": 20,
         }
       }
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -275,6 +229,7 @@ exports[`app lock selection page should render properly 1`] = `
       accessibilityLabel="pin-code-selection-touchable"
       accessible={false}
       fifth={true}
+      focusable={true}
       hitSlop={
         Object {
           "bottom": 20,
@@ -283,6 +238,7 @@ exports[`app lock selection page should render properly 1`] = `
           "top": 20,
         }
       }
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -720,6 +676,7 @@ exports[`app lock selection page should render properly 1`] = `
         tertiary={true}
       >
         <RCTSwitch
+          accessibilityRole="button"
           onChange={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}

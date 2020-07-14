@@ -11,17 +11,7 @@ import {
   Container,
   CustomButton,
 } from '../components'
-import {
-  OFFSET_3X,
-  OFFSET_4X,
-  OFFSET_6X,
-  OFFSET_7X,
-  HAIRLINE_WIDTH,
-  whiteSmoke,
-  isiPhone5,
-  white,
-} from '../common/styles/constant'
-import { color, font, OFFSET_1X, OFFSET_2X } from '../common/styles'
+import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 import {
   CLAIM_REQUEST_STATUS,
   ACCEPTING_TEXT,
@@ -34,6 +24,7 @@ import type {
   ClaimRequestStatus,
 } from './type-claim-offer'
 import { formatNumbers } from '../components/text'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
 const ClaimRequestModalText = (props: { children: string, bold?: boolean }) => (
   <CustomText
@@ -182,7 +173,7 @@ export class ClaimRequestStatusModal extends PureComponent<
                 tertiary
                 bg="tertiary"
                 transparentBg
-                style={[{ marginBottom: OFFSET_1X / 2 }]}
+                style={[{ marginBottom: moderateScale(5) }]}
                 bold
               >
                 {isPending && fromConnectionHistory
@@ -199,19 +190,17 @@ export class ClaimRequestStatusModal extends PureComponent<
             style={[styles.container, styles.backgroundColor]}
           >
             <CustomView style={[styles.innerContainer]} center verticalSpace>
-              {isPending &&
-                fromConnectionHistory && (
-                  <AvatarsPair
-                    middleImage={middleImage}
-                    middleImageStyle={middleImageStyle}
-                    avatarRight={avatarRight}
-                    testID={'claim-request'}
-                  />
-                )}
-              {isPending &&
-                !isSending && (
-                  <ClaimRequestModalText>{message1}</ClaimRequestModalText>
-                )}
+              {isPending && fromConnectionHistory && (
+                <AvatarsPair
+                  middleImage={middleImage}
+                  middleImageStyle={middleImageStyle}
+                  avatarRight={avatarRight}
+                  testID={'claim-request'}
+                />
+              )}
+              {isPending && !isSending && (
+                <ClaimRequestModalText>{message1}</ClaimRequestModalText>
+              )}
 
               {isPending && payTokenValue && !isSendingPaidCredentialRequest ? (
                 <ClaimRequestModalText bold>
@@ -246,7 +235,7 @@ export class ClaimRequestStatusModal extends PureComponent<
               fifth
               onPress={this.onContinue}
               title={'Continue'}
-              textStyle={{ fontWeight: 'bold', color: '#85BF43' }}
+              textStyle={{ fontWeight: 'bold', color: colors.cmGreen1 }}
             />
           </CustomView>
         )}
@@ -257,43 +246,43 @@ export class ClaimRequestStatusModal extends PureComponent<
 
 const styles = StyleSheet.create({
   connectedArrow: {
-    height: 20,
-    width: 80,
+    height: moderateScale(20),
+    width: moderateScale(80),
     zIndex: -1,
     right: 7,
   },
   connectedArrowRight: {
-    height: 20,
-    width: 80,
+    height: moderateScale(20),
+    width: moderateScale(80),
     zIndex: -1,
   },
   message: {
-    marginBottom: OFFSET_1X / 2,
+    marginBottom: moderateScale(5),
   },
   title: {
-    marginBottom: OFFSET_1X,
+    marginBottom: moderateScale(10),
   },
   fullScreen: {
     flex: 1,
   },
   container: {
-    marginHorizontal: OFFSET_3X,
+    marginHorizontal: moderateScale(30),
   },
   innerContainer: {
     ...Platform.select({
       ios: {
-        borderBottomColor: color.bg.fifth.font.tertiary,
-        borderBottomWidth: HAIRLINE_WIDTH,
+        borderBottomColor: colors.cmGray1,
+        borderBottomWidth: moderateScale(StyleSheet.hairlineWidth / 2),
       },
       android: {
-        borderBottomColor: color.bg.fifth.font.secondary,
+        borderBottomColor: colors.cmGray4,
         borderBottomWidth: 1,
       },
     }),
-    padding: OFFSET_2X,
+    padding: moderateScale(20),
   },
   backgroundColor: {
-    backgroundColor: white,
+    backgroundColor: colors.cmWhite,
   },
   loaderHeading: { height: '84%' },
 })

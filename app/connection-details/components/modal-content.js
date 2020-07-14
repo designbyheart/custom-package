@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent, Component } from 'react'
+import React, { useMemo, useCallback, useState, useEffect } from 'react'
 import {
   Text,
   View,
@@ -8,52 +8,82 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  InteractionManager,
 } from 'react-native'
 import RNFetchBlob from 'rn-fetch-blob'
 import FileViewer from 'react-native-file-viewer'
 
-import { Border } from '../../components/connection-details/border'
 import { Avatar } from '../../components/avatar/avatar'
 import { BLANK_ATTRIBUTE_DATA_TEXT } from '../type-connection-details'
 import { flattenAsync } from '../../common/flatten-async'
+import { Loader } from '../../components'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
-// TODO: Fix the <any, {}> to be the correct types for props and state
-class ModalContent extends PureComponent<any, {}> {
-  render() {
-    const { uid, remotePairwiseDID } = this.props
+type ModalContentProps = {
+  uid: string,
+  remotePairwiseDID: string,
+  content: Array<{
+    label: string,
+    data?: string,
+  }>,
+  showSidePicture?: boolean,
+  imageUrl?: string,
+}
 
-    return (
-      <View style={styles.container}>
-        <ScrollView style={styles.scrollViewWrapper}>
-          {this.props.content.map((userData, index) => (
-            <View key={index} style={styles.wrapper}>
-              <View style={styles.textAvatarWrapper}>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.title}>
-                    {userData.label.toLowerCase().endsWith('_link')
-                      ? userData.label.slice(0, -5)
-                      : userData.label}
-                  </Text>
-                  <DataRenderer
-                    label={userData.label}
-                    data={userData.data}
-                    uid={uid}
-                    remotePairwiseDID={remotePairwiseDID}
-                  />
-                </View>
-                {this.props.showSidePicture && (
-                  <View style={styles.avatarWrapper}>
-                    <Avatar radius={16} src={{ uri: this.props.imageUrl }} />
-                  </View>
-                )}
-              </View>
-              <Border borderColor={'#a5a5a5'} />
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-    )
+export const ModalContent = ({
+  uid,
+  remotePairwiseDID,
+  content,
+  imageUrl,
+  showSidePicture = false,
+}: ModalContentProps) => {
+  const source = useMemo(
+    () => ({
+      uri: imageUrl,
+    }),
+    [imageUrl]
+  )
+  const [interactionDone, setInteractionDone] = useState(false)
+
+  useEffect(() => {
+    InteractionManager.runAfterInteractions(() => setInteractionDone(true))
+  }, [])
+
+  if (!interactionDone) {
+    return <Loader />
   }
+
+  return (
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollViewWrapper}>
+        {content.map((userData, index) => (
+          <View key={index} style={styles.wrapper}>
+            <View style={styles.textAvatarWrapper}>
+              <View style={styles.textWrapper}>
+                <Text style={styles.title}>
+                  {userData.label.toLowerCase().endsWith('_link')
+                    ? userData.label.slice(0, -5)
+                    : userData.label}
+                </Text>
+                <DataRenderer
+                  label={userData.label}
+                  data={userData.data}
+                  uid={uid}
+                  remotePairwiseDID={remotePairwiseDID}
+                />
+              </View>
+              {showSidePicture && (
+                <View style={styles.avatarWrapper}>
+                  <Avatar radius={16} src={source} />
+                </View>
+              )}
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  )
 }
 
 function DataRenderer(props: {
@@ -128,7 +158,7 @@ function PhotoAttachment(props: { base64: string }) {
   )
 }
 
-class Attachment extends Component<AttachmentPropType, void> {
+function Attachment(props: AttachmentPropType) {
   // This component renders icon only and not render content itself
   // ConnectMe is not rendering and opening items inside ConnectMe
   // because it is not safe from security perspective
@@ -136,39 +166,18 @@ class Attachment extends Component<AttachmentPropType, void> {
   // So, for file types whose mime type is known to us, we will render it's icon
   // if mime type matches word doc, then we render word doc icon
 
-  render() {
-    const icon = getIcon(this.props.attachment['mime-type'])
-
-    return (
-      <TouchableOpacity
-        onPress={this.onKnownAttachmentOpen}
-        style={styles.nameIconContainer}
-      >
-        <Image
-          source={icon}
-          style={styles.attachmentIcon}
-          resizeMode="contain"
-        />
-        <View style={styles.attachmentNameContainer}>
-          <Text style={styles.content} ellipsizeMode="tail" numberOfLines={3}>
-            {this.props.attachment.name}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    )
-  }
-
-  onKnownAttachmentOpen = async () => {
+  const onKnownAttachmentOpen = useCallback(async () => {
     const {
       uid,
       remotePairwiseDID,
       label,
-      attachment: { extension, data: { base64 } },
-    } = this.props
+      attachment: {
+        extension,
+        data: { base64 },
+      },
+    } = props
     // create file path with DocumentDirectory, uid, remotePairwiseDID and label
-    const attachmentPath = `${
-      RNFetchBlob.fs.dirs.DocumentDir
-    }/${remotePairwiseDID}-${uid}-${label}.${extension}`
+    const attachmentPath = `${RNFetchBlob.fs.dirs.DocumentDir}/${remotePairwiseDID}-${uid}-${label}.${extension}`
     // check if file exists
     const [existError, exists] = await flattenAsync(RNFetchBlob.fs.exists)(
       attachmentPath
@@ -202,7 +211,23 @@ class Attachment extends Component<AttachmentPropType, void> {
         `Please install an application which can handle .${extension}`
       )
     }
-  }
+  }, [props])
+
+  const icon = getIcon(props.attachment['mime-type'])
+
+  return (
+    <TouchableOpacity
+      onPress={onKnownAttachmentOpen}
+      style={styles.nameIconContainer}
+    >
+      <Image source={icon} style={styles.attachmentIcon} resizeMode="contain" />
+      <View style={styles.attachmentNameContainer}>
+        <Text style={styles.content} ellipsizeMode="tail" numberOfLines={3}>
+          {props.attachment.name}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  )
 }
 
 function getIcon(mimeType: string) {
@@ -269,48 +294,45 @@ type AttachmentPropType = {
   label: string,
 }
 
-export { ModalContent }
-
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     flex: 1,
   },
   scrollViewWrapper: {
-    flex: 1,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.cmGray5,
   },
   wrapper: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.cmGray5,
     width: '90%',
     marginLeft: '5%',
-    paddingTop: 12,
-    position: 'relative',
+    paddingTop: moderateScale(12),
+    borderBottomColor: colors.cmGray2,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   title: {
-    fontSize: 14,
+    fontSize: verticalScale(fontSizes.size7),
     fontWeight: '700',
-    color: '#a5a5a5',
+    color: colors.cmGray2,
     width: '100%',
     textAlign: 'left',
-    marginBottom: 2,
-    fontFamily: 'Lato',
+    marginBottom: moderateScale(2),
+    fontFamily: fontFamily,
   },
   content: {
-    fontSize: 17,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '400',
-    color: '#505050',
+    color: colors.cmGray1,
     width: '100%',
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   contentGray: {
-    fontSize: 17,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '400',
-    color: '#a5a5a5',
+    color: colors.cmGray2,
     width: '100%',
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   textAvatarWrapper: {
     width: '98.5%',
@@ -318,7 +340,7 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     width: '85%',
-    paddingBottom: 12,
+    paddingBottom: moderateScale(12),
   },
   avatarWrapper: {
     width: '15%',
@@ -326,12 +348,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   photoAttachment: {
-    width: 150,
-    height: 150,
+    width: moderateScale(150),
+    height: moderateScale(150),
   },
   attachmentIcon: {
-    width: 64,
-    height: 64,
+    width: moderateScale(64),
+    height: moderateScale(64),
   },
   nameIconContainer: {
     flexDirection: 'row',
@@ -340,6 +362,6 @@ const styles = StyleSheet.create({
   },
   attachmentNameContainer: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: moderateScale(10),
   },
 })

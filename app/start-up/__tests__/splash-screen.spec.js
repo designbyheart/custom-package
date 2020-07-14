@@ -13,10 +13,7 @@ import {
   invitationRoute,
 } from '../../common/'
 import { PUSH_NOTIFICATION_SENT_CODE } from '../../api/api-constants'
-import {
-  default as connectedSplashScreen,
-  SplashScreenView,
-} from '../splash-screen'
+import { splashScreenScreen, SplashScreenView } from '../splash-screen'
 import { color } from '../../common/styles'
 import SplashScreen from 'react-native-splash-screen'
 import {
@@ -28,6 +25,7 @@ import {
 import { DEEP_LINK_STATUS } from '../../deep-link/type-deep-link'
 
 describe('<SplashScreen />', () => {
+  const connectedSplashScreen = splashScreenScreen.screen
   function getProps(overrideProps = {}) {
     const getLock = () => {
       const { lock } = getStore().getState()
@@ -50,6 +48,7 @@ describe('<SplashScreen />', () => {
     } = store.getState()
     const props = {
       navigation: getNavigation(),
+      route: {},
       deepLink,
       isInitialized: config.isInitialized,
       lock,

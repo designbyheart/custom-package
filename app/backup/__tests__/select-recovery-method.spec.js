@@ -17,13 +17,12 @@ describe('<SelectRecoveryMethod />', () => {
   const navigation = {
     navigate: jest.fn(),
     goBack: jest.fn(),
-    getParam: jest.fn(),
     setParams: jest.fn(),
-
-    state: {
-      params: {
-        initialRoute: selectRecoveryMethodRoute,
-      },
+  }
+  const route = {
+    params: {
+      initialRoute: selectRecoveryMethodRoute,
+      navigateBack: jest.fn(),
     },
   }
 
@@ -32,6 +31,7 @@ describe('<SelectRecoveryMethod />', () => {
       .create(
         <SelectRecoveryMethod
           navigation={navigation}
+          route={route}
           hydrateCloudBackup={jest.fn()}
           hasVerifiedRecoveryPhrase={jest.fn()}
           generateBackupFile={jest.fn()}

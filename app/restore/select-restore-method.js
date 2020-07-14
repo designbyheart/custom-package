@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import { View, Text, Platform } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
 
 import {
   selectRestoreMethodRoute,
@@ -47,9 +46,9 @@ const download = require('../images/download3x.png')
 
 export class SelectRestoreMethod extends Component<RestoreProps, void> {
   static navigationOptions = ({
-    navigation: { navigate, state: { params } },
+    navigation: { navigate },
   }: ReactNavigationBackup) => ({
-    header: (
+    header: () => (
       <CustomHeader
         backgroundColor={color.bg.fifth.color}
         largeHeader
@@ -66,13 +65,14 @@ export class SelectRestoreMethod extends Component<RestoreProps, void> {
         </CustomView>
       </CustomHeader>
     ),
-    gesturesEnabled: false,
+    gestureEnabled: false,
+    headerShown: true,
   })
 
   componentDidUpdate(prevProps: RestoreProps) {
     if (
       this.props.restore.status !== prevProps.restore.status &&
-      this.props.restore.status === RestoreStatus.fileSaved &&
+      this.props.restore.status === RestoreStatus.FILE_SAVED_TO_APP_DIRECTORY &&
       // not sure about this route might need to change to "selectRestoreMethod"
       this.props.route === selectRestoreMethodRoute
     ) {
@@ -101,9 +101,11 @@ export class SelectRestoreMethod extends Component<RestoreProps, void> {
       }
     )
   }
+
   cloudRestore = () => {
     this.props.navigation.navigate(cloudRestoreRoute)
   }
+
   render() {
     return (
       <Container style={[styles.selectRecoveryMethod]}>
@@ -190,13 +192,12 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ saveFileToAppDirectory, updateStatusBarTheme }, dispatch)
 
-export default createStackNavigator({
-  [selectRestoreMethodRoute]: {
-    screen: withStatusBar({ color: 'white' })(
-      connect(mapStateToProps, mapDispatchToProps)(SelectRestoreMethod)
-    ),
-  },
-})
+export const selectRestoreMethodScreen = {
+  routeName: selectRestoreMethodRoute,
+  screen: withStatusBar({ color: 'white' })(
+    connect(mapStateToProps, mapDispatchToProps)(SelectRestoreMethod)
+  ),
+}

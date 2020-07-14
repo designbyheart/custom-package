@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   headerSpacer: {
     height: '100%',
-    width: isBiggerThanShortDevice ? SPACE_FILLER : SPACE_FILLER * 3 / 4,
+    width: isBiggerThanShortDevice ? SPACE_FILLER : (SPACE_FILLER * 3) / 4,
   },
   showRecoveryPassphrase: {
     width: '86%',
@@ -255,7 +255,9 @@ const styles = StyleSheet.create({
   selectContainer: {
     maxHeight: isBiggerThanMediumDevice
       ? 460
-      : isBiggerThanShortDevice ? 400 : 310,
+      : isBiggerThanShortDevice
+      ? 400
+      : 310,
     // marginHorizontal:20,
   },
   selectRecoveryMethod: {
@@ -283,7 +285,9 @@ const styles = StyleSheet.create({
     fontSize: isBiggerThanMediumDevice ? 27 : 20,
     marginBottom: isBiggerThanMediumDevice
       ? 40
-      : isBiggerThanShortDevice ? 20 : 10,
+      : isBiggerThanShortDevice
+      ? 20
+      : 10,
     width: '100%',
     color: '#505050',
   },

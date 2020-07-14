@@ -3,11 +3,10 @@ import type {
   NavigationScreenProp,
   NavigationLeafRoute,
   NavigationRoute,
-} from 'react-navigation'
+} from '@react-navigation/native'
 import type { ReactNavigation } from '../common/type-common'
 import type { CustomError } from '../common/type-common'
 import type { IsValid } from '../components/input-control/type-input-control'
-import type { CredentialOfferModalStatus } from '../claim-offer/type-claim-offer'
 
 export type BackupWalletProps = {
   backup: BackupInfo,
@@ -46,18 +45,22 @@ export const ERROR_BACKUP_WALLET_SHARE = {
 export type WalletSendAmountNavigation = {
   navigation: NavigationScreenProp<{|
     ...NavigationLeafRoute,
+  |}>,
+  route: {
     params: {|
       onTabPress: ({
         navigation: NavigationScreenProp<NavigationRoute>,
         defaultHandler: () => void,
       }) => void,
     |},
-  |}>,
+  },
 }
 
 export type WalletTabSendDetailNavigation = {
   navigation: NavigationScreenProp<{|
     ...NavigationLeafRoute,
+  |}>,
+  route: {
     params: {|
       isValid: boolean,
       onSendTokens: () => void,
@@ -66,7 +69,7 @@ export type WalletTabSendDetailNavigation = {
         'navigate'
       >,
     |},
-  |}>,
+  },
 }
 
 export type WalletTabSendDetailsProps = {
@@ -135,7 +138,6 @@ export type WalletSendPaymentData = {
 export type WalletTabSendDetailsState = {
   showPaymentAddress: boolean,
   isPaymentAddressValid: IsValid,
-  credentialOfferModalStatus: CredentialOfferModalStatus,
 }
 
 export type WalletHistoryProps = {
@@ -241,19 +243,19 @@ export type WalletStore = {
 export type HydrateWalletBalanceFailAction = {
   type: typeof HYDRATE_WALLET_BALANCE_FAIL,
   error: CustomError,
-  status: StoreStatus,
+  status: $PropertyType<StoreStatus, 'status'>,
 }
 
 export type HydrateWalletAddressesFailAction = {
   type: typeof HYDRATE_WALLET_ADDRESSES_FAIL,
   error: CustomError,
-  status: StoreStatus,
+  status: $PropertyType<StoreStatus, 'status'>,
 }
 
 export type HydrateWalletHistoryFailAction = {
   type: typeof HYDRATE_WALLET_HISTORY_FAIL,
   error: CustomError,
-  status: StoreStatus,
+  status: $PropertyType<StoreStatus, 'status'>,
 }
 
 export type SendTokensAction = {

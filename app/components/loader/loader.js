@@ -2,11 +2,13 @@
 
 import React, { Component } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+
 import { LoadingIndicator } from './loading-indicator'
 import type { LoaderProps, LoaderState } from './type-loader'
 import { DARK } from './type-loader'
 import { color, font, OFFSET_2X } from '../../common/styles'
-import { Container, CustomText } from '..'
+import CustomText from '../text'
+import { Container } from '../layout/container'
 
 const LOADING_MESSAGES = ['Please wait…', 'Hold on…', 'Loading…', 'Working…']
 

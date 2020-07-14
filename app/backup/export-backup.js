@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import { Image, Dimensions } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
@@ -56,20 +55,24 @@ export class ExportBackupFile extends Component<ExportBackupFileProps, void> {
   }
 
   componentDidUpdate(prevProps: ExportBackupFileProps) {
-    const { navigation: { navigate, state, goBack }, backupStatus } = this.props
+    const {
+      navigation: { navigate, goBack },
+      route,
+      backupStatus,
+    } = this.props
     if (
       prevProps.backupStatus !== BACKUP_STORE_STATUS.BACKUP_COMPLETE &&
       backupStatus === BACKUP_STORE_STATUS.BACKUP_COMPLETE
     ) {
       navigate(backupCompleteRoute, {
-        initialRoute: state.params.initialRoute,
+        initialRoute: route.params.initialRoute,
       })
     } else if (
       prevProps.backupStatus !== BACKUP_STORE_STATUS.EXPORT_BACKUP_FAILURE &&
       backupStatus === BACKUP_STORE_STATUS.EXPORT_BACKUP_FAILURE
     ) {
       navigate(backupErrorRoute, {
-        initialRoute: state.params.initialRoute,
+        initialRoute: route.params.initialRoute,
       })
     }
   }
@@ -113,9 +116,10 @@ export class ExportBackupFile extends Component<ExportBackupFileProps, void> {
   }
 
   static navigationOptions = ({
-    navigation: { goBack, navigate, state },
+    navigation: { goBack, navigate },
+    route,
   }: ReactNavigationBackup) => ({
-    header: (
+    header: () => (
       <CustomHeader
         flatHeader
         largeHeader
@@ -134,7 +138,7 @@ export class ExportBackupFile extends Component<ExportBackupFileProps, void> {
         <CustomView style={[styles.headerSpacer]}>
           <Icon
             medium
-            onPress={() => navigate(state.params.initialRoute)}
+            onPress={() => navigate(route.params.initialRoute)}
             testID={EXPORT_BACKUP_CLOSE_TEST_ID}
             iconStyle={[styles.headerIcon]}
             src={closeImage}
@@ -142,7 +146,8 @@ export class ExportBackupFile extends Component<ExportBackupFileProps, void> {
         </CustomView>
       </CustomHeader>
     ),
-    gesturesEnabled: true,
+    gestureEnabled: true,
+    headerShown: true,
   })
 
   render() {
@@ -221,7 +226,7 @@ export class ExportBackupFile extends Component<ExportBackupFileProps, void> {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ exportBackup }, dispatch)
 
 const mapStateToProps = (state: Store) => {
@@ -231,10 +236,9 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-export default createStackNavigator({
-  [exportBackupFileRoute]: {
-    screen: withStatusBar({ color: color.bg.thirteenth.color })(
-      connect(mapStateToProps, mapDispatchToProps)(ExportBackupFile)
-    ),
-  },
-})
+export const exportBackupFileScreen = {
+  routeName: exportBackupFileRoute,
+  screen: withStatusBar({ color: color.bg.thirteenth.color })(
+    connect(mapStateToProps, mapDispatchToProps)(ExportBackupFile)
+  ),
+}

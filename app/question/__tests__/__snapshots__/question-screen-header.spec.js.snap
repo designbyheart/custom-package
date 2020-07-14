@@ -13,6 +13,7 @@ exports[`<QuestionScreenHeader /> should match snapshot 1`] = `
 >
   <View
     accessible={true}
+    focusable={true}
     hitSlop={
       Object {
         "bottom": 20,
@@ -21,6 +22,7 @@ exports[`<QuestionScreenHeader /> should match snapshot 1`] = `
         "top": 20,
       }
     }
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -54,6 +56,7 @@ exports[`<QuestionScreenHeader /> should match snapshot 1`] = `
   </View>
   <View
     accessible={true}
+    focusable={true}
     hitSlop={
       Object {
         "bottom": 20,
@@ -62,6 +65,7 @@ exports[`<QuestionScreenHeader /> should match snapshot 1`] = `
         "top": 20,
       }
     }
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}

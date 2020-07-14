@@ -7,7 +7,10 @@ import { throwError } from 'redux-saga-test-plan/providers'
 import AlertAsync from 'react-native-alert-async'
 
 import { onfidoRoute } from '../../../common'
-import { registerCloudAgentWithToken } from '../cloud-agent'
+import {
+  registerCloudAgentWithToken,
+  previousChoiceStorageKey,
+} from '../cloud-agent'
 import {
   agencyUrl,
   agencyDID,
@@ -21,6 +24,7 @@ import {
   createOneTimeInfoWithToken,
 } from '../../../bridge/react-native-cxs/RNCxs'
 import { FETCH_ADDITIONAL_DATA } from '../../../push-notification/type-push-notification'
+import { safeDelete } from '../../../services/storage'
 
 describe('cloud-agent:saga', () => {
   const agencyConfig = {
@@ -85,5 +89,11 @@ describe('cloud-agent:saga', () => {
       .provide([[matchers.call.fn(AlertAsync), 'Deny']])
       .returns([`CS-010::User denied push notification permission`, null])
       .run()
+  })
+
+  beforeEach(async () => {
+    try {
+      await safeDelete(previousChoiceStorageKey)
+    } catch (e) {}
   })
 })

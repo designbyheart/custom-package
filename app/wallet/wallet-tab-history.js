@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { List, ListItem } from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
 
 import {
   Container,
@@ -89,11 +89,8 @@ export class WalletTabHistory extends Component<WalletHistoryProps, void> {
     const walletHistory = transactions.map(transaction => {
       let itemProps = {
         key: transaction.id,
-        avatar: this.getHistoryIcons(transaction.action),
-        hideChevron: true,
+        leftAvatar: this.getHistoryIcons(transaction.action),
         subtitle: <HistoryItem {...transaction} />,
-        avatarStyle: styles.avatarStyle,
-        avatarOverlayContainerStyle: styles.avatarOverlayContainerStyle,
         containerStyle: styles.listItemContainer,
       }
       return <ListItem {...itemProps} />
@@ -102,17 +99,18 @@ export class WalletTabHistory extends Component<WalletHistoryProps, void> {
     return (
       <Container>
         {status === STORE_STATUS.IN_PROGRESS && <Loader showMessage={false} />}
-        {transactions.length < 1 &&
-          status !== STORE_STATUS.SUCCESS && (
-            <Container center>
-              <CustomText h5 bg="tertiary" style={[styles.noHistory]}>
-                No history to show
-              </CustomText>
-            </Container>
-          )}
+        {transactions.length < 1 && status !== STORE_STATUS.SUCCESS && (
+          <Container center>
+            <CustomText h5 bg="tertiary" style={[styles.noHistory]}>
+              No history to show
+            </CustomText>
+          </Container>
+        )}
         {transactions.length > 0 && (
           <ScrollView>
-            <List containerStyle={styles.listContainer}>{walletHistory}</List>
+            <CustomView style={[styles.listContainer]}>
+              {walletHistory}
+            </CustomView>
           </ScrollView>
         )}
       </Container>

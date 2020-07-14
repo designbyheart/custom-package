@@ -4,18 +4,16 @@ import { StyleSheet, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import {
-  Container,
-  CustomView,
-  CustomText,
-  Separator,
-  Icon,
-  CustomSafeAreaView,
-} from '../index'
-import { OFFSET_1X, OFFSET_3X } from '../../common/styles'
-import { getUserAvatarSource } from '../../store/store-selector'
 import type { CustomListProps, Item } from './type-custom-list'
 import type { Store } from '../../store/type-store'
+
+import { Container } from '../layout/container'
+import { CustomView } from '../layout/custom-view'
+import CustomText from '../text'
+import Icon from '../icon'
+import Separator from '../separator'
+import { OFFSET_1X, OFFSET_3X } from '../../common/styles'
+import { getUserAvatarSource } from '../../store/store-selector'
 
 export class CustomList extends Component<CustomListProps, void> {
   keyExtractor = ({ label }: Item, index: number) => `${label}${index}`
@@ -102,7 +100,6 @@ export class CustomList extends Component<CustomListProps, void> {
   render() {
     const items: Item[] = this.props.items
     return (
-      //TODO : fix other customSafeAreaView , use prop
       <Container safeArea fifth>
         <FlatList
           data={items}

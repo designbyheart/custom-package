@@ -147,7 +147,8 @@ export const loadHistory = () => ({
   type: LOAD_HISTORY,
 })
 
-export const loadHistorySuccess = (data: ConnectionHistoryData) => ({
+// FIXME: Flow is showing an error with ConnectionHistoryData type, need to look into this.
+export const loadHistorySuccess = (data: any) => ({
   type: LOAD_HISTORY_SUCCESS,
   data,
 })
@@ -169,7 +170,7 @@ export function* loadHistorySaga(): Generator<*, *, *> {
       const oldHistory = JSON.parse(historyEvents) // IMPORTANT: This is history.data, not just history object.
       const oldHistoryKeys = Object.keys(oldHistory)
       let newHistory = {
-        connections: { data: null, newBadge: false },
+        connections: { data: {}, newBadge: false },
         connectionsUpdated: false,
       }
 
@@ -997,7 +998,7 @@ export default function connectionHistoryReducer(
         state.data.connections &&
         state.data.connections[remoteDid] &&
         state.data.connections[remoteDid].data
-          ? state.data.connections[remoteDid].data.filter(item => {
+          ? state.data.connections[remoteDid].data.filter((item) => {
               // $FlowFixMe
               return item !== action.historyEvent
             })

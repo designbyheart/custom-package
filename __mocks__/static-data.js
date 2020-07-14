@@ -51,7 +51,6 @@ import {
   onfidoProcessStatus,
   onfidoConnectionStatus,
 } from '../app/onfido/type-onfido'
-import { calendarFormat } from 'moment'
 import { STORAGE_STATUS } from '../app/common/type-common'
 import {
   PROOF_REQUEST_STATUS,
@@ -965,6 +964,8 @@ export function getNavigation(params?: any): any {
       path: '/someRouteName',
       index: 1,
       routes: [],
+    },
+    route: {
       params: params || {},
     },
     goBack: jest.fn(),
@@ -972,7 +973,6 @@ export function getNavigation(params?: any): any {
     setParams: jest.fn(),
     isFocused: jest.fn().mockReturnValue(true),
     push: jest.fn(),
-    getParam: jest.fn((paramName, defaultValue) => defaultValue),
     dismiss: jest.fn(),
     openDrawer: jest.fn(),
     closeDrawer: jest.fn(),
@@ -1507,13 +1507,9 @@ export const connectionHistory = {
   },
 }
 
-export const activeConnectionThemePrimary = `rgba(${
-  color.actions.button.primary.rgba
-})`
+export const activeConnectionThemePrimary = `rgba(${color.actions.button.primary.rgba})`
 
-export const activeConnectionThemeSecondary = `rgba(${
-  color.actions.button.secondary.rgba
-})`
+export const activeConnectionThemeSecondary = `rgba(${color.actions.button.secondary.rgba})`
 
 export const mockConnection1 = {
   ...successConnectionData.newConnection,

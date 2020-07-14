@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import { Dimensions, Keyboard } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -20,7 +19,7 @@ import {
   exportBackupFileRoute,
   selectRecoveryMethodRoute,
 } from '../common'
-import { color } from '../common/styles/constant'
+import { colors } from '../common/styles/constant'
 import styles from './styles'
 import {
   VERIFY_BACK_TEST_ID,
@@ -53,14 +52,10 @@ export class VerifyRecoveryPhrase extends Component<
   }
 
   static navigationOptions = ({
-    navigation: { goBack, navigate, state },
+    navigation: { goBack, navigate },
   }: ReactNavigationBackup) => ({
-    header: (
-      <CustomHeader
-        backgroundColor={color.bg.twelfth.color}
-        largeHeader
-        flatHeader
-      >
+    header: () => (
+      <CustomHeader backgroundColor={colors.cmGreen1} largeHeader flatHeader>
         <CustomView style={[styles.headerSpacer]}>
           <Icon
             medium
@@ -72,7 +67,8 @@ export class VerifyRecoveryPhrase extends Component<
         </CustomView>
       </CustomHeader>
     ),
-    gesturesEnabled: false,
+    gestureEnabled: false,
+    headerShown: true,
   })
 
   verifyRecoveryPhrase = async (passphrase: string) => {
@@ -82,7 +78,7 @@ export class VerifyRecoveryPhrase extends Component<
       .toLowerCase()
       .trim()
     const { recoveryPassphrase } = this.props
-    const { initialRoute } = this.props.navigation.state.params
+    const { initialRoute } = this.props.route.params
 
     const hashedPassphrase: string | null = await generateKey(
       cleanedPassphrase,
@@ -139,7 +135,7 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       hasVerifiedRecoveryPhrase,
@@ -148,10 +144,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default createStackNavigator({
-  [verifyRecoveryPhraseRoute]: {
-    screen: withStatusBar({ color: color.bg.twelfth.color })(
-      connect(mapStateToProps, mapDispatchToProps)(VerifyRecoveryPhrase)
-    ),
-  },
-})
+export const verifyRecoveryPhraseScreen = {
+  routeName: verifyRecoveryPhraseRoute,
+  screen: withStatusBar({ color: colors.cmGreen1 })(
+    connect(mapStateToProps)(VerifyRecoveryPhrase)
+  ),
+}

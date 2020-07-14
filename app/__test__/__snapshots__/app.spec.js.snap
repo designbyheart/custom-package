@@ -4,14 +4,15 @@ exports[`<App/> in android environment. should dispatch navigation action 1`] = 
 [MockFunction] {
   "calls": Array [
     Array [
-      Array [
-        Object {
+      Object {
+        "payload": Object {
+          "name": "routeName",
           "params": Object {
             "existingPin": true,
           },
-          "routeName": "routeName",
         },
-      ],
+        "type": "NAVIGATE",
+      },
     ],
   ],
   "results": Array [
@@ -27,11 +28,12 @@ exports[`<App/> in android environment. should redirect to lockSelectionRoute sc
 [MockFunction] {
   "calls": Array [
     Array [
-      Array [
-        Object {
-          "routeName": "LockSelection",
+      Object {
+        "payload": Object {
+          "name": "LockSelection",
         },
-      ],
+        "type": "NAVIGATE",
+      },
     ],
   ],
   "results": Array [
@@ -47,11 +49,12 @@ exports[`<App/> in android environment. should redirect to settingsTab screen if
 [MockFunction] {
   "calls": Array [
     Array [
-      Array [
-        Object {
-          "routeName": "TabSettings",
+      Object {
+        "payload": Object {
+          "name": "TabSettings",
         },
-      ],
+        "type": "NAVIGATE",
+      },
     ],
   ],
   "results": Array [
@@ -64,15 +67,15 @@ exports[`<App/> in android environment. should redirect to settingsTab screen if
 `;
 
 exports[`<App/> in ios environment. should render properly and snapshot should match 1`] = `
-<View
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
   style={
-    Object {
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "flex": 1,
+      },
+      undefined,
+    ]
   }
->
-  <View
-    onNavigationStateChange={[Function]}
-  />
-</View>
+/>
 `;

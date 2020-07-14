@@ -10,7 +10,6 @@ import {
   Animated,
   Dimensions,
 } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
 import type {
@@ -20,7 +19,7 @@ import type {
 } from '../../common/type-common'
 
 import { Container, CustomView, CustomText, CustomButton } from '../index'
-import { cmGrey4, caribbeanGreen, color, black } from '../../common/styles'
+import { colors } from '../../common/styles'
 import { withStatusBar } from '../status-bar/status-bar'
 import { styles } from './bottom-up-slider-screen-styles'
 import { BottomUpSliderScreenHeader } from './components/bottom-up-slider-screen-header'
@@ -33,10 +32,6 @@ export function withBottomUpSliderScreen(
 ) {
   class BottomUpSliderScreen extends Component<{} & ReactNavigation, void> {
     _translateY = new Animated.Value(0)
-
-    static navigationOptions = () => ({
-      header: null,
-    })
 
     render() {
       const transform = this._getTransform(this._translateY)
@@ -91,7 +86,7 @@ export function withBottomUpSliderScreen(
       }
     )
 
-    _onHandlerStateChange = event => {
+    _onHandlerStateChange = (event) => {
       const { state, velocityY, translationY } = event.nativeEvent
       if (state === State.END) {
         const minimumDistanceToClose = 150
@@ -107,9 +102,9 @@ export function withBottomUpSliderScreen(
       }
     }
 
-    _getTransform = translateY => [{ translateY }]
+    _getTransform = (translateY) => [{ translateY }]
 
-    _getOpacity = translateY =>
+    _getOpacity = (translateY) =>
       translateY.interpolate({
         inputRange: [0, height],
         outputRange: [1, 0.2],
@@ -134,21 +129,10 @@ export function withBottomUpSliderScreen(
     }
   }
 
-  return createStackNavigator(
-    {
-      [routeName]: {
-        screen: withStatusBar({ color: black })(BottomUpSliderScreen),
-      },
-    },
-    {
-      cardStyle: { backgroundColor: 'transparent' },
-      transitionConfig: () => ({
-        containerStyle: {
-          backgroundColor: 'transparent',
-        },
-      }),
-    }
-  )
+  return {
+    routeName,
+    screen: withStatusBar({ color: colors.cmBlack })(BottomUpSliderScreen),
+  }
 }
 
 type BottomUpSliderScreenHOC = {

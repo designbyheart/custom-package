@@ -14,6 +14,7 @@ describe('user about app screen', () => {
   const props = {
     navigation: getNavigation(),
     environmentName: 'DEMO',
+    route: { params: {} },
   }
 
   it('should render properly and snapshot should match', () => {

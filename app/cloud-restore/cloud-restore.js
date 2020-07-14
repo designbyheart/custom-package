@@ -2,9 +2,9 @@
 
 import React, { Component } from 'react'
 import { Dimensions, Keyboard } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
 import type {
   VerifyRecoveryPhraseProps,
   VerifyRecoveryPhraseState,
@@ -64,9 +64,9 @@ export class CloudRestore extends Component<
     navigate(selectRestoreMethodRoute)
   }
   static navigationOptions = ({
-    navigation: { getParam, navigate },
+    route: { params },
   }: ReactNavigationBackup) => ({
-    header: (
+    header: () => (
       <CustomHeader
         backgroundColor={color.bg.twelfth.color}
         largeHeader
@@ -75,7 +75,7 @@ export class CloudRestore extends Component<
         <CustomView style={[styles.headerSpacer]}>
           <Icon
             medium
-            onPress={getParam('navigateBack')}
+            onPress={params.navigateBack}
             testID={VERIFY_BACK_TEST_ID}
             iconStyle={[styles.headerBackIcon]}
             src={backImage}
@@ -85,7 +85,7 @@ export class CloudRestore extends Component<
         <CustomView style={[styles.headerSpacer]}>
           <Icon
             medium
-            onPress={getParam('navigateBack')}
+            onPress={params.navigateBack}
             testID={VERIFY_CLOSE_TEST_ID}
             iconStyle={[styles.headerIcon]}
             src={closeImage}
@@ -93,7 +93,8 @@ export class CloudRestore extends Component<
         </CustomView>
       </CustomHeader>
     ),
-    gesturesEnabled: false,
+    gestureEnabled: false,
+    headerShown: true,
   })
 
   verifyRecoveryPhrase = async (passphrase: string) => {
@@ -135,13 +136,12 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ submitPassphrase, restoreStatus, resetError }, dispatch)
 
-export default createStackNavigator({
-  [cloudRestoreRoute]: {
-    screen: withStatusBar({ color: color.bg.twelfth.color })(
-      connect(mapStateToProps, mapDispatchToProps)(CloudRestore)
-    ),
-  },
-})
+export const cloudRestoreScreen = {
+  routeName: cloudRestoreRoute,
+  screen: withStatusBar({ color: color.bg.twelfth.color })(
+    connect(mapStateToProps, mapDispatchToProps)(CloudRestore)
+  ),
+}

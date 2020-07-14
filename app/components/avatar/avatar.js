@@ -11,7 +11,7 @@ const empty = []
 // TODO: add a prop size instead of using large, medium and small as different prop.
 export class Avatar extends PureComponent<AvatarProps, void> {
   onPressDebounce = debounce(
-    event => {
+    (event) => {
       if (this.props.onPress) {
         this.props.onPress(event)
       }
@@ -61,9 +61,9 @@ export class Avatar extends PureComponent<AvatarProps, void> {
       square
         ? null
         : radius
-          ? { borderRadius: radius }
-          : // $FlowFixMe flow does not support dynamic property lookup
-            avatarStyle[`${size}Round`],
+        ? { borderRadius: radius }
+        : // $FlowFixMe flow does not support dynamic property lookup
+          avatarStyle[`${size}Round`],
       ...imageStyle,
     ]
 

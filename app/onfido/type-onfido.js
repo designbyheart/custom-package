@@ -4,7 +4,7 @@ import type { CustomError } from '../common/type-common'
 import type {
   NavigationScreenProp,
   NavigationLeafRoute,
-} from 'react-navigation'
+} from '@react-navigation/native'
 
 export const onfidoProcessStatus = {
   IDLE: 'IDLE',
@@ -35,10 +35,12 @@ export type OnfidoConnectionStatus = $Keys<typeof onfidoConnectionStatus>
 export type OnfidoNavigation = {
   navigation: NavigationScreenProp<{|
     ...NavigationLeafRoute,
+  |}>,
+  route: {
     params: {|
       title: string,
     |},
-  |}>,
+  },
 }
 
 export type OnfidoProps = {

@@ -39,7 +39,7 @@ export function withStatusBar(
       componentDidMount() {
         if (this.props.navigation && this.props.navigation.addListener) {
           this.focusListener = this.props.navigation.addListener(
-            'didFocus',
+            'willFocus',
             this.onFocus
           )
         }

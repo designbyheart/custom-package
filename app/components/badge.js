@@ -16,7 +16,7 @@ export const BadgeLabel = (props: *) => {
   const center = props.center ? styles.center : null
 
   return (
-    <Text {...props} style={[styles.label, textColor, center, props.style]}>
+    <Text style={[styles.label, textColor, center, props.style]}>
       {props.text}
     </Text>
   )

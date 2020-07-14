@@ -1,17 +1,9 @@
 // @flow
 import React from 'react'
 import { TouchableOpacity, Text, View, Image, StyleSheet } from 'react-native'
-import {
-  atlantis,
-  atlantisOpacity,
-  darkGray,
-  grey,
-  mediumGray,
-  white,
-  font,
-  newBannerCardSizes,
-  isiPhone5,
-} from '../../common/styles/constant'
+import { isiPhone5 } from '../../common/styles'
+import { colors, font, fontFamily, fontSizes } from '../../common/styles/constant'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
 import type { NewBannerCardProps } from './type-new-banner-card'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
@@ -30,7 +22,7 @@ export const NewBannerCard = (props: NewBannerCardProps) => {
         ) : (
           <DefaultLogo
             text={props.issuerName[0]}
-            size={newBannerCardSizes.logoSize}
+            size={moderateScale(34, 0.15)}
             fontSize={isiPhone5 ? font.size.M : font.size.ML}
           />
         )}
@@ -59,18 +51,18 @@ export const NewBannerCard = (props: NewBannerCardProps) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: atlantisOpacity,
+    backgroundColor: colors.cmGreen3,
     borderWidth: 1,
-    borderColor: atlantis,
-    height: newBannerCardSizes.height,
-    marginLeft: newBannerCardSizes.distance,
-    marginRight: newBannerCardSizes.distance,
-    marginTop: newBannerCardSizes.distance,
+    borderColor: colors.cmGreen1,
+    height: moderateScale(70, 0.12),
+    marginLeft: moderateScale(7, 0.1),
+    marginRight: moderateScale(7, 0.1),
+    marginTop: moderateScale(7, 0.1),
     borderRadius: 8,
   },
   iconSection: {
     height: '100%',
-    width: 64,
+    width: moderateScale(65, 0.2),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -87,36 +79,50 @@ const styles = StyleSheet.create({
   },
   textDateSection: {
     height: '100%',
-    width: 65,
+    width: moderateScale(65, 0.2),
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
   },
   issuerText: {
-    fontFamily: font.family,
-    fontSize: isiPhone5 ? font.size.S : font.size.M,
+    fontFamily: fontFamily,
+    fontSize: moderateScale(fontSizes.size5, 0.1),
     fontWeight: 'bold',
-    color: darkGray,
-    marginBottom: 3,
+    color: colors.cmGray1,
+    marginBottom: moderateScale(3, 0.1),
   },
   newMessageText: {
-    fontFamily: font.family,
-    fontSize: isiPhone5 ? font.size.XXS : font.size.XS1,
+    fontFamily: fontFamily,
+    fontSize: moderateScale(fontSizes.size8, 0.1),
     fontWeight: 'bold',
-    color: darkGray,
-    marginTop: 3,
+    color: colors.cmGray1,
+    marginTop: moderateScale(3, 0.1),
   },
   issuerLogo: {
-    width: newBannerCardSizes.logoSize,
-    height: newBannerCardSizes.logoSize,
-    borderRadius: newBannerCardSizes.logoSize / 2,
+    width: moderateScale(34, 0.15),
+    height: moderateScale(34, 0.15),
+    borderRadius: moderateScale(34, 0.15) / 2,
   },
   dateText: {
-    fontFamily: font.family,
+    fontFamily: fontFamily,
     fontWeight: '500',
-    fontSize: isiPhone5 ? font.size.XXXXS : font.size.XXXS,
+    fontSize: moderateScale(fontSizes.size9, 0.1),
     fontStyle: 'italic',
-    color: darkGray,
-    marginTop: 8,
-    marginRight: 8,
+    color: colors.cmGray1,
+    marginTop: moderateScale(8, 0.1),
+    marginRight: moderateScale(8, 0.1),
+  },
+  placeholderIfNoImage: {
+    width: moderateScale(34, 0.15),
+    height: moderateScale(34, 0.15),
+    borderRadius: moderateScale(34, 0.15) / 2,
+    backgroundColor: colors.cmGray2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  placeholderTextIfNoImage: {
+    fontFamily: fontFamily,
+    fontSize: moderateScale(fontSizes.size4, 0.1),
+    fontWeight: 'bold',
+    color: colors.cmWhite,
   },
 })
