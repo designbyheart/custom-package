@@ -12,15 +12,9 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { SwipeRow } from 'react-native-swipe-list-view'
-import {
-  mediumGray,
-  white,
-  font,
-  recentCardSizes,
-  isiPhone5,
-  cmRed,
-  whiteSolid,
-} from '../../common/styles/constant'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, font, fontFamily, fontSizes } from '../../common/styles/constant'
+import { isiPhone5 } from '../../common/styles'
 
 import type { RecentCardProps } from './type-recent-card'
 import {
@@ -42,7 +36,6 @@ import {
 } from '../../proof/type-proof'
 import { reTrySendProof } from '../../proof/proof-store'
 import { deleteHistoryEvent } from '../../connection-history/connection-history-store'
-import { scale } from 'react-native-size-matters'
 import { safeGet, safeSet } from '../../services/storage'
 import {
   DENY_PROOF_REQUEST_FAIL,
@@ -128,7 +121,7 @@ const renderImageOrText = (logoUrl: string, issuerName: string) => {
   ) : (
     <DefaultLogo
       text={issuerName}
-      size={recentCardSizes.logoSize}
+      size={moderateScale(30)}
       fontSize={isiPhone5 ? font.size.S : font.size.M}
     />
   )
@@ -257,7 +250,7 @@ function getRetryFunction({
   return () => {}
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       acceptClaimOffer,
@@ -272,14 +265,14 @@ const mapDispatchToProps = dispatch =>
 export const RecentCard = connect(null, mapDispatchToProps)(RecentCardComponent)
 
 const commonCardStyles = {
-  height: recentCardSizes.height,
-  marginLeft: 20,
-  marginRight: 20,
+  height: verticalScale(40),
+  marginLeft: moderateScale(20),
+  marginRight: moderateScale(20),
 }
 const styles = StyleSheet.create({
   messageContainer: { flex: 1 },
   container: {
-    backgroundColor: whiteSolid,
+    backgroundColor: colors.cmWhite,
     flexDirection: 'row',
     ...commonCardStyles,
   },
@@ -301,52 +294,66 @@ const styles = StyleSheet.create({
   },
   textDateSection: {
     height: '100%',
-    width: isiPhone5 ? 48 : 52,
+    width: moderateScale(48),
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
   issuerLogo: {
-    width: recentCardSizes.logoSize,
-    height: recentCardSizes.logoSize,
-    borderRadius: recentCardSizes.logoSize / 2,
+    width: moderateScale(30),
+    height: moderateScale(30),
+    borderRadius: moderateScale(30) / 2,
     opacity: 0.5,
   },
   textMessage: {
-    fontSize: isiPhone5 ? font.size.XS1 : font.size.PREFIX,
+    fontSize: verticalScale(fontSizes.size8),
     fontWeight: 'normal',
-    fontFamily: font.family,
-    color: mediumGray,
+    fontFamily: fontFamily,
+    color: colors.cmGray3,
   },
   textIssuer: {
-    fontSize: isiPhone5 ? font.size.XXXS : font.size.XXS,
+    fontSize: verticalScale(fontSizes.size10),
     fontWeight: 'normal',
-    fontFamily: font.family,
-    color: mediumGray,
+    fontFamily: fontFamily,
+    color: colors.cmGray3,
   },
   textDate: {
-    fontSize: isiPhone5 ? font.size.XXXXXS : font.size.XXXXS,
+    fontSize: verticalScale(fontSizes.size11),
     fontWeight: 'normal',
-    fontFamily: font.family,
+    fontFamily: fontFamily,
     fontStyle: 'italic',
-    color: mediumGray,
+    color: colors.cmGray3,
+  },
+  placeholderIfNoImage: {
+    width: moderateScale(30),
+    height: moderateScale(30),
+    borderRadius: moderateScale(30) / 2,
+    backgroundColor: colors.cmGray3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  placeholderTextIfNoImage: {
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size7),
+    fontWeight: 'bold',
+    color: colors.cmWhite,
   },
   retryText: {
-    color: cmRed,
+    color: colors.cmRed,
     marginRight: scale(3),
   },
   deleteButton: {
     flex: 1,
-    backgroundColor: cmRed,
+    backgroundColor: colors.cmRed,
     justifyContent: 'flex-end',
     alignItems: 'center',
     flexDirection: 'row',
     ...commonCardStyles,
   },
   deleteButtonText: {
-    color: whiteSolid,
+    color: colors.cmWhite,
     alignItems: 'center',
     marginRight: scale(30),
-    fontFamily: font.family,
-    fontSize: scale(font.size.XS),
+    fontFamily: fontFamily,
+    fontSize: scale(12),
   },
 })

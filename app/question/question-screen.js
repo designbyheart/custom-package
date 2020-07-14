@@ -1,14 +1,8 @@
 // @flow
 import React, { Component } from 'react'
-import {
-  LayoutAnimation,
-  UIManager,
-  FlatList,
-  SafeAreaView,
-} from 'react-native'
+import { LayoutAnimation, FlatList, SafeAreaView } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createStackNavigator } from 'react-navigation'
 import CloseButton from './components/atoms/close-button'
 import QuestionDetails from './components/atoms/question-details'
 import QuestionScreenText from './components/atoms/question-screen-text'
@@ -40,27 +34,15 @@ import {
   getQuestionValidity,
 } from './question-store'
 import { questionStyles as defaultQuestionStyles } from './question-screen-style'
-import { black } from '../common/styles'
 import { getConnection } from '../store/store-selector'
 import { QuestionActions } from './components/question-screen-actions'
 import { checkIfAnimationToUse } from '../bridge/react-native-cxs/RNCxs'
-import { withStatusBar } from '../components/status-bar/status-bar'
 import { customLogger } from '../store/custom-logger'
 
 export class Question extends Component<
   QuestionScreenProps,
   QuestionScreenState
 > {
-  constructor(props: QuestionScreenProps) {
-    super(props)
-    UIManager.setLayoutAnimationEnabledExperimental &&
-      UIManager.setLayoutAnimationEnabledExperimental(true)
-  }
-
-  static navigationOptions = ({ navigation }: { navigation: any }) => ({
-    header: null,
-  })
-
   state = {
     response: null,
   }
@@ -77,7 +59,7 @@ export class Question extends Component<
       question ? question.status : undefined
     )
 
-    const keyExtractor = item => item
+    const keyExtractor = (item) => item
     const validationError: null | CustomError = getQuestionValidity(
       question && question.payload
     )
@@ -91,17 +73,15 @@ export class Question extends Component<
         />
         {/* We need to show action buttons all the time except when screen
             is in loading state */}
-        {!loading &&
-          !validationError &&
-          !success && (
-            <QuestionActions
-              selectedResponse={this.state.response}
-              onSubmit={this.onSubmit}
-              onCancel={this.onCancel}
-              onSelectResponseAndSubmit={this.onSelectResponseAndSubmit}
-              question={this.props.question}
-            />
-          )}
+        {!loading && !validationError && !success && (
+          <QuestionActions
+            selectedResponse={this.state.response}
+            onSubmit={this.onSubmit}
+            onCancel={this.onCancel}
+            onSelectResponseAndSubmit={this.onSelectResponseAndSubmit}
+            question={this.props.question}
+          />
+        )}
         <CloseButton onPress={this.onGoBack} icon={'CloseIcon'} />
       </SafeAreaView>
     )
@@ -191,11 +171,6 @@ export class Question extends Component<
     }
   }
 
-  // Component lifecycle
-  componentWillUnmount() {
-    this.isUnmounted = true
-  }
-
   componentDidMount() {
     if (this.props.question) {
       this.props.updateQuestionStatus(
@@ -274,8 +249,7 @@ export class Question extends Component<
   }
 
   onCancel = () => {
-    !this.isUnmounted && !this.isCloseTriggered && this.onGoBack()
-    this.isCloseTriggered = true
+    this.onGoBack()
   }
 
   onGoBack = () => {
@@ -286,30 +260,14 @@ export class Question extends Component<
     // this function is supposed to do nothing
   }
 
-  // this a common pattern when we want to be sure that we are not running
-  // actions after a component is unmounted
-  // in our case, user can close modal either by pressing "okay" or clicking outside
-  // so we need to be sure that we are not running code after this component
-  // is unmounted from react-native tree
-  isUnmounted = false
-  // this variable is just to ensure that on slow devices
-  // if user clicks on gray area and component was already scheduled to close
-  // by auto close, or by user clicking on okay button and then auto-close trigger
-  // we want to make sure that close is triggered by either action
-  // and we don't want to run close again in any case
-  isCloseTriggered = false
-
   afterSuccessShown = () => {
     // auto close after success is shown to user
     this.onCancel()
   }
 }
 
-const mapStateToProps = (
-  state: Store,
-  { navigation }: QuestionScreenNavigation
-) => {
-  const uid: ?string = navigation.getParam('uid') || null
+const mapStateToProps = (state: Store, { route }: QuestionScreenNavigation) => {
+  const uid: ?string = route.params?.uid || null
   if (!uid) {
     return {}
   }
@@ -330,7 +288,7 @@ const mapStateToProps = (
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateQuestionStatus,
@@ -339,18 +297,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export const QuestionStack = createStackNavigator(
-  {
-    [questionRoute]: {
-      screen: connect(mapStateToProps, mapDispatchToProps)(Question),
-    },
-  },
-  {
-    cardStyle: defaultQuestionStyles.listContainer,
-    transitionConfig: () => ({
-      containerStyle: defaultQuestionStyles.listContainer,
-    }),
-  }
-)
-
-export default QuestionStack
+export const questionScreen = {
+  routeName: questionRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(Question),
+}

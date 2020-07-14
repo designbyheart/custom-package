@@ -83,7 +83,7 @@ import {
   PROOF_REQUEST_AUTO_FILL,
 } from '../proof-request/type-proof-request'
 import { captureError } from '../services/error/error-handler'
-import KeepScreenOn from 'react-native-keep-screen-on'
+// import KeepScreenOn from 'react-native-keep-screen-on'
 import { customLogger } from '../store/custom-logger'
 
 export const updateAttributeClaim = (
@@ -219,11 +219,11 @@ export function convertIndyPreparedProofToAttributes(
   preparedProof: IndyPreparedProof,
   requestedAttributes: ProofRequestedAttributes
 ): Array<Attribute> {
-  let attributes = Object.keys(requestedAttributes).map(attributeKey => {
+  let attributes = Object.keys(requestedAttributes).map((attributeKey) => {
     const label = requestedAttributes[attributeKey].name
     const revealedAttributes = preparedProof.attrs[attributeKey]
     if (revealedAttributes && revealedAttributes.length > 0) {
-      return revealedAttributes.map(revealedAttribute => {
+      return revealedAttributes.map((revealedAttribute) => {
         // convert attrs props to lowercase
         // maintain a mapping that will map case insensitive name to actual name in `attrs`
         let caseInsensitiveMap = null
@@ -517,9 +517,6 @@ export function* updateAttributeClaimAndSendProof(
     const selectedSelfAttestedAttributes = convertSelfAttestedToIndySelfAttested(
       selfAttestedAttributes
     )
-    // keeping device's screen ON so that phone doesn't lock
-    // while generating or sending proof
-    KeepScreenOn.setKeepScreenOn(true)
     yield call(
       generateProof,
       proofHandle,
@@ -550,7 +547,6 @@ export function* updateAttributeClaimAndSendProof(
     }
     yield put(proofSuccess(proof, action.uid))
   } catch (e) {
-    KeepScreenOn.setKeepScreenOn(false)
     // captureError(e)
     yield put(errorSendProofFail(action.uid, action.remoteDid, e))
   }
@@ -578,12 +574,12 @@ function* reTrySendProofSaga(action: RetrySendProofAction): Generator<*, *, *> {
   yield put(getProof(uid))
   const [missingAttributeFound, proofRequestAutofill] = yield race([
     take(
-      missingAttributeAction =>
+      (missingAttributeAction) =>
         missingAttributeAction.type === MISSING_ATTRIBUTES_FOUND &&
         missingAttributeAction.uid === uid
     ),
     take(
-      proofRequestAutofillAction =>
+      (proofRequestAutofillAction) =>
         proofRequestAutofillAction.type === PROOF_REQUEST_AUTO_FILL &&
         proofRequestAutofillAction.uid === uid
     ),
@@ -593,7 +589,7 @@ function* reTrySendProofSaga(action: RetrySendProofAction): Generator<*, *, *> {
     yield put(userSelfAttestedAttributes(action.selfAttestedAttributes, uid))
   }
   yield take(
-    proofRequestDataStoreAction =>
+    (proofRequestDataStoreAction) =>
       proofRequestDataStoreAction.type === PROOF_REQUEST_SEND_PROOF_HANDLE &&
       proofRequestDataStoreAction.uid === uid
   )

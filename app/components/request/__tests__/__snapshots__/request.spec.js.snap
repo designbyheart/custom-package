@@ -44,12 +44,9 @@ exports[`<Request /> should match snapshot 1`] = `
         }
         testID="request-text-message-container"
       >
-        <Animatable.View
+        <View
           accessibilityLabel="request-text-container-animation"
           accessible={true}
-          animation="bounceInDown"
-          delay={100}
-          duration={1500}
           testID="request-text-container-animation"
         >
           <View
@@ -147,7 +144,7 @@ exports[`<Request /> should match snapshot 1`] = `
               Enterprise A agent wants to connect with you
             </Text>
           </View>
-        </Animatable.View>
+        </View>
       </View>
       <View
         accessibilityLabel="request-text-container-avatars"
@@ -159,12 +156,9 @@ exports[`<Request /> should match snapshot 1`] = `
         }
         testID="request-text-container-avatars"
       >
-        <Animatable.View
+        <View
           accessibilityLabel="invitation-text-container-avatars-animation"
           accessible={true}
-          animation="bounceInUp"
-          delay={300}
-          duration={1500}
           testID="invitation-text-container-avatars-animation"
         >
           <View
@@ -195,6 +189,8 @@ exports[`<Request /> should match snapshot 1`] = `
             >
               <View
                 accessible={true}
+                focusable={true}
+                onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -223,7 +219,10 @@ exports[`<Request /> should match snapshot 1`] = `
                   testID="invitation-text-avatars-invitee"
                 >
                   <Image
+                    accessibilityLabel="invitation-text-avatars-invitee-image"
                     accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
                     onResponderRelease={[Function]}
@@ -246,11 +245,16 @@ exports[`<Request /> should match snapshot 1`] = `
                         },
                       ]
                     }
+                    testID="invitation-text-avatars-invitee-image"
                   />
                 </View>
               </View>
               <Image
-                source={1}
+                source={
+                  Object {
+                    "default": "RelativeImageStub",
+                  }
+                }
                 style={
                   Object {
                     "height": 8,
@@ -279,7 +283,10 @@ exports[`<Request /> should match snapshot 1`] = `
                 testID="invitation-text-avatars-inviter"
               >
                 <Image
+                  accessibilityLabel="invitation-text-avatars-inviter-image"
                   accessible={true}
+                  focusable={true}
+                  onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
                   onResponderRelease={[Function]}
@@ -302,16 +309,21 @@ exports[`<Request /> should match snapshot 1`] = `
                       },
                     ]
                   }
+                  testID="invitation-text-avatars-inviter-image"
                 />
               </View>
             </View>
           </View>
-        </Animatable.View>
+        </View>
       </View>
     </View>
   </View>
-  <RCTSafeAreaView
-    emulateUnlessSupported={true}
+  <RNCSafeAreaView
+    edges={
+      Array [
+        "bottom",
+      ]
+    }
     style={
       Object {
         "backgroundColor": "rgba(119, 119, 119, 1.0)",
@@ -327,267 +339,172 @@ exports[`<Request /> should match snapshot 1`] = `
       }
     >
       <View
-        style={Object {}}
+        row={true}
+        style={
+          Object {
+            "flexDirection": "row",
+          }
+        }
       >
         <View
-          customColor={
-            Object {
-              "backgroundColor": "rgba(119, 119, 119, 1.0)",
-            }
-          }
-          row={true}
           style={
             Object {
-              "flexDirection": "row",
+              "flex": 1,
             }
           }
         >
           <View
             style={
               Object {
-                "flex": 1,
+                "borderRadius": 3,
+                "marginLeft": 0,
+                "marginRight": 0,
+                "overflow": "hidden",
               }
             }
           >
             <View
-              style={Object {}}
+              accessibilityLabel="request-deny"
+              accessibilityRole="button"
+              accessibilityState={
+                Object {
+                  "busy": false,
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              focusable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+              testID="request-deny"
             >
               <View
                 style={
-                  Array [
-                    Object {
-                      "marginLeft": 15,
-                      "marginRight": 15,
-                    },
-                    undefined,
-                    Object {
-                      "marginLeft": 0,
-                      "marginRight": 0,
-                    },
-                    undefined,
-                  ]
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "rgba(119, 119, 119, 1.0)",
+                    "borderColor": "#2089dc",
+                    "borderRadius": 3,
+                    "borderWidth": 0,
+                    "color": "#ffffff",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "padding": 8,
+                    "paddingVertical": 17,
+                    "textAlign": "center",
+                  }
                 }
               >
-                <View
-                  accessibilityLabel="request-deny"
-                  accessible={true}
-                  isTVSelectable={true}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
-                  style={null}
-                  testID="request-deny"
-                >
-                  <View
-                    pointerEvents="box-only"
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#9E9E9E",
-                          "flexDirection": "row",
-                          "justifyContent": "center",
-                          "padding": 19,
-                        },
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        Object {
-                          "backgroundColor": "rgba(119, 119, 119, 1.0)",
-                        },
-                        undefined,
-                        Object {
-                          "padding": 12,
-                        },
-                        undefined,
-                        undefined,
-                        undefined,
-                        Array [
-                          Object {
-                            "paddingVertical": 17,
-                          },
-                        ],
-                        false,
-                        false,
-                      ]
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                      "paddingBottom": 1,
+                      "paddingTop": 2,
+                      "textAlign": "center",
                     }
-                  >
-                    <Text
-                      style={
-                        Array [
-                          Object {},
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          Array [
-                            Object {
-                              "color": "white",
-                              "fontSize": 16,
-                            },
-                            Object {
-                              "color": "#ffffff",
-                            },
-                            Object {
-                              "fontSize": 14,
-                            },
-                            undefined,
-                            undefined,
-                            undefined,
-                            undefined,
-                            false,
-                          ],
-                        ]
-                      }
-                    >
-                      Deny
-                    </Text>
-                  </View>
-                </View>
+                  }
+                >
+                  Deny
+                </Text>
               </View>
             </View>
           </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
           <View
             style={
               Object {
-                "flex": 1,
+                "borderRadius": 3,
+                "marginLeft": 0,
+                "marginRight": 0,
+                "overflow": "hidden",
               }
             }
           >
             <View
-              style={Object {}}
+              accessibilityLabel="request-accept"
+              accessibilityRole="button"
+              accessibilityState={
+                Object {
+                  "busy": false,
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              focusable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "borderColor": "#ffffff",
+                  "borderLeftWidth": 0.5,
+                  "opacity": 1,
+                }
+              }
+              testID="request-accept"
             >
               <View
                 style={
-                  Array [
-                    Object {
-                      "marginLeft": 15,
-                      "marginRight": 15,
-                    },
-                    undefined,
-                    Object {
-                      "marginLeft": 0,
-                      "marginRight": 0,
-                    },
-                    undefined,
-                  ]
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "rgba(119, 119, 119, 1.0)",
+                    "borderColor": "#ffffff",
+                    "borderLeftWidth": 0.5,
+                    "borderRadius": 3,
+                    "borderWidth": 0,
+                    "color": "#ffffff",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "padding": 8,
+                    "paddingVertical": 17,
+                    "textAlign": "center",
+                  }
                 }
               >
-                <View
-                  accessibilityLabel="request-accept"
-                  accessible={true}
-                  isTVSelectable={true}
-                  onResponderGrant={[Function]}
-                  onResponderMove={[Function]}
-                  onResponderRelease={[Function]}
-                  onResponderTerminate={[Function]}
-                  onResponderTerminationRequest={[Function]}
-                  onStartShouldSetResponder={[Function]}
+                <Text
                   style={
-                    Array [
-                      Object {
-                        "borderLeftColor": "#ffffff",
-                        "borderLeftWidth": 0.4,
-                      },
-                    ]
-                  }
-                  testID="request-accept"
-                >
-                  <View
-                    pointerEvents="box-only"
-                    style={
-                      Array [
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#9E9E9E",
-                          "flexDirection": "row",
-                          "justifyContent": "center",
-                          "padding": 19,
-                        },
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        Object {
-                          "backgroundColor": "rgba(119, 119, 119, 1.0)",
-                        },
-                        undefined,
-                        Object {
-                          "padding": 12,
-                        },
-                        undefined,
-                        undefined,
-                        undefined,
-                        Array [
-                          Object {
-                            "paddingVertical": 17,
-                          },
-                          Object {
-                            "borderLeftColor": "#ffffff",
-                            "borderLeftWidth": 0.4,
-                          },
-                        ],
-                        false,
-                        false,
-                      ]
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                      "paddingBottom": 1,
+                      "paddingTop": 2,
+                      "textAlign": "center",
                     }
-                  >
-                    <Text
-                      style={
-                        Array [
-                          Object {},
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          undefined,
-                          Array [
-                            Object {
-                              "color": "white",
-                              "fontSize": 16,
-                            },
-                            Object {
-                              "color": "#ffffff",
-                            },
-                            Object {
-                              "fontSize": 14,
-                            },
-                            undefined,
-                            undefined,
-                            Object {
-                              "fontWeight": "bold",
-                            },
-                            undefined,
-                            false,
-                          ],
-                        ]
-                      }
-                    >
-                      Connect
-                    </Text>
-                  </View>
-                </View>
+                  }
+                >
+                  Connect
+                </Text>
               </View>
             </View>
           </View>
         </View>
       </View>
     </View>
-  </RCTSafeAreaView>
+  </RNCSafeAreaView>
 </View>
 `;

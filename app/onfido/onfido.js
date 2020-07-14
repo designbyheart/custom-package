@@ -12,6 +12,7 @@ import type {
   OnfidoConnectionStatus,
   OnfidoNavigation,
 } from './type-onfido'
+import type { ReactNavigation } from '../common/type-common'
 
 import {
   Container,
@@ -40,25 +41,11 @@ import {
   TEXT_ONFIDO_ID_PARAGRAPH,
   TEXT_ONFIDO_HEADING_2,
 } from './type-onfido'
-import {
-  connectionsDrawerRoute,
-  connectionHistoryDetailsRoute,
-} from '../common'
+import { onfidoRoute, connectionsDrawerRoute } from '../common'
 import { withStatusBar } from '../components/status-bar/status-bar'
+import { headerNavigationOptions } from '../navigation/navigation-header-config'
 
 export class Onfido extends Component<OnfidoProps, void> {
-  static navigationOptions = ({ navigation }: OnfidoNavigation) => ({
-    headerStyle: {
-      backgroundColor: color.bg.tertiary.color,
-      borderBottomWidth: 0,
-      borderBottomColor: color.bg.tertiary.color,
-      elevation: 0,
-      shadowOpacity: 0,
-    },
-    headerTintColor: color.actions.ninth,
-    headerTitle: navigation.getParam('title', ''),
-  })
-
   onAction = () => {
     if (isSuccess(this.props.status, this.props.connectionStatus)) {
       this.props.navigation.goBack()
@@ -313,8 +300,8 @@ function getActionButtonText(
   return hasError(status, connectionStatus)
     ? TEXT_ONFIDO_YES
     : isSuccess(status, connectionStatus)
-      ? TEXT_ONFIDO_OK
-      : TEXT_ONFIDO_I_ACCEPT
+    ? TEXT_ONFIDO_OK
+    : TEXT_ONFIDO_I_ACCEPT
 }
 
 const styles = StyleSheet.create({
@@ -346,9 +333,17 @@ const mapStateToProps = (state: Store) => ({
   connectionStatus: state.onfido.onfidoConnectionStatus,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ launchOnfidoSDK, resetOnfidoStatues }, dispatch)
 
-export default withStatusBar()(
-  connect(mapStateToProps, mapDispatchToProps)(Onfido)
-)
+export const onfidoScreen = {
+  routeName: onfidoRoute,
+  screen: withStatusBar()(connect(mapStateToProps, mapDispatchToProps)(Onfido)),
+  options({ route }: ReactNavigation) {
+    return {
+      ...headerNavigationOptions({
+        title: route.params?.title ?? '',
+      }),
+    }
+  },
+}

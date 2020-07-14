@@ -5,7 +5,7 @@ import React from 'react'
 import type { GenericObject } from '../../../common/type-common'
 
 import CustomText from '../../text'
-import { color } from '../../../common/styles'
+import { colors } from '../../../common/styles'
 
 export function BottomUpSliderText(props: GenericObject) {
   return (
@@ -13,10 +13,7 @@ export function BottomUpSliderText(props: GenericObject) {
       bg={false}
       bold
       {...props}
-      style={[
-        { color: color.bg.tertiary.font.seventh },
-        ...(props.style || []),
-      ]}
+      style={[{ color: colors.cmOrange }, ...(props.style || [])]}
     >
       {props.children}
     </CustomText>

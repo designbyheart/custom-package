@@ -2,7 +2,8 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { CustomView } from '../../components'
+
+import { CustomView } from '../../components/layout/custom-view'
 import { color, OFFSET_1X } from '../../common/styles'
 import type { PinCodeDigitProps } from './type-pin-code-box'
 

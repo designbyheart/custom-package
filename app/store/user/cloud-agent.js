@@ -1,16 +1,16 @@
 // @flow
 
-import { Platform, AppState } from 'react-native'
+import { Platform, AppState, Linking } from 'react-native'
 import delay from '@redux-saga/delay-p'
 import { put, take, call, select, race, all } from 'redux-saga/effects'
 import { eventChannel, END } from 'redux-saga'
 import uniqueId from 'react-native-unique-id'
 import firebase from 'react-native-firebase'
 import AlertAsync from 'react-native-alert-async'
-import { changeNotificationSetting } from 'react-native-check-notification-permission'
 
 import type { PushNotificationStore } from '../../push-notification/type-push-notification'
 import type { UserOneTimeInfo } from './type-user-store'
+import type { RouteUpdateAction } from '../route-store'
 
 import { flattenAsync } from '../../common/flatten-async'
 import {
@@ -37,7 +37,7 @@ import {
   walletRoute,
   cloudRestoreRoute,
 } from '../../common'
-import { ROUTE_UPDATE } from '../route-store'
+import { ROUTE_UPDATE, handleRouteUpdate } from '../route-store'
 import { OFFLINE_STATUS } from '../../offline/type-offline'
 import { pushNotificationPermissionAction } from '../../push-notification/push-notification-store'
 
@@ -89,7 +89,7 @@ export function* registerCloudAgentWithToken(
   if (!routesForSpecialMessage.includes(currentScreen)) {
     // if we are not on routes that needs vcx init
     // then we wait for user to go on one such route
-    const action = yield take(isUserOnInitNeedRoute)
+    const action: RouteUpdateAction = yield take(isUserOnInitNeedRoute)
     currentScreen = action.currentScreen
   }
 
@@ -146,7 +146,7 @@ export function* registerCloudAgentWithToken(
   if (permissionError || hasPermissionError || !hasPermissionResult) {
     // if user does not provide push notification permission
     // then tell user that they won't be able to establish a connection or take a backup
-    const permissionChoice = yield call(
+    const permissionChoice: string = yield call(
       AlertAsync,
       'Denied permission',
       'You would not be able to establish connection. If you need to establish connection, you can enable push notification permission in your phone settings for ConnectMe.',
@@ -167,12 +167,12 @@ export function* registerCloudAgentWithToken(
 
     // We are here, that means user wants to go to app settings
     // redirect to app settings
-    changeNotificationSetting()
+    Linking.openSettings()
 
     // wait for user to come back, check for app state change
     const appStateChannel = yield call(appStateSource)
     while (true) {
-      const state = yield take(appStateChannel)
+      const state: string = yield take(appStateChannel)
       if (state === 'active') {
         // close channel, as we are not interested anymore to listen
         // for state changes, since state has become 'active'
@@ -224,9 +224,9 @@ export function* registerCloudAgentWithToken(
       { cancelable: true }
     )
     return [
-      `CS-006::Failed to get notification token, ${notificationTokenError ||
-        getTokenTimeout ||
-        ''}`,
+      `CS-006::Failed to get notification token, ${
+        notificationTokenError || getTokenTimeout || ''
+      }`,
       null,
     ]
   }
@@ -263,7 +263,7 @@ export function* registerCloudAgentWithToken(
   // Now, we have provision token which can be used to register/provision cloud agent
   const [createOneTimeInfoError, userOneTimeInfo]: [
     null | string,
-    null | UserOneTimeInfo,
+    null | UserOneTimeInfo
   ] = yield call(createOneTimeInfoWithToken, agencyConfig, provisionToken)
   if (createOneTimeInfoError) {
     return [
@@ -285,31 +285,19 @@ export function* registerCloudAgentWithoutToken(
 
 function getPushPermission() {
   return new Promise((resolve, reject) =>
-    firebase
-      .messaging()
-      .requestPermission()
-      .then(resolve)
-      .catch(reject)
+    firebase.messaging().requestPermission().then(resolve).catch(reject)
   )
 }
 
 function hasPushPermission() {
   return new Promise((resolve, reject) =>
-    firebase
-      .messaging()
-      .hasPermission()
-      .then(resolve)
-      .catch(reject)
+    firebase.messaging().hasPermission().then(resolve).catch(reject)
   )
 }
 
 function getFirebaseToken() {
   return new Promise((resolve, reject) =>
-    firebase
-      .messaging()
-      .getToken()
-      .then(resolve)
-      .catch(reject)
+    firebase.messaging().getToken().then(resolve).catch(reject)
   )
 }
 
@@ -348,8 +336,8 @@ function isUserOnInitNeedRoute(action: *) {
 function appStateSource() {
   let currentState = AppState.currentState || 'background'
 
-  return eventChannel(emitter => {
-    const _stateChangeListener = nextAppState => {
+  return eventChannel((emitter) => {
+    const _stateChangeListener = (nextAppState) => {
       if (
         currentState.match(/inactive|background/) &&
         nextAppState === 'active'
@@ -369,7 +357,7 @@ function appStateSource() {
 }
 
 function onTokenRefresh() {
-  return new Promise(resolve => firebase.messaging().onTokenRefresh(resolve))
+  return new Promise((resolve) => firebase.messaging().onTokenRefresh(resolve))
 }
 
 function* askForProvisionToken(
@@ -409,7 +397,9 @@ function* askForProvisionToken(
     // Now, we wait for agency to send push notification to this device
     // or stop waiting after 1 minute
     const [
-      { notificationPayload: { msg: provisionToken } },
+      {
+        notificationPayload: { msg: provisionToken },
+      },
       timeout,
     ] = yield race([take('FETCH_ADDITIONAL_DATA'), call(delay, 60000)])
 
@@ -441,7 +431,7 @@ function isOnline(action: *) {
 
 const ALLOW = 'Allow'
 const DENY = 'Deny'
-const previousChoiceStorageKey = 'previousChoiceResult'
+export const previousChoiceStorageKey = 'previousChoiceResult'
 const genericPushDialogue = {
   title: 'Register device',
   text:

@@ -246,7 +246,7 @@ export async function simpleInit(): Promise<boolean> {
   return initResult
 }
 
-export const getWalletPoolName = memoize(async function() {
+export const getWalletPoolName = memoize(async function () {
   const appUniqueId = await uniqueId()
   await secureSet(__uniqueId, appUniqueId)
   const walletName = `${appUniqueId}-cm-wallet`
@@ -295,7 +295,7 @@ export async function serializeConnection(
 }
 
 // cache Promise of serializedString so that we don't call Bridge method again
-export const getHandleBySerializedConnection = memoize(async function(
+export const getHandleBySerializedConnection = memoize(async function (
   serializedConnection: string
 ): Promise<number> {
   const connectionHandle: number = await RNIndy.deserializeConnection(
@@ -364,7 +364,7 @@ export async function serializeClaimOffer(
   return serializedClaimOffer
 }
 
-export const getClaimHandleBySerializedClaimOffer = memoize(async function(
+export const getClaimHandleBySerializedClaimOffer = memoize(async function (
   serializedClaimOffer: string
 ): Promise<number> {
   const claimHandle: number = await RNIndy.deserializeClaimOffer(
@@ -649,9 +649,11 @@ export async function getLedgerFees(): Promise<LedgerFeesData> {
   return convertVcxLedgerFeesToLedgerFees(fees)
 }
 
-export const checkIfAnimationToUse = memoize(function() {
+export const checkIfAnimationToUse = memoize(function () {
   return Platform.OS === 'android'
-    ? RNIndy.totalMemory / smallDeviceMemory < 1 ? true : false
+    ? RNIndy.totalMemory / smallDeviceMemory < 1
+      ? true
+      : false
     : false
 })
 

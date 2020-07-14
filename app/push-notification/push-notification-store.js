@@ -75,7 +75,6 @@ import {
   vcxGetAgentMessages,
   updateWalletBackupStateWithMessage,
   backupWalletBackup,
-  serializeBackupWallet,
 } from '../bridge/react-native-cxs/RNCxs'
 import {
   HYDRATED,
@@ -135,13 +134,11 @@ import {
   lockPinSetupHomeRoute,
   lockEnterPinRoute,
   lockEnterFingerprintRoute,
-  lockAuthorizationRoute,
   lockAuthorizationHomeRoute,
   questionRoute,
 } from '../common'
 import { claimReceivedVcx } from '../claim/claim-store'
 import { questionReceived } from '../question/question-store'
-import { NavigationActions } from 'react-navigation'
 import type { SerializedClaimOffer } from './../claim-offer/type-claim-offer'
 import { customLogger } from '../store/custom-logger'
 import {
@@ -157,13 +154,13 @@ import {
   cloudBackupFailure,
   setAutoCloudBackupEnabled,
   viewedWalletError,
-} from '../backup/backup-store'
+} from '../backup/backup-actions'
 import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
 import RNFetchBlob from 'rn-fetch-blob'
 import { showInAppNotification } from '../in-app-notification/in-app-notification-actions'
 
 async function delay(ms): Promise<number> {
-  return new Promise(res => setTimeout(res, ms))
+  return new Promise((res) => setTimeout(res, ms))
 }
 
 const blackListedRoute = {
@@ -174,7 +171,6 @@ const blackListedRoute = {
   [lockPinSetupHomeRoute]: lockPinSetupHomeRoute,
   [lockEnterPinRoute]: lockEnterPinRoute,
   [lockEnterFingerprintRoute]: lockEnterFingerprintRoute,
-  [lockAuthorizationRoute]: lockAuthorizationRoute,
   [lockAuthorizationHomeRoute]: lockAuthorizationHomeRoute,
   [invitationRoute]: invitationRoute,
 }
@@ -234,7 +230,7 @@ export function convertClaimOfferPushPayloadToAppClaimOffer(
    * ]
    */
   const revealedAttributes = Object.keys(pushPayload.claim).map(
-    attributeName => {
+    (attributeName) => {
       let attributeValue = pushPayload.claim[attributeName]
       if (Array.isArray(attributeValue)) {
         attributeValue = attributeValue[0]
@@ -273,7 +269,7 @@ export function convertProofRequestPushPayloadToAppProofRequest(
   const { requested_attributes, name, version } = proof_request_data
 
   const requestedAttributes = Object.keys(requested_attributes).map(
-    attributeKey => ({
+    (attributeKey) => ({
       label: requested_attributes[attributeKey].name,
     })
   )
@@ -670,7 +666,7 @@ export const goToUIScreen = (
 })
 
 function* watchUpdateRelevantPushPayloadStoreAndRedirect(): any {
-  yield takeEvery(UPDATE_RELEVANT_PUSH_PAYLOAD_STORE_AND_REDIRECT, function*({
+  yield takeEvery(UPDATE_RELEVANT_PUSH_PAYLOAD_STORE_AND_REDIRECT, function* ({
     notification,
   }: updatePayloadToRelevantStoreAndRedirectAction) {
     yield* updatePayloadToRelevantStoreSaga(notification)
@@ -775,9 +771,7 @@ function* redirectToRelevantScreen(notification: RedirectToRelevantScreen) {
         case MESSAGE_TYPE.PROOF_REQUEST:
         case 'PROOF_REQUEST_RECEIVED':
           routeToDirect = proofRequestRoute
-          notificationText = `${
-            additionalData.remoteName
-          } wants you to share information`
+          notificationText = `${additionalData.remoteName} wants you to share information`
           break
 
         case MESSAGE_TYPE.QUESTION:

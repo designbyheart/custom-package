@@ -10,7 +10,6 @@ import type { OpenIdConnectState } from '../open-id-connect/open-id-connect-acti
 import { proofRequestReceived } from '../proof-request/proof-request-store'
 
 export type QRCodeScannerScreenState = {
-  isCameraAuthorized: boolean,
   isCameraEnabled: boolean,
   appState: ?string,
 }

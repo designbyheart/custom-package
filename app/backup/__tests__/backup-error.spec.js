@@ -11,14 +11,14 @@ describe('Restore screen', () => {
       store: getStore(),
       navigation: {
         setParams: jest.fn(),
-        getParam: jest.fn(),
         navigate: jest.fn(),
         goBack: jest.fn(),
-        state: {
-          params: {
-            recoveryPassphrase: '',
-            initialRoute: '',
-          },
+      },
+      route: {
+        params: {
+          recoveryPassphrase: '',
+          initialRoute: '',
+          navigateBack: jest.fn(),
         },
       },
       hydrateCloudBackup: jest.fn(),

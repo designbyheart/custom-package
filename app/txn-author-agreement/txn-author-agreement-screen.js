@@ -4,20 +4,19 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '@react-navigation/compat'
 
 import type {
   NavigationScreenProp,
   NavigationLeafRoute,
-} from 'react-navigation'
-import type { ReduxConnect } from '../common/type-common'
+} from '@react-navigation/native'
+import type { ReduxConnect, GenericObject } from '../common/type-common'
 import type { Store } from '../store/type-store'
 import type { Connection } from '../store/type-connection-store'
 
 import { withBottomUpSliderScreen } from '../components/bottom-up-slider-screen/bottom-up-slider-screen'
 import {
   openIdConnectRoute,
-  homeRoute,
   txnAuthorAgreementRoute,
   settingsRoute,
   walletTabSendDetailsRoute,
@@ -68,6 +67,8 @@ export class TxnAuthorAgreement extends Component<
   }
 
   getBody = (status: string) => {
+    const extraHeightStyle: Array<GenericObject> = [styles.extraHeight]
+
     const inProgressStates = [
       TAA_STATUS.ACCEPT_TAA_IN_PROGRESS,
       TAA_STATUS.GET_TAA_IN_PROGRESS,
@@ -86,7 +87,7 @@ export class TxnAuthorAgreement extends Component<
         <BottomUpSliderSuccess
           afterSuccessShown={this.afterSuccessShown}
           successText="Transaction Author Agreement accepted."
-          style={[styles.extraHeight]}
+          style={extraHeightStyle}
         />
       )
     } else if (errorStates.includes(status)) {
@@ -94,8 +95,8 @@ export class TxnAuthorAgreement extends Component<
         status === TAA_STATUS.ACCEPT_TAA_ERROR
           ? 'Error occurred while accepting Transaction Author Agreement'
           : status === TAA_STATUS.GET_TAA_ERROR
-            ? 'Error occurred while getting Transaction Author Agreement'
-            : 'Error'
+          ? 'Error occurred while getting Transaction Author Agreement'
+          : 'Error'
 
       return (
         <View>
@@ -181,7 +182,7 @@ const mapStateToProps = (
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       checkTxnAuthorAgreement,
@@ -191,7 +192,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default withBottomUpSliderScreen(
+export const txnAuthorAgreementScreen = withBottomUpSliderScreen(
   { routeName: txnAuthorAgreementRoute },
   withNavigation(
     connect(mapStateToProps, mapDispatchToProps)(TxnAuthorAgreement)

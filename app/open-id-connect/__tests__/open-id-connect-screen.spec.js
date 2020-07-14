@@ -67,6 +67,12 @@ describe('<OpenIdConnectScreen />', () => {
         ...getNavigation(),
       },
       dispatch: jest.fn(),
+      route: {
+        params: {
+          oidcAuthenticationRequest:
+            mockOpenIdConnectRequest1.oidcAuthenticationRequest,
+        },
+      },
     }
   }
 

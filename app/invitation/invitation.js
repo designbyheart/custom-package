@@ -10,27 +10,25 @@ import type { InvitationProps, InvitationNavigation } from './type-invitation'
 
 import { captureError } from '../services/error/error-handler'
 import {
-  Request,
   Container,
   CustomModal,
   Loader,
   CustomText,
   CustomView,
 } from '../components'
-import { homeRoute, noop } from '../common'
+import { homeRoute, noop, invitationRoute } from '../common'
 import { OFFSET_1X } from '../common/styles'
 import { ResponseType } from '../components/request/type-request'
 import { sendInvitationResponse, invitationRejected } from './invitation-store'
 import { smsPendingInvitationSeen } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { SMSPendingInvitationStatus } from '../sms-pending-invitation/type-sms-pending-invitation'
-import { NavigationActions } from 'react-navigation'
 import { barStyleDark, color } from '../common/styles/constant'
 import {
   ERROR_ALREADY_EXIST,
   ERROR_INVITATION_RESPONSE_FAILED,
   ERROR_ALREADY_EXIST_TITLE,
 } from '../api/api-constants'
-import { withStatusBar } from '../components/status-bar/status-bar'
+import { Request } from '../components/request/request'
 
 export class Invitation extends Component<InvitationProps, void> {
   render() {
@@ -64,8 +62,6 @@ export class Invitation extends Component<InvitationProps, void> {
           senderLogoUrl={senderLogoUrl}
           onAction={this.onAction}
           testID={'invitation'}
-          navigation={navigation}
-          showErrorAlerts={showErrorAlerts}
           invitationError={invitation ? invitation.error : undefined}
           senderName={senderName}
         />
@@ -203,9 +199,8 @@ function isValidInvitation(
 
 const mapStateToProps = (
   state: Store,
-  { navigation }: InvitationNavigation
+  { route: { params } }: InvitationNavigation
 ) => {
-  const { params } = navigation.state
   const senderDID = params ? params.senderDID : ''
   const smsToken = params ? params.token : null
   const isSmsInvitationNotSeen =
@@ -222,12 +217,13 @@ const mapStateToProps = (
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     { sendInvitationResponse, invitationRejected, smsPendingInvitationSeen },
     dispatch
   )
 
-export default withStatusBar({ color: color.bg.fifth.color })(
-  connect(mapStateToProps, mapDispatchToProps)(Invitation)
-)
+export const invitationScreen = {
+  routeName: invitationRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(Invitation),
+}

@@ -9,15 +9,14 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native'
-import { measurements } from '../../../app/common/styles/measurements'
-import { color, font, grey, isiPhone5, newBannerCardSizes, white } from '../../common/styles'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 
 // TODO: Fix the <any, void> to be the correct types for props and state
 class ConnectionDetailsNav extends PureComponent<any, void> {
   render() {
-    const { navigation } = this.props
-    const { key, params } = this.props.navigation.state
+    const { params } = this.props.route
 
     return (
       <View style={styles.container}>
@@ -25,9 +24,9 @@ class ConnectionDetailsNav extends PureComponent<any, void> {
           <TouchableOpacity onPress={this.goBack}>
             <SvgCustomIcon
               name="ChevronLeft"
-              fill={'#777777'}
-              width={24}
-              height={36}
+              fill={colors.cmGray2}
+              width={moderateScale(24)}
+              height={moderateScale(36)}
             />
           </TouchableOpacity>
         </View>
@@ -41,13 +40,13 @@ class ConnectionDetailsNav extends PureComponent<any, void> {
                   resizeMode={'cover'}
                 />
               </View>
-              ) :
+            ) : (
               <DefaultLogo
                 text={params.senderName[0]}
-                size={32}
+                size={moderateScale(32)}
                 fontSize={17}
               />
-            }
+            )}
           </View>
           <View style={styles.headerTitleWrapper}>
             <Text
@@ -63,9 +62,9 @@ class ConnectionDetailsNav extends PureComponent<any, void> {
           <TouchableOpacity onPress={this.props.moreOptionsOpen}>
             <SvgCustomIcon
               name="ThreeDots"
-              fill={'#777777'}
-              width={24}
-              height={24}
+              fill={colors.cmGray2}
+              width={moderateScale(24)}
+              height={moderateScale(24)}
             />
           </TouchableOpacity>
         </View>
@@ -74,13 +73,12 @@ class ConnectionDetailsNav extends PureComponent<any, void> {
   }
 
   goBack = () => {
-    const { navigation } = this.props
-    const { params } = this.props.navigation.state
+    const {
+      navigation,
+      route: { params },
+    } = this.props
     this.props.newConnectionSeen(params.senderDID)
-    const backRedirectRoute = this.props.navigation.getParam(
-      'backRedirectRoute',
-      null
-    )
+    const backRedirectRoute = this.props.route.params?.backRedirectRoute
     if (backRedirectRoute) {
       navigation.navigate(backRedirectRoute)
     } else {
@@ -97,11 +95,10 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 999,
     flexDirection: 'row',
-    height: measurements.connectionDetailsNav,
+    height: verticalScale(90),
     width: '100%',
-    backgroundColor:
-      Platform.OS === 'ios' ? 'rgba(255, 255, 255, 0.8)' : '#fff',
-    shadowColor: '#000',
+    backgroundColor: colors.cmWhite,
+    shadowColor: colors.cmBlack,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 10,
@@ -113,7 +110,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     flexDirection: 'row',
-    paddingBottom: 7,
+    paddingBottom: verticalScale(7),
   },
   iconAndNameWrapper: {
     width: '70%',
@@ -124,21 +121,20 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 32,
-    height: 32,
+    width: moderateScale(32),
+    height: moderateScale(32),
     borderRadius: 20,
   },
   headerIcon: {
-    width: 32,
-    height: 32,
+    width: moderateScale(32),
+    height: moderateScale(32),
   },
   headerTitle: {
-    fontStyle: 'normal',
     fontWeight: '700',
-    fontSize: 17,
+    fontSize: verticalScale(fontSizes.size5),
     textAlign: 'center',
-    color: '#505050',
-    fontFamily: 'Lato',
+    color: colors.cmGray1,
+    fontFamily: fontFamily,
   },
   buttonMoreOptionsWrapper: {
     height: '100%',
@@ -146,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     flexDirection: 'row',
-    paddingBottom: 17,
+    paddingBottom: moderateScale(15),
   },
   headerImageOuterWrapper: {
     height: '100%',
@@ -154,7 +150,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
     flexDirection: 'row',
-    paddingBottom: 14,
+    paddingBottom: moderateScale(14),
   },
   headerTitleWrapper: {
     height: '100%',
@@ -162,7 +158,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
     flexDirection: 'row',
-    paddingBottom: 20,
-    paddingLeft: 10,
+    paddingBottom: moderateScale(20),
+    paddingLeft: moderateScale(10),
   },
 })

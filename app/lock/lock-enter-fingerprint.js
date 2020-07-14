@@ -6,7 +6,11 @@ import { Container, CustomText, CustomButton } from '../components'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { captureError } from '../services/error/error-handler'
-import { homeRoute, lockEnterPinRoute } from '../common'
+import {
+  homeRoute,
+  lockEnterPinRoute,
+  lockEnterFingerprintRoute,
+} from '../common'
 import { unlockApp, clearPendingRedirect } from './lock-store'
 import type { Store } from '../store/type-store'
 import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
@@ -16,7 +20,6 @@ import type {
   PendingRedirection,
 } from './type-lock'
 import { AllowedFallbackToucheIDErrors } from './type-lock'
-import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class LockEnterFingerprint extends Component<
   LockEnterFingerProps,
@@ -28,7 +31,7 @@ export class LockEnterFingerprint extends Component<
     errorMessage: null,
   }
 
-  componentWillReceiveProps(nextProps: LockEnterFingerProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: LockEnterFingerProps) {
     //if fetching Invitation prop has changed and its fetched then only check for authentication
     if (
       this.props.isFetchingInvitation !== nextProps.isFetchingInvitation &&
@@ -46,7 +49,7 @@ export class LockEnterFingerprint extends Component<
     //this method will be called in fingerprint authentication screen
     //or any where in app if there is a invitation received.
     if (pendingRedirection) {
-      pendingRedirection.map(pendingRedirection => {
+      pendingRedirection.map((pendingRedirection) => {
         this.props.navigation.navigate(
           pendingRedirection.routeName,
           pendingRedirection.params || {}
@@ -63,19 +66,19 @@ export class LockEnterFingerprint extends Component<
 
   touchIdHandler = () => {
     TouchId.isSupported()
-      .then(success => {
+      .then((success) => {
         TouchId.authenticate('', this.touchIdHandler)
-          .then(success => {
+          .then((success) => {
             this.setState({ authenticationSuccess: true, errorMessage: null })
             if (this.props.isFetchingInvitation === false) {
               this.onAuthenticationSuccess(this.props.pendingRedirection)
             }
           })
-          .catch(error => {
+          .catch((error) => {
             this.handleFailedAuth(error)
           })
       })
-      .catch(error => {
+      .catch((error) => {
         this.handleFailedAuth(error)
       })
   }
@@ -146,14 +149,14 @@ const mapStateToProps = (state: Store) => ({
   pendingRedirection: state.lock.pendingRedirection,
   pendingRedirectionParams: state.lock.pendingRedirectionParams || {},
   isFetchingInvitation: Object.keys(state.smsPendingInvitation).some(
-    smsToken =>
+    (smsToken) =>
       state.smsPendingInvitation[smsToken] &&
       state.smsPendingInvitation[smsToken].isFetching === true
   ),
   isAppLocked: state.lock.isAppLocked,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       clearPendingRedirect,
@@ -162,9 +165,10 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default withStatusBar()(
-  connect(mapStateToProps, mapDispatchToProps)(LockEnterFingerprint)
-)
+export const lockEnterFingerprintScreen = {
+  routeName: lockEnterFingerprintRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(LockEnterFingerprint),
+}
 
 const style = StyleSheet.create({
   tryAgainButton: {

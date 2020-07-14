@@ -24,7 +24,8 @@ import delay from '@redux-saga/delay-p'
 
 describe('<LockFingerprintSetup />', () => {
   const getProps = () => ({
-    navigation: getNavigation({ touchIdActive: true }),
+    navigation: getNavigation(),
+    route: { params: { touchIdActive: true } },
     touchIdActive: true,
     fromSettings: false,
     currentScreen: lockTouchIdSetupRoute,
@@ -33,7 +34,7 @@ describe('<LockFingerprintSetup />', () => {
   })
 
   const options = {
-    createNodeMock: element => {
+    createNodeMock: (element) => {
       return {
         clear: () => {
           cleared = true

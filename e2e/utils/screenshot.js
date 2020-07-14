@@ -13,6 +13,7 @@ const PNG = require('pngjs').PNG
 const JPEG = require('jpeg-js')
 
 const iPhone7 = 'iPhone7'.toLowerCase()
+const iPhone8 = 'iPhone8'.toLowerCase()
 const iPhoneX = 'iPhoneX'.toLowerCase()
 const iPhone5s = 'iPhone5s'.toLowerCase()
 const iPhoneXSMax = 'iPhoneXSMax'.toLowerCase()
@@ -32,6 +33,15 @@ const SIZE = {
     },
   },
   [iPhone7]: {
+    width: 750,
+    height: 1334,
+    cropHeight: 39,
+    scaleFactor: {
+      width: 2,
+      height: 2,
+    },
+  },
+  [iPhone8]: {
     width: 750,
     height: 1334,
     cropHeight: 39,
@@ -62,13 +72,14 @@ const SIZE = {
 
 const SIMULATOR_NAME_MAP = {
   [iPhone7]: 'iPhone 7',
+  [iPhone8]: 'iPhone 8',
   [iPhoneX]: 'iPhone X',
   [iPhone5s]: 'iPhone 5s',
   [iPhoneXSMax]: 'iPhone XS Max',
 }
 
 const COMPARE_ERROR_TOLERANCE = 0.0001
-const defaultSimulator = iPhone7
+const defaultSimulator = iPhone8
 const baseDirectory = 'e2e/screenshots'
 const { SIMULATOR = defaultSimulator, UPDATE } = process.env
 const simulator = SIMULATOR ? SIMULATOR.toLowerCase() : defaultSimulator
@@ -119,7 +130,7 @@ function getDiffPath(name: string) {
 }
 
 const diff = promisify(gm.compare)
-const diffOptions = file => ({ file, tolerance: COMPARE_ERROR_TOLERANCE })
+const diffOptions = (file) => ({ file, tolerance: COMPARE_ERROR_TOLERANCE })
 
 // it uses GraphicsMagick and it is async
 const areSame = async (image1: string, image2: string, diffImagePath: string) =>
@@ -148,7 +159,7 @@ async function removeHeader(image: string) {
     const { width, height, cropHeight } = SIZE[simulator]
     gm(image)
       .crop(width, height - cropHeight, 0, cropHeight)
-      .write(image, error => {
+      .write(image, (error) => {
         if (error) {
           reject(error)
         }
@@ -183,7 +194,7 @@ async function mask(path: *, area: *, name: *) {
   await new Promise((resolve, reject) => {
     gm(path)
       .drawRectangle(x0, y0, x1, y1)
-      .write(path, error => {
+      .write(path, (error) => {
         if (error) {
           reject(error)
         }

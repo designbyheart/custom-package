@@ -1,5 +1,5 @@
 // @flow
-import urlParse from 'url-parse'
+import urlParse, { type Url } from 'url-parse'
 
 import type {
   AriesConnectionInvite,
@@ -17,8 +17,8 @@ import { flatJsonParse } from '../../../common/flat-json-parse'
 import { isAriesConnectionInviteQrCode } from './qr-code-aries-connection-invite'
 import { isValidOIDCQrCode } from './qr-code-oidc'
 
-export function isValidUrlQrCode(urlQrCode: string): urlParse | boolean {
-  const parsedUrl: urlParse = urlParse(urlQrCode, {}, true)
+export function isValidUrlQrCode(urlQrCode: string): Url | false {
+  const parsedUrl = urlParse(urlQrCode, {}, true)
 
   if (!validUrlQrCodeScheme.includes(parsedUrl.protocol)) {
     return false
@@ -28,12 +28,12 @@ export function isValidUrlQrCode(urlQrCode: string): urlParse | boolean {
 }
 
 export async function getUrlQrCodeData(
-  parsedUrl: urlParse,
+  parsedUrl: Url,
   url: string
 ): Promise<
   [
     null | QR_SCAN_STATUS,
-    null | Object | AriesConnectionInvite | QrCodeOIDC | QrCodeNonJsonUrl,
+    null | Object | AriesConnectionInvite | QrCodeOIDC | QrCodeNonJsonUrl
   ]
 > {
   // if we get url qr code, then there are three ways as of now that ConnectMe supports

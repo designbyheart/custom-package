@@ -11,9 +11,16 @@ describe('Privacy and TNC screen', () => {
     url: PrivacyTNC.INFO_TYPE.PRIVACY,
   })
 
+  const route = {
+    params: {
+      title: PrivacyTNC.INFO_TYPE.PRIVACY.title,
+      url: PrivacyTNC.INFO_TYPE.PRIVACY.url,
+    },
+  }
+
   it('should render properly and snapshot should match', () => {
     const tree = renderer
-      .create(<PrivacyTNC navigation={navigation} />)
+      .create(<PrivacyTNC navigation={navigation} route={route} />)
       .toJSON()
     expect(tree).toMatchSnapshot()
   })

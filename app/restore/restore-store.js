@@ -1,5 +1,5 @@
 // @flow
-import { decryptWalletFile, copyToPath } from '../bridge/react-native-cxs/RNCxs'
+
 import { unzip } from 'react-native-zip-archive'
 import firebase from 'react-native-firebase'
 import {
@@ -11,7 +11,20 @@ import {
   select,
   fork,
 } from 'redux-saga/effects'
+import RNFetchBlob from 'rn-fetch-blob'
+
+import type { Store } from '../store/type-store.js'
 import type { CustomError } from '../common/type-common'
+import type {
+  SaveToAppDirectory,
+  RestoreActions,
+  SaveFiletoAppDirectoryAction,
+  RestoreSubmitPassphrase,
+  RestoreStore,
+  RestoreStoreStatus,
+} from './type-restore'
+
+import { decryptWalletFile, copyToPath } from '../bridge/react-native-cxs/RNCxs'
 import {
   SAVE_FILE_TO_APP_DIRECTORY,
   RESTORE_STATUS,
@@ -25,13 +38,6 @@ import {
   RESTORE_DATA_FAILED_MESSAGE,
 } from './type-restore'
 import { WALLET_FILE_NAME } from '../backup/type-backup'
-import type {
-  SaveToAppDirectory,
-  RestoreActions,
-  SaveFiletoAppDirectoryAction,
-  RestoreSubmitPassphrase,
-  RestoreStore,
-} from './type-restore'
 import {
   LAST_SUCCESSFUL_BACKUP,
   LAST_SUCCESSFUL_CLOUD_BACKUP,
@@ -39,19 +45,16 @@ import {
   PASSPHRASE_STORAGE_KEY,
   WALLET_KEY,
 } from '../common/secure-storage-constants'
-import RNFetchBlob from 'rn-fetch-blob'
 import { getRestoreStatus, getRestoreFileName } from '../store/store-selector'
 import { pinHash as generateKey, generateSalt } from '../lock/pin-hash'
 import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { Platform } from 'react-native'
-import type { Store } from '../store/type-store.js'
 import { hydrate, hydrateNonReduxData } from '../store/hydration-store'
 import { pushNotificationPermissionAction } from '../push-notification/push-notification-store'
 import { safeGet, safeSet, walletSet } from '../services/storage'
 import { PIN_ENABLED_KEY, IN_RECOVERY } from '../lock/type-lock'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
-
 import { generateRecoveryPhraseSuccess } from '../backup/backup-store'
 
 export const saveFileToAppDirectory = (data: SaveToAppDirectory) => ({
@@ -59,7 +62,7 @@ export const saveFileToAppDirectory = (data: SaveToAppDirectory) => ({
   data,
 })
 
-export const restoreStatus = (status: string) => ({
+export const restoreStatus = (status: RestoreStoreStatus) => ({
   type: RESTORE_STATUS,
   status,
 })
@@ -188,7 +191,7 @@ export function* saveZipFile(
     //TODO move the copy logic for android to RNLayer
     if (Platform.OS === 'android') {
       copyToPath(tempUri, destPath)
-      yield put(restoreStatus(RestoreStatus.fileSaved))
+      yield put(restoreStatus(RestoreStatus.FILE_SAVED_TO_APP_DIRECTORY))
     } else if (Platform.OS === 'ios') {
       tempUri = uri.substr('file://'.length)
 
@@ -203,7 +206,7 @@ export function* saveZipFile(
 
         yield call(fs.cp, tempUri, destPath)
       }
-      yield put(restoreStatus(RestoreStatus.fileSaved))
+      yield put(restoreStatus(RestoreStatus.FILE_SAVED_TO_APP_DIRECTORY))
     } else {
       yield put(restoreStatus(RestoreStatus.FILE_SAVE_ERROR))
       yield put(
@@ -251,7 +254,7 @@ export default function restoreReducer(
       return {
         ...state,
         error: action.error,
-        status: RestoreStatus.failedStatus,
+        status: RestoreStatus.RESTORE_FAILED,
       }
     case RESTORE_STATUS:
       return {

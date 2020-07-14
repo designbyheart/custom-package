@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Keyboard, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createStackNavigator, NavigationActions } from 'react-navigation'
+import { createStackNavigator } from '@react-navigation/stack'
 import { scale } from 'react-native-size-matters'
 import {
   Container,
@@ -32,6 +32,7 @@ import type {
   WalletTabSendDetailsState,
   WalletTabSendDetailNavigation,
 } from './type-wallet'
+import type { CredentialOfferModalStatus } from '../claim-offer/type-claim-offer'
 import { formatNumbers } from '../components/text'
 import { receiveTabRoute } from '../common'
 import {
@@ -52,10 +53,13 @@ import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class WalletTabSendDetails extends Component<
   WalletTabSendDetailsProps,
-  WalletTabSendDetailsState
+  WalletTabSendDetailsState & {
+    credentialOfferModalStatus: CredentialOfferModalStatus,
+  }
 > {
   static navigationOptions = ({
     navigation,
+    route,
   }: WalletTabSendDetailNavigation) => ({
     header: (
       <CustomHeader flatHeader backgroundColor={whiteSmokeSecondary}>
@@ -82,9 +86,9 @@ export class WalletTabSendDetails extends Component<
           quinaryText
           transparentBg
           h5
-          style={[navigation.state.params.isValid ? {} : styles.disabledText]}
+          style={[route.params.isValid ? {} : styles.disabledText]}
           testID={SEND_TOKENS_TO_PAYMENT_ADDRESS}
-          onPress={() => navigation.state.params.onSendTokens()}
+          onPress={() => route.params.onSendTokens()}
         >
           Send
         </CustomText>
@@ -106,8 +110,8 @@ export class WalletTabSendDetails extends Component<
   componentDidUpdate(prevProps: WalletTabSendDetailsProps) {
     if (this.props.tokenSentStatus !== prevProps.tokenSentStatus) {
       if (this.props.tokenSentStatus === STORE_STATUS.SUCCESS) {
-        const { navigation } = this.props
-        const { params } = navigation.state
+        const { navigation, route } = this.props
+        const { params } = route
         /*
           So, we have one operation to go back to tabs stack, and then another one to change tab to receiveTabRoute.
 
@@ -383,13 +387,14 @@ const mapStateToProps = (state: Store) => ({
   tokenSentStatus: state.wallet.payment.status,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ sendTokens }, dispatch)
 
-export default createStackNavigator({
-  WalletTabSendDetails: {
-    screen: withStatusBar({ color: whiteSmokeSecondary })(
-      connect(mapStateToProps, mapDispatchToProps)(WalletTabSendDetails)
-    ),
-  },
-})
+// TODO:KS Remove this createStackNavigator
+// to remove all nested stack navigators
+export const walletTabsScreen = {
+  routeName: 'WalletTabSendDetails',
+  screen: withStatusBar({ color: whiteSmokeSecondary })(
+    connect(mapStateToProps, mapDispatchToProps)(WalletTabSendDetails)
+  ),
+}

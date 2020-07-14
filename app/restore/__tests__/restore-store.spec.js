@@ -40,7 +40,7 @@ describe('store: backup-store: ', () => {
   })
   it('action: RESTORE_STATUS', () => {
     expect(
-      restoreReducer(initialState, restoreStatus(RestoreStatus.success))
+      restoreReducer(initialState, restoreStatus(RestoreStatus.RESTORE_SUCCESS))
     ).toMatchSnapshot()
   })
   it('action: ERROR_RESTORE', () => {

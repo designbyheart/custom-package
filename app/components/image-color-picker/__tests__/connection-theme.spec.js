@@ -25,7 +25,11 @@ function props() {
 describe('<ConnectionTheme />', () => {
   it('should render default theme properly', () => {
     const connectionTheme = renderer
-      .create(<ConnectionTheme {...props()} />)
+      .create(
+        <ConnectionTheme {...props()}>
+          <Button title="Test" />
+        </ConnectionTheme>
+      )
       .toJSON()
     expect(connectionTheme).toMatchSnapshot()
   })

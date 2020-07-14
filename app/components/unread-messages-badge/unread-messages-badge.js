@@ -3,67 +3,40 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
 import { getConnections } from '../../store/connections-store'
-import {
-  primaryHeaderHeight,
-  isiPhone5,
-  unreadMessagesBadgeSizes,
-} from '../../common/styles/constant'
+import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 
 import type { Store } from '../../store/type-store'
 import type { UnreadMessagesBadgeProps } from './type-unread-messages-badge'
 import type { Connection } from '../../store/type-connection-store'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
 import { HISTORY_EVENT_STATUS } from '../../connection-history/type-connection-history'
 
 const { width } = Dimensions.get('screen')
-const marginTop = isiPhone5
-  ? primaryHeaderHeight - 42
-  : primaryHeaderHeight - 47
+const marginTop = verticalScale(90 - 42)
 
-export class UnreadMessagesBadge extends Component<
-  UnreadMessagesBadgeProps,
-  void
-> {
-  render() {
-    if (this.props.customContainerStyle) {
-      return (
-        <View
-          style={
-            this.props.numberOfNewMessages > 0
-              ? this.props.customContainerStyle
-              : styles.homeContainerNoMessages
-          }
-        >
-          <Text style={styles.numberText}>
-            {this.props.numberOfNewMessages}
-          </Text>
-        </View>
-      )
-    }
-    return (
-      <View
-        style={
-          this.props.numberOfNewMessages > 0
-            ? [
-                this.props.absolutePosition
-                  ? styles.containerAbsolute
-                  : styles.container,
-              ]
-            : [
-                this.props.absolutePosition
-                  ? styles.containerAbsoluteZeroMessages
-                  : styles.containerZeroMessages,
-              ]
-        }
-      >
-        <Text style={styles.numberText}>
-          {this.props.numberOfNewMessages > 9
-            ? '9+'
-            : this.props.numberOfNewMessages}
-        </Text>
-      </View>
-    )
+export const UnreadMessagesBadge = ({
+  customContainerStyle,
+  numberOfNewMessages = 0,
+  absolutePosition,
+}: UnreadMessagesBadgeProps) => {
+  if (numberOfNewMessages <= 0) {
+    return null
   }
+
+  const containerStyle = customContainerStyle
+    ? customContainerStyle
+    : absolutePosition
+    ? styles.containerAbsolute
+    : styles.container
+
+  return (
+    <View style={containerStyle}>
+      <Text style={styles.numberText}>
+        {numberOfNewMessages > 9 ? '9+' : numberOfNewMessages}
+      </Text>
+    </View>
+  )
 }
 
 const mapStateToProps = (state: Store) => {
@@ -97,7 +70,7 @@ const mapStateToProps = (state: Store) => {
   const flattenPlaceholderArray = customFlat(placeholderArray)
 
   let numberOfNewMessages = 0
-  flattenPlaceholderArray.map(message => {
+  flattenPlaceholderArray.map((message) => {
     if (isNewConnection(message.status)) numberOfNewMessages++
   })
 
@@ -108,53 +81,30 @@ const mapStateToProps = (state: Store) => {
 
 export default connect(mapStateToProps, null)(UnreadMessagesBadge)
 
+export const unreadMessageContainerCommonStyle = {
+  width: moderateScale(22),
+  height: moderateScale(22),
+  borderRadius: moderateScale(22) / 2,
+  backgroundColor: colors.cmGreen1,
+  alignItems: 'center',
+  justifyContent: 'center',
+}
 const styles = StyleSheet.create({
   container: {
-    width: unreadMessagesBadgeSizes.height,
-    height: unreadMessagesBadgeSizes.height,
-    borderRadius: unreadMessagesBadgeSizes.height / 2,
-    backgroundColor: '#86B93B',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: width * 0.2,
+    ...unreadMessageContainerCommonStyle,
     marginTop: marginTop + 5,
-    marginLeft: 5,
-  },
-  homeContainerNoMessages: {
-    width: 0,
-    height: 0,
+    marginLeft: moderateScale(5),
   },
   containerAbsolute: {
-    width: unreadMessagesBadgeSizes.height,
-    height: unreadMessagesBadgeSizes.height,
-    borderRadius: unreadMessagesBadgeSizes.height / 2,
-    backgroundColor: '#86B93B',
-    alignItems: 'center',
-    justifyContent: 'center',
-    top: isiPhone5 ? marginTop - 3 : marginTop,
-    left: width * 0.1 + 5,
+    ...unreadMessageContainerCommonStyle,
+    top: verticalScale(marginTop - 3),
+    left: moderateScale(width * 0.1 + 5),
     position: 'absolute',
-  },
-  containerAbsoluteZeroMessages: {
-    width: 0,
-    height: 0,
-    top: 0,
-    left: 0,
-    position: 'absolute',
-  },
-  containerZeroMessages: {
-    width: 0,
-    height: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: width * 0.2 + 24,
-    marginTop: marginTop + 5,
-    marginLeft: 5,
   },
   numberText: {
-    fontFamily: 'Lato',
-    fontSize: isiPhone5 ? 14 : 16,
+    fontFamily: fontFamily,
+    fontSize: moderateScale(14),
     fontWeight: '500',
-    color: '#FFF',
+    color: colors.cmWhite,
   },
 })

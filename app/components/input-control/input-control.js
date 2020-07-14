@@ -13,7 +13,7 @@
 // when and if we would new features, we would add those later
 
 import React, { PureComponent } from 'react'
-import { View, ListView, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { CustomView } from '../layout/custom-view'
 import { CustomList } from '../custom-list/custom-list'
 import { TextInput } from 'react-native'

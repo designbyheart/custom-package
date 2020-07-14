@@ -21,6 +21,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
       accessibilityLabel="pin-code-input-boxes-touchable"
       accessible={false}
       center={true}
+      focusable={true}
       hitSlop={
         Object {
           "bottom": 20,
@@ -29,6 +30,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
           "top": 20,
         }
       }
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -102,6 +104,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
       >
         <View
           accessible={true}
+          focusable={true}
           hitSlop={
             Object {
               "bottom": 20,
@@ -110,6 +113,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
               "top": 20,
             }
           }
+          onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -127,6 +131,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             accessibilityLabel="pin-code-digit-0-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -135,6 +140,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -158,6 +164,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             accessibilityLabel="pin-code-digit-1-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -166,6 +173,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -189,6 +197,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             accessibilityLabel="pin-code-digit-2-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -197,6 +206,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -220,6 +230,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             accessibilityLabel="pin-code-digit-3-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -228,6 +239,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -251,6 +263,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             accessibilityLabel="pin-code-digit-4-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -259,6 +272,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -282,6 +296,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             accessibilityLabel="pin-code-digit-5-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -290,6 +305,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -313,6 +329,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
         <TextInput
           accessibilityLabel="pin-code-input-box"
           accessible={true}
+          allowFontScaling={true}
           autoCorrect={false}
           autoFocus={true}
           blurOnSubmit={false}
@@ -322,6 +339,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
           keyboardType="number-pad"
           maxLength={6}
           onChangeText={[Function]}
+          rejectResponderTermination={true}
           style={
             Object {
               "height": 0,
@@ -331,6 +349,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             }
           }
           testID="pin-code-input-box"
+          underlineColorAndroid="transparent"
           value=""
         />
       </View>

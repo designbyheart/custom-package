@@ -13,12 +13,13 @@ describe('<LockSetupSuccess />', () => {
   const getProps = (isFetchingInvitation = false) => ({
     isFetchingInvitation,
     navigation: getNavigation(),
+    route: {},
     pendingRedirection,
     unlockApp: jest.fn(),
     clearPendingRedirect: jest.fn(),
   })
   const options = {
-    createNodeMock: element => {
+    createNodeMock: (element) => {
       return {
         clear: () => {
           cleared = true

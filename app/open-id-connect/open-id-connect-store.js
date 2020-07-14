@@ -222,7 +222,7 @@ export function* openIdConnectYesSaga(
   }
   const [signError, { data, signature }]: [
     typeof Error,
-    SignDataResponse,
+    SignDataResponse
   ] = yield call(
     flattenAsync(connectionSignData),
     connectionHandle,
@@ -350,7 +350,7 @@ function* sendErrorResponse(
 
 // TODO:KS Move to a common place where we can use this anywhere it is needed
 export function* addArtificialDelayIfNeeded(
-  startTime: moment.Moment
+  startTime: moment$Moment
 ): Generator<*, *, *> {
   const endTime = moment()
   const expectedDelayTime = startTime.add(1.5, 'seconds')

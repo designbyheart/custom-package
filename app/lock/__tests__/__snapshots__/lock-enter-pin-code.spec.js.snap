@@ -21,6 +21,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
       accessibilityLabel="pin-code-input-boxes-touchable"
       accessible={false}
       center={true}
+      focusable={true}
       hitSlop={
         Object {
           "bottom": 20,
@@ -29,6 +30,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
           "top": 20,
         }
       }
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -102,6 +104,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
       >
         <View
           accessible={true}
+          focusable={true}
           hitSlop={
             Object {
               "bottom": 20,
@@ -110,6 +113,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
               "top": 20,
             }
           }
+          onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -127,6 +131,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             accessibilityLabel="pin-code-digit-0-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -135,6 +140,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -158,6 +164,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             accessibilityLabel="pin-code-digit-1-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -166,6 +173,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -189,6 +197,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             accessibilityLabel="pin-code-digit-2-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -197,6 +206,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -220,6 +230,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             accessibilityLabel="pin-code-digit-3-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -228,6 +239,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -251,6 +263,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             accessibilityLabel="pin-code-digit-4-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -259,6 +272,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -282,6 +296,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             accessibilityLabel="pin-code-digit-5-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -290,6 +305,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -313,6 +329,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
         <TextInput
           accessibilityLabel="pin-code-input-box"
           accessible={true}
+          allowFontScaling={true}
           autoCorrect={false}
           autoFocus={true}
           blurOnSubmit={false}
@@ -322,6 +339,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
           keyboardType="number-pad"
           maxLength={6}
           onChangeText={[Function]}
+          rejectResponderTermination={true}
           style={
             Object {
               "height": 0,
@@ -331,6 +349,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             }
           }
           testID="pin-code-input-box"
+          underlineColorAndroid="transparent"
           value=""
         />
       </View>
@@ -360,6 +379,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
       accessibilityLabel="pin-code-input-boxes-touchable"
       accessible={false}
       center={true}
+      focusable={true}
       hitSlop={
         Object {
           "bottom": 20,
@@ -368,6 +388,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
           "top": 20,
         }
       }
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -441,6 +462,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
       >
         <View
           accessible={true}
+          focusable={true}
           hitSlop={
             Object {
               "bottom": 20,
@@ -449,6 +471,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
               "top": 20,
             }
           }
+          onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -466,6 +489,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             accessibilityLabel="pin-code-digit-0-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -474,6 +498,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -497,6 +522,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             accessibilityLabel="pin-code-digit-1-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -505,6 +531,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -528,6 +555,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             accessibilityLabel="pin-code-digit-2-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -536,6 +564,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -559,6 +588,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             accessibilityLabel="pin-code-digit-3-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -567,6 +597,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -590,6 +621,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             accessibilityLabel="pin-code-digit-4-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -598,6 +630,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -621,6 +654,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             accessibilityLabel="pin-code-digit-5-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -629,6 +663,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -652,6 +687,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
         <TextInput
           accessibilityLabel="pin-code-input-box"
           accessible={true}
+          allowFontScaling={true}
           autoCorrect={false}
           autoFocus={true}
           blurOnSubmit={false}
@@ -661,6 +697,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
           keyboardType="number-pad"
           maxLength={6}
           onChangeText={[Function]}
+          rejectResponderTermination={true}
           style={
             Object {
               "height": 0,
@@ -670,6 +707,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             }
           }
           testID="pin-code-input-box"
+          underlineColorAndroid="transparent"
           value=""
         />
       </View>
@@ -699,6 +737,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
       accessibilityLabel="pin-code-input-boxes-touchable"
       accessible={false}
       center={true}
+      focusable={true}
       hitSlop={
         Object {
           "bottom": 20,
@@ -707,6 +746,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
           "top": 20,
         }
       }
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -780,6 +820,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
       >
         <View
           accessible={true}
+          focusable={true}
           hitSlop={
             Object {
               "bottom": 20,
@@ -788,6 +829,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
               "top": 20,
             }
           }
+          onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -805,6 +847,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             accessibilityLabel="pin-code-digit-0-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -813,6 +856,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -836,6 +880,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             accessibilityLabel="pin-code-digit-1-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -844,6 +889,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -867,6 +913,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             accessibilityLabel="pin-code-digit-2-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -875,6 +922,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -898,6 +946,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             accessibilityLabel="pin-code-digit-3-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -906,6 +955,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -929,6 +979,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             accessibilityLabel="pin-code-digit-4-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -937,6 +988,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -960,6 +1012,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             accessibilityLabel="pin-code-digit-5-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -968,6 +1021,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -991,6 +1045,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
         <TextInput
           accessibilityLabel="pin-code-input-box"
           accessible={true}
+          allowFontScaling={true}
           autoCorrect={false}
           autoFocus={true}
           blurOnSubmit={false}
@@ -1000,6 +1055,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
           keyboardType="number-pad"
           maxLength={6}
           onChangeText={[Function]}
+          rejectResponderTermination={true}
           style={
             Object {
               "height": 0,
@@ -1009,6 +1065,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             }
           }
           testID="pin-code-input-box"
+          underlineColorAndroid="transparent"
           value=""
         />
       </View>
@@ -1038,6 +1095,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
       accessibilityLabel="pin-code-input-boxes-touchable"
       accessible={false}
       center={true}
+      focusable={true}
       hitSlop={
         Object {
           "bottom": 20,
@@ -1046,6 +1104,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
           "top": 20,
         }
       }
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1119,6 +1178,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
       >
         <View
           accessible={true}
+          focusable={true}
           hitSlop={
             Object {
               "bottom": 20,
@@ -1127,6 +1187,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
               "top": 20,
             }
           }
+          onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1144,6 +1205,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             accessibilityLabel="pin-code-digit-0-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -1152,6 +1214,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1175,6 +1238,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             accessibilityLabel="pin-code-digit-1-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -1183,6 +1247,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1206,6 +1271,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             accessibilityLabel="pin-code-digit-2-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -1214,6 +1280,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1237,6 +1304,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             accessibilityLabel="pin-code-digit-3-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -1245,6 +1313,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1268,6 +1337,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             accessibilityLabel="pin-code-digit-4-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -1276,6 +1346,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1299,6 +1370,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             accessibilityLabel="pin-code-digit-5-touchable"
             accessible={false}
             center={true}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 20,
@@ -1307,6 +1379,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "top": 20,
               }
             }
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1330,6 +1403,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
         <TextInput
           accessibilityLabel="pin-code-input-box"
           accessible={true}
+          allowFontScaling={true}
           autoCorrect={false}
           autoFocus={true}
           blurOnSubmit={false}
@@ -1339,6 +1413,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
           keyboardType="number-pad"
           maxLength={6}
           onChangeText={[Function]}
+          rejectResponderTermination={true}
           style={
             Object {
               "height": 0,
@@ -1348,6 +1423,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             }
           }
           testID="pin-code-input-box"
+          underlineColorAndroid="transparent"
           value=""
         />
       </View>

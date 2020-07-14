@@ -13,6 +13,13 @@ describe('<WalletTabSendDetails />', () => {
   let navigation = {
     ...getNavigation(),
   }
+  const route = {
+    params: {
+      isValid: true,
+      onSendTokens: jest.fn(),
+      navigate: jest.fn(),
+    },
+  }
 
   function setup() {
     const component = renderer.create(
@@ -21,6 +28,7 @@ describe('<WalletTabSendDetails />', () => {
           tokenAmount="12345"
           tokenSentStatus={STORE_STATUS.SUCCESS}
           navigation={navigation}
+          route={route}
           sendTokens={jest.fn()}
         />
       </Provider>

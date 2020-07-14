@@ -22,12 +22,13 @@ describe('<GenerateRecoveryPhrase />', () => {
     navigate: jest.fn(),
     goBack: jest.fn(),
     setParams: jest.fn(),
-    getParam: jest.fn(),
-    state: {
-      params: {
-        recoveryPassphrase,
-        initialRoute: settingsRoute,
-      },
+  }
+
+  const route = {
+    params: {
+      recoveryPassphrase,
+      initialRoute: settingsRoute,
+      navigateBack: jest.fn(),
     },
   }
 
@@ -43,6 +44,7 @@ describe('<GenerateRecoveryPhrase />', () => {
         hydrateCloudBackup={jest.fn()}
         recoveryStatus={BACKUP_STORE_STATUS.GENERATE_PHRASE_SUCCESS}
         navigation={navigation}
+        route={route}
       />
     )
     tree.getInstance().setState({
@@ -67,6 +69,7 @@ describe('<GenerateRecoveryPhrase />', () => {
         hydrateCloudBackup={jest.fn()}
         recoveryStatus={BACKUP_STORE_STATUS.GENERATE_PHRASE_LOADING}
         navigation={navigation}
+        route={route}
       />
     )
     expect(tree.toJSON()).toMatchSnapshot()
@@ -83,6 +86,7 @@ describe('<GenerateRecoveryPhrase />', () => {
         hydrateCloudBackup={jest.fn()}
         recoveryStatus={BACKUP_STORE_STATUS.GENERATE_PHRASE_FAILURE}
         navigation={navigation}
+        route={route}
       />
     )
     tree.getInstance().setState({

@@ -1,5 +1,5 @@
-// flow-typed signature: 90448158f7585274ad62ef0febb8626d
-// flow-typed version: 48a1b7b5fd/redux-saga_v1.x.x/flow_>=v0.76.0
+// flow-typed signature: 689311caccb0db4742bdff80086a5a09
+// flow-typed version: c6154227d1/redux-saga_v1.x.x/flow_>=v0.104.x
 
 declare module 'redux-saga' {
   // These types are copied directly from the redux libdef.
@@ -10,11 +10,12 @@ declare module 'redux-saga' {
 
   // * remove next types
   declare type DispatchAPI<A> = (action: A) => A
-  declare type Dispatch<A: { type: string }> = DispatchAPI<A>
+  declare type Dispatch<A: { type: string, ... }> = DispatchAPI<A>
 
   declare type MiddlewareAPI<S, A, D = Dispatch<A>> = {
     dispatch: D,
     getState(): S,
+    ...
   }
 
   declare type Middleware<S, A, D = Dispatch<A>> = (
@@ -34,6 +35,7 @@ declare module 'redux-saga' {
   declare export var isEnd: {
     (input: TEnd): true,
     (input: mixed): false,
+    ...,
   }
 
   declare export type Predicate<T> = (arg: T) => boolean
@@ -58,7 +60,7 @@ declare module 'redux-saga' {
     error: () => Error | void;
     cancel: () => void;
     toPromise(): Promise<RT>;
-    setContext<C: {}>(props: $Shape<C>): void;
+    setContext<C: { ... }>(props: $Shape<C>): void;
   }
 
   declare export interface SagaMonitor {
@@ -68,6 +70,7 @@ declare module 'redux-saga' {
       +label: string,
       +root?: boolean,
       +effect: Effect,
+      ...
     }) => void;
     effectResolved?: (effectId: number, result: mixed) => void;
     effectRejected?: (effectId: number, error: any) => void;
@@ -145,7 +148,7 @@ declare module 'redux-saga' {
     channel?: PredicateTakeableChannel<A>,
     dispatch?: (input: A) => mixed,
     getState?: () => S,
-    context?: {},
+    context?: { ... },
     sagaMonitor?: SagaMonitor,
     logger?: Logger,
     effectMiddlewares?: Array<EffectMiddleware>,
@@ -250,9 +253,10 @@ declare module 'redux-saga' {
       T7,
       T8
     ): Task<R>,
+    ...,
   }
 
-  declare export type SagaMiddleware<C: {}> = {
+  declare export type SagaMiddleware<C: { ... }> = {
     <S, A, D>(api: MiddlewareAPI<S, A, D>): (next: D) => D,
     run: {
       <R, Fn: () => Saga<R>>(saga: Fn): Task<R>,
@@ -330,13 +334,15 @@ declare module 'redux-saga' {
         T7,
         T8
       ): Task<R>,
+      ...,
     },
     setContext: (props: $Shape<C>) => void,
+    ...
   }
 
   declare export type Emit<T> = (input: T) => void
 
-  declare export type SagaMiddlewareOptions<C: {}> = {|
+  declare export type SagaMiddlewareOptions<C: { ... }> = {|
     context?: C,
     sagaMonitor?: SagaMonitor,
     logger?: Logger,
@@ -362,7 +368,7 @@ declare module 'redux-saga' {
     +combinator: C;
   }
 
-  declare export type AllTakeEffect<M: { maybe: true } | void> = IEffect<
+  declare export type AllTakeEffect<M: { maybe: true, ... } | void> = IEffect<
     'TAKE',
     $ReadOnly<{|
       pattern: '*',
@@ -372,9 +378,9 @@ declare module 'redux-saga' {
   >
 
   declare export type TakeEffect<
-    P: { pattern: Pattern } | void,
-    C: { channel: TakeableChannel<*> } | void,
-    M: { maybe: true } | void
+    P: { pattern: Pattern, ... } | void,
+    C: { channel: TakeableChannel<*>, ... } | void,
+    M: { maybe: true, ... } | void
   > = IEffect<
     'TAKE',
     $ReadOnly<{|
@@ -386,9 +392,9 @@ declare module 'redux-saga' {
   >
 
   declare export type PutEffect<
-    A: {},
+    A: { ... },
     C: PuttableChannel<*> | null,
-    R: { resolve: true } | void
+    R: { resolve: true, ... } | void
   > = IEffect<
     'PUT',
     $ReadOnly<{|
@@ -416,7 +422,7 @@ declare module 'redux-saga' {
   declare export type ForkEffect<
     Ctx,
     Fn: (...args: Array<*>) => *,
-    D: { detached: true } | void,
+    D: { detached: true, ... } | void,
     Args: $ReadOnlyArray<*>
   > = IEffect<
     'FORK',
@@ -431,7 +437,7 @@ declare module 'redux-saga' {
 
   declare export function detach<T1, T2, T3>(
     effect: ForkEffect<T1, T2, *, T3>
-  ): ForkEffect<T1, T2, { detached: true }, T3>
+  ): ForkEffect<T1, T2, { detached: true, ... }, T3>
 
   declare export type CpsEffect<
     Ctx,
@@ -492,17 +498,21 @@ declare module 'redux-saga' {
 
   declare export type CancelledEffect = IEffect<'CANCELLED', {||}, false>
 
-  declare export type SetContextEffect<T: {}> = IEffect<'SET_CONTEXT', T, false>
+  declare export type SetContextEffect<T: { ... }> = IEffect<
+    'SET_CONTEXT',
+    T,
+    false
+  >
 
   declare export type GetContextEffect<T> = IEffect<'GET_CONTEXT', T, false>
 
   declare export type RaceEffect<
-    R: { +[name: string]: Effect } | $ReadOnlyArray<Effect>
+    R: { +[name: string]: Effect, ... } | $ReadOnlyArray<Effect>
   > = IEffect<'RACE', R, true>
 
   declare export type AllEffect = IEffect<
     'ALL',
-    { +[name: string]: Effect } | $ReadOnlyArray<Effect>,
+    { +[name: string]: Effect, ... } | $ReadOnlyArray<Effect>,
     true
   >
 
@@ -573,19 +583,21 @@ declare module 'redux-saga/effects' {
   |}>
 
   declare export var put: {
-    <A: {}>(action: A): PutEffect<A, null, void>,
-    <A: {}, T, CH: PuttableChannel<T>>(
+    <A: { ... }>(action: A): PutEffect<A, null, void>,
+    <A: { ... }, T, CH: PuttableChannel<T>>(
       channel: CH,
       action: A
     ): PutEffect<A, CH, void>,
+    ...,
   }
 
   declare export var putResolve: {
-    <A: {}>(action: A): PutEffect<A, null, { resolve: true }>,
-    <A: {}, T, CH: PuttableChannel<T>>(
+    <A: { ... }>(action: A): PutEffect<A, null, { resolve: true, ... }>,
+    <A: { ... }, T, CH: PuttableChannel<T>>(
       channel: CH,
       action: A
-    ): PutEffect<A, CH, { resolve: true }>,
+    ): PutEffect<A, CH, { resolve: true, ... }>,
+    ...,
   }
 
   declare export var call: {
@@ -655,7 +667,6 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): CallEffect<null, Fn, [T1, T2, T3, T4, T5, T6, T7, T8]>,
-
     // call([context, fn], ...args)
     <Ctx, R, Fn: () => R>(cfn: [Ctx, Fn]): CallEffect<Ctx, Fn, []>,
     <Ctx, R, T1, Fn: T1 => R>(cfn: [Ctx, Fn], T1): CallEffect<Ctx, Fn, [T1]>,
@@ -727,16 +738,15 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): CallEffect<Ctx, Fn, [T1, T2, T3, T4, T5, T6, T7, T8]>,
-
     // call([context, fnName], ...args)
-    <R, FnName: string, Fn: () => R, Ctx: { [FnName]: Fn }>(
+    <R, FnName: string, Fn: () => R, Ctx: { [FnName]: Fn, ... }>(
       cfn: [Ctx, FnName]
     ): CallEffect<Ctx, Fn, []>,
-    <R, FnName: string, T1, Fn: T1 => R, Ctx: { [FnName]: Fn }>(
+    <R, FnName: string, T1, Fn: T1 => R, Ctx: { [FnName]: Fn, ... }>(
       cfn: [Ctx, FnName],
       T1
     ): CallEffect<Ctx, Fn, [T1]>,
-    <R, FnName: string, T1, T2, Fn: (T1, T2) => R, Ctx: { [FnName]: Fn }>(
+    <R, FnName: string, T1, T2, Fn: (T1, T2) => R, Ctx: { [FnName]: Fn, ... }>(
       cfn: [Ctx, FnName],
       T1,
       T2
@@ -748,7 +758,7 @@ declare module 'redux-saga/effects' {
       T2,
       T3,
       Fn: (T1, T2, T3) => R,
-      Ctx: { [FnName]: Fn }
+      Ctx: { [FnName]: Fn, ... }
     >(
       cfn: [Ctx, FnName],
       T1,
@@ -763,7 +773,7 @@ declare module 'redux-saga/effects' {
       T3,
       T4,
       Fn: (T1, T2, T3, T4) => R,
-      Ctx: { [FnName]: Fn }
+      Ctx: { [FnName]: Fn, ... }
     >(
       cfn: [Ctx, FnName],
       T1,
@@ -780,7 +790,7 @@ declare module 'redux-saga/effects' {
       T4,
       T5,
       Fn: (T1, T2, T3, T4, T5) => R,
-      Ctx: { [FnName]: Fn }
+      Ctx: { [FnName]: Fn, ... }
     >(
       cfn: [Ctx, FnName],
       T1,
@@ -799,7 +809,7 @@ declare module 'redux-saga/effects' {
       T5,
       T6,
       Fn: (T1, T2, T3, T4, T5, T6) => R,
-      Ctx: { [FnName]: Fn }
+      Ctx: { [FnName]: Fn, ... }
     >(
       cfn: [Ctx, FnName],
       T1,
@@ -820,7 +830,7 @@ declare module 'redux-saga/effects' {
       T6,
       T7,
       Fn: (T1, T2, T3, T4, T5, T6, T7) => R,
-      Ctx: { [FnName]: Fn }
+      Ctx: { [FnName]: Fn, ... }
     >(
       cfn: [Ctx, FnName],
       T1,
@@ -843,7 +853,7 @@ declare module 'redux-saga/effects' {
       T7,
       T8,
       Fn: (T1, T2, T3, T4, T5, T6, T7, T8) => R,
-      Ctx: { [FnName]: Fn }
+      Ctx: { [FnName]: Fn, ... }
     >(
       cfn: [Ctx, FnName],
       T1,
@@ -855,37 +865,56 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): CallEffect<Ctx, Fn, [T1, T2, T3, T4, T5, T6, T7, T8]>,
-
     // call({context, fn}, ...args)
-    <Ctx, R, Fn: () => R>(cfn: { context: Ctx, fn: Fn }): CallEffect<
-      Ctx,
-      Fn,
-      []
-    >,
+    <Ctx, R, Fn: () => R>(cfn: {
+      context: Ctx,
+      fn: Fn,
+      ...
+    }): CallEffect<Ctx, Fn, []>,
     <Ctx, R, T1, Fn: T1 => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1
     ): CallEffect<Ctx, Fn, [T1]>,
     <Ctx, R, T1, T2, Fn: (T1, T2) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2
     ): CallEffect<Ctx, Fn, [T1, T2]>,
     <Ctx, R, T1, T2, T3, Fn: (T1, T2, T3) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3
     ): CallEffect<Ctx, Fn, [T1, T2, T3]>,
     <Ctx, R, T1, T2, T3, T4, Fn: (T1, T2, T3, T4) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
       T4
     ): CallEffect<Ctx, Fn, [T1, T2, T3, T4]>,
     <Ctx, R, T1, T2, T3, T4, T5, Fn: (T1, T2, T3, T4, T5) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -893,7 +922,11 @@ declare module 'redux-saga/effects' {
       T5
     ): CallEffect<Ctx, Fn, [T1, T2, T3, T4, T5]>,
     <Ctx, R, T1, T2, T3, T4, T5, T6, Fn: (T1, T2, T3, T4, T5, T6) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -902,7 +935,11 @@ declare module 'redux-saga/effects' {
       T6
     ): CallEffect<Ctx, Fn, [T1, T2, T3, T4, T5, T6]>,
     <Ctx, R, T1, T2, T3, T4, T5, T6, T7, Fn: (T1, T2, T3, T4, T5, T6, T7) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -924,7 +961,11 @@ declare module 'redux-saga/effects' {
       T8,
       Fn: (T1, T2, T3, T4, T5, T6, T7, T8) => R
     >(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -934,6 +975,7 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): CallEffect<Ctx, Fn, [T1, T2, T3, T4, T5, T6, T7, T8]>,
+    ...,
   }
 
   declare export var apply: {
@@ -1015,11 +1057,13 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): CallEffect<Ctx, Fn, [T1, T2, T3, T4, T5, T6, T7, T8]>,
+    ...,
   }
 
   declare type NodeCallback<R> = {
     (err: Error): void,
     (err: null | void | false, result: R): void,
+    ...,
   }
 
   declare export var cps: {
@@ -1115,7 +1159,6 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): CpsEffect<null, Fn, [T1, T2, T3, T4, T5, T6, T7, T8]>,
-
     // cps([context, fn], ...args)
     <Ctx, R, Fn: (NodeCallback<R>) => void>(
       cfn: [Ctx, Fn]
@@ -1222,29 +1265,45 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): CpsEffect<Ctx, Fn, [T1, T2, T3, T4, T5, T6, T7, T8]>,
-
     // cps({context, fn}, ...args)
     <Ctx, R, Fn: (NodeCallback<R>) => void>(cfn: {
       context: Ctx,
       fn: Fn,
+      ...
     }): CpsEffect<Ctx, Fn, []>,
     <Ctx, R, T1, Fn: (T1, NodeCallback<R>) => void>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1
     ): CpsEffect<Ctx, Fn, [T1]>,
     <Ctx, R, T1, T2, Fn: (T1, T2, NodeCallback<R>) => void>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2
     ): CpsEffect<Ctx, Fn, [T1, T2]>,
     <Ctx, R, T1, T2, T3, Fn: (T1, T2, T3, NodeCallback<R>) => void>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3
     ): CpsEffect<Ctx, Fn, [T1, T2, T3]>,
     <Ctx, R, T1, T2, T3, T4, Fn: (T1, T2, T3, T4, NodeCallback<R>) => void>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -1260,7 +1319,11 @@ declare module 'redux-saga/effects' {
       T5,
       Fn: (T1, T2, T3, T4, T5, NodeCallback<R>) => void
     >(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -1278,7 +1341,11 @@ declare module 'redux-saga/effects' {
       T6,
       Fn: (T1, T2, T3, T4, T5, T6, NodeCallback<R>) => void
     >(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -1298,7 +1365,11 @@ declare module 'redux-saga/effects' {
       T7,
       Fn: (T1, T2, T3, T4, T5, T6, T7, NodeCallback<R>) => void
     >(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -1320,7 +1391,11 @@ declare module 'redux-saga/effects' {
       T8,
       Fn: (T1, T2, T3, T4, T5, T6, T7, T8, NodeCallback<R>) => void
     >(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -1330,6 +1405,7 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): CpsEffect<Ctx, Fn, [T1, T2, T3, T4, T5, T6, T7, T8]>,
+    ...,
   }
 
   declare export var fork: {
@@ -1403,7 +1479,6 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): ForkEffect<null, Fn, void, [T1, T2, T3, T4, T5, T6, T7, T8]>,
-
     // fork([context, fn], ...args)
     <Ctx, R, Fn: () => R>(cfn: [Ctx, Fn]): ForkEffect<Ctx, Fn, void, []>,
     <Ctx, R, T1, Fn: T1 => R>(
@@ -1478,38 +1553,56 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): ForkEffect<Ctx, Fn, void, [T1, T2, T3, T4, T5, T6, T7, T8]>,
-
     // fork({context, fn}, ...args)
-    <Ctx, R, Fn: () => R>(cfn: { context: Ctx, fn: Fn }): ForkEffect<
-      Ctx,
-      Fn,
-      void,
-      []
-    >,
+    <Ctx, R, Fn: () => R>(cfn: {
+      context: Ctx,
+      fn: Fn,
+      ...
+    }): ForkEffect<Ctx, Fn, void, []>,
     <Ctx, R, T1, Fn: T1 => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1
     ): ForkEffect<Ctx, Fn, void, [T1]>,
     <Ctx, R, T1, T2, Fn: (T1, T2) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2
     ): ForkEffect<Ctx, Fn, void, [T1, T2]>,
     <Ctx, R, T1, T2, T3, Fn: (T1, T2, T3) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3
     ): ForkEffect<Ctx, Fn, void, [T1, T2, T3]>,
     <Ctx, R, T1, T2, T3, T4, Fn: (T1, T2, T3, T4) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
       T4
     ): ForkEffect<Ctx, Fn, void, [T1, T2, T3, T4]>,
     <Ctx, R, T1, T2, T3, T4, T5, Fn: (T1, T2, T3, T4, T5) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -1517,7 +1610,11 @@ declare module 'redux-saga/effects' {
       T5
     ): ForkEffect<Ctx, Fn, void, [T1, T2, T3, T4, T5]>,
     <Ctx, R, T1, T2, T3, T4, T5, T6, Fn: (T1, T2, T3, T4, T5, T6) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -1526,7 +1623,11 @@ declare module 'redux-saga/effects' {
       T6
     ): ForkEffect<Ctx, Fn, void, [T1, T2, T3, T4, T5, T6]>,
     <Ctx, R, T1, T2, T3, T4, T5, T6, T7, Fn: (T1, T2, T3, T4, T5, T6, T7) => R>(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -1548,7 +1649,11 @@ declare module 'redux-saga/effects' {
       T8,
       Fn: (T1, T2, T3, T4, T5, T6, T7, T8) => R
     >(
-      cfn: { context: Ctx, fn: Fn },
+      cfn: {
+        context: Ctx,
+        fn: Fn,
+        ...
+      },
       T1,
       T2,
       T3,
@@ -1558,33 +1663,34 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): ForkEffect<Ctx, Fn, void, [T1, T2, T3, T4, T5, T6, T7, T8]>,
+    ...,
   }
 
   declare export var spawn: {
     // spawn(fn, ...args)
-    <R, Fn: () => R>(Fn): ForkEffect<null, Fn, { detached: true }, []>,
+    <R, Fn: () => R>(Fn): ForkEffect<null, Fn, { detached: true, ... }, []>,
     <R, T1, Fn: T1 => R>(
       Fn,
       T1
-    ): ForkEffect<null, Fn, { detached: true }, [T1]>,
+    ): ForkEffect<null, Fn, { detached: true, ... }, [T1]>,
     <R, T1, T2, Fn: (T1, T2) => R>(
       Fn,
       T1,
       T2
-    ): ForkEffect<null, Fn, { detached: true }, [T1, T2]>,
+    ): ForkEffect<null, Fn, { detached: true, ... }, [T1, T2]>,
     <R, T1, T2, T3, Fn: (T1, T2, T3) => R>(
       Fn,
       T1,
       T2,
       T3
-    ): ForkEffect<null, Fn, { detached: true }, [T1, T2, T3]>,
+    ): ForkEffect<null, Fn, { detached: true, ... }, [T1, T2, T3]>,
     <R, T1, T2, T3, T4, Fn: (T1, T2, T3, T4) => R>(
       Fn,
       T1,
       T2,
       T3,
       T4
-    ): ForkEffect<null, Fn, { detached: true }, [T1, T2, T3, T4]>,
+    ): ForkEffect<null, Fn, { detached: true, ... }, [T1, T2, T3, T4]>,
     <R, T1, T2, T3, T4, T5, Fn: (T1, T2, T3, T4, T5) => R>(
       Fn,
       T1,
@@ -1592,7 +1698,7 @@ declare module 'redux-saga/effects' {
       T3,
       T4,
       T5
-    ): ForkEffect<null, Fn, { detached: true }, [T1, T2, T3, T4, T5]>,
+    ): ForkEffect<null, Fn, { detached: true, ... }, [T1, T2, T3, T4, T5]>,
     <R, T1, T2, T3, T4, T5, T6, Fn: (T1, T2, T3, T4, T5, T6) => R>(
       Fn,
       T1,
@@ -1601,7 +1707,7 @@ declare module 'redux-saga/effects' {
       T4,
       T5,
       T6
-    ): ForkEffect<null, Fn, { detached: true }, [T1, T2, T3, T4, T5, T6]>,
+    ): ForkEffect<null, Fn, { detached: true, ... }, [T1, T2, T3, T4, T5, T6]>,
     <R, T1, T2, T3, T4, T5, T6, T7, Fn: (T1, T2, T3, T4, T5, T6, T7) => R>(
       Fn,
       T1,
@@ -1611,7 +1717,12 @@ declare module 'redux-saga/effects' {
       T5,
       T6,
       T7
-    ): ForkEffect<null, Fn, { detached: true }, [T1, T2, T3, T4, T5, T6, T7]>,
+    ): ForkEffect<
+      null,
+      Fn,
+      { detached: true, ... },
+      [T1, T2, T3, T4, T5, T6, T7]
+    >,
     <
       R,
       T1,
@@ -1636,36 +1747,35 @@ declare module 'redux-saga/effects' {
     ): ForkEffect<
       null,
       Fn,
-      { detached: true },
+      { detached: true, ... },
       [T1, T2, T3, T4, T5, T6, T7, T8]
     >,
-
     // spawn([context, fn], ...args)
     <Ctx, R, Fn: () => R>(
       cfn: [Ctx, Fn]
-    ): ForkEffect<Ctx, Fn, { detached: true }, []>,
+    ): ForkEffect<Ctx, Fn, { detached: true, ... }, []>,
     <Ctx, R, T1, Fn: T1 => R>(
       cfn: [Ctx, Fn],
       T1
-    ): ForkEffect<Ctx, Fn, { detached: true }, [T1]>,
+    ): ForkEffect<Ctx, Fn, { detached: true, ... }, [T1]>,
     <Ctx, R, T1, T2, Fn: (T1, T2) => R>(
       cfn: [Ctx, Fn],
       T1,
       T2
-    ): ForkEffect<Ctx, Fn, { detached: true }, [T1, T2]>,
+    ): ForkEffect<Ctx, Fn, { detached: true, ... }, [T1, T2]>,
     <Ctx, R, T1, T2, T3, Fn: (T1, T2, T3) => R>(
       cfn: [Ctx, Fn],
       T1,
       T2,
       T3
-    ): ForkEffect<Ctx, Fn, { detached: true }, [T1, T2, T3]>,
+    ): ForkEffect<Ctx, Fn, { detached: true, ... }, [T1, T2, T3]>,
     <Ctx, R, T1, T2, T3, T4, Fn: (T1, T2, T3, T4) => R>(
       cfn: [Ctx, Fn],
       T1,
       T2,
       T3,
       T4
-    ): ForkEffect<Ctx, Fn, { detached: true }, [T1, T2, T3, T4]>,
+    ): ForkEffect<Ctx, Fn, { detached: true, ... }, [T1, T2, T3, T4]>,
     <Ctx, R, T1, T2, T3, T4, T5, Fn: (T1, T2, T3, T4, T5) => R>(
       cfn: [Ctx, Fn],
       T1,
@@ -1673,7 +1783,7 @@ declare module 'redux-saga/effects' {
       T3,
       T4,
       T5
-    ): ForkEffect<Ctx, Fn, { detached: true }, [T1, T2, T3, T4, T5]>,
+    ): ForkEffect<Ctx, Fn, { detached: true, ... }, [T1, T2, T3, T4, T5]>,
     <Ctx, R, T1, T2, T3, T4, T5, T6, Fn: (T1, T2, T3, T4, T5, T6) => R>(
       cfn: [Ctx, Fn],
       T1,
@@ -1682,7 +1792,7 @@ declare module 'redux-saga/effects' {
       T4,
       T5,
       T6
-    ): ForkEffect<Ctx, Fn, { detached: true }, [T1, T2, T3, T4, T5, T6]>,
+    ): ForkEffect<Ctx, Fn, { detached: true, ... }, [T1, T2, T3, T4, T5, T6]>,
     <Ctx, R, T1, T2, T3, T4, T5, T6, T7, Fn: (T1, T2, T3, T4, T5, T6, T7) => R>(
       cfn: [Ctx, Fn],
       T1,
@@ -1692,7 +1802,12 @@ declare module 'redux-saga/effects' {
       T5,
       T6,
       T7
-    ): ForkEffect<Ctx, Fn, { detached: true }, [T1, T2, T3, T4, T5, T6, T7]>,
+    ): ForkEffect<
+      Ctx,
+      Fn,
+      { detached: true, ... },
+      [T1, T2, T3, T4, T5, T6, T7]
+    >,
     <
       Ctx,
       R,
@@ -1718,9 +1833,10 @@ declare module 'redux-saga/effects' {
     ): ForkEffect<
       Ctx,
       Fn,
-      { detached: true },
+      { detached: true, ... },
       [T1, T2, T3, T4, T5, T6, T7, T8]
     >,
+    ...,
   }
 
   declare export var join: {
@@ -1728,6 +1844,7 @@ declare module 'redux-saga/effects' {
     // join([...tasks])
     <T: Task<*>>(task: T): JoinEffect<T>,
     <T: Array<Task<*>>>(tasks: T): JoinEffect<T>,
+    ...,
   }
 
   declare export var cancel: {
@@ -1737,6 +1854,7 @@ declare module 'redux-saga/effects' {
     (): CancelEffect<'@@redux-saga/SELF_CANCELLATION'>,
     <T: Task<*>>(task: T): CancelEffect<T>,
     <T: Task<*>>(tasks: Array<T>): CancelEffect<$ReadOnlyArray<T>>,
+    ...,
   }
 
   declare export var select: {
@@ -1823,6 +1941,7 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): SelectEffect<Fn, [T1, T2, T3, T4, T5, T6, T7, T8]>,
+    ...,
   }
 
   declare export var actionChannel: {
@@ -1833,40 +1952,47 @@ declare module 'redux-saga/effects' {
       pattern: P,
       buffer: B
     ): ActionChannelEffect<BT, P, B>,
+    ...,
   }
 
   declare export var flush: {
     // flush(channel)
     <T, CH: FlushableChannel<T>>(channel: CH): FlushEffect<CH>,
+    ...,
   }
 
   declare export var cancelled: {
     // cancelled()
     (): CancelledEffect,
+    ...,
   }
 
   declare export var setContext: {
     // setContext(props)
-    <T: {}>(props: T): SetContextEffect<T>,
+    <T: { ... }>(props: T): SetContextEffect<T>,
+    ...,
   }
 
   declare export var getContext: {
     // getContext(prop)
     <T: string>(prop: T): GetContextEffect<T>,
+    ...,
   }
 
   declare export var race: {
     // race(effects)
     // race([...effects])
-    <R: { +[name: string]: Effect }>(effects: R): RaceEffect<R>,
+    <R: { +[name: string]: Effect, ... }>(effects: R): RaceEffect<R>,
     <R: $ReadOnlyArray<Effect>>(effects: R): RaceEffect<R>,
+    ...,
   }
 
   declare export var all: {
     // all(effects)
     // all([...effects])
-    (effects: { +[name: string]: Effect }): AllEffect,
+    (effects: { +[name: string]: Effect, ... }): AllEffect,
     (effects: $ReadOnlyArray<Effect>): AllEffect,
+    ...,
   }
 
   declare export var take: {
@@ -1875,18 +2001,22 @@ declare module 'redux-saga/effects' {
     (): AllTakeEffect<void>,
     <T, CH: TakeableChannel<T>>(
       channel: CH
-    ): TakeEffect<void, { channel: CH }, void>,
-    <P: Pattern>(pattern: P): TakeEffect<{ pattern: P }, void, void>,
+    ): TakeEffect<void, { channel: CH, ... }, void>,
+    <P: Pattern>(pattern: P): TakeEffect<{ pattern: P, ... }, void, void>,
+    ...,
   }
 
   declare export var takeMaybe: {
     // takeMaybe(pattern)
     // takeMaybe(channel)
-    (): AllTakeEffect<{ maybe: true }>,
+    (): AllTakeEffect<{ maybe: true, ... }>,
     <T, CH: TakeableChannel<T>>(
       channel: CH
-    ): TakeEffect<void, { channel: CH }, { maybe: true }>,
-    <P: Pattern>(pattern: P): TakeEffect<{ pattern: P }, void, { maybe: true }>,
+    ): TakeEffect<void, { channel: CH, ... }, { maybe: true, ... }>,
+    <P: Pattern>(
+      pattern: P
+    ): TakeEffect<{ pattern: P, ... }, void, { maybe: true, ... }>,
+    ...,
   }
 
   declare export var takeEvery: {
@@ -2027,6 +2157,7 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): ForkEffect<null, Fn, void, [P, Fn, T1, T2, T3, T4, T5, T6, T7, T8]>,
+    ...,
   }
 
   declare export var takeLatest: {
@@ -2167,6 +2298,7 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): ForkEffect<null, Fn, void, [P, Fn, T1, T2, T3, T4, T5, T6, T7, T8]>,
+    ...,
   }
 
   declare export var takeLeading: {
@@ -2307,6 +2439,7 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): ForkEffect<null, Fn, void, [P, Fn, T1, T2, T3, T4, T5, T6, T7, T8]>,
+    ...,
   }
 
   declare export var delay: {
@@ -2318,6 +2451,7 @@ declare module 'redux-saga/effects' {
       timeout: T1,
       T2
     ): CallEffect<null, (ms: T1) => Promise<true>, [T1, T2]>,
+    ...,
   }
 
   declare export var throttle: {
@@ -2481,6 +2615,7 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): ForkEffect<null, Fn, void, [MS, P, Fn, T1, T2, T3, T4, T5, T6, T7, T8]>,
+    ...,
   }
 
   declare export var debounce: {
@@ -2630,6 +2765,7 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): ForkEffect<null, Fn, void, [MS, P, Fn, T1, T2, T3, T4, T5, T6, T7, T8]>,
+    ...,
   }
 
   declare export var retry: {
@@ -2761,5 +2897,6 @@ declare module 'redux-saga/effects' {
       T7,
       T8
     ): CallEffect<null, Function, [MT, D, Fn, T1, T2, T3, T4, T5, T6, T7, T8]>,
+    ...,
   }
 }

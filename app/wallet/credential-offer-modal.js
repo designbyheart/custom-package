@@ -9,17 +9,8 @@ import {
   Container,
   CustomModal,
 } from '../components'
-import {
-  OFFSET_1X,
-  OFFSET_2X,
-  OFFSET_3X,
-  OFFSET_6X,
-  OFFSET_7X,
-  color,
-  HAIRLINE_WIDTH,
-  whiteSmoke,
-  isiPhone5,
-} from '../common/styles/constant'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 import Modal from 'react-native-modal'
 import PaymentFailureModal from './payment-failure-modal'
 import {
@@ -59,7 +50,7 @@ export default class CredentialOfferModal extends PureComponent<
     } = this.props
     return (
       <Modal
-        backdropColor={whiteSmoke}
+        backdropColor={colors.cmGray5}
         isVisible={
           credentialOfferModalStatus !== CREDENTIAL_OFFER_MODAL_STATUS.NONE
         }
@@ -111,7 +102,7 @@ export default class CredentialOfferModal extends PureComponent<
                 fifth
                 onPress={this.props.onClose}
                 title={'Continue'}
-                textStyle={{ fontWeight: 'bold', color: '#85BF43' }}
+                textStyle={{ fontWeight: 'bold', color: colors.cmGreen1 }}
               />
             </CustomView>
           )}
@@ -207,25 +198,25 @@ export default class CredentialOfferModal extends PureComponent<
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: OFFSET_3X,
+    marginHorizontal: moderateScale(30),
   },
   innerContainer: {
     ...Platform.select({
       ios: {
-        borderBottomColor: color.bg.fifth.font.tertiary,
-        borderBottomWidth: HAIRLINE_WIDTH,
+        borderBottomColor: colors.cmGray1,
+        borderBottomWidth: StyleSheet.hairlineWidth,
       },
       android: {
-        borderBottomColor: color.bg.fifth.font.secondary,
+        borderBottomColor: colors.cmGray5,
         borderBottomWidth: 1,
       },
     }),
-    padding: OFFSET_2X,
+    padding: moderateScale(20),
   },
   message: {
-    marginBottom: OFFSET_1X / 2,
+    marginBottom: moderateScale(5),
   },
   fontBlack: {
-    color: '#777777',
+    color: colors.cmGray2,
   },
 })

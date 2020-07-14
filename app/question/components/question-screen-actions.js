@@ -1,10 +1,10 @@
 // @flow
 
-import React, { Component } from 'react'
+import React, { Component, useCallback } from 'react'
 
 import type { QuestionResponse, QuestionStoreMessage } from '../type-question'
 
-import { CustomView, Container, CustomButton } from '../../components'
+import { CustomView, CustomButton } from '../../components'
 import {
   TEXT_IGNORE,
   TEXT_SUBMIT,
@@ -19,83 +19,76 @@ import {
   disabledStyle,
 } from '../question-screen-style'
 
-import { isSmallWidthDevice } from '../../common/styles'
+import { isSmallWidthDevice, cmRed } from '../../common/styles'
 
-export class QuestionActions extends React.Component<
-  QuestionActionProps,
-  void
-> {
-  render() {
-    const testID = 'question-action'
-    const { question, selectedResponse } = this.props
+export const QuestionActions = ({
+  question,
+  selectedResponse,
+  onSelectResponseAndSubmit,
+  onSubmit,
+}: QuestionActionProps) => {
+  const testID = 'question-action'
 
-    if (!question) {
-      return null
-    }
-    const { valid_responses: responses } = question.payload
-
-    let cancelButtonTitle = TEXT_IGNORE
-    let submitButtonTitle = TEXT_SUBMIT
-
-    const { error, success, idle } = getScreenStatus(
-      question ? question.status : undefined
-    )
-    if (error) {
-      cancelButtonTitle = TEXT_CANCEL
-      submitButtonTitle = TEXT_TRY_AGAIN
-    }
-
-    if (success) {
-      submitButtonTitle = TEXT_OK
-    }
-    // if screen status is success or error, we need to enable submit button
-    // if status is idle, then user needs to first select an answer
-    // and only after that submit button is enabled
-    const isSubmitDisabled = success || error ? false : !selectedResponse
-
-    // If there are more than two responses, then we need to render
-    // our own buttons (submit and cancel)
-    const shouldRenderSubmitButton = idle ? responses.length > 2 : true
-
-    // we need to render responses as buttons, so user can just press a button
-    // to select the response for question
-    // If a question has two valid responses
-    // then those two responses would be rendered as buttons in screen
-    // and user can tap on either button to send that particular response
-    const responseButtons = (
-      <QuestionResponseButtons
-        responses={responses}
-        onPress={this.props.onSelectResponseAndSubmit}
-      />
-    )
-
-    return (
-      <CustomView
-        //   row
-        style={[
-          // questionStyles.questionActionContainer,
-          questionStyles.actionWrapper,
-        ]}
-      >
-        <CustomView style={questionStyles.actionButtonContainer}>
-          {shouldRenderSubmitButton ? (
-            <CustomButton
-              {...questionActionButtonDefaultProps}
-              eleventh
-              style={[questionStyles.actionButton, questionStyles.submitButton]}
-              title={submitButtonTitle}
-              disabled={isSubmitDisabled}
-              testID={`${testID}-submit`}
-              onPress={this.props.onSubmit}
-              customColor={disabledStyle}
-            />
-          ) : (
-            responseButtons
-          )}
-        </CustomView>
-      </CustomView>
-    )
+  if (!question) {
+    return null
   }
+  const { valid_responses: responses } = question.payload
+
+  let cancelButtonTitle = TEXT_IGNORE
+  let submitButtonTitle = TEXT_SUBMIT
+
+  const { error, success, idle } = getScreenStatus(
+    question ? question.status : undefined
+  )
+  if (error) {
+    cancelButtonTitle = TEXT_CANCEL
+    submitButtonTitle = TEXT_TRY_AGAIN
+  }
+
+  if (success) {
+    submitButtonTitle = TEXT_OK
+  }
+  // if screen status is success or error, we need to enable submit button
+  // if status is idle, then user needs to first select an answer
+  // and only after that submit button is enabled
+  const isSubmitDisabled = success || error ? false : !selectedResponse
+
+  // If there are more than two responses, then we need to render
+  // our own buttons (submit and cancel)
+  const shouldRenderSubmitButton = idle ? responses.length > 2 : true
+
+  // we need to render responses as buttons, so user can just press a button
+  // to select the response for question
+  // If a question has two valid responses
+  // then those two responses would be rendered as buttons in screen
+  // and user can tap on either button to send that particular response
+  const responseButtons = (
+    <QuestionResponseButtons
+      responses={responses}
+      onPress={onSelectResponseAndSubmit}
+    />
+  )
+
+  return (
+    <CustomView style={[questionStyles.actionWrapper]}>
+      <CustomView style={questionStyles.actionButtonContainer}>
+        {shouldRenderSubmitButton ? (
+          <CustomButton
+            {...questionActionButtonDefaultProps}
+            eleventh
+            style={[questionStyles.actionButton, questionStyles.submitButton]}
+            title={submitButtonTitle}
+            disabled={isSubmitDisabled}
+            testID={`${testID}-submit`}
+            onPress={onSubmit}
+            customColor={disabledStyle}
+          />
+        ) : (
+          responseButtons
+        )}
+      </CustomView>
+    </CustomView>
+  )
 }
 
 function QuestionResponseButtons(props: QuestionResponseButtonsProps) {
@@ -136,56 +129,53 @@ function QuestionResponseButtons(props: QuestionResponseButtonsProps) {
   )
 }
 
-class QuestionResponseButton extends React.PureComponent<
-  QuestionResponseButtonProps,
-  void
-> {
-  render() {
-    const { response, isPrimaryResponse, isSingleResponse } = this.props
+const QuestionResponseButton = ({
+  response,
+  isPrimaryResponse,
+  isSingleResponse,
+  onPress,
+}: QuestionResponseButtonProps) => {
+  const onResponse = useCallback(() => {
+    onPress(response)
+  }, [])
+  // We need to show only one line of text on action buttons
+  // Normally, we should have used react-native's numberOfLines prop
+  // but since we are using an external library for Buttons
+  // and this version is bit older, in newer versions we can specify
+  // numberOfLines prop for Button component
+  // So, for now just using substring on response text
+  // Also, if there is only a single response
+  // then we need to show half text limit on button, because in single response
+  // buttons are placed side by side and has less width
+  // TODO: Upgrade react-native-elements and use numberOfLines prop
+  const buttonText = isSingleResponse
+    ? ellipsis(response.text, Math.floor(getResponseButtonsTextLimit() / 2))
+    : ellipsis(response.text, getResponseButtonsTextLimit())
 
-    // We need to show only one line of text on action buttons
-    // Normally, we should have used react-native's numberOfLines prop
-    // but since we are using an external library for Buttons
-    // and this version is bit older, in newer versions we can specify
-    // numberOfLines prop for Button component
-    // So, for now just using substring on response text
-    // Also, if there is only a single response
-    // then we need to show half text limit on button, because in single response
-    // buttons are placed side by side and has less width
-    // TODO: Upgrade react-native-elements and use numberOfLines prop
-    const buttonText = isSingleResponse
-      ? ellipsis(response.text, Math.floor(getResponseButtonsTextLimit() / 2))
-      : ellipsis(response.text, getResponseButtonsTextLimit())
-
-    return (
-      <CustomView
+  return (
+    <CustomView
+      style={[
+        questionStyles.actionButtonContainer,
+        isPrimaryResponse
+          ? questionStyles.submitButton
+          : questionStyles.cancelButton,
+      ]}
+    >
+      <CustomButton
+        {...questionActionButtonDefaultProps}
+        eleventh={isPrimaryResponse}
+        twelfth={!isPrimaryResponse}
         style={[
-          questionStyles.actionButtonContainer,
-          isPrimaryResponse
-            ? questionStyles.submitButton
-            : questionStyles.cancelButton,
+          questionStyles.actionButton,
+          isPrimaryResponse && questionStyles.submitButton,
         ]}
-      >
-        <CustomButton
-          {...questionActionButtonDefaultProps}
-          eleventh={isPrimaryResponse}
-          twelfth={!isPrimaryResponse}
-          style={[
-            questionStyles.actionButton,
-            isPrimaryResponse && questionStyles.submitButton,
-          ]}
-          title={buttonText}
-          testID={`${response.nonce}-submit`}
-          onPress={this.onPress}
-          customColor={isPrimaryResponse ? {} : questionStyles.cancelBtnColor}
-        />
-      </CustomView>
-    )
-  }
-
-  onPress = () => {
-    this.props.onPress(this.props.response)
-  }
+        title={buttonText}
+        testID={`${response.nonce}-submit`}
+        onPress={onResponse}
+        titleStyle={isPrimaryResponse ? {} : questionStyles.cancelBtnColor}
+      />
+    </CustomView>
+  )
 }
 
 function ellipsis(text: string, maxLength: number) {

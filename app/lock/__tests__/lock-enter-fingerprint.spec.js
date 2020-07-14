@@ -21,6 +21,7 @@ function props() {
     navigation: {
       ...getNavigation(),
     },
+    route: {},
   }
 }
 

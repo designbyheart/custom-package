@@ -2,9 +2,12 @@
 import React, { PureComponent } from 'react'
 import { Image, StyleSheet, Platform } from 'react-native'
 import Modal from 'react-native-modal'
-import { Avatar, CustomView, UserAvatar } from '../components'
+import { Avatar } from './avatar/avatar'
+import { CustomView } from './layout/custom-view'
+import UserAvatar from './user-avatar/user-avatar'
+
 import { color, OFFSET_1X, OFFSET_2X, isiPhone5 } from '../common/styles'
-import avatarStyle from '../components/avatar/avatar-style'
+import avatarStyle from './avatar/avatar-style'
 import type { ImageSource } from '../common/type-common'
 
 // TODO:KS Add types and tests for this component

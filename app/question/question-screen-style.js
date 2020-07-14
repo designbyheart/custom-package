@@ -13,7 +13,8 @@ import {
   color,
   cmRed,
   deviceHeight,
-  primaryGreen, grey,
+  primaryGreen,
+  grey,
 } from '../common/styles'
 
 const QUESTION_SENDER_LOGO_DIMENSION = 100
@@ -207,8 +208,8 @@ export const disabledStyle = {
 
 function getQuestionResponsesHeight(singleResponse: ?boolean) {
   const { height } = Dimensions.get('window')
-  const headerHeight = height * 10 / 100
-  const bottomActionsHeight = height * (singleResponse ? 10 : 20) / 100
+  const headerHeight = (height * 10) / 100
+  const bottomActionsHeight = (height * (singleResponse ? 10 : 20)) / 100
   const senderDetailsHeight = 100
   const titleHeight = 100
 

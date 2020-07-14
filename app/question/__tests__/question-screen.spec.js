@@ -119,6 +119,7 @@ describe('<QuestionScreen />', () => {
       navigation: {
         ...getNavigation(),
       },
+      route: { params: {} },
       questionStyles,
     }
   }

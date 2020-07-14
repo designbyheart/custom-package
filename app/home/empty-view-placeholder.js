@@ -1,12 +1,8 @@
 // @flow
 import React from 'react'
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native'
-import {
-  mediumGray,
-  font,
-  primaryHeaderHeight,
-  isiPhone5,
-} from '../common/styles/constant'
+import { colors, fontFamily, fontSizes } from '../common/styles/constant'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
 const checkmarkImage = require('../images/homeCheckmark.png')
 const { height } = Dimensions.get('screen')
@@ -24,19 +20,19 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    paddingTop: isiPhone5 ? 30 : 50,
+    paddingTop: verticalScale(30),
     alignItems: 'center',
     justifyContent: 'center',
   },
   checkmarkImage: {
-    width: isiPhone5 ? 80 : 100,
-    height: isiPhone5 ? 80 : 100,
+    width: verticalScale(80),
+    height: verticalScale(80),
   },
   infoText: {
-    fontFamily: font.family,
-    fontSize: isiPhone5 ? font.size.M : font.size.ML,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size4),
     fontWeight: '500',
-    color: mediumGray,
-    marginTop: isiPhone5 ? 50 : 70,
+    color: colors.cmGray3,
+    marginTop: verticalScale(50),
   },
 })

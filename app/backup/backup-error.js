@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import { Image, StyleSheet, Dimensions } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
@@ -35,9 +34,10 @@ const closeImage = require('../images/iconClose.png')
 
 export class BackupErrorScreen extends Component<BackupErrorProps, void> {
   static navigationOptions = ({
-    navigation: { goBack, navigate, state },
+    navigation: { goBack, navigate },
+    route,
   }: ReactNavigationBackup) => ({
-    header: (
+    header: () => (
       <CustomHeader backgroundColor={venetianRed} largeHeader flatHeader>
         <CustomView style={[headerStyles.headerSpacer]}>
           <Icon
@@ -52,7 +52,7 @@ export class BackupErrorScreen extends Component<BackupErrorProps, void> {
         <CustomView style={[headerStyles.headerSpacer]}>
           <Icon
             medium
-            onPress={() => navigate(state.params.initialRoute)}
+            onPress={() => navigate(route.params.initialRoute)}
             testID={BACKUP_ERROR_CLOSE_TEST_ID}
             iconStyle={[headerStyles.headerIcon]}
             src={closeImage}
@@ -60,11 +60,12 @@ export class BackupErrorScreen extends Component<BackupErrorProps, void> {
         </CustomView>
       </CustomHeader>
     ),
-    gesturesEnabled: true,
+    gestureEnabled: true,
+    headerShown: true,
   })
 
   tryAgain = () => {
-    const { initialRoute } = this.props.navigation.state.params
+    const { initialRoute } = this.props.route.params
     this.props.generateBackupFile()
     this.props.navigation.navigate(exportBackupFileRoute, {
       initialRoute,
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateStatusBarTheme,
@@ -170,10 +171,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default createStackNavigator({
-  [backupErrorRoute]: {
-    screen: withStatusBar({ color: venetianRed })(
-      connect(null, mapDispatchToProps)(BackupErrorScreen)
-    ),
-  },
-})
+export const backupErrorScreen = {
+  routeName: backupErrorRoute,
+  screen: withStatusBar({ color: venetianRed })(
+    connect(null, mapDispatchToProps)(BackupErrorScreen)
+  ),
+}

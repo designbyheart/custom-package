@@ -2,7 +2,6 @@
 
 import React, { PureComponent } from 'react'
 import { Image, Dimensions } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
 
 import type {
   BackupCompleteProps,
@@ -39,15 +38,17 @@ const successCheck = require('../images/successCheck.png')
 
 export class BackupComplete extends PureComponent<BackupCompleteProps, void> {
   backupComplete = () => {
-    const { navigation: { navigate, state, goBack } } = this.props
+    const {
+      navigation: { navigate, goBack },
+    } = this.props
 
     return navigate(settingsRoute)
   }
 
   static navigationOptions = ({
-    navigation: { navigate, state: { params } },
+    navigation: { navigate },
   }: ReactNavigationBackup) => ({
-    header: (
+    header: () => (
       <CustomHeader
         backgroundColor={color.bg.fourteenth.color}
         largeHeader
@@ -66,7 +67,8 @@ export class BackupComplete extends PureComponent<BackupCompleteProps, void> {
         </CustomView>
       </CustomHeader>
     ),
-    gesturesEnabled: false,
+    gestureEnabled: false,
+    headerShown: true,
   })
 
   render() {
@@ -130,8 +132,7 @@ export class BackupComplete extends PureComponent<BackupCompleteProps, void> {
   }
 }
 
-export default createStackNavigator({
-  [backupCompleteRoute]: {
-    screen: withStatusBar({ color: color.bg.fourteenth.color })(BackupComplete),
-  },
-})
+export const backupCompleteScreen = {
+  routeName: backupCompleteRoute,
+  screen: withStatusBar({ color: color.bg.fourteenth.color })(BackupComplete),
+}

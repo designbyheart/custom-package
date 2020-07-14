@@ -224,8 +224,7 @@ platform :ios do
     match(
       type: "#{type}",
       app_identifier: "#{options[:app_identifier]}",
-      force_for_new_devices: true,
-      generate_apple_certs: false
+      force_for_new_devices: true
     )
   end
 

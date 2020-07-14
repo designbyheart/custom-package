@@ -91,7 +91,7 @@ const CredentialCostInfo = (props: CredentialCostInfoProps) => {
     )
   }
 
-  const keyExtractor = item => `${item.label}`
+  const keyExtractor = (item) => `${item.label}`
 
   return (
     <View style={styles.costContainer}>

@@ -1,4 +1,5 @@
 // @flow
+
 import type { ReactNavigation, CustomError } from '../common/type-common'
 
 export const SAVE_FILE_TO_APP_DIRECTORY: 'SAVE_FILE_TO_APP_DIRECTORY' =
@@ -11,21 +12,22 @@ export const RESTORE_RESET: 'RESTORE_RESET' = 'RESTORE_RESET'
 
 export const RestoreStatus = {
   ZIP_FILE_SELECTED: 'ZIP_FILE_SELECTED',
-  fileSaved: 'FILE_SAVED_TO_APP_DIRECTORY',
+  FILE_SAVED_TO_APP_DIRECTORY: 'FILE_SAVED_TO_APP_DIRECTORY',
   FILE_SAVE_ERROR: 'FILE_SAVE_ERROR',
   DECRYPTION_START: 'DECRYPTION_START',
   FILE_DECRYPT_SUCCESS: 'FILE_DECRYPT_SUCCESS',
   RESTORE_DATA_STORE_START: 'RESTORE_DATA_STORE_START',
   RESTORE_DATA_STORE_SUCCESS: 'RESTORE_DATA_STORE_SUCCESS',
   PASSPHRASE_PAGE_LOADED: 'PASSPHRASE_PAGE_LOADED',
-  success: 'RESTORE_SUCCESS',
-  failedStatus: 'RESTORE_FAILED',
+  RESTORE_SUCCESS: 'RESTORE_SUCCESS',
+  RESTORE_FAILED: 'RESTORE_FAILED',
   none: 'none',
 }
 
 export const initialState = {
   status: RestoreStatus.none,
   error: null,
+  passphrase: null,
   restoreFile: {
     fileName: '',
     fileSize: 0,
@@ -62,7 +64,7 @@ export type ErrorRestoreAction = {
 
 export type RestoreStatusAction = {
   type: typeof RESTORE_STATUS,
-  status: string,
+  status: RestoreStoreStatus,
 }
 
 export type RestoreSubmitPassphraseAction = {
@@ -79,39 +81,28 @@ export type RestoreActions =
 
 export type RestoreStore = {
   restoreFile: SaveToAppDirectory,
+  status: RestoreStoreStatus,
   passphrase?: ?string,
-} & StoreError &
-  RestoreStoreStatus
+} & StoreError
 
 export type StoreError = { error: ?CustomError }
-export type RestoreStoreStatus = { status: $Keys<typeof RestoreStatus> }
+export type RestoreStoreStatus = $Keys<typeof RestoreStatus>
 
 export type RestoreProps = {
   updateStatusBarTheme: string => void,
   saveFileToAppDirectory: SaveToAppDirectory => void,
-  restore: RestoreStoreType,
+  restore: RestoreStore,
   route: string,
   isCloudBackupEnabled: false,
 } & ReactNavigation
 
 export type RestorePassphraseProps = {
   submitPassphrase: string => void,
-  restore: RestoreStoreType,
+  restore: RestoreStore,
 } & ReactNavigation
 
-export type RestoreStoreType = {
-  status: $Keys<typeof RestoreStatus>,
-  error: ?CustomError,
-  restoreFile: {
-    fileName: string,
-    fileSize: number,
-    type: string,
-    uri: string,
-  },
-}
-
 export type RestoreWaitScreenProps = {
-  restore: RestoreStoreType,
+  restore: RestoreStore,
   route: string,
 } & ReactNavigation
 

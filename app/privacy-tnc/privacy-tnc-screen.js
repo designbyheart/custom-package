@@ -1,27 +1,11 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { StyleSheet, Image, WebView, View } from 'react-native'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { createStackNavigator } from 'react-navigation'
-import {
-  Container,
-  CustomText,
-  CustomView,
-  Icon,
-  CustomHeader,
-} from '../components'
-import {
-  color,
-  OFFSET_1X,
-  OFFSET_2X,
-  OFFSET_3X,
-  OFFSET_4X,
-  OFFSET_6X,
-  OFFSET_7X,
-} from '../common/styles'
-import { tertiaryHeaderStyles } from '../components/layout/header-styles'
+import { StyleSheet, View } from 'react-native'
+import WebView from 'react-native-webview'
+
 import type { PrivacyTNCProps, PrivacyTNCState } from './type-privacy-tnc'
+import type { CustomError, ReactNavigation } from '../common/type-common'
+
 import {
   TermsAndConditionsTitle,
   TermsAndConditionUrl,
@@ -29,15 +13,10 @@ import {
   PrivacyPolicyUrl,
   localPrivacyPolicySource,
 } from '../common/privacyTNC-constants'
-import { LoaderGif } from '../components/loader-gif/loader-gif'
-import type { CustomError, ReactNavigation } from '../common/type-common'
+import { OrangeLoader } from '../components/loader-gif/loader-gif'
 import { localEulaSource } from '../eula/type-eula'
-
-const styles = StyleSheet.create({
-  headerLeft: {
-    width: OFFSET_2X,
-  },
-})
+import { privacyTNCRoute } from '../common'
+import { headerNavigationOptions } from '../navigation/navigation-header-config'
 
 export class PrivacyTNC extends PureComponent<
   PrivacyTNCProps,
@@ -47,31 +26,6 @@ export class PrivacyTNC extends PureComponent<
     PRIVACY: { url: PrivacyPolicyUrl, title: PrivacyPolicyTitle },
     TNC: { url: TermsAndConditionUrl, title: TermsAndConditionsTitle },
   }
-
-  static navigationOptions = ({ navigation }: *) => ({
-    header: (
-      <CustomHeader
-        flatHeader
-        backgroundColor={color.bg.tertiary.color}
-        leftComponent={
-          <Icon
-            small
-            testID={'back-arrow'}
-            iconStyle={[styles.headerLeft]}
-            src={require('../images/icon_backArrow.png')}
-            resizeMode="contain"
-            onPress={() => navigation.goBack()}
-          />
-        }
-        centerComponent={
-          <CustomText bg="tertiary" tertiary transparentBg semiBold>
-            {navigation.state.params && navigation.state.params.title}
-          </CustomText>
-        }
-      />
-    ),
-    swipeEnabled: false,
-  })
 
   state = {
     error: null,
@@ -83,7 +37,7 @@ export class PrivacyTNC extends PureComponent<
 
   render() {
     let webViewUri =
-      this.props.navigation.getParam('url') || PrivacyTNC.INFO_TYPE.PRIVACY.url
+      this.props.route.params?.url ?? PrivacyTNC.INFO_TYPE.PRIVACY.url
     const isTNC = webViewUri === PrivacyTNC.INFO_TYPE.TNC.url
 
     if (this.state.error) {
@@ -94,10 +48,32 @@ export class PrivacyTNC extends PureComponent<
       <WebView
         source={{ uri: webViewUri }}
         startInLoadingState={true}
-        renderLoading={() => LoaderGif}
+        renderLoading={renderLoader}
         onError={this.onError}
-        renderError={() => <View />}
+        renderError={renderError}
       />
     )
   }
+}
+
+function renderLoader() {
+  return <View style={styles.container}>{OrangeLoader}</View>
+}
+
+function renderError() {
+  return <View />
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+})
+
+export const privacyTNCScreen = {
+  routeName: privacyTNCRoute,
+  screen: PrivacyTNC,
+  options({ navigation, route }: *) {
+    return headerNavigationOptions({ title: route.params.title })
+  },
 }

@@ -5,11 +5,13 @@ import {
   take,
   all,
   call,
+  race,
   fork,
   select,
   takeLatest,
   takeLeading,
 } from 'redux-saga/effects'
+import delay from '@redux-saga/delay-p'
 import uniqueId from 'react-native-unique-id'
 import firebase from 'react-native-firebase'
 
@@ -118,7 +120,6 @@ import { RESET } from '../common/type-common'
 import type { Connection } from './type-connection-store'
 import {
   updatePushToken,
-  updatePayloadToRelevantStore,
   fetchAdditionalDataError,
   updatePayloadToRelevantStoreSaga,
 } from '../push-notification/push-notification-store'
@@ -155,7 +156,6 @@ import {
   CLAIM_REQUEST_STATUS,
   VCX_CLAIM_OFFER_STATE,
 } from './../claim-offer/type-claim-offer'
-import { claimReceivedVcx, claimReceivedVcxSaga } from './../claim/claim-store'
 import type { SerializedClaimOffer } from '../claim-offer/type-claim-offer'
 import { SEND_CLAIM_REQUEST } from '../claim-offer/type-claim-offer'
 import { getPendingFetchAdditionalDataKey } from './store-selector'
@@ -601,17 +601,30 @@ export function* ensureAppHydrated(): Generator<*, *, *> {
 export function* initVcx(findingWallet?: any): Generator<*, *, *> {
   if (findingWallet !== true) {
     yield* ensureAppHydrated()
-    // Since we have added a feature flag, so we need to wait
-    // to know that user is going to enable the feature flag or not
-    // now problem is how do we know when to stop waiting
-    // so we are assuming that whenever user goes past lock-selection
-    // screen, that means now user can't enable feature flag
-    // because there is no way to enable that flag now
-    const currentScreen: string = yield select(getCurrentScreen)
-    if (UNSAFE_SCREENS_TO_DOWNLOAD_SMS.indexOf(currentScreen) > -1) {
-      // user is on screens where he has chance to change environment details
-      // so we wait for event which tells that we are safe
-      yield take(SAFE_TO_DOWNLOAD_SMS_INVITATION)
+    while (true) {
+      // Since we have added a feature flag, so we need to wait
+      // to know that user is going to enable the feature flag or not
+      // now problem is how do we know when to stop waiting
+      // so we are assuming that whenever user goes past lock-selection
+      // screen, that means now user can't enable feature flag
+      // because there is no way to enable that flag now
+      const currentScreen: string = yield select(getCurrentScreen)
+      if (UNSAFE_SCREENS_TO_DOWNLOAD_SMS.indexOf(currentScreen) > -1) {
+        // user is on screens where he has chance to change environment details
+        // so we wait for event which tells that we are safe
+        // it might happen that this saga triggeres before route change
+        // and hence it might get stuck waiting for event to happen
+        // so we timeout and check route again, and we do this in a loop
+        // and break when we are on safe route
+        const { onSafeRoute, timeout } = yield race({
+          onSafeRoute: take(SAFE_TO_DOWNLOAD_SMS_INVITATION),
+          timeout: call(delay, 5000),
+        })
+        if (onSafeRoute) {
+          break
+        }
+      }
+      break
     }
   }
 
@@ -721,7 +734,7 @@ export const getGenesisFileName = (agencyUrl: string) => {
   return (
     GENESIS_FILE_NAME +
     '_' +
-    findKey(baseUrls, environment => environment.agencyUrl === agencyUrl)
+    findKey(baseUrls, (environment) => environment.agencyUrl === agencyUrl)
   )
 }
 
@@ -773,10 +786,10 @@ export const traverseAndGetAllMessages = (
   let messages: Array<DownloadedMessage> = []
   if (Array.isArray(data)) {
     data.map(
-      connection =>
+      (connection) =>
         connection &&
         connection.msgs &&
-        connection.msgs.map(message => {
+        connection.msgs.map((message) => {
           messages.push(message)
         })
     )
@@ -823,7 +836,7 @@ export function* processMessages(
       }
 
       let { myPairwiseDid: pairwiseDID, senderDID } =
-      connection && connection[0]
+        connection && connection[0]
 
       if (
         !(
@@ -1019,8 +1032,7 @@ const convertDecryptedPayloadToSerializedProofRequest = (
     fmt: string,
     name: string,
     ver: string,
-  } =
-    parsedPayload['@type']
+  } = parsedPayload['@type']
   stringifiableProofRequest.data.proof_request = {
     ...parsedMsg,
     msg_ref_id: uid,
@@ -1264,10 +1276,10 @@ function* handleAriesMessage(
       const payloadMessageType = JSON.parse(payload['@msg'])['@type']
 
       if (payloadMessageType && payloadMessageType.includes("connections") &&
-          (payloadMessageType.endsWith('response') || 
+          (payloadMessageType.endsWith('response') ||
           payloadMessageType.endsWith('problem_report'))) {
 
-          // if we receive connection response message or connection problem report 
+          // if we receive connection response message or connection problem report
           // we need to update state of related corresponding connection object
           yield call(
           updateAriesConnectionState,
@@ -1332,11 +1344,11 @@ export function* acknowledgeServer(
   let acknowledgeServerData: AcknowledgeServerData = []
   let tempData = data
   if (Array.isArray(tempData) && tempData.length > 0) {
-    tempData.map(msgData => {
+    tempData.map((msgData) => {
       let pairwiseDID = msgData.pairwiseDID
       let uids = []
       if (msgData['msgs'] && Array.isArray(msgData['msgs'])) {
-        msgData['msgs'].map(msg => {
+        msgData['msgs'].map((msg) => {
           if (
             msg.statusCode === MESSAGE_RESPONSE_CODE.MESSAGE_PENDING &&
             msgTypes.indexOf(msg.type) >= 0
@@ -1377,7 +1389,7 @@ export function* updateMessageStatus(
 
 function addClaimOfferMessageRefId(decryptedPayload: string, uid: string): string {
   return JSON.stringify(
-    JSON.parse(JSON.parse(decryptedPayload)['@msg']).map(message => {
+    JSON.parse(JSON.parse(decryptedPayload)['@msg']).map((message) => {
       if (message.hasOwnProperty('msg_ref_id')) {
         message.msg_ref_id = uid
       }
@@ -1442,7 +1454,7 @@ export function* watchConfig(): any {
 export const getEnvironmentName = (configStore: ConfigStore) => {
   const { agencyUrl } = configStore
 
-  return findKey(baseUrls, environment => environment.agencyUrl === agencyUrl)
+  return findKey(baseUrls, (environment) => environment.agencyUrl === agencyUrl)
 }
 
 export default function configReducer(

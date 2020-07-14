@@ -3,7 +3,7 @@ import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
-import ConnectionDetails from '../connection-details'
+import { connectionHistoryScreen } from '../connection-details'
 import {
   getStore,
   senderLogoUrl,
@@ -11,21 +11,22 @@ import {
   activeConnectionThemePrimary,
   getNavigation,
 } from '../../../__mocks__/static-data'
+import { connectionHistRoute } from '../../common'
 
 describe('<ConnectionDetails />', () => {
+  const ConnectionDetails = connectionHistoryScreen.screen
   const store = getStore()
-  function props(senderdid: string) {
+  function props(senderDID: string) {
     return {
       navigation: {
-        state: {
-          params: {
-            senderDID: senderdid,
-            senderName: 'jim',
-            image: 'https://robothash.com/logo.png',
-          },
-        },
         navigate: jest.fn(),
-        getParam: jest.fn(),
+      },
+      route: {
+        params: {
+          senderDID: senderDID,
+          senderName: 'jim',
+          image: 'https://robothash.com/logo.png',
+        },
       },
     }
   }

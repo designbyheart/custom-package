@@ -9,6 +9,7 @@ import Loader from '../components/loader/loader'
 import { Error } from '../components/error/error'
 import { Success } from '../components/success/success'
 import CredentialCostInfo from '../claim-offer/components/credential-cost-info'
+import { designStyleGuideRoute } from '../common'
 
 class DesignStyleguide extends Component<void, void> {
   render() {
@@ -60,7 +61,13 @@ class DesignStyleguide extends Component<void, void> {
   }
 }
 
-export default DesignStyleguide
+export const designStyleGuideScreen = {
+  routeName: designStyleGuideRoute,
+  screen: DesignStyleguide,
+  options: {
+    headerShown: true,
+  },
+}
 
 const styles = StyleSheet.create({
   container: {

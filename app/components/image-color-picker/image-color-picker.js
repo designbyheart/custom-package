@@ -1,10 +1,11 @@
 // @flow
 import React, { Component } from 'react'
-import { WebView, Platform } from 'react-native'
+import { Platform } from 'react-native'
 import RNFetchBlob from 'rn-fetch-blob'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ImageResizer from 'react-native-image-resizer'
+import WebView from 'react-native-webview'
 
 import { updateConnectionTheme } from '../../store/connections-store'
 import type { ImagePickerProps, ImagePickerStates } from './type-color-picker'
@@ -87,8 +88,12 @@ export class ImageColorPicker extends Component<
     }
   }
 
+  // TODO: Fix any flow types in this code, i.e. get rid of "any" type
   onBridgeMessage = (message: any) => {
-    let messageData = JSON.parse(message.nativeEvent.data)
+    const decodedMsg = decodeURIComponent(
+      decodeURIComponent(message.nativeEvent.data)
+    )
+    let messageData = JSON.parse(decodedMsg)
     if (
       messageData.message === 'rgbValues' &&
       this.state.imageBlob &&
@@ -102,7 +107,7 @@ export class ImageColorPicker extends Component<
     const firstBestColor = Object.values(payload[0])
     const secondBestColor = payload.length > 1 ? Object.values(payload[1]) : []
 
-    let imageColor = greyRGB.split(', ').map(rgb => parseInt(rgb, 10))
+    let imageColor = greyRGB.split(', ').map((rgb) => parseInt(rgb, 10))
     // add alpha value to rgba
     imageColor.push(1)
 
@@ -151,7 +156,7 @@ export class ImageColorPicker extends Component<
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateConnectionTheme,

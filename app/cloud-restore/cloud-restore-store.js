@@ -8,7 +8,6 @@ import {
   SET_CLOUD_RESTORE_MESSAGE,
 } from './cloud-restore-type'
 import type { RestoreCloudSubmitPassphraseAction } from './cloud-restore-type'
-import { unzip } from 'react-native-zip-archive'
 import { pinHash as generateKey, generateSalt } from '../lock/pin-hash'
 import type { RestoreSubmitPassphrase } from '../restore/type-restore'
 import { WALLET_FILE_NAME } from '../backup/type-backup'

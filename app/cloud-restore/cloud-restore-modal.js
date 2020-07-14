@@ -13,7 +13,6 @@ import {
 } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { createStackNavigator } from 'react-navigation'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
 import type { Store } from '../store/type-store'
@@ -41,8 +40,8 @@ import { getCloudBackupStatus } from '../store/store-selector'
 import {
   cloudBackupStart,
   resetCloudBackupStatus,
-  setAutoCloudBackupEnabled,
 } from '../backup/backup-store'
+import { setAutoCloudBackupEnabled } from '../backup/backup-actions'
 import { color } from '../common/styles/constant'
 //TODO: jy-copy and pasted questionStyles from the question modal, should put these in on place once generic modal is made
 import styles, { questionStyles } from '../backup/styles'
@@ -69,20 +68,11 @@ import { RestoreStatus } from '../restore/type-restore'
 const { height } = Dimensions.get('window')
 export class CloudRestoreModal extends Component<CloudBackupScreenProps, void> {
   _translateY = new Animated.Value(0)
-  constructor(props: CloudBackupScreenProps) {
-    super(props)
-  }
-  componentDidMount = () => {}
-
-  static navigationOptions = ({ navigation }: { navigation: any }) => ({
-    header: null,
-  })
 
   componentDidUpdate(prevProps: RestoreProps) {
     if (
       !this.props.restore.error &&
       this.props.restore.status === RestoreStatus.RESTORE_DATA_STORE_SUCCESS
-      // && this.props.route === restoreWaitRoute
     ) {
       // TODO: the params have to be removed when the lockEnterPinRoute design is changed in according with the recovery screen.
       this.props.navigation.navigate(lockEnterPinRoute, {
@@ -93,9 +83,9 @@ export class CloudRestoreModal extends Component<CloudBackupScreenProps, void> {
       this.props.navigation.navigate(cloudRestoreRoute)
     }
   }
-  _getTransform = translateY => [{ translateY }]
+  _getTransform = (translateY) => [{ translateY }]
 
-  _getOpacity = translateY =>
+  _getOpacity = (translateY) =>
     translateY.interpolate({
       inputRange: [0, height],
       outputRange: [1, 0.2],
@@ -189,7 +179,7 @@ export class CloudRestoreModal extends Component<CloudBackupScreenProps, void> {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     { cloudBackupStart, resetCloudBackupStatus, setAutoCloudBackupEnabled },
     dispatch
@@ -204,22 +194,9 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-export const CloudRestoreModalStack = createStackNavigator(
-  {
-    [cloudRestoreModalRoute]: {
-      screen: withStatusBar({ color: 'white' })(
-        connect(mapStateToProps, mapDispatchToProps)(CloudRestoreModal)
-      ),
-    },
-  },
-  {
-    cardStyle: { backgroundColor: 'transparent' },
-    transitionConfig: () => ({
-      containerStyle: {
-        backgroundColor: 'transparent',
-      },
-    }),
-  }
-)
-
-export default CloudRestoreModalStack
+export const cloudRestoreModalScreen = {
+  routeName: cloudRestoreModalRoute,
+  screen: withStatusBar({ color: 'white' })(
+    connect(mapStateToProps, mapDispatchToProps)(CloudRestoreModal)
+  ),
+}

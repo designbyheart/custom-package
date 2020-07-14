@@ -16,7 +16,11 @@ exports[`<Icon /> should match snapshot 1`] = `
     ]
   }
   resizeMode="cover"
-  src={1}
+  src={
+    Object {
+      "default": "RelativeImageStub",
+    }
+  }
   style={
     Object {
       "alignItems": "center",
@@ -47,7 +51,11 @@ exports[`<Icon /> should match snapshot 1`] = `
         accessibilityLabel="test-icon-test"
         accessible={true}
         resizeMode="cover"
-        source={1}
+        source={
+          Object {
+            "default": "RelativeImageStub",
+          }
+        }
         style={
           Array [
             Object {

@@ -1,61 +1,44 @@
 // @flow
-import React, { PureComponent } from 'react'
-import SvgCustomIcon from '../svg-custom-icon'
-import { UnreadMessagesBadge } from '../'
+import React, { PureComponent, useCallback } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
-import { BlurView } from 'react-native-blur'
-
-import { styles } from './styles'
-import { grey, isiPhone5 } from '../../common/styles/constant'
+import { useNavigation } from '@react-navigation/native'
 
 import type { PrimaryHeaderProps } from './type-primary-header'
 
-class PrimaryHeader extends PureComponent<PrimaryHeaderProps, void> {
-  render() {
-    const {
-      container,
-      labelSection,
-      iconsSection,
-      label,
-      icon,
-      svgIcon,
-      labelNotHome,
-    } = styles
-    const { headline } = this.props
+import { SvgCustomIcon } from '../svg-custom-icon'
+import UnreadMessagesBadge from '../unread-messages-badge/unread-messages-badge'
+import { styles } from './styles'
+import { colors } from '../../common/styles/constant'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
-    return (
-      <View style={container}>
-        <View
-          style={iconsSection}
-          accessible={true}
-          accessibilityLabel="burger-menu"
-        >
-          <TouchableOpacity
-            testID="burger-menu"
-            style={icon}
-            onPress={this.props.navigation && this.props.navigation.openDrawer}
-          >
-            <SvgCustomIcon
-              name="BurgerMenu"
-              width={isiPhone5 ? 32 : 36}
-              height={isiPhone5 ? 32 : 36}
-              fill={grey}
-              style={svgIcon}
-            />
-          </TouchableOpacity>
-          {headline !== 'Home' && (
-            <UnreadMessagesBadge absolutePosition={true} />
-          )}
-        </View>
-        <View style={labelSection}>
-          <Text style={headline === 'Home' ? label : labelNotHome}>
-            {headline}
-          </Text>
-          {headline === 'Home' && <UnreadMessagesBadge />}
-        </View>
+export const PrimaryHeader = ({ headline }: PrimaryHeaderProps) => {
+  const navigation = useNavigation()
+  const toggleDrawer = useCallback(() => {
+    navigation.toggleDrawer()
+  }, [])
+
+  return (
+    <View style={styles.container}>
+      <View
+        accessible={true}
+        accessibilityLabel="burger-menu"
+        style={styles.iconSection}
+      >
+        <TouchableOpacity testID="burger-menu" onPress={toggleDrawer}>
+          <SvgCustomIcon
+            name="BurgerMenu"
+            width={moderateScale(32)}
+            height={moderateScale(32)}
+            fill={colors.cmGray2}
+            style={styles.svgIcon}
+          />
+        </TouchableOpacity>
+        {headline !== 'Home' && <UnreadMessagesBadge absolutePosition={true} />}
       </View>
-    )
-  }
+      <View style={styles.labelSection}>
+        <Text style={styles.label}>{headline}</Text>
+        {headline === 'Home' && <UnreadMessagesBadge />}
+      </View>
+    </View>
+  )
 }
-
-export { PrimaryHeader }

@@ -1,5 +1,6 @@
 // @flow
-import React, { Component } from 'react'
+import * as React from 'react'
+import { Component } from 'react'
 import {
   View,
   FlatList,
@@ -14,12 +15,12 @@ import { ConnectionCard } from '../components/connection-details/connection-card
 import { NewMessageBreakLine } from '../components/connection-details/new-message-break-line'
 import MoreOptions from './components/more-options'
 import { ConnectionPending } from '../components/connection-details/connection-pending'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 import {
   updateStatusBarTheme,
   sendConnectionRedirect,
 } from '../../app/store/connections-store'
 import { newConnectionSeen } from '../../app/connection-history/connection-history-store'
-import { BlurView } from 'react-native-blur'
 import Snackbar from 'react-native-snackbar'
 import { measurements } from '../../app/common/styles/measurements'
 import { connect } from 'react-redux'
@@ -36,14 +37,18 @@ import type {
 } from './type-connection-details'
 import { CONNECTION_ALREADY_EXIST } from './type-connection-details'
 import { getConnection, getConnectionTheme } from '../store/store-selector'
-import { withStatusBar } from '../components/status-bar/status-bar'
-import { isIphoneX, isIphoneXR, cmRed } from '../common/styles/constant'
+import { colors } from '../common/styles/constant'
 import {
   DENY_PROOF_REQUEST_SUCCESS,
-  DENY_PROOF_REQUEST,
   DENY_PROOF_REQUEST_FAIL,
+  DENY_PROOF_REQUEST,
 } from '../proof-request/type-proof-request'
-import { proofRequestRoute, claimOfferRoute, questionRoute } from '../common'
+import {
+  proofRequestRoute,
+  claimOfferRoute,
+  questionRoute,
+  connectionHistRoute,
+} from '../common'
 import { MESSAGE_TYPE } from '../api/api-constants'
 import {
   CLAIM_OFFER_ACCEPTED,
@@ -56,8 +61,7 @@ import {
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 
 let ScreenWidth = Dimensions.get('window').width
-
-class ConnectionDetails extends Component<
+export class ConnectionDetails extends Component<
   ConnectionHistoryProps,
   ConnectionHistoryState
 > {
@@ -67,7 +71,7 @@ class ConnectionDetails extends Component<
     newMessageLine: false,
   }
 
-  flatList = null
+  flatList = React.createRef<FlatList<any>>()
 
   componentDidMount() {
     this.props.updateStatusBarTheme(this.props.activeConnectionThemePrimary)
@@ -75,22 +79,21 @@ class ConnectionDetails extends Component<
 
     // since componentDidMount is always getting called when navigating to this screen
     // the check if snack bar should be displayed can be done in componentDidMount
-    if (this.props.navigation.getParam('showExistingConnectionSnack')) {
+    if (this.props.route.params.showExistingConnectionSnack) {
       this.showSnackBar()
       this.props.sendConnectionRedirect(
-        this.props.navigation.getParam('qrCodeInvitationPayload'),
+        this.props.route.params.qrCodeInvitationPayload,
         {
-          senderDID: this.props.navigation.getParam('senderDID'),
-          identifier: this.props.navigation.getParam('identifier'),
+          senderDID: this.props.route.params.senderDID,
+          identifier: this.props.route.params.identifier,
         }
       )
     }
   }
 
   navigateToModal = () => {
-    const notificationOpenOptions = this.props.navigation.getParam(
-      'notificationOpenOptions'
-    )
+    const notificationOpenOptions = this.props.route.params
+      .notificationOpenOptions
     if (
       !notificationOpenOptions ||
       !notificationOpenOptions.openMessageDirectly
@@ -106,8 +109,8 @@ class ConnectionDetails extends Component<
     // a message. Now, we need to know what is messageId and messageType
     // so that we can open correct modal
 
-    const messageType = this.props.navigation.getParam('messageType')
-    const uid = this.props.navigation.getParam('uid')
+    const messageType = this.props.route.params.messageType
+    const uid = this.props.route.params.uid
 
     if (messageType && uid) {
       switch (messageType) {
@@ -154,7 +157,7 @@ class ConnectionDetails extends Component<
           noOfAttributes={item.data.length}
           buttonText={'RETRY'}
           showBadge={false}
-          colorBackground={cmRed}
+          colorBackground={colors.cmRed}
           uid={item.originalPayload.uid}
           proof={true}
           navigation={this.props.navigation}
@@ -235,14 +238,14 @@ class ConnectionDetails extends Component<
           noOfAttributes={item.data.length}
           buttonText={'RETRY'}
           showBadge={false}
-          colorBackground={cmRed}
+          colorBackground={colors.cmRed}
           navigation={this.props.navigation}
           received={true}
           data={item}
-          imageUrl={this.props.navigation.state.params.image}
-          institutialName={this.props.navigation.state.params.senderName}
-          colorBackground={cmRed}
-          secondColorBackground={cmRed}
+          imageUrl={this.props.route.params.image}
+          institutionalName={this.props.route.params.senderName}
+          colorBackground={colors.cmRed}
+          secondColorBackground={colors.cmRed}
         />
       )
     } else if (item.action === 'RECEIVED') {
@@ -259,8 +262,8 @@ class ConnectionDetails extends Component<
           navigation={this.props.navigation}
           received={true}
           data={item}
-          imageUrl={this.props.navigation.state.params.image}
-          institutialName={this.props.navigation.state.params.senderName}
+          imageUrl={this.props.route.params.image}
+          institutionalName={this.props.route.params.senderName}
           colorBackground={this.props.activeConnectionThemePrimary}
           secondColorBackground={this.props.activeConnectionThemeSecondary}
         />
@@ -272,7 +275,6 @@ class ConnectionDetails extends Component<
           uid={item.data.uid}
           messageTitle={item.data.messageTitle}
           messageContent={item.data.messageText}
-          showButtons={true}
           navigation={this.props.navigation}
           colorBackground={this.props.activeConnectionThemePrimary}
         />
@@ -284,7 +286,6 @@ class ConnectionDetails extends Component<
           uid={item.data.uid}
           requestStatus={'YOU ANSWERED'}
           requestAction={'"' + item.data.answer.text + '"'}
-          navigation={this.props.navigation}
         />
       )
     } else if (item.action === 'CLAIM OFFER RECEIVED') {
@@ -335,25 +336,27 @@ class ConnectionDetails extends Component<
           infoDate={formattedDate}
           buttonText={'RETRY'}
           showBadge={false}
-          colorBackground={cmRed}
+          colorBackground={colors.cmRed}
           navigation={this.props.navigation}
           received={true}
           data={item}
           imageUrl={this.props.navigation.state.params.image}
           institutialName={this.props.navigation.state.params.senderName}
-          colorBackground={cmRed}
-          secondColorBackground={cmRed}
+          colorBackground={colors.cmRed}
+          secondColorBackground={colors.cmRed}
         />
       )
     }
+
+    return null
   }
 
   showSnackBar = () => {
     const showExistingConnectionSnack =
-      this.props.navigation.getParam('showExistingConnectionSnack') || false
+      this.props.route.params?.showExistingConnectionSnack || false
     if (showExistingConnectionSnack) {
       Snackbar.show({
-        title: CONNECTION_ALREADY_EXIST,
+        text: CONNECTION_ALREADY_EXIST,
         duration: Snackbar.LENGTH_LONG,
       })
     }
@@ -382,18 +385,19 @@ class ConnectionDetails extends Component<
 
   scrollToEnd = () => {
     setTimeout(() => {
-      this.flatList && this.flatList.scrollToEnd({ animated: true })
+      this.flatList.current &&
+        this.flatList.current.scrollToEnd({ animated: true })
     }, 300)
   }
 
   render() {
-    if (this.props.navigation.state) {
+    if (this.props.route) {
       const {
         senderName,
         image,
         senderDID,
         identifier,
-      } = this.props.navigation.state.params
+      } = this.props.route.params
       const {
         activeConnectionThemePrimary,
         activeConnectionThemeSecondary,
@@ -404,11 +408,6 @@ class ConnectionDetails extends Component<
         ? { uri: image }
         : require('../images/cb_evernym.png')
 
-      // if (this.state.newMessageLine) {
-      //   const slackLine = <NewMessageBreakLine key={arrayUI.length} />
-      //   arrayUI.splice(1, 0, slackLine)
-      // }
-
       return (
         <View style={styles.container}>
           <ConnectionDetailsNav
@@ -416,6 +415,7 @@ class ConnectionDetails extends Component<
             navigation={this.props.navigation}
             moreOptionsOpen={this.moreOptionsOpen}
             colorBackground={activeConnectionThemePrimary}
+            route={this.props.route}
           />
           <Animated.View
             style={[
@@ -427,13 +427,12 @@ class ConnectionDetails extends Component<
               <MoreOptions
                 navigation={this.props.navigation}
                 moreOptionsClose={this.moreOptionsClose}
+                route={this.props.route}
               />
             )}
           </Animated.View>
           <FlatList
-            ref={ref => {
-              this.flatList = ref
-            }}
+            ref={this.flatList}
             keyExtractor={this.keyExtractor}
             style={styles.flatListContainer}
             contentContainerStyle={styles.flatListInnerContainer}
@@ -441,13 +440,6 @@ class ConnectionDetails extends Component<
             renderItem={this.renderItem}
             onContentSizeChange={this.scrollToEnd}
           />
-          {Platform.OS === 'ios' ? (
-            <BlurView
-              style={styles.absoluteTop}
-              blurType="light"
-              blurAmount={8}
-            />
-          ) : null}
         </View>
       )
     } else {
@@ -461,15 +453,14 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
     state.history &&
     state.history.data &&
     state.history.data.connections &&
-    props.navigation.state
-      ? state.history.data.connections[props.navigation.state.params.senderDID]
-          .data
+    props.route
+      ? state.history.data.connections[props.route.params.senderDID].data
       : []
   connectionHistory = connectionHistory.slice()
 
   const themeForLogo = getConnectionTheme(
     state,
-    props.navigation.state ? props.navigation.state.params.image : ''
+    props.route ? props.route.params.image : ''
   )
 
   return {
@@ -480,7 +471,7 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateStatusBarTheme,
@@ -490,37 +481,31 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default withStatusBar()(
-  connect(mapStateToProps, mapDispatchToProps)(ConnectionDetails)
-)
+export const connectionHistoryScreen = {
+  routeName: connectionHistRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(ConnectionDetails),
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: colors.cmWhite,
   },
   flatListContainer: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: colors.cmWhite,
   },
   flatListInnerContainer: {
-    paddingTop: isIphoneX || isIphoneXR ? 91 : 67,
+    paddingTop: verticalScale(90),
   },
   moreOptionsWrapper: {
     position: 'absolute',
     width: ScreenWidth,
     zIndex: 999,
-    elevation: 16,
-    height: measurements.WINDOW_HEIGHT,
-  },
-  absoluteTop: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    width: '100%',
-    height: measurements.connectionDetailsBlurNav,
+    elevation: 8,
+    height: Dimensions.get('screen').height - verticalScale(40),
   },
 })

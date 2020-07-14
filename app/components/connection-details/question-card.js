@@ -1,48 +1,54 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { useCallback } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { questionRoute } from '../../common'
+import { useNavigation } from '@react-navigation/native'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
-// TODO: Fix the <any, {}> to be the correct types for props and state
-class QuestionCard extends PureComponent<any, {}> {
-  navigateToQuestionScreen = () => {
-    this.props.navigation.navigate(questionRoute, { uid: this.props.uid })
-  }
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.messageDate}>{this.props.messageDate}</Text>
-        <Text style={styles.messageTitle}>{this.props.messageTitle}</Text>
-        <Text
-          style={styles.messageContent}
-          numberOfLines={1}
-          ellipsizeMode="tail"
+export const QuestionCard = ({
+  uid,
+  colorBackground,
+  messageDate,
+  messageTitle,
+  messageContent,
+}: QuestionCardProps) => {
+  const navigation = useNavigation()
+  const navigateToQuestionScreen = useCallback(() => {
+    navigation.navigate(questionRoute, { uid })
+  }, [])
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.messageDate}>{messageDate}</Text>
+      <Text style={styles.messageTitle}>{messageTitle}</Text>
+      <Text
+        style={styles.messageContent}
+        numberOfLines={1}
+        ellipsizeMode="tail"
+      >
+        {messageContent}
+      </Text>
+      <View style={styles.buttonsWrapper}>
+        <TouchableOpacity
+          onPress={navigateToQuestionScreen}
+          style={[styles.buttonView, { backgroundColor: colorBackground }]}
         >
-          {this.props.messageContent}
-        </Text>
-        <View
-          style={[
-            styles.buttonsWrapper,
-            { display: this.props.showButtons ? 'flex' : 'none' },
-          ]}
-        >
-          <TouchableOpacity
-            onPress={this.navigateToQuestionScreen}
-            style={[
-              styles.buttonView,
-              { backgroundColor: this.props.colorBackground },
-            ]}
-          >
-            <Text style={styles.viewText}>View</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.helperView} />
+          <Text style={styles.viewText}>View</Text>
+        </TouchableOpacity>
       </View>
-    )
-  }
+      <View style={styles.helperView} />
+    </View>
+  )
 }
 
-export { QuestionCard }
+type QuestionCardProps = {
+  uid: string,
+  colorBackground: string,
+  messageDate: string,
+  messageTitle: string,
+  messageContent: string,
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -52,7 +58,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingLeft: '7%',
     paddingRight: '7%',
-    paddingTop: 15,
+    paddingTop: moderateScale(15),
     flexDirection: 'column',
     alignItems: 'stretch',
   },
@@ -61,68 +67,63 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     width: '100%',
-    height: 45,
+    height: moderateScale(45),
   },
   messageDate: {
-    color: '#777',
-    fontSize: 11,
-    lineHeight: 13,
+    color: colors.cmGray2,
+    fontSize: verticalScale(fontSizes.size9),
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   messageTitle: {
-    color: '#505050',
+    color: colors.cmGray1,
     fontWeight: '500',
-    fontSize: 17,
-    lineHeight: 20,
+    fontSize: moderateScale(fontSizes.size5),
     textAlign: 'left',
-    marginTop: 2,
-    marginBottom: 2,
-    fontFamily: 'Lato',
+    marginTop: verticalScale(2),
+    marginBottom: verticalScale(2),
+    fontFamily: fontFamily,
   },
   messageContent: {
-    color: '#505050',
-    fontSize: 14,
-    lineHeight: 17,
+    color: colors.cmGray1,
+    fontSize: moderateScale(fontSizes.size7),
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   buttonsWrapper: {
     flexDirection: 'row',
     width: '100%',
-    marginTop: 15,
+    marginTop: moderateScale(15),
   },
   buttonView: {
-    padding: 6.5,
-    paddingLeft: 26,
-    paddingRight: 26,
-    borderRadius: 5,
+    padding: moderateScale(6.5),
+    paddingLeft: moderateScale(26),
+    paddingRight: moderateScale(26),
+    borderRadius: moderateScale(5),
   },
   viewText: {
-    color: 'white',
-    fontSize: 17,
-    lineHeight: 20,
+    color: colors.cmWhite,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '700',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   buttonIgnore: {
     backgroundColor: 'transparent',
-    padding: 6.5,
-    paddingLeft: 26,
-    paddingRight: 26,
-    borderRadius: 5,
+    padding: moderateScale(6.5),
+    paddingLeft: moderateScale(26),
+    paddingRight: moderateScale(26),
+    borderRadius: moderateScale(5),
   },
   ignoreText: {
-    color: '#777',
-    fontSize: 14,
-    lineHeight: 20,
+    color: colors.cmGray2,
+    fontSize: moderateScale(fontSizes.size7),
     fontWeight: '700',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   helperView: {
     borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
+    borderBottomColor: colors.cmGray5,
     width: '100%',
-    paddingTop: 15,
+    paddingTop: moderateScale(15),
   },
 })

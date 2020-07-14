@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import { Text } from 'react-native'
 import moment from 'moment'
 
-import { CustomText } from '../index'
+import CustomText from '../text'
 import type { CustomDateProps } from './type-custom-date'
 
 export default class CustomDate extends PureComponent<CustomDateProps, void> {

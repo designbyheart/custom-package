@@ -3,13 +3,13 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '@react-navigation/compat'
 import urlParse from 'url-parse'
 
 import type {
   NavigationScreenProp,
   NavigationLeafRoute,
-} from 'react-navigation'
+} from '@react-navigation/native'
 import type { OIDCAuthenticationRequest } from '../components/qr-scanner/type-qr-scanner'
 import type { ReduxConnect } from '../common/type-common'
 import type { Store } from '../store/type-store'
@@ -207,7 +207,7 @@ export class OpenIdConnectScreen extends Component<
 }
 
 const mapStateToProps = (state: Store, props: OpenIdConnectNavigation) => {
-  const { oidcAuthenticationRequest } = props.navigation.state.params
+  const { oidcAuthenticationRequest } = props.route.params
   const possibleConnections = getConnectionByProp(
     state,
     'publicDID',
@@ -224,7 +224,7 @@ const mapStateToProps = (state: Store, props: OpenIdConnectNavigation) => {
   }
 }
 
-export default withBottomUpSliderScreen(
+export const openIdConnectScreen = withBottomUpSliderScreen(
   { routeName: openIdConnectRoute },
   withNavigation(connect(mapStateToProps)(OpenIdConnectScreen))
 )
@@ -234,10 +234,12 @@ const defaultAvatar = require('../images/UserAvatar.png')
 export type OpenIdConnectNavigation = {
   navigation: NavigationScreenProp<{|
     ...NavigationLeafRoute,
+  |}>,
+  route: {
     params: {|
       oidcAuthenticationRequest: OIDCAuthenticationRequest,
     |},
-  |}>,
+  },
 }
 
 type OpenIdConnectScreenProps = {

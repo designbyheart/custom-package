@@ -13,7 +13,6 @@ import {
 } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { createStackNavigator } from 'react-navigation'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
 import type { Store } from '../store/type-store'
@@ -40,11 +39,8 @@ import {
   getAutoCloudBackupEnabled,
 } from '../store/store-selector'
 import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
-import {
-  cloudBackupStart,
-  resetCloudBackupStatus,
-  setAutoCloudBackupEnabled,
-} from './backup-store'
+import { cloudBackupStart, resetCloudBackupStatus } from './backup-store'
+import { setAutoCloudBackupEnabled } from './backup-actions'
 import { color } from '../common/styles/constant'
 
 import styles, { questionStyles } from './styles'
@@ -85,7 +81,7 @@ export class CloudBackup extends Component<CloudBackupScreenProps, void> {
       this.props.cloudBackupStart()
     }
     // NOTE: might switxh to automatically start backing up and show QuestionLoader
-    // const {fromToggleAction, switchState} = this.props.navigation.state.params
+    // const {fromToggleAction, switchState} = this.props.route.params
     // if (this.props.isAutoBackupEnabled && !fromToggleAction) {
     //   this.props.cloudBackupStart()
     // } else if(fromToggleAction && !switchState) {
@@ -102,12 +98,9 @@ export class CloudBackup extends Component<CloudBackupScreenProps, void> {
     this.props.cloudBackupStart()
   }
 
-  static navigationOptions = ({ navigation }: { navigation: any }) => ({
-    header: null,
-  })
-  _getTransform = translateY => [{ translateY }]
+  _getTransform = (translateY) => [{ translateY }]
 
-  _getOpacity = translateY =>
+  _getOpacity = (translateY) =>
     translateY.interpolate({
       inputRange: [0, height],
       outputRange: [1, 0.2],
@@ -150,7 +143,7 @@ export class CloudBackup extends Component<CloudBackupScreenProps, void> {
     }
   )
 
-  _onHandlerStateChange = event => {
+  _onHandlerStateChange = (event) => {
     const { state, velocityY, translationY } = event.nativeEvent
     if (state === State.END) {
       const minimumDistanceToClose = 150
@@ -376,7 +369,7 @@ function Success({ navigateBackToSettings }: NavigateBackToSettingsType) {
   )
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       cloudBackupStart,
@@ -394,22 +387,9 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-export const CloudBackupStack = createStackNavigator(
-  {
-    [cloudBackupRoute]: {
-      screen: withStatusBar({ color: 'white' })(
-        connect(mapStateToProps, mapDispatchToProps)(CloudBackup)
-      ),
-    },
-  },
-  {
-    cardStyle: { backgroundColor: 'transparent' },
-    transitionConfig: () => ({
-      containerStyle: {
-        backgroundColor: 'transparent',
-      },
-    }),
-  }
-)
-
-export default CloudBackupStack
+export const cloudBackupScreen = {
+  routeName: cloudBackupRoute,
+  screen: withStatusBar({ color: 'white' })(
+    connect(mapStateToProps, mapDispatchToProps)(CloudBackup)
+  ),
+}

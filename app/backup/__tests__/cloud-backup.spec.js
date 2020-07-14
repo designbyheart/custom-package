@@ -14,25 +14,9 @@ describe('<CloudBackup />', () => {
     jest.runOnlyPendingTimers()
   })
 
-  const navigation = {
-    navigate: jest.fn(),
-    goBack: jest.fn(),
-    state: {
-      params: {
-        initialRoute: cloudBackupRoute,
-      },
-      index: 1,
-      key: 'Some Key',
-      routeName: 'Route Name',
-      routes: [],
-    },
-    addListener: jest.fn(),
-    dangerouslyGetParent: jest.fn(),
-    dispatch: jest.fn(),
-    getParam: jest.fn(),
-    isFocused: jest.fn(),
-    setParams: jest.fn(),
-  }
+  const navigation = getNavigation({
+    initialRoute: cloudBackupRoute,
+  })
 
   const restoreStore = {
     status: 'ZIP_FILE_SELECTED',

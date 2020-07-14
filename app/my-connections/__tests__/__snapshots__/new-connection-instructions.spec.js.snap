@@ -5,13 +5,19 @@ exports[`<NewConnectionInstructions /> should match snapshot 1`] = `
   accessibilityIgnoresInvertColors={true}
   style={
     Object {
+      "alignItems": "center",
       "height": "100%",
+      "justifyContent": "center",
       "width": "100%",
     }
   }
 >
   <Image
-    source={1}
+    source={
+      Object {
+        "default": "RelativeImageStub",
+      }
+    }
     style={
       Array [
         Object {
@@ -30,66 +36,41 @@ exports[`<NewConnectionInstructions /> should match snapshot 1`] = `
     }
   />
   <View
-    center={true}
     style={
-      Object {
-        "alignItems": "center",
-        "flex": 1,
-        "justifyContent": "center",
-        "marginTop": 64,
-      }
-    }
-  >
-    <View
-      center={true}
-      style={
+      Array [
         Object {
           "alignItems": "center",
+          "height": "100%",
           "justifyContent": "center",
-        }
-      }
-    >
+          "width": "100%",
+        },
+      ]
+    }
+  >
+    <View>
       <Image
         resizeMode="contain"
-        source={1}
+        source={
+          Object {
+            "default": "RelativeImageStub",
+          }
+        }
         style={
           Object {
-            "height": 90,
+            "alignSelf": "center",
+            "height": 70.7142857142857,
           }
         }
       />
       <Text
-        allowFontScaling={false}
         style={
           Array [
             Object {
-              "fontSize": 23,
-            },
-            Object {
-              "fontFamily": "Lato",
-            },
-            Object {
-              "backgroundColor": "#333333",
-              "color": "#ffffff",
-            },
-            Object {
-              "fontWeight": "bold",
-            },
-            null,
-            Object {
-              "backgroundColor": "transparent",
-            },
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            Object {
               "color": "#EB9B2D",
-              "marginVertical": 5,
+              "fontFamily": "Lato",
+              "fontSize": 19.82857142857143,
+              "fontWeight": "bold",
+              "marginVertical": 4.785714285714286,
               "textAlign": "center",
             },
           ]
@@ -98,37 +79,13 @@ exports[`<NewConnectionInstructions /> should match snapshot 1`] = `
         You now have a digital wallet!
       </Text>
       <Text
-        allowFontScaling={false}
         style={
           Array [
             Object {
-              "fontSize": 17,
-            },
-            Object {
-              "fontFamily": "Lato",
-            },
-            Object {
-              "backgroundColor": "#333333",
-              "color": "#ffffff",
-            },
-            Object {
-              "fontWeight": "bold",
-            },
-            null,
-            Object {
-              "backgroundColor": "transparent",
-            },
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            Object {
               "color": "#505050",
-              "marginVertical": 5,
+              "fontSize": 16.854285714285716,
+              "marginVertical": 4.785714285714286,
+              "textAlign": "center",
             },
           ]
         }
@@ -136,36 +93,13 @@ exports[`<NewConnectionInstructions /> should match snapshot 1`] = `
         Want to see how it works?
       </Text>
       <Text
-        allowFontScaling={false}
         style={
           Array [
             Object {
-              "fontSize": 15,
-            },
-            Object {
-              "fontFamily": "Lato",
-            },
-            Object {
-              "backgroundColor": "#333333",
-              "color": "#ffffff",
-            },
-            null,
-            null,
-            Object {
-              "backgroundColor": "transparent",
-            },
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            Object {
               "color": "#505050",
+              "fontSize": 14.871428571428572,
               "marginHorizontal": "5%",
-              "marginVertical": 5,
+              "marginVertical": 4.785714285714286,
               "textAlign": "center",
             },
           ]
@@ -183,13 +117,19 @@ exports[`<NewConnectionInstructions /> should match snapshot for test network 1`
   accessibilityIgnoresInvertColors={true}
   style={
     Object {
+      "alignItems": "center",
       "height": "100%",
+      "justifyContent": "center",
       "width": "100%",
     }
   }
 >
   <Image
-    source={1}
+    source={
+      Object {
+        "default": "RelativeImageStub",
+      }
+    }
     style={
       Array [
         Object {
@@ -208,66 +148,41 @@ exports[`<NewConnectionInstructions /> should match snapshot for test network 1`
     }
   />
   <View
-    center={true}
     style={
-      Object {
-        "alignItems": "center",
-        "flex": 1,
-        "justifyContent": "center",
-        "marginTop": 64,
-      }
-    }
-  >
-    <View
-      center={true}
-      style={
+      Array [
         Object {
           "alignItems": "center",
+          "height": "100%",
           "justifyContent": "center",
-        }
-      }
-    >
+          "width": "100%",
+        },
+      ]
+    }
+  >
+    <View>
       <Image
         resizeMode="contain"
-        source={1}
+        source={
+          Object {
+            "default": "RelativeImageStub",
+          }
+        }
         style={
           Object {
-            "height": 90,
+            "alignSelf": "center",
+            "height": 70.7142857142857,
           }
         }
       />
       <Text
-        allowFontScaling={false}
         style={
           Array [
             Object {
-              "fontSize": 23,
-            },
-            Object {
-              "fontFamily": "Lato",
-            },
-            Object {
-              "backgroundColor": "#333333",
-              "color": "#ffffff",
-            },
-            Object {
-              "fontWeight": "bold",
-            },
-            null,
-            Object {
-              "backgroundColor": "transparent",
-            },
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            Object {
               "color": "#EB9B2D",
-              "marginVertical": 5,
+              "fontFamily": "Lato",
+              "fontSize": 19.82857142857143,
+              "fontWeight": "bold",
+              "marginVertical": 4.785714285714286,
               "textAlign": "center",
             },
           ]
@@ -276,37 +191,13 @@ exports[`<NewConnectionInstructions /> should match snapshot for test network 1`
         You now have a digital wallet!
       </Text>
       <Text
-        allowFontScaling={false}
         style={
           Array [
             Object {
-              "fontSize": 17,
-            },
-            Object {
-              "fontFamily": "Lato",
-            },
-            Object {
-              "backgroundColor": "#333333",
-              "color": "#ffffff",
-            },
-            Object {
-              "fontWeight": "bold",
-            },
-            null,
-            Object {
-              "backgroundColor": "transparent",
-            },
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            Object {
               "color": "#505050",
-              "marginVertical": 5,
+              "fontSize": 16.854285714285716,
+              "marginVertical": 4.785714285714286,
+              "textAlign": "center",
             },
           ]
         }
@@ -314,36 +205,13 @@ exports[`<NewConnectionInstructions /> should match snapshot for test network 1`
         Want to see how it works?
       </Text>
       <Text
-        allowFontScaling={false}
         style={
           Array [
             Object {
-              "fontSize": 15,
-            },
-            Object {
-              "fontFamily": "Lato",
-            },
-            Object {
-              "backgroundColor": "#333333",
-              "color": "#ffffff",
-            },
-            null,
-            null,
-            Object {
-              "backgroundColor": "transparent",
-            },
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            Object {
               "color": "#505050",
+              "fontSize": 14.871428571428572,
               "marginHorizontal": "5%",
-              "marginVertical": 5,
+              "marginVertical": 4.785714285714286,
               "textAlign": "center",
             },
           ]

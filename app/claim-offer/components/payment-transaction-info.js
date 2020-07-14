@@ -37,13 +37,7 @@ const messages = {
   INSUFFICIENT_BALANCE_WITH_DATA: (
     feesData: TokenFeesData & { credentialPrice: string }
   ) =>
-    `You do not have enough tokens to purchase this credential. You need (credential price: ${
-      feesData.credentialPrice
-    } + fees: ${feesData.fees} = total: ${
-      feesData.total
-    }), while your current token balance is ${
-      feesData.currentTokenBalance
-    }. Please get in touch with Sovrin Foundation to get more tokens. Once you have enough tokens, open credential offer again and you should be able to accept.`,
+    `You do not have enough tokens to purchase this credential. You need (credential price: ${feesData.credentialPrice} + fees: ${feesData.fees} = total: ${feesData.total}), while your current token balance is ${feesData.currentTokenBalance}. Please get in touch with Sovrin Foundation to get more tokens. Once you have enough tokens, open credential offer again and you should be able to accept.`,
   SENDING_PAID_CREDENTIAL_REQUEST: 'Transferring tokens...',
   SENDING_CREDENTIAL_REQUEST: 'Accepting offer...',
   SUCCESS:

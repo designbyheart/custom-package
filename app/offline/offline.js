@@ -1,68 +1,33 @@
 // @flow
 
 import React, { Component } from 'react'
-import { View, StyleSheet, NetInfo } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { offline } from './offline-store'
+import NetInfo from '@react-native-community/netinfo'
+
 import type { OfflineProps } from './type-offline'
 import type { Store } from '../store/type-store'
+import type { NetInfoState } from '@react-native-community/netinfo'
+
+import { offline } from './offline-store'
 import { getOfflineStatus } from '../store/store-selector'
 import { Container } from '../components'
 import VectorIcon from '../components/vector-icon/vector-icon'
 
 export class Offline extends Component<OfflineProps> {
-  connectivityChecker: IntervalID
+  unsubscribe = null
 
   componentDidMount() {
-    NetInfo.isConnected.addEventListener(
-      'connectionChange',
-      this.handleConnectivityChange
-    )
+    this.unsubscribe = NetInfo.addEventListener(this.handleConnectivityChange)
   }
 
   componentWillUnmount() {
-    NetInfo.isConnected.removeEventListener(
-      'connectionChange',
-      this.handleConnectivityChange
-    )
-    this.clearInternetCheck()
+    this.unsubscribe && this.unsubscribe()
   }
 
-  clearInternetCheck() {
-    this.connectivityChecker && clearInterval(this.connectivityChecker)
-  }
-
-  handleConnectivityChange = (isConnected: boolean) => {
-    if (!isConnected) {
-      // NetInfo does not reliably change status to connected
-      // however, it works pretty well to change status to offline
-      if (!this.connectivityChecker) {
-        // once we know that we are offline, then we start checking for online
-        // and does not solely rely on NetInfo module
-        this.connectivityChecker = setInterval(this.checkConnectivity, 5000)
-      }
-    } else {
-      this.clearInternetCheck()
-    }
-    this.props.offline(!isConnected)
-  }
-
-  checkConnectivity = () => {
-    fetch('https://www.google.com/', {
-      method: 'HEAD',
-    })
-      .then(response => {
-        if (response.status < 500) {
-          this.handleConnectivityChange(true)
-          this.clearInternetCheck()
-        } else {
-          this.handleConnectivityChange(false)
-        }
-      })
-      .catch(error => {
-        this.handleConnectivityChange(false)
-      })
+  handleConnectivityChange = (state: NetInfoState) => {
+    this.props.offline(!state.isInternetReachable)
   }
 
   render() {

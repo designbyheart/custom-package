@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import { Image, Dimensions } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import type { Store } from '../store/type-store'
@@ -121,19 +120,26 @@ export class GenerateRecoveryPhrase extends Component<
   }
 
   verifyRecoveryPhrase = () => {
-    const { navigation: { navigate, state } } = this.props
+    const {
+      navigation: { navigate },
+      route,
+    } = this.props
 
     navigate(verifyRecoveryPhraseRoute, {
       recoveryPassphrase: this.props.recoveryPassphrase.hash,
-      initialRoute: state.params.initialRoute,
+      initialRoute: route.params.initialRoute,
     })
   }
   backToSettings = () => {
-    const { navigation: { navigate } } = this.props
+    const {
+      navigation: { navigate },
+    } = this.props
     navigate(settingsRoute)
   }
   onRecoveryPhraseGoBack = () => {
-    const { navigation: { navigate, state, goBack } } = this.props
+    const {
+      navigation: { navigate, goBack },
+    } = this.props
     goBack(null)
   }
 
@@ -157,7 +163,8 @@ export class GenerateRecoveryPhrase extends Component<
         </CustomView>
       </CustomHeader>
     ),
-    gesturesEnabled: false,
+    gestureEnabled: false,
+    headerShown: true,
   })
 
   //TODO fix refactor UI
@@ -194,11 +201,11 @@ export class GenerateRecoveryPhrase extends Component<
 
   render() {
     // for viewRecover mode
-    const viewOnlyMode = this.props.navigation.state.params.viewOnlyMode
-      ? true
-      : false
+    const viewOnlyMode = this.props.route.params.viewOnlyMode ? true : false
     const { recoveryPassphrase, recoveryStatus } = this.props
-    const { navigation: { navigate, state } } = this.props
+    const {
+      navigation: { navigate },
+    } = this.props
     const disableButton =
       recoveryStatus === BACKUP_STORE_STATUS.GENERATE_PHRASE_FAILURE ||
       recoveryStatus === BACKUP_STORE_STATUS.GENERATE_PHRASE_LOADING ||
@@ -233,7 +240,7 @@ export class GenerateRecoveryPhrase extends Component<
             <Image
               source={textBubble}
               style={[styles.imageIcon]}
-              onLayout={event =>
+              onLayout={(event) =>
                 this.setChatBubbleDimensions(event.nativeEvent.layout)
               }
             />
@@ -309,13 +316,12 @@ const mapStateToProps = (state: Store) => {
     recoveryStatus: getBackupStatus(state),
   }
 }
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ generateRecoveryPhrase }, dispatch)
 
-export default createStackNavigator({
-  [genRecoveryPhraseRoute]: {
-    screen: withStatusBar({ color: color.bg.eleventh.color })(
-      connect(mapStateToProps, mapDispatchToProps)(GenerateRecoveryPhrase)
-    ),
-  },
-})
+export const generateRecoveryPhraseScreen = {
+  routeName: genRecoveryPhraseRoute,
+  screen: withStatusBar({ color: color.bg.eleventh.color })(
+    connect(mapStateToProps, mapDispatchToProps)(GenerateRecoveryPhrase)
+  ),
+}

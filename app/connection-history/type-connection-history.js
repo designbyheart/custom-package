@@ -169,19 +169,18 @@ export type ConnectionHistoryItem = {
 }
 
 export type ConnectionHistoryDetailsProps = {
-  navigation: {
-    state: {
-      params: {
-        type: string,
-        id?: string,
-        type?: string,
-        icon?: string,
-        action?: string,
-        status?: string,
-        timestamp?: string,
-        data?: Array<Item>,
-        claimMap?: ?ClaimMap,
-      },
+  navigation: {},
+  route: {
+    params: {
+      type: string,
+      id?: string,
+      type?: string,
+      icon?: string,
+      action?: string,
+      status?: string,
+      timestamp?: string,
+      data?: Array<Item>,
+      claimMap?: ?ClaimMap,
     },
   },
 }

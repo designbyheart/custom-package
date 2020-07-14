@@ -18,7 +18,7 @@ import type {
 import type {
   NavigationScreenProp,
   NavigationLeafRoute,
-} from 'react-navigation'
+} from '@react-navigation/native'
 
 export type InvitationPayload = {
   senderEndpoint: string,
@@ -106,11 +106,13 @@ export type InvitationAction =
 export type InvitationNavigation = {
   navigation: NavigationScreenProp<{|
     ...NavigationLeafRoute,
+  |}>,
+  route: {
     params: {|
       senderDID: string,
       token: ?string,
     |},
-  |}>,
+  },
 }
 export type InvitationProps = {
   invitation: ?Invitation,

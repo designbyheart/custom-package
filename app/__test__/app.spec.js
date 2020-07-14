@@ -1,7 +1,7 @@
 // @flow
 import 'react-native'
-import React, { PureComponent } from 'react'
-import { BackHandler, StatusBar, ToastAndroid } from 'react-native'
+import React from 'react'
+import { BackHandler, StatusBar, ToastAndroid, Platform } from 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import { ConnectMeApp } from './../app'
@@ -36,16 +36,19 @@ describe('<App/>', () => {
   describe('in android environment.', () => {
     let tree = null
 
+    beforeAll(() => {
+      Platform.OS = 'android'
+    })
+
+    afterAll(() => {
+      Platform.OS = 'ios'
+    })
+
     beforeEach(() => {
-      const platform = jest.mock('Platform', () => {
-        const Platform = jest.requireActual('Platform')
-        Platform.OS = 'android'
-        return Platform
-      })
       tree = renderer.create(<ConnectMeApp />)
     })
 
-    it(`should have been called BackHandler addEventListner`, () => {
+    it(`should have been called BackHandler addEventListener`, () => {
       expect(BackHandler.addEventListener).toHaveBeenCalled()
     })
 
@@ -70,7 +73,7 @@ describe('<App/>', () => {
       const dispatch = jest.fn()
       if (instance) {
         instance.currentRouteParams = { existingPin: true }
-        instance.navigatorRef = { dispatch }
+        instance.navigatorRef = { current: { dispatch } }
         instance.currentRouteKey = 'key'
         instance.currentRoute = lockPinSetupHomeRoute
       }
@@ -85,7 +88,7 @@ describe('<App/>', () => {
       const dispatch = jest.fn()
       if (instance) {
         instance.currentRouteParams = { existingPin: false }
-        instance.navigatorRef = { dispatch }
+        instance.navigatorRef = { current: { dispatch } }
         instance.currentRouteKey = 'key'
         instance.currentRoute = lockPinSetupHomeRoute
       }
@@ -121,68 +124,11 @@ describe('<App/>', () => {
       expect(instance && instance.exitTimeout).not.toBe(0)
     })
 
-    it(`fn:navigationChangeHandler testing`, () => {
-      let instance = tree && tree.root && tree.root.instance
-      const dispatch = jest.spyOn(store, 'dispatch')
-      if (instance) {
-        instance.navigationChangeHandler(
-          {
-            index: 0,
-            routes: [{ key: 'key', params: {}, routeName: 'routeName' }],
-          },
-          {
-            index: 0,
-            routes: [
-              { key: 'updatedKey', params: {}, routeName: 'updatedRouteName' },
-            ],
-          }
-        )
-        expect(instance.currentRouteKey).toBe('updatedKey')
-        expect(instance.currentRoute).toBe('updatedRouteName')
-      }
-      expect(dispatch).toHaveBeenCalled()
-      dispatch.mockReset()
-      dispatch.mockRestore()
-    })
-
-    it(`fn:navigationChangeHandler testing`, () => {
-      let instance = tree && tree.root && tree.root.instance
-      const dispatch = jest.spyOn(store, 'dispatch')
-      if (instance) {
-        instance.navigationChangeHandler(
-          {
-            index: 0,
-            routes: [{ key: 'key', params: {}, routeName: 'routeName' }],
-          },
-          {
-            index: 0,
-            routes: [
-              {
-                index: 0,
-                routes: [
-                  {
-                    key: 'updatedKey',
-                    params: {},
-                    routeName: 'updatedRouteName',
-                  },
-                ],
-              },
-            ],
-          }
-        )
-        expect(instance.currentRouteKey).toBe('updatedKey')
-        expect(instance.currentRoute).toBe('updatedRouteName')
-      }
-      expect(dispatch).toHaveBeenCalled()
-      dispatch.mockReset()
-      dispatch.mockRestore()
-    })
-
     it(`should dispatch navigation action`, () => {
       let instance = tree && tree.root && tree.root.instance
       const dispatch = jest.fn()
       if (instance) {
-        instance.navigatorRef = { dispatch }
+        instance.navigatorRef = { current: { dispatch } }
       }
       instance && instance.navigateToRoute('routeName', { existingPin: true })
       expect(dispatch).toMatchSnapshot()

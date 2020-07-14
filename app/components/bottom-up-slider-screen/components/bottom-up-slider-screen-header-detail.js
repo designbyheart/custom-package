@@ -1,14 +1,14 @@
 // @flow
 import React from 'react'
 import { Image, StyleSheet, Platform, Text } from 'react-native'
-import { isBiggerThanShortDevice } from '../../../common/styles'
 
 import { CustomView, Container } from '../../layout/'
 import { BottomUpSliderText } from './bottom-up-slider-screen-text'
-import { scale } from 'react-native-size-matters'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontSizes, fontFamily } from '../../../common/styles'
 
 export function BottomUpSliderContentHeaderDetail(props: {
-  source: number | { uri: string } | string,
+  source: number,
   senderName: string,
   headerInfo: string,
   headerTitle: string,
@@ -94,18 +94,15 @@ const headerNameText = (wordLength: number): number => {
   }
 }
 
-const HEADER_LOGO_DIMENSION = 32
-const headerSpacing = '5%'
-
 const styles = StyleSheet.create({
   contentHeaderContainer: {
     justifyContent: 'space-around',
     paddingHorizontal: 16,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
-    backgroundColor: 'white',
-    height: isBiggerThanShortDevice ? 112 : 96,
-    shadowColor: '#000000',
+    backgroundColor: colors.cmWhite,
+    height: verticalScale(96),
+    shadowColor: colors.cmBlack,
     shadowOpacity: 0.1,
     shadowRadius: 14,
     shadowOffset: {
@@ -116,24 +113,25 @@ const styles = StyleSheet.create({
     elevation: Platform.OS === 'android' ? 8 : 0,
   },
   headerLogo: {
-    width: HEADER_LOGO_DIMENSION,
-    height: HEADER_LOGO_DIMENSION,
-    borderRadius: HEADER_LOGO_DIMENSION / 2,
+    width: moderateScale(32),
+    height: moderateScale(32),
+    borderRadius: moderateScale(16),
     borderWidth: 1,
   },
   headerName: {
-    marginLeft: headerSpacing,
+    marginLeft: '5%',
   },
   headerNameText: {
-    fontSize: 17,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '700',
+    fontFamily: fontFamily,
   },
   slideHeaderUpText: {
-    color: '#505050',
+    color: colors.cmGray1,
     fontWeight: '600',
   },
   slideHeaderUpAboutText: {
-    color: '#777777',
-    fontSize: isBiggerThanShortDevice ? 14 : 10,
+    color: colors.cmGray2,
+    fontSize: verticalScale(10),
   },
 })

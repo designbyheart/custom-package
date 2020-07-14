@@ -1,10 +1,50 @@
 // @flow
 import DeviceInfo from 'react-native-device-info'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 import { StyleSheet } from 'react-native'
-import { Dimensions, Platform } from 'react-native'
+import { Dimensions, Platform, PixelRatio } from 'react-native'
 
-// TODO:KS Add support for themes as well
-// Color name taken from http://www.htmlcsscolor.com/
+// Colors
+export const colors = {
+  cmGreen1: '#86B93B',
+  cmGreen2: '#6C8E3A',
+  cmGreen3: 'rgba(134, 185, 59, 0.15)',
+  cmRed: '#CE0B24',
+  cmOrange: '#EB9B2D',
+  cmWhite: '#FFFFFF',
+  cmGray5: '#F2F2F2',
+  cmGray4: '#EAEAEA',
+  cmGray3: '#A5A5A5',
+  cmGray2: '#777777',
+  cmGray1: '#505050',
+  cmBlack: '#000000',
+  cmBlue: '#236BAE',
+}
+
+// Fonts
+export const fontFamily = 'Lato'
+export const fontSizes = {
+  size0: 42,
+  size1: 26,
+  size2: 23,
+  size3: 19,
+  size4: 17,
+  size5: 15,
+  size6: 14,
+  size7: 13,
+  size8: 11,
+  size9: 10,
+  size10: 9,
+  size11: 8,
+}
+
+// >>> We should not use the code below this comment for sizes, colors and other constants.
+// >>> The code beow this comment should be removed after we remove CustomText, CustomView,
+// >>> etc. because only those still depend on these constants.
+
+const { width, height } = Dimensions.get('screen')
+export const isiPhone5 = width >= 320 && width < 375
+
 const zircon = '#ebebea'
 export const nightRider = '#333333'
 export const grey = '#777777'
@@ -50,7 +90,6 @@ export const black = '#000000'
 export const yellowSea = '#EB9B2D'
 export const cornFlowerBlue = '#4A90E2'
 export const atlantis = '#86B93B'
-export const cmRed = '#CE0B24'
 export const atlantisOpacity = 'rgba(134, 185, 59, 0.15)'
 const gamboge = '#DD9012'
 const blueViolet = '#8D13FE'
@@ -73,6 +112,7 @@ export const lightWhite = '#E5E5EA'
 export const blackTransparent = `rgba(0, 0, 0, 0.8)`
 export const cmGrey1 = '#505050'
 export const cmGrey2 = grey
+export const cmRed = '#CE0B24'
 
 // color shades
 const primaryShade = '1.0'
@@ -284,9 +324,6 @@ export const bubbleSize = {
 }
 
 export const PIN_CODE_BORDER_BOTTOM = 4
-
-const { width, height } = Dimensions.get('screen')
-export const isiPhone5 = width >= 320 && width < 375
 export const isSmallWidthDevice = isiPhone5
 export const responsiveHorizontalPadding = isSmallWidthDevice
   ? 5
@@ -303,33 +340,15 @@ export const isBiggerThanShortDevice = height > SHORT_DEVICE
 export const isBiggerThanVeryShortDevice = height > VERY_SHORT_DEVICE
 export const isIphoneX =
   Platform.OS === 'ios' &&
-  (phoneModel &&
-    (phoneModel.toLowerCase() === 'iphone x' ||
-      phoneModel.toLowerCase() === 'iphone xs'))
+  phoneModel &&
+  (phoneModel.toLowerCase() === 'iphone x' ||
+    phoneModel.toLowerCase() === 'iphone xs')
 export const isIphoneXR =
   Platform.OS === 'ios' &&
-  (phoneModel &&
-    (phoneModel.toLowerCase() === 'iphone xr' ||
-      phoneModel.toLowerCase() === 'iphone xs max'))
+  phoneModel &&
+  (phoneModel.toLowerCase() === 'iphone xr' ||
+    phoneModel.toLowerCase() === 'iphone xs max')
 export const deviceHeight = height
-export const primaryHeaderHeight =
-  Platform.OS === 'ios' ? (height >= MEDIUM_DEVICE ? 120 : 72) : 88
-
-export const newBannerCardSizes = {
-  height: isiPhone5 ? 70 : 80,
-  distance: 8,
-  logoSize: isiPhone5 ? 34 : 40,
-}
-
-export const recentCardSizes = {
-  height: isiPhone5 ? 40 : 48,
-  distance: 8,
-  logoSize: isiPhone5 ? 24 : 32,
-}
-
-export const unreadMessagesBadgeSizes = {
-  height: isiPhone5 ? 22 : 24,
-}
 
 export const verticalBreakpoint = {
   extraSmall: height <= 550,

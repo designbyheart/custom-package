@@ -41,7 +41,7 @@ export const readVisibleText = async (testID: string) => {
 }
 
 export function wait(delay: *): Promise<void> {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     setTimeout(resolve, delay)
   })
 }
@@ -60,23 +60,17 @@ export const waitForElementAndTap = async (
   switch (matcher_type) {
     case 'id':
       const e1 = element(by.id(matcher_data))
-      await waitFor(e1)
-        .toBeVisible()
-        .withTimeout(timeout)
+      await waitFor(e1).toBeVisible().withTimeout(timeout)
       await e1.tap()
       break
     case 'text':
       const e2 = element(by.text(matcher_data))
-      await waitFor(e2)
-        .toBeVisible()
-        .withTimeout(timeout)
+      await waitFor(e2).toBeVisible().withTimeout(timeout)
       await e2.tap()
       break
     case 'type':
       const e3 = element(by.type(matcher_data))
-      await waitFor(e3)
-        .toBeVisible()
-        .withTimeout(timeout)
+      await waitFor(e3).toBeVisible().withTimeout(timeout)
       await e3.tap()
       break
   }

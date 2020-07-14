@@ -1,25 +1,41 @@
 // @flow
 import { StyleSheet, Platform } from 'react-native'
-import { color, grey, white } from '../../common/styles/constant'
+import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
 const styles = StyleSheet.create({
   animatedContainer: {
     position: 'absolute',
     zIndex: 1000,
     width: '100%',
-    height: 96,
+    height: moderateScale(90, 0.25),
     alignItems: 'center',
     justifyContent: 'center',
   },
   container: {
     width: '100%',
-    height: 80,
+    height: moderateScale(80, 0.25),
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: color.border.primary,
+    borderBottomColor: colors.cmGray5,
+  },
+  initialsContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: colors.cmGray5,
+  },
+  initialsText: {
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size5),
+    fontWeight: 'bold',
+    color: colors.cmGray1,
   },
   newCardContainer: {
-    backgroundColor: color.bg.sixteenth.color,
+    backgroundColor: colors.cmGreen3,
   },
   avatarSection: {
     height: '100%',
@@ -43,10 +59,12 @@ const styles = StyleSheet.create({
     width: '68%',
     height: '100%',
     justifyContent: 'flex-end',
+    paddingBottom: verticalScale(2),
   },
   descriptionSection: {
     width: '96%',
     height: '100%',
+    paddingTop: verticalScale(2),
   },
   dateButtonSection: {
     width: '32%',
@@ -67,20 +85,20 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   companyNameText: {
-    fontFamily: 'Lato',
-    fontSize: 17,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: 'bold',
-    color: color.textColor.darkgray,
+    color: colors.cmGray1,
   },
   descriptionText: {
-    fontFamily: 'Lato',
-    fontSize: 14,
-    color: color.textColor.grey,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size8),
+    color: colors.cmGray2,
   },
   dateText: {
-    fontFamily: 'Lato',
-    fontSize: 11,
-    color: color.textColor.mediumGray,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size9),
+    color: colors.cmGray3,
     marginBottom: 5,
   },
   newButtonSection: {
@@ -90,24 +108,24 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   newLabel: {
-    width: 64,
-    height: 16,
+    width: moderateScale(64),
+    height: verticalScale(16),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: color.bg.twelfth.color,
+    backgroundColor: colors.cmGreen1,
     marginBottom: 5,
   },
   newLabelText: {
-    fontFamily: 'Lato',
-    fontSize: 11,
+    fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size9),
     fontWeight: '500',
-    color: color.bg.primary.font.primary,
+    color: colors.cmWhite,
   },
   outerContainer: {
     position: 'absolute',
     zIndex: 1000,
     width: '100%',
-    height: 96,
+    height: moderateScale(90, 0.25),
     alignItems: 'center',
     justifyContent: 'center',
   },

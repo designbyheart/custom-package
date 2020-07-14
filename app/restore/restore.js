@@ -18,13 +18,10 @@ import {
   restoreRoute,
   selectRestoreMethodRoute,
 } from '../common'
-import { DocumentPicker } from 'react-native-document-picker'
-import RNFetchBlob from 'rn-fetch-blob'
 import { updateStatusBarTheme } from '../store/connections-store'
 import type { RestoreProps } from './type-restore'
 
 import { saveFileToAppDirectory } from './restore-store'
-import { NavigationActions } from 'react-navigation'
 import type { Store } from '../store/type-store'
 import { RestoreStatus } from './type-restore'
 import { customLogger } from '../store/custom-logger'
@@ -41,7 +38,7 @@ export class RestoreStartScreen extends Component<RestoreProps, void> {
   componentDidUpdate(prevProps: RestoreProps) {
     if (
       this.props.restore.status !== prevProps.restore.status &&
-      this.props.restore.status === RestoreStatus.fileSaved &&
+      this.props.restore.status === RestoreStatus.FILE_SAVED_TO_APP_DIRECTORY &&
       this.props.route === restoreRoute
     ) {
       this.props.navigation.navigate(restorePassphraseRoute)
@@ -64,7 +61,7 @@ export class RestoreStartScreen extends Component<RestoreProps, void> {
   render() {
     //TODO set error to display screen in error mode
     const error =
-      this.props.restore.status === RestoreStatus.failedStatus ||
+      this.props.restore.status === RestoreStatus.RESTORE_FAILED ||
       (this.props.restore.status === RestoreStatus.FILE_SAVE_ERROR &&
         this.props.restore.error)
     let restoreIcon = require('../images/logo_connectme.png')
@@ -244,7 +241,10 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ saveFileToAppDirectory, updateStatusBarTheme }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(RestoreStartScreen)
+export const restoreStartScreen = {
+  routeName: restoreRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(RestoreStartScreen),
+}

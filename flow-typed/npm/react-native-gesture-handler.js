@@ -1,6 +1,14 @@
 // @flow
 import React from 'react'
 
+// declare module 'react-native-gesture-handler' {
+//   declare interface StateI {
+//     END: 'END';
+//     BEGAN: 'BEGAN';
+//   }
+//   declare var State: StateI
+//   declare module.exports: any
+// }
 declare module 'react-native-gesture-handler' {
   declare interface StateI {
     END: 'END';
@@ -13,9 +21,7 @@ declare module 'react-native-gesture-handler' {
 declare module 'react-native-gesture-handler/Swipeable' {
   declare type AnimatedValue = Object
 
-  declare export default class Swipeable extends React.Component<
-    SwipeableProperties
-  > {
+  declare export default class Swipeable extends React.Component<SwipeableProperties> {
     close: () => void;
     openLeft: () => void;
     openRight: () => void;

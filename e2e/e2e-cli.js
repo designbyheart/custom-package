@@ -34,7 +34,7 @@ const args = yargs
   .option('s', {
     alias: 'simulators',
     describe: 'simulators on which tests need to run',
-    choices: ['iphone5s', 'iphone7', 'iphonex', 'iphonexsmax', 'nexus'], // android check
+    choices: ['iphone5s', 'iphone7', 'iphone8', 'iphonex', 'iphonexsmax', 'nexus'], // android check
     default: ['iphonexsmax'],
     array: true,
   })
@@ -91,7 +91,7 @@ const args = yargs
     'Run e2e with update, build release mode, on simulators, with detox config as -r, and test file to run'
   )
   .help().argv
-;(async function(done) {
+;(async function (done) {
   testsDirectory = args.draft ? 'e2e/__draft__' : 'e2e/__tests__'
   await runBuildIfNeeded(args)
   const exitCode = await runTests(args)
@@ -172,6 +172,7 @@ async function runTests(args) {
     iphone7: 'iPhone 7',
     iphonex: 'iPhone X',
     iphonexsmax: 'iPhone XS Max',
+    iphone8: 'iPhone 8',
     nexus: 'connectme', // android check
   }
 
@@ -222,11 +223,11 @@ async function runTests(args) {
       const fileNames = await readDir(testsDirectory)
       extraArgs.push(
         ...fileNames
-          .map(file => {
+          .map((file) => {
             if (file === 'initial.spec.js') return ''
             return `${testsDirectory}/${file}`
           })
-          .filter(_ => _)
+          .filter((_) => _)
       )
     }
 

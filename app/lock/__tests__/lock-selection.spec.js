@@ -19,6 +19,7 @@ function getLockSelectionProps() {
 
 const navigation = getNavigation()
 const store = getStore()
+const route = {}
 
 let componentInstance: LockSelection
 let tree
@@ -30,7 +31,12 @@ describe('app lock selection page should', () => {
     props = getLockSelectionProps()
     wrapper = renderer.create(
       <Provider store={store}>
-        <LockSelection {...props} showDevMode={false} navigation={navigation} />
+        <LockSelection
+          {...props}
+          showDevMode={false}
+          navigation={navigation}
+          route={route}
+        />
       </Provider>
     )
     tree = wrapper.toJSON()

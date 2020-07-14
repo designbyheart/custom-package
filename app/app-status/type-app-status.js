@@ -1,9 +1,15 @@
 // @flow
+
+import type { ReduxConnect } from '../common/type-common'
+
 export type AppStatusState = {
   appState: ?string,
 }
 
 export type AppStatusProps = {
-  getUnacknowledgedMessages: () => void,
+  ...ConnectProps,
+} & ReduxConnect
+
+export type ConnectProps = {|
   restoreStatus: string,
-}
+|}

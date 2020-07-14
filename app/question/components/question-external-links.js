@@ -20,9 +20,7 @@ import {
   color,
 } from '../../common/styles'
 
-export class QuestionExternalLinks extends PureComponent<
-  QuestionExternalLinksProps
-> {
+export class QuestionExternalLinks extends PureComponent<QuestionExternalLinksProps> {
   render() {
     const { externalLinks = [] } = this.props
 
@@ -54,9 +52,7 @@ export class QuestionExternalLinks extends PureComponent<
   }
 }
 
-export class QuestionExternalLink extends PureComponent<
-  QuestionExternalLinkProps
-> {
+export class QuestionExternalLink extends PureComponent<QuestionExternalLinkProps> {
   render() {
     const { text, src } = this.props.link
     return (
@@ -86,10 +82,10 @@ export class QuestionExternalLink extends PureComponent<
   openLink = () => {
     Linking.openURL(this.props.link.src).catch(() => {
       Snackbar.show({
-        title: 'Could not open this link. Link seems to be incorrect.',
+        text: 'Could not open this link. Link seems to be incorrect.',
         duration: Snackbar.LENGTH_LONG,
         backgroundColor: venetianRed,
-        color: white,
+        textColor: white,
       })
     })
   }

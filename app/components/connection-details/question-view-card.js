@@ -1,42 +1,34 @@
 // @flow
-import React, { PureComponent } from 'react'
-import {
-  Text,
-  View,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native'
-import { questionRoute } from '../../common'
+import React from 'react'
+import { Text, View, StyleSheet } from 'react-native'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
-let ScreenHeight = Dimensions.get('window').height
-
-// TODO: Fix the <any, void> to be the correct types for props and state
-class QuestionViewCard extends PureComponent<any, {}> {
-  navigateToQuestionScreen = () => {
-    this.props.navigation.navigate(questionRoute, { uid: this.props.uid })
-  }
-
-  render() {
-    const { navigation } = this.props
-
-    const { key, params } = this.props.navigation.state
-
-    return (
-      <View style={styles.container}>
-        <View style={styles.contentRow}>
-          <View style={styles.content}>
-            <Text style={styles.messageDate}>{this.props.messageDate} - </Text>
-            <Text style={styles.requestStatus}>{this.props.requestStatus}</Text>
-          </View>
-          <Text style={styles.requestAction}>{this.props.requestAction}</Text>
+export const QuestionViewCard = ({
+  messageDate,
+  uid,
+  requestStatus,
+  requestAction,
+}: QuestionViewCardProps) => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.contentRow}>
+        <View style={styles.content}>
+          <Text style={styles.messageDate}>{messageDate} - </Text>
+          <Text style={styles.requestStatus}>{requestStatus}</Text>
         </View>
+        <Text style={styles.requestAction}>{requestAction}</Text>
       </View>
-    )
-  }
+    </View>
+  )
 }
 
-export { QuestionViewCard }
+type QuestionViewCardProps = {
+  uid: string,
+  messageDate: string,
+  requestStatus: string,
+  requestAction: string,
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -45,11 +37,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '86%',
     marginLeft: '7%',
-    paddingTop: 20,
-    paddingBottom: 20,
+    paddingTop: moderateScale(20),
+    paddingBottom: moderateScale(20),
     alignItems: 'stretch',
     borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
+    borderBottomColor: colors.cmGray5,
   },
   contentRow: {
     flex: 1,
@@ -60,36 +52,22 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   messageDate: {
-    color: '#777',
-    fontSize: 11,
-    lineHeight: 13,
+    color: colors.cmGray2,
+    fontSize: moderateScale(fontSizes.size9),
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   requestStatus: {
-    color: '#777',
-    fontSize: 11,
-    lineHeight: 13,
+    color: colors.cmGray2,
+    fontSize: moderateScale(fontSizes.size9),
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   requestAction: {
-    color: '#a5a5a5',
-    fontSize: 14,
+    color: colors.cmGray3,
+    fontSize: moderateScale(fontSizes.size7),
     fontWeight: '700',
-    paddingTop: 3,
-    fontFamily: 'Lato',
-  },
-  buttonUndo: {
-    paddingLeft: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#236BAE',
-    fontSize: 17,
-    lineHeight: 20,
-    fontWeight: '700',
-    fontFamily: 'Lato',
+    paddingTop: verticalScale(3),
+    fontFamily: fontFamily,
   },
 })

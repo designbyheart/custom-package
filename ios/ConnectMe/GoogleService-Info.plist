@@ -23,15 +23,17 @@
     <key>STORAGE_BUCKET</key>
     <string>connectmecloudmsgservice.appspot.com</string>
     <key>IS_ADS_ENABLED</key>
-    <true></true>
+    <false/>
     <key>IS_ANALYTICS_ENABLED</key>
-    <false></false>
+    <false/>
     <key>IS_APPINVITE_ENABLED</key>
-    <false></false>
+    <false/>
     <key>IS_GCM_ENABLED</key>
-    <true></true>
+    <true/>
     <key>IS_SIGNIN_ENABLED</key>
-    <true></true>
+    <false/>
+    <key>firebase_crashlytics_collection_enabled</key>
+    <false/>
     <key>GOOGLE_APP_ID</key>
     <string>1:587891114080:ios:18fe3797e5636392</string>
     <key>DATABASE_URL</key>

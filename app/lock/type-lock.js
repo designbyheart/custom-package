@@ -3,7 +3,7 @@ import type { CustomError, ReactNavigation } from '../common/type-common'
 import type {
   NavigationScreenProp,
   NavigationLeafRoute,
-} from 'react-navigation'
+} from '@react-navigation/native'
 
 import { SWITCH_ERROR_ALERTS } from '../store/type-config-store'
 
@@ -261,11 +261,13 @@ export type LockEnterProps = {
 export type LockAuthorizationNavigation = {
   navigation: NavigationScreenProp<{|
     ...NavigationLeafRoute,
+  |}>,
+  route: {
     params: {|
       onSuccess?: () => void,
       onAvoid?: () => void,
     |},
-  |}>,
+  },
 }
 export type LockAuthorizationProps = {} & LockAuthorizationNavigation
 

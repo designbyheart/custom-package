@@ -247,7 +247,7 @@ export const getConnection = (
   remoteConnectionId: string,
   connections: Connections
 ): Array<any> =>
-  Object.values(connections).filter(function(c: any) {
+  Object.values(connections).filter(function (c: any) {
     return c.remoteConnectionId === remoteConnectionId
   })
 
@@ -454,7 +454,10 @@ export default function connections(
         error: initialState.error,
       }
     case NEW_CONNECTION_SUCCESS:
-      const { connection, connection: { identifier } } = action
+      const {
+        connection,
+        connection: { identifier },
+      } = action
       return {
         ...state,
         isFetching: false,

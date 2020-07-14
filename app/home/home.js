@@ -11,9 +11,9 @@ import {
   Dimensions,
 } from 'react-native'
 import { bindActionCreators } from 'redux'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 import { connect } from 'react-redux'
 import Snackbar from 'react-native-snackbar'
-import { BlurView } from 'react-native-blur'
 
 import type { Store } from '../store/type-store'
 import type { HomeProps } from './type-home'
@@ -22,7 +22,6 @@ import type { ReactNavigation } from '../common/type-common'
 
 import { HISTORY_EVENT_STATUS } from '../connection-history/type-connection-history'
 import { PrimaryHeader, CameraButton } from '../components'
-import { createStackNavigator } from 'react-navigation'
 import {
   homeRoute,
   qrCodeScannerTabRoute,
@@ -40,13 +39,7 @@ import {
   SERVER_ENVIRONMENT,
   GET_MESSAGES_LOADING,
 } from '../store/type-config-store'
-import { withStatusBar } from '../components/status-bar/status-bar'
-import {
-  primaryHeaderHeight,
-  white,
-  newBannerCardSizes,
-  isiPhone5,
-} from '../common/styles/constant'
+import { colors } from '../common/styles/constant'
 import { NewBannerCard } from './new-banner-card/new-banner-card'
 import { RecentCard } from './recent-card/recent-card'
 import { RecentCardSeparator } from './recent-card-separator'
@@ -185,19 +178,8 @@ export class HomeScreen extends Component<HomeProps, void> {
 
   renderEmptyListPlaceholder = () => <EmptyViewPlaceholder />
 
-  renderBlurForIos = () => {
-    if (Platform.OS === 'ios') {
-      return (
-        <BlurView
-          style={styles.blurContainer}
-          blurType="light"
-          blurAmount={8}
-        />
-      )
-    } else return null
-  }
-
   render() {
+    console.log(this.props)
     return (
       <View style={styles.outerContainer}>
         <View
@@ -239,7 +221,6 @@ export class HomeScreen extends Component<HomeProps, void> {
             />
           </View>
         </View>
-        {this.renderBlurForIos()}
         <PrimaryHeader headline="Home" navigation={this.props.navigation} />
         <CameraButton
           onPress={() => this.props.navigation.navigate(qrCodeScannerTabRoute)}
@@ -289,7 +270,7 @@ const mapStateToProps = (state: Store) => {
   // Once the credential is accepted or proof is shared, that object does not contain logoUrl and issuerName
   // so we need to store them here.
   const mappedDidToLogoAndName = {}
-  receivedConnections.map(connection => {
+  receivedConnections.map((connection) => {
     mappedDidToLogoAndName[connection.senderDID] = {
       logoUrl: connection.logoUrl,
       issuerName: connection.senderName,
@@ -323,7 +304,7 @@ const mapStateToProps = (state: Store) => {
   // Sorts the newest actions to be on top
   const newBannerConnections = []
   const recentConnections = []
-  flattenPlaceholderArray.map(connection => {
+  flattenPlaceholderArray.map((connection) => {
     if (isNewConnection(connection.status)) {
       newBannerConnections.push(connection)
     } else recentConnections.push(connection)
@@ -344,7 +325,7 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       getUnacknowledgedMessages,
@@ -352,13 +333,10 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default createStackNavigator({
-  [homeRoute]: {
-    screen: withStatusBar()(
-      connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
-    ),
-  },
-})
+export const homeScreen = {
+  routeName: homeRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(HomeScreen),
+}
 
 const { height } = Dimensions.get('screen')
 
@@ -369,30 +347,24 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: white,
-  },
-  blurContainer: {
-    position: 'absolute',
-    top: 0,
-    width: '100%',
-    height: primaryHeaderHeight,
+    backgroundColor: colors.cmWhite,
   },
   checkmarkContainer: {
     width: '100%',
-    height: height * 0.6,
+    height: '60%',
   },
   newBadgeFlatListContainer: {
-    marginTop: primaryHeaderHeight,
+    marginTop: verticalScale(90),
   },
   newBadgeFlatListInnerContainer: {
-    paddingBottom: 25,
-    paddingTop: 20,
+    paddingBottom: moderateScale(20, 0.2),
+    paddingTop: moderateScale(18, 0.1),
   },
   recentFlatListContainer: {
     flex: 1,
   },
   recentFlatListInnerContainer: {
-    paddingBottom: 80,
-    paddingTop: isiPhone5 ? 10 : 14,
+    paddingBottom: moderateScale(70, 0.12),
+    paddingTop: moderateScale(10, 0.28),
   },
 })

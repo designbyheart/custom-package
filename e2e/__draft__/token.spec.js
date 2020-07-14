@@ -58,6 +58,12 @@ describe.skip('Token functionality', () => {
       width: 337,
       height: 106,
     },
+    iphone8: {
+      top: 272,
+      left: 19,
+      width: 337,
+      height: 106,
+    },
     iphonex: {
       top: 296,
       left: 19,
@@ -80,6 +86,12 @@ describe.skip('Token functionality', () => {
       height: 40,
     },
     iphone7: {
+      top: 68,
+      left: 45,
+      width: 280,
+      height: 40,
+    },
+    iphone8: {
       top: 68,
       left: 45,
       width: 280,

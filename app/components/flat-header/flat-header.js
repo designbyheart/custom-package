@@ -7,25 +7,23 @@ import { color, mediumGray } from '../../common/styles'
 import type { FlatHeaderProps } from './type-flat-header'
 
 const FlatHeader = (props: FlatHeaderProps) => {
-  const { navigation, svgIconName, label } = props
+  const { navigation, svgIconName, label, route } = props
 
   return (
     <View style={styles.headerContainer}>
       <View style={styles.headerLeftSection}>
-        {svgIconName &&
-          navigation.state.params &&
-          navigation.state.params.existingPin === true && (
-            <TouchableOpacity
-              style={styles.backButton}
-              testID="back-arrow"
-              accessible={true}
-              accessibilityLabel="back-arrow"
-              hitSlop={{ top: 70, left: 70, bottom: 70, right: 70 }}
-              onPress={() => navigation.goBack(null)}
-            >
-              <SvgCustomIcon name={svgIconName} fill={mediumGray} />
-            </TouchableOpacity>
-          )}
+        {svgIconName && route.params && route.params.existingPin === true && (
+          <TouchableOpacity
+            style={styles.backButton}
+            testID="back-arrow"
+            accessible={true}
+            accessibilityLabel="back-arrow"
+            hitSlop={{ top: 70, left: 70, bottom: 70, right: 70 }}
+            onPress={() => navigation.goBack(null)}
+          >
+            <SvgCustomIcon name={svgIconName} fill={mediumGray} />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.headerCenterSection}>
         {label && <Text style={styles.text}>{label}</Text>}

@@ -25,6 +25,11 @@ export const handleRouteUpdate = (currentScreen: string) => ({
   currentScreen,
 })
 
+export type RouteUpdateAction = {
+  type: typeof ROUTE_UPDATE,
+  currentScreen: string,
+}
+
 export default function routeReducer(
   state: RouteStore = initialState,
   action: RouteStoreAction

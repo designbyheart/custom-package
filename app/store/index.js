@@ -3,6 +3,9 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 import { createLogger } from 'redux-logger'
+
+import type { Store } from './type-store'
+
 import {
   customLogger,
   PiiHiddenTransformer,
@@ -116,14 +119,16 @@ let reduxLogger = createLogger({
   stateTransformer: PiiHiddenTransformer,
   actionTransformer: PiiHiddenActionTransformer,
 })
-middlewares.push(reduxLogger)
+// middlewares.push(reduxLogger)
 
 middlewares.push(sagaMiddleware)
 
-const store = createStore(appReducer, applyMiddleware(...middlewares))
+const store = createStore<Store, *, *>(
+  appReducer,
+  applyMiddleware(...middlewares)
+)
 
-// $FlowFixMe Don't know how to fix polymorphic type coercion
-sagaMiddleware.run(function*() {
+sagaMiddleware.run(function* (): Generator<*, *, *> {
   return yield all([
     watchConnection(),
     watchConfig(),

@@ -1,6 +1,8 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
 class ModalButton extends PureComponent<any, {}> {
@@ -27,10 +29,10 @@ export { ModalButton }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.cmGray5,
     width: '100%',
-    padding: 15,
-    paddingBottom: 45,
+    padding: moderateScale(15),
+    paddingBottom: moderateScale(45),
   },
   innerWrapper: {
     width: '100%',
@@ -42,17 +44,17 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   buttonClose: {
-    padding: 17.5,
-    paddingLeft: 30,
-    paddingRight: 30,
+    padding: moderateScale(17),
+    paddingLeft: moderateScale(30),
+    paddingRight: moderateScale(30),
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
   },
   close: {
-    fontSize: 17,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '700',
-    color: '#fff',
-    fontFamily: 'Lato',
+    color: colors.cmWhite,
+    fontFamily: fontFamily,
   },
 })

@@ -2,8 +2,7 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, StatusBar, Platform } from 'react-native'
 import type { CustomHeaderProps } from './type-custom-header'
-import { SafeAreaView } from 'react-navigation'
-import { withNavigationFocus } from 'react-navigation'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { Header } from 'react-native-elements'
 
 import style from '../layout/layout-style'
@@ -36,7 +35,7 @@ class CustomHeader extends PureComponent<CustomHeaderProps, void> {
       <SafeAreaView style={{ backgroundColor }} forceInset={ToggleLargeHeader}>
         <Header
           backgroundColor={backgroundColor}
-          outerContainerStyles={[
+          containerStyles={[
             outerContainerStyles,
             ContainerStyles,
             borderStyles,

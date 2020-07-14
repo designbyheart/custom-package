@@ -81,7 +81,7 @@ describe('Connection via QR Code', () => {
     const { resolve, promise: invitationPushed } = getDeferred() // <<< can work without it
     const http = require('http')
     const server = http
-      .createServer(function(request, response) {
+      .createServer(function (request, response) {
         response.writeHead(200, { 'Content-Type': 'application/json' })
         response.write(jsonData.trim())
         response.end()
@@ -194,9 +194,7 @@ describe('Connection via QR Code', () => {
 
     await waitForElementAndTap('text', OK_TEXT_ALERT, TIMEOUT)
 
-    await element(by.type(GENERAL_SCROLL_VIEW))
-      .atIndex(2)
-      .swipe('down')
+    await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('down')
 
     try {
       await element(
@@ -204,17 +202,13 @@ describe('Connection via QR Code', () => {
       ).typeText('test attribute 1')
     } catch (e) {
       try {
-        await element(by.type(GENERAL_SCROLL_VIEW))
-          .atIndex(2)
-          .swipe('down')
+        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('down')
 
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('1'))
         ).typeText('test attribute 1')
       } catch (e) {
-        await element(by.type(GENERAL_SCROLL_VIEW))
-          .atIndex(2)
-          .swipe('up')
+        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('up')
 
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('1'))
@@ -231,17 +225,13 @@ describe('Connection via QR Code', () => {
       ).typeText('test attribute 2')
     } catch (e) {
       try {
-        await element(by.type(GENERAL_SCROLL_VIEW))
-          .atIndex(2)
-          .swipe('down')
+        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('down')
 
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
         ).typeText('test attribute 2')
       } catch (e) {
-        await element(by.type(GENERAL_SCROLL_VIEW))
-          .atIndex(2)
-          .swipe('up')
+        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('up')
 
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
@@ -258,17 +248,13 @@ describe('Connection via QR Code', () => {
       ).typeText('test attribute 3')
     } catch (e) {
       try {
-        await element(by.type(GENERAL_SCROLL_VIEW))
-          .atIndex(2)
-          .swipe('down')
+        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('down')
 
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
         ).typeText('test attribute 3')
       } catch (e) {
-        await element(by.type(GENERAL_SCROLL_VIEW))
-          .atIndex(2)
-          .swipe('up')
+        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('up')
 
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
@@ -324,9 +310,7 @@ describe('Connection via QR Code', () => {
 
     await expect(element(by.text(CONNECTION_ENTRY_HEADER))).toBeVisible()
 
-    await element(by.text(VIEW_CREDENTIAL))
-      .atIndex(1)
-      .tap()
+    await element(by.text(VIEW_CREDENTIAL)).atIndex(1).tap()
 
     await expect(element(by.text(CREDENTIAL_HEADER))).toBeVisible()
 
@@ -340,9 +324,7 @@ describe('Connection via QR Code', () => {
       .atIndex(0)
       .swipe('up', 'fast', 0.5)
 
-    await element(by.text(VIEW_PROOF))
-      .atIndex(0)
-      .tap()
+    await element(by.text(VIEW_PROOF)).atIndex(0).tap()
 
     await expect(element(by.text(PROOF_HEADER))).toBeVisible()
 

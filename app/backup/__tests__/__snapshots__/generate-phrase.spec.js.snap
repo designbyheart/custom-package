@@ -12,7 +12,11 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
   }
 >
   <Image
-    source={1}
+    source={
+      Object {
+        "default": "RelativeImageStub",
+      }
+    }
     style={
       Array [
         Object {
@@ -136,7 +140,11 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
     >
       <Image
         onLayout={[Function]}
-        source={1}
+        source={
+          Object {
+            "default": "RelativeImageStub",
+          }
+        }
         style={
           Array [
             Object {
@@ -310,24 +318,27 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
     </View>
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
         accessibilityLabel="submit-recovery-passphrase"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -335,14 +346,44 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
+          Object {
+            "borderRadius": 5,
+            "elevation": 7,
+            "height": 48,
+            "marginBottom": 15,
+            "marginLeft": "2%",
+            "marginRight": "2%",
+            "opacity": 1,
+            "shadowColor": "#777777",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 1,
+            },
+            "shadowOpacity": 0.3,
+            "shadowRadius": 5,
+          }
+        }
+        testID="submit-recovery-passphrase"
+      >
+        <View
+          style={
             Object {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderColor": "#2089dc",
               "borderRadius": 5,
+              "borderWidth": 0,
+              "color": "#4A90E2",
               "elevation": 7,
+              "flexDirection": "row",
+              "fontSize": 18,
+              "fontWeight": "600",
               "height": 48,
+              "justifyContent": "center",
               "marginBottom": 15,
               "marginLeft": "2%",
               "marginRight": "2%",
+              "padding": 8,
               "shadowColor": "#777777",
               "shadowOffset": Object {
                 "height": 1,
@@ -350,95 +391,19 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
               },
               "shadowOpacity": 0.3,
               "shadowRadius": 5,
-            },
-          ]
-        }
-        testID="submit-recovery-passphrase"
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "elevation": 7,
-                  "height": 48,
-                  "marginBottom": 15,
-                  "marginLeft": "2%",
-                  "marginRight": "2%",
-                  "shadowColor": "#777777",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 1,
-                  },
-                  "shadowOpacity": 0.3,
-                  "shadowRadius": 5,
-                },
-              ],
-              false,
-              false,
-            ]
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#4A90E2",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 18,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "600",
-                  },
-                  undefined,
-                  false,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Continue
@@ -462,7 +427,11 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
   }
 >
   <Image
-    source={1}
+    source={
+      Object {
+        "default": "RelativeImageStub",
+      }
+    }
     style={
       Array [
         Object {
@@ -586,7 +555,11 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
     >
       <Image
         onLayout={[Function]}
-        source={1}
+        source={
+          Object {
+            "default": "RelativeImageStub",
+          }
+        }
         style={
           Array [
             Object {
@@ -753,24 +726,27 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
     </View>
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
         accessibilityLabel="submit-recovery-passphrase"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": true,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -778,14 +754,45 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
+          Object {
+            "borderRadius": 5,
+            "elevation": 7,
+            "height": 48,
+            "marginBottom": 15,
+            "marginLeft": "2%",
+            "marginRight": "2%",
+            "opacity": 1,
+            "shadowColor": "#777777",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 1,
+            },
+            "shadowOpacity": 0.3,
+            "shadowRadius": 5,
+          }
+        }
+        testID="submit-recovery-passphrase"
+      >
+        <View
+          style={
             Object {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderColor": "#2089dc",
               "borderRadius": 5,
+              "borderWidth": 0,
+              "color": "#4A90E2",
               "elevation": 7,
+              "flexDirection": "row",
+              "fontSize": 18,
+              "fontWeight": "600",
               "height": 48,
+              "justifyContent": "center",
               "marginBottom": 15,
               "marginLeft": "2%",
               "marginRight": "2%",
+              "opacity": 0.4,
+              "padding": 8,
               "shadowColor": "#777777",
               "shadowOffset": Object {
                 "height": 1,
@@ -793,104 +800,27 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
               },
               "shadowOpacity": 0.3,
               "shadowRadius": 5,
-            },
-          ]
-        }
-        testID="submit-recovery-passphrase"
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "elevation": 7,
-                  "height": 48,
-                  "marginBottom": 15,
-                  "marginLeft": "2%",
-                  "marginRight": "2%",
-                  "shadowColor": "#777777",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 1,
-                  },
-                  "shadowOpacity": 0.3,
-                  "shadowRadius": 5,
-                },
-              ],
-              Object {
-                "backgroundColor": "#dadee0",
-              },
-              Array [
-                Object {
-                  "backgroundColor": "#ffffff",
-                },
-                Object {
-                  "opacity": 0.4,
-                },
-              ],
-            ]
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#4A90E2",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 18,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "600",
-                  },
-                  undefined,
-                  undefined,
-                ],
-              ]
+              Object {
+                "color": Object {
+                  "color": Array [
+                    208,
+                    8,
+                    63,
+                  ],
+                  "model": "hsl",
+                  "valpha": 1,
+                },
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Continue
@@ -914,7 +844,11 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
   }
 >
   <Image
-    source={1}
+    source={
+      Object {
+        "default": "RelativeImageStub",
+      }
+    }
     style={
       Array [
         Object {
@@ -1038,7 +972,11 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
     >
       <Image
         onLayout={[Function]}
-        source={1}
+        source={
+          Object {
+            "default": "RelativeImageStub",
+          }
+        }
         style={
           Array [
             Object {
@@ -1166,24 +1104,27 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
     </View>
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
         accessibilityLabel="submit-recovery-passphrase"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": true,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -1191,14 +1132,45 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
+          Object {
+            "borderRadius": 5,
+            "elevation": 7,
+            "height": 48,
+            "marginBottom": 15,
+            "marginLeft": "2%",
+            "marginRight": "2%",
+            "opacity": 1,
+            "shadowColor": "#777777",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 1,
+            },
+            "shadowOpacity": 0.3,
+            "shadowRadius": 5,
+          }
+        }
+        testID="submit-recovery-passphrase"
+      >
+        <View
+          style={
             Object {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderColor": "#2089dc",
               "borderRadius": 5,
+              "borderWidth": 0,
+              "color": "#4A90E2",
               "elevation": 7,
+              "flexDirection": "row",
+              "fontSize": 18,
+              "fontWeight": "600",
               "height": 48,
+              "justifyContent": "center",
               "marginBottom": 15,
               "marginLeft": "2%",
               "marginRight": "2%",
+              "opacity": 0.4,
+              "padding": 8,
               "shadowColor": "#777777",
               "shadowOffset": Object {
                 "height": 1,
@@ -1206,104 +1178,27 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
               },
               "shadowOpacity": 0.3,
               "shadowRadius": 5,
-            },
-          ]
-        }
-        testID="submit-recovery-passphrase"
-      >
-        <View
-          pointerEvents="box-only"
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#ffffff",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "borderRadius": 5,
-                  "elevation": 7,
-                  "height": 48,
-                  "marginBottom": 15,
-                  "marginLeft": "2%",
-                  "marginRight": "2%",
-                  "shadowColor": "#777777",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 1,
-                  },
-                  "shadowOpacity": 0.3,
-                  "shadowRadius": 5,
-                },
-              ],
-              Object {
-                "backgroundColor": "#dadee0",
-              },
-              Array [
-                Object {
-                  "backgroundColor": "#ffffff",
-                },
-                Object {
-                  "opacity": 0.4,
-                },
-              ],
-            ]
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#4A90E2",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 18,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "600",
-                  },
-                  undefined,
-                  undefined,
-                ],
-              ]
+              Object {
+                "color": Object {
+                  "color": Array [
+                    208,
+                    8,
+                    63,
+                  ],
+                  "model": "hsl",
+                  "valpha": 1,
+                },
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Continue

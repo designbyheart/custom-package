@@ -8,6 +8,7 @@ import {
   Alert,
   Platform,
   Dimensions,
+  InteractionManager,
 } from 'react-native'
 import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { connect } from 'react-redux'
@@ -22,13 +23,11 @@ import {
   Avatar,
   Icon,
   ConnectionTheme,
-  ClaimProofHeader,
   Separator,
-  FooterActions,
   UserAvatar,
   headerStyles,
+  Loader,
 } from '../../components'
-import { BorderSeparator } from '../../components/connection-details/border-separator'
 import type {
   ProofRequestProps,
   AdditionalProofDataPayload,
@@ -40,7 +39,6 @@ import type {
 } from '../../proof-request/type-proof-request'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
 import debounce from 'lodash.debounce'
-import Swiper from 'react-native-swiper'
 import {
   rejectProofRequest,
   acceptProofRequest,
@@ -73,7 +71,6 @@ import {
   updateAttributeClaim,
   getProof,
 } from '../../proof/proof-store'
-import { brown } from 'color-name'
 import type {
   GenericObject,
   GenericStringObject,
@@ -82,6 +79,13 @@ import type {
 import type { Attribute } from '../../push-notification/type-push-notification'
 import type { Store } from '../../store/type-store'
 import { customLogger } from '../../store/custom-logger'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import {
+  colors,
+  fontFamily,
+  fontSizes,
+  font,
+} from '../../common/styles/constant'
 
 const screenWidth = Dimensions.get('window').width
 const sliderWidth = screenWidth - screenWidth * 0.1
@@ -102,7 +106,7 @@ export function isInvalidValues(
   missingAttributes: MissingAttributes | {},
   userFilledValues: GenericObject
 ): boolean {
-  return Object.keys(missingAttributes).some(attributeName => {
+  return Object.keys(missingAttributes).some((attributeName) => {
     const userFilledValue = userFilledValues[attributeName]
 
     if (!userFilledValue) {
@@ -131,7 +135,7 @@ class ProofRequestAttributeList extends Component<
     )
   }
 
-  componentWillReceiveProps(nextProps: ProofRequestAttributeListProp) {
+  UNSAFE_componentWillReceiveProps(nextProps: ProofRequestAttributeListProp) {
     if (this.props.missingAttributes !== nextProps.missingAttributes) {
       // once we know that there are missing attributes
       // then we generate state variable for each of them
@@ -147,7 +151,7 @@ class ProofRequestAttributeList extends Component<
   // this form is needed to fix flow error
   // because methods of a class are by default covariant
   // so we need an invariance to tell method signature
-  canEnableGenerateProof = function() {
+  canEnableGenerateProof = function () {
     const isInvalid = isInvalidValues(this.props.missingAttributes, this.state)
     this.props.canEnablePrimaryAction(!isInvalid, this.state)
   }
@@ -180,8 +184,9 @@ class ProofRequestAttributeList extends Component<
         layout={'default'}
         sliderWidth={sliderWidth}
         itemWidth={sliderWidth}
-        onSnapToItem={swipeIndex => this.onSwipe(items[swipeIndex])}
+        onSnapToItem={(swipeIndex) => this.onSwipe(items[swipeIndex])}
         data={items}
+        loop={true}
         renderItem={({ item, index: itemIndex }) => {
           const adjustedLabel = item.label.toLocaleLowerCase()
           const testID = 'proof-request-attribute-item'
@@ -221,7 +226,7 @@ class ProofRequestAttributeList extends Component<
                       testID={`${testID}-input-${adjustedLabel}`}
                       accessible={true}
                       accessibilityLabel={`${testID}-input-${adjustedLabel}`}
-                      onChange={e => this.onTextChange(e, adjustedLabel)}
+                      onChange={(e) => this.onTextChange(e, adjustedLabel)}
                       editable={!this.props.disableUserInputs}
                       underlineColorAndroid="transparent"
                     />
@@ -263,8 +268,6 @@ class ProofRequestAttributeList extends Component<
         renderItem={this.renderItem}
         extraData={this.props}
         extraScrollHeight={Platform.OS === 'ios' ? 170 : null}
-        ItemSeparatorComponent={BorderSeparator}
-        ListFooterComponent={BorderSeparator}
       />
     )
   }
@@ -370,6 +373,7 @@ class ModalContentProof extends Component<
       disableUserInputs: false,
       selectedClaims: {},
       disableSendButton: false,
+      interactionsDone: false,
     }
     this.onSend = this.onSend.bind(this)
   }
@@ -425,7 +429,7 @@ class ModalContentProof extends Component<
     }
   }
 
-  componentWillReceiveProps(nextProps: ProofRequestProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: ProofRequestProps) {
     if (
       (this.props.proofGenerationError !== nextProps.proofGenerationError &&
         nextProps.proofGenerationError) ||
@@ -542,6 +546,11 @@ class ModalContentProof extends Component<
   componentDidMount() {
     this.props.proofRequestShown(this.props.uid)
     this.props.getProof(this.props.uid)
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        interactionsDone: true,
+      })
+    })
   }
 
   onIgnore = () => {
@@ -630,6 +639,10 @@ class ModalContentProof extends Component<
       this.props.data.requestedAttributes
     )
 
+    if (!this.state.interactionsDone) {
+      return <Loader />
+    }
+
     return (
       <View style={styles.outerModalWrapper}>
         <View style={styles.innerModalWrapper}>
@@ -695,7 +708,7 @@ const mapStateToProps = (state: Store, mergeProps) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       proofRequestShown,
@@ -716,9 +729,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(ModalContentProof)
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    height: 69,
-    backgroundColor: '#f2f2f2',
-    paddingTop: 12,
+    height: moderateScale(69),
+    backgroundColor: colors.cmGray5,
+    paddingTop: moderateScale(12),
+    borderBottomColor: colors.cmGray3,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   textAvatarWrapper: {
     flexDirection: 'row',
@@ -726,36 +741,36 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     width: '85%',
-    paddingBottom: 12,
+    paddingBottom: moderateScale(12),
   },
   avatarWrapper: {
-    marginTop: -15,
+    marginTop: moderateScale(-15),
     width: '15%',
   },
   title: {
-    fontSize: 14,
+    fontSize: verticalScale(fontSizes.size7),
     fontWeight: '700',
-    color: '#a5a5a5',
+    color: colors.cmGray3,
     width: '100%',
     textAlign: 'left',
-    marginBottom: 2,
-    fontFamily: 'Lato',
+    marginBottom: moderateScale(2),
+    fontFamily: fontFamily,
   },
   content: {
-    fontSize: 17,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '400',
-    color: '#505050',
+    color: colors.cmGray1,
     width: '100%',
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   contentGray: {
-    fontSize: 17,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '400',
-    color: '#a5a5a5',
+    color: colors.cmGray3,
     width: '100%',
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   outerModalWrapper: {
     width: '100%',
@@ -763,7 +778,7 @@ const styles = StyleSheet.create({
   },
   innerModalWrapper: {
     flex: 1,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.cmGray5,
   },
   keyboardFlatList: {
     paddingLeft: '5%',

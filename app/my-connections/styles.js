@@ -1,7 +1,8 @@
 // @flow
 import { StyleSheet } from 'react-native'
 import { measurements } from '../common/styles/measurements'
-import { primaryHeaderHeight } from '../common/styles/constant'
+import { colors } from '../common/styles/constant'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
 const externalStyles = StyleSheet.create({
   outerContainer: {
@@ -10,22 +11,22 @@ const externalStyles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: colors.cmWhite,
   },
   flatListContainer: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
-    marginTop: primaryHeaderHeight,
+    backgroundColor: colors.cmWhite,
+    marginTop: verticalScale(90),
   },
   flatListInnerContainer: {
-    paddingBottom: 170,
+    paddingBottom: moderateScale(170, 0.25),
   },
   blurContainer: {
     position: 'absolute',
     top: 0,
     width: '100%',
-    height: primaryHeaderHeight,
+    height: verticalScale(90),
   },
 })
 

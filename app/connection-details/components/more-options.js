@@ -8,27 +8,33 @@ import {
   Text,
   Platform,
   StyleSheet,
+  Dimensions,
 } from 'react-native'
-import { measurements } from '../../../app/common/styles/measurements'
 import { deleteConnectionAction } from '../../store/connections-store'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserAvatarSource } from '../../store/store-selector'
 import type { Store } from '../../store/type-store'
-import { grey, white } from '../../common/styles'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import {
+  colors,
+  fontFamily,
+  fontSizes,
+  font,
+} from '../../common/styles/constant'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 
 const defaultAvatar = require('../../images/UserAvatar.png')
 // TODO: Fix the <any, void> to be the correct types for props and state
 class MoreOptions extends Component<any, void> {
-  onDeleteConnection = senderDID => {
+  onDeleteConnection = (senderDID) => {
     this.props.deleteConnectionAction(senderDID)
     this.props.navigation.goBack(null)
   }
   render() {
-    const { navigation } = this.props
-
-    const { key, params } = this.props.navigation.state
+    const {
+      route: { params },
+    } = this.props
     let avatarSource = this.props.userAvatarSource || defaultAvatar
 
     return (
@@ -41,16 +47,16 @@ class MoreOptions extends Component<any, void> {
         <View style={styles.contentWrapper}>
           <View style={styles.row}>
             {typeof params.image === 'string' ? (
-                <Image style={styles.image} source={{ uri: params.image }} />
-              ) :
-              <View style={{marginRight: 5}}>
+              <Image style={styles.image} source={{ uri: params.image }} />
+            ) : (
+              <View style={{ marginRight: 5 }}>
                 <DefaultLogo
                   text={params.senderName[0]}
-                  size={24}
+                  size={moderateScale(24)}
                   fontSize={12}
                 />
               </View>
-            }
+            )}
             <Text style={styles.text}>did: {params.senderDID}</Text>
           </View>
           <View style={styles.row}>
@@ -63,9 +69,9 @@ class MoreOptions extends Component<any, void> {
           >
             <SvgCustomIcon
               name="TrashCan"
-              fill={'#236BAE'}
-              width={24}
-              height={24}
+              fill={colors.cmBlue}
+              width={moderateScale(24)}
+              height={moderateScale(24)}
             />
             <Text style={styles.buttonText}>Delete Connection</Text>
           </TouchableOpacity>
@@ -77,9 +83,9 @@ class MoreOptions extends Component<any, void> {
           >
             <SvgCustomIcon
               name="CloseIcon"
-              fill={'#777777'}
-              width={12}
-              height={12}
+              fill={colors.cmGray2}
+              width={moderateScale(12)}
+              height={moderateScale(12)}
             />
           </TouchableOpacity>
         </View>
@@ -90,20 +96,20 @@ class MoreOptions extends Component<any, void> {
 const mapStateToProps = (state: Store) => ({
   userAvatarSource: getUserAvatarSource(state.user.avatarName),
 })
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ deleteConnectionAction }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(MoreOptions)
 
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    paddingTop: 40,
+    paddingTop: verticalScale(40),
     zIndex: 999,
     alignItems: 'flex-end',
     width: '100%',
     paddingLeft: '2%',
     paddingRight: '2%',
-    height: measurements.WINDOW_HEIGHT,
+    height: Dimensions.get('screen').height,
   },
   closeScreenWrapper: {
     position: 'absolute',
@@ -113,62 +119,62 @@ const styles = StyleSheet.create({
   },
   smallSquare: {
     position: 'relative',
-    backgroundColor: 'white',
-    width: 40,
-    height: 40,
-    shadowColor: '#000000',
+    backgroundColor: colors.cmWhite,
+    width: moderateScale(40),
+    height: moderateScale(40),
+    shadowColor: colors.cmBlack,
     shadowOpacity: 0.2,
     shadowRadius: 7,
-    elevation: 7,
+    elevation: 8,
   },
   closeButtonWrapper: {
     position: 'absolute',
     zIndex: 999,
-    width: 40,
-    height: 40,
-    top: 40,
+    width: moderateScale(40),
+    height: moderateScale(40),
+    top: moderateScale(40),
     right: '2%',
-    elevation: 13,
+    elevation: 8,
   },
   closeButton: {
-    width: 40,
-    height: 40,
-    backgroundColor: 'white',
+    width: moderateScale(40),
+    height: moderateScale(40),
+    backgroundColor: colors.cmWhite,
     alignItems: 'center',
     justifyContent: 'center',
   },
   closeIcon: {
-    width: 14,
-    height: 14,
+    width: moderateScale(14),
+    height: moderateScale(14),
   },
   contentWrapper: {
     position: 'relative',
     backgroundColor: 'white',
-    padding: 12,
-    shadowColor: '#000000',
+    padding: moderateScale(12),
+    shadowColor: colors.cmBlack,
     shadowOpacity: 0.2,
     shadowRadius: 12,
-    elevation: 12,
+    elevation: 8,
     maxWidth: '100%',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingBottom: 12,
+    paddingBottom: moderateScale(12),
   },
   image: {
-    width: 24,
-    height: 24,
+    width: moderateScale(24),
+    height: moderateScale(24),
     borderRadius: 12,
     marginRight: 5,
   },
   text: {
     textAlign: 'left',
     fontWeight: '500',
-    fontSize: 17,
-    color: '#777',
-    fontFamily: 'Lato',
+    fontSize: verticalScale(fontSizes.size5),
+    color: colors.cmGray2,
+    fontFamily: fontFamily,
   },
   deleteButton: {
     flexDirection: 'row',
@@ -176,16 +182,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   trashCanIcon: {
-    width: 19,
-    height: 24,
-    marginRight: 8,
-    marginLeft: 3,
+    width: moderateScale(19),
+    height: moderateScale(24),
+    marginRight: moderateScale(8),
+    marginLeft: moderateScale(3),
   },
   buttonText: {
     textAlign: 'left',
     fontWeight: '500',
-    fontSize: 17,
-    color: '#236BAE',
-    fontFamily: 'Lato',
+    fontSize: verticalScale(fontSizes.size5),
+    color: colors.cmBlue,
+    fontFamily: fontFamily,
   },
 })

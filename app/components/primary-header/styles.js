@@ -1,74 +1,49 @@
 // @flow
-import { StyleSheet, Platform, PixelRatio, Dimensions } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
-import {
-  primaryHeaderHeight,
-  grey,
-  isiPhone5,
-} from '../../common/styles/constant'
+import { colors, fontFamily } from '../../common/styles/constant'
 
 // original in icon{} and label{} marginTop was 73 and height was 120, thus the 47 to keep
 // subtracting 47 from containerHeight keeps it relative to what is was.
-const marginTop = isiPhone5
-  ? primaryHeaderHeight - 42
-  : primaryHeaderHeight - 47
-const { width } = Dimensions.get('screen')
 
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: 0,
     zIndex: 1,
-    height: primaryHeaderHeight,
+    height: verticalScale(90),
     width: '100%',
     flexDirection: 'row',
-    backgroundColor:
-      Platform.OS === 'ios' ? 'rgba(255, 255, 255, 0.8)' : '#fff',
-    shadowColor: '#000',
+    backgroundColor: colors.cmWhite,
+    shadowColor: colors.cmBlack,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 10,
     elevation: Platform.OS === 'android' ? 8 : 0,
   },
   labelSection: {
-    width: width * 0.8,
-    height: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
-  },
-  iconsSection: {
-    width: width * 0.2,
-    height: '100%',
+    alignItems: 'flex-end',
+    paddingBottom: moderateScale(15),
+    width: '85%',
   },
   svgIcon: {
-    marginLeft: isiPhone5 ? 15 : 20,
+    marginLeft: moderateScale(15),
   },
   label: {
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
     fontWeight: 'bold',
-    fontSize: isiPhone5 ? 20 : 26,
-    marginTop: isiPhone5 ? marginTop + 3 : marginTop,
-    color: grey,
-    marginLeft: isiPhone5 ? 14 : 20,
+    fontSize: moderateScale(22),
+    marginLeft: moderateScale(-50),
+    color: colors.cmGray2,
   },
-  labelNotHome: {
-    fontFamily: 'Lato',
-    fontWeight: 'bold',
-    fontSize: isiPhone5 ? 20 : 26,
-    marginTop: isiPhone5 ? marginTop + 3 : marginTop,
-    color: grey,
-    marginRight: width * 0.2,
-  },
-  icon: {
-    marginTop,
-    marginRight: 6,
-  },
-  blur: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    width: '100%',
-    height: 120,
+  iconSection: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    paddingBottom: moderateScale(10),
+    width: '15%',
   },
 })
 

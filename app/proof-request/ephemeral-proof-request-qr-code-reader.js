@@ -22,7 +22,7 @@ export async function validateEphemeralProofQrCode(
 ): Promise<
   [
     null | string,
-    null | { type: string, proofRequest: QrCodeEphemeralProofRequest },
+    null | { type: string, proofRequest: QrCodeEphemeralProofRequest }
   ]
 > {
   // ConnectMe supports three types of data for ephemeral proof request

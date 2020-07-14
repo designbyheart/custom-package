@@ -1,6 +1,8 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { Text, Image, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
 class ConnectionPending extends PureComponent<any, {}> {
@@ -40,37 +42,36 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: '86%',
     marginLeft: '7%',
-    paddingTop: 15,
-    paddingBottom: 15,
+    paddingTop: moderateScale(15),
+    paddingBottom: moderateScale(15),
   },
   innerWrapper: {
     flexDirection: 'row',
     alignItems: 'stretch',
     borderWidth: 1,
-    borderColor: '#f2f2f2',
+    borderColor: colors.cmGray5,
     borderRadius: 3,
     width: '100%',
-    padding: 12,
+    padding: moderateScale(12),
   },
   date: {
-    color: '#777',
-    fontSize: 11,
-    lineHeight: 13,
+    color: colors.cmGray2,
+    fontSize: moderateScale(fontSizes.size10),
     textAlign: 'left',
-    fontFamily: 'Lato',
-    paddingBottom: 8,
+    fontFamily: fontFamily,
+    paddingBottom: moderateScale(8),
   },
   spinerWrapper: {
     position: 'relative',
   },
   spiner: {
-    width: 24,
-    height: 24,
+    width: moderateScale(24),
+    height: moderateScale(24),
   },
   absolute: {
-    width: 14,
-    height: 14,
-    backgroundColor: 'white',
+    width: moderateScale(14),
+    height: moderateScale(14),
+    backgroundColor: colors.cmWhite,
     borderRadius: 7,
     position: 'absolute',
   },
@@ -79,24 +80,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textWrapper: {
-    paddingLeft: 12,
+    paddingLeft: moderateScale(12),
     flex: 1,
   },
   title: {
-    color: '#505050',
+    color: colors.cmGray1,
     fontWeight: '700',
-    fontSize: 14,
-    lineHeight: 17,
+    fontSize: moderateScale(fontSizes.size7),
     textAlign: 'left',
-    marginBottom: 4,
-    fontFamily: 'Lato',
+    marginBottom: moderateScale(4),
+    fontFamily: fontFamily,
   },
   content: {
-    color: '#777',
+    color: colors.cmGray2,
     fontWeight: '400',
-    fontSize: 11,
-    lineHeight: 14,
+    fontSize: moderateScale(fontSizes.size9),
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
 })

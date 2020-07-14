@@ -15,6 +15,7 @@ describe('send logs screen', () => {
     navigation: getNavigation(),
     environmentName: 'DEMO',
     logIsEncrypted: false,
+    route: {},
   }
 
   it('should render properly and snapshot should match', () => {

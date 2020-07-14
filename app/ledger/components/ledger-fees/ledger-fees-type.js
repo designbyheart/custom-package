@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import type { LedgerFees } from '../../type-ledger-store'
-import type { Dispatch } from '../../../common/type-common'
+import type { ReduxConnect } from '../../../common/type-common'
 import type { WalletBalance } from '../../../wallet/type-wallet'
 
 type ReactComponent = React.Node
@@ -19,7 +19,7 @@ export type LedgerFeesProps = {
     retry: NoOp
   ) => ReactComponent,
   onStateChange: (state: LedgerFeesStateEnum, data?: LedgerFeesData) => void,
-} & Dispatch
+} & ReduxConnect
 
 export type LedgerFeesRenderPhases = {
   IN_PROGRESS: (data?: any, retry: NoOp) => ReactComponent,

@@ -22,24 +22,27 @@ exports[`<QuestionActions /> when more than two responses are present match snap
   >
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
         accessibilityLabel="question-action-submit"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -47,102 +50,43 @@ exports[`<QuestionActions /> when more than two responses are present match snap
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 5,
-              "borderWidth": 0,
-              "height": 56,
-            },
-            Object {
-              "backgroundColor": "#86B93B",
-              "borderColor": "#86B93B",
-            },
-          ]
+          Object {
+            "backgroundColor": "#86B93B",
+            "borderColor": "#86B93B",
+            "borderRadius": 5,
+            "borderWidth": 0,
+            "height": 56,
+            "opacity": 1,
+          }
         }
         testID="question-action-submit"
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#86B93B",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 5,
-                  "borderWidth": 0,
-                  "height": 56,
-                },
-                Object {
-                  "backgroundColor": "#86B93B",
-                  "borderColor": "#86B93B",
-                },
-              ],
-              false,
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "color": "#ffffff",
+              "flexDirection": "row",
+              "height": 56,
+              "justifyContent": "center",
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Try Again
@@ -176,24 +120,27 @@ exports[`<QuestionActions /> when more than two responses are present match snap
   >
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
         accessibilityLabel="question-action-submit"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -201,102 +148,43 @@ exports[`<QuestionActions /> when more than two responses are present match snap
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 5,
-              "borderWidth": 0,
-              "height": 56,
-            },
-            Object {
-              "backgroundColor": "#86B93B",
-              "borderColor": "#86B93B",
-            },
-          ]
+          Object {
+            "backgroundColor": "#86B93B",
+            "borderColor": "#86B93B",
+            "borderRadius": 5,
+            "borderWidth": 0,
+            "height": 56,
+            "opacity": 1,
+          }
         }
         testID="question-action-submit"
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#86B93B",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 5,
-                  "borderWidth": 0,
-                  "height": 56,
-                },
-                Object {
-                  "backgroundColor": "#86B93B",
-                  "borderColor": "#86B93B",
-                },
-              ],
-              false,
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "color": "#ffffff",
+              "flexDirection": "row",
+              "height": 56,
+              "justifyContent": "center",
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             OK
@@ -330,24 +218,27 @@ exports[`<QuestionActions /> when more than two responses are present render Ign
   >
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
         accessibilityLabel="question-action-submit"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": true,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -355,111 +246,52 @@ exports[`<QuestionActions /> when more than two responses are present render Ign
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 5,
-              "borderWidth": 0,
-              "height": 56,
-            },
-            Object {
-              "backgroundColor": "#86B93B",
-              "borderColor": "#86B93B",
-            },
-          ]
+          Object {
+            "backgroundColor": "#86B93B",
+            "borderColor": "#86B93B",
+            "borderRadius": 5,
+            "borderWidth": 0,
+            "height": 56,
+            "opacity": 1,
+          }
         }
         testID="question-action-submit"
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#86B93B",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 5,
-                  "borderWidth": 0,
-                  "height": 56,
-                },
-                Object {
-                  "backgroundColor": "#86B93B",
-                  "borderColor": "#86B93B",
-                },
-              ],
-              Object {
-                "backgroundColor": "#dadee0",
-              },
-              Array [
-                Object {
-                  "backgroundColor": "#86B93B",
-                },
-                Object {
-                  "opacity": 0.4,
-                },
-              ],
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "color": "#ffffff",
+              "flexDirection": "row",
+              "height": 56,
+              "justifyContent": "center",
+              "opacity": 0.4,
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  undefined,
-                ],
-              ]
+              Object {
+                "color": Object {
+                  "color": Array [
+                    208,
+                    8,
+                    63,
+                  ],
+                  "model": "hsl",
+                  "valpha": 1,
+                },
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Submit
@@ -493,24 +325,27 @@ exports[`<QuestionActions /> when one response is present match snapshot if in e
   >
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
         accessibilityLabel="question-action-submit"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -518,102 +353,43 @@ exports[`<QuestionActions /> when one response is present match snapshot if in e
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 5,
-              "borderWidth": 0,
-              "height": 56,
-            },
-            Object {
-              "backgroundColor": "#86B93B",
-              "borderColor": "#86B93B",
-            },
-          ]
+          Object {
+            "backgroundColor": "#86B93B",
+            "borderColor": "#86B93B",
+            "borderRadius": 5,
+            "borderWidth": 0,
+            "height": 56,
+            "opacity": 1,
+          }
         }
         testID="question-action-submit"
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#86B93B",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 5,
-                  "borderWidth": 0,
-                  "height": 56,
-                },
-                Object {
-                  "backgroundColor": "#86B93B",
-                  "borderColor": "#86B93B",
-                },
-              ],
-              false,
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "color": "#ffffff",
+              "flexDirection": "row",
+              "height": 56,
+              "justifyContent": "center",
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Try Again
@@ -647,24 +423,27 @@ exports[`<QuestionActions /> when one response is present match snapshot if in s
   >
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
         accessibilityLabel="question-action-submit"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -672,102 +451,43 @@ exports[`<QuestionActions /> when one response is present match snapshot if in s
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 5,
-              "borderWidth": 0,
-              "height": 56,
-            },
-            Object {
-              "backgroundColor": "#86B93B",
-              "borderColor": "#86B93B",
-            },
-          ]
+          Object {
+            "backgroundColor": "#86B93B",
+            "borderColor": "#86B93B",
+            "borderRadius": 5,
+            "borderWidth": 0,
+            "height": 56,
+            "opacity": 1,
+          }
         }
         testID="question-action-submit"
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#86B93B",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 5,
-                  "borderWidth": 0,
-                  "height": 56,
-                },
-                Object {
-                  "backgroundColor": "#86B93B",
-                  "borderColor": "#86B93B",
-                },
-              ],
-              false,
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "color": "#ffffff",
+              "flexDirection": "row",
+              "height": 56,
+              "justifyContent": "center",
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             OK
@@ -816,24 +536,27 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
       >
         <View
           style={
-            Array [
-              Object {
-                "marginLeft": 15,
-                "marginRight": 15,
-              },
-              undefined,
-              Object {
-                "marginLeft": 0,
-                "marginRight": 0,
-              },
-              undefined,
-            ]
+            Object {
+              "borderRadius": 3,
+              "marginLeft": 0,
+              "marginRight": 0,
+              "overflow": "hidden",
+            }
           }
         >
           <View
             accessibilityLabel="akdfakjfkjdaadkgak-submit"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": false,
+                "disabled": false,
+              }
+            }
             accessible={true}
+            focusable={true}
             isTVSelectable={true}
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -841,102 +564,43 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 5,
-                  "borderWidth": 0,
-                  "height": 56,
-                },
-                Object {
-                  "backgroundColor": "#86B93B",
-                  "borderColor": "#86B93B",
-                },
-              ]
+              Object {
+                "backgroundColor": "#86B93B",
+                "borderColor": "#86B93B",
+                "borderRadius": 5,
+                "borderWidth": 0,
+                "height": 56,
+                "opacity": 1,
+              }
             }
             testID="akdfakjfkjdaadkgak-submit"
           >
             <View
-              pointerEvents="box-only"
               style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#9E9E9E",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "padding": 19,
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Object {
-                    "backgroundColor": "#01C8A1",
-                  },
-                  undefined,
-                  Object {
-                    "padding": 12,
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    null,
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderRadius": 5,
-                      "borderWidth": 0,
-                      "height": 56,
-                    },
-                    Object {
-                      "backgroundColor": "#86B93B",
-                      "borderColor": "#86B93B",
-                    },
-                  ],
-                  undefined,
-                  undefined,
-                ]
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#01C8A1",
+                  "borderColor": "#86B93B",
+                  "borderRadius": 5,
+                  "borderWidth": 0,
+                  "color": "#ffffff",
+                  "flexDirection": "row",
+                  "height": 56,
+                  "justifyContent": "center",
+                  "padding": 8,
+                  "textAlign": "center",
+                }
               }
             >
               <Text
                 style={
-                  Array [
-                    Object {},
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    Array [
-                      Object {
-                        "color": "white",
-                        "fontSize": 16,
-                      },
-                      Object {
-                        "color": "#ffffff",
-                      },
-                      Object {
-                        "fontSize": 14,
-                      },
-                      Object {
-                        "fontSize": 17,
-                      },
-                      undefined,
-                      Object {
-                        "fontWeight": "bold",
-                      },
-                      Object {
-                        "fontFamily": "Lato",
-                      },
-                      undefined,
-                    ],
-                  ]
+                  Object {
+                    "color": "white",
+                    "fontSize": 18,
+                    "paddingBottom": 1,
+                    "paddingTop": 2,
+                    "textAlign": "center",
+                  }
                 }
               >
                 Yes
@@ -972,24 +636,27 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
   >
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
         accessibilityLabel="question-action-submit"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -997,102 +664,43 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 5,
-              "borderWidth": 0,
-              "height": 56,
-            },
-            Object {
-              "backgroundColor": "#86B93B",
-              "borderColor": "#86B93B",
-            },
-          ]
+          Object {
+            "backgroundColor": "#86B93B",
+            "borderColor": "#86B93B",
+            "borderRadius": 5,
+            "borderWidth": 0,
+            "height": 56,
+            "opacity": 1,
+          }
         }
         testID="question-action-submit"
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#86B93B",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 5,
-                  "borderWidth": 0,
-                  "height": 56,
-                },
-                Object {
-                  "backgroundColor": "#86B93B",
-                  "borderColor": "#86B93B",
-                },
-              ],
-              false,
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "color": "#ffffff",
+              "flexDirection": "row",
+              "height": 56,
+              "justifyContent": "center",
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             Try Again
@@ -1126,24 +734,27 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
   >
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "marginLeft": 0,
-            "marginRight": 0,
-          },
-          undefined,
-        ]
+        Object {
+          "borderRadius": 3,
+          "marginLeft": 0,
+          "marginRight": 0,
+          "overflow": "hidden",
+        }
       }
     >
       <View
         accessibilityLabel="question-action-submit"
+        accessibilityRole="button"
+        accessibilityState={
+          Object {
+            "busy": false,
+            "disabled": false,
+          }
+        }
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -1151,102 +762,43 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 5,
-              "borderWidth": 0,
-              "height": 56,
-            },
-            Object {
-              "backgroundColor": "#86B93B",
-              "borderColor": "#86B93B",
-            },
-          ]
+          Object {
+            "backgroundColor": "#86B93B",
+            "borderColor": "#86B93B",
+            "borderRadius": 5,
+            "borderWidth": 0,
+            "height": 56,
+            "opacity": 1,
+          }
         }
         testID="question-action-submit"
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "#86B93B",
-              },
-              undefined,
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              Array [
-                null,
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 5,
-                  "borderWidth": 0,
-                  "height": 56,
-                },
-                Object {
-                  "backgroundColor": "#86B93B",
-                  "borderColor": "#86B93B",
-                },
-              ],
-              false,
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#86B93B",
+              "borderColor": "#86B93B",
+              "borderRadius": 5,
+              "borderWidth": 0,
+              "color": "#ffffff",
+              "flexDirection": "row",
+              "height": 56,
+              "justifyContent": "center",
+              "padding": 8,
+              "textAlign": "center",
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 16,
-                  },
-                  Object {
-                    "color": "#ffffff",
-                  },
-                  Object {
-                    "fontSize": 14,
-                  },
-                  Object {
-                    "fontSize": 17,
-                  },
-                  undefined,
-                  Object {
-                    "fontWeight": "bold",
-                  },
-                  Object {
-                    "fontFamily": "Lato",
-                  },
-                  false,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             OK
@@ -1294,24 +846,27 @@ exports[`<QuestionActions /> when two responses are present render both response
       >
         <View
           style={
-            Array [
-              Object {
-                "marginLeft": 15,
-                "marginRight": 15,
-              },
-              undefined,
-              Object {
-                "marginLeft": 0,
-                "marginRight": 0,
-              },
-              undefined,
-            ]
+            Object {
+              "borderRadius": 3,
+              "marginLeft": 0,
+              "marginRight": 0,
+              "overflow": "hidden",
+            }
           }
         >
           <View
             accessibilityLabel="No-submit"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": false,
+                "disabled": false,
+              }
+            }
             accessible={true}
+            focusable={true}
             isTVSelectable={true}
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1319,96 +874,43 @@ exports[`<QuestionActions /> when two responses are present render both response
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 5,
-                  "borderWidth": 0,
-                  "height": 56,
-                },
-                false,
-              ]
+              Object {
+                "backgroundColor": "transparent",
+                "borderRadius": 5,
+                "borderWidth": 0,
+                "height": 56,
+                "opacity": 1,
+              }
             }
             testID="No-submit"
           >
             <View
-              pointerEvents="box-only"
               style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#9E9E9E",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "padding": 19,
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Object {
-                    "backgroundColor": "white",
-                  },
-                  undefined,
-                  Object {
-                    "padding": 12,
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    null,
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderRadius": 5,
-                      "borderWidth": 0,
-                      "height": 56,
-                    },
-                    false,
-                  ],
-                  undefined,
-                  undefined,
-                ]
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#ffffff",
+                  "borderColor": "#2089dc",
+                  "borderRadius": 5,
+                  "borderWidth": 0,
+                  "color": "#777777",
+                  "flexDirection": "row",
+                  "height": 56,
+                  "justifyContent": "center",
+                  "padding": 8,
+                  "textAlign": "center",
+                }
               }
             >
               <Text
                 style={
-                  Array [
-                    Object {},
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    Array [
-                      Object {
-                        "color": "white",
-                        "fontSize": 16,
-                      },
-                      Object {
-                        "color": "#CE0B24",
-                      },
-                      Object {
-                        "fontSize": 14,
-                      },
-                      Object {
-                        "fontSize": 17,
-                      },
-                      undefined,
-                      Object {
-                        "fontWeight": "bold",
-                      },
-                      Object {
-                        "fontFamily": "Lato",
-                      },
-                      undefined,
-                    ],
-                  ]
+                  Object {
+                    "backgroundColor": "white",
+                    "color": "#CE0B24",
+                    "fontSize": 18,
+                    "paddingBottom": 1,
+                    "paddingTop": 2,
+                    "textAlign": "center",
+                  }
                 }
               >
                 Answer 2
@@ -1431,24 +933,27 @@ exports[`<QuestionActions /> when two responses are present render both response
       >
         <View
           style={
-            Array [
-              Object {
-                "marginLeft": 15,
-                "marginRight": 15,
-              },
-              undefined,
-              Object {
-                "marginLeft": 0,
-                "marginRight": 0,
-              },
-              undefined,
-            ]
+            Object {
+              "borderRadius": 3,
+              "marginLeft": 0,
+              "marginRight": 0,
+              "overflow": "hidden",
+            }
           }
         >
           <View
             accessibilityLabel="YES-submit"
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "busy": false,
+                "disabled": false,
+              }
+            }
             accessible={true}
+            focusable={true}
             isTVSelectable={true}
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1456,102 +961,43 @@ exports[`<QuestionActions /> when two responses are present render both response
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 5,
-                  "borderWidth": 0,
-                  "height": 56,
-                },
-                Object {
-                  "backgroundColor": "#86B93B",
-                  "borderColor": "#86B93B",
-                },
-              ]
+              Object {
+                "backgroundColor": "#86B93B",
+                "borderColor": "#86B93B",
+                "borderRadius": 5,
+                "borderWidth": 0,
+                "height": 56,
+                "opacity": 1,
+              }
             }
             testID="YES-submit"
           >
             <View
-              pointerEvents="box-only"
               style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "#9E9E9E",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "padding": 19,
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Object {
-                    "backgroundColor": "#01C8A1",
-                  },
-                  undefined,
-                  Object {
-                    "padding": 12,
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    null,
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderRadius": 5,
-                      "borderWidth": 0,
-                      "height": 56,
-                    },
-                    Object {
-                      "backgroundColor": "#86B93B",
-                      "borderColor": "#86B93B",
-                    },
-                  ],
-                  undefined,
-                  undefined,
-                ]
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#01C8A1",
+                  "borderColor": "#86B93B",
+                  "borderRadius": 5,
+                  "borderWidth": 0,
+                  "color": "#ffffff",
+                  "flexDirection": "row",
+                  "height": 56,
+                  "justifyContent": "center",
+                  "padding": 8,
+                  "textAlign": "center",
+                }
               }
             >
               <Text
                 style={
-                  Array [
-                    Object {},
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    Array [
-                      Object {
-                        "color": "white",
-                        "fontSize": 16,
-                      },
-                      Object {
-                        "color": "#ffffff",
-                      },
-                      Object {
-                        "fontSize": 14,
-                      },
-                      Object {
-                        "fontSize": 17,
-                      },
-                      undefined,
-                      Object {
-                        "fontWeight": "bold",
-                      },
-                      Object {
-                        "fontFamily": "Lato",
-                      },
-                      undefined,
-                    ],
-                  ]
+                  Object {
+                    "color": "white",
+                    "fontSize": 18,
+                    "paddingBottom": 1,
+                    "paddingTop": 2,
+                    "textAlign": "center",
+                  }
                 }
               >
                 Answer 1

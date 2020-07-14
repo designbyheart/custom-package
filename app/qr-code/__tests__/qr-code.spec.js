@@ -4,7 +4,6 @@ import 'react-native'
 import { Alert } from 'react-native'
 import renderer from 'react-test-renderer'
 import { RNCamera } from 'react-native-camera'
-import Permissions from 'react-native-permissions'
 import { qrCodeScannerTabRoute, invitationRoute } from '../../common/'
 import { QRCodeScannerScreen, convertQrCodeToInvitation } from '../qr-code'
 import {
@@ -18,6 +17,7 @@ describe('<QRScannerScreen />', () => {
   function getProps() {
     return {
       navigation: getNavigation(),
+      route: {},
       invitationReceived: jest.fn(),
       currentScreen: qrCodeScannerTabRoute,
       changeEnvironmentUrl: jest.fn(),
@@ -39,11 +39,10 @@ describe('<QRScannerScreen />', () => {
 
   it('should match snapshot', () => {
     const { instance, component } = setup()
-    instance.setState({ isCameraAuthorized: true, isCameraEnabled: true })
+    instance.setState({ isCameraEnabled: true })
 
     let tree = component.toJSON()
     expect(tree).toMatchSnapshot()
-    expect(Permissions.request).toHaveBeenCalledTimes(1)
   })
 
   it('match snapshot when camera is not authorized', () => {
@@ -90,7 +89,6 @@ describe('<QRScannerScreen />', () => {
     )
 
     // component.update(updatedComponent)
-    expect(Permissions.request).toHaveBeenCalledTimes(5)
   })
 
   // skipping this test because as of now this code is commented and not used
@@ -100,7 +98,10 @@ describe('<QRScannerScreen />', () => {
     const {
       instance,
       component,
-      props: { changeEnvironmentUrl, navigation: { goBack } },
+      props: {
+        changeEnvironmentUrl,
+        navigation: { navigate, goBack },
+      },
     } = setup()
     const alertSpy = jest.spyOn(Alert, 'alert')
 

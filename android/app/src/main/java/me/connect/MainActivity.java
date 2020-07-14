@@ -20,7 +20,6 @@ import me.connect.rnindy.RNIndyStaticData;
 import android.content.Intent;
 
 import android.content.ContextWrapper;
-import android.support.v4.app.ActivityCompat;
 import android.system.Os;
 import android.widget.Toast;
 
@@ -31,9 +30,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 
-public class MainActivity extends ReactFragmentActivity {
-    // implements ActivityCompat.OnRequestPermissionsResultCallback {
-
+public class MainActivity extends ReactActivity {
     /**
      * Returns the name of the main component registered from JavaScript. This is
      * used to schedule rendering of the component.

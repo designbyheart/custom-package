@@ -9,7 +9,8 @@ import {
   OFFSET_3X,
   isiPhone5,
 } from '../common/styles'
-import { CustomView, CustomButton } from '../components'
+import CustomButton from './button'
+import { CustomView } from './layout/custom-view'
 import debounce from 'lodash.debounce'
 import { noop } from '../common'
 
@@ -38,7 +39,7 @@ export default class CustomModal extends PureComponent<CustomModalProps, void> {
   }
 
   onPressDebounce = debounce(
-    event => {
+    (event) => {
       if (this.props.onPress) {
         this.props.onPress(event)
       }

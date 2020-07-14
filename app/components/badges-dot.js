@@ -13,7 +13,9 @@ export class Dot extends PureComponent<DotProps, void> {
     const dotSize =
       size === 'small'
         ? styles.badgeSmall
-        : size === 'medium' ? styles.badgeMedium : styles.badgeLarge
+        : size === 'medium'
+        ? styles.badgeMedium
+        : styles.badgeLarge
     return <View style={[styles.badge, dotSize]} />
   }
 }

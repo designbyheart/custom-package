@@ -15,8 +15,8 @@ export const CloudRestoreStatus = {
   CLOUD_BACKUP_LOCATE_ERROR: 'CLOUD_BACKUP_LOCATE_ERROR',
   DOWNLOADING_BACKUP_START: 'DOWNLOADING_BACKUP_START',
   DOWNLOADING_BACKUP_SUCCESS: 'DOWNLOADING_BACKUP_SUCCESS',
-  success: 'RESTORE_SUCCESS',
-  failedStatus: 'RESTORE_FAILED',
+  RESTORE_SUCCESS: 'RESTORE_SUCCESS',
+  RESTORE_FAILED: 'RESTORE_FAILED',
   none: 'none',
 }
 
@@ -32,8 +32,6 @@ export const initialState = {
   passphrase: '',
   error: null,
 }
-
-export type RestoreStore = typeof CloudRestoreStatus
 
 export type ResetRestoreAction = {
   type: typeof RESTORE_RESET,

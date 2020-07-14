@@ -30,11 +30,9 @@ export type ResponseTypes = $Keys<typeof ResponseType>
 
 export type RequestProps = RequestDetailProps & {
   onAction: (response: ResponseTypes) => void,
-  showErrorAlerts: boolean,
-  isTouchIdEnabled: boolean,
   invitationError?: ?CustomError,
   senderName: string,
-} & ReactNavigation
+}
 
 export type RequestState = {
   disableAccept: boolean,

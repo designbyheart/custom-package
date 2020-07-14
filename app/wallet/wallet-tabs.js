@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { Dimensions } from 'react-native'
-import { TabBarTop, createTabNavigator } from 'react-navigation'
+// import { createMaterialTopTabNavigator } from '@react-navigation/'
 
 import type { WalletTabsProps } from './type-wallet'
 
@@ -21,63 +21,62 @@ export default class WalletTabs extends PureComponent<WalletTabsProps, void> {
     const outerNavigation = {
       navigation: this.props.navigation,
     }
-    return <Tabs screenProps={outerNavigation} />
+    // return <Tabs screenProps={outerNavigation} />
+    return null
   }
 }
 
-const Tabs = createTabNavigator(
-  {
-    [receiveTabRoute]: {
-      screen: WalletTabReceive,
-    },
-    [sendTabRoute]: {
-      screen: WalletSendAmount,
-    },
-    // [historyTabRoute]: {
-    //   screen: WalletTabHistory,
-    //   navigationOptions: {
-    //     tabBarLabel: HISTORY_TAB,
-    //     tabBarTestIDProps: {
-    //       testID: HISTORY_TAB_TEST_ID,
-    //       accessible: true,
-    //       accessibleLabel: HISTORY_TAB_TEST_ID,
-    //       accessibilityLabel: HISTORY_TAB_TEST_ID,
-    //     },
-    //   },
-    // },
-  },
-  {
-    animationEnabled: true,
-    backBehavior: 'none',
-    swipeEnabled: true,
-    lazy: false,
-    initialRouteName: receiveTabRoute,
-    //order: [receiveTabRoute, sendTabRoute, historyTabRoute],
-    order: [receiveTabRoute, sendTabRoute],
-    initialLayout: {
-      height: 52,
-      width,
-    },
-    tabBarComponent: TabBarTop,
-    tabBarPosition: 'top',
-    tabBarOptions: {
-      allowFontScaling: false,
-      activeTintColor: color.actions.font.seventh,
-      inactiveTintColor: color.bg.tertiary.font.primary,
-      indicatorStyle: {
-        backgroundColor: color.actions.font.seventh,
-        height: 3,
-      },
-      style: {
-        backgroundColor: color.bg.tertiary.color,
-        borderBottomWidth: 1,
-        borderBottomColor: color.border.primary,
-      },
-      labelStyle: {
-        fontSize: font.size.S,
-        fontFamily: font.family,
-        fontWeight: 'bold',
-      },
-    },
-  }
-)
+// const Tabs = createAppContainer<*, *>(
+//   createMaterialTopTabNavigator(
+//     {
+//       [receiveTabRoute]: {
+//         screen: WalletTabReceive,
+//       },
+//       [sendTabRoute]: {
+//         screen: WalletSendAmount,
+//       },
+//       // [historyTabRoute]: {
+//       //   screen: WalletTabHistory,
+//       //   navigationOptions: {
+//       //     tabBarLabel: HISTORY_TAB,
+//       //     tabBarTestIDProps: {
+//       //       testID: HISTORY_TAB_TEST_ID,
+//       //       accessible: true,
+//       //       accessibleLabel: HISTORY_TAB_TEST_ID,
+//       //       accessibilityLabel: HISTORY_TAB_TEST_ID,
+//       //     },
+//       //   },
+//       // },
+//     },
+//     {
+//       backBehavior: 'none',
+//       lazy: false,
+//       initialRouteName: receiveTabRoute,
+//       //order: [receiveTabRoute, sendTabRoute, historyTabRoute],
+//       order: [receiveTabRoute, sendTabRoute],
+//       initialLayout: {
+//         height: 52,
+//         width,
+//       },
+//       tabBarOptions: {
+//         allowFontScaling: false,
+//         activeTintColor: color.actions.font.seventh,
+//         inactiveTintColor: color.bg.tertiary.font.primary,
+//         indicatorStyle: {
+//           backgroundColor: color.actions.font.seventh,
+//           height: 3,
+//         },
+//         style: {
+//           backgroundColor: color.bg.tertiary.color,
+//           borderBottomWidth: 1,
+//           borderBottomColor: color.border.primary,
+//         },
+//         labelStyle: {
+//           fontSize: font.size.S,
+//           fontFamily: font.family,
+//           fontWeight: 'bold',
+//         },
+//       },
+//     }
+//   )
+// )

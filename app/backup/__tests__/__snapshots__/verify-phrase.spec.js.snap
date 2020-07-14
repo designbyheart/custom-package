@@ -5,6 +5,7 @@ exports[`<VerifyRecoveryPhrase /> should match snapshot 1`] = `
   accessibilityLabel="verify-passphrase-container-container-touchable"
   accessible={false}
   emulateUnlessSupported={true}
+  focusable={true}
   hitSlop={
     Object {
       "bottom": 20,
@@ -13,6 +14,7 @@ exports[`<VerifyRecoveryPhrase /> should match snapshot 1`] = `
       "top": 20,
     }
   }
+  onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
@@ -29,7 +31,11 @@ exports[`<VerifyRecoveryPhrase /> should match snapshot 1`] = `
   testID="verify-passphrase-container-container-touchable"
 >
   <Image
-    source={1}
+    source={
+      Object {
+        "default": "RelativeImageStub",
+      }
+    }
     style={
       Array [
         Object {
@@ -185,6 +191,7 @@ exports[`<VerifyRecoveryPhrase /> should match snapshot 1`] = `
         <TextInput
           accessibilityLabel="verify-passphrase-container-text-input"
           accessible={true}
+          allowFontScaling={true}
           autoCapitalize="none"
           autoCorrect={false}
           autoFocus={true}
@@ -194,6 +201,7 @@ exports[`<VerifyRecoveryPhrase /> should match snapshot 1`] = `
           onSubmitEditing={[Function]}
           placeholder="Enter recovery phrase here"
           placeholderTextColor="white"
+          rejectResponderTermination={true}
           returnKeyLabel="done"
           returnKeyType="done"
           style={

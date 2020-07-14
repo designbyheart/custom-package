@@ -2,7 +2,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createStackNavigator } from 'react-navigation'
 
 import type { ReactNavigation } from '../common/type-common'
 import type { Store } from '../store/type-store'
@@ -27,7 +26,6 @@ import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
 import { unlockApp } from './lock-store'
 import { CustomHeader, FlatHeader } from '../components'
 import { Keyboard, Platform } from 'react-native'
-import { withStatusBar } from '../components/status-bar/status-bar'
 
 export class LockEnterPin extends PureComponent<
   LockEnterPinProps,
@@ -42,18 +40,20 @@ export class LockEnterPin extends PureComponent<
   keyboardListener = null
   keyboardShowListener = null
 
-  static navigationOptions = ({ navigation }: ReactNavigation) => ({
-    header:
-      navigation.state.params &&
-      navigation.state.params.fromScreen === 'recovery' ? (
+  static navigationOptions = ({ navigation, route }: ReactNavigation) => ({
+    header: () => {
+      return route.params && route.params.fromScreen === 'recovery' ? (
         <CustomHeader flatHeader backgroundColor={color.bg.tertiary.color} />
       ) : (
         <FlatHeader
           navigation={navigation}
           svgIconName="Arrow"
           label="App Security"
+          route={route}
         />
-      ),
+      )
+    },
+    headerShown: true,
   })
 
   componentDidMount() {
@@ -99,23 +99,23 @@ export class LockEnterPin extends PureComponent<
     }
   }
 
-  componentWillReceiveProps(nextProps: LockEnterPinProps) {
+  componentDidUpdate(prevProps: LockEnterPinProps) {
     if (
-      this.props.isFetchingInvitation !== nextProps.isFetchingInvitation &&
-      nextProps.isFetchingInvitation === false &&
-      nextProps.pendingRedirection
+      prevProps.isFetchingInvitation !== this.props.isFetchingInvitation &&
+      this.props.isFetchingInvitation === false &&
+      this.props.pendingRedirection
     ) {
       if (this.state.authenticationSuccess && this.state.isKeyboardHidden) {
-        // passing the nextProps in to the redirect function
+        // passing the this.props in to the redirect function
         // the prop is being changed (pendingRedirection) from object to null
         // CLEAR_PENDING_REDIRECT clearing the pendingRedirection property to null
         // so, the previous props are being sent for the redirection
-        this.redirect(nextProps)
+        this.redirect(this.props)
       }
     }
 
     // we are removing the keyboard listener every time we navigate out of this screen.
-    if (nextProps.navigation.isFocused()) {
+    if (this.props.navigation.isFocused()) {
       if (!this.keyboardListener) {
         this.keyboardListener = Keyboard.addListener(
           'keyboardDidHide',
@@ -129,8 +129,8 @@ export class LockEnterPin extends PureComponent<
         )
       }
     } else if (
-      this.props.currentScreen === lockEnterPinRoute &&
-      nextProps.currentScreen !== lockEnterPinRoute
+      prevProps.currentScreen === lockEnterPinRoute &&
+      this.props.currentScreen !== lockEnterPinRoute
     ) {
       this.keyboardListener && this.keyboardListener.remove()
       this.keyboardShowListener && this.keyboardShowListener.remove()
@@ -142,7 +142,7 @@ export class LockEnterPin extends PureComponent<
     //This will set isAppLocked to false
     props.unlockApp()
     if (props.pendingRedirection) {
-      props.pendingRedirection.map(pendingRedirection => {
+      props.pendingRedirection.map((pendingRedirection) => {
         props.navigation.navigate(
           pendingRedirection.routeName,
           pendingRedirection.params || {}
@@ -154,6 +154,7 @@ export class LockEnterPin extends PureComponent<
       this.props.navigation.navigate(homeRoute)
     }
   }
+
   onSuccess = () => {
     if (!this.state.authenticationSuccess) {
       this.setState({ authenticationSuccess: true })
@@ -175,12 +176,11 @@ export class LockEnterPin extends PureComponent<
   }
 
   render() {
-    const { isFetchingInvitation, navigation, inRecovery } = this.props
+    const { isFetchingInvitation, navigation, route, inRecovery } = this.props
     let fromRecovery = false
-    if (navigation.state) {
+    if (route) {
       fromRecovery =
-        (navigation.state.params &&
-        navigation.state.params.fromScreen === 'recovery'
+        (route.params && route.params.fromScreen === 'recovery'
           ? true
           : false) || inRecovery === 'true'
     }
@@ -204,22 +204,27 @@ export class LockEnterPin extends PureComponent<
   }
 }
 
-const mapStateToProps = (state: Store, { navigation }: ReactNavigation) => ({
+const mapStateToProps = (
+  state: Store,
+  { navigation, route }: ReactNavigation
+) => ({
   pendingRedirection: state.lock.pendingRedirection,
   isFetchingInvitation: Object.keys(state.smsPendingInvitation).some(
-    smsToken =>
+    (smsToken) =>
       state.smsPendingInvitation[smsToken] &&
       state.smsPendingInvitation[smsToken].isFetching === true
   ),
-  existingPin: navigation.state
-    ? navigation.state.params ? navigation.state.params.existingPin : false
+  existingPin: route
+    ? route.params
+      ? route.params.existingPin
+      : false
     : false,
   isAppLocked: state.lock.isAppLocked,
   inRecovery: state.lock.inRecovery,
   currentScreen: state.route.currentScreen,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       clearPendingRedirect,
@@ -228,10 +233,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default createStackNavigator({
-  [lockEnterPinRoute]: {
-    screen: withStatusBar()(
-      connect(mapStateToProps, mapDispatchToProps)(LockEnterPin)
-    ),
-  },
-})
+export const lockEnterPinScreen = {
+  routeName: lockEnterPinRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(LockEnterPin),
+}

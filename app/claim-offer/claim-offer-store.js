@@ -416,7 +416,7 @@ export function* saveSerializedClaimOffer(
   try {
     const [serializedClaimOffer, claimOfferVcxState]: [
       string,
-      number,
+      number
     ] = yield all([
       call(serializeClaimOffer, claimHandle),
       call(getClaimOfferState, claimHandle),

@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React, { useMemo } from 'react'
 import {
   Text,
   View,
@@ -8,67 +8,62 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native'
-import { ImageColorPicker } from '../../components'
 import { CheckmarkBadge } from '../../components/connection-details/checkmark-badge'
-import { font, grey, isiPhone5, newBannerCardSizes, white } from '../../common/styles'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 
-// TODO: Fix the <any, void> to be the correct types for props and state
-class ModalHeader extends PureComponent<any, void> {
-  render() {
-    const {
-      institutialName,
-      credentialName,
-      credentialText,
-      imageUrl,
-      colorBackground,
-    } = this.props
-
-    return (
-      <View style={styles.container}>
-        <View style={styles.topSection}>
-          <View style={styles.imageSection}>
-            {typeof imageUrl === 'string' ? (
-              <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="cover" />
-            ) :
-              <DefaultLogo
-                text={institutialName[0]}
-                size={32}
-                fontSize={21}
-              />
-            }
-          </View>
-          <View style={styles.issuerAndInfoSection}>
-            <Text style={styles.issuerNameText}>{institutialName}</Text>
-            <Text style={styles.infoText}>{credentialText}</Text>
-          </View>
-          <View style={styles.checkmarkSection}>
-            <CheckmarkBadge color={colorBackground} />
-          </View>
-        </View>
-        <View style={styles.bottomSection}>
-          <Text
-            numberOfLines={2}
-            ellipsizeMode="tail"
-            style={styles.credentialProofQuestionText}
-          >
-            {credentialName}
-          </Text>
-        </View>
-      </View>
-    )
-  }
+type ModalHeaderProps = {
+  institutionalName: string,
+  credentialName: string,
+  credentialText: string,
+  imageUrl: string,
+  colorBackground: string,
 }
 
-export { ModalHeader }
+export const ModalHeader = ({
+  institutionalName,
+  credentialName,
+  credentialText,
+  imageUrl,
+  colorBackground,
+}: ModalHeaderProps) => {
+  const source = useMemo(() => ({ uri: imageUrl }), [imageUrl])
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.topSection}>
+        <View style={styles.imageSection}>
+          <Image style={styles.image} source={source} resizeMode="cover" />
+        </View>
+        <View style={styles.issuerAndInfoSection}>
+          <Text style={styles.issuerNameText}>{institutionalName}</Text>
+          <Text style={styles.infoText}>{credentialText}</Text>
+        </View>
+        <View style={styles.checkmarkSection}>
+          <CheckmarkBadge color={colorBackground} />
+        </View>
+      </View>
+      <View style={styles.bottomSection}>
+        <Text
+          numberOfLines={2}
+          ellipsizeMode="tail"
+          style={styles.credentialProofQuestionText}
+        >
+          {credentialName}
+        </Text>
+      </View>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: colors.cmWhite,
     flexDirection: 'column',
     width: '100%',
-    height: 114,
-    shadowColor: '#000000',
+    height: moderateScale(105),
+    shadowColor: colors.cmBlack,
     shadowOpacity: 0.1,
     shadowRadius: 14,
     shadowOffset: {
@@ -84,55 +79,49 @@ const styles = StyleSheet.create({
   },
   imageSection: {
     height: '100%',
-    width: 64,
-    paddingTop: 16,
-    paddingLeft: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: moderateScale(64),
+    paddingTop: moderateScale(16),
+    paddingLeft: moderateScale(16),
   },
   issuerAndInfoSection: {
     flex: 1,
-    paddingTop: 10,
+    paddingTop: moderateScale(10),
   },
   checkmarkSection: {
     height: '100%',
-    width: 64,
+    width: moderateScale(64),
     alignItems: 'flex-end',
-    paddingRight: 16,
-    paddingTop: 16,
+    paddingRight: moderateScale(16),
+    paddingTop: moderateScale(16),
   },
   issuerNameText: {
-    fontSize: 17,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '700',
-    color: '#505050',
-    fontFamily: 'Lato',
+    color: colors.cmGray1,
+    fontFamily: fontFamily,
   },
   infoText: {
-    fontSize: 14,
+    fontSize: verticalScale(fontSizes.size7),
     fontWeight: '400',
-    color: '#777',
-    fontFamily: 'Lato',
+    color: colors.cmGray2,
+    fontFamily: fontFamily,
   },
   image: {
-    width: 32,
-    height: 32,
-  },
-  checkmark: {
-    width: 23,
-    height: 34.5,
+    width: moderateScale(32),
+    height: moderateScale(32),
   },
   bottomSection: {
     height: '50%',
     width: '100%',
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingLeft: moderateScale(16),
+    paddingRight: moderateScale(16),
     justifyContent: 'center',
   },
   credentialProofQuestionText: {
-    fontSize: 21,
+    fontSize: verticalScale(fontSizes.size3),
     fontWeight: '400',
-    color: '#505050',
-    fontFamily: 'Lato',
-    marginBottom: 4,
+    color: colors.cmGray1,
+    fontFamily: fontFamily,
+    marginBottom: moderateScale(4),
   },
 })

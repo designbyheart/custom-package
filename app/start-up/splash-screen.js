@@ -52,7 +52,7 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
       JSON.stringify(nextDeepLinkTokens) !==
         JSON.stringify(prevProps.deepLink.tokens)
     ) {
-      Object.keys(nextDeepLinkTokens).map(smsToken => {
+      Object.keys(nextDeepLinkTokens).map((smsToken) => {
         if (
           nextDeepLinkTokens[smsToken].status !== DEEP_LINK_STATUS.PROCESSED
         ) {
@@ -75,7 +75,7 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
   getUnHandledSmsPendingInvitations = () => {
     const smsPendingInvitations = Object.keys(
       this.props.smsPendingInvitation
-    ).map(invitationToken => {
+    ).map((invitationToken) => {
       return {
         ...this.props.smsPendingInvitation[invitationToken],
         invitationToken,
@@ -278,7 +278,7 @@ const mapStateToProps = ({
   publicDIDs: getAllPublicDid(connections),
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       getSmsPendingInvitation,
@@ -289,4 +289,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(SplashScreenView)
+export const splashScreenScreen = {
+  routeName: splashScreenRoute,
+  screen: connect(mapStateToProps, mapDispatchToProps)(SplashScreenView),
+}

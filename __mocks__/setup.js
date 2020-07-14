@@ -1,47 +1,133 @@
 import React from 'react'
-import { NativeModules } from 'react-native'
+import * as ReactNative from 'react-native'
 import fetch from './fetch-mock'
 import mockModal from './modal-mock'
 import mockView from './view-mock'
-import mockCamera from './react-native-camera'
-
-NativeModules.BlobModule = {
-  ...NativeModules.BlobModule,
-  addNetworkingHandler: jest.fn(),
-}
 
 // mock Math.random for <Loader />
 const mockMath = Object.create(global.Math)
 mockMath.random = () => 0.1
 global.Math = mockMath
 
-jest.mock('NativeAnimatedHelper')
+global.fetch = fetch
 
-// mock this module to allow react-navigation to mock Linking
-jest.mock('Linking', () => ({
-  addEventListener: jest.fn(),
-  removeEventListener: jest.fn(),
-  openURL: jest.fn(() => Promise.resolve()),
-  canOpenURL: jest.fn(() => Promise.resolve()),
-  getInitialURL: jest.fn(() => Promise.resolve()),
-}))
+jest.doMock('react-native', () => {
+  // Extend ReactNative
+  return Object.setPrototypeOf(
+    {
+      // ...ReactNative,
+      Animated: {
+        ...ReactNative.Animated,
+      },
 
-jest.mock('react-navigation', () => ({
-  createStackNavigator: jest.fn(() => mockView),
-  createTabNavigator: jest.fn(() => mockView),
-  createDrawerNavigator: jest.fn(() => mockView),
-  TabBarTop: jest.fn(),
-  isFocused: true,
-  withNavigationFocus: jest.fn(() => mockView),
-  NavigationActions: {
-    reset() {
-      return arguments
+      StyleSheet: {
+        ...ReactNative.StyleSheet,
+      },
+
+      LayoutAnimation: {
+        ...ReactNative.LayoutAnimation,
+        configureNext: jest.fn(),
+      },
+
+      Linking: {
+        ...ReactNative.Linking,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        openURL: jest.fn(() => Promise.resolve()),
+        canOpenURL: jest.fn(() => Promise.resolve()),
+        getInitialURL: jest.fn(() => Promise.resolve()),
+      },
+
+      PixelRatio: {
+        get: jest.fn(() => 3), //PixelRatio.get() === 3 then iPhone 6 plus
+        roundToNearestPixel: jest.fn((num) => num),
+      },
+
+      // Mock a native module
+      NativeModules: {
+        ...ReactNative.NativeModules,
+        BlobModule: {
+          ...ReactNative.NativeModules.BlobModule,
+          addNetworkingHandler: jest.fn(),
+        },
+        RNIndy: {
+          // Add mock for RNIndy on NativeModules
+          // we don't want to mock NativeModules the way we are doing for all above
+          // because then we would have to mock everything else as well of NativeModules
+          // a lot of other modules depend on it, so we are adding RNIndy
+          // which is what we need to mock
+          deserializeConnection: jest.fn((_) => Promise.resolve(1)),
+          setWalletItem: jest.fn((_) => Promise.resolve(1)),
+          deleteWalletItem: jest.fn((_) => Promise.resolve(1)),
+          updateWalletItem: jest.fn((_) => Promise.resolve(1)),
+          createWalletKey: jest.fn((_) => Promise.resolve('walletKey')),
+          setVcxLogger: jest.fn((_) =>
+            Promise.resolve('./connectme.rotating.93939939.log')
+          ),
+          writeToVcxLog: jest.fn(),
+          encryptVcxLog: jest.fn(),
+          exitAppAndroid: jest.fn(),
+          updateMessages: jest.fn(),
+        },
+        RNCNetInfo: {
+          getCurrentState: jest.fn(() => Promise.resolve()),
+          addListener: jest.fn(),
+          removeListeners: jest.fn(),
+        },
+      },
+      Dimensions: {
+        ...ReactNative.Dimensions,
+        get: jest.fn(() => ({
+          width: 320,
+          height: 540,
+        })),
+      },
+      UIManager: {
+        ...ReactNative.UIManager,
+        configureNextLayoutAnimation: jest.fn(),
+        getViewManagerConfig: jest.fn(),
+      },
+      InteractionManager: {
+        ...ReactNative.InteractionManager,
+        runAfterInteractions(fn) {
+          fn()
+        },
+        createInteractionHandle: jest.fn(),
+        clearInteractionHandle: jest.fn(),
+      },
+      BackHandler: {
+        ...ReactNative.BackHandler,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+      },
+      Platform: {
+        ...ReactNative.Platform,
+      },
+
+      Modal: mockModal,
+      View: ReactNative.View,
+      Text: ReactNative.Text,
+      Image: ReactNative.Image,
+      TextInput: ReactNative.TextInput,
     },
-    navigate(input) {
-      return [input]
-    },
-  },
-  withNavigation: component => component,
+    ReactNative
+  )
+})
+
+jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper')
+
+jest.doMock('react-native-vector-icons/lib/icon-button', () => () => {
+  const { View, Text } = require('react-native')
+  const mockIcon = (props: any) => (
+    <View {...props}>
+      {props.children !== null ? props.children : <Text>Test children</Text>}
+    </View>
+  )
+})
+
+jest.mock('react-native-zip-archive', () => ({
+  zip: jest.fn(() => Promise.resolve()),
+  unzip: jest.fn(() => Promise.resolve()),
 }))
 
 jest.mock('react-native-firebase', () => ({
@@ -60,11 +146,6 @@ jest.mock('react-native-firebase', () => ({
   })),
 }))
 
-jest.mock('PixelRatio', () => ({
-  get: jest.fn(() => 3), //PixelRatio.get() === 3 then iPhone 6 plus
-  roundToNearestPixel: jest.fn(num => num),
-}))
-
 jest.mock('react-native-sensitive-info', () => {
   // todo: need to handle empty key-chain case
   const secureStorage = {
@@ -79,58 +160,27 @@ jest.mock('react-native-sensitive-info', () => {
     setItem: jest.fn((key, value, st) =>
       Promise.resolve((secureStorage['ConnectMeKeyChain'][key] = value))
     ),
-    getItem: jest.fn(key =>
+    getItem: jest.fn((key) =>
       Promise.resolve(secureStorage['ConnectMeKeyChain'][key])
     ),
-    deleteItem: jest.fn(key =>
+    deleteItem: jest.fn((key) =>
       Promise.resolve(delete secureStorage['ConnectMeKeyChain'][key])
     ),
   }
 })
 
-jest.mock('react-native-animatable', () => ({
-  View: 'Animatable.View',
-}))
-
-jest.mock('Dimensions', () => ({
-  get: jest.fn(() => ({
-    width: 320,
-    height: 540,
-  })),
-}))
-
-jest.mock('UIManager', () => ({
-  configureNextLayoutAnimation: jest.fn(),
-  getViewManagerConfig: jest.fn(),
-}))
-
 jest.mock('react-native-touch-id', () => {
   return {
-    authenticate: jest.fn(message => Promise.resolve()),
-    isSupported: jest.fn(_ => Promise.resolve()),
+    authenticate: jest.fn((message) => Promise.resolve()),
+    isSupported: jest.fn((_) => Promise.resolve()),
   }
 })
 
-// jest.mock('react-native-sentry', () => ({
-//   Sentry: {
-//     install() {},
-//     config() {
-//       return { install() {} }
-//     },
-//     captureException(error) {},
-//   },
-//   SentryLog: {
-//     Debug: 1,
-//   },
-// }))
+jest.mock('@react-native-community/async-storage')
 
-jest.mock('AlertIOS', () => ({
-  alert() {},
-}))
+jest.mock('@react-native-community/blur')
 
-global.fetch = fetch
-
-jest.mock('Modal', () => mockModal)
+jest.mock('@babel/plugin-proposal-decorators')
 
 jest.mock('react-native-modal', () => mockModal)
 
@@ -140,26 +190,16 @@ jest.mock('rn-fetch-blob', () => ({
     dirs: {
       DocumentDir: '/var/application/DocumentDir',
     },
-    exists: jest.fn(path => Promise.resolve(true)),
-    unlink: jest.fn(path => Promise.resolve(true)),
+    exists: jest.fn((path) => Promise.resolve(true)),
+    unlink: jest.fn((path) => Promise.resolve(true)),
     cp: jest.fn((source, destination) => Promise.resolve(destination)),
   },
 }))
 
-jest.mock('WebView', () => 'WebView')
-
-jest.mock('InteractionManager', () => ({
-  runAfterInteractions(fn) {
-    fn()
-  },
-  createInteractionHandle: jest.fn(),
-  clearInteractionHandle: jest.fn(),
-}))
-
-jest.mock('TextInput', () => 'TextInput')
+jest.mock('react-native-webview')
 
 jest.mock('moment', () =>
-  jest.fn(date => ({
+  jest.fn((date) => ({
     format(format) {
       if (format === 'MM/DD/YYYY') {
         return '01/10/2018'
@@ -179,13 +219,7 @@ jest.mock('moment', () =>
 
 jest.mock('react-native-share', () => {})
 
-//jest.mock('react-native-shake', () => {})
-
 jest.mock('react-native-mail', () => {})
-
-jest.mock('react-native-permissions', () => ({
-  request: jest.fn(permission => Promise.resolve('authorized')),
-}))
 
 jest.mock('react-native-branch', () => {
   return {
@@ -236,42 +270,9 @@ jest.mock('react-native-image-crop-picker', () => ({
   ),
 }))
 
-jest.mock('react-native-share', () => {})
-
 jest.mock('react-native-device-info', () => ({
   getModel: jest.fn(),
 }))
-
-// Add mock for RNIndy on NativeModules
-// we don't want to mock NativeModules the way we are doing for all above
-// because then we would have to mock everything else as well of NativeModules
-// a lot of other modules depend on it, so we are adding RNIndy
-// which is what we need to mock
-NativeModules.RNIndy = {
-  deserializeConnection: jest.fn(_ => Promise.resolve(1)),
-  setWalletItem: jest.fn(_ => Promise.resolve(1)),
-  deleteWalletItem: jest.fn(_ => Promise.resolve(1)),
-  updateWalletItem: jest.fn(_ => Promise.resolve(1)),
-  createWalletKey: jest.fn(_ => Promise.resolve('walletKey')),
-  setVcxLogger: jest.fn(_ =>
-    Promise.resolve('./connectme.rotating.93939939.log')
-  ),
-  writeToVcxLog: jest.fn(),
-  encryptVcxLog: jest.fn(),
-  exitAppAndroid: jest.fn(),
-  updateMessages: jest.fn(),
-  shutdownVcx: jest.fn(() => true),
-}
-
-NativeModules.I18nManager = {
-  localeIdentifier: 'en_US',
-  //localeIdentifier: jest.fn(), is there a way to make this dynamic?
-}
-NativeModules.SettingsManager = {
-  settings: {
-    AppleLocale: 'en_XX',
-  },
-}
 
 jest.mock('react-native-version-number', () => ({
   appVersion: '1.0',
@@ -282,14 +283,9 @@ jest.mock('apptentive-react-native', () => ({
   Apptentive: {
     register: () => Promise.resolve(null),
     presentMessageCenter: jest.fn(),
-    onAuthenticationFailed: reason => null,
+    onAuthenticationFailed: (reason) => null,
   },
   ApptentiveConfiguration: () => null,
-}))
-
-jest.mock('BackHandler', () => ({
-  addEventListener: jest.fn(),
-  removeEventListener: jest.fn(),
 }))
 
 jest.mock('react-native-gesture-handler', () => {
@@ -334,10 +330,35 @@ jest.mock('react-native-snackbar', () => ({
   LENGTH_LONG: 3,
 }))
 
+jest.mock('react-native-localize', () => ({
+  getLocales: () => [{ countryCode: 'US' }],
+}))
+
+jest.mock('reactotron-react-native', () => ({
+  configure: () => ({ useReactNative: () => ({ connect() {} }) }),
+}))
+
+jest.mock('react-native-document-picker', () => ({
+  show: (config: Object, callback: (error: any, result: any) => void) => {
+    callback(null, {
+      fileName: 'test-file-name',
+      fileSize: 1200,
+      type: 'zip',
+      uri: 'file:///document-directory',
+    })
+  },
+}))
+
+jest.mock('react-native-shake')
+
+jest.mock('react-native-screens', () => ({
+  enableScreens: jest.fn(),
+}))
+
 jest.mock('react-native-file-viewer', () => ({
   open: jest.fn((path, options) => Promise.resolve()),
 }))
 
-jest.mock('react-native-check-notification-permission', () => ({
-  changeNotificationSetting: jest.fn(),
-}))
+jest.mock('react-native-reanimated', () =>
+  jest.requireActual('../node_modules/react-native-reanimated/mock')
+)

@@ -155,7 +155,7 @@ export class PushNotification extends Component<PushNotificationProps, void> {
   }
 
   listenForTokenUpdate() {
-    this.refreshTokenListener = firebase.messaging().onTokenRefresh(token => {
+    this.refreshTokenListener = firebase.messaging().onTokenRefresh((token) => {
       this.saveDeviceToken(token)
     })
   }
@@ -182,7 +182,7 @@ export class PushNotification extends Component<PushNotificationProps, void> {
     firebase
       .messaging()
       .getToken()
-      .then(token => {
+      .then((token) => {
         if (token) {
           // user has a device token
           this.saveDeviceToken(token)
@@ -190,7 +190,7 @@ export class PushNotification extends Component<PushNotificationProps, void> {
           // user doesn't have a device token
         }
       })
-      .catch(e => {
+      .catch((e) => {
         // we didn't get a token
         // for now we can just ignore it
         // but we might need to add a feature which will remind user to give
@@ -236,7 +236,7 @@ export class PushNotification extends Component<PushNotificationProps, void> {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       pushNotificationPermissionAction,

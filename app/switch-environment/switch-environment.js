@@ -222,7 +222,7 @@ class SwitchEnvironment extends Component<
             </CustomText>
             <TextInput
               style={styles.TextInput}
-              onChangeText={agencyUrl => this.setState({ agencyUrl })}
+              onChangeText={(agencyUrl) => this.setState({ agencyUrl })}
               value={this.state.agencyUrl}
               testID="text-input-agencyUrl"
               autoCorrect={false}
@@ -240,7 +240,7 @@ class SwitchEnvironment extends Component<
             </CustomText>
             <TextInput
               style={styles.TextInput}
-              onChangeText={agencyDID => this.setState({ agencyDID })}
+              onChangeText={(agencyDID) => this.setState({ agencyDID })}
               value={this.state.agencyDID}
               testID="text-input-agencyDID"
               autoCorrect={false}
@@ -258,7 +258,7 @@ class SwitchEnvironment extends Component<
             </CustomText>
             <TextInput
               style={styles.TextInput}
-              onChangeText={agencyVerificationKey =>
+              onChangeText={(agencyVerificationKey) =>
                 this.setState({ agencyVerificationKey })
               }
               value={this.state.agencyVerificationKey}
@@ -278,7 +278,7 @@ class SwitchEnvironment extends Component<
             </CustomText>
             <TextInput
               style={styles.TextInput}
-              onChangeText={poolConfig => this.setState({ poolConfig })}
+              onChangeText={(poolConfig) => this.setState({ poolConfig })}
               value={this.state.poolConfig}
               testID="text-input-poolConfig"
               autoCorrect={false}
@@ -296,7 +296,7 @@ class SwitchEnvironment extends Component<
             </CustomText>
             <TextInput
               style={styles.TextInput}
-              onChangeText={paymentMethod => this.setState({ paymentMethod })}
+              onChangeText={(paymentMethod) => this.setState({ paymentMethod })}
               value={this.state.paymentMethod}
               testID="text-input-paymentMethod"
               autoCorrect={false}
@@ -326,7 +326,7 @@ const mapStateToProps = ({ config }: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       changeEnvironment,
@@ -335,9 +335,12 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default withStatusBar()(
-  connect(mapStateToProps, mapDispatchToProps)(SwitchEnvironment)
-)
+export const switchEnvironmentScreen = {
+  routeName: switchEnvironmentRoute,
+  screen: withStatusBar()(
+    connect(mapStateToProps, mapDispatchToProps)(SwitchEnvironment)
+  ),
+}
 
 const style = StyleSheet.create({
   buttonGroup: {

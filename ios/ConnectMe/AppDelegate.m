@@ -7,11 +7,12 @@
 
 #import "AppDelegate.h"
 
-#import <react-native-branch/RNBranch.h>
+#import "RNBranch.h"
+#import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "Apptentive.h"
-#import "SplashScreen.h"
+#import "RNSplashScreen.h"
 #import <Firebase.h>
 #import "RNFirebaseNotifications.h"
 #import "RNFirebaseMessaging.h"
@@ -20,14 +21,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  NSURL *jsCodeLocation;
-
-  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:@"ConnectMe"
-                                               initialProperties:nil
-                                                   launchOptions:launchOptions];
+  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+  [FIRApp configure];
+  [RNFirebaseNotifications configure];
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
+                                                   moduleName:@"ConnectMe"
+                                            initialProperties:nil];
   rootView.backgroundColor = [UIColor blackColor];
 
   [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
@@ -39,14 +38,22 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
 
-  [FIRApp configure];
-  [RNFirebaseNotifications configure];
   [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
   [[UIApplication sharedApplication] setStatusBarHidden:NO];
-  [SplashScreen show]; //show splash screen
+  [RNSplashScreen show]; //show splash screen
 
   return YES;
 }
+
+- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+{
+#if DEBUG
+  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+#else
+  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+#endif
+}
+
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {

@@ -15,7 +15,11 @@ exports[`Restore screen should render properly and match the snapshot 1`] = `
   testID="restore-container"
 >
   <Image
-    source={1}
+    source={
+      Object {
+        "default": "RelativeImageStub",
+      }
+    }
     style={
       Array [
         Object {
@@ -49,7 +53,11 @@ exports[`Restore screen should render properly and match the snapshot 1`] = `
       }
     >
       <Image
-        source={1}
+        source={
+          Object {
+            "default": "RelativeImageStub",
+          }
+        }
         style={
           Array [
             Object {
@@ -135,24 +143,27 @@ exports[`Restore screen should render properly and match the snapshot 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
-              "marginLeft": 15,
-              "marginRight": 15,
-            },
-            undefined,
-            Object {
-              "marginLeft": 0,
-              "marginRight": 0,
-            },
-            undefined,
-          ]
+          Object {
+            "borderRadius": 3,
+            "marginLeft": 0,
+            "marginRight": 0,
+            "overflow": "hidden",
+          }
         }
       >
         <View
           accessibilityLabel="try-again"
+          accessibilityRole="button"
+          accessibilityState={
+            Object {
+              "busy": false,
+              "disabled": false,
+            }
+          }
           accessible={true}
+          focusable={true}
           isTVSelectable={true}
+          onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -160,15 +171,40 @@ exports[`Restore screen should render properly and match the snapshot 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
-                "borderRadius": 5,
-                "height": 48,
-                "marginTop": 10,
-                "width": "100%",
+            Object {
+              "borderRadius": 5,
+              "elevation": 4,
+              "height": 48,
+              "marginTop": 10,
+              "opacity": 1,
+              "shadowColor": "#777777",
+              "shadowOffset": Object {
+                "height": 5,
+                "width": 0,
               },
+              "shadowOpacity": 0.3,
+              "shadowRadius": 5,
+              "width": "100%",
+            }
+          }
+          testID="try-again"
+        >
+          <View
+            style={
               Object {
+                "alignItems": "center",
+                "backgroundColor": "#ffffff",
+                "borderColor": "#2089dc",
+                "borderRadius": 5,
+                "borderWidth": 0,
+                "color": "#d0021b",
                 "elevation": 4,
+                "flexDirection": "row",
+                "fontWeight": "600",
+                "height": 48,
+                "justifyContent": "center",
+                "marginTop": 10,
+                "padding": 8,
                 "shadowColor": "#777777",
                 "shadowOffset": Object {
                   "height": 5,
@@ -176,94 +212,20 @@ exports[`Restore screen should render properly and match the snapshot 1`] = `
                 },
                 "shadowOpacity": 0.3,
                 "shadowRadius": 5,
-              },
-            ]
-          }
-          testID="try-again"
-        >
-          <View
-            pointerEvents="box-only"
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "backgroundColor": "#ffffff",
-                },
-                undefined,
-                Object {
-                  "padding": 12,
-                },
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  null,
-                  Object {
-                    "borderRadius": 5,
-                    "height": 48,
-                    "marginTop": 10,
-                    "width": "100%",
-                  },
-                  Object {
-                    "elevation": 4,
-                    "shadowColor": "#777777",
-                    "shadowOffset": Object {
-                      "height": 5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.3,
-                    "shadowRadius": 5,
-                  },
-                ],
-                undefined,
-                undefined,
-              ]
+                "textAlign": "center",
+                "width": "100%",
+              }
             }
           >
             <Text
               style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 16,
-                    },
-                    Object {
-                      "color": "#d0021b",
-                    },
-                    Object {
-                      "fontSize": 14,
-                    },
-                    undefined,
-                    undefined,
-                    Object {
-                      "fontWeight": "600",
-                    },
-                    undefined,
-                    undefined,
-                  ],
-                ]
+                Object {
+                  "color": "white",
+                  "fontSize": 18,
+                  "paddingBottom": 1,
+                  "paddingTop": 2,
+                  "textAlign": "center",
+                }
               }
             >
               Try Again

@@ -9,10 +9,10 @@ import {
   Dimensions,
 } from 'react-native'
 import debounce from 'lodash.debounce'
-import { scale } from 'react-native-size-matters'
+import { scale, moderateScale, verticalScale } from 'react-native-size-matters'
 import CredentialPriceInfo from '../labels/credential-price-info'
 import { shadeColor } from '../../utilities/color'
-import { lightGray, whiteSolid } from '../../common/styles/constant'
+import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 import { CustomText } from '../../components'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
@@ -22,7 +22,7 @@ class ModalButtons extends PureComponent<any, {}> {
   }
 
   debounceButtonPress = debounce(
-    event => {
+    (event) => {
       const { primaryActionValue, onPress } = this.props
       if (primaryActionValue) {
         onPress(primaryActionValue)
@@ -62,13 +62,7 @@ class ModalButtons extends PureComponent<any, {}> {
     return (
       <View style={[styles.container, containerStyles]}>
         {children}
-        <View
-          style={[
-            styles.innerWrapper,
-            buttonsWrapperStyles,
-            // screenWidth <= 450 && styles.fullWidth,
-          ]}
-        >
+        <View style={[styles.innerWrapper, buttonsWrapperStyles]}>
           {leftBtnText && (
             <TouchableOpacity
               style={[
@@ -77,7 +71,6 @@ class ModalButtons extends PureComponent<any, {}> {
                   backgroundColor:
                     secondColorBackground || shadeColor(colorBackground, 60),
                 },
-                // screenWidth <= 450 && styles.fullIgnore,
               ]}
               onPress={onIgnore}
             >
@@ -110,8 +103,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     width: '100%',
     maxWidth: '100%',
-    padding: 15,
-    paddingBottom: 45,
+    padding: moderateScale(15),
+    paddingBottom: moderateScale(45),
     flexDirection: 'column',
   },
   innerWrapper: {
@@ -123,37 +116,33 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   buttonIgnore: {
-    padding: 17.5,
-    paddingLeft: 10,
-    paddingRight: 10,
+    padding: moderateScale(17),
+    paddingLeft: moderateScale(10),
+    paddingRight: moderateScale(10),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: lightGray,
+    backgroundColor: colors.cmGray4,
     minWidth: '35%',
   },
   ignore: {
-    fontSize: 17,
-    fontSize: scale(17),
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '700',
-    color: '#fff',
-    fontFamily: 'Lato',
-    color: whiteSolid,
+    color: colors.cmWhite,
+    fontFamily: fontFamily,
   },
   buttonAccept: {
     flex: 1,
-    padding: 17.5,
-    paddingLeft: 10,
-    paddingRight: 10,
+    padding: moderateScale(17),
+    paddingLeft: moderateScale(10),
+    paddingRight: moderateScale(10),
     alignItems: 'center',
     justifyContent: 'center',
   },
   accept: {
-    fontSize: 17,
-    fontSize: scale(17),
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '700',
-    color: '#fff',
-    color: whiteSolid,
-    fontFamily: 'Lato',
+    color: colors.cmWhite,
+    fontFamily: fontFamily,
   },
   fullWidth: {
     flexDirection: 'column',

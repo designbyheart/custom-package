@@ -1,14 +1,14 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { StyleSheet, ScrollView, View, Image } from 'react-native'
-import { List, ListItem } from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
 import { font } from '../../common/styles/constant'
 
 class ListItemSettings extends PureComponent<any, any> {
   render() {
     return (
       <ScrollView bounces={false}>
-        <List containerStyle={[style.listContainer]}>
+        <View style={style.listContainer}>
           {this.props.list.map((item, index) => {
             return (
               <ListItem
@@ -18,8 +18,7 @@ class ListItemSettings extends PureComponent<any, any> {
                 key={index}
                 title={item.title}
                 subtitle={item.subtitle}
-                avatar={item.avatar}
-                avatarStyle={false}
+                leftAvatar={item.avatar}
                 rightIcon={
                   item.rightIcon === 'spinner' ? (
                     <View>
@@ -37,7 +36,7 @@ class ListItemSettings extends PureComponent<any, any> {
               />
             )
           })}
-        </List>
+        </View>
       </ScrollView>
     )
   }

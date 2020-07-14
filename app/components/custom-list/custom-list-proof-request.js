@@ -3,12 +3,15 @@ import React, { Component } from 'react'
 import { StyleSheet, FlatList, View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { BorderSeparator } from '../../components/connection-details/border-separator'
-import { Icon } from '../index'
-import { getUserAvatarSource } from '../../store/store-selector'
+
 import type { CustomListProps, Item } from './type-custom-list'
 import type { Store } from '../../store/type-store'
 import { BLANK_ATTRIBUTE_DATA_TEXT } from '../../connection-details/type-connection-details'
+
+import Icon from '../icon'
+import { getUserAvatarSource } from '../../store/store-selector'
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 export class CustomListProofRequest extends Component<CustomListProps, void> {
   keyExtractor = ({ label }: Item, index: number) => `${label}${index}`
@@ -38,14 +41,16 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
         <View style={styles.textAvatarWrapper}>
           <View style={styles.textWrapper}>
             <Text style={styles.title}>{item.label}</Text>
-            {// Show (none) in a lighter gray if the data is actually a blank string
-            isDataEmptyString ? (
-              <Text style={styles.contentGray}>
-                {BLANK_ATTRIBUTE_DATA_TEXT}
-              </Text>
-            ) : (
-              <Text style={styles.content}>{item.data}</Text>
-            )}
+            {
+              // Show (none) in a lighter gray if the data is actually a blank string
+              isDataEmptyString ? (
+                <Text style={styles.contentGray}>
+                  {BLANK_ATTRIBUTE_DATA_TEXT}
+                </Text>
+              ) : (
+                <Text style={styles.content}>{item.data}</Text>
+              )
+            }
           </View>
           <View style={styles.avatarWrapper}>
             <Icon
@@ -67,8 +72,6 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
         style={styles.keyboardFlatList}
         data={this.props.items}
         keyExtractor={this.keyExtractor}
-        ItemSeparatorComponent={BorderSeparator}
-        ListFooterComponent={BorderSeparator}
         renderItem={this.renderListType1Item}
       />
     )
@@ -83,35 +86,37 @@ export default connect(mapStateToProps)(CustomListProofRequest)
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.cmGray5,
     width: '100%',
     position: 'relative',
-    paddingTop: 12,
+    paddingTop: moderateScale(12),
+    borderBottomColor: colors.cmGray3,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   title: {
-    fontSize: 14,
+    fontSize: verticalScale(fontSizes.size7),
     fontWeight: '700',
-    color: '#a5a5a5',
+    color: colors.cmGray3,
     width: '100%',
     textAlign: 'left',
-    marginBottom: 2,
-    fontFamily: 'Lato',
+    marginBottom: moderateScale(2),
+    fontFamily: fontFamily,
   },
   content: {
-    fontSize: 17,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '400',
-    color: '#505050',
+    color: colors.cmGray1,
     width: '100%',
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   contentGray: {
-    fontSize: 17,
+    fontSize: verticalScale(fontSizes.size5),
     fontWeight: '400',
-    color: '#a5a5a5',
+    color: colors.cmGray1,
     width: '100%',
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   textAvatarWrapper: {
     width: '98.5%',
@@ -119,10 +124,10 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     width: '85%',
-    paddingBottom: 12,
+    paddingBottom: moderateScale(12),
   },
   avatarWrapper: {
-    marginTop: -10,
+    marginTop: moderateScale(-10),
     width: '15%',
     alignItems: 'center',
     justifyContent: 'center',

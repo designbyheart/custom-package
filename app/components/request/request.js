@@ -1,125 +1,62 @@
 // @flow
-import React, { Component } from 'react'
-import { View, Alert } from 'react-native'
-import { bindActionCreators } from 'redux'
-import { Container, TouchId } from '../../components'
-import { connect } from 'react-redux'
-import { TOUCH_ID_MESSAGE, TOUCH_ID_NOT_AVAILABLE, noop } from '../../common'
+import React, { useCallback, useEffect, useState } from 'react'
+
+import type { RequestProps } from './type-request'
+
+import { Container } from '../layout/container'
 import RequestDetail from './request-detail'
 import FooterActions from '../footer-actions/footer-actions'
-import type { RequestProps, RequestState, ResponseTypes } from './type-request'
-import { captureError } from '../../services/error/error-handler'
-import { lockAuthorizationRoute } from '../../common/route-constants'
-import type { Store } from '../../store/type-store'
-import {
-  ERROR_ALREADY_EXIST,
-  ERROR_INVITATION_RESPONSE_FAILED,
-  ERROR_ALREADY_EXIST_TITLE,
-} from '../../api/api-constants'
 
-export class Request extends Component<RequestProps, RequestState> {
-  state = {
-    disableAccept: false,
-  }
+export const Request = ({
+  title,
+  onAction,
+  invitationError,
+  message,
+  senderLogoUrl,
+  senderName,
+  testID,
+}: RequestProps) => {
+  const [disableActions, setDisableActions] = useState(false)
 
-  onAccept = () => {
-    this.setState({ disableAccept: true })
+  const onAccept = useCallback(() => {
+    setDisableActions(true)
     // Move these values to enum, we are not doing it now because of TODO in type file
-    return this.onAction('accepted')
-  }
+    onAction('accepted')
+  }, [])
 
-  onDecline = () => {
+  const onDecline = useCallback(() => {
+    setDisableActions(true)
     // Move these values to enum, we are not doing it now because of TODO in type file
-    return this.onAction('rejected')
-  }
+    onAction('rejected')
+  }, [])
 
-  onSuccessfulAuthorization = (response: ResponseTypes) => {
-    this.props.onAction(response)
-  }
-
-  onDuplicateConnectionError = () => {
-    this.onSuccessfulAuthorization('rejected')
-  }
-
-  onAvoidAuthorization = () => {
-    /**
-     * User can choose to avoid entering passcode either by canceling
-     * or by pressing back button and choose to ignore passcode
-     * then once user comes back, we need to re-enable button
-     * so that user can press accept or decline button again
-     */
-    this.setState({ disableAccept: false })
-  }
-
-  onTouchIdFailed = (response: ResponseTypes) =>
-    this.props.navigation.navigate(lockAuthorizationRoute, {
-      onSuccess: () => this.onSuccessfulAuthorization(response),
-      onAvoid: () => this.onAvoidAuthorization(),
-    })
-
-  authenticate = (response: ResponseTypes) => {
-    return TouchId.isSupported()
-      .then(result => TouchId.authenticate(TOUCH_ID_MESSAGE))
-      .then(() => this.onSuccessfulAuthorization(response))
-      .catch(() => this.onTouchIdFailed(response))
-  }
-
-  checkIfTouchIdEnabled(response: ResponseTypes) {
-    if (this.props.isTouchIdEnabled) {
-      return this.authenticate(response)
-    } else {
-      this.onTouchIdFailed(response)
-    }
-  }
-
-  onAction = (response: ResponseTypes) => {
-    this.checkIfTouchIdEnabled(response)
-  }
-
-  componentDidUpdate(prevProps: RequestProps) {
+  useEffect(() => {
     // When Accept invitation errors out we are re-enabling accept button. Giving user the option to retry.
-    if (
-      this.props.invitationError !== prevProps.invitationError &&
-      this.props.invitationError
-    ) {
-      this.setState({
-        disableAccept: false,
-      })
+    if (invitationError) {
+      setDisableActions(false)
     }
-  }
+  }, [invitationError])
 
-  render() {
-    const { title, message, senderLogoUrl, testID, senderName }: RequestProps = this.props
-
-    return (
-      <Container testID="request-container">
-        <Container fifth>
-          <RequestDetail
-            title={title}
-            message={message}
-            senderName={senderName}
-            senderLogoUrl={senderLogoUrl}
-            testID={testID}
-          />
-        </Container>
-        <FooterActions
-          disableAccept={this.state.disableAccept}
-          disableDeny={this.state.disableAccept}
-          onAccept={this.onAccept}
-          onDecline={this.onDecline}
-          logoUrl={senderLogoUrl}
+  return (
+    <Container testID="request-container">
+      <Container fifth>
+        <RequestDetail
+          title={title}
+          message={message}
+          senderLogoUrl={senderLogoUrl}
+          senderName={senderName}
           testID={testID}
-          useColorPicker={true}
         />
       </Container>
-    )
-  }
+      <FooterActions
+        disableAccept={disableActions}
+        disableDeny={disableActions}
+        onAccept={onAccept}
+        onDecline={onDecline}
+        logoUrl={senderLogoUrl}
+        testID={testID}
+        useColorPicker={true}
+      />
+    </Container>
+  )
 }
-
-const mapStateToProps = ({ lock }: Store) => {
-  return {
-    isTouchIdEnabled: lock.isTouchIdEnabled,
-  }
-}
-
-export default connect(mapStateToProps)(Request)
