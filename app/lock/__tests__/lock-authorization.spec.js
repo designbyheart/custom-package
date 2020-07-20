@@ -17,7 +17,6 @@ describe('<LockAuthorization />', () => {
     const { props, lockEnterInstance } = setup()
 
     lockEnterInstance && lockEnterInstance.props.onSuccess()
-    expect(props.navigation.goBack).toHaveBeenCalled()
     expect(props.route.params.onSuccess).toHaveBeenCalled()
   })
 

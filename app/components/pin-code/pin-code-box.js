@@ -28,8 +28,6 @@ export default class PinCodeBox extends PureComponent<
     pin: '',
   }
 
-  keyboardDidHideListener = null
-
   customKeyboardRef = null
 
   inputBox: ?TextInput = null
@@ -39,17 +37,6 @@ export default class PinCodeBox extends PureComponent<
   maxLength = 6
 
   maxValue = '999999'
-
-  componentDidMount = () => {
-    this.keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      this.hideKeyboard
-    )
-  }
-
-  componentWillUnmount = () => {
-    this.keyboardDidHideListener && this.keyboardDidHideListener.remove()
-  }
 
   onPinChange = (pin: string) => {
     if (pin === '' || isDigit(pin.substr(pin.length - 1))) {

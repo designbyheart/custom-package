@@ -24,14 +24,9 @@ export const LockAuthorization = ({
 }: LockAuthorizationProps) => {
   const [interactionDone] = useInteractionDone()
   const onSuccess = useCallback(() => {
-    navigation.goBack()
     const { params } = route
     params && params.onSuccess && params.onSuccess()
   }, [])
-
-  if (!interactionDone) {
-    return LoaderGif
-  }
 
   return <LockEnter onSuccess={onSuccess} />
 }

@@ -36,7 +36,7 @@ export class LockSetupSuccess extends Component<
       this.props.route.params &&
       this.props.route.params.changePin === true
     ) {
-      this.props.navigation.pop(2)
+      this.props.navigation.pop(3)
     } else if (this.props.pendingRedirection) {
       // if there is a redirection pending, then redirect and clear it
       this.props.pendingRedirection.map((pendingRedirection) => {
