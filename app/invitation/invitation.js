@@ -3,12 +3,21 @@ import React, { Component } from 'react'
 import { View, StatusBar, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import isUrl from 'validator/lib/isURL'
 
+import { ID, TYPE } from '../common/type-common'
 import type { Store } from '../store/type-store'
 import type { ResponseTypes } from '../components/request/type-request'
-import type { InvitationProps, InvitationNavigation } from './type-invitation'
+import type {
+  AriesConnectionInvite,
+  AriesConnectionInvitePayload,
+  InvitationProps,
+  InvitationNavigation
+} from './type-invitation'
 
+import { CONNECTION_INVITE_TYPES } from './type-invitation'
 import { captureError } from '../services/error/error-handler'
+import { schemaValidator } from '../services/schema-validator'
 import {
   Container,
   CustomModal,
@@ -166,6 +175,47 @@ function isSuccess(prevProps: InvitationProps, currentProps: InvitationProps) {
 
 function isLoading(currentProps: InvitationProps) {
   return currentProps.invitation && currentProps.invitation.isFetching
+}
+
+export function isValidAriesV1InviteData(
+  payload: any,
+  original: string
+): false | AriesConnectionInvite {
+  if (!schemaValidator.validate(ariesConnectionInviteQrSchema, payload)) {
+    return false
+  }
+
+  if (!isUrl(payload.serviceEndpoint)) {
+    return false
+  }
+
+  return {
+    original,
+    payload,
+    type: CONNECTION_INVITE_TYPES.ARIES_V1_QR,
+    version: '1.0',
+  }
+}
+
+const ariesConnectionInviteQrSchema = {
+  type: 'object',
+  properties: {
+    [ID]: { type: 'string' },
+    [TYPE]: { type: 'string' },
+    label: { type: ['null', 'string'] },
+    recipientKeys: {
+      type: 'array',
+      items: [{ type: 'string' }],
+      minItems: 1,
+    },
+    routingKeys: {
+      type: ['null', 'array'],
+      items: [{ type: 'string' }],
+      minItems: 0,
+    },
+    serviceEndpoint: { type: 'string' },
+  },
+  required: [ID, TYPE, 'recipientKeys', 'serviceEndpoint'],
 }
 
 function isValidInvitation(
