@@ -16,6 +16,7 @@ import { Container } from '../layout/container'
 import { CustomView } from '../layout/custom-view'
 import CustomText from '../text'
 import Icon from '../icon'
+import { isValidAriesV1InviteData } from '../../invitation/invitation'
 import {
   color,
   OFFSET_2X,
@@ -45,7 +46,6 @@ import {
 } from '../../qr-code/type-qr-code'
 import {
   isAriesConnectionInviteQrCode,
-  isValidAriesV1InviteData,
 } from './qr-code-types/qr-code-aries-connection-invite'
 import { CONNECTION_INVITE_TYPES } from '../../invitation/type-invitation'
 import { flatFetch } from '../../common/flat-fetch'

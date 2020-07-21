@@ -16,7 +16,7 @@ import type {
   SMSPendingInvitationPayload,
   SMSPendingInvitationRequestAction,
 } from './type-sms-pending-invitation'
-import type { InvitationPayload } from '../invitation/type-invitation'
+import type { InvitationPayload, AriesConnectionInvite, AriesConnectionInvitePayload } from '../invitation/type-invitation'
 import {
   SMS_PENDING_INVITATION_REQUEST,
   SMS_PENDING_INVITATION_RECEIVED,
@@ -44,6 +44,8 @@ import { RESET } from '../common/type-common'
 import { captureError } from '../services/error/error-handler'
 import { isValidInvitationUrl } from './sms-invitation-validator'
 import { schemaValidator } from '../services/schema-validator'
+import { ID } from '../common/type-common'
+import { isValidAriesV1InviteData } from '../invitation/invitation'
 
 const initialState = {}
 
@@ -54,7 +56,7 @@ export const getSmsPendingInvitation = (smsToken: string) => ({
 
 export const smsPendingInvitationReceived = (
   smsToken: string,
-  data: SMSPendingInvitationPayload
+  data: SMSPendingInvitationPayload | AriesConnectionInvitePayload
 ) => ({
   type: SMS_PENDING_INVITATION_RECEIVED,
   data,
@@ -98,6 +100,47 @@ export const convertSmsPayloadToInvitation = (
   senderDetail: pendingInvitation.senderDetail,
   version: pendingInvitation.version,
 })
+
+export function convertAriesPayloadToInvitation(
+  ariesConnectionInvite: AriesConnectionInvite
+): InvitationPayload {
+  const { payload, original } = ariesConnectionInvite
+
+  const senderAgentKeyDelegationProof = {
+    agentDID: payload.recipientKeys[0],
+    agentDelegatedKey: payload.recipientKeys[0],
+    signature: '<no-signature-supplied>',
+  }
+
+  const invitation = {
+    senderEndpoint: payload.serviceEndpoint,
+    requestId: payload[ID],
+    senderAgentKeyDelegationProof,
+    senderName: payload.label || 'Unknown',
+    senderDID: payload.recipientKeys[0],
+    // TODO:KS Need to discuss with architects to know how to fulfill this requirement
+    senderLogoUrl: null,
+    senderVerificationKey: payload.recipientKeys[0],
+    targetName: payload.label || 'Unknown',
+    senderDetail: {
+      name: payload.label || 'Unknown',
+      agentKeyDlgProof: senderAgentKeyDelegationProof,
+      DID: payload.recipientKeys[0],
+      logoUrl: null,
+      verKey: payload.recipientKeys[0],
+      publicDID: payload.recipientKeys[0],
+    },
+    senderAgencyDetail: {
+      DID: payload.recipientKeys[0],
+      verKey: payload.recipientKeys[1],
+      endpoint: payload.serviceEndpoint,
+    },
+    version: '1.0',
+    original,
+  }
+
+  return invitation
+}
 
 export function* callSmsPendingInvitationRequest(
   action: SMSPendingInvitationRequestAction
@@ -181,20 +224,36 @@ export function* callSmsPendingInvitationRequest(
     )
 
     if (
-      !schemaValidator.validate(
+      schemaValidator.validate(
         smsInvitationExpectedSchema,
         pendingInvitationPayload
       )
     ) {
-      throw new Error('Invitation payload object format is not as expected')
+      yield put(
+        invitationReceived({
+          payload: convertSmsPayloadToInvitation(
+            ((pendingInvitationPayload: Object): SMSPendingInvitationPayload)
+          ),
+        })
+      )
+      yield put(smsPendingInvitationReceived(smsToken, pendingInvitationPayload))
+      return
     }
 
-    yield put(
-      invitationReceived({
-        payload: convertSmsPayloadToInvitation(pendingInvitationPayload),
-      })
-    )
-    yield put(smsPendingInvitationReceived(smsToken, pendingInvitationPayload))
+    const original = JSON.stringify(pendingInvitationPayload)
+    const ariesV1Invite = isValidAriesV1InviteData(pendingInvitationPayload, original)
+    if (ariesV1Invite) {
+      yield put(
+        invitationReceived({
+          payload: convertAriesPayloadToInvitation(ariesV1Invite),
+        })
+      )
+      yield put(smsPendingInvitationReceived(smsToken, pendingInvitationPayload))
+      return
+    }
+
+    throw new Error('Invitation payload object format is not as expected')
+
   } catch (e) {
     let error: CustomError = {
       code: ERROR_PENDING_INVITATION_RESPONSE_PARSE_CODE,

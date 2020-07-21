@@ -1,18 +1,15 @@
 // @flow
 
-import isUrl from 'validator/lib/isURL'
-import URLParse, { type Url } from 'url-parse'
+import type { Url } from 'url-parse'
 
 import type {
   AriesConnectionInvite,
   AriesConnectionInvitePayload,
 } from '../../../invitation/type-invitation'
 
-import { CONNECTION_INVITE_TYPES } from '../../../invitation/type-invitation'
-import { schemaValidator } from '../../../services/schema-validator'
-import { ID, TYPE } from '../../../common/type-common'
 import { flattenAsync } from '../../../common/flatten-async'
 import { toUtf8FromBase64 } from '../../../bridge/react-native-cxs/RNCxs'
+import { isValidAriesV1InviteData } from '../../../invitation/invitation'
 
 export async function isAriesConnectionInviteQrCode(
   parsedUrl: Url
@@ -39,45 +36,4 @@ export async function isAriesConnectionInviteQrCode(
   }
 
   return isValidAriesV1InviteData(qrData, decodedInvite)
-}
-
-export function isValidAriesV1InviteData(
-  payload: Object,
-  original: string
-): false | AriesConnectionInvite {
-  if (!schemaValidator.validate(ariesConnectionInviteQrSchema, payload)) {
-    return false
-  }
-
-  if (!isUrl(payload.serviceEndpoint)) {
-    return false
-  }
-
-  return {
-    original,
-    payload,
-    type: CONNECTION_INVITE_TYPES.ARIES_V1_QR,
-    version: '1.0',
-  }
-}
-
-const ariesConnectionInviteQrSchema = {
-  type: 'object',
-  properties: {
-    [ID]: { type: 'string' },
-    [TYPE]: { type: 'string' },
-    label: { type: ['null', 'string'] },
-    recipientKeys: {
-      type: 'array',
-      items: [{ type: 'string' }],
-      minItems: 1,
-    },
-    routingKeys: {
-      type: ['null', 'array'],
-      items: [{ type: 'string' }],
-      minItems: 0,
-    },
-    serviceEndpoint: { type: 'string' },
-  },
-  required: [ID, TYPE, 'recipientKeys', 'serviceEndpoint'],
 }
