@@ -8,6 +8,7 @@ import type {
   ResetAction,
   RequestedAttrsJson,
   MatchingCredential,
+  AttributeNames
 } from '../common/type-common'
 import type {
   SelfAttestedAttributes,
@@ -32,7 +33,13 @@ export type ProofRevealedDetails = {
 }
 
 export type IndyRequestedProof = {
-  revealed_attrs: {
+  revealed_group_attrs?: {
+    [string]: {
+      claimUuid: string,
+      values: AttributeNames
+    }
+  },
+  revealed_attrs?: {
     [string]: Array<string>,
   },
   unrevealed_attrs: GenericObject,

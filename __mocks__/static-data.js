@@ -492,9 +492,15 @@ export const proofRequest = {
       requestedAttributes: [
         {
           label: 'Address 1',
+          values: {
+            'Address 1': '',
+          },
         },
         {
           label: 'Address 2',
+          values: {
+            'Address 2': '',
+          },
         },
       ],
     },

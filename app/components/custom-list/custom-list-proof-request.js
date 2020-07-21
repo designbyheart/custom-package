@@ -14,9 +14,18 @@ import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 export class CustomListProofRequest extends Component<CustomListProps, void> {
-  keyExtractor = ({ label }: Item, index: number) => `${label}${index}`
+  keyExtractor = ({ label, values }: Item, index: number) => {
+    if (label) {
+      return `${label}${index}`
+    }
+    if (values) {
+      return `${Object.keys(values).join("-")}${index}`
+    }
 
-  renderListType1Item = ({ item, index }: { item: Item, index: number }) => {
+    return `${index}`
+  }
+
+  renderSingleValue = ({ item, index }: { item: Item, index: number }) => {
     // if item is an array then take first element of item
     // as we only need single item
     if (Array.isArray(item)) {
@@ -66,13 +75,81 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
     )
   }
 
+  renderMultipleValues = ({ item, index }: { item: Item, index: number }) => {
+
+    let logoUrl
+    if (!item.values) {
+      return <View></View>
+    }
+
+    const views = Object.keys(item.values).map((label, keyIndex) => {
+      let value = ""
+      if (item.values) {
+        value = item.values[label]
+      }
+
+      const isDataEmptyString = value === ''
+
+      if (!logoUrl) {
+        logoUrl = value || isDataEmptyString
+          ? item.claimUuid &&
+            this.props.claimMap &&
+            this.props.claimMap[item.claimUuid] &&
+            this.props.claimMap[item.claimUuid].logoUrl
+            ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
+            : this.props.avatarSource ||
+            require('../../images/UserAvatar.png')
+          : null
+      }
+
+      return (
+        <View key={`${index}_${keyIndex}`} style={styles.textInnerItemWrapper}>
+          <Text style={styles.title}>{label}</Text>
+          {// Show (none) in a lighter gray if the data is actually a blank string
+            isDataEmptyString ? (
+              <Text style={styles.contentGray}>
+                {BLANK_ATTRIBUTE_DATA_TEXT}
+              </Text>
+            ) : (
+                <Text style={styles.content}>{value}</Text>
+              )}
+        </View>
+      )
+    })
+
+    return (
+      <View key={index} style={styles.wrapper}>
+        <View style={styles.textAvatarWrapper}>
+          <View style={styles.textInnerWrapper}>
+            {views}
+          </View>
+          <View style={styles.avatarWrapper}>
+            <Icon
+              medium
+              round
+              resizeMode="cover"
+              src={logoUrl}
+              testID={`proof-requester-logo-${index}`}
+            />
+          </View>
+        </View>
+      </View>
+    )
+  }
+
   render() {
     return (
       <FlatList
         style={styles.keyboardFlatList}
         data={this.props.items}
         keyExtractor={this.keyExtractor}
-        renderItem={this.renderListType1Item}
+        renderItem={({ item, index }: { item: Item, index: number }) => {
+          if (item.values) {
+            return this.renderMultipleValues({ item, index })
+          } else {
+            return this.renderSingleValue({ item, index })
+          }
+        }}
       />
     )
   }
@@ -126,8 +203,14 @@ const styles = StyleSheet.create({
     width: '85%',
     paddingBottom: moderateScale(12),
   },
+  textInnerWrapper: {
+    width: '85%',
+  },
+  textInnerItemWrapper: {
+    paddingBottom: moderateScale(12),
+  },
   avatarWrapper: {
-    marginTop: moderateScale(-10),
+    marginTop: moderateScale(12),
     width: '15%',
     alignItems: 'center',
     justifyContent: 'center',

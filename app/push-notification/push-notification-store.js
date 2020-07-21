@@ -238,6 +238,7 @@ export function convertClaimOfferPushPayloadToAppClaimOffer(
       return {
         label: attributeName,
         data: attributeValue,
+        values: {}
       }
     }
   )
@@ -268,10 +269,33 @@ export function convertProofRequestPushPayloadToAppProofRequest(
   } = pushPayload
   const { requested_attributes, name, version } = proof_request_data
 
-  const requestedAttributes = Object.keys(requested_attributes).map(
-    (attributeKey) => ({
-      label: requested_attributes[attributeKey].name,
-    })
+  const requestedAttributes = []
+  Object.keys(requested_attributes).forEach(
+    (attributeKey) => {
+      let attribute = requested_attributes[attributeKey]
+      if (attribute.name) {
+        requestedAttributes.push({
+          label: attribute.name,
+          values: {
+            [attribute.name]: ''
+          }
+        })
+      }
+
+      // TODO:DA label is not used for multiple attributes, refactor is required
+      if (attribute.names) {
+        const names = attribute.names
+        const values = names.reduce((acc, name) => ({
+          ...acc,
+          [name]: '',
+        }), {})
+
+        requestedAttributes.push({
+          label: names.join(","),
+          values: values
+        })
+      }
+    }
   )
 
   return {
@@ -359,8 +383,8 @@ export function* fetchAdditionalDataSaga(
     type === MESSAGE_TYPE.CLAIM_OFFER ||
     type === MESSAGE_TYPE.PROOF_REQUEST
   ) {
-    // if we get notification about received `claimOffer` / `proofReuqest` message, 
-    // we need to download that message and process 
+    // if we get notification about received `claimOffer` / `proofReuqest` message,
+    // we need to download that message and process
     // we can download and process that messages same way for `proprietary` and `aries` protocols.
     // so we are raising this action to run downloadMessagesSaga
     yield put({

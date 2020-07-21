@@ -137,9 +137,15 @@ Object {
   "data": Array [
     Object {
       "label": "Address 1",
+      "values": Object {
+        "Address 1": "",
+      },
     },
     Object {
       "label": "Address 2",
+      "values": Object {
+        "Address 2": "",
+      },
     },
   ],
   "id": "a4f35623-b50c-40ea-a2b0-f7cd06e03142",
@@ -151,9 +157,15 @@ Object {
         "requestedAttributes": Array [
           Object {
             "label": "Address 1",
+            "values": Object {
+              "Address 1": "",
+            },
           },
           Object {
             "label": "Address 2",
+            "values": Object {
+              "Address 2": "",
+            },
           },
         ],
         "version": "1.0.0",
@@ -422,9 +434,15 @@ Object {
             "data": Array [
               Object {
                 "label": "Address 1",
+                "values": Object {
+                  "Address 1": "",
+                },
               },
               Object {
                 "label": "Address 2",
+                "values": Object {
+                  "Address 2": "",
+                },
               },
             ],
             "id": "a4f35623-b50c-40ea-a2b0-f7cd06e03142",
@@ -436,9 +454,15 @@ Object {
                   "requestedAttributes": Array [
                     Object {
                       "label": "Address 1",
+                      "values": Object {
+                        "Address 1": "",
+                      },
                     },
                     Object {
                       "label": "Address 2",
+                      "values": Object {
+                        "Address 2": "",
+                      },
                     },
                   ],
                   "version": "1.0.0",

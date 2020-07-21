@@ -143,6 +143,10 @@ export type RequestedAttrsJson = {
   +[string]: [string, boolean, MatchingCredential],
 }
 
+export type AttributeNames = {
+  +[string]: string
+}
+
 export type MatchingCredential = {
   cred_info: {
     referent: string,
