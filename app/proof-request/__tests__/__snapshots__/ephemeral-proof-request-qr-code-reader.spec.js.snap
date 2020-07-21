@@ -34,9 +34,15 @@ Object {
         "requestedAttributes": Array [
           Object {
             "label": "Address 1",
+            "values": Object {
+              "Address 1": "",
+            },
           },
           Object {
             "label": "Address 2",
+            "values": Object {
+              "Address 2": "",
+            },
           },
         ],
         "version": "0.1",
@@ -97,9 +103,15 @@ Object {
         "requestedAttributes": Array [
           Object {
             "label": "Address 1",
+            "values": Object {
+              "Address 1": "",
+            },
           },
           Object {
             "label": "Address 2",
+            "values": Object {
+              "Address 2": "",
+            },
           },
         ],
         "version": "0.1",

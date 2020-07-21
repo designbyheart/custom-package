@@ -465,9 +465,13 @@ export default function proofRequestReducer(
               if (Array.isArray(attribute) && attribute.length > 0) {
                 return {
                   label: attribute[0].label,
+                  values: attribute[0].values,
                 }
               }
-              return { label: attribute.label }
+              return { 
+                label: attribute.label,
+                values: attribute.values,            
+              }
             }),
           },
         },

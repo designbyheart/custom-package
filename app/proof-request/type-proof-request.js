@@ -20,7 +20,8 @@ import type { ClaimMap } from '../claim/type-claim'
 import { updateAttributeClaim } from '../proof/proof-store'
 
 export type RequestedAttribute = {|
-  name: string,
+  name?: string,
+  names?: Array<string>,
   self_attest_allowed?: boolean,
 |}
 

@@ -1266,6 +1266,8 @@ function* handleAriesMessage(
         message
       )
 
+      yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
+
       additionalData = {
         ...JSON.parse(message),
         proofHandle,

@@ -414,6 +414,7 @@ function convertErrorSendProofToHistoryEvent(
 }
 
 function mapSentAttributes(
+  revealedGroupAttributes: *,
   revealedAttributes: *,
   selfAttestedAttributes: *,
   requestedAttributes: *
@@ -434,6 +435,18 @@ function mapSentAttributes(
         })
       }
     )
+  }
+
+  if (revealedGroupAttributes) {
+    const attributes = revealedGroupAttributes
+    Object.keys(attributes).forEach(attributeKey => {
+      const revealedAttribute = attributes[attributeKey]
+      sentAttributes.push({
+        key: attributeKey,
+        values: revealedAttribute.values,
+        claimUuid: revealedAttribute.claimUuid
+      })
+    })
   }
 
   if (selfAttestedAttributes) {
@@ -461,11 +474,12 @@ export function convertProofSendToHistoryEvent(
     originalProofRequestData: { requested_attributes },
     remotePairwiseDID: remoteDid,
   }: ProofRequestPayload,
-  { requested_proof: { revealed_attrs, self_attested_attrs } }: Proof
+  { requested_proof: { revealed_group_attrs, revealed_attrs, self_attested_attrs } }: Proof
 ): ConnectionHistoryEvent {
   return {
     action: HISTORY_EVENT_STATUS[SEND_PROOF_SUCCESS],
     data: mapSentAttributes(
+      revealed_group_attrs,
       revealed_attrs,
       self_attested_attrs,
       requested_attributes
@@ -977,8 +991,8 @@ export default function connectionHistoryReducer(
             [remoteDid]: {
               data: [
                 ...(state.data &&
-                state.data.connections &&
-                state.data.connections[remoteDid]
+                  state.data.connections &&
+                  state.data.connections[remoteDid]
                   ? state.data.connections[remoteDid].data
                   : []),
                 action.historyEvent,
@@ -1043,8 +1057,8 @@ export default function connectionHistoryReducer(
             [action.senderDid]: {
               data: [
                 ...(state.data &&
-                state.data.connections &&
-                state.data.connections[action.senderDid]
+                  state.data.connections &&
+                  state.data.connections[action.senderDid]
                   ? state.data.connections[action.senderDid].data
                   : []),
               ],

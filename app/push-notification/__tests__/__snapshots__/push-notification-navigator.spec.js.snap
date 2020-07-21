@@ -11,14 +11,17 @@ Object {
       Object {
         "data": "Alice",
         "label": "name",
+        "values": Object {},
       },
       Object {
         "data": "2000-05-17",
         "label": "date_of_birth",
+        "values": Object {},
       },
       Object {
         "data": "175",
         "label": "height",
+        "values": Object {},
       },
     ],
     "version": "0.1",
@@ -68,9 +71,15 @@ Object {
     "requestedAttributes": Array [
       Object {
         "label": "Address 1",
+        "values": Object {
+          "Address 1": "",
+        },
       },
       Object {
         "label": "Address 2",
+        "values": Object {
+          "Address 2": "",
+        },
       },
     ],
     "version": "0.1",

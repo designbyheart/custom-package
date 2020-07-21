@@ -8,6 +8,7 @@ import type {
   ResetAction,
   NotificationPayload,
   MatchingCredential,
+  AttributeNames
 } from '../common/type-common'
 
 export const PUSH_NOTIFICATION_PERMISSION = 'PUSH_NOTIFICATION_PERMISSION'
@@ -102,6 +103,7 @@ export type Attribute = {
   label: string,
   key?: string,
   data?: string,
+  values?: AttributeNames,
   logoUrl?: string,
   claimUuid?: string,
   cred_info?: MatchingCredential,

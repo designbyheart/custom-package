@@ -126,7 +126,7 @@ export function isInvalidValues(
 class ProofRequestAttributeList extends Component<
   ProofRequestAttributeListProp,
   ProofRequestAttributeListState
-> {
+  > {
   constructor(props: ProofRequestAttributeListProp) {
     super(props)
     this.canEnableGenerateProof = debounce(
@@ -172,9 +172,97 @@ class ProofRequestAttributeList extends Component<
 
   keyExtractor = ({ label }: Attribute, index: number) => `${label}${index}`
 
+  // once we are going to render multiple values
+  // then we have to render view for each pair in values and
+  // collect them into one wrapping view
+  renderValues = ({ item, index }) => {
+    if (!item.values) {
+      return <View></View>
+    }
+
+    let logoUrl
+
+    const views = Object.keys(item.values).map((label, keyIndex) => {
+      const adjustedLabel = item.label.toLocaleLowerCase()
+      const testID = 'proof-request-attribute-item'
+
+      const value = item.values[label]
+      const isDataEmptyString = value === ''
+
+      if (!logoUrl) {
+        logoUrl = value || isDataEmptyString
+          ? item.claimUuid &&
+            this.props.claimMap &&
+            this.props.claimMap[item.claimUuid] &&
+            this.props.claimMap[item.claimUuid].logoUrl
+            ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
+            : this.props.userAvatarSource ||
+            require('../../images/UserAvatar.png')
+          : null
+      }
+
+      const showInputBox =
+        adjustedLabel in this.props.missingAttributes && !value
+
+      return (
+        <View key={`${index}_${keyIndex}`}>
+          <Text style={styles.title}>{label}</Text>
+          <View>
+            {showInputBox ? (
+              <TextInput
+                style={styles.contentInput}
+                autoCorrect={false}
+                blurOnSubmit={true}
+                clearButtonMode="always"
+                numberOfLines={3}
+                multiline={true}
+                maxLength={200}
+                placeholder={`Enter ${label}`}
+                returnKeyType="done"
+                testID={`${testID}-input-${adjustedLabel}`}
+                accessible={true}
+                accessibilityLabel={`${testID}-input-${adjustedLabel}`}
+                onChange={e => this.onTextChange(e, adjustedLabel)}
+                editable={!this.props.disableUserInputs}
+                underlineColorAndroid="transparent"
+              />
+            ) : // If data is empty string, show the BLANK text in gray instead
+              isDataEmptyString ? (
+                <Text style={styles.contentGray}>
+                  {BLANK_ATTRIBUTE_DATA_TEXT}
+                </Text>
+              ) : (
+                  <Text style={styles.content}>{value}</Text>
+                )}
+          </View>
+        </View>
+      )
+    })
+
+    return (
+      <View key={index} style={styles.wrapper}>
+        <View style={styles.textAvatarWrapper}>
+          <View style={styles.textInnerWrapper}>
+            {views}
+          </View>
+          <View style={styles.avatarInnerWrapper}>
+            <Icon
+              medium
+              round
+              resizeMode="cover"
+              src={logoUrl}
+              testID={`proof-requester-logo-${index}`}
+            />
+          </View>
+        </View>
+      </View>
+    )
+  }
+
   renderItem = ({ item, index }) => {
     // convert item to array of item
     let items = item
+
     if (!Array.isArray(items)) {
       items = [items]
     }
@@ -184,74 +272,10 @@ class ProofRequestAttributeList extends Component<
         layout={'default'}
         sliderWidth={sliderWidth}
         itemWidth={sliderWidth}
-        onSnapToItem={(swipeIndex) => this.onSwipe(items[swipeIndex])}
+        onSnapToItem={swipeIndex => this.onSwipe(items[swipeIndex])}
         data={items}
         loop={true}
-        renderItem={({ item, index: itemIndex }) => {
-          const adjustedLabel = item.label.toLocaleLowerCase()
-          const testID = 'proof-request-attribute-item'
-
-          const isDataEmptyString = item.data === ''
-
-          const logoUrl =
-            item.data || isDataEmptyString
-              ? item.claimUuid &&
-                this.props.claimMap &&
-                this.props.claimMap[item.claimUuid] &&
-                this.props.claimMap[item.claimUuid].logoUrl
-                ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
-                : this.props.userAvatarSource ||
-                  require('../../images/UserAvatar.png')
-              : null
-
-          const showInputBox =
-            adjustedLabel in this.props.missingAttributes && !item.data
-
-          return (
-            <View key={itemIndex} style={styles.wrapper}>
-              <Text style={styles.title}>{item.label}</Text>
-              <View style={styles.textAvatarWrapper}>
-                <View style={styles.textWrapper}>
-                  {showInputBox ? (
-                    <TextInput
-                      style={styles.content}
-                      autoCorrect={false}
-                      blurOnSubmit={true}
-                      clearButtonMode="always"
-                      numberOfLines={3}
-                      multiline={true}
-                      maxLength={200}
-                      placeholder={`Enter ${item.label}`}
-                      returnKeyType="done"
-                      testID={`${testID}-input-${adjustedLabel}`}
-                      accessible={true}
-                      accessibilityLabel={`${testID}-input-${adjustedLabel}`}
-                      onChange={(e) => this.onTextChange(e, adjustedLabel)}
-                      editable={!this.props.disableUserInputs}
-                      underlineColorAndroid="transparent"
-                    />
-                  ) : // If data is empty string, show the BLANK text in gray instead
-                  isDataEmptyString ? (
-                    <Text style={styles.contentGray}>
-                      {BLANK_ATTRIBUTE_DATA_TEXT}
-                    </Text>
-                  ) : (
-                    <Text style={styles.content}>{item.data}</Text>
-                  )}
-                </View>
-                <View style={styles.avatarWrapper}>
-                  <Icon
-                    medium
-                    round
-                    resizeMode="cover"
-                    src={logoUrl}
-                    testID={`proof-requester-logo-${index}`}
-                  />
-                </View>
-              </View>
-            </View>
-          )
-        }}
+        renderItem={this.renderValues}
       />
     )
   }
@@ -311,7 +335,7 @@ export const isPropEmpty = (prop: string) => (
   return !(data[prop] || data[prop] === '')
 }
 
-export const missingData = isPropEmpty('data')
+export const missingData = isPropEmpty('values')
 
 export function enablePrimaryAction(
   missingAttributes: MissingAttributes | {},
@@ -360,7 +384,7 @@ export function getMissingAttributeNames(
 class ModalContentProof extends Component<
   ProofRequestProps,
   ProofRequestState
-> {
+  > {
   constructor(props) {
     super(props)
     if (this.props.uid) {
@@ -729,7 +753,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(ModalContentProof)
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    height: moderateScale(69),
     backgroundColor: colors.cmGray5,
     paddingTop: moderateScale(12),
     borderBottomColor: colors.cmGray3,
@@ -739,13 +762,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
   },
-  textWrapper: {
+  textInnerWrapper: {
     width: '85%',
-    paddingBottom: moderateScale(12),
   },
   avatarWrapper: {
     marginTop: moderateScale(-15),
     width: '15%',
+  },
+  avatarInnerWrapper: {
+    marginTop: moderateScale(12),
   },
   title: {
     fontSize: verticalScale(fontSizes.size7),
@@ -756,8 +781,18 @@ const styles = StyleSheet.create({
     marginBottom: moderateScale(2),
     fontFamily: fontFamily,
   },
+  contentInput: {
+    fontSize: verticalScale(fontSizes.size5),
+    height: 48,
+    fontWeight: '400',
+    color: colors.cmGray1,
+    width: '100%',
+    textAlign: 'left',
+    fontFamily: fontFamily,
+  },
   content: {
     fontSize: verticalScale(fontSizes.size5),
+    marginBottom: moderateScale(12),
     fontWeight: '400',
     color: colors.cmGray1,
     width: '100%',
@@ -766,6 +801,8 @@ const styles = StyleSheet.create({
   },
   contentGray: {
     fontSize: verticalScale(fontSizes.size5),
+    marginTop: moderateScale(10),
+    marginBottom: moderateScale(6),
     fontWeight: '400',
     color: colors.cmGray3,
     width: '100%',

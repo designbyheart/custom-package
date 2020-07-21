@@ -192,15 +192,36 @@ export function convertPreparedProofToRequestedAttributes(
         typeof requestedAttribute.self_attest_allowed === 'boolean' &&
         requestedAttribute.self_attest_allowed === false
       ) {
-        dissatisfiedAttributes.push({
-          name: requestedAttribute.name,
-          reason: NO_SELF_ATTEST,
-        })
+
+        if (requestedAttribute.name) {
+          dissatisfiedAttributes.push({
+            name: requestedAttribute.name,
+            reason: NO_SELF_ATTEST,
+          })
+        } else if (requestedAttribute.names) {
+          requestedAttribute.names.forEach(attributeName =>
+            dissatisfiedAttributes.push({
+              name: attributeName,
+              reason: NO_SELF_ATTEST,
+            })
+          )
+        }
       } else {
-        missingAttributes.push({
-          key: attrKey,
-          name: requestedAttribute.name,
-        })
+        if (requestedAttribute.name) {
+          missingAttributes.push({
+            key: attrKey,
+            name: requestedAttribute.name,
+          })
+        } else if (requestedAttribute.names) {
+          // all missed attributes from group cannot be self-attested
+          // so they should be treated as dissatisfied
+          requestedAttribute.names.forEach(attributeName =>
+            dissatisfiedAttributes.push({
+              name: attributeName,
+              reason: NO_SELF_ATTEST,
+            })
+          )
+        }
       }
 
       return acc
@@ -220,13 +241,21 @@ export function convertIndyPreparedProofToAttributes(
   requestedAttributes: ProofRequestedAttributes
 ): Array<Attribute> {
   let attributes = Object.keys(requestedAttributes).map((attributeKey) => {
-    const label = requestedAttributes[attributeKey].name
+    let labels: Array<string> = []
+    let attribute = requestedAttributes[attributeKey]
+    if (attribute.names) {
+      labels.push(...attribute.names)
+    } else if (attribute.name) {
+      labels.push(attribute.name)
+    }
+    const label = labels.join()
     const revealedAttributes = preparedProof.attrs[attributeKey]
     if (revealedAttributes && revealedAttributes.length > 0) {
       return revealedAttributes.map((revealedAttribute) => {
         // convert attrs props to lowercase
         // maintain a mapping that will map case insensitive name to actual name in `attrs`
         let caseInsensitiveMap = null
+        let values = {}
         if (revealedAttribute) {
           caseInsensitiveMap = Object.keys(
             revealedAttribute.cred_info.attrs
@@ -237,8 +266,21 @@ export function convertIndyPreparedProofToAttributes(
             }),
             {}
           )
-        }
 
+          values = labels.reduce(
+            (acc, attributeLabel) => {
+              if (caseInsensitiveMap) {
+                const key = caseInsensitiveMap[attributeLabel.toLowerCase().replace(/ /g, '')]
+                return {
+                  ...acc,
+                  [attributeLabel]: revealedAttribute.cred_info.attrs[key],
+                }
+              }
+            },
+            {}
+          )
+        }
+        //TODO:DA seems that `data` field is not required in Attribute anymore and can be deleted, so it can be removed, but refactoring is needed
         return {
           label,
           key: attributeKey,
@@ -246,8 +288,9 @@ export function convertIndyPreparedProofToAttributes(
             revealedAttribute &&
             caseInsensitiveMap &&
             revealedAttribute.cred_info.attrs[
-              caseInsensitiveMap[label.toLowerCase().replace(/ /g, '')]
+            caseInsensitiveMap[label.toLowerCase().replace(/ /g, '')]
             ],
+          values: values,
           claimUuid: revealedAttribute && revealedAttribute.cred_info.referent,
           // TODO:KS Refactor this logic to not put cred_info here
           // We are putting cred_info here because we don't want to iterate
@@ -265,6 +308,9 @@ export function convertIndyPreparedProofToAttributes(
       {
         label,
         data: selfAttestedAttribute,
+        values: {
+          [label]: selfAttestedAttribute
+        },
       },
     ]
   })
@@ -297,57 +343,54 @@ export function convertUserSelectedCredentialToVcxSelectedCredentials(
 }
 
 export function convertSelectedCredentialAttributesToIndyProof(
-  userSelectedCredentials: IndyRequestedAttributes
+  userSelectedCredentials: IndyRequestedAttributes,
+  proofRequest: ProofRequestData
 ) {
   const credentialFilledAttributes = Object.keys(userSelectedCredentials)
-
-  return credentialFilledAttributes.reduce((acc, attributeKey) => {
-    // this will give us the credential which user selected to fulfill attribute
-    // the reason we are taking this from userSelectedCredentials is because
-    // user might have multiple credential that can fulfill an attribute
-    // but user can select only one of the credential to fulfill an attribute
+  let revealedAttributes = {}
+  let revealedGroupAttributes = {}
+  Object.keys(proofRequest.requested_attributes).forEach((attributeKey) => {
+    const attribute = proofRequest.requested_attributes[attributeKey]
     const selectedAttribute = userSelectedCredentials[attributeKey]
-    const selectedCredentialAttributes = selectedAttribute[2].cred_info.attrs
-    const caseInsensitiveMap = Object.keys(selectedCredentialAttributes).reduce(
-      (acc, attributeName) => ({
-        ...acc,
-        [attributeName.toLowerCase().replace(/ /g, '')]: attributeName,
-      }),
-      {}
-    )
+    if (selectedAttribute) {
+      const selectedCredentialAttributes = selectedAttribute[2].cred_info.attrs
+      const caseInsensitiveMap = Object.keys(selectedCredentialAttributes).reduce(
+        (acc, attributeName) => ({
+          ...acc,
+          [attributeName.toLowerCase().replace(/ /g, '')]: attributeName,
+        }),
+        {}
+      )
 
-    // we only have attribute key at this point, we can still get attribute name
-    // but then we would have to do a lot of other mapping
-    // we should still do that but for now we know that attribute keys are formed
-    // by adding _<index> after the name of attribute
-    // so we are removing that last _<index> from attribute key and generating attribute name
-    // We will remove this logic and have it work without below hack
-    // when we will refactor whole proof generation logic
-    let attributeLabel = attributeKey.split('_')
-    if (attributeLabel.length > 1) {
-      attributeLabel = attributeLabel.slice(0, -1)
-    }
-    attributeLabel = attributeLabel.join('_')
-    let attributeValueFromCredential =
-      selectedCredentialAttributes[
-        caseInsensitiveMap[attributeLabel.toLowerCase().replace(/ /g, '')]
-      ]
-    // if we find that we did not get the value from credential
-    // then attributeLabel must be wrong because this credential
-    // was selected by user then that means at time of cred selection
-    // it had value. So, we try to get value with attribute key now
-    if (!attributeValueFromCredential) {
-      attributeValueFromCredential =
-        selectedCredentialAttributes[
-          caseInsensitiveMap[attributeKey.toLowerCase().replace(/ /g, '')]
+      // in case of single attribute we fill usual revealed_attrs structure
+      if (attribute.name) {
+        revealedAttributes[attributeKey] = [
+          selectedAttribute[0],
+          selectedCredentialAttributes[
+          caseInsensitiveMap[attribute.name.toLowerCase().replace(/ /g, '')]]
         ]
-    }
+      }
 
-    return {
-      ...acc,
-      [attributeKey]: [selectedAttribute[0], attributeValueFromCredential],
+      // in case of multiple attributes we fill revealed_group_attrs structure
+      if (attribute.names) {
+        const values = attribute.names.reduce((acc, name) => ({
+          ...acc,
+          [name]: selectedCredentialAttributes[
+            caseInsensitiveMap[name.toLowerCase().replace(/ /g, '')]
+          ]
+        }), {})
+        revealedGroupAttributes[attributeKey] = {
+          claimUuid: selectedAttribute[0],
+          values: values
+        }
+      }
     }
-  }, {})
+  })
+
+  return {
+    revealedAttributes,
+    revealedGroupAttributes
+  }
 }
 
 export function* generateProofSaga(action: GenerateProofAction): any {
@@ -525,6 +568,14 @@ export function* updateAttributeClaimAndSendProof(
     )
 
     yield put(acceptProofRequest(action.uid))
+    const proofRequestPayload: ProofRequestPayload = yield select(
+      getProofRequest,
+      action.uid
+    )
+    const proofRequest = proofRequestPayload.originalProofRequestData
+    const { revealedAttributes, revealedGroupAttributes } = convertSelectedCredentialAttributesToIndyProof(
+      requestedAttrsJson, proofRequest
+    )
     // create a proof object so that history store and others that depend on proof
     // can use this proof object, previously proof object was generated with libIndy
     // now that we have removed libIndy and use vcx, we are generating this object
@@ -537,9 +588,8 @@ export function* updateAttributeClaimAndSendProof(
         c_list: [[0]],
       },
       requested_proof: {
-        revealed_attrs: convertSelectedCredentialAttributesToIndyProof(
-          requestedAttrsJson
-        ),
+        revealed_attrs: revealedAttributes,
+        revealed_group_attrs: revealedGroupAttributes,
         unrevealed_attrs: {},
         self_attested_attrs: selectedSelfAttestedAttributes,
         predicates: {},

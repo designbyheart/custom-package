@@ -18,6 +18,9 @@ Array [
       "data": "Address 1",
       "key": "attr1_uuid",
       "label": "Address 1",
+      "values": Object {
+        "Address 1": "Address 1",
+      },
     },
   ],
   Array [
@@ -36,6 +39,9 @@ Array [
       "data": "Address 2",
       "key": "attr2_uuid",
       "label": "Address 2",
+      "values": Object {
+        "Address 2": "Address 2",
+      },
     },
   ],
 ]
@@ -59,6 +65,9 @@ Array [
       "data": "Address 1",
       "key": "attr1_uuid",
       "label": "Address 1",
+      "values": Object {
+        "Address 1": "Address 1",
+      },
     },
   ],
   Array [
@@ -77,54 +86,81 @@ Array [
       "data": "Address 2",
       "key": "attr2_uuid",
       "label": "Address 2",
+      "values": Object {
+        "Address 2": "Address 2",
+      },
     },
   ],
   Array [
     Object {
       "data": undefined,
       "label": "Address 3",
+      "values": Object {
+        "Address 3": undefined,
+      },
     },
   ],
   Array [
     Object {
       "data": undefined,
       "label": "Address 4",
+      "values": Object {
+        "Address 4": undefined,
+      },
     },
   ],
   Array [
     Object {
       "data": undefined,
       "label": "Address 5",
+      "values": Object {
+        "Address 5": undefined,
+      },
     },
   ],
   Array [
     Object {
       "data": undefined,
       "label": "Address 6",
+      "values": Object {
+        "Address 6": undefined,
+      },
     },
   ],
   Array [
     Object {
       "data": undefined,
       "label": "Address 7",
+      "values": Object {
+        "Address 7": undefined,
+      },
     },
   ],
   Array [
     Object {
       "data": undefined,
       "label": "Address 8",
+      "values": Object {
+        "Address 8": undefined,
+      },
     },
   ],
   Array [
     Object {
       "data": undefined,
       "label": "Address 9",
+      "values": Object {
+        "Address 9": undefined,
+      },
     },
   ],
   Array [
     Object {
       "data": undefined,
       "label": "Address 10",
+      "values": Object {
+        "Address 10": undefined,
+      },
     },
   ],
 ]
@@ -148,6 +184,9 @@ Array [
       "data": "Address 1",
       "key": "attr1_uuid",
       "label": "A d d r e s s    1",
+      "values": Object {
+        "A d d r e s s    1": "Address 1",
+      },
     },
   ],
   Array [
@@ -166,6 +205,9 @@ Array [
       "data": "Address 2",
       "key": "attr2_uuid",
       "label": "  Ad  dress 2 ",
+      "values": Object {
+        "  Ad  dress 2 ": "Address 2",
+      },
     },
   ],
 ]

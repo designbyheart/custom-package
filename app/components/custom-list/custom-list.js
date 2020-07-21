@@ -16,7 +16,16 @@ import { OFFSET_1X, OFFSET_3X } from '../../common/styles'
 import { getUserAvatarSource } from '../../store/store-selector'
 
 export class CustomList extends Component<CustomListProps, void> {
-  keyExtractor = ({ label }: Item, index: number) => `${label}${index}`
+  keyExtractor = ({ label, values }: Item, index: number) => {
+    if (label) {
+      return `${label}${index}`
+    }
+    if (values) {
+      return `${Object.keys(values).join("-")}${index}`
+    }
+
+    return `${index}`
+  }
 
   renderListType1Item = ({ item, index }: { item: Item, index: number }) => {
     // if item is an array then take first element of item
