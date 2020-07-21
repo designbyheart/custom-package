@@ -297,7 +297,11 @@ function CardStackScreen() {
       initialRouteName={splashScreenRoute}
       screenOptions={cardStackOptions}
     >
-      <CardStack.Screen name={homeRoute} component={AppDrawer} />
+      <CardStack.Screen
+        name={homeRoute}
+        component={AppDrawer}
+        options={{ gestureEnabled: false }}
+      />
       <CardStack.Screen
         name={privacyTNCScreen.routeName}
         component={privacyTNCScreen.screen}
@@ -327,6 +331,11 @@ function CardStackScreen() {
       <CardStack.Screen
         name={lockEnterFingerprintScreen.routeName}
         component={lockEnterFingerprintScreen.screen}
+      />
+      <CardStack.Screen
+        name={lockAuthorizationScreen.routeName}
+        component={lockAuthorizationScreen.screen}
+        options={lockAuthorizationScreen.options}
       />
       <CardStack.Screen
         name={lockSetupSuccessScreen.routeName}
@@ -452,11 +461,6 @@ export function ConnectMeAppNavigator() {
       <ModalStack.Screen
         name={cloudRestoreModalScreen.routeName}
         component={cloudRestoreModalScreen.screen}
-      />
-      <ModalStack.Screen
-        name={lockAuthorizationScreen.routeName}
-        component={lockAuthorizationScreen.screen}
-        options={lockAuthorizationScreen.options}
       />
       <ModalStack.Screen
         name={proofScreen.routeName}
