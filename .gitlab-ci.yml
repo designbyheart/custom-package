@@ -98,39 +98,39 @@ yarn-test:
     - UDID=$(xcrun simctl list --json | jq '.devices["com.apple.CoreSimulator.SimRuntime.iOS-13-3"] | map(select(.name == "iPhone 8")) | .[0].udid' | sed -e 's/^"//' -e 's/"$//')
     - xcrun simctl boot $UDID
 
-# detox-ios-test:
-#   extends: .ios-test
-#   variables:
-#     VUI_PWD: "ktjo6iKiJsn7EGlCCZj07qKw3"
-#     MAIL_PWD: "Evernym123"
-#   script:
-#     - xcversion select --verbose --symlink 11.3
-#     - xcversion selected
-#     - sudo xcodebuild -license accept
-#     - cd ios
-#     - gem uninstall bundler
-#     - gem install bundler
-#     - bundler update --bundler
-#     - gem install cocoapods
-#     - cd ..
-#     - mkdir -p ~/.ssh/
-#     - ssh-keyscan -4H gitlab.corp.evernym.com > ~/.ssh/known_hosts
-#     - eval $(ssh-agent -s)
-#     - echo "$CALLCENTER_CERTS_DEPLOY_KEY" | tr -d '\r' | ssh-add - > /dev/null
-#     - echo "$IOSDEV_EVERNYM_RSA_KEY" | tr -d '\r' | ssh-add - > /dev/null
-#     - chmod 644 ~/.ssh/known_hosts
-#     - security -v unlock-keychain -p ${VAGRANT_USER_PASS} ~/Library/Keychains/login.keychain-db
-#     - nvm use
-#     - yarn
-#     - yarn pod:update
-#     - yarn pod:dev:install
-#     - echo "detox=yes" > .env
-#     - echo "detox=yes" > .env.production
-#     - yarn e2e -b release -e qa -s iphone8
-#   artifacts:
-#     paths:
-#       - e2e/screenshots
-#     expire_in: 52 week
+detox-ios-test:
+  extends: .ios-test
+  variables:
+    VUI_PWD: "ktjo6iKiJsn7EGlCCZj07qKw3"
+    MAIL_PWD: "Evernym123"
+  script:
+    - xcversion select --verbose --symlink 11.3
+    - xcversion selected
+    - sudo xcodebuild -license accept
+    - cd ios
+    - gem uninstall bundler
+    - gem install bundler
+    - bundler update --bundler
+    - gem install cocoapods
+    - cd ..
+    - mkdir -p ~/.ssh/
+    - ssh-keyscan -4H gitlab.corp.evernym.com > ~/.ssh/known_hosts
+    - eval $(ssh-agent -s)
+    - echo "$CALLCENTER_CERTS_DEPLOY_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - echo "$IOSDEV_EVERNYM_RSA_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - chmod 644 ~/.ssh/known_hosts
+    - security -v unlock-keychain -p ${VAGRANT_USER_PASS} ~/Library/Keychains/login.keychain-db
+    - nvm use
+    - yarn
+    - yarn pod:update
+    - yarn pod:dev:install
+    - echo "detox=yes" > .env
+    - echo "detox=yes" > .env.production
+    - yarn e2e -b release -e qa -s iphone8
+  artifacts:
+    paths:
+      - e2e/screenshots
+    expire_in: 52 week
 
 ### - iOS - ###
 .build-ios:

@@ -48,9 +48,9 @@ import {
 // - start running all other tests, by not uninstalling app and saving time
 
 describe('One time initial setup and base screenshots check', () => {
-  it('Set environment, set lock, go to home', async () => {
-    await unlock()
-  })
+  // it('Set environment, set lock, go to home', async () => {
+  //   await unlock()
+  // })
 
   it('Home screenshot check', async () => {
     await matchScreenshot(SCREENSHOT_HOME)

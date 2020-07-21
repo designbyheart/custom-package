@@ -13,7 +13,11 @@ export const BackButton = () => {
   }, [])
 
   return (
-    <TouchableOpacity onPress={onPress} hitSlop={hitSlop}>
+    <TouchableOpacity
+      testID="back-button-component"
+      onPress={onPress}
+      hitSlop={hitSlop}
+    >
       <SvgCustomIcon name="Arrow" fill={mediumGray} />
     </TouchableOpacity>
   )

@@ -11,9 +11,13 @@ import {
   ONFIDO_ACCEPT_BUTTON,
   ALLOW_BUTTON,
   SCREENSHOT_ONFIDO_DOC_SELECTION,
+  SCREENSHOT_ONFIDO_PASSPORT,
+  SCREENSHOT_ONFIDO_LICENSE,
+  SCREENSHOT_ONFIDO_NIC,
+  SCREENSHOT_ONFIDO_RPC,
 } from '../utils/test-constants'
 
-describe('Onfido', () => {
+describe.skip('Onfido', () => {
   it('Check onfido general screen', async () => {
     await element(by.id(BURGER_MENU)).tap()
     await element(by.text(MENU_SETTINGS)).tap()
@@ -32,6 +36,8 @@ describe('Onfido', () => {
   it('Check passport', async () => {
     await element(by.text('Passport')).tap()
     await expect(element(by.text('Passport photo page'))).toBeVisible()
+    await matchScreenshot(SCREENSHOT_ONFIDO_PASSPORT) // screenshot
+
     await element(by.label(ONFIDO_CUSTOM_BACK_ARROW)).tap()
   })
 
@@ -40,6 +46,8 @@ describe('Onfido', () => {
     await expect(element(by.text('Select your country'))).toBeVisible()
     await element(by.text('United States')).tap()
     await expect(element(by.text("Front of driver's license"))).toBeVisible()
+    await matchScreenshot(SCREENSHOT_ONFIDO_LICENSE) // screenshot
+
     await element(by.label(ONFIDO_CUSTOM_BACK_ARROW)).tap()
     await element(by.label(ONFIDO_CUSTOM_BACK_ARROW)).tap()
   })
@@ -49,6 +57,8 @@ describe('Onfido', () => {
     await expect(element(by.text('Select your country'))).toBeVisible()
     await element(by.text('United States')).tap()
     await expect(element(by.text('Front of card'))).toBeVisible()
+    await matchScreenshot(SCREENSHOT_ONFIDO_NIC) // screenshot
+
     await element(by.label(ONFIDO_CUSTOM_BACK_ARROW)).tap()
     await element(by.label(ONFIDO_CUSTOM_BACK_ARROW)).tap()
   })
@@ -58,6 +68,7 @@ describe('Onfido', () => {
     await expect(element(by.text('Select your country'))).toBeVisible()
     await element(by.text('United States')).tap()
     await expect(element(by.text('Front of permit'))).toBeVisible()
+    await matchScreenshot(SCREENSHOT_ONFIDO_RPC) // screenshot
     await element(by.label(ONFIDO_CUSTOM_BACK_ARROW)).tap()
     await element(by.label(ONFIDO_CUSTOM_BACK_ARROW)).tap()
 

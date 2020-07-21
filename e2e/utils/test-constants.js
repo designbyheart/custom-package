@@ -26,6 +26,7 @@ export const BACK_ARROW = 'back-arrow-touchable'
 export const BURGER_MENU = 'burger-menu'
 export const SCAN_BUTTON = 'Scan'
 export const ALLOW_BUTTON = 'Allow'
+export const NEW_BACK_ARROW = 'back-button-component'
 
 // home
 export const HOME_FEEDBACK_BUTTON = 'home-feedback-id-label'
@@ -97,7 +98,7 @@ export const BACKUP_CLOSE = 'recovery-header-close-image'
 export const SETTINGS_BIOMETRICS = 'Biometrics'
 export const BIOMETRICS_OK = 'Ok'
 export const SETTINGS_PASSCODE = 'Passcode'
-export const PASSCODE_BACK_ARROW = 'back-arrow'
+export const PASSCODE_BACK_ARROW = 'back-button-component'
 export const SETTINGS_CHAT = 'Chat With Us'
 export const SETTINGS_ABOUT = 'About'
 export const SETTINGS_ONFIDO = 'ONFIDO'
@@ -122,7 +123,15 @@ export const SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED =
   'proof_request_1.png'
 export const SCREENSHOT_TEST_CONNECTION = 'test_connection.png'
 export const SCREENSHOT_EMPTY_CHAT = 'empty_chat.png'
+export const SCREENSHOT_NOT_EMPTY_CHAT = 'not_empty_chat.png'
 export const SCREENSHOT_ONFIDO_DOC_SELECTION = 'onfido_doc_selection.png'
+export const SCREENSHOT_ONFIDO_PASSPORT = 'onfido_passport.png'
+export const SCREENSHOT_ONFIDO_LICENSE = 'onfido_license.png'
+export const SCREENSHOT_ONFIDO_NIC = 'onfido_nic.png'
+export const SCREENSHOT_ONFIDO_RPC = 'onfido_rpc.png'
+export const SCREENSHOT_ABOUT_MAIN = 'about_main.png'
+export const SCREENSHOT_ABOUT_TAC = 'about_tac.png'
+export const SCREENSHOT_ABOUT_PP = 'about_pp.png'
 
 // menu
 export const MENU_CONTAINER = 'menu-container'
@@ -151,12 +160,12 @@ export const CHAT_SEND_BUTTON = 'Send'
 export const CHAT_SUCCESS_MESSAGE = 'We will respond to your message soon.'
 
 // about
-export const ABOUT_BACK_ARROW = 'back-arrow-touchable'
+export const ABOUT_BACK_ARROW = 'back-button-component'
 export const ABOUT_HEADER = 'About this App'
 export const ABOUT_TAC_BUTTON_HEADER = 'Terms and Conditions'
 export const ABOUT_PP_BUTTON_HEADER = 'Privacy Policy'
 
 // onfido
-export const ONFIDO_BACK_ARROW = 'header-back'
+export const ONFIDO_BACK_ARROW = 'back-button-component'
 export const ONFIDO_CUSTOM_BACK_ARROW = 'back'
 export const ONFIDO_ACCEPT_BUTTON = 'I accept'
