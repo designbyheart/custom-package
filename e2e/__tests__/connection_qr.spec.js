@@ -107,12 +107,12 @@ describe('Connection via QR Code', () => {
 
     await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
 
-    await waitFor(element(by.id(PIN_CODE_INPUT_BOX)).atIndex(1))
-      .toExist()
-      .withTimeout(10000)
-    await element(by.id(PIN_CODE_INPUT_BOX))
-      .atIndex(1)
-      .replaceText(TEST_PASS_CODE)
+    // await waitFor(element(by.id(PIN_CODE_INPUT_BOX)).atIndex(1))
+    //   .toExist()
+    //   .withTimeout(10000)
+    // await element(by.id(PIN_CODE_INPUT_BOX))
+    //   .atIndex(1)
+    //   .replaceText(TEST_PASS_CODE)
   })
 
   it('Case 2.1: create and reject credential', async () => {

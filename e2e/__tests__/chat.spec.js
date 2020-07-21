@@ -14,6 +14,7 @@ import {
   CHAT_SEND_BUTTON,
   CHAT_SUCCESS_MESSAGE,
   SCREENSHOT_EMPTY_CHAT,
+  SCREENSHOT_NOT_EMPTY_CHAT,
 } from '../utils/test-constants'
 
 describe('Chat', () => {
@@ -45,6 +46,7 @@ describe('Chat', () => {
     await element(by.type(CHAT_TEXT_VIEW)).atIndex(2).tapReturnKey()
     await element(by.text(CHAT_SEND_BUTTON)).tap()
     await expect(element(by.text(CHAT_SUCCESS_MESSAGE))).toBeVisible()
+    await matchScreenshot(SCREENSHOT_NOT_EMPTY_CHAT) // screenshot
 
     await element(by.text(CHAT_CLOSE)).tap()
   })
