@@ -1,5 +1,5 @@
 // @flow
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 import { createLogger } from 'redux-logger'
@@ -123,9 +123,14 @@ let reduxLogger = createLogger({
 
 middlewares.push(sagaMiddleware)
 
+const composeEnhancers =
+  (global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+    global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})) ||
+  compose
+
 const store = createStore<Store, *, *>(
   appReducer,
-  applyMiddleware(...middlewares)
+  composeEnhancers(applyMiddleware(...middlewares))
 )
 
 sagaMiddleware.run(function* (): Generator<*, *, *> {
