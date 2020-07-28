@@ -40,6 +40,7 @@ import {
   SCREENSHOT_CLAIM_OFFER_PROFILE_INFO,
   SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
   SCREENSHOT_TEST_CONNECTION,
+  BACK_ARROW,
 } from '../utils/test-constants'
 import { waitForElementAndTap } from '../utils/detox-selectors'
 import { element, by, waitFor, expect } from 'detox'
@@ -57,6 +58,7 @@ import {
 } from '../utils/api'
 import { unlock } from '../utils/lock-unlock'
 import { matchScreenshot } from '../utils/screenshot'
+import { exec } from 'child-process-async'
 import chalk from 'chalk'
 
 let connectionId
@@ -64,19 +66,21 @@ let schema
 let credDef
 let credential
 let proof
-const TIMEOUT = 10000
+let URL
+const TIMEOUT = 15000
 
-describe('Connection via QR Code', () => {
+describe('Connection via QR code and SMS link', () => {
   it('Case 1: user should be able to establish connection via scanning QR code', async () => {
     let [
-      // token,
+      token,
       invitationId,
-      // fetchingInvitation,
-      // invitationUrl,
+      fetchingInvitation,
+      invitationUrl,
       jsonData,
     ] = await getInvitation()
 
     connectionId = invitationId
+    URL = invitationUrl
 
     const { resolve, promise: invitationPushed } = getDeferred() // <<< can work without it
     const http = require('http')
@@ -107,6 +111,7 @@ describe('Connection via QR Code', () => {
 
     await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
 
+    await new Promise((r) => setTimeout(r, 10000)) // sync issue
     // await waitFor(element(by.id(PIN_CODE_INPUT_BOX)).atIndex(1))
     //   .toExist()
     //   .withTimeout(10000)
@@ -333,6 +338,20 @@ describe('Connection via QR Code', () => {
     ).toBeVisible()
 
     await waitForElementAndTap('text', CLOSE_BUTTON, TIMEOUT)
+  })
+
+  it('Case 6: open connection using SMS link', async () => {
+    await exec(`xcrun simctl openurl booted ${URL}`)
+
+    await new Promise((r) => setTimeout(r, 10000)) // sync issue
+
+    await expect(element(by.text('Evernym QA-RC'))).toBeVisible()
+
+    try {
+      await element(by.id(BACK_ARROW)).tap()
+    } catch (e) {
+      await element(by.text('Ok')).tap() // invitation has been expired
+    }
   })
 })
 

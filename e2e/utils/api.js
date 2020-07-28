@@ -84,7 +84,7 @@ export async function getInvitation() {
     `${verityBaseUrl}/connections`,
     {
       name: 'Alex',
-      phone: '8327364896',
+      phone: '18327364896',
       sms: true,
     },
     httpsConfig
@@ -99,61 +99,62 @@ export async function getInvitation() {
   console.log(chalk.cyan(stdout))
   const jsonData = stdout.substr(8)
 
-  // await new Promise(r => setTimeout(r, 30000)) // wait before fetching latest message
+  await new Promise((r) => setTimeout(r, 20000)) // wait before fetching latest message
 
-  // // not putting `await` here because we don't want to block here
-  // // it should run asynchronously, we will wait for inbox to open
-  // // when we need to get the email, not before that
-  // const [connection, inbox] = await imap
-  //   .connect(inboxConfig)
-  //   .then(connection => {
-  //     return [connection, connection.openBox('INBOX')]
-  //   })
-  //   .catch(console.error)
+  // not putting `await` here because we don't want to block here
+  // it should run asynchronously, we will wait for inbox to open
+  // when we need to get the email, not before that
+  const [connection, inbox] = await imap
+    .connect(inboxConfig)
+    .then((connection) => {
+      return [connection, connection.openBox('INBOX')]
+    })
+    .catch(console.error)
 
-  // await inbox.then(res => console.log(res)).catch(console.error)
-  // const emails = await connection.search(emailSearchCriteria, emailFetchOptions)
-  // const latestEmailBody = R.compose(
-  //   R.prop('body'),
-  //   R.head,
-  //   R.filter(R.eqProps('which', { which: 'TEXT' })),
-  //   R.flatten,
-  //   R.prop('parts'),
-  //   R.head,
-  //   R.sortWith([R.descend(R.prop('seqNo'))])
-  // )(emails)
+  await inbox.then((res) => console.log(res)).catch(console.error)
+  const emails = await connection.search(emailSearchCriteria, emailFetchOptions)
+  const latestEmailBody = R.compose(
+    R.prop('body'),
+    R.head,
+    R.filter(R.eqProps('which', { which: 'TEXT' })),
+    R.flatten,
+    R.prop('parts'),
+    R.head,
+    R.sortWith([R.descend(R.prop('seqNo'))])
+  )(emails)
   // const appLink = 'https://link.comect.me/?t='
-  // const appLinkIndex = latestEmailBody.indexOf(appLink)
-  // const tokenSize = 8
-  // const token = latestEmailBody.slice(
-  //   appLinkIndex + appLink.length,
-  //   appLinkIndex + appLink.length + tokenSize
-  // )
+  const appLink = 'https://connectme.app.link/?t='
+  const appLinkIndex = latestEmailBody.indexOf(appLink)
+  const tokenSize = 8
+  const token = latestEmailBody.slice(
+    appLinkIndex + appLink.length,
+    appLinkIndex + appLink.length + tokenSize
+  )
 
-  // await new Promise(r => setTimeout(r, 60000)) // wait until latest message will be processed
-  // await connection.end() // close mail server connection
+  await new Promise((r) => setTimeout(r, 40000)) // wait until latest message will be processed
+  await connection.end() // close mail server connection
 
-  // // no need to wait for invitation to be fetched
-  // // we can call this function only to get invitation token
-  // // and when we need actual invitation data, then we can resolve for
-  // // fetchingInvitation or use await to get invitation data
-  // // this can be used directly by qr-code screen
-  // const fetchingInvitation = await get(
-  //   `${devAgencyUrl}/agency/url-mapper/${token}`
-  // )
-  //   .then(R.compose(get, R.path(['data', 'url'])))
-  //   .catch(console.error)
+  // no need to wait for invitation to be fetched
+  // we can call this function only to get invitation token
+  // and when we need actual invitation data, then we can resolve for
+  // fetchingInvitation or use await to get invitation data
+  // this can be used directly by qr-code screen
+  const fetchingInvitation = await get(
+    `${devAgencyUrl}/agency/url-mapper/${token}`
+  )
+    .then(R.compose(get, R.path(['data', 'url'])))
+    .catch(console.error)
 
-  // console.log(chalk.cyan(connection))
-  // console.log(chalk.cyan(inbox))
-  // console.log(chalk.cyan(token))
-  // console.log(chalk.cyan(fetchingInvitation))
+  console.log(chalk.cyan(connection))
+  console.log(chalk.cyan(inbox))
+  console.log(chalk.cyan(token))
+  console.log(chalk.cyan(fetchingInvitation))
 
   return [
-    // token,
+    token,
     invitationId,
-    // fetchingInvitation,
-    // `${appLink}${token}`,
+    fetchingInvitation,
+    `${appLink}${token}`,
     jsonData,
   ]
 }
