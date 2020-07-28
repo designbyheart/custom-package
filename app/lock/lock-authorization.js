@@ -28,7 +28,7 @@ export const LockAuthorization = ({
     params && params.onSuccess && params.onSuccess()
   }, [])
 
-  return <LockEnter onSuccess={onSuccess} />
+  return !interactionDone ? LoaderGif : <LockEnter onSuccess={onSuccess} />
 }
 
 export const lockAuthorizationScreen = {

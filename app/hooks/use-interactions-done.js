@@ -7,9 +7,13 @@ export function useInteractionDone() {
   const [interactionDone, setInteractionDone] = useState(false)
 
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
+    let timeOutId
+
+    timeOutId = setTimeout(() => {
       setInteractionDone(true)
-    })
+    }, 500)
+
+    return () => clearTimeout(timeOutId)
   }, [])
 
   return [interactionDone]

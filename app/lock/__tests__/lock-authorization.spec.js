@@ -7,6 +7,8 @@ import { getNavigation, getStore } from '../../../__mocks__/static-data'
 import { LockEnter } from '../lock-enter'
 import { BackButton } from '../../components/back-button/back-button'
 
+jest.useFakeTimers()
+
 describe('<LockAuthorization />', () => {
   it('should match snapshot', () => {
     const { component } = setup()
@@ -30,6 +32,10 @@ describe('<LockAuthorization />', () => {
           <LockAuthorization {...props} />
         </Provider>
       )
+    })
+
+    act(() => {
+      jest.advanceTimersByTime(1000)
     })
     if (!component) {
       throw new Error('component not found')
