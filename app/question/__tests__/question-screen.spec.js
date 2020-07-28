@@ -82,7 +82,8 @@ describe('<QuestionScreen />', () => {
     expect(props.sendAnswerToQuestion).toHaveBeenCalledTimes(1)
     expect(props.sendAnswerToQuestion).toHaveBeenCalledWith(
       mockQuestionPayload2.uid,
-      component.getInstance().state.response
+      component.getInstance().state.response,
+      null
     )
   })
 

@@ -41,6 +41,13 @@ describe('Question Store', () => {
   const { uid, valid_responses } = mockQuestionPayload
   const answer = valid_responses[0]
   const answerMsgId = 'answerMsgId'
+  const thread = {
+    thid: '7b4a3d0c-03bd-449f-9f05-765524a73f6e',
+    sender_order: 0,
+    received_orders: {
+      CaGwcvJSWvoz1oMxej1nMm: 0,
+    },
+  }
 
   let initialState
   beforeEach(() => {
@@ -58,7 +65,7 @@ describe('Question Store', () => {
     expect(
       questionReducer(
         afterQuestionReceivedState,
-        sendAnswerToQuestion(uid, answer)
+        sendAnswerToQuestion(uid, answer, thread)
       )
     ).toMatchSnapshot()
   })
@@ -140,7 +147,14 @@ describe('Question Store', () => {
       signature: 'signatureInBase64GenerateByDataInBase64',
     }
 
-    return expectSaga(answerToQuestionSaga, sendAnswerToQuestion(uid, answer))
+    const message = getUserAnswer(signDataResponse)
+    if (thread !== null) {
+      message['~thread'] = thread
+    }
+    return expectSaga(
+      answerToQuestionSaga,
+      sendAnswerToQuestion(uid, answer, thread)
+    )
       .withState(stateWithConnectionQuestionVcxSuccess)
       .provide([
         [matchers.call.fn(getHandleBySerializedConnection), connectionHandle],
@@ -150,7 +164,7 @@ describe('Question Store', () => {
       .call(getHandleBySerializedConnection, vcxSerializedConnection)
       .call(connectionSignData, connectionHandle, answer.nonce)
       .call(connectionSendMessage, connectionHandle, {
-        message: JSON.stringify(getUserAnswer(signDataResponse)),
+        message: JSON.stringify(message),
         messageType: MESSAGE_TYPE_ANSWER,
         messageTitle: MESSAGE_TITLE_ANSWER,
         refMessageId: uid,

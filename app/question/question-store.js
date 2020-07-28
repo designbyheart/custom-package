@@ -13,6 +13,7 @@ import type {
   QuestionResponse,
   QuestionStoreData,
   UpdateQuestionStorageStatusAction,
+  QuestionThread,
 } from './type-question'
 import type { Store } from '../store/type-store'
 import type { Connection } from '../store/type-connection-store'
@@ -99,7 +100,7 @@ function* watchQuestionSeen(): any {
 export function* answerToQuestionSaga(
   action: SendAnswerToQuestionAction
 ): Generator<*, *, *> {
-  const { answer, uid } = action
+  const { answer, uid, thread } = action
   yield put(updateQuestionStatus(uid, QUESTION_STATUS.SEND_ANSWER_IN_PROGRESS))
 
   const vcxResult = yield* ensureVcxInitSuccess()
@@ -129,8 +130,15 @@ export function* answerToQuestionSaga(
         connectionHandle,
         answer.nonce
       )
+
       try {
-        const userAnswer = getUserAnswer({ data, signature })
+        let userAnswer = getUserAnswer({ data, signature })
+
+        // Aries compatibility questions
+        if (thread !== null) {
+          userAnswer['~thread'] = thread
+        }
+
         const answerMsgId: string = yield call(
           connectionSendMessage,
           connectionHandle,
@@ -147,7 +155,9 @@ export function* answerToQuestionSaga(
             QUESTION_STATUS.SEND_ANSWER_SUCCESS_TILL_CLOUD_AGENT
           )
         )
+
         yield put(updateQuestionAnswer(uid, answer, answerMsgId))
+
         // since answer is complete, we need to persist new state
         yield call(persistQuestionSaga)
       } catch (e) {
@@ -223,23 +233,28 @@ export function getUserAnswer({ data, signature }: SignDataResponse) {
       sig_data: data,
       timestamp: moment().format(),
     },
+    '~thread': {},
   }
 }
 
 export const questionReceived = (
   question: QuestionPayload
-): QuestionReceivedAction => ({
-  type: QUESTION_RECEIVED,
-  question,
-})
+): QuestionReceivedAction => {
+  return {
+    type: QUESTION_RECEIVED,
+    question,
+  }
+}
 
 export const sendAnswerToQuestion = (
   uid?: string,
-  answer: QuestionResponse
+  answer: QuestionResponse,
+  thread?: QuestionThread = null
 ) => ({
   type: SEND_ANSWER_TO_QUESTION,
   uid,
   answer,
+  thread,
 })
 
 export const updateQuestionStatus = (

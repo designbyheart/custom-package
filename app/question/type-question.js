@@ -11,6 +11,12 @@ import type {
   NavigationLeafRoute,
 } from '@react-navigation/native'
 
+export type QuestionThread = {
+  thid: string,
+  sender_order: number,
+  received_orders: Object,
+} | null
+
 export type QuestionScreenProps = {
   updateQuestionStatus: (
     uid: string,
@@ -19,7 +25,8 @@ export type QuestionScreenProps = {
   ) => UpdateQuestionStatusAction,
   sendAnswerToQuestion: (
     uid: string,
-    answer: QuestionResponse
+    answer: QuestionResponse,
+    thread?: QuestionThread | null
   ) => SendAnswerToQuestionAction,
   question?: QuestionStoreMessage,
   senderLogoUrl?: null | number | GenericObject,
@@ -42,6 +49,7 @@ export type SendAnswerToQuestionAction = {
   type: typeof SEND_ANSWER_TO_QUESTION,
   uid: string,
   answer: QuestionResponse,
+  thread: Object,
 }
 
 export const UPDATE_QUESTION_STATUS = 'UPDATE_QUESTION_STATUS'
@@ -94,6 +102,7 @@ export type QuestionPayload = {
   forDID: string,
   remotePairwiseDID?: string,
   externalLinks: Array<ExternalLink>,
+  '~thread'?: QuestionThread | null,
 }
 
 export type QuestionRequest = {

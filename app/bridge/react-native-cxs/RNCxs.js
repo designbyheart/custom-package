@@ -316,7 +316,7 @@ export async function createCredentialWithProprietaryOffer(
 
   const [vcxCredentialOffer, paymentDetails]: [
     VcxCredentialOffer,
-    MessagePaymentDetails,
+    MessagePaymentDetails
   ] = JSON.parse(credentialOffer)
 
   vcxCredentialOffer.price =
@@ -679,6 +679,8 @@ export async function connectionSendMessage(
     ref_msg_id: options.refMessageId || null,
   })
 
+  const isAries = JSON.parse(options.message)['~thread']
+
   const msgId: string = await RNIndy.connectionSendMessage(
     connectionHandle,
     options.message,
@@ -687,7 +689,11 @@ export async function connectionSendMessage(
 
   // since we are calling an external API, we need to make sure that
   // the data that we are receiving is the data that we need
-  if (typeof msgId !== 'string' || msgId.length === 0) {
+  if (isAries && typeof msgId !== 'string') {
+    throw new Error(
+      `Invalid data received from wrapper. Excepted msgId, got ${msgId}`
+    )
+  } else if (!isAries && (typeof msgId !== 'string' || msgId.length === 0)) {
     throw new Error(
       `Invalid data received from wrapper. Excepted msgId, got ${msgId}`
     )
