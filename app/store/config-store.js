@@ -814,6 +814,7 @@ export function* processMessages(
   // additional data will be fetched and passed to relevant( claim, claimOffer, proofRequest,etc )store.
   const messages: Array<DownloadedMessage> = traverseAndGetAllMessages(data)
   const dataAlreadyExists = yield select(getPendingFetchAdditionalDataKey)
+
   for (let i = 0; i < messages.length; i++) {
     try {
       // get message type
@@ -962,11 +963,18 @@ export const convertDecryptedPayloadToQuestion = (
   forDID: string,
   senderDID: string,
   messageTitle: string,
-  messageText: string
+  messageText: string,
+  thread: Object = null
 ): QuestionPayload => {
   const parsedPayload = JSON.parse(decryptedPayload)
   const parsedMsg: QuestionRequest = JSON.parse(parsedPayload['@msg'])
 
+  if (thread !== null) {
+    // Fallback when we don't receive thid in the ~thread object, we should then use @id
+    if (!thread['thid']) {
+      thread['thid'] = parsedMsg['@id']
+    }
+  }
   return {
     '@type': parsedMsg['@type'],
     messageId: parsedMsg['@id'],
@@ -984,6 +992,7 @@ export const convertDecryptedPayloadToQuestion = (
     messageTitle: parsedMsg.question_text || messageTitle,
     messageText: parsedMsg.question_detail || messageText,
     externalLinks: parsedMsg.external_links || [],
+    ...(thread ? { '~thread': thread } : {}),
   }
 }
 
@@ -1091,7 +1100,7 @@ function* handleProprietaryMessage(
 
     // proprietary credential offer
     if (type === MESSAGE_TYPE.CLAIM_OFFER) {
-    // TODO: remove once https://gitlab.corp.evernym.com/dev/vcx/indy-sdk/-/merge_requests/220 get merged
+      // TODO: remove once https://gitlab.corp.evernym.com/dev/vcx/indy-sdk/-/merge_requests/220 get merged
       const message = addClaimOfferMessageRefId(decryptedPayload, uid)
 
       // update type so that messages can be processed and added
@@ -1125,16 +1134,12 @@ function* handleProprietaryMessage(
 
     // proprietary proof request
     if (type === MESSAGE_TYPE.PROOF_REQUEST) {
-    // TODO: remove once https://gitlab.corp.evernym.com/dev/vcx/indy-sdk/-/merge_requests/220 get merged
+      // TODO: remove once https://gitlab.corp.evernym.com/dev/vcx/indy-sdk/-/merge_requests/220 get merged
       const message = addProofRequestMessageRefId(decryptedPayload, uid)
 
       messageType = MESSAGE_TYPE.PROOF_REQUEST
 
-      const proofHandle = yield call(
-        proofCreateWithRequest,
-        uid,
-        message
-      )
+      const proofHandle = yield call(proofCreateWithRequest, uid, message)
 
       additionalData = {
         ...JSON.parse(message),
@@ -1174,9 +1179,7 @@ function* handleProprietaryMessage(
   }
 }
 
-function* handleAriesMessage(
-  message: DownloadedMessage,
-): Generator<*, *, *> {
+function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
   const { senderDID, uid, type, decryptedPayload } = message
   const remotePairwiseDID = senderDID
   const connection: Connection[] = yield select(getConnection, senderDID)
@@ -1211,6 +1214,29 @@ function* handleAriesMessage(
     // now we can try to look inside decryptedpayload
     const payload = JSON.parse(decryptedPayload)
     const payloadType = payload['@type']
+
+    const questionMessage = JSON.parse(payload['@msg'])
+
+    const thread = questionMessage['~thread']
+
+    if (
+      questionMessage['@type'].endsWith('question') ||
+      questionMessage['question_text']
+    ) {
+      if (!decryptedPayload) return
+      additionalData = convertDecryptedPayloadToQuestion(
+        connectionHandle,
+        decryptedPayload,
+        uid,
+        forDID,
+        senderDID,
+        '',
+        '',
+        thread
+      )
+
+      messageType = MESSAGE_TYPE.QUESTION
+    }
 
     if (
       payloadType.name === 'CRED_OFFER' ||
@@ -1260,11 +1286,7 @@ function* handleAriesMessage(
 
       messageType = MESSAGE_TYPE.PROOF_REQUEST
 
-      const proofHandle = yield call(
-        proofCreateWithRequest,
-        uid,
-        message
-      )
+      const proofHandle = yield call(proofCreateWithRequest, uid, message)
 
       yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
 
@@ -1277,32 +1299,30 @@ function* handleAriesMessage(
     if (payloadType && payloadType.name === 'aries' && payload['@msg']) {
       const payloadMessageType = JSON.parse(payload['@msg'])['@type']
 
-      if (payloadMessageType && payloadMessageType.includes("connections") &&
-          (payloadMessageType.endsWith('response') ||
-          payloadMessageType.endsWith('problem_report'))) {
-
-          // if we receive connection response message or connection problem report
-          // we need to update state of related corresponding connection object
-          yield call(
+      if (
+        payloadMessageType &&
+        payloadMessageType.includes('connections') &&
+        (payloadMessageType.endsWith('response') ||
+          payloadMessageType.endsWith('problem_report'))
+      ) {
+        // if we receive connection response message or connection problem report
+        // we need to update state of related corresponding connection object
+        yield call(
           updateAriesConnectionState,
           forDID,
           vcxSerializedConnection,
-          payload['@msg'],
+          payload['@msg']
         )
 
         // as we handled the received message we need to update its status
         // to read
-        yield fork(updateMessageStatus, [
-          { pairwiseDID: forDID, uids: [uid] },
-        ])
+        yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
       }
 
       if (payloadMessageType && payloadMessageType.endsWith('ack')) {
         // if we have just ack data then for now send acknowledge to server
         // so that we don't download it again
-        yield fork(updateMessageStatus, [
-          { pairwiseDID: forDID, uids: [uid] },
-        ])
+        yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
       }
     }
 
@@ -1339,10 +1359,7 @@ export function* acknowledgeServer(
   data: Array<DownloadedConnectionMessages>
 ): Generator<*, *, *> {
   // toLowerCase here to handle type 'question' and 'Question'
-  const msgTypes = [
-    MESSAGE_TYPE.QUESTION,
-    MESSAGE_TYPE.QUESTION.toLowerCase(),
-  ]
+  const msgTypes = [MESSAGE_TYPE.QUESTION, MESSAGE_TYPE.QUESTION.toLowerCase()]
   let acknowledgeServerData: AcknowledgeServerData = []
   let tempData = data
   if (Array.isArray(tempData) && tempData.length > 0) {
@@ -1351,7 +1368,26 @@ export function* acknowledgeServer(
       let uids = []
       if (msgData['msgs'] && Array.isArray(msgData['msgs'])) {
         msgData['msgs'].map((msg) => {
-          if (
+          // Check for Aries protocol
+          let decryptedPayload =
+            msg['decryptedPayload'] && JSON.parse(msg['decryptedPayload'])
+          let isAries = false
+          let isMsgTypeAriesQuestion = false
+          if (decryptedPayload) {
+            isAries = decryptedPayload['@type']['name'] === 'aries'
+            isMsgTypeAriesQuestion = JSON.parse(decryptedPayload['@msg'])[
+              '@type'
+            ].includes('question')
+          }
+
+          if (isAries) {
+            if (
+              msg.statusCode === MESSAGE_RESPONSE_CODE.MESSAGE_PENDING &&
+              isMsgTypeAriesQuestion
+            ) {
+              uids.push(msg.uid)
+            }
+          } else if (
             msg.statusCode === MESSAGE_RESPONSE_CODE.MESSAGE_PENDING &&
             msgTypes.indexOf(msg.type) >= 0
           ) {
@@ -1379,7 +1415,6 @@ export function* updateMessageStatus(
   }
   try {
     const messagesToAck = JSON.stringify(acknowledgeServerData)
-    console.log('acknowledging messages', acknowledgeServerData)
     yield call(updateMessages, 'MS-106', messagesToAck)
   } catch (e) {
     captureError(e)
@@ -1389,7 +1424,10 @@ export function* updateMessageStatus(
   }
 }
 
-function addClaimOfferMessageRefId(decryptedPayload: string, uid: string): string {
+function addClaimOfferMessageRefId(
+  decryptedPayload: string,
+  uid: string
+): string {
   return JSON.stringify(
     JSON.parse(JSON.parse(decryptedPayload)['@msg']).map((message) => {
       if (message.hasOwnProperty('msg_ref_id')) {
@@ -1400,7 +1438,10 @@ function addClaimOfferMessageRefId(decryptedPayload: string, uid: string): strin
   )
 }
 
-function addProofRequestMessageRefId(decryptedPayload: string, uid: string): string {
+function addProofRequestMessageRefId(
+  decryptedPayload: string,
+  uid: string
+): string {
   let message = JSON.parse(JSON.parse(decryptedPayload)['@msg'])
   if (message.hasOwnProperty('msg_ref_id')) {
     message.msg_ref_id = uid

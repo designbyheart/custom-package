@@ -39,7 +39,7 @@ import {
   SERVER_ENVIRONMENT,
   GET_MESSAGES_LOADING,
 } from '../store/type-config-store'
-import { colors } from '../common/styles/constant'
+import { colors, fontFamily } from '../common/styles/constant'
 import { NewBannerCard } from './new-banner-card/new-banner-card'
 import { RecentCard } from './recent-card/recent-card'
 import { RecentCardSeparator } from './recent-card-separator'
@@ -179,7 +179,6 @@ export class HomeScreen extends Component<HomeProps, void> {
   renderEmptyListPlaceholder = () => <EmptyViewPlaceholder />
 
   render() {
-    console.log(this.props)
     return (
       <View style={styles.outerContainer}>
         <View
@@ -240,9 +239,9 @@ export class HomeScreen extends Component<HomeProps, void> {
     ) {
       Snackbar.dismiss()
       Snackbar.show({
-        title: this.props.snackError,
+        text: this.props.snackError,
         backgroundColor: venetianRed,
-        fontFamily: 'Lato',
+        fontFamily: fontFamily,
         duration: Snackbar.LENGTH_LONG,
       })
     }
