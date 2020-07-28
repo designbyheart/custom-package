@@ -118,6 +118,8 @@ export const SCREENSHOT_CONNECTIONS = 'connections.png'
 export const SCREENSHOT_SETTINGS = 'settings.png'
 export const SCREENSHOT_MENU = 'menu.png'
 export const SCREENSHOT_INVITATION = 'invitation.png'
+export const SCREENSHOT_INVITATION_LINK_TO_EXISTING_CONNECTION =
+  'invitation_link_to_existing_connection.png'
 export const SCREENSHOT_CLAIM_OFFER_PROFILE_INFO = 'claim_offer_1.png'
 export const SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED =
   'proof_request_1.png'

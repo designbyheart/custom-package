@@ -60,6 +60,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             "opacity": 1,
           }
         }
+        testID="back-arrow-touchable"
       >
         <RNSVGSvgView
           align="xMidYMid"
@@ -525,6 +526,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             "opacity": 1,
           }
         }
+        testID="back-arrow-touchable"
       >
         <RNSVGSvgView
           align="xMidYMid"
@@ -981,6 +983,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
             "opacity": 1,
           }
         }
+        testID="back-arrow-touchable"
       >
         <RNSVGSvgView
           align="xMidYMid"
@@ -1431,6 +1434,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             "opacity": 1,
           }
         }
+        testID="back-arrow-touchable"
       >
         <RNSVGSvgView
           align="xMidYMid"
@@ -1896,6 +1900,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
             "opacity": 1,
           }
         }
+        testID="back-arrow-touchable"
       >
         <RNSVGSvgView
           align="xMidYMid"
@@ -2541,6 +2546,7 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
             "opacity": 1,
           }
         }
+        testID="back-arrow-touchable"
       >
         <RNSVGSvgView
           align="xMidYMid"

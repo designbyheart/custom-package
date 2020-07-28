@@ -21,7 +21,7 @@ class ConnectionDetailsNav extends PureComponent<any, void> {
     return (
       <View style={styles.container}>
         <View style={styles.buttonBackWrapper}>
-          <TouchableOpacity onPress={this.goBack}>
+          <TouchableOpacity testID="back-arrow-touchable" onPress={this.goBack}>
             <SvgCustomIcon
               name="ChevronLeft"
               fill={colors.cmGray2}
