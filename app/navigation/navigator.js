@@ -24,6 +24,7 @@ import type { ImageSource } from '../common/type-common'
 
 import { aboutAppScreen } from '../about-app/about-app'
 import { homeScreen } from '../home/home'
+import { myCredentialsScreen } from '../my-credentials/my-credentials'
 import { MyConnectionsScreen } from '../my-connections/my-connections'
 import { splashScreenScreen } from '../start-up/splash-screen'
 import { SettingsScreen } from '../settings/settings'
@@ -71,6 +72,7 @@ import {
   homeRoute,
   walletTabSendDetailsRoute,
   connectionsDrawerRoute,
+  credentialsDrawerRoute,
   homeDrawerRoute,
   settingsDrawerRoute,
 } from '../common'
@@ -247,6 +249,10 @@ const connectionDrawerItemOptions = {
   drawerIcon: drawerItemIcon('Connections'),
   drawerLabel: drawerItemLabel('My Connections'),
 }
+const credentialsDrawerItemOptions = {
+  drawerIcon: drawerItemIcon('Credentials'),
+  drawerLabel: drawerItemLabel('My Credentials'),
+}
 const settingsDrawerItemOptions = {
   drawerIcon: drawerItemIcon('Settings'),
   drawerLabel: drawerItemLabel('Settings'),
@@ -267,6 +273,11 @@ function AppDrawer() {
         name={connectionsDrawerRoute}
         component={MyConnectionsScreen}
         options={connectionDrawerItemOptions}
+      />
+      <Drawer.Screen
+        name={credentialsDrawerRoute}
+        component={myCredentialsScreen.screen}
+        options={credentialsDrawerItemOptions}
       />
       <Drawer.Screen
         name={settingsDrawerRoute}
