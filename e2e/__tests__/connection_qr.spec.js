@@ -111,7 +111,7 @@ describe('Connection via QR code and SMS link', () => {
 
     await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
 
-    await new Promise((r) => setTimeout(r, 20000)) // sync issue
+    await new Promise((r) => setTimeout(r, 30000)) // sync issue
     // await waitFor(element(by.id(PIN_CODE_INPUT_BOX)).atIndex(1))
     //   .toExist()
     //   .withTimeout(10000)
