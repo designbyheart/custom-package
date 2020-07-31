@@ -128,7 +128,7 @@ import { pinHash as generateKey, generateSalt } from '../lock/pin-hash'
 import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
 import { pushNotificationPermissionAction } from '../push-notification/push-notification-store'
-import firebase from 'react-native-firebase'
+import messaging from '@react-native-firebase/messaging'
 import { PUSH_NOTIFICATION_RECEIVED } from '../push-notification/type-push-notification'
 import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
 import { cloudBackupFailure } from './backup-actions'
@@ -165,7 +165,7 @@ export function* cloudBackupSaga(
     // NOTE: Only do these two lines if we do not already have a push token
     const pushToken = yield call(safeGet, PUSH_COM_METHOD)
     if (!pushToken) {
-      yield call(() => firebase.messaging().requestPermission())
+      yield call(() => messaging().requestPermission())
       yield put(pushNotificationPermissionAction(true))
     }
 

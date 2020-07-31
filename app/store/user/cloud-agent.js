@@ -5,7 +5,7 @@ import delay from '@redux-saga/delay-p'
 import { put, take, call, select, race, all } from 'redux-saga/effects'
 import { eventChannel, END } from 'redux-saga'
 import uniqueId from 'react-native-unique-id'
-import firebase from 'react-native-firebase'
+import messaging from '@react-native-firebase/messaging'
 import AlertAsync from 'react-native-alert-async'
 
 import type { PushNotificationStore } from '../../push-notification/type-push-notification'
@@ -285,19 +285,19 @@ export function* registerCloudAgentWithoutToken(
 
 function getPushPermission() {
   return new Promise((resolve, reject) =>
-    firebase.messaging().requestPermission().then(resolve).catch(reject)
+    messaging().requestPermission().then(resolve).catch(reject)
   )
 }
 
 function hasPushPermission() {
   return new Promise((resolve, reject) =>
-    firebase.messaging().hasPermission().then(resolve).catch(reject)
+    messaging().hasPermission().then(resolve).catch(reject)
   )
 }
 
 function getFirebaseToken() {
   return new Promise((resolve, reject) =>
-    firebase.messaging().getToken().then(resolve).catch(reject)
+    messaging().getToken().then(resolve).catch(reject)
   )
 }
 
@@ -357,7 +357,7 @@ function appStateSource() {
 }
 
 function onTokenRefresh() {
-  return new Promise((resolve) => firebase.messaging().onTokenRefresh(resolve))
+  return new Promise((resolve) => messaging().onTokenRefresh(resolve))
 }
 
 function* askForProvisionToken(

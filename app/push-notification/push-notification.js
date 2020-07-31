@@ -1,15 +1,16 @@
 // @flow
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, Platform } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import firebase from 'react-native-firebase'
+import messaging from '@react-native-firebase/messaging'
+import PushNotificationIOS from '@react-native-community/push-notification-ios'
+
 import type {
   Notification,
   NotificationOpen,
   RemoteMessage,
-} from 'react-native-firebase'
-
+} from '@react-native-firebase/app'
 import type {
   PushNotificationProps,
   NotificationOpenOptions,
@@ -88,32 +89,17 @@ export class PushNotification extends Component<PushNotificationProps, void> {
   }
 
   componentDidMount = async () => {
-    // TODO: refactor to run this based off of actions so that we're not creating a new push notification token when user is trying to restore wallet
+    if (Platform.OS === 'ios') {
+      // Sets the current badge number on the app icon to zero. iOS only for now.
+      PushNotificationIOS.setApplicationIconBadgeNumber(0)
+    }
 
-    // Sets the current badge number on the app icon to zero.
-    // iOS only for now.
-    firebase.notifications().setBadge(0)
-    // Removes all delivered notifications.
-    firebase.notifications().removeAllDeliveredNotifications()
-
-    // When a notification is displayed, the listener is invoked with the notification.
-    this.notificationDisplayedListener = firebase
-      .notifications()
-      .onNotificationDisplayed((notification: Notification) => {
-        this.onPushNotificationReceived(this.notificationParser(notification))
-      })
-
-    // When a notification is received, but not displayed, the listener is invoked with the notification.
-    this.notificationListener = firebase
-      .notifications()
-      .onNotification((notification: Notification) => {
-        this.onPushNotificationReceived(this.notificationParser(notification))
-      })
+    // Removes all delivered notifications from notification center
+    PushNotificationIOS.removeAllDeliveredNotifications()
 
     // When a notification is opened, the listener is invoked with the notification and the action that was invoked when it was clicked on.
-    this.onNotificationOpenedListener = firebase
-      .notifications()
-      .onNotificationOpened((notificationOpen: NotificationOpen) => {
+    this.onNotificationOpenedListener = messaging().onNotificationOpenedApp(
+      (notificationOpen: NotificationOpen) => {
         // Get the action triggered by the notification being opened
         const action = notificationOpen.action
         // Get information about the notification that was opened
@@ -121,22 +107,16 @@ export class PushNotification extends Component<PushNotificationProps, void> {
         this.onPushNotificationReceived(this.notificationParser(notification), {
           openMessageDirectly: true,
         })
-      })
+      }
+    )
 
-    this.messageListener = firebase
-      .messaging()
-      .onMessage((message: RemoteMessage) => {
-        // Process your message as required
-        // https://rnfirebase.io/docs/v5.x.x/messaging/receiving-messages
-        // https://rnfirebase.io/docs/v5.x.x/messaging/upstream-messages
-        this.onPushNotificationReceived(remoteMessageParser(message))
-      })
+    this.messageListener = messaging().onMessage((message: RemoteMessage) => {
+      this.onPushNotificationReceived(remoteMessageParser(message))
+    })
 
     try {
       // Due to the delay in the React Native bridge, the onNotification listeners will not be available at startup, so this method can be used to check to see if the application was opened by a notification.
-      const notificationOpen: NotificationOpen = await firebase
-        .notifications()
-        .getInitialNotification()
+      const notificationOpen: NotificationOpen = await messaging().getInitialNotification()
 
       // App was opened by a notification
       if (notificationOpen) {
@@ -155,7 +135,7 @@ export class PushNotification extends Component<PushNotificationProps, void> {
   }
 
   listenForTokenUpdate() {
-    this.refreshTokenListener = firebase.messaging().onTokenRefresh((token) => {
+    this.refreshTokenListener = messaging().onTokenRefresh((token) => {
       this.saveDeviceToken(token)
     })
   }
@@ -179,8 +159,7 @@ export class PushNotification extends Component<PushNotificationProps, void> {
   }
 
   getToken() {
-    firebase
-      .messaging()
+    messaging()
       .getToken()
       .then((token) => {
         if (token) {

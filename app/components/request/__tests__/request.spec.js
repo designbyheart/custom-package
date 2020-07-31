@@ -4,7 +4,6 @@ import 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import TouchId from 'react-native-touch-id'
-import firebase from 'react-native-firebase'
 
 import { Request } from '../request'
 import type { RequestProps, ResponseTypes } from '../type-request'

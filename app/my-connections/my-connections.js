@@ -10,9 +10,9 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import firebase from 'react-native-firebase'
 import { BlurView } from '@react-native-community/blur'
 import Snackbar from 'react-native-snackbar'
+import PushNotificationIOS from '@react-native-community/push-notification-ios'
 
 import type { Store } from '../store/type-store'
 import type {
@@ -48,13 +48,16 @@ import { colors, fontFamily } from '../common/styles/constant'
 export class MyConnections extends Component<
   MyConnectionsProps,
   MyConnectionsState
-  > {
+> {
   componentDidUpdate(prevProps: MyConnectionsProps) {
     const noUnSeenMessages =
       prevProps.unSeenMessagesCount && !this.props.unSeenMessagesCount
 
     if (noUnSeenMessages) {
-      firebase.notifications().setBadge(0)
+      if (Platform.OS === 'ios') {
+        // Sets the current badge number on the app icon to zero. iOS only for now.
+        PushNotificationIOS.setApplicationIconBadgeNumber(0)
+      }
     }
 
     if (
@@ -189,7 +192,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-          state.history.data.connections[connection.senderDID].data.length - 1
+            state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -200,7 +203,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-          state.history.data.connections[connection.senderDID].data.length - 1
+            state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -211,7 +214,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-          state.history.data.connections[connection.senderDID].data.length - 1
+            state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -222,7 +225,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-          state.history.data.connections[connection.senderDID].data.length - 1
+            state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -233,7 +236,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-          state.history.data.connections[connection.senderDID].data.length - 1
+            state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1

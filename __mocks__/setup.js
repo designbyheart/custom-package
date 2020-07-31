@@ -130,20 +130,17 @@ jest.mock('react-native-zip-archive', () => ({
   unzip: jest.fn(() => Promise.resolve()),
 }))
 
-jest.mock('react-native-firebase', () => ({
-  notifications: jest.fn(() => ({
-    onNotificationDisplayed: jest.fn(() => Promise.resolve()),
-    onNotification: jest.fn(() => Promise.resolve()),
-    onNotificationOpened: jest.fn(() => Promise.resolve()),
-    getInitialNotification: jest.fn(() => Promise.resolve()),
-    removeAllDeliveredNotifications: jest.fn(),
-  })),
-  messaging: jest.fn(() => ({
-    requestPermission: jest.fn(() => Promise.resolve(true)),
-    onTokenRefresh: jest.fn(() => Promise.resolve('refreshed-token-value')),
-    getToken: jest.fn(() => Promise.resolve('token-value')),
-    hasPermission: jest.fn(() => Promise.resolve(true)),
-  })),
+jest.mock('@react-native-firebase/messaging', () => () => ({
+  requestPermission: jest.fn(() => Promise.resolve(true)),
+  onTokenRefresh: jest.fn(() => Promise.resolve('refreshed-token-value')),
+  getToken: jest.fn(() => Promise.resolve('token-value')),
+  hasPermission: jest.fn(() => Promise.resolve(true)),
+  getInitialNotification: jest.fn(() => Promise.resolve()),
+  onNotificationOpenedApp: jest.fn(() => Promise.resolve()),
+}))
+
+jest.mock('@react-native-community/push-notification-ios', () => ({
+  removeAllDeliveredNotifications: jest.fn(),
 }))
 
 jest.mock('react-native-sensitive-info', () => {

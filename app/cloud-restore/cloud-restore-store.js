@@ -41,7 +41,7 @@ import {
 import { PASSPHRASE_SALT_STORAGE_KEY, PASSPHRASE_STORAGE_KEY } from '../common'
 import { PIN_ENABLED_KEY, IN_RECOVERY } from '../lock/type-lock'
 import { hydrate, hydrateNonReduxData } from '../store/hydration-store'
-import firebase from 'react-native-firebase'
+import messaging from '@react-native-firebase/messaging'
 import { pushNotificationPermissionAction } from '../push-notification/push-notification-store'
 import { customLogger } from '../store/custom-logger'
 import { restoreStatus } from '../restore/restore-store'
@@ -168,7 +168,7 @@ export function* cloudRestore(
       // so after push token update
       // we need to do requestPermission or else push notifications won't come
       const requestPushNotificationPermission = () => {
-        firebase.messaging().requestPermission()
+        messaging().requestPermission()
       }
       yield call(requestPushNotificationPermission)
       yield put(pushNotificationPermissionAction(true))

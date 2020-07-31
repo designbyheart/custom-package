@@ -1,19 +1,13 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { Avatar } from '../../components/avatar/avatar'
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 import type { CredentialCardProps } from './type-credential-card'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 class CredentialCard extends PureComponent<CredentialCardProps, void> {
-
   pad = (dateOrMonth: number) => {
     return dateOrMonth < 10 ? '0' + dateOrMonth : dateOrMonth
   }
@@ -91,18 +85,12 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
   }
 
   render() {
-    const {
-      image,
-      date,
-      credentialName,
-      attributesCount,
-    } = this.props
+    const { image, date, credentialName, attributesCount } = this.props
 
     const attributesLabel = attributesCount == 1 ? 'attribute' : `attributes`
 
     return (
-      <TouchableOpacity
-        style={styles.container}>
+      <TouchableOpacity style={styles.container}>
         <View style={styles.avatarSection}>
           {typeof image === 'string' ? (
             <Avatar
@@ -111,8 +99,8 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
               testID={`${credentialName}-avatar`}
             />
           ) : (
-              <DefaultLogo text={credentialName} size={32} fontSize={17} />
-            )}
+            <DefaultLogo text={credentialName} size={32} fontSize={17} />
+          )}
         </View>
         <View style={styles.infoSection}>
           <View style={styles.infoSectionTopRow}>
@@ -140,7 +128,9 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
         </View>
         <View style={styles.dateSection}>
           <View style={styles.dateSectionRow}>
-            <Text style={styles.dateText}>{this.getCorrectDateLabel(date * 1000)}</Text>
+            <Text style={styles.dateText}>
+              {this.getCorrectDateLabel(date * 1000)}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -208,7 +198,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontFamily: fontFamily,
-    fontStyle: "italic",
+    fontStyle: 'italic',
     fontSize: verticalScale(fontSizes.size9),
     color: colors.cmGray3,
   },

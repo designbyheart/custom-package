@@ -19,10 +19,6 @@ import java.util.List;
 // add vcx react native package
 import me.connect.rnindy.RNIndyPackage;
 
-// Firebase needs to be manually linked
-import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
-import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
-
 // branch needs to have a referral in initializing
 import io.branch.referral.Branch;
 
@@ -40,10 +36,6 @@ public class MainApplication extends Application implements ShareApplication, Re
       List<ReactPackage> packages = new PackageList(this).getPackages();
       
       // Packages that cannot be auto linked yet can be added manually here:
-
-      // firebase packages
-      packages.add(new RNFirebaseNotificationsPackage());
-      packages.add(new RNFirebaseMessagingPackage());
       
       // vcx package
       packages.add(new RNIndyPackage());

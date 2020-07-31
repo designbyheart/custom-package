@@ -3,7 +3,7 @@ import React, { useCallback } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { withNavigation } from '@react-navigation/compat'
+import { useNavigation } from '@react-navigation/native'
 
 import type {
   ReactNavigation,
@@ -32,7 +32,6 @@ type CredentialReceivedProps = {
       data: any, // TODO Add type from ConnectionHistoryEvent, make this type as Generic
     },
   },
-  navigation: $PropertyType<ReactNavigation, 'navigation'>,
 } & ReduxConnect
 
 const Modal = (props: CredentialReceivedProps) => {
@@ -42,14 +41,15 @@ const Modal = (props: CredentialReceivedProps) => {
     imageUrl,
     secondColorBackground,
   } = props.route.params
+  const navigation = useNavigation()
+  const hideModal = useCallback(() => {
+    navigation.goBack(null)
+  }, [])
+
   const { data } = props.route.params
   if (data.action !== 'RECEIVED') {
     return null
   }
-
-  const hideModal = useCallback(() => {
-    props.navigation.goBack(null)
-  }, [])
 
   return (
     <View style={styles.modalWrapper}>
@@ -76,7 +76,7 @@ const Modal = (props: CredentialReceivedProps) => {
 
 export const fulfilledMessageScreen = {
   routeName: modalScreenRoute,
-  screen: withNavigation(connect()(Modal)),
+  screen: connect()(Modal),
 }
 
 const styles = StyleSheet.create({

@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { withNavigation } from '@react-navigation/compat'
 import { bindActionCreators } from 'redux'
 import { claimOfferRoute } from '../../common/route-constants'
 import { BigNumber } from 'bignumber.js'

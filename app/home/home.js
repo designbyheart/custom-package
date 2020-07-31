@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react'
 import moment from 'moment'
-import firebase from 'react-native-firebase'
 import {
   StyleSheet,
   Platform,
