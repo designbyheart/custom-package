@@ -10,7 +10,6 @@ import {
   race,
 } from 'redux-saga/effects'
 import { NativeModules } from 'react-native'
-import firebase from 'react-native-firebase'
 
 import type {
   OnfidoStore,

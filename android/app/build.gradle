@@ -238,11 +238,7 @@ android.applicationVariants.all { variant ->
   }
 }
 dependencies {
-
-    // firebase
-    implementation 'com.google.android.gms:play-services-base:16.1.0'
-    implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    
     implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
 
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')

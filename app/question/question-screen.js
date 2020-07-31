@@ -229,7 +229,7 @@ export class Question extends Component<
       this.props.sendAnswerToQuestion(
         this.props.question.payload.uid,
         this.state.response,
-        null,
+        null
       )
     } else {
       customLogger.log(

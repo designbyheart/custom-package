@@ -1,5 +1,5 @@
 // @flow
-import { Alert } from 'react-native'
+import { Alert, Platform } from 'react-native'
 import {
   put,
   take,
@@ -13,7 +13,7 @@ import {
 } from 'redux-saga/effects'
 import delay from '@redux-saga/delay-p'
 import uniqueId from 'react-native-unique-id'
-import firebase from 'react-native-firebase'
+import PushNotificationIOS from '@react-native-community/push-notification-ios'
 
 import { secureSet, getHydrationItem } from '../services/storage'
 import {
@@ -286,7 +286,7 @@ export const cloudBackupEnvironments = [
 // what settings should be in dev environment
 const isDevEnvironment = __DEV__ && process.env.NODE_ENV !== 'test'
 export const defaultEnvironment = isDevEnvironment
-  ? SERVER_ENVIRONMENT.QA
+  ? SERVER_ENVIRONMENT.DEVTEAM1
   : SERVER_ENVIRONMENT.PROD
 
 const initialState: ConfigStore = {
@@ -762,8 +762,10 @@ export function* getMessagesSaga(): Generator<*, *, *> {
 
     if (data && data.length != 0) {
       try {
-        // Remove all the FCM notifications from the tray
-        firebase.notifications().removeAllDeliveredNotifications()
+        if (Platform.OS === 'ios') {
+          // Remove all the FCM notifications from the tray
+          PushNotificationIOS.removeAllDeliveredNotifications()
+        }
         const parsedData: DownloadedConnectionsWithMessages = JSON.parse(data)
         yield* processMessages(parsedData)
         yield* acknowledgeServer(parsedData)

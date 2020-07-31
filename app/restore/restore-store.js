@@ -1,7 +1,7 @@
 // @flow
 
 import { unzip } from 'react-native-zip-archive'
-import firebase from 'react-native-firebase'
+import messaging from '@react-native-firebase/messaging'
 import {
   takeLatest,
   all,
@@ -155,7 +155,7 @@ export function* restoreFileDecrypt(
       // so after push token update
       // we need to do requestPermission or else push notifications won't come
       const requestPushNotificationPermission = () => {
-        firebase.messaging().requestPermission()
+        messaging().requestPermission()
       }
       yield call(requestPushNotificationPermission)
       yield put(pushNotificationPermissionAction(true))

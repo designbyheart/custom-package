@@ -99,7 +99,6 @@ import {
   secureGet,
   getHydrationItem,
 } from '../../services/storage'
-import firebase from 'react-native-firebase'
 import * as errorHandler from './../../services/error/error-handler'
 import { addSerializedClaimOffer } from './../../claim-offer/claim-offer-store'
 import { claimReceivedVcx } from './../../claim/claim-store'

@@ -4,5 +4,5 @@ export type CredentialCardProps = {
   claimUuid: string,
   date: number,
   image: string,
-  attributesCount: number
+  attributesCount: number,
 }
