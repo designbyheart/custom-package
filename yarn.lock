@@ -3728,7 +3728,7 @@ detox-getprops@0.1.2:
   resolved "https://registry.yarnpkg.com/detox-getprops/-/detox-getprops-0.1.2.tgz#a76ec631629f2cca643c98d687700b82884b8f35"
   integrity sha512-fAv+emwiwRvVrOcVQAn3Gkl540If/Any9GBYmFzTAxxgRTwDqcg/X2LVLU8/Dkb4k7KPNAZeIHcIPMVGbt0X9w==
 
-detox@^16.8.2:
+detox@16.8.2:
   version "16.8.2"
   resolved "https://registry.yarnpkg.com/detox/-/detox-16.8.2.tgz#122df3d1cfe1b936651e2783b9cc1fcd9dbe6e9f"
   integrity sha512-41d8+8jRXyUfcdwa/APwMQEJaCexEH82zBjJ+sPjPCqcb9lZC520EExxgS+GMTLlFXgTu8luYjoCHNdR/g0bVw==
@@ -6528,11 +6528,6 @@ jpeg-js@0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.4.1.tgz#937a3ae911eb6427f151760f8123f04c8bfe6ef7"
   integrity sha512-jA55yJiB5tCXEddos8JBbvW+IMrqY0y1tjjx9KNVtA+QPmu7ND5j0zkKopClpUTsaETL135uOM2XfcYG4XRjmw==
-
-js-data@^2.9.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/js-data/-/js-data-2.10.0.tgz#8ddaa1b5e5b81384b29bc4d949bc8cc09be16d84"
-  integrity sha1-jdqhteW4E4Sym8TZSbyMwJvhbYQ=
 
 js-data@^2.9.0:
   version "2.10.1"
