@@ -401,7 +401,7 @@ PODS:
   - TOCropViewController (2.5.3)
   - TouchID (4.4.1):
     - React
-  - vcx (0.0.165)
+  - vcx (0.0.166)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -470,7 +470,7 @@ DEPENDENCIES:
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNZipArchive (from `../node_modules/react-native-zip-archive`)
   - TouchID (from `../node_modules/react-native-touch-id`)
-  - vcx (= 0.0.165)
+  - vcx (= 0.0.166)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -704,9 +704,9 @@ SPEC CHECKSUMS:
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   TOCropViewController: 20a14b6a7a098308bf369e7c8d700dc983a974e6
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
-  vcx: 8b6a9df2ab77e259263006c80c9c6dcb051ecf8a
+  vcx: 1b23408cdea252ca46f1c57ffe7ef42e2ac7d29b
   Yoga: ba3d99dbee6c15ea6bbe3783d1f0cb1ffb79af0f
 
 PODFILE CHECKSUM: ea39f37fc1e6a1c707dbef2911311e9bd01e1806
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3
