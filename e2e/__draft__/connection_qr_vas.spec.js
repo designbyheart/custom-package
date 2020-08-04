@@ -18,6 +18,8 @@ import {
   ALLOW_BUTTON,
   INVITATION_ACCEPT,
 } from '../utils/test-constants'
+
+//$FlowFixMe
 require('tls').DEFAULT_ECDH_CURVE = 'auto'
 
 const TIMEOUT = 10000
@@ -144,6 +146,7 @@ const main = async () => {
   await new Promise((r) => setTimeout(r, 10000))
 
   // RelationshipInvitationRequest request :: VAS returns RelationshipInvite
+  //$FlowFixMe
   let lastResponse = JSON.parse(VASresponse)
   console.log(`DID: ${lastResponse['did']}`)
   const THREAD_ID = lastResponse['~thread']['thid']
@@ -162,6 +165,7 @@ const main = async () => {
     .then((res) => console.log(res.data))
 
   await new Promise((r) => setTimeout(r, 10000))
+  //$FlowFixMe
   lastResponse = JSON.parse(VASresponse)
   const qrCode = lastResponse['inviteURL']
   console.log(qrCode)
