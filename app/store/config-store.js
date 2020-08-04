@@ -1222,9 +1222,10 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
     const thread = questionMessage['~thread']
 
     if (
-      questionMessage['@type'].endsWith('question') ||
-      questionMessage['question_text']
-    ) {
+      (typeof questionMessage['@type'] === "string") &&
+      (questionMessage['@type'].endsWith('question') ||
+        questionMessage['question_text'])
+    ) { // TODO: Proper type check will be done once we update version VCX on 0.10.0
       if (!decryptedPayload) return
       additionalData = convertDecryptedPayloadToQuestion(
         connectionHandle,
