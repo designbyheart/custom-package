@@ -257,7 +257,7 @@ dependencies {
     }
 
     // current libvcx aar
-    implementation 'com.evernym:vcx:0.9.3-dde7fb9@aar'
+    implementation 'com.evernym:vcx:0.9.2-fee080c@aar'
 
     // onfido sdk https://github.com/onfido/onfido-android-sdk
     implementation 'com.onfido.sdk.capture:onfido-capture-sdk:4.11.1@aar'
