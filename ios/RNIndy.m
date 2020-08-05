@@ -1142,7 +1142,7 @@ RCT_EXPORT_METHOD(getRedirectDetails:(NSInteger)connection_handle
      else {
        resolve(redirectDetails);
      }
-   }];                    
+   }];
 }
 
 RCT_EXPORT_METHOD(proofCreateWithRequest:(NSString*)sourceId
@@ -1395,7 +1395,7 @@ RCT_EXPORT_METHOD(getTxnAuthorAgreement:(RCTPromiseResolveBlock) resolve
       resolve(authorAgreement);
     }
   }];
-}  
+}
 
 
 RCT_EXPORT_METHOD(getAcceptanceMechanisms:(NSString *)requesterDID
@@ -1418,7 +1418,7 @@ RCT_EXPORT_METHOD(getAcceptanceMechanisms:(NSString *)requesterDID
       resolve(jsonResult);
     }
   }];
-} 
+}
 
 RCT_EXPORT_METHOD(setActiveTxnAuthorAgreementMeta:(NSString *)text
                   withVersion:(NSString *)version
@@ -1435,6 +1435,21 @@ RCT_EXPORT_METHOD(setActiveTxnAuthorAgreementMeta:(NSString *)text
                             withTimestamp: time
   ];
    resolve(@{});
+}
+
+RCT_EXPORT_METHOD(fetchPublicEntities:(RCTPromiseResolveBlock) resolve
+                             rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] fetchPublicEntities:^(NSError *error)
+   {
+     if (error != nil && error.code != 0) {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, @"Error occurred while rejecting proof", error);
+     }
+     else {
+       resolve(@{});
+     }
+   }];
 }
 
 @end

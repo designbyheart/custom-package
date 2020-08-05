@@ -8,6 +8,7 @@ import {
   select,
   takeEvery,
   fork,
+  spawn,
 } from 'redux-saga/effects'
 import moment from 'moment'
 import type {
@@ -41,6 +42,7 @@ import {
   getClaimHandleBySerializedClaimOffer,
   updateClaimOfferState,
   getClaimVcx,
+  fetchPublicEntitiesForCredentials,
 } from '../bridge/react-native-cxs/RNCxs'
 import { CLAIM_STORAGE_ERROR } from '../services/error/error-code'
 import {
@@ -233,6 +235,15 @@ export function* checkForClaim(
         userDID,
         serializedClaimOffer.messageId
       )
+
+      // once we stored a new credential into the wallet we can update the cache containing
+      // public entities (like Schemas, Credential Definitions) located on the Ledger.
+      // This allows us to reduce the time taken for Proof generation (for the first credential usage) by
+      // using already cached entities instead of queering the Ledger.
+      // we even can not wait/handle the result of this function.
+      // If querying failed we will query entities again during
+      // proof generation and will get an error there if it fails again.
+      yield spawn(fetchPublicEntitiesForCredentials)
     }
   } catch (e) {
     // we got error while saving claim in wallet, what to do now?

@@ -1420,4 +1420,21 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
             e.printStackTrace();
         }
     }
+
+    @ReactMethod
+    public void fetchPublicEntities(Promise promise) {
+        Log.d(TAG, "fetchPublicEntities() called");
+        try {
+            UtilsApi.vcxFetchPublicEntities().whenComplete((result, e) -> {
+                if (e != null) {
+                    Log.e(TAG, "fetchPublicEntities", e);
+                    promise.reject("VcxException", e.getMessage());
+                } else {
+                    promise.resolve(0);
+                }
+            });
+        } catch (VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    }
 }

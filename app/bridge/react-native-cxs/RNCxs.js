@@ -838,3 +838,8 @@ export async function connectionGetState(
 export async function connectionUpdateState(connectionHandle: number) {
   return RNIndy.connectionUpdateState(connectionHandle)
 }
+
+export async function fetchPublicEntitiesForCredentials(
+): Promise<void> {
+  return await RNIndy.fetchPublicEntities()
+}
