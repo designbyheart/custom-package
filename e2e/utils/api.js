@@ -16,7 +16,7 @@ import chalk from 'chalk'
 require('tls').DEFAULT_ECDH_CURVE = 'auto'
 
 const httpsConfig = {
-  timeout: 240000,
+  timeout: 300000,
   httpsAgent: new https.Agent({
     ca: fs.readFileSync('devops/ca.crt'),
   }),
