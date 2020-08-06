@@ -16,7 +16,7 @@ import chalk from 'chalk'
 require('tls').DEFAULT_ECDH_CURVE = 'auto'
 
 const httpsConfig = {
-  timeout: 240000,
+  timeout: 300000,
   httpsAgent: new https.Agent({
     ca: fs.readFileSync('devops/ca.crt'),
   }),
@@ -65,7 +65,7 @@ const inboxConfig = {
     host: 'imap.mail.yahoo.com',
     port: 993,
     tls: true,
-    authTimeout: 15000,
+    authTimeout: 60000,
   },
 }
 
@@ -99,7 +99,7 @@ export async function getInvitation() {
   console.log(chalk.cyan(stdout))
   const jsonData = stdout.substr(8)
 
-  await new Promise((r) => setTimeout(r, 20000)) // wait before fetching latest message
+  await new Promise((r) => setTimeout(r, 30000)) // wait before fetching latest message
 
   // not putting `await` here because we don't want to block here
   // it should run asynchronously, we will wait for inbox to open
@@ -131,7 +131,7 @@ export async function getInvitation() {
     appLinkIndex + appLink.length + tokenSize
   )
 
-  await new Promise((r) => setTimeout(r, 40000)) // wait until latest message will be processed
+  await new Promise((r) => setTimeout(r, 30000)) // wait until latest message will be processed
   await connection.end() // close mail server connection
 
   // no need to wait for invitation to be fetched
