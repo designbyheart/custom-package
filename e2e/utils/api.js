@@ -65,7 +65,7 @@ const inboxConfig = {
     host: 'imap.mail.yahoo.com',
     port: 993,
     tls: true,
-    authTimeout: 15000,
+    authTimeout: 60000,
   },
 }
 
