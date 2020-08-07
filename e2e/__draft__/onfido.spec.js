@@ -1,7 +1,8 @@
 // @flow
 
-import { element, by, waitFor, expect } from 'detox'
+import { element, by, waitFor, expect, device } from 'detox'
 import { matchScreenshot } from '../utils/screenshot'
+import { unlock } from '../utils/lock-unlock'
 import {
   BURGER_MENU,
   MENU_SETTINGS,
@@ -17,7 +18,7 @@ import {
   SCREENSHOT_ONFIDO_RPC,
 } from '../utils/test-constants'
 
-describe.skip('Onfido', () => {
+describe('Onfido', () => {
   it('Check onfido general screen', async () => {
     await element(by.id(BURGER_MENU)).tap()
     await element(by.text(MENU_SETTINGS)).tap()
@@ -31,6 +32,18 @@ describe.skip('Onfido', () => {
     await matchScreenshot(SCREENSHOT_ONFIDO_DOC_SELECTION) // screenshot
     await expect(element(by.text('Identity verification'))).toBeVisible()
     await expect(element(by.text('Select a document'))).toBeVisible()
+
+    // workaround
+    await element(by.text('Passport')).tap()
+    await new Promise((r) => setTimeout(r, 5000)) // sync issue
+    await device.terminateApp()
+    await new Promise((r) => setTimeout(r, 5000)) // sync issue
+    await device.launchApp()
+    await unlock()
+    await element(by.id(BURGER_MENU)).tap()
+    await element(by.text(MENU_SETTINGS)).tap()
+    await element(by.text(SETTINGS_ONFIDO)).tap()
+    await element(by.text(ONFIDO_ACCEPT_BUTTON)).tap()
   })
 
   it('Check passport', async () => {
