@@ -139,6 +139,7 @@ export const SCREENSHOT_ABOUT_PP = 'about_pp.png'
 export const MENU_CONTAINER = 'menu-container'
 export const MENU_HOME = 'Home'
 export const MENU_MY_CONNECTIONS = 'My Connections'
+export const MENU_MY_CREDENTIALS = 'My Credentials'
 export const MENU_SETTINGS = 'Settings'
 
 // my connections
