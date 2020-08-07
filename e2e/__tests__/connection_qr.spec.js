@@ -111,7 +111,7 @@ describe('Connection via QR code and SMS link', () => {
 
     await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
 
-    await new Promise((r) => setTimeout(r, 45000)) // sync issue
+    await new Promise((r) => setTimeout(r, 30000)) // sync issue
     // await waitFor(element(by.id(PIN_CODE_INPUT_BOX)).atIndex(1))
     //   .toExist()
     //   .withTimeout(10000)
@@ -126,7 +126,18 @@ describe('Connection via QR code and SMS link', () => {
       connectionId
     ).catch(console.error)
 
-    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.error(e)
+      // await device.launchApp({
+      //   newInstance: true,
+      // })
+      // await unlock()
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
     await waitForElementAndTap('text', CLAIM_OFFER_REJECT, TIMEOUT)
   })
@@ -137,7 +148,18 @@ describe('Connection via QR code and SMS link', () => {
       connectionId
     ).catch(console.error)
 
-    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.error(e)
+      // await device.launchApp({
+      //   newInstance: true,
+      // })
+      // await unlock()
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
     await matchScreenshot(SCREENSHOT_CLAIM_OFFER_PROFILE_INFO) // screenshot
 
@@ -149,7 +171,18 @@ describe('Connection via QR code and SMS link', () => {
       console.error
     )
 
-    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.error(e)
+      // await device.launchApp({
+      //   newInstance: true,
+      // })
+      // await unlock()
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
     await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
   })
@@ -160,7 +193,18 @@ describe('Connection via QR code and SMS link', () => {
       connectionId
     ).catch(console.error)
 
-    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.error(e)
+      // await device.launchApp({
+      //   newInstance: true,
+      // })
+      // await unlock()
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
     await waitForElementAndTap('text', PROOF_REQUEST_REJECT, TIMEOUT)
   })
@@ -176,10 +220,11 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.error(e)
-      await device.launchApp({
-        newInstance: true,
-      })
-      await unlock()
+      // await device.launchApp({
+      //   newInstance: true,
+      // })
+      // await unlock()
+      await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -199,10 +244,11 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.error(e)
-      await device.launchApp({
-        newInstance: true,
-      })
-      await unlock()
+      // await device.launchApp({
+      //   newInstance: true,
+      // })
+      // await unlock()
+      await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -220,10 +266,11 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.error(e)
-      await device.launchApp({
-        newInstance: true,
-      })
-      await unlock()
+      // await device.launchApp({
+      //   newInstance: true,
+      // })
+      // await unlock()
+      await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
