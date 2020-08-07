@@ -6,6 +6,7 @@ import {
   MENU_CONTAINER,
   MENU_HOME,
   MENU_MY_CONNECTIONS,
+  MENU_MY_CREDENTIALS,
   MENU_SETTINGS,
 } from '../utils/test-constants'
 
@@ -28,6 +29,11 @@ describe('Menu screen', () => {
       .toBeVisible()
       .withTimeout(5000)
 
+    // check my credentials button
+    await waitFor(element(by.text(MENU_MY_CREDENTIALS)))
+      .toBeVisible()
+      .withTimeout(5000)
+
     // check settings button
     await waitFor(element(by.text(MENU_SETTINGS)))
       .toBeVisible()
@@ -35,6 +41,8 @@ describe('Menu screen', () => {
   })
   it('Case 2: check all available buttons', async () => {
     await element(by.text(MENU_MY_CONNECTIONS)).tap()
+    await element(by.id(BURGER_MENU)).tap()
+    await element(by.text(MENU_MY_CREDENTIALS)).tap()
     await element(by.id(BURGER_MENU)).tap()
     await element(by.text(MENU_SETTINGS)).tap()
     await element(by.id(BURGER_MENU)).tap()
