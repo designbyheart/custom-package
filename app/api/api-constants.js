@@ -67,3 +67,9 @@ export const ERROR_PENDING_INVITATION_RESPONSE_PARSE =
 
 export const ERROR_INVITATION_RESPONSE_FAILED =
   'Failed to establish connection. Please try again later.'
+
+export const ERROR_INVITATION_ALREADY_ACCEPTED_TITLE = 'Invitation already accepted'
+
+export const ERROR_INVITATION_ALREADY_ACCEPTED_MESSAGE =
+  'The connection invitation has already been accepted. ' +
+  'Please, request a new invitation to establish a connection.'

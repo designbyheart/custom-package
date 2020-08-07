@@ -16,7 +16,7 @@ import type {
   InvitationNavigation
 } from './type-invitation'
 
-import { CONNECTION_INVITE_TYPES } from './type-invitation'
+import { CONNECTION_INVITE_TYPES, ERROR_INVITATION_ALREADY_ACCEPTED_CODE } from './type-invitation'
 import { captureError } from '../services/error/error-handler'
 import { schemaValidator } from '../services/schema-validator'
 import {
@@ -37,6 +37,8 @@ import {
   ERROR_ALREADY_EXIST,
   ERROR_INVITATION_RESPONSE_FAILED,
   ERROR_ALREADY_EXIST_TITLE,
+  ERROR_INVITATION_ALREADY_ACCEPTED_TITLE,
+  ERROR_INVITATION_ALREADY_ACCEPTED_MESSAGE,
 } from '../api/api-constants'
 import { Request } from '../components/request/request'
 
@@ -100,18 +102,28 @@ export class Invitation extends Component<InvitationProps, void> {
 
     const { error, payload } = currentProps.invitation
 
-    const isDuplicateConnection = error
-      ? error.code === ERROR_ALREADY_EXIST.code
-      : false
+    let errorTitle
+    let errorMessage
+    let okAction
 
-    const errorMessage =
-      isDuplicateConnection && error && payload
-        ? `${error.message}${payload.senderName}`
-        : ERROR_INVITATION_RESPONSE_FAILED
-    const okAction = isDuplicateConnection
-      ? this.onDuplicateConnectionError
-      : noop
-    const errorTitle = isDuplicateConnection ? ERROR_ALREADY_EXIST_TITLE : null
+    if (error && error.code === ERROR_INVITATION_ALREADY_ACCEPTED_CODE) {
+      errorTitle = ERROR_INVITATION_ALREADY_ACCEPTED_TITLE
+      errorMessage = ERROR_INVITATION_ALREADY_ACCEPTED_MESSAGE
+      okAction = this.navigate
+    } else {
+      const isDuplicateConnection = error
+        ? error.code === ERROR_ALREADY_EXIST.code
+        : false
+
+      errorMessage =
+        isDuplicateConnection && error && payload
+          ? `${error.message}${payload.senderName}`
+          : ERROR_INVITATION_RESPONSE_FAILED
+      okAction = isDuplicateConnection
+        ? this.onDuplicateConnectionError
+        : noop
+      errorTitle = isDuplicateConnection ? ERROR_ALREADY_EXIST_TITLE : null
+    }
 
     Alert.alert(errorTitle, errorMessage, [{ text: 'Ok', onPress: okAction }], {
       cancelable: false,
