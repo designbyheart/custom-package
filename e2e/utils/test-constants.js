@@ -115,6 +115,7 @@ export const SWITCH_ENVIRONMENT_SAVE_BUTTON = 'switch-environment-footer-accept'
 // screenshot names
 export const SCREENSHOT_HOME = 'home.png'
 export const SCREENSHOT_CONNECTIONS = 'connections.png'
+export const SCREENSHOT_CREDENTIALS = 'credentials.png'
 export const SCREENSHOT_SETTINGS = 'settings.png'
 export const SCREENSHOT_MENU = 'menu.png'
 export const SCREENSHOT_INVITATION = 'invitation.png'
@@ -152,6 +153,9 @@ export const CREDENTIAL_HEADER = 'Accepted Credential'
 export const VIEW_PROOF = 'VIEW REQUEST DETAILS'
 export const PROOF_HEADER = 'You shared this information'
 export const CLOSE_BUTTON = 'Close'
+
+// my credentials
+export const MY_CREDENTIALS_HEADER = 'My Credentials'
 
 // chat
 export const CHAT_CANCEL = 'Cancel'

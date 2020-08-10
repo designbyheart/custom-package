@@ -6,10 +6,12 @@ import { matchScreenshot } from '../utils/screenshot'
 import {
   SCREENSHOT_HOME,
   SCREENSHOT_CONNECTIONS,
+  SCREENSHOT_CREDENTIALS,
   SCREENSHOT_SETTINGS,
   SCREENSHOT_MENU,
   BURGER_MENU,
   MENU_MY_CONNECTIONS,
+  MENU_MY_CREDENTIALS,
   MENU_SETTINGS,
 } from '../utils/test-constants'
 
@@ -64,6 +66,12 @@ describe('One time initial setup and base screenshots check', () => {
   it('My connections screenshot check', async () => {
     await element(by.text(MENU_MY_CONNECTIONS)).tap()
     await matchScreenshot(SCREENSHOT_CONNECTIONS)
+  })
+
+  it('My credentials screenshot check', async () => {
+    await element(by.id(BURGER_MENU)).tap()
+    await element(by.text(MENU_MY_CREDENTIALS)).tap()
+    await matchScreenshot(SCREENSHOT_CREDENTIALS)
   })
 
   it('Settings screenshot check', async () => {
