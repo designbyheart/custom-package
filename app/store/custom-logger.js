@@ -12,6 +12,7 @@ import { UPDATE_LOG_ISENCRYPTED } from '../send-logs/type-send-logs'
 import {
   CLAIM_RECEIVED,
   CLAIM_RECEIVED_VCX,
+  HYDRATE_CLAIM_MAP,
   MAP_CLAIM_TO_SENDER,
 } from '../claim/type-claim'
 import { GENERATE_RECOVERY_PHRASE_SUCCESS } from '../backup/type-backup'
@@ -19,7 +20,7 @@ import {
   DELETE_CONNECTION_SUCCESS,
   NEW_CONNECTION,
   DELETE_CONNECTION_FAILURE,
-  DELETE_CONNECTION,
+  DELETE_CONNECTION, UPDATE_SERIALIZE_CONNECTION_FAIL, UPDATE_CONNECTION_SERIALIZED_STATE, SEND_CONNECTION_REDIRECT,
 } from './type-connection-store'
 import { NEW_CONNECTION_SUCCESS } from './new-connection-success'
 import { HYDRATE_CONNECTIONS } from './type-connection-store'
@@ -30,6 +31,10 @@ import {
   SEND_PAID_CREDENTIAL_REQUEST,
   ADD_SERIALIZED_CLAIM_OFFER,
   HYDRATE_CLAIM_OFFERS_SUCCESS,
+  CLAIM_OFFER_ACCEPTED,
+  SEND_CLAIM_REQUEST_FAIL,
+  PAID_CREDENTIAL_REQUEST_FAIL,
+  NEW_CONNECTION_SEEN,
 } from '../claim-offer/type-claim-offer'
 import {
   DEEP_LINK_DATA,
@@ -51,12 +56,12 @@ import {
   UPDATE_ATTRIBUTE_CLAIM,
   PROOF_SUCCESS,
   USER_SELF_ATTESTED_ATTRIBUTES,
-  PROOF_REQUEST_SEND_PROOF_HANDLE,
+  PROOF_REQUEST_SEND_PROOF_HANDLE, RETRY_SEND_PROOF,
 } from '../proof/type-proof'
 import {
   HYDRATE_PROOF_REQUESTS,
   MISSING_ATTRIBUTES_FOUND,
-  PROOF_REQUEST_AUTO_FILL,
+  PROOF_REQUEST_AUTO_FILL, PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND,
   PROOF_REQUEST_RECEIVED,
   PROOF_SERIALIZED,
 } from '../proof-request/type-proof-request'
@@ -81,10 +86,31 @@ import {
   HYDRATE_WALLET_HISTORY,
   SEND_TOKENS_FAIL,
   WALLET_ADDRESSES_REFRESHED,
-  SEND_TOKENS,
+  SEND_TOKENS, REFRESH_WALLET_BALANCE,
 } from '../wallet/type-wallet'
 import { SHOW_IN_APP_NOTIFICATION } from '../in-app-notification/in-app-notification-type'
-import { RESTORE_SUBMIT_PASSPHRASE } from '../restore/type-restore'
+import { RESTORE_SUBMIT_PASSPHRASE, SAVE_FILE_TO_APP_DIRECTORY } from '../restore/type-restore'
+import { RESTORE_CLOUD_SUBMIT_PASSPHRASE } from '../cloud-restore/cloud-restore-type'
+import { HYDRATE_CLAIM_MAP_FAIL } from '../connection-details/components/types/type-details-claim'
+import { ERROR_SEND_PROOF } from '../connection-details/components/types/type-details-proof'
+import {
+  INVITATION_RECEIVED, INVITATION_REJECTED, INVITATION_RESPONSE_FAIL,
+  INVITATION_RESPONSE_SEND,
+  INVITATION_RESPONSE_SUCCESS,
+} from '../invitation/type-invitation'
+import { CHECK_PIN, SET_PIN } from '../lock/type-lock'
+import { OPEN_ID_CONNECT_UPDATE_STATUS } from '../open-id-connect/open-id-connect-actions'
+import {
+  FETCH_ADDITIONAL_DATA, FETCH_ADDITIONAL_DATA_PENDING_KEYS, HYDRATE_PUSH_TOKEN,
+  PUSH_NOTIFICATION_RECEIVED,
+  PUSH_NOTIFICATION_UPDATE_TOKEN, UPDATE_RELEVANT_PUSH_PAYLOAD_STORE, UPDATE_RELEVANT_PUSH_PAYLOAD_STORE_AND_REDIRECT,
+} from '../push-notification/type-push-notification'
+import {
+  SMS_PENDING_INVITATION_FAIL,
+  SMS_PENDING_INVITATION_RECEIVED,
+  SMS_PENDING_INVITATION_REQUEST, SMS_PENDING_INVITATION_SEEN,
+} from '../sms-pending-invitation/type-sms-pending-invitation'
+import { SERVER_ENVIRONMENT_CHANGED, SWITCH_ENVIRONMENT } from './type-config-store'
 
 const { RNIndy } = NativeModules
 
@@ -361,6 +387,7 @@ export function PiiHiddenTransformer(state: Store) {
     backup: {
       ...state.backup,
       passphrase: hiddenInfoReplacement,
+      backupWalletPath: hiddenInfoReplacement,
     },
     connections: {
       ...state.connections,
@@ -370,6 +397,9 @@ export function PiiHiddenTransformer(state: Store) {
     claimOffer: hiddenInfoReplacement,
     config: {
       ...state.config,
+      agencyUrl: hiddenInfoReplacement,
+      agencyDID: hiddenInfoReplacement,
+      agencyVerificationKey: hiddenInfoReplacement,
       poolConfig: hiddenInfoReplacement,
     },
     deepLink: {
@@ -424,6 +454,14 @@ export function PiiHiddenTransformer(state: Store) {
       ...state.restore,
       passphrase: state.restore.passphrase ? hiddenInfoReplacement : null,
     },
+    pushNotification: {
+      ...state.pushNotification,
+      notification: hiddenInfoReplacement,
+      pushToken: hiddenInfoReplacement,
+    },
+    smsPendingInvitation: hiddenInfoReplacement,
+    invitation: hiddenInfoReplacement,
+    openIdConnect: hiddenInfoReplacement,
   })
 }
 
@@ -440,26 +478,40 @@ export function PiiHiddenActionTransformer(action: any) {
     [GENERATE_RECOVERY_PHRASE_SUCCESS]: ['passphrase'],
     [RESTORE_SUBMIT_PASSPHRASE]: ['passphrase'],
 
+    [INVITATION_RECEIVED]: ['data'],
+    [INVITATION_RESPONSE_SEND]: ['data'],
+    [INVITATION_RESPONSE_SUCCESS]: ['senderDID'],
+    [INVITATION_RESPONSE_FAIL]: ['senderDID'],
+    [INVITATION_REJECTED]: ['senderDID'],
     [NEW_CONNECTION]: ['connection'],
     [NEW_CONNECTION_SUCCESS]: ['connection'],
     [DELETE_CONNECTION]: ['senderDID'],
     [DELETE_CONNECTION_SUCCESS]: ['filteredConnections'],
     [DELETE_CONNECTION_FAILURE]: ['connection'],
     [HYDRATE_CONNECTIONS]: ['connections'],
+    [NEW_CONNECTION_SEEN]: ['senderDid'],
+    [UPDATE_SERIALIZE_CONNECTION_FAIL]: ['identifier'],
+    [UPDATE_CONNECTION_SERIALIZED_STATE]: ['identifier', 'vcxSerializedConnection'],
+    [SEND_CONNECTION_REDIRECT]: ['qrCodeInvitationPayload', 'existingConnectionDetails'],
 
     [CLAIM_RECEIVED]: ['claim'],
-    [MAP_CLAIM_TO_SENDER]: ['senderDID', 'myPairwiseDID'],
+    [MAP_CLAIM_TO_SENDER]: ['claimUuid', 'senderDID', 'myPairwiseDID', 'logoUrl'],
     [CLAIM_RECEIVED_VCX]: ['claim'],
     [CLAIM_OFFER_RECEIVED]: ['payload', 'payloadInfo'],
     [SEND_CLAIM_REQUEST]: ['payload'],
     [SEND_CLAIM_REQUEST_SUCCESS]: ['payload'],
+    [SEND_CLAIM_REQUEST_FAIL]: ['remoteDid'],
     [SEND_PAID_CREDENTIAL_REQUEST]: ['payload'],
+    [PAID_CREDENTIAL_REQUEST_FAIL]: ['remoteDid'],
     [ADD_SERIALIZED_CLAIM_OFFER]: [
       'serializedClaimOffer',
       'userDID',
       'claimOfferVcxState',
     ],
+    [CLAIM_OFFER_ACCEPTED]: ['remoteDid'],
+    [HYDRATE_CLAIM_MAP]: ['claimMap'],
     [HYDRATE_CLAIM_OFFERS_SUCCESS]: ['claimOffers'],
+    [HYDRATE_CLAIM_MAP_FAIL]: ['claim'],
 
     [DEEP_LINK_DATA]: ['data'],
     [DEEP_LINK_PROCESSED]: ['data'],
@@ -474,19 +526,31 @@ export function PiiHiddenActionTransformer(action: any) {
     [UPDATE_ONFIDO_APPLICANT_ID]: ['applicantId'],
     [HYDRATE_ONFIDO_DID_SUCCESS]: ['onfidoDid'],
 
-    [UPDATE_ATTRIBUTE_CLAIM]: ['requestedAttrsJson'],
+    [UPDATE_ATTRIBUTE_CLAIM]: ['requestedAttrsJson', 'remoteDid'],
     [PROOF_SUCCESS]: ['proof'],
     [USER_SELF_ATTESTED_ATTRIBUTES]: ['selfAttestedAttributes'],
     [PROOF_REQUEST_SEND_PROOF_HANDLE]: ['selfAttestedAttributes'],
     [HYDRATE_PROOF_REQUESTS]: ['proofRequests'],
     [PROOF_REQUEST_AUTO_FILL]: ['requestedAttributes'],
+    [MISSING_ATTRIBUTES_FOUND]: ['missingAttributes'],
     [PROOF_REQUEST_RECEIVED]: ['payload', 'payloadInfo'],
     [PROOF_SERIALIZED]: ['serializedProof'],
+    [ERROR_SEND_PROOF]: ['remoteDid'],
+    [RETRY_SEND_PROOF]: ['selfAttestedAttributes', 'updateAttributeClaimAction'],
+    [PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND]: ['dissatisfiedAttributes'],
 
     [QUESTION_RECEIVED]: ['question'],
     [HYDRATE_QUESTION_STORE]: ['data'],
     [UPDATE_QUESTION_ANSWER]: ['answer'],
     [SEND_ANSWER_TO_QUESTION]: ['answer'],
+
+    [PUSH_NOTIFICATION_RECEIVED]: ['notification'],
+    [PUSH_NOTIFICATION_UPDATE_TOKEN]: ['token'],
+    [FETCH_ADDITIONAL_DATA]: ['notificationPayload'],
+    [FETCH_ADDITIONAL_DATA_PENDING_KEYS]: ['forDID'],
+    [HYDRATE_PUSH_TOKEN]: ['token'],
+    [UPDATE_RELEVANT_PUSH_PAYLOAD_STORE_AND_REDIRECT]: ['notification'],
+    [UPDATE_RELEVANT_PUSH_PAYLOAD_STORE]: ['notification'],
 
     [CONNECT_REGISTER_CREATE_AGENT_DONE]: ['userOneTimeInfo'],
     [HYDRATE_USER_STORE]: ['data'],
@@ -496,6 +560,24 @@ export function PiiHiddenActionTransformer(action: any) {
     [SEND_TOKENS]: ['tokenAmount', 'recipientWalletAddress'],
 
     [SHOW_IN_APP_NOTIFICATION]: ['notification'],
+
+    [RESTORE_CLOUD_SUBMIT_PASSPHRASE]: ['passphrase'],
+
+    [OPEN_ID_CONNECT_UPDATE_STATUS]: ['oidcAuthenticationRequest'],
+
+    [SMS_PENDING_INVITATION_REQUEST]: ['smsToken'],
+    [SMS_PENDING_INVITATION_RECEIVED]: ['data', 'smsToken'],
+    [SMS_PENDING_INVITATION_FAIL]: ['smsToken'],
+    [SMS_PENDING_INVITATION_SEEN]: ['smsToken'],
+
+    [SET_PIN]: ['pin'],
+    [CHECK_PIN]: ['pin'],
+
+    [SERVER_ENVIRONMENT_CHANGED]: ['serverEnvironment'],
+    [SWITCH_ENVIRONMENT]: ['poolConfig', 'agencyUrl', 'agencyDID',
+      'agencyVerificationKey'],
+
+    [REFRESH_WALLET_BALANCE]: ['walletBalance'],
   }
 
   // There are some action which has deep nested data
