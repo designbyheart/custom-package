@@ -301,3 +301,10 @@ export type ConnectionHistoryProps = {
 } & ReactNavigation
 
 export const CONNECTION_ALREADY_EXIST = 'Connection already exists.'
+
+export const REMOVE_EVENT = 'REMOVE_EVENT'
+export type RemoveEventAction = {
+  type: typeof REMOVE_EVENT,
+  uid: string,
+  navigationRoute: string,
+}
