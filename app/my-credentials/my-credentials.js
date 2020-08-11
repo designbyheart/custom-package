@@ -8,11 +8,14 @@ import type { MyCredentialsProps, Item } from './type-my-credentials'
 import type { ClaimOfferPayload } from '../claim-offer/type-claim-offer'
 import { PrimaryHeader, CameraButton } from '../components'
 import { CredentialCard } from './credential-card/credential-card'
+import { NewCredentialInstructions } from './new-credential-instructions'
 import { myCredentialsRoute, qrCodeScannerTabRoute } from '../common'
 import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { SERVER_ENVIRONMENT } from '../store/type-config-store'
+import { getEnvironmentName } from '../store/config-store'
 
 export class MyCredentials extends Component<MyCredentialsProps, void> {
   keyExtractor = (item: Object) => item.claimUuid.toString()
@@ -53,9 +56,18 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
     })
     credentials.sort((a, b) => a.credentialName.localeCompare(b.credentialName))
 
+    const hasNoCredentials = credentials.length == 0
+
     return (
       <View style={styles.outerContainer}>
         <View style={styles.container} testID="my-credentials-container">
+          {hasNoCredentials && (
+            <NewCredentialInstructions
+              usingProductionNetwork={
+                this.props.environmentName === SERVER_ENVIRONMENT.PROD
+              }
+            />
+          )}
           <FlatList
             keyExtractor={this.keyExtractor}
             style={styles.flatListContainer}
@@ -82,6 +94,7 @@ const mapStateToProps = (state: Store) => {
   return {
     claimMap,
     offers,
+    environmentName: getEnvironmentName(state.config),
   }
 }
 

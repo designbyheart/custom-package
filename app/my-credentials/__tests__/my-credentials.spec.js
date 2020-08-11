@@ -8,6 +8,7 @@ import renderer, { act } from 'react-test-renderer'
 import { MyCredentials } from '../my-credentials'
 import { Provider } from 'react-redux'
 import { MockedNavigator } from '../../../__mocks__/mock-navigator'
+import { SERVER_ENVIRONMENT } from '../../store/type-config-store'
 
 describe('my credentials screen', () => {
   jest.useFakeTimers()
@@ -53,6 +54,7 @@ describe('my credentials screen', () => {
           },
         },
       },
+      environmentName: SERVER_ENVIRONMENT.PROD,
       route: {},
     }
   }

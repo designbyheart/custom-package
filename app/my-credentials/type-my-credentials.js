@@ -6,6 +6,7 @@ import type { ClaimOfferPayload } from '../claim-offer/type-claim-offer'
 export type MyCredentialsProps = {
   claimMap: ClaimMap,
   offers: ClaimOffers,
+  environmentName: string,
 } & ReactNavigation
 
 export type Item = {
@@ -18,4 +19,8 @@ export type Item = {
 
 export type ClaimOffers = {
   +[string]: ClaimOfferPayload,
+}
+
+export type NewCredentialInstructionsProps = {
+  usingProductionNetwork: boolean,
 }
