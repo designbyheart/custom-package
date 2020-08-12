@@ -387,7 +387,6 @@ export function PiiHiddenTransformer(state: Store) {
     backup: {
       ...state.backup,
       passphrase: hiddenInfoReplacement,
-      backupWalletPath: hiddenInfoReplacement,
     },
     connections: {
       ...state.connections,
@@ -428,6 +427,10 @@ export function PiiHiddenTransformer(state: Store) {
     },
     wallet: {
       ...state.wallet,
+      backup: {
+        ...state.wallet.backup,
+        encryptionKey: hiddenInfoReplacement,
+      },
       walletAddresses: {
         ...state.wallet.walletAddresses,
         data: hiddenInfoReplacement,

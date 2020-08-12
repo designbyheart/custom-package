@@ -54,8 +54,8 @@ Object {
 
 exports[`fn:PiiHiddenActionTransformer should hide senderDID and pairwiseDID in MAP_CLAIM_TO_SENDER 1`] = `
 Object {
-  "claimUuid": "claimUUID",
-  "logoUrl": "logoUrl",
+  "claimUuid": "****",
+  "logoUrl": "****",
   "myPairwiseDID": "****",
   "senderDID": "****",
   "type": "MAP_CLAIM_TO_SENDER",
@@ -78,9 +78,9 @@ Object {
   "claim": "****",
   "claimOffer": "****",
   "config": Object {
-    "agencyDID": "tjVxL8raUsG5s5ZzGhYV1",
-    "agencyUrl": "https://agency-sandbox.evernym.com",
-    "agencyVerificationKey": "VCNhKASjLU5tVWnZpjcyEsoV1QC3adrPVMCCjeKMobn",
+    "agencyDID": "****",
+    "agencyUrl": "****",
+    "agencyVerificationKey": "****",
     "isAlreadyInstalled": true,
     "isHydrated": false,
     "isInitialized": false,
@@ -114,7 +114,7 @@ Object {
   "inAppNotification": Object {
     "notification": "****",
   },
-  "invitation": Object {},
+  "invitation": "****",
   "ledger": Object {
     "fees": Object {
       "data": Object {
@@ -144,6 +144,7 @@ Object {
     "onfidoDid": null,
     "status": "IDLE",
   },
+  "openIdConnect": "****",
   "proof": "****",
   "proofRequest": "****",
   "pushNotification": Object {
@@ -152,9 +153,9 @@ Object {
     "isFetching": false,
     "isPristine": true,
     "navigateRoute": undefined,
-    "notification": undefined,
+    "notification": "****",
     "pendingFetchAdditionalDataKey": undefined,
-    "pushToken": undefined,
+    "pushToken": "****",
   },
   "question": Object {
     "data": "****",
@@ -178,7 +179,7 @@ Object {
   "sendlogs": Object {
     "encryptLogStatus": false,
   },
-  "smsPendingInvitation": Object {},
+  "smsPendingInvitation": "****",
   "txnAuthorAgreement": Object {
     "haveAlreadySignedAgreement": false,
     "status": "IDLE",
@@ -196,7 +197,7 @@ Object {
   "wallet": Object {
     "backup": Object {
       "backupPath": "test_backup_path",
-      "encryptionKey": "walletEncryptionKey",
+      "encryptionKey": "****",
       "error": null,
       "fileStatus": "IDLE",
       "latest": "2017-09-06T00:00:00+05:30",
