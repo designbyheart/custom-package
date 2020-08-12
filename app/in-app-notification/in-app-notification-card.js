@@ -96,11 +96,7 @@ class NotificationCardComponent extends Component<NotificationCardProps, void> {
                     testID="in-app-notification-card"
                   />
                 ) : (
-                  <DefaultLogo
-                    text={senderName}
-                    size={32}
-                    fontSize={17}
-                  />
+                  <DefaultLogo text={senderName} size={32} fontSize={17} />
                 )}
               </View>
               <View style={infoSection}>

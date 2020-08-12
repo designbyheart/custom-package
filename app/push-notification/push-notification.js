@@ -29,16 +29,14 @@ import { getUnacknowledgedMessages } from '../store/config-store'
 
 export const remoteMessageParser = (message: RemoteMessage) => {
   const {
-    data: {
-      forDID,
-      uid,
-      type,
-      remotePairwiseDID,
-      pushNotifMsgText,
-      pushNotifMsgTitle,
-      senderLogoUrl,
-      msg,
-    },
+    forDID,
+    uid,
+    type,
+    remotePairwiseDID,
+    pushNotifMsgText,
+    pushNotifMsgTitle,
+    senderLogoUrl,
+    msg,
   } = message
 
   return {
@@ -61,33 +59,6 @@ export class PushNotification extends Component<PushNotificationProps, void> {
   onNotificationOpenedListener = null
   messageListener = null
 
-  // Because the type returned from Notification for data is: { [string]: string }, we're parsing it in order to have proper type checks
-  notificationParser(notification: Notification) {
-    const {
-      data: {
-        forDID,
-        uid,
-        type,
-        remotePairwiseDID,
-        senderLogoUrl,
-        pushNotifMsgText,
-        pushNotifMsgTitle,
-        msg,
-      },
-    } = notification
-
-    return {
-      forDID,
-      uid,
-      type,
-      remotePairwiseDID,
-      senderLogoUrl,
-      pushNotifMsgText,
-      pushNotifMsgTitle,
-      msg,
-    }
-  }
-
   componentDidMount = async () => {
     if (Platform.OS === 'ios') {
       // Sets the current badge number on the app icon to zero. iOS only for now.
@@ -100,11 +71,9 @@ export class PushNotification extends Component<PushNotificationProps, void> {
     // When a notification is opened, the listener is invoked with the notification and the action that was invoked when it was clicked on.
     this.onNotificationOpenedListener = messaging().onNotificationOpenedApp(
       (notificationOpen: NotificationOpen) => {
-        // Get the action triggered by the notification being opened
-        const action = notificationOpen.action
         // Get information about the notification that was opened
-        const notification: Notification = notificationOpen.notification
-        this.onPushNotificationReceived(this.notificationParser(notification), {
+        const notification: Notification = notificationOpen.data
+        this.onPushNotificationReceived(remoteMessageParser(notification), {
           openMessageDirectly: true,
         })
       }
@@ -120,11 +89,9 @@ export class PushNotification extends Component<PushNotificationProps, void> {
 
       // App was opened by a notification
       if (notificationOpen) {
-        // Get the action triggered by the notification being opened
-        const action = notificationOpen.action
         // Get information about the notification that was opened
-        const notification: Notification = notificationOpen.notification
-        this.onPushNotificationReceived(this.notificationParser(notification), {
+        const notification: Notification = notificationOpen.data
+        this.onPushNotificationReceived(remoteMessageParser(notification), {
           openMessageDirectly: true,
         })
       }

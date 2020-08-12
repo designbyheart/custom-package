@@ -34,7 +34,11 @@ import type { SplashScreenProps } from './type-splash-screen'
 import type { Store } from '../store/type-store'
 import { SMSPendingInvitationStatus } from '../sms-pending-invitation/type-sms-pending-invitation'
 import type { AriesConnectionInvitePayload } from '../invitation/type-invitation'
-import type { SMSPendingInvitationPayload, SMSPendingInvitations, SMSPendingInvitationStatusType } from '../sms-pending-invitation/type-sms-pending-invitation'
+import type {
+  SMSPendingInvitationPayload,
+  SMSPendingInvitations,
+  SMSPendingInvitationStatusType,
+} from '../sms-pending-invitation/type-sms-pending-invitation'
 import { deepLinkProcessed } from '../deep-link/deep-link-store'
 import { DEEP_LINK_STATUS } from '../deep-link/type-deep-link'
 import { getAllPublicDid } from '../store/store-selector'
@@ -42,9 +46,9 @@ import { isValidAriesV1InviteData } from '../invitation/invitation'
 
 const isReceived = ({ payload, status }) =>
   payload &&
-      ((payload.senderDetail && payload.senderDetail.DID) ||
-       (payload.recipientKeys &&
-        ((payload: any): AriesConnectionInvitePayload).recipientKeys[0])) &&
+  ((payload.senderDetail && payload.senderDetail.DID) ||
+    (payload.recipientKeys &&
+      ((payload: any): AriesConnectionInvitePayload).recipientKeys[0])) &&
   status === SMSPendingInvitationStatus.RECEIVED
 
 export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
@@ -131,10 +135,21 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
       )
 
       const pendingRedirectionList = unseenSmsPendingInvitations.map(
-        ({ payload, invitationToken }: { +payload: ?(SMSPendingInvitationPayload | AriesConnectionInvitePayload), invitationToken: string }) => {
+        ({
+          payload,
+          invitationToken,
+        }: {
+          +payload: ?(
+            | SMSPendingInvitationPayload
+            | AriesConnectionInvitePayload
+          ),
+          invitationToken: string,
+        }) => {
           if (payload) {
             const ariesV1Invite = isValidAriesV1InviteData(payload, '')
-            const senderDID = ariesV1Invite ? ((payload: any): AriesConnectionInvitePayload).recipientKeys[0] : ((payload: any): SMSPendingInvitationPayload).senderDetail.DID
+            const senderDID = ariesV1Invite
+              ? ((payload: any): AriesConnectionInvitePayload).recipientKeys[0]
+              : ((payload: any): SMSPendingInvitationPayload).senderDetail.DID
             this.props.deepLinkProcessed(invitationToken)
             // check if invitation has public did
             // if we have public did then we have to check for duplicate connection
@@ -142,9 +157,11 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
             // then we need to redirect to that connection screen
             // instead of invitation screen
             const publicDID = ariesV1Invite
-                  ? ((payload: any): AriesConnectionInvitePayload).recipientKeys[0]
-                  : ((payload: any): SMSPendingInvitationPayload).senderDetail.publicDID
-            const connectionAlreadyExist = publicDID && publicDID in this.props.publicDIDs
+              ? ((payload: any): AriesConnectionInvitePayload).recipientKeys[0]
+              : ((payload: any): SMSPendingInvitationPayload).senderDetail
+                  .publicDID
+            const connectionAlreadyExist =
+              publicDID && publicDID in this.props.publicDIDs
 
             let routeName = invitationRoute
             let params = { senderDID, token: invitationToken }
@@ -172,8 +189,8 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
                 qrCodeInvitationPayload: ariesV1Invite
                   ? convertAriesPayloadToInvitation(ariesV1Invite)
                   : convertSmsPayloadToInvitation(
-                    ((payload: any): SMSPendingInvitationPayload)
-                  ),
+                      ((payload: any): SMSPendingInvitationPayload)
+                    ),
               }
             }
 
