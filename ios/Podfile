@@ -6,16 +6,16 @@ source 'git@gitlab.corp.evernym.com:dev/vcx/indy-sdk.git'
 
 def vcx_version_for_debug_or_release
     if ENV['CONNECTME_DEBUG'] == "true"
-        '0.0.164'
+        '0.0.168'
     else
-        '0.0.163'
+        '0.0.167'
     end
 end
 
 target 'ConnectMe' do
-    
+
 	use_frameworks!
-	
+
 	# Allow using RNFirebase as static frameworks
 	$RNFirebaseAsStaticFramework = true
 
