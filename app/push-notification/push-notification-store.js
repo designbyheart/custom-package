@@ -238,7 +238,7 @@ export function convertClaimOfferPushPayloadToAppClaimOffer(
       return {
         label: attributeName,
         data: attributeValue,
-        values: {}
+        values: {},
       }
     }
   )
@@ -270,33 +270,34 @@ export function convertProofRequestPushPayloadToAppProofRequest(
   const { requested_attributes, name, version } = proof_request_data
 
   const requestedAttributes = []
-  Object.keys(requested_attributes).forEach(
-    (attributeKey) => {
-      let attribute = requested_attributes[attributeKey]
-      if (attribute.name) {
-        requestedAttributes.push({
-          label: attribute.name,
-          values: {
-            [attribute.name]: ''
-          }
-        })
-      }
+  Object.keys(requested_attributes).forEach((attributeKey) => {
+    let attribute = requested_attributes[attributeKey]
+    if (attribute.name) {
+      requestedAttributes.push({
+        label: attribute.name,
+        values: {
+          [attribute.name]: '',
+        },
+      })
+    }
 
-      // TODO:DA label is not used for multiple attributes, refactor is required
-      if (attribute.names) {
-        const names = attribute.names
-        const values = names.reduce((acc, name) => ({
+    // TODO:DA label is not used for multiple attributes, refactor is required
+    if (attribute.names) {
+      const names = attribute.names
+      const values = names.reduce(
+        (acc, name) => ({
           ...acc,
           [name]: '',
-        }), {})
+        }),
+        {}
+      )
 
-        requestedAttributes.push({
-          label: names.join(","),
-          values: values
-        })
-      }
+      requestedAttributes.push({
+        label: names.join(','),
+        values: values,
+      })
     }
-  )
+  })
 
   return {
     data: {
@@ -846,10 +847,10 @@ function* handleRedirection(
     // if we find that we can open notification directly
     // i.e. we received this notification from user tapping on notification
     // from notification center outside of the app
-    // then we want user to go connection details screen of particular notification
-    // and then inside connection details screen, we want to show message
+    // then we want user to go home screnn of particular notification
+    // and then inside home screen, we want to show message
     // that belongs to this notification
-    yield put(navigateToRoutePN(connectionHistRoute, params))
+    yield put(navigateToRoutePN(homeDrawerRoute, params))
   } else {
     // if we find that we did not have indication to open notification directly
     // that means we need to show in-app notification that we have received a message

@@ -211,8 +211,6 @@ export class LockPinSetup extends PureComponent<
           keyboardHidden: false,
         })
       }
-      this.keyboardDidShowListener && this.keyboardDidShowListener.remove()
-      this.keyboardDidHideListener && this.keyboardDidHideListener.remove()
     }
   }
 
