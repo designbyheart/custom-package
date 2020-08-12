@@ -46,9 +46,15 @@ describe('<LockFingerprintSetup />', () => {
   let component
   let props
   let cleared
+  let isSupportedSpy
+  let authenticatesSpy
 
   beforeEach(() => {
     props = getProps()
+    isSupportedSpy = jest.spyOn(TouchId, 'isSupported')
+    isSupportedSpy.mockImplementation(() => Promise.resolve({}))
+    authenticatesSpy = jest.spyOn(TouchId, 'authenticate')
+    authenticatesSpy.mockImplementation(() => Promise.resolve({}))
     component = renderer.create(<LockFingerprintSetup {...props} />, options)
   })
 
@@ -57,12 +63,6 @@ describe('<LockFingerprintSetup />', () => {
   })
 
   it('should show use Passcode Alert ', async () => {
-    const isSupportedSpy = spyOn(TouchId, 'isSupported').and.returnValue(
-      Promise.resolve({})
-    )
-    const authenticatesSpy = spyOn(TouchId, 'authenticate').and.returnValue(
-      Promise.resolve({})
-    )
     component.update(<LockFingerprintSetup {...props} fromSettings={true} />)
     const alertSpy = jest.spyOn(Alert, 'alert')
     let instance = component.getInstance()
@@ -77,13 +77,12 @@ describe('<LockFingerprintSetup />', () => {
     expect(alertSpy).toMatchSnapshot() // this will give error if the alert message is changed
     alertSpy.mockReset()
     alertSpy.mockRestore()
+    isSupportedSpy.mockReset()
+    authenticatesSpy.mockReset()
+    isSupportedSpy.mockReset()
+    authenticatesSpy.mockRestore()
   })
   it('should goto PinSetupScreen', async () => {
-    const isSupportedSpy = jest.spyOn(TouchId, 'isSupported')
-    isSupportedSpy.mockImplementation(() => Promise.resolve({}))
-    const authenticatesSpy = jest.spyOn(TouchId, 'authenticate')
-    authenticatesSpy.mockImplementation(() => Promise.resolve({}))
-
     let instance = component.getInstance()
     await instance.touchIdHandler()
     expect(props.enableTouchIdAction).toHaveBeenCalled()
@@ -97,10 +96,6 @@ describe('<LockFingerprintSetup />', () => {
     authenticatesSpy.mockRestore()
   })
   it('should goto SettingsScreen', async () => {
-    const isSupportedSpy = jest.spyOn(TouchId, 'isSupported')
-    isSupportedSpy.mockImplementation(() => Promise.resolve({}))
-    const authenticatesSpy = jest.spyOn(TouchId, 'authenticate')
-    authenticatesSpy.mockImplementation(() => Promise.resolve({}))
     expect(props.enableTouchIdAction).not.toHaveBeenCalled()
     expect(props.navigation.goBack).not.toHaveBeenCalledWith(null)
     component.update(
@@ -120,9 +115,6 @@ describe('<LockFingerprintSetup />', () => {
     authenticatesSpy.mockRestore()
   })
   it('should show biometrics exceed alert if authentication fails', async () => {
-    const isSupportedSpy = jest.spyOn(TouchId, 'isSupported')
-    isSupportedSpy.mockImplementation(() => Promise.resolve({}))
-    const authenticatesSpy = jest.spyOn(TouchId, 'authenticate')
     authenticatesSpy.mockImplementation(() =>
       Promise.reject({
         name: LAErrorTouchIDUnknownError,
@@ -148,9 +140,6 @@ describe('<LockFingerprintSetup />', () => {
     authenticatesSpy.mockRestore()
   })
   xit('should redirect to settings screen if authentication fails', async () => {
-    const isSupportedSpy = jest.spyOn(TouchId, 'isSupported')
-    isSupportedSpy.mockImplementation(() => Promise.resolve({}))
-    const authenticatesSpy = jest.spyOn(TouchId, 'authenticate')
     authenticatesSpy.mockImplementation(() =>
       Promise.reject({
         name: LAErrorAuthenticationFailed,
@@ -169,9 +158,6 @@ describe('<LockFingerprintSetup />', () => {
     authenticatesSpy.mockRestore()
   })
   it('should redirect to lock Selection screen if authentication fails', async () => {
-    const isSupportedSpy = jest.spyOn(TouchId, 'isSupported')
-    isSupportedSpy.mockImplementation(() => Promise.resolve({}))
-    const authenticatesSpy = jest.spyOn(TouchId, 'authenticate')
     authenticatesSpy.mockImplementation(() =>
       Promise.reject({
         name: LAErrorAuthenticationFailed,
@@ -188,7 +174,6 @@ describe('<LockFingerprintSetup />', () => {
     authenticatesSpy.mockRestore()
   })
   it('should show Your phone doesn’t support biometrics. alert in ios', async () => {
-    const isSupportedSpy = jest.spyOn(TouchId, 'isSupported')
     isSupportedSpy.mockImplementation(() =>
       Promise.reject({ name: LAErrorTouchIDUnknownError })
     )
@@ -214,7 +199,6 @@ describe('<LockFingerprintSetup />', () => {
     getBiometricErrorSpy.mockRestore()
   })
   it('should show enable biometrics alert in ios', async () => {
-    const isSupportedSpy = jest.spyOn(TouchId, 'isSupported')
     isSupportedSpy.mockImplementation(() =>
       Promise.reject({ name: LAErrorTouchIDUnknownError })
     )
@@ -243,7 +227,6 @@ describe('<LockFingerprintSetup />', () => {
   })
 
   it('should show biometrics exceed alert in ios', async () => {
-    const isSupportedSpy = jest.spyOn(TouchId, 'isSupported')
     isSupportedSpy.mockImplementation(() =>
       Promise.reject({ name: LAErrorTouchIDUnknownError })
     )
@@ -279,7 +262,6 @@ describe('<LockFingerprintSetup />', () => {
   // need to fix this test
   // giving TypeError: Cannot read property 'showAlert' of undefined error
   xit('should show enable biometrics alert in android', async () => {
-    const isSupportedSpy = jest.spyOn(TouchId, 'isSupported')
     isSupportedSpy.mockImplementationOnce(() =>
       Promise.reject({ name: LAErrorTouchIDUnknownError, code: '' })
     )

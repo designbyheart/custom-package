@@ -296,15 +296,15 @@ export type LockSetupSuccessState = {
   interactionsDone: boolean,
 }
 
-export const LAErrorAuthenticationFailed = 'LAErrorAuthenticationFailed'
-export const LAErrorUserCancel = 'LAErrorUserCancel'
-export const LAErrorUserFallback = 'LAErrorUserFallback'
-export const LAErrorSystemCancel = 'LAErrorSystemCancel'
-export const LAErrorPasscodeNotSet = 'LAErrorPasscodeNotSet'
-export const LAErrorTouchIDNotAvailable = 'LAErrorTouchIDNotAvailable'
-export const LAErrorTouchIDNotEnrolled = 'LAErrorTouchIDNotEnrolled'
-export const LAErrorTouchIDUnknownError = 'RCTTouchIDUnknownError'
-export const LAErrorTouchIDNotSupported = 'RCTTouchIDNotSupported'
+export const LAErrorAuthenticationFailed = 'AuthenticationFailed'
+export const LAErrorUserCancel = 'UserCancel'
+export const LAErrorUserFallback = 'UserFallback'
+export const LAErrorSystemCancel = 'SystemCancel'
+export const LAErrorPasscodeNotSet = 'PasscodeNotSet'
+export const LAErrorTouchIDNotAvailable = 'FingerprintScannerNotAvailable'
+export const LAErrorTouchIDNotEnrolled = 'FingerprintScannerNotEnrolled'
+export const LAErrorTouchIDUnknownError = 'FingerprintScannerUnknownError'
+export const LAErrorTouchIDNotSupported = 'FingerprintScannerNotSupported'
 export const TouchIDError = 'Touch ID Error'
 export const LAErrorTouchIDTooManyAttempts = 'FINGERPRINT_ERROR_LOCKOUT'
 

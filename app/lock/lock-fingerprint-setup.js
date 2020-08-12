@@ -85,21 +85,26 @@ export class LockFingerprintSetup extends PureComponent<
     this.touchIdHandler()
   }
   touchIdHandler = async () => {
-    if (
-      !this.props.fromSettings ||
-      (this.props.fromSettings && this.props.currentScreen === settingsRoute)
-    )
+    const currentScreenIsSettings =
+      this.props.fromSettings && this.props.currentScreen === settingsRoute
+    if (!this.props.fromSettings || currentScreenIsSettings) {
       return TouchId.isSupported()
         .then((success) => {
-          return TouchId.authenticate('', this.handleTouchID)
-            .then((success) => {
+          return TouchId.authenticate(
+            {
+              title: 'Authentication Required',
+            },
+            this.handleTouchID
+          )
+            .then(() => {
+              TouchId.release()
               this.props.fromSettings
                 ? this.goToSettingsScreen()
                 : this.goToPinSetupScreen()
             })
             .catch((error) => {
-              // captureError(error)
               if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
+                TouchId.release()
                 if (error.code === LAErrorTouchIDTooManyAttempts) {
                   this.popUpNativeAlert(touchIDAlerts.biometricsExceedAlert)
                 } else {
@@ -112,6 +117,7 @@ export class LockFingerprintSetup extends PureComponent<
         })
         .catch((error) => {
           captureError(error)
+          TouchId.release()
           if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
             let alertMessage = touchIDAlerts.notSupportedBiometrics
             if (Platform.OS === 'android') {
@@ -133,6 +139,7 @@ export class LockFingerprintSetup extends PureComponent<
             }
           }
         })
+    }
   }
 
   componentDidMount() {
