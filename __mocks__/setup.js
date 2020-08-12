@@ -166,13 +166,6 @@ jest.mock('react-native-sensitive-info', () => {
   }
 })
 
-jest.mock('react-native-touch-id', () => {
-  return {
-    authenticate: jest.fn((message) => Promise.resolve()),
-    isSupported: jest.fn((_) => Promise.resolve()),
-  }
-})
-
 jest.mock('@react-native-community/async-storage')
 
 jest.mock('@react-native-community/blur')

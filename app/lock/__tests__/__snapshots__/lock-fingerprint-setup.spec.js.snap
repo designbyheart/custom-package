@@ -110,26 +110,6 @@ exports[`<LockFingerprintSetup /> should show biometrics exceed alert in ios 1`]
 }
 `;
 
-exports[`<LockFingerprintSetup /> should show enable biometrics alert in android 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      null,
-      "You need to enable biometrics for Connect.Me in your device settings.",
-      Array [
-        Object {
-          "onPress": [Function],
-          "text": "Ok",
-        },
-      ],
-      Object {
-        "cancelable": false,
-      },
-    ],
-  ],
-}
-`;
-
 exports[`<LockFingerprintSetup /> should show enable biometrics alert in ios 1`] = `
 [MockFunction] {
   "calls": Array [

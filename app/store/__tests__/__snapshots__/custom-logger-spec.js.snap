@@ -65,7 +65,7 @@ Object {
 exports[`fn:PiiHiddenTransformer should hide all PII information with **** 1`] = `
 Object {
   "backup": Object {
-    "backupWalletPath": "/Users/CoreSimulator/Devices/5F89AA14-B694-465F-82C3-838552AB4B85/data/Containers/Data/Application/4536A441-4B70-4A30-8DCC-5274E6781535/Documents/backup.zip",
+    "backupWalletPath": "****",
     "cloudBackupPending": false,
     "error": null,
     "lastSuccessfulBackup": "2018-06-27T18:27:35+05:30",
