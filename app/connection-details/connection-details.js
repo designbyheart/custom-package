@@ -19,6 +19,7 @@ import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 import {
   updateStatusBarTheme,
   sendConnectionRedirect,
+  sendConnectionReuse,
 } from '../../app/store/connections-store'
 import { newConnectionSeen } from '../../app/connection-history/connection-history-store'
 import Snackbar from 'react-native-snackbar'
@@ -59,6 +60,8 @@ import {
   DENY_CLAIM_OFFER_SUCCESS,
 } from '../claim-offer/type-claim-offer'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
+import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
+import type { AriesOutOfBandInvite } from '../invitation/type-invitation'
 
 let ScreenWidth = Dimensions.get('window').width
 export class ConnectionDetails extends Component<
@@ -81,13 +84,29 @@ export class ConnectionDetails extends Component<
     // the check if snack bar should be displayed can be done in componentDidMount
     if (this.props.route.params.showExistingConnectionSnack) {
       this.showSnackBar()
-      this.props.sendConnectionRedirect(
-        this.props.route.params.qrCodeInvitationPayload,
-        {
-          senderDID: this.props.route.params.senderDID,
-          identifier: this.props.route.params.identifier,
+
+      const invite = this.props.route.params.qrCodeInvitationPayload
+
+      if (invite.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR) {
+        this.props.sendConnectionRedirect(
+          invite,
+          {
+            senderDID: this.props.route.params.senderDID,
+            identifier: this.props.route.params.identifier,
+          }
+        )
+      } else if (invite.type === CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND) {
+        if (!invite.originalObject) {
+          return
         }
-      )
+
+        this.props.sendConnectionReuse(
+          ((invite.originalObject: any): AriesOutOfBandInvite),
+          {
+            senderDID: this.props.route.params.senderDID,
+          }
+        )
+      }
     }
   }
 
@@ -477,6 +496,7 @@ const mapDispatchToProps = (dispatch) =>
       updateStatusBarTheme,
       newConnectionSeen,
       sendConnectionRedirect,
+      sendConnectionReuse,
     },
     dispatch
   )

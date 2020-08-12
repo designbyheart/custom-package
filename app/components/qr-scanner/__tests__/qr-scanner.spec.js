@@ -24,6 +24,7 @@ describe('<QRScanner />', () => {
     onInvitationUrl: jest.fn(),
     onOIDCAuthenticationRequest: jest.fn(),
     onAriesConnectionInviteRead: jest.fn(),
+    onAriesOutOfBandInviteRead: jest.fn(),
     onEphemeralProofRequest: jest.fn(),
   })
 

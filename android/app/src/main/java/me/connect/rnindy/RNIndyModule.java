@@ -232,6 +232,25 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void createConnectionWithOutOfBandInvite(String invitationId, String inviteDetails, Promise promise) {
+        Log.d(TAG, "createConnectionWithOutOfBandInvite() called with: invitationId = [" + invitationId +
+              "], inviteDetails = [" + inviteDetails + "]," + promise + "]");
+        try {
+            ConnectionApi.vcxCreateConnectionWithOutofbandInvite(invitationId, inviteDetails).exceptionally((t) -> {
+                Log.e(TAG, "createConnectionWithOutOfBandInvite: ", t);
+                promise.reject("FutureException", t.getMessage());
+                return -1;
+            }).thenAccept(result -> {
+                if (result != -1) {
+                    BridgeUtils.resolveIfValid(promise, result);
+                }
+            });
+        } catch (Exception e) {
+            promise.reject("VCXException", e.getMessage());
+        }
+    }
+
+    @ReactMethod
     public void vcxAcceptInvitation(int connectionHandle, String connectionType, Promise promise) {
         Log.d(TAG, "acceptInvitation()");
         try {
@@ -1311,6 +1330,24 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
                 BridgeUtils.resolveIfValid(promise, result);
             });
         } catch (VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void connectionReuse(int connectionHandle, String invite, Promise promise) {
+        Log.d(TAG, "connectionReuse() called with connectionHandle = " + connectionHandle + ", promise = " + promise);
+
+        try {
+            ConnectionApi.connectionSendReuse(connectionHandle, invite).whenComplete((result, t) -> {
+                if (t != null) {
+                    Log.e(TAG, "connectionReuse: ", t);
+                    promise.reject("VcxException", t.getMessage());
+                } else {
+                    promise.resolve(0);
+                }
+            });
+        } catch(VcxException e) {
             promise.reject("VcxException", e.getMessage());
         }
     }

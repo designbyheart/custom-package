@@ -11,6 +11,7 @@ import type { ResponseTypes } from '../components/request/type-request'
 import type {
   AriesConnectionInvite,
   AriesConnectionInvitePayload,
+  AriesOutOfBandInvite,
   InvitationProps,
   InvitationNavigation
 } from './type-invitation'
@@ -216,6 +217,97 @@ const ariesConnectionInviteQrSchema = {
     serviceEndpoint: { type: 'string' },
   },
   required: [ID, TYPE, 'recipientKeys', 'serviceEndpoint'],
+}
+
+export function isValidAriesOutOfBandInviteData(
+  invite: any,
+): false | AriesOutOfBandInvite {
+  if (!schemaValidator.validate(ariesOutOfBandInviteSchema, invite)) {
+    return false
+  }
+
+  if (
+    !invite.service.every(
+      serviceEntry =>
+        typeof(serviceEntry) === 'string' ||
+        typeof(serviceEntry) === 'object' && isUrl(serviceEntry.serviceEndpoint)
+    )
+  ) {
+    return false
+  }
+
+  return invite
+}
+
+const ariesOutOfBandInviteSchema = {
+  type: 'object',
+  properties: {
+    [ID]: { type: 'string' },
+    [TYPE]: { type: 'string' },
+    label: { type: ['null', 'string'] },
+    goal_code: { type: ['null', 'string'] },
+    goal: { type: ['null', 'string'] },
+    handshake_protocols: {
+      type: 'array',
+      items: [{ type: 'string' }],
+    },
+    'request~attach': {
+      type: 'array',
+      items: [{
+        type: 'object',
+        properties: {
+          [ID]: { type: 'string' },
+          'mime-type': { type: 'string' },
+          data: {
+            type: 'object',
+            anyOf: [
+              { properties: { json: { type: 'string' } } },
+              { properties: { base64: { type: 'string' } } },
+            ],
+            minProperties: 1,
+          },
+        },
+        required: [ID, 'mime-type', 'data'],
+      }],
+    },
+    service: {
+      type: 'array',
+      items: {
+        anyOf: [
+          { type: 'string' },
+          {
+            type: 'object',
+            properties: {
+              id: { type: 'string' },
+              type: { type: 'string' },
+              recipientKeys: {
+                type: 'array',
+                items: [{ type: 'string' }],
+                minItems: 1,
+              },
+              routingKeys: {
+                type: ['null', 'array'],
+                items: [{ type: 'string' }],
+                minItems: 0,
+              },
+              serviceEndpoint: { type: 'string' },
+            },
+            required: ['id', 'type', 'recipientKeys', 'serviceEndpoint'],
+          },
+        ],
+      },
+      minItems: 1,
+    },
+  },
+  anyOf: [
+    {
+      required: ['handshake_protocols'],
+    },
+    {
+      required: ['request~attach'],
+    },
+  ],
+  required: [ID, TYPE, 'service'],
 }
 
 function isValidInvitation(

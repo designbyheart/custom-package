@@ -50,12 +50,15 @@ import type { Store } from '../store/type-store'
 import type {
   InvitationPayload,
   AriesConnectionInvite,
+  AriesOutOfBandInvite,
+  AriesServiceEntry,
 } from '../invitation/type-invitation'
 import type {
   QRCodeScannerScreenState,
   QRCodeScannerScreenProps,
 } from './type-qr-code'
 import type { QrCodeEphemeralProofRequest } from '../proof-request/type-proof-request'
+import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
 
 import {
   MESSAGE_NO_CAMERA_PERMISSION,
@@ -258,6 +261,7 @@ export class QRCodeScannerScreen extends Component<
             onInvitationUrl={this.onInvitationUrl}
             onOIDCAuthenticationRequest={this.onOIDCAuthenticationRequest}
             onAriesConnectionInviteRead={this.onAriesConnectionInviteRead}
+            onAriesOutOfBandInviteRead={this.onAriesOutOfBandInviteRead}
             onEphemeralProofRequest={this.onEphemeralProofRequest}
           />
         ) : null}
@@ -315,6 +319,79 @@ export class QRCodeScannerScreen extends Component<
     }
 
     this.checkExistingConnectionAndRedirect({ payload: invitation })
+  }
+
+  onAriesOutOfBandInviteRead = (
+    invite: AriesOutOfBandInvite
+  ) => {
+    const payload = invite
+
+    const serviceEntry = payload.service ? ((payload.service.find(serviceEntry => typeof(serviceEntry) === 'object'): any): AriesServiceEntry) : null
+    if (!serviceEntry) {
+      this.props.navigation.goBack(null)
+
+      Alert.alert('Unsupported or invalid invitation format', 'Failed to establish connection.')
+      return
+    }
+
+    const publicDID = serviceEntry.recipientKeys[0]
+    const connectionAlreadyExist = publicDID in this.props.publicDIDs
+
+    if ((!payload.handshake_protocols || !payload.handshake_protocols.length) &&
+        (!payload['request~attach'] || !payload['request~attach'].length)) {
+      this.props.navigation.goBack(null)
+
+      Alert.alert('Invalid invitation', 'Failed to establish connection.')
+      return
+    }
+    else if (payload.handshake_protocols && payload.handshake_protocols.length &&
+             (!payload['request~attach'] || !payload['request~attach'].length)) {
+      // Call create_connection_with_outofband_invitation function to process invite.
+      // Complete connection with regular flow.
+      // UI: show invite and follow reglar connection steps.
+
+      const senderAgentKeyDelegationProof = {
+        agentDID: serviceEntry.recipientKeys[0],
+        agentDelegatedKey: serviceEntry.recipientKeys[0],
+        signature: '<no-signature-supplied>',
+      }
+
+      const invitation = {
+        senderEndpoint: serviceEntry.serviceEndpoint,
+        requestId: payload[ID],
+        senderAgentKeyDelegationProof,
+        senderName: payload.label || 'Unknown',
+        senderDID: serviceEntry.recipientKeys[0],
+        senderLogoUrl: payload.profileUrl || null,
+        senderVerificationKey: serviceEntry.recipientKeys[0],
+        targetName: payload.label || 'Unknown',
+        senderDetail: {
+          name: payload.label || 'Unknown',
+          agentKeyDlgProof: senderAgentKeyDelegationProof,
+          DID: serviceEntry.recipientKeys[0],
+          logoUrl: payload.profileUrl || null,
+          verKey: serviceEntry.recipientKeys[0],
+          publicDID: serviceEntry.recipientKeys[0],
+        },
+        senderAgencyDetail: {
+          DID: serviceEntry.recipientKeys[0],
+          verKey: serviceEntry.recipientKeys[1],
+          endpoint: serviceEntry.serviceEndpoint,
+        },
+        type: CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND,
+        version: '1.0',
+        original: JSON.stringify(invite),
+        originalObject: invite,
+      }
+
+      this.checkExistingConnectionAndRedirect({ payload: invitation })
+    }
+    else {
+      // Implement this case
+      this.props.navigation.goBack(null)
+      Alert.alert('Invalid invitation', 'Failed to establish connection.')
+      return
+    }
   }
 
   onEphemeralProofRequest = (

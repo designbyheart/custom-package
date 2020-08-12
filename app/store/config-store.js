@@ -1217,17 +1217,11 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
     const payload = JSON.parse(decryptedPayload)
     const payloadType = payload['@type']
 
-    const questionMessage = JSON.parse(payload['@msg'])
+    if (payloadType.name === 'question') {
+      // TODO: it will be changed on committed-question  in VCX 0.10.0
+      const message = JSON.parse(payload['@msg'])
+      const thread = message['~thread']
 
-    const thread = questionMessage['~thread']
-
-    if (
-      typeof questionMessage['@type'] === 'string' &&
-      (questionMessage['@type'].endsWith('question') ||
-        questionMessage['question_text'])
-    ) {
-      // TODO: Proper type check will be done once we update version VCX on 0.10.0
-      if (!decryptedPayload) return
       additionalData = convertDecryptedPayloadToQuestion(
         connectionHandle,
         decryptedPayload,
@@ -1298,6 +1292,14 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
         ...JSON.parse(message),
         proofHandle,
       }
+    }
+
+    if (payloadType.name === 'handshake-reuse-accepted') {
+      // if we have just ack data then for now send acknowledge to server
+      // so that we don't download it again
+      yield fork(updateMessageStatus, [
+        { pairwiseDID: forDID, uids: [uid] },
+      ])
     }
 
     if (payloadType && payloadType.name === 'aries' && payload['@msg']) {

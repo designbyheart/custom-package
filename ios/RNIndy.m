@@ -703,6 +703,24 @@ RCT_EXPORT_METHOD(createConnectionWithInvite: (NSString *)invitationId
   }];
 }
 
+RCT_EXPORT_METHOD(createConnectionWithOutOfBandInvite: (NSString *)invitationId
+                                               invite: (NSString *)invite
+                                             resolver: (RCTPromiseResolveBlock) resolve
+                                             rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] connectionCreateWithOutofbandInvite:invitationId
+                                                            invite:invite
+                                                        completion:^(NSError *error, NSInteger connectionHandle) {
+     if (error != nil && error.code != 0)
+     {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, @"Error occurred while creating connection", error);
+     } else {
+       resolve(@(connectionHandle));
+     }
+  }];
+}
+
 RCT_EXPORT_METHOD(vcxAcceptInvitation: (NSInteger )connectionHandle
                     connectionType: (NSString *)connectionType
                           resolver: (RCTPromiseResolveBlock) resolve
@@ -1141,6 +1159,25 @@ RCT_EXPORT_METHOD(getRedirectDetails:(NSInteger)connection_handle
      }
      else {
        resolve(redirectDetails);
+     }
+   }];
+}
+
+RCT_EXPORT_METHOD(connectionReuse:(NSInteger)connection_handle
+                  invite: (NSString *)invite
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] connectionSendReuse:connection_handle
+                                            invite:invite
+                                    withCompletion:^(NSError *error)
+   {
+     if (error != nil && error.code != 0) {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, @"Error occurred while reusing to existing connection", error);
+     }
+     else {
+       resolve(@{});
      }
    }];
 }

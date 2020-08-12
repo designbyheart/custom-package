@@ -28,7 +28,10 @@ import {
 } from '../store/type-config-store'
 import { PROOF_REQUEST_RECEIVED } from '../proof-request/type-proof-request'
 import { QUESTION_RECEIVED } from '../question/type-question'
-import { SEND_REDIRECT_SUCCESS } from '../store/type-connection-store'
+import {
+  SEND_REDIRECT_SUCCESS,
+  SEND_REUSE_SUCCESS,
+} from '../store/type-connection-store'
 import { getConnectionsCount } from '../store/store-selector'
 
 export function* watchMessageDownload(): any {
@@ -46,6 +49,7 @@ function* watchManualDownloadTrigger(): any {
       SEND_CLAIM_REQUEST_SUCCESS,
       SEND_PAID_CREDENTIAL_REQUEST,
       SEND_REDIRECT_SUCCESS,
+      SEND_REUSE_SUCCESS,
     ],
     triggerDownloadSaga
   )
