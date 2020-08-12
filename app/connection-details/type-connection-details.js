@@ -60,6 +60,7 @@ import {
   UPDATE_QUESTION_ANSWER,
 } from '../question/type-question'
 import { sendConnectionRedirect } from '../store/connections-store'
+import { sendConnectionReuse } from '../store/connections-store'
 
 export const HISTORY_EVENT_STATUS = {
   [INVITATION_RECEIVED]: 'CONNECTION REQUEST',
@@ -274,6 +275,7 @@ export type ConnectionHistoryProps = {
   activeConnectionThemeSecondary: string,
   connectionHistory: ConnectionHistoryEvent[],
   sendConnectionRedirect: typeof sendConnectionRedirect,
+  sendConnectionReuse: typeof sendConnectionReuse,
   newConnectionSeen: Function,
   updateStatusBarTheme: (color?: string) => void,
   deleteConnectionAction: (senderDID: string) => void,

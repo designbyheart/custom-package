@@ -26,7 +26,10 @@ import type {
   SignDataResponse,
   VcxConnectionConnectV2Result,
 } from './type-cxs'
-import type { InvitationPayload } from '../../invitation/type-invitation'
+import type {
+  AriesOutOfBandInvite,
+  InvitationPayload,
+} from '../../invitation/type-invitation'
 import {
   convertAgencyConfigToVcxProvision,
   convertVcxProvisionResultToUserOneTimeInfo,
@@ -277,6 +280,17 @@ export async function createConnectionWithAriesInvite(
   invitation: InvitationPayload
 ): Promise<number> {
   const connectionHandle: number = await RNIndy.createConnectionWithInvite(
+    invitation.requestId,
+    invitation.original
+  )
+
+  return connectionHandle
+}
+
+export async function createConnectionWithAriesOutOfBandInvite(
+  invitation: InvitationPayload
+): Promise<number> {
+  const connectionHandle: number = await RNIndy.createConnectionWithOutOfBandInvite(
     invitation.requestId,
     invitation.original
   )
@@ -821,6 +835,13 @@ export async function connectionRedirect(
   connectionHandle: number
 ): Promise<void> {
   return RNIndy.connectionRedirect(redirectConnectionHandle, connectionHandle)
+}
+
+export async function connectionReuse(
+  connectionHandle: number,
+  invite: AriesOutOfBandInvite
+): Promise<void> {
+  return RNIndy.connectionReuse(connectionHandle, JSON.stringify(invite))
 }
 
 export async function getRedirectDetails(

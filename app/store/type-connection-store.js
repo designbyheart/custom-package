@@ -1,5 +1,8 @@
 // @flow
-import type { InvitationPayload } from '../invitation/type-invitation'
+import type {
+  AriesOutOfBandInvite,
+  InvitationPayload,
+} from '../invitation/type-invitation'
 import type { CustomError } from '../common/type-common'
 
 export const UPDATE_CONNECTION_THEME = 'UPDATE_CONNECTION_THEME'
@@ -106,6 +109,18 @@ export type SendConnectionRedirectAction = {
 }
 
 export const SEND_REDIRECT_SUCCESS = 'SEND_REDIRECT_SUCCESS'
+
+export const SEND_CONNECTION_REUSE: 'SEND_CONNECTION_REUSE' =
+  'SEND_CONNECTION_REUSE'
+export type SendConnectionReuseAction = {
+  type: typeof SEND_CONNECTION_REUSE,
+  invite: AriesOutOfBandInvite,
+  existingConnectionDetails: {
+    senderDID: string,
+  },
+}
+
+export const SEND_REUSE_SUCCESS = 'SEND_REUSE_SUCCESS'
 
 export const UPDATE_CONNECTION_FAIL: 'UPDATE_CONNECTION_FAIL' =
   'UPDATE_CONNECTION_FAIL'

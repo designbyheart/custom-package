@@ -3,6 +3,7 @@
 import type {
   InvitationPayload,
   AriesConnectionInvite,
+  AriesOutOfBandInvite,
 } from '../../invitation/type-invitation'
 import type { QrCodeEphemeralProofRequest } from '../../proof-request/type-proof-request'
 
@@ -84,6 +85,7 @@ export type QrScannerProps = {
   onInvitationUrl: InvitationPayload => void,
   onOIDCAuthenticationRequest: OIDCAuthenticationRequest => void,
   onAriesConnectionInviteRead: AriesConnectionInvite => void,
+  onAriesOutOfBandInviteRead: AriesOutOfBandInvite => void,
   onEphemeralProofRequest: QrCodeEphemeralProofRequest => void,
 }
 

@@ -30,10 +30,14 @@ import type {
   DeleteConnectionFailureEventAction,
   DeleteConnectionEventAction,
   SendConnectionRedirectAction,
+  SendConnectionReuseAction,
   UpdateSerializeConnectionFailAction,
   UpdateConnectionSerializedStateAction,
 } from './type-connection-store'
-import type { InvitationPayload } from '../invitation/type-invitation'
+import type {
+  AriesOutOfBandInvite,
+  InvitationPayload,
+} from '../invitation/type-invitation'
 import {
   NEW_CONNECTION,
   DELETE_CONNECTION_SUCCESS,
@@ -46,9 +50,11 @@ import {
   NEW_CONNECTION_FAIL,
   HYDRATE_CONNECTIONS,
   SEND_CONNECTION_REDIRECT,
+  SEND_CONNECTION_REUSE,
   UPDATE_SERIALIZE_CONNECTION_FAIL,
   UPDATE_CONNECTION_SERIALIZED_STATE,
   SEND_REDIRECT_SUCCESS,
+  SEND_REUSE_SUCCESS,
   UPDATE_CONNECTION_FAIL,
 } from './type-connection-store'
 import {
@@ -56,6 +62,7 @@ import {
   getHandleBySerializedConnection,
   createConnectionWithInvite,
   connectionRedirect,
+  connectionReuse,
 } from '../bridge/react-native-cxs/RNCxs'
 import { RESET } from '../common/type-common'
 import type { UserOneTimeInfo } from './user/type-user-store'
@@ -342,6 +349,18 @@ export const sendConnectionRedirect = (
   existingConnectionDetails,
 })
 
+export const sendConnectionReuse = (
+  invite: AriesOutOfBandInvite,
+  existingConnectionDetails: $PropertyType<
+    SendConnectionReuseAction,
+    'existingConnectionDetails'
+  >
+) => ({
+  type: SEND_CONNECTION_REUSE,
+  invite,
+  existingConnectionDetails,
+})
+
 function* sendConnectionRedirectSaga(
   action: SendConnectionRedirectAction
 ): Generator<*, *, *> {
@@ -405,8 +424,64 @@ function* sendConnectionRedirectSaga(
   }
 }
 
+function* sendConnectionReuseSaga(
+  action: SendConnectionReuseAction
+): Generator<*, *, *> {
+  try {
+    const vcxResult = yield* ensureVcxInitSuccess()
+    if (vcxResult && vcxResult.fail) {
+      throw new Error(vcxResult.fail.message)
+    }
+
+    try {
+      // get reuse connection handle
+      const [connection]: Array<Connection> = yield select(
+        getConnectionBySenderDid,
+        action.existingConnectionDetails.senderDID,
+      )
+      const connectionHandle = yield call(
+        getHandleBySerializedConnection,
+        connection.vcxSerializedConnection,
+      )
+
+      try {
+        // call API for connectionReuse
+        yield call(
+          connectionReuse,
+          connectionHandle,
+          action.invite,
+        )
+        yield put({
+          type: SEND_REUSE_SUCCESS,
+        })
+      } catch (e) {
+        // catch error if connectionReuse API fails
+        yield put({
+          type: 'ERROR_SENDING_REUSE',
+          e,
+        })
+      }
+
+    } catch (e) {
+      // catch error if existing handle is not found
+      yield put({
+        type: 'ERROR_CONNECTION_HANDLE_REUSE',
+        e,
+      })
+    }
+  } catch (e) {
+    // catch error
+    captureError(e)
+    customLogger.error(`connectionReuse: ${e}`)
+  }
+}
+
 export function* watchSendConnectionRedirect(): any {
   yield takeEvery(SEND_CONNECTION_REDIRECT, sendConnectionRedirectSaga)
+}
+
+export function* watchSendConnectionReuse(): any {
+  yield takeEvery(SEND_CONNECTION_REUSE, sendConnectionReuseSaga)
 }
 
 export function* watchUpdateConnectionTheme(): any {
@@ -419,6 +494,7 @@ export function* watchConnection(): any {
     watchNewConnection(),
     watchUpdateConnectionTheme(),
     watchSendConnectionRedirect(),
+    watchSendConnectionReuse(),
   ])
 }
 

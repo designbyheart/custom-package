@@ -16,7 +16,10 @@ import { Container } from '../layout/container'
 import { CustomView } from '../layout/custom-view'
 import CustomText from '../text'
 import Icon from '../icon'
-import { isValidAriesV1InviteData } from '../../invitation/invitation'
+import {
+  isValidAriesV1InviteData,
+  isValidAriesOutOfBandInviteData,
+} from '../../invitation/invitation'
 import {
   color,
   OFFSET_2X,
@@ -230,6 +233,11 @@ export default class QRScanner extends PureComponent<
       return this.props.onEphemeralProofRequest(
         ephemeralProofRequest.proofRequest
       )
+    }
+
+    const outOfBandInvite = isValidAriesOutOfBandInviteData(qrData)
+    if (outOfBandInvite) {
+      return this.props.onAriesOutOfBandInviteRead(outOfBandInvite)
     }
 
     // if none of the code matches
