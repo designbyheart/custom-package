@@ -36,6 +36,7 @@ import {
   connectionSignData,
   connectionSendMessage,
 } from '../../bridge/react-native-cxs/RNCxs'
+import { retrySaga } from '../../api/api-utils'
 
 describe('Question Store', () => {
   const { uid, valid_responses } = mockQuestionPayload
@@ -148,7 +149,7 @@ describe('Question Store', () => {
     }
 
     const message = getUserAnswer(signDataResponse)
-    if (thread !== null) {
+    if (thread) {
       message['~thread'] = thread
     }
     return expectSaga(

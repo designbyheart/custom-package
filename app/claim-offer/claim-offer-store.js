@@ -104,6 +104,7 @@ import type { LedgerFeesData } from '../ledger/type-ledger-store'
 import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
+import { retrySaga } from '../api/api-utils'
 
 const claimOfferInitialState = {
   vcxSerializedClaimOffers: {},
@@ -335,11 +336,8 @@ export function* claimOfferAccepted(
     const paymentHandle = 0
 
     try {
-      yield call(
-        sendClaimRequestApi,
-        claimHandle,
-        connectionHandle,
-        paymentHandle
+      yield* retrySaga(
+        call(sendClaimRequestApi, claimHandle, connectionHandle, paymentHandle)
       )
       yield put(sendClaimRequestSuccess(messageId, claimOfferPayload))
       // if we are able to send claim request successfully,
