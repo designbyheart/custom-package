@@ -11,12 +11,6 @@ import type {
   NavigationLeafRoute,
 } from '@react-navigation/native'
 
-export type QuestionThread = {
-  thid: string,
-  sender_order: number,
-  received_orders: Object,
-} | null
-
 export type QuestionScreenProps = {
   updateQuestionStatus: (
     uid: string,
@@ -26,7 +20,6 @@ export type QuestionScreenProps = {
   sendAnswerToQuestion: (
     uid: string,
     answer: QuestionResponse,
-    thread?: QuestionThread | null
   ) => SendAnswerToQuestionAction,
   question?: QuestionStoreMessage,
   senderLogoUrl?: null | number | GenericObject,
@@ -49,7 +42,6 @@ export type SendAnswerToQuestionAction = {
   type: typeof SEND_ANSWER_TO_QUESTION,
   uid: string,
   answer: QuestionResponse,
-  thread: Object,
 }
 
 export const UPDATE_QUESTION_STATUS = 'UPDATE_QUESTION_STATUS'
@@ -82,11 +74,12 @@ export type HydrateQuestionStoreAction = {
 
 export type QuestionResponse = {
   text: string,
-  nonce: string,
+  nonce?: string,
 }
 
 // TODO: Convert property names as per JS standard for naming without underscores
 export type QuestionPayload = {
+  protocol?: string,
   messageTitle: string,
   messageText: string,
   '@type': string,
@@ -102,7 +95,7 @@ export type QuestionPayload = {
   forDID: string,
   remotePairwiseDID?: string,
   externalLinks: Array<ExternalLink>,
-  '~thread'?: QuestionThread | null,
+  originalQuestion?: string,
 }
 
 export type QuestionRequest = {
@@ -113,6 +106,16 @@ export type QuestionRequest = {
   valid_responses: Array<QuestionResponse>,
   '@timing': { expires_time: string },
   external_links?: Array<ExternalLink>,
+}
+
+export type AriesQuestionRequest = {
+  '@type': string,
+  '@id': string,
+  question_text: string,
+  question_detail: string,
+  nonce: string,
+  valid_responses: Array<QuestionResponse>,
+  '~timing': { expires_time: string },
 }
 
 export type ExternalLink = {
@@ -251,7 +254,17 @@ export const ERROR_TOO_MANY_EXTERNAL_LINKS = {
     '"external_links" array should not have more than 1000 link objects.',
 }
 
-export const QUESTION_ANSWER_PROTOCOL1 =
+export const ERROR_RESPONSE_NOT_UNIQUE_ANSWERS = {
+  code: 'CM-QUE-013',
+  message: 'Not every response in valid_responses array has unique text',
+}
+
+export const ERROR_NO_QUESTION_NONCE = {
+  code: 'CM-QUE-014',
+  message: 'Question does not contain nonce.',
+}
+
+export const COMMITEDANSWER_QUESTION_PROTOCOL =
   'did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/committedanswer/1.0/answer'
 
 export const MESSAGE_TYPE_ANSWER = 'Answer'
@@ -263,3 +276,6 @@ export const TEXT_SUBMIT = 'Submit'
 export const TEXT_CANCEL = 'Cancel'
 export const TEXT_TRY_AGAIN = 'Try Again'
 export const TEXT_OK = 'OK'
+
+export const QUESTIONANSWER_PROTOCOL = 'questionanswer'
+export const COMMITEDANSWER_PROTOCOL = 'commitedanswer'

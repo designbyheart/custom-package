@@ -1489,4 +1489,25 @@ RCT_EXPORT_METHOD(fetchPublicEntities:(RCTPromiseResolveBlock) resolve
    }];
 }
 
+RCT_EXPORT_METHOD(connectionSendAnswer: (NSInteger) connectionHandle
+                  question: (NSString *) question
+                  answer: (NSString *)answer
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] connectionSendAnswer:connectionHandle
+                                         question:question
+                                            answer:answer
+                                      withCompletion:^(NSError *error)
+   {
+     if (error != nil && error.code != 0) {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, @"Error occurred while sending answer", error);
+     }
+     else {
+       resolve(@{});
+     }
+   }];
+}
+
 @end

@@ -83,7 +83,6 @@ describe('<QuestionScreen />', () => {
     expect(props.sendAnswerToQuestion).toHaveBeenCalledWith(
       mockQuestionPayload2.uid,
       component.getInstance().state.response,
-      null
     )
   })
 

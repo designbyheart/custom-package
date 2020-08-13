@@ -28,7 +28,7 @@ const QuestionResponses = (props: {
       {trimmedResponses.map((response, i) => {
         const radioData = { label: response.text, value: i }
         const isSelected =
-          selectedResponse && selectedResponse.nonce === response.nonce
+          selectedResponse && selectedResponse.text === response.text
 
         return (
           <RadioButton

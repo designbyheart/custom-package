@@ -229,25 +229,6 @@ export class Question extends Component<
       this.props.sendAnswerToQuestion(
         this.props.question.payload.uid,
         this.state.response,
-        null
-      )
-    } else {
-      customLogger.log(
-        'called onSubmit for question response without either uid or selecting response'
-      )
-    }
-
-    // Aries-based question
-    if (
-      this.props.question &&
-      this.props.question.payload.uid &&
-      this.props.question.payload['~thread'] &&
-      this.state.response
-    ) {
-      this.props.sendAnswerToQuestion(
-        this.props.question.payload.uid,
-        this.state.response,
-        this.props.question.payload['~thread']
       )
     } else {
       customLogger.log(

@@ -170,7 +170,7 @@ const QuestionResponseButton = ({
           isPrimaryResponse && questionStyles.submitButton,
         ]}
         title={buttonText}
-        testID={`${response.nonce}-submit`}
+        testID={`${response.nonce ? response.nonce : response.text}-submit`}
         onPress={onResponse}
         titleStyle={isPrimaryResponse ? {} : questionStyles.cancelBtnColor}
       />
