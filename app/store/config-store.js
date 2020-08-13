@@ -1297,9 +1297,7 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
     if (payloadType.name === 'handshake-reuse-accepted') {
       // if we have just ack data then for now send acknowledge to server
       // so that we don't download it again
-      yield fork(updateMessageStatus, [
-        { pairwiseDID: forDID, uids: [uid] },
-      ])
+      yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
     }
 
     if (payloadType && payloadType.name === 'aries' && payload['@msg']) {

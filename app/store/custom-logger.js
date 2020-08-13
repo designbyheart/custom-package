@@ -20,7 +20,10 @@ import {
   DELETE_CONNECTION_SUCCESS,
   NEW_CONNECTION,
   DELETE_CONNECTION_FAILURE,
-  DELETE_CONNECTION, UPDATE_SERIALIZE_CONNECTION_FAIL, UPDATE_CONNECTION_SERIALIZED_STATE, SEND_CONNECTION_REDIRECT,
+  DELETE_CONNECTION,
+  UPDATE_SERIALIZE_CONNECTION_FAIL,
+  UPDATE_CONNECTION_SERIALIZED_STATE,
+  SEND_CONNECTION_REDIRECT,
 } from './type-connection-store'
 import { NEW_CONNECTION_SUCCESS } from './new-connection-success'
 import { HYDRATE_CONNECTIONS } from './type-connection-store'
@@ -56,12 +59,14 @@ import {
   UPDATE_ATTRIBUTE_CLAIM,
   PROOF_SUCCESS,
   USER_SELF_ATTESTED_ATTRIBUTES,
-  PROOF_REQUEST_SEND_PROOF_HANDLE, RETRY_SEND_PROOF,
+  PROOF_REQUEST_SEND_PROOF_HANDLE,
+  RETRY_SEND_PROOF,
 } from '../proof/type-proof'
 import {
   HYDRATE_PROOF_REQUESTS,
   MISSING_ATTRIBUTES_FOUND,
-  PROOF_REQUEST_AUTO_FILL, PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND,
+  PROOF_REQUEST_AUTO_FILL,
+  PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND,
   PROOF_REQUEST_RECEIVED,
   PROOF_SERIALIZED,
 } from '../proof-request/type-proof-request'
@@ -86,31 +91,45 @@ import {
   HYDRATE_WALLET_HISTORY,
   SEND_TOKENS_FAIL,
   WALLET_ADDRESSES_REFRESHED,
-  SEND_TOKENS, REFRESH_WALLET_BALANCE,
+  SEND_TOKENS,
+  REFRESH_WALLET_BALANCE,
 } from '../wallet/type-wallet'
 import { SHOW_IN_APP_NOTIFICATION } from '../in-app-notification/in-app-notification-type'
-import { RESTORE_SUBMIT_PASSPHRASE, SAVE_FILE_TO_APP_DIRECTORY } from '../restore/type-restore'
+import {
+  RESTORE_SUBMIT_PASSPHRASE,
+  SAVE_FILE_TO_APP_DIRECTORY,
+} from '../restore/type-restore'
 import { RESTORE_CLOUD_SUBMIT_PASSPHRASE } from '../cloud-restore/cloud-restore-type'
 import { HYDRATE_CLAIM_MAP_FAIL } from '../connection-details/components/types/type-details-claim'
 import { ERROR_SEND_PROOF } from '../connection-details/components/types/type-details-proof'
 import {
-  INVITATION_RECEIVED, INVITATION_REJECTED, INVITATION_RESPONSE_FAIL,
+  INVITATION_RECEIVED,
+  INVITATION_REJECTED,
+  INVITATION_RESPONSE_FAIL,
   INVITATION_RESPONSE_SEND,
   INVITATION_RESPONSE_SUCCESS,
 } from '../invitation/type-invitation'
 import { CHECK_PIN, SET_PIN } from '../lock/type-lock'
 import { OPEN_ID_CONNECT_UPDATE_STATUS } from '../open-id-connect/open-id-connect-actions'
 import {
-  FETCH_ADDITIONAL_DATA, FETCH_ADDITIONAL_DATA_PENDING_KEYS, HYDRATE_PUSH_TOKEN,
+  FETCH_ADDITIONAL_DATA,
+  FETCH_ADDITIONAL_DATA_PENDING_KEYS,
+  HYDRATE_PUSH_TOKEN,
   PUSH_NOTIFICATION_RECEIVED,
-  PUSH_NOTIFICATION_UPDATE_TOKEN, UPDATE_RELEVANT_PUSH_PAYLOAD_STORE, UPDATE_RELEVANT_PUSH_PAYLOAD_STORE_AND_REDIRECT,
+  PUSH_NOTIFICATION_UPDATE_TOKEN,
+  UPDATE_RELEVANT_PUSH_PAYLOAD_STORE,
+  UPDATE_RELEVANT_PUSH_PAYLOAD_STORE_AND_REDIRECT,
 } from '../push-notification/type-push-notification'
 import {
   SMS_PENDING_INVITATION_FAIL,
   SMS_PENDING_INVITATION_RECEIVED,
-  SMS_PENDING_INVITATION_REQUEST, SMS_PENDING_INVITATION_SEEN,
+  SMS_PENDING_INVITATION_REQUEST,
+  SMS_PENDING_INVITATION_SEEN,
 } from '../sms-pending-invitation/type-sms-pending-invitation'
-import { SERVER_ENVIRONMENT_CHANGED, SWITCH_ENVIRONMENT } from './type-config-store'
+import {
+  SERVER_ENVIRONMENT_CHANGED,
+  SWITCH_ENVIRONMENT,
+} from './type-config-store'
 
 const { RNIndy } = NativeModules
 
@@ -155,115 +174,115 @@ export const customLogger = {
   logLevel: 'debug',
   alsoLogToConsole: process.env.NODE_ENV !== 'test' && __DEV__,
   MAX_ALLOWED_FILE_BYTES: 10000000,
-  log: function(...allArgs: any[]) {
+  log: function (...allArgs: any[]) {
     //console.log(JSON.stringify(allArgs))
     this.addRecord({ levelName: 'log', args: allArgs })
     if (this.alsoLogToConsole) {
       console.log.apply(null, allArgs)
     }
   },
-  error: function(...allArgs: any[]) {
+  error: function (...allArgs: any[]) {
     this.addRecord({ levelName: 'error', args: allArgs })
     if (this.alsoLogToConsole && detox !== 'yes') {
       console.error.apply(null, allArgs)
     }
   },
-  assert: function(...allArgs: any[]) {
+  assert: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.assert.apply(null, allArgs)
     }
   },
-  clear: function(...allArgs: any[]) {
+  clear: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.clear.apply(null, allArgs)
     }
   },
-  count: function(...allArgs: any[]) {
+  count: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.count.apply(null, allArgs)
     }
   },
-  debug: function(...allArgs: any[]) {
+  debug: function (...allArgs: any[]) {
     this.addRecord({ levelName: 'debug', args: allArgs })
     if (this.alsoLogToConsole) {
       console.debug.apply(null, allArgs)
     }
   },
-  dir: function(...allArgs: any[]) {
+  dir: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.dir.apply(null, allArgs)
     }
   },
-  dirxml: function(...allArgs: any[]) {
+  dirxml: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.dirxml.apply(null, allArgs)
     }
   },
-  group: function(...allArgs: any[]) {
+  group: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.group.apply(null, allArgs)
     }
   },
-  groupCollapsed: function(...allArgs: any[]) {
+  groupCollapsed: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.groupCollapsed.apply(null, allArgs)
     }
   },
-  groupEnd: function(...allArgs: any[]) {
+  groupEnd: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.groupEnd.apply(null, allArgs)
     }
   },
-  info: function(...allArgs: any[]) {
+  info: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.info.apply(null, allArgs)
     }
   },
-  table: function(...allArgs: any[]) {
+  table: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.table.apply(null, allArgs)
     }
   },
-  time: function(...allArgs: any[]) {
+  time: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.time.apply(null, allArgs)
     }
   },
-  timeEnd: function(...allArgs: any[]) {
+  timeEnd: function (...allArgs: any[]) {
     if (this.alsoLogToConsole) {
       console.timeEnd.apply(null, allArgs)
     }
   },
-  trace: function(...allArgs: any[]) {
+  trace: function (...allArgs: any[]) {
     this.addRecord({ levelName: 'trace', args: allArgs })
     if (this.alsoLogToConsole) {
       console.trace.apply(null, allArgs)
     }
   },
-  warn: function(...allArgs: any[]) {
+  warn: function (...allArgs: any[]) {
     this.addRecord({ levelName: 'warn', args: allArgs })
     if (this.alsoLogToConsole) {
       console.warn.apply(null, allArgs)
     }
   },
 
-  captureException: function(error: Error) {
+  captureException: function (error: Error) {
     this.log(error.toString())
   },
 
-  setVcxLogFile: function(logFile: string) {
+  setVcxLogFile: function (logFile: string) {
     this.vcxLogFile = logFile
   },
 
-  getVcxLogFile: function() {
+  getVcxLogFile: function () {
     return this.vcxLogFile
   },
 
-  getEncryptedVcxLogFile: function() {
+  getEncryptedVcxLogFile: function () {
     return this.encryptedLogFile
   },
 
-  init: function(levelName: string) {
+  init: function (levelName: string) {
     if (!this.initOnlyOnce) {
       this.initOnlyOnce = true
       this.logLevel = levelName
@@ -273,10 +292,10 @@ export const customLogger = {
       )
       if (fetchPromise) {
         fetchPromise
-          .then(function(response) {
+          .then(function (response) {
             return response.text()
           })
-          .then(function(verKey) {
+          .then(function (verKey) {
             //console.log('The encryption key is: ', verKey)
             CUSTOM_LOG_UTILS.encryptionKey = verKey
           })
@@ -284,30 +303,30 @@ export const customLogger = {
 
       // invoke the RNIndy.setVcxLogger function
       uniqueId()
-        .then(uniqueIdent => {
+        .then((uniqueIdent) => {
           //console.log('The app unique id is: ', uniqueIdent)
           setVcxLogger(this.logLevel, uniqueIdent, this.MAX_ALLOWED_FILE_BYTES)
-            .then(logFilePath => {
+            .then((logFilePath) => {
               this.setVcxLogFile(logFilePath)
               //console.log('Setting vcx log file to: ', logFilePath)
             })
-            .catch(error => {
+            .catch((error) => {
               console.error('Error setting vcx log file: ', error)
             })
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error getting unique id in redux store: ', error)
         })
     }
   },
 
-  addRecord: function(record: any) {
+  addRecord: function (record: any) {
     // write the logging record to the debug file
     const rotatingLog = this.getVcxLogFile()
     if (rotatingLog) {
       RNFetchBlob.fs
         .exists(rotatingLog)
-        .then(exists => {
+        .then((exists) => {
           if (exists) {
             if (this.recordBuffer.length) {
               for (let i = 0; i < this.recordBuffer.length; ++i) {
@@ -328,7 +347,7 @@ export const customLogger = {
     }
   },
 
-  addRecordToBuffer: function(record: any) {
+  addRecordToBuffer: function (record: any) {
     if (this.recordBuffer.length <= 0 && !this.initOnlyOnce) {
       // This logic MUST ensure that this.init() is only invoked ONCE
       this.init('debug')
@@ -336,7 +355,7 @@ export const customLogger = {
     this.recordBuffer.push(record)
   },
 
-  writeToLog: function(rotatingLog: string, record: any) {
+  writeToLog: function (rotatingLog: string, record: any) {
     const recordAsString = JSON.stringify(record)
 
     if (recordAsString.indexOf('%c prev state') === -1) {
@@ -349,7 +368,7 @@ export const customLogger = {
         .then(() => {
           //console.log('Wrote log message ' + recordAsString + ' to log file: ', rotatingLog)
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(
             'Error writing log message ' + recordAsString + ' to log file: ',
             rotatingLog
@@ -358,7 +377,7 @@ export const customLogger = {
     }
   },
 
-  encryptLogFile: async function() {
+  encryptLogFile: async function () {
     const rotatingLog = this.getVcxLogFile()
     this.encryptedLogFile = await encryptVcxLog(
       rotatingLog,
@@ -368,9 +387,9 @@ export const customLogger = {
     return this.encryptedLogFile
   },
 
-  clearRecords: function() {},
+  clearRecords: function () {},
 
-  getRecords: function() {},
+  getRecords: function () {},
 }
 
 const hidePii = !__DEV__ || process.env.NODE_ENV === 'test'
@@ -494,11 +513,22 @@ export function PiiHiddenActionTransformer(action: any) {
     [HYDRATE_CONNECTIONS]: ['connections'],
     [NEW_CONNECTION_SEEN]: ['senderDid'],
     [UPDATE_SERIALIZE_CONNECTION_FAIL]: ['identifier'],
-    [UPDATE_CONNECTION_SERIALIZED_STATE]: ['identifier', 'vcxSerializedConnection'],
-    [SEND_CONNECTION_REDIRECT]: ['qrCodeInvitationPayload', 'existingConnectionDetails'],
+    [UPDATE_CONNECTION_SERIALIZED_STATE]: [
+      'identifier',
+      'vcxSerializedConnection',
+    ],
+    [SEND_CONNECTION_REDIRECT]: [
+      'qrCodeInvitationPayload',
+      'existingConnectionDetails',
+    ],
 
     [CLAIM_RECEIVED]: ['claim'],
-    [MAP_CLAIM_TO_SENDER]: ['claimUuid', 'senderDID', 'myPairwiseDID', 'logoUrl'],
+    [MAP_CLAIM_TO_SENDER]: [
+      'claimUuid',
+      'senderDID',
+      'myPairwiseDID',
+      'logoUrl',
+    ],
     [CLAIM_RECEIVED_VCX]: ['claim'],
     [CLAIM_OFFER_RECEIVED]: ['payload', 'payloadInfo'],
     [SEND_CLAIM_REQUEST]: ['payload'],
@@ -539,7 +569,10 @@ export function PiiHiddenActionTransformer(action: any) {
     [PROOF_REQUEST_RECEIVED]: ['payload', 'payloadInfo'],
     [PROOF_SERIALIZED]: ['serializedProof'],
     [ERROR_SEND_PROOF]: ['remoteDid'],
-    [RETRY_SEND_PROOF]: ['selfAttestedAttributes', 'updateAttributeClaimAction'],
+    [RETRY_SEND_PROOF]: [
+      'selfAttestedAttributes',
+      'updateAttributeClaimAction',
+    ],
     [PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND]: ['dissatisfiedAttributes'],
 
     [QUESTION_RECEIVED]: ['question'],
@@ -577,8 +610,12 @@ export function PiiHiddenActionTransformer(action: any) {
     [CHECK_PIN]: ['pin'],
 
     [SERVER_ENVIRONMENT_CHANGED]: ['serverEnvironment'],
-    [SWITCH_ENVIRONMENT]: ['poolConfig', 'agencyUrl', 'agencyDID',
-      'agencyVerificationKey'],
+    [SWITCH_ENVIRONMENT]: [
+      'poolConfig',
+      'agencyUrl',
+      'agencyDID',
+      'agencyVerificationKey',
+    ],
 
     [REFRESH_WALLET_BALANCE]: ['walletBalance'],
   }

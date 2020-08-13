@@ -13,7 +13,7 @@ import type {
   AriesConnectionInvitePayload,
   AriesOutOfBandInvite,
   InvitationProps,
-  InvitationNavigation
+  InvitationNavigation,
 } from './type-invitation'
 
 import { CONNECTION_INVITE_TYPES } from './type-invitation'
@@ -220,7 +220,7 @@ const ariesConnectionInviteQrSchema = {
 }
 
 export function isValidAriesOutOfBandInviteData(
-  invite: any,
+  invite: any
 ): false | AriesOutOfBandInvite {
   if (!schemaValidator.validate(ariesOutOfBandInviteSchema, invite)) {
     return false
@@ -228,9 +228,10 @@ export function isValidAriesOutOfBandInviteData(
 
   if (
     !invite.service.every(
-      serviceEntry =>
-        typeof(serviceEntry) === 'string' ||
-        typeof(serviceEntry) === 'object' && isUrl(serviceEntry.serviceEndpoint)
+      (serviceEntry) =>
+        typeof serviceEntry === 'string' ||
+        (typeof serviceEntry === 'object' &&
+          isUrl(serviceEntry.serviceEndpoint))
     )
   ) {
     return false
@@ -253,22 +254,24 @@ const ariesOutOfBandInviteSchema = {
     },
     'request~attach': {
       type: 'array',
-      items: [{
-        type: 'object',
-        properties: {
-          [ID]: { type: 'string' },
-          'mime-type': { type: 'string' },
-          data: {
-            type: 'object',
-            anyOf: [
-              { properties: { json: { type: 'string' } } },
-              { properties: { base64: { type: 'string' } } },
-            ],
-            minProperties: 1,
+      items: [
+        {
+          type: 'object',
+          properties: {
+            [ID]: { type: 'string' },
+            'mime-type': { type: 'string' },
+            data: {
+              type: 'object',
+              anyOf: [
+                { properties: { json: { type: 'string' } } },
+                { properties: { base64: { type: 'string' } } },
+              ],
+              minProperties: 1,
+            },
           },
+          required: [ID, 'mime-type', 'data'],
         },
-        required: [ID, 'mime-type', 'data'],
-      }],
+      ],
     },
     service: {
       type: 'array',

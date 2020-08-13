@@ -102,10 +102,10 @@ export function* sendResponse(
     const isAriesInvite = Boolean(payload.original)
     const isOutOfBandInvite = Boolean(payload.type == 'ARIES_OUT_OF_BAND')
     const createConnectionApi = isAriesInvite
-          ? (isOutOfBandInvite
-             ? createConnectionWithAriesOutOfBandInvite
-             : createConnectionWithAriesInvite)
-          : createConnectionWithInvite
+      ? isOutOfBandInvite
+        ? createConnectionWithAriesOutOfBandInvite
+        : createConnectionWithAriesInvite
+      : createConnectionWithInvite
 
     const connectionHandle: number = yield call(createConnectionApi, payload)
     const pairwiseInfo: MyPairwiseInfo = yield call(

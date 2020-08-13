@@ -321,31 +321,40 @@ export class QRCodeScannerScreen extends Component<
     this.checkExistingConnectionAndRedirect({ payload: invitation })
   }
 
-  onAriesOutOfBandInviteRead = (
-    invite: AriesOutOfBandInvite
-  ) => {
+  onAriesOutOfBandInviteRead = (invite: AriesOutOfBandInvite) => {
     const payload = invite
 
-    const serviceEntry = payload.service ? ((payload.service.find(serviceEntry => typeof(serviceEntry) === 'object'): any): AriesServiceEntry) : null
+    const serviceEntry = payload.service
+      ? ((payload.service.find(
+          (serviceEntry) => typeof serviceEntry === 'object'
+        ): any): AriesServiceEntry)
+      : null
     if (!serviceEntry) {
       this.props.navigation.goBack(null)
 
-      Alert.alert('Unsupported or invalid invitation format', 'Failed to establish connection.')
+      Alert.alert(
+        'Unsupported or invalid invitation format',
+        'Failed to establish connection.'
+      )
       return
     }
 
     const publicDID = serviceEntry.recipientKeys[0]
     const connectionAlreadyExist = publicDID in this.props.publicDIDs
 
-    if ((!payload.handshake_protocols || !payload.handshake_protocols.length) &&
-        (!payload['request~attach'] || !payload['request~attach'].length)) {
+    if (
+      (!payload.handshake_protocols || !payload.handshake_protocols.length) &&
+      (!payload['request~attach'] || !payload['request~attach'].length)
+    ) {
       this.props.navigation.goBack(null)
 
       Alert.alert('Invalid invitation', 'Failed to establish connection.')
       return
-    }
-    else if (payload.handshake_protocols && payload.handshake_protocols.length &&
-             (!payload['request~attach'] || !payload['request~attach'].length)) {
+    } else if (
+      payload.handshake_protocols &&
+      payload.handshake_protocols.length &&
+      (!payload['request~attach'] || !payload['request~attach'].length)
+    ) {
       // Call create_connection_with_outofband_invitation function to process invite.
       // Complete connection with regular flow.
       // UI: show invite and follow reglar connection steps.
@@ -385,8 +394,7 @@ export class QRCodeScannerScreen extends Component<
       }
 
       this.checkExistingConnectionAndRedirect({ payload: invitation })
-    }
-    else {
+    } else {
       // Implement this case
       this.props.navigation.goBack(null)
       Alert.alert('Invalid invitation', 'Failed to establish connection.')

@@ -88,13 +88,10 @@ export class ConnectionDetails extends Component<
       const invite = this.props.route.params.qrCodeInvitationPayload
 
       if (invite.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR) {
-        this.props.sendConnectionRedirect(
-          invite,
-          {
-            senderDID: this.props.route.params.senderDID,
-            identifier: this.props.route.params.identifier,
-          }
-        )
+        this.props.sendConnectionRedirect(invite, {
+          senderDID: this.props.route.params.senderDID,
+          identifier: this.props.route.params.identifier,
+        })
       } else if (invite.type === CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND) {
         if (!invite.originalObject) {
           return

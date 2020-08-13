@@ -131,7 +131,7 @@ export async function getInvitation() {
     appLinkIndex + appLink.length + tokenSize
   )
 
-  await new Promise((r) => setTimeout(r, 30000)) // wait until latest message will be processed
+  await new Promise((r) => setTimeout(r, 45000)) // wait until latest message will be processed
   await connection.end() // close mail server connection
 
   // no need to wait for invitation to be fetched
