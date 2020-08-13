@@ -40,7 +40,8 @@ export type AriesConnectionInvitePayload = {
   serviceEndpoint: string,
 }
 
-export type AriesOutOfBandInviteType = 'https://didcomm.org/out-of-band/1.0/invitation'
+export type AriesOutOfBandInviteType =
+  'https://didcomm.org/out-of-band/1.0/invitation'
 
 export type AriesServiceEntry = {
   id: string,

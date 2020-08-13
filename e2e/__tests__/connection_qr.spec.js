@@ -38,9 +38,13 @@ import {
   CLOSE_BUTTON,
   SCREENSHOT_INVITATION,
   SCREENSHOT_CLAIM_OFFER_PROFILE_INFO,
+  SCREENSHOT_CLAIM_OFFER_ADDRESS,
+  SCREENSHOT_CLAIM_OFFER_CONTACT,
+  SCREENSHOT_CLAIM_OFFER_MIXED,
   SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
   SCREENSHOT_TEST_CONNECTION,
   BACK_ARROW,
+  MENU_HOME,
 } from '../utils/test-constants'
 import { waitForElementAndTap } from '../utils/detox-selectors'
 import { element, by, waitFor, expect, device } from 'detox'
@@ -52,6 +56,8 @@ import {
   sendProofRequest,
   CLAIM_OFFER_PROFILE_INFO,
   CLAIM_OFFER_ADDRESS,
+  CLAIM_OFFER_CONTACT,
+  CLAIM_OFFER_MIXED,
   PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
   PROOF_TEMPLATE_TWO_CLAIM_FULFILLED,
   PROOF_TEMPLATE_MISSING_ATTRIBUTES,
@@ -70,7 +76,7 @@ let URL
 const TIMEOUT = 60000
 
 describe('Connection via QR code and SMS link', () => {
-  it('Case 1: user should be able to establish connection via scanning QR code', async () => {
+  it('Case 1.1: user should be able to establish connection via scanning QR code', async () => {
     let [
       token,
       invitationId,
@@ -120,7 +126,21 @@ describe('Connection via QR code and SMS link', () => {
     //   .replaceText(TEST_PASS_CODE)
   })
 
-  it('Case 2.1: create and reject credential', async () => {
+  it('Case 1.2: open connection using SMS link right after establishing connection', async () => {
+    await exec(`xcrun simctl openurl booted ${URL}`)
+
+    await new Promise((r) => setTimeout(r, 10000)) // sync issue
+
+    try {
+      await expect(element(by.text('Evernym QA-RC'))).toBeVisible()
+
+      await element(by.id(BACK_ARROW)).tap()
+    } catch (e) {
+      await element(by.text('Ok')).tap() // invitation has been expired
+    }
+  })
+
+  it('Case 2.1: create and reject profile credential', async () => {
     credential = await sendClaimOffer(
       CLAIM_OFFER_PROFILE_INFO,
       connectionId
@@ -142,7 +162,7 @@ describe('Connection via QR code and SMS link', () => {
     await waitForElementAndTap('text', CLAIM_OFFER_REJECT, TIMEOUT)
   })
 
-  it('Case 2.2: create and accept credential', async () => {
+  it('Case 2.2: create and accept profile credential', async () => {
     credential = await sendClaimOffer(
       CLAIM_OFFER_PROFILE_INFO,
       connectionId
@@ -166,7 +186,7 @@ describe('Connection via QR code and SMS link', () => {
     await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
   })
 
-  it('Case 2.3: create and accept another credential', async () => {
+  it('Case 2.3: create and accept address credential', async () => {
     credential = await sendClaimOffer(CLAIM_OFFER_ADDRESS, connectionId).catch(
       console.error
     )
@@ -183,6 +203,54 @@ describe('Connection via QR code and SMS link', () => {
       await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
+
+    await matchScreenshot(SCREENSHOT_CLAIM_OFFER_ADDRESS) // screenshot
+
+    await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
+  })
+
+  it('Case 2.4: create and accept contact credential', async () => {
+    credential = await sendClaimOffer(CLAIM_OFFER_CONTACT, connectionId).catch(
+      console.error
+    )
+
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.error(e)
+      // await device.launchApp({
+      //   newInstance: true,
+      // })
+      // await unlock()
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
+
+    await matchScreenshot(SCREENSHOT_CLAIM_OFFER_CONTACT) // screenshot
+
+    await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
+  })
+
+  it('Case 2.5: create and accept mixed credential', async () => {
+    credential = await sendClaimOffer(CLAIM_OFFER_MIXED, connectionId).catch(
+      console.error
+    )
+
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.error(e)
+      // await device.launchApp({
+      //   newInstance: true,
+      // })
+      // await unlock()
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
+
+    await matchScreenshot(SCREENSHOT_CLAIM_OFFER_MIXED) // screenshot
 
     await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
   })
@@ -352,37 +420,19 @@ describe('Connection via QR code and SMS link', () => {
     await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
   })
 
-  it('Case 4.1: check my connections screen and its elements', async () => {
+  it('Case 4.2: check my connections screenshot with test connection', async () => {
     await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
     await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
 
-    // check connections view
-    await waitFor(element(by.id(MY_CONNECTIONS_CONTAINER)))
-      .toBeVisible()
-      .withTimeout(TIMEOUT)
-
-    // check connections header
-    await waitFor(element(by.text(MY_CONNECTIONS_HEADER)))
-      .toBeVisible()
-      .withTimeout(TIMEOUT)
-
-    // check menu button
-    await waitFor(element(by.id(BURGER_MENU)))
-      .toBeVisible()
-      .withTimeout(TIMEOUT)
-
-    // check camera button
-    await waitFor(element(by.text(SCAN_BUTTON)))
-      .toBeVisible()
-      .withTimeout(TIMEOUT)
-  })
-
-  it('Case 4.2: check my connections screenshot with test connection', async () => {
     await matchScreenshot(SCREENSHOT_TEST_CONNECTION) // screenshot
   })
 
   it('Case 5: drill down to connection and check its elements', async () => {
+    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+
+    await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
+
     await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
 
     await element(by.type(GENERAL_SCROLL_VIEW))
@@ -391,7 +441,7 @@ describe('Connection via QR code and SMS link', () => {
 
     await expect(element(by.text(CONNECTION_ENTRY_HEADER))).toBeVisible()
 
-    await element(by.text(VIEW_CREDENTIAL)).atIndex(1).tap()
+    await element(by.text(VIEW_CREDENTIAL)).atIndex(3).tap()
 
     await expect(element(by.text(CREDENTIAL_HEADER))).toBeVisible()
 
@@ -414,16 +464,21 @@ describe('Connection via QR code and SMS link', () => {
     ).toBeVisible()
 
     await waitForElementAndTap('text', CLOSE_BUTTON, TIMEOUT)
+
+    await element(by.id(BACK_ARROW)).tap()
   })
 
-  it('Case 6: open connection using SMS link', async () => {
+  it('Case 6: open connection using SMS link when connection is already expired', async () => {
+    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+
+    await waitForElementAndTap('text', MENU_HOME, TIMEOUT)
+
     await exec(`xcrun simctl openurl booted ${URL}`)
 
     await new Promise((r) => setTimeout(r, 10000)) // sync issue
 
     try {
       await expect(element(by.text('Evernym QA-RC'))).toBeVisible()
-
       await element(by.id(BACK_ARROW)).tap()
     } catch (e) {
       await element(by.text('Ok')).tap() // invitation has been expired

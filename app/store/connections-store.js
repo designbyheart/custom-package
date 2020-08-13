@@ -437,20 +437,16 @@ function* sendConnectionReuseSaga(
       // get reuse connection handle
       const [connection]: Array<Connection> = yield select(
         getConnectionBySenderDid,
-        action.existingConnectionDetails.senderDID,
+        action.existingConnectionDetails.senderDID
       )
       const connectionHandle = yield call(
         getHandleBySerializedConnection,
-        connection.vcxSerializedConnection,
+        connection.vcxSerializedConnection
       )
 
       try {
         // call API for connectionReuse
-        yield call(
-          connectionReuse,
-          connectionHandle,
-          action.invite,
-        )
+        yield call(connectionReuse, connectionHandle, action.invite)
         yield put({
           type: SEND_REUSE_SUCCESS,
         })
@@ -461,7 +457,6 @@ function* sendConnectionReuseSaga(
           e,
         })
       }
-
     } catch (e) {
       // catch error if existing handle is not found
       yield put({

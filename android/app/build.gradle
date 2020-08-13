@@ -238,6 +238,8 @@ android.applicationVariants.all { variant ->
   }
 }
 dependencies {
+    
+    androidTestImplementation('com.wix:detox:+')
 
     implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
 

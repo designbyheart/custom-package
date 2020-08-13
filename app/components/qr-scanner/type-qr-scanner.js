@@ -80,13 +80,13 @@ export type QrScannerState = {
 }
 
 export type QrScannerProps = {
-  onRead: QrCodeShortInvite => void,
+  onRead: (QrCodeShortInvite) => void,
   onClose: () => void,
-  onInvitationUrl: InvitationPayload => void,
-  onOIDCAuthenticationRequest: OIDCAuthenticationRequest => void,
-  onAriesConnectionInviteRead: AriesConnectionInvite => void,
-  onAriesOutOfBandInviteRead: AriesOutOfBandInvite => void,
-  onEphemeralProofRequest: QrCodeEphemeralProofRequest => void,
+  onInvitationUrl: (InvitationPayload) => void,
+  onOIDCAuthenticationRequest: (OIDCAuthenticationRequest) => void,
+  onAriesConnectionInviteRead: (AriesConnectionInvite) => void,
+  onAriesOutOfBandInviteRead: (AriesOutOfBandInvite) => void,
+  onEphemeralProofRequest: (QrCodeEphemeralProofRequest) => void,
 }
 
 export type CameraMarkerProps = {

@@ -53,7 +53,7 @@ describe('Settings screen', () => {
     // await element(by.text(SETTINGS_CREATE_BACKUP)).tap()
     // await element(by.id(BACKUP_CLOSE)).tap()
     await element(by.text(SETTINGS_BIOMETRICS)).tap()
-    // await element(by.text(BIOMETRICS_OK)).tap()
+    await element(by.text(BIOMETRICS_OK)).tap()
     await element(by.text(SETTINGS_PASSCODE)).tap()
     await element(by.id(PASSCODE_BACK_ARROW)).tap()
     await element(by.text(SETTINGS_CHAT)).tap()

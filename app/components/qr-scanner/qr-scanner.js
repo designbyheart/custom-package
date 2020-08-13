@@ -47,9 +47,7 @@ import {
   MESSAGE_NO_CAMERA_PERMISSION,
   MESSAGE_ALLOW_CAMERA_PERMISSION,
 } from '../../qr-code/type-qr-code'
-import {
-  isAriesConnectionInviteQrCode,
-} from './qr-code-types/qr-code-aries-connection-invite'
+import { isAriesConnectionInviteQrCode } from './qr-code-types/qr-code-aries-connection-invite'
 import { CONNECTION_INVITE_TYPES } from '../../invitation/type-invitation'
 import { flatFetch } from '../../common/flat-fetch'
 import { flatTryCatch } from '../../common/flat-try-catch'

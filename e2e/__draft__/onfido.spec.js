@@ -33,17 +33,17 @@ describe('Onfido', () => {
     await expect(element(by.text('Identity verification'))).toBeVisible()
     await expect(element(by.text('Select a document'))).toBeVisible()
 
-    // workaround
-    await element(by.text('Passport')).tap()
-    await new Promise((r) => setTimeout(r, 5000)) // sync issue
-    await device.terminateApp()
-    await new Promise((r) => setTimeout(r, 5000)) // sync issue
-    await device.launchApp()
-    await unlock()
-    await element(by.id(BURGER_MENU)).tap()
-    await element(by.text(MENU_SETTINGS)).tap()
-    await element(by.text(SETTINGS_ONFIDO)).tap()
-    await element(by.text(ONFIDO_ACCEPT_BUTTON)).tap()
+    // // workaround
+    // await element(by.text('Passport')).tap()
+    // await new Promise((r) => setTimeout(r, 5000)) // sync issue
+    // await device.terminateApp()
+    // await new Promise((r) => setTimeout(r, 5000)) // sync issue
+    // await device.launchApp()
+    // await unlock()
+    // await element(by.id(BURGER_MENU)).tap()
+    // await element(by.text(MENU_SETTINGS)).tap()
+    // await element(by.text(SETTINGS_ONFIDO)).tap()
+    // await element(by.text(ONFIDO_ACCEPT_BUTTON)).tap()
   })
 
   it('Check passport', async () => {
@@ -56,7 +56,7 @@ describe('Onfido', () => {
 
   it('Check license', async () => {
     await element(by.text("Driver's License")).tap()
-    await expect(element(by.text('Select your country'))).toBeVisible()
+    await expect(element(by.text('Select issuing country'))).toBeVisible()
     await element(by.text('United States')).tap()
     await expect(element(by.text("Front of driver's license"))).toBeVisible()
     await matchScreenshot(SCREENSHOT_ONFIDO_LICENSE) // screenshot
@@ -67,7 +67,7 @@ describe('Onfido', () => {
 
   it('Check NIC', async () => {
     await element(by.text('National Identity Card')).tap()
-    await expect(element(by.text('Select your country'))).toBeVisible()
+    await expect(element(by.text('Select issuing country'))).toBeVisible()
     await element(by.text('United States')).tap()
     await expect(element(by.text('Front of card'))).toBeVisible()
     await matchScreenshot(SCREENSHOT_ONFIDO_NIC) // screenshot
@@ -78,7 +78,7 @@ describe('Onfido', () => {
 
   it('Check RPC', async () => {
     await element(by.text('Residence Permit Card')).tap()
-    await expect(element(by.text('Select your country'))).toBeVisible()
+    await expect(element(by.text('Select issuing country'))).toBeVisible()
     await element(by.text('United States')).tap()
     await expect(element(by.text('Front of permit'))).toBeVisible()
     await matchScreenshot(SCREENSHOT_ONFIDO_RPC) // screenshot
