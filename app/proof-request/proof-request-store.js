@@ -21,7 +21,7 @@ import type {
   DenyProofRequestAction,
   DenyProofRequestSuccessAction,
 } from './type-proof-request'
-
+import delay from '@redux-saga/delay-p'
 import {
   getUserPairwiseDid,
   getProofRequestPairwiseDid,
@@ -73,6 +73,7 @@ import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import { resetTempProofData, errorSendProofFail } from '../proof/proof-store'
 import { secureSet, getHydrationItem } from '../services/storage'
+import { retrySaga } from '../api/api-utils'
 
 const proofRequestInitialState = {}
 
@@ -220,7 +221,7 @@ export function* proofAccepted(
   }
 
   try {
-    yield call(sendProofApi, proofHandle, connectionHandle)
+    yield* retrySaga(call(sendProofApi, proofHandle, connectionHandle))
     yield put(sendProofSuccess(uid))
     yield put(resetTempProofData(uid))
   } catch (e) {
@@ -468,9 +469,9 @@ export default function proofRequestReducer(
                   values: attribute[0].values,
                 }
               }
-              return { 
+              return {
                 label: attribute.label,
-                values: attribute.values,            
+                values: attribute.values,
               }
             }),
           },

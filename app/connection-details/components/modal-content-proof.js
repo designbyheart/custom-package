@@ -126,7 +126,7 @@ export function isInvalidValues(
 class ProofRequestAttributeList extends Component<
   ProofRequestAttributeListProp,
   ProofRequestAttributeListState
-  > {
+> {
   constructor(props: ProofRequestAttributeListProp) {
     super(props)
     this.canEnableGenerateProof = debounce(
@@ -190,15 +190,16 @@ class ProofRequestAttributeList extends Component<
       const isDataEmptyString = value === ''
 
       if (!logoUrl) {
-        logoUrl = value || isDataEmptyString
-          ? item.claimUuid &&
-            this.props.claimMap &&
-            this.props.claimMap[item.claimUuid] &&
-            this.props.claimMap[item.claimUuid].logoUrl
-            ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
-            : this.props.userAvatarSource ||
-            require('../../images/UserAvatar.png')
-          : null
+        logoUrl =
+          value || isDataEmptyString
+            ? item.claimUuid &&
+              this.props.claimMap &&
+              this.props.claimMap[item.claimUuid] &&
+              this.props.claimMap[item.claimUuid].logoUrl
+              ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
+              : this.props.userAvatarSource ||
+                require('../../images/UserAvatar.png')
+            : null
       }
 
       const showInputBox =
@@ -222,18 +223,18 @@ class ProofRequestAttributeList extends Component<
                 testID={`${testID}-input-${adjustedLabel}`}
                 accessible={true}
                 accessibilityLabel={`${testID}-input-${adjustedLabel}`}
-                onChange={e => this.onTextChange(e, adjustedLabel)}
+                onChange={(e) => this.onTextChange(e, adjustedLabel)}
                 editable={!this.props.disableUserInputs}
                 underlineColorAndroid="transparent"
               />
             ) : // If data is empty string, show the BLANK text in gray instead
-              isDataEmptyString ? (
-                <Text style={styles.contentGray}>
-                  {BLANK_ATTRIBUTE_DATA_TEXT}
-                </Text>
-              ) : (
-                  <Text style={styles.content}>{value}</Text>
-                )}
+            isDataEmptyString ? (
+              <Text style={styles.contentGray}>
+                {BLANK_ATTRIBUTE_DATA_TEXT}
+              </Text>
+            ) : (
+              <Text style={styles.content}>{value}</Text>
+            )}
           </View>
         </View>
       )
@@ -242,9 +243,7 @@ class ProofRequestAttributeList extends Component<
     return (
       <View key={index} style={styles.wrapper}>
         <View style={styles.textAvatarWrapper}>
-          <View style={styles.textInnerWrapper}>
-            {views}
-          </View>
+          <View style={styles.textInnerWrapper}>{views}</View>
           <View style={styles.avatarInnerWrapper}>
             <Icon
               medium
@@ -272,7 +271,7 @@ class ProofRequestAttributeList extends Component<
         layout={'default'}
         sliderWidth={sliderWidth}
         itemWidth={sliderWidth}
-        onSnapToItem={swipeIndex => this.onSwipe(items[swipeIndex])}
+        onSnapToItem={(swipeIndex) => this.onSwipe(items[swipeIndex])}
         data={items}
         loop={true}
         renderItem={this.renderValues}
@@ -384,7 +383,7 @@ export function getMissingAttributeNames(
 class ModalContentProof extends Component<
   ProofRequestProps,
   ProofRequestState
-  > {
+> {
   constructor(props) {
     super(props)
     if (this.props.uid) {

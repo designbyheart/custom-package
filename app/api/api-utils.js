@@ -1,8 +1,29 @@
 // @flow
-import { SERVER_ERROR_CODE, SERVER_API_CALL_ERROR } from './api-constants'
-import { captureError } from '../services/error/error-handler'
+import delay from '@redux-saga/delay-p'
+import { call } from 'redux-saga/effects'
+
+import type { CallEffect } from 'redux-saga'
 import type { CustomError } from '../common/type-common'
 import type { ApiData, BackendError } from './type-api'
+
+import { SERVER_ERROR_CODE, SERVER_API_CALL_ERROR } from './api-constants'
+import { captureError } from '../services/error/error-handler'
+
+export function* retrySaga(callEffect: any): Generator<*, *, *> {
+  let answerMsgId: string = '' // --> Only for structured messages.
+  for (let i = 0; i < 3; i++) {
+    try {
+      answerMsgId = yield callEffect
+      return answerMsgId
+    } catch (error) {
+      if (i < 2) {
+        yield call(delay, 2000)
+      }
+    }
+  }
+  // TODO: We should send error from API call directly which will be rethrown from here, so we can know which API call failed.
+  throw new Error('Sending Proof Request Failed.')
+}
 
 export const options = (
   method: string = 'GET',
@@ -30,13 +51,13 @@ export const api = (
   showAlert: boolean = false
 ) =>
   fetch(url, apiOptions)
-    .then(res => {
+    .then((res) => {
       // TODO:KS create common method to return successful
       // and unsuccessful api response
       if (res.status >= 200 && res.status < 300) {
         return res
           .json()
-          .then(response => ({
+          .then((response) => ({
             payload: response,
           }))
           .catch((error: Error) => ({
@@ -54,7 +75,7 @@ export const api = (
         }))
       }
     })
-    .then(response => {
+    .then((response) => {
       // if response contains payload and no error, that means we got success
       if (response.payload && !response.error) {
         return response.payload

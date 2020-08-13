@@ -23,7 +23,7 @@ import type {
   ComponentStatus,
 } from '../common/type-common'
 import type { SignDataResponse } from '../bridge/react-native-cxs/type-cxs'
-
+import delay from '@redux-saga/delay-p'
 import {
   QUESTION_RECEIVED,
   SEND_ANSWER_TO_QUESTION,
@@ -76,6 +76,7 @@ import {
   safeDelete,
   getHydrationItem,
 } from '../services/storage'
+import { retrySaga } from '../api/api-utils'
 
 export function* watchQuestion(): any {
   yield all([
@@ -139,15 +140,13 @@ export function* answerToQuestionSaga(
           userAnswer['~thread'] = thread
         }
 
-        const answerMsgId: string = yield call(
-          connectionSendMessage,
-          connectionHandle,
-          {
+        const answerMsgId: string = yield* retrySaga(
+          call(connectionSendMessage, connectionHandle, {
             message: JSON.stringify(userAnswer),
             messageType: MESSAGE_TYPE_ANSWER,
             messageTitle: MESSAGE_TITLE_ANSWER,
             refMessageId: uid,
-          }
+          })
         )
         yield put(
           updateQuestionStatus(
