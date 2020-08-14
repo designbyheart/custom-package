@@ -193,3 +193,10 @@ export const ERROR_INVITATION_SERIALIZE_UPDATE = (message: string) => ({
   code: 'INVITATION-003',
   message: `Error while getting serialized connection for aries: ${message}`,
 })
+
+export const ERROR_INVITATION_ALREADY_ACCEPTED_CODE = 'INVITATION-004'
+
+export const ERROR_INVITATION_ALREADY_ACCEPTED = (message: string) => ({
+  code: ERROR_INVITATION_ALREADY_ACCEPTED_CODE,
+  message: `Error while establishing a connection ${message}`,
+})

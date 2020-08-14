@@ -1,5 +1,5 @@
 // @flow
-import { put, takeLatest, call, all, select, fork } from 'redux-saga/effects'
+import { put, takeLatest, call, all, select } from 'redux-saga/effects'
 import {
   INVITATION_RECEIVED,
   INVITATION_RESPONSE_SEND,
@@ -8,6 +8,7 @@ import {
   INVITATION_REJECTED,
   ERROR_INVITATION_CONNECT,
   ERROR_INVITATION_SERIALIZE_UPDATE,
+  ERROR_INVITATION_ALREADY_ACCEPTED,
 } from './type-invitation'
 import { ResponseType } from '../components/request/type-request'
 import { ERROR_ALREADY_EXIST } from '../api/api-constants'
@@ -49,6 +50,7 @@ import {
   connectionFail,
   ERROR_CONNECTION,
 } from '../store/type-connection-store'
+import { CONNECTION_ALREADY_EXISTS } from '../bridge/react-native-cxs/error-cxs'
 
 export const invitationInitialState = {}
 
@@ -142,7 +144,11 @@ export function* sendResponse(
     yield put(saveNewConnection(connection))
   } catch (e) {
     captureError(e)
-    yield put(invitationFail(ERROR_INVITATION_CONNECT(e.message), senderDID))
+    if (e.code === CONNECTION_ALREADY_EXISTS) {
+      yield put(invitationFail(ERROR_INVITATION_ALREADY_ACCEPTED(e.message), senderDID))
+    } else {
+      yield put(invitationFail(ERROR_INVITATION_CONNECT(e.message), senderDID))
+    }
   }
 }
 
