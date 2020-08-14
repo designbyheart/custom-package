@@ -6,7 +6,6 @@ import type { AgencyPoolConfig } from '../../store/type-config-store'
 import type { GenericObject } from '../../common/type-common'
 import type {
   ClaimOfferPushPayload,
-  ClaimPushPayload,
 } from '../../push-notification/type-push-notification'
 import type { ProofRequestPushPayload } from '../../proof-request/type-proof-request'
 
@@ -195,7 +194,7 @@ export type VcxSendCredentialRequest = {}
 
 export type VcxClaimInfo = {
   credential_id?: string,
-  credential?: ClaimPushPayload,
+  credential?: string,
   credential_offer?: string,
 }
 

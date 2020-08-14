@@ -57,6 +57,7 @@ import type {
   ClaimOfferPayload,
   AddSerializedClaimOfferAction,
   SerializedClaimOffer,
+  ClaimRequestSuccessAction,
 } from './type-claim-offer'
 import type {
   AdditionalDataPayload,
@@ -73,8 +74,10 @@ import {
   getPoolConfig,
   getClaimOffers,
   getConnection,
+  getHistoryEvent,
   getSerializedClaimOffer,
   getWalletBalance,
+  getConnectionHistory,
 } from '../store/store-selector'
 import type { IndyClaimOffer } from '../bridge/react-native-cxs/type-cxs'
 import {
@@ -175,9 +178,10 @@ export const sendClaimRequestFail = (uid: string, remoteDid: string) => ({
   remoteDid,
 })
 
-export const claimRequestSuccess = (uid: string) => ({
+export const claimRequestSuccess = (uid: string, issueDate: number): ClaimRequestSuccessAction => ({
   type: CLAIM_REQUEST_SUCCESS,
   uid,
+  issueDate,
 })
 
 export const claimRequestFail = (uid: string, error: CustomError) => ({
@@ -383,8 +387,8 @@ export function* claimOfferAccepted(
 function* claimStorageSuccessSaga(
   action: ClaimStorageSuccessAction
 ): Generator<*, *, *> {
-  const { messageId } = action
-  yield put(claimRequestSuccess(messageId))
+  const { messageId, issueDate } = action
+  yield put(claimRequestSuccess(messageId, issueDate))
 }
 
 export function* watchClaimStorageSuccess(): any {
@@ -504,8 +508,31 @@ export function* removePersistedSerializedClaimOffersSaga(): Generator<
 export function* hydrateClaimOffersSaga(): Generator<*, *, *> {
   try {
     const claimOffersJson = yield call(getHydrationItem, CLAIM_OFFERS)
+    const connectionHistory = yield select(getConnectionHistory)
     if (claimOffersJson) {
       const serializedClaimOffers = JSON.parse(claimOffersJson)
+      const { vcxSerializedClaimOffers: serializedOffers, ...offers } = serializedClaimOffers
+
+      // To make sure that all claim offers has issue date
+      // we have to look through connection history and extract issue date from it if current date is empty
+      let storageSuccessHistory = []
+      Object.keys(connectionHistory.data.connections)
+        .map(uid => connectionHistory.data.connections[uid])
+        .forEach(connection => {
+          storageSuccessHistory.push(...connection.data.filter(event => event.originalPayload.type === CLAIM_STORAGE_SUCCESS))
+        })
+
+      Object.keys(offers).forEach((uid) => {
+        const offer = offers[uid]
+        if (!offer.issueDate) {
+          const historyEvent = storageSuccessHistory.find(event => event.originalPayload.messageId === uid)
+          if (historyEvent) {
+            offer.issueDate = historyEvent.originalPayload.issueDate
+          }
+          serializedClaimOffers[uid] = offer
+        }
+      })
+
       yield put(hydrateClaimOffers(serializedClaimOffers))
     }
   } catch (e) {
@@ -606,6 +633,7 @@ export default function claimOfferReducer(
         [action.uid]: {
           ...state[action.uid],
           claimRequestStatus: CLAIM_REQUEST_STATUS.CLAIM_REQUEST_SUCCESS,
+          issueDate: action.issueDate
         },
       }
     case CLAIM_REQUEST_FAIL:

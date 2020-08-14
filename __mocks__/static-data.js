@@ -184,6 +184,7 @@ export const successConnectionData = {
 }
 
 export const claimOfferId = 'usd123'
+export const claimOfferIssueDate = 123456789
 export const claimDefinitionSchemaSequenceNumber = 36
 const issuerDid = 'issuerDid'
 export const senderLogoUrl = 'http://testissuer.com/logoUrl.png'
@@ -1267,7 +1268,7 @@ export const sendClaimRequestSuccessEvent = sendClaimRequestSuccess(
   claimOfferPayload
 )
 
-export const claimReceivedSuccessEvent = claimStorageSuccess(uid)
+export const claimReceivedSuccessEvent = claimStorageSuccess(uid, claimOfferIssueDate)
 
 export const proofRequestReceivedEvent = proofRequestReceived(
   proofRequest.payload,

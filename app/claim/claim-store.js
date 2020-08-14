@@ -71,10 +71,12 @@ export const claimReceived = (claim: Claim): ClaimReceivedAction => ({
 })
 
 export const claimStorageSuccess = (
-  messageId: string
+  messageId: string,
+  issueDate: number,
 ): ClaimStorageSuccessAction => ({
   type: CLAIM_STORAGE_SUCCESS,
   messageId,
+  issueDate
 })
 
 export const claimStorageFail = (
@@ -90,13 +92,15 @@ export const mapClaimToSender = (
   claimUuid: string,
   senderDID: string,
   myPairwiseDID: string,
-  logoUrl: string
+  logoUrl: string,
+  issueDate: number,
 ): MapClaimToSenderAction => ({
   type: MAP_CLAIM_TO_SENDER,
   claimUuid,
   senderDID,
   myPairwiseDID,
   logoUrl,
+  issueDate,
 })
 
 export const hydrateClaimMap = (claimMap: ClaimMap) => ({
@@ -206,19 +210,23 @@ export function* checkForClaim(
         getConnectionByUserDid,
         userDID
       )
+
+      const issueDate = moment().unix()
+
       if (connection) {
         yield put(
           mapClaimToSender(
             vcxClaim.claimUuid,
             connection.senderDID,
             userDID,
-            connection.logoUrl
+            connection.logoUrl,
+            issueDate
           )
         )
         yield fork(saveClaimUuidMap)
       }
 
-      yield put(claimStorageSuccess(serializedClaimOffer.messageId))
+      yield put(claimStorageSuccess(serializedClaimOffer.messageId, issueDate))
       yield* updateMessageStatus([
         {
           pairwiseDID: userDID,
@@ -306,7 +314,7 @@ export default function claimReducer(
     }
 
     case MAP_CLAIM_TO_SENDER:
-      const { claimUuid, senderDID, myPairwiseDID, logoUrl } = action
+      const { claimUuid, senderDID, myPairwiseDID, logoUrl, issueDate } = action
       return {
         ...state,
         claimMap: {
@@ -315,7 +323,7 @@ export default function claimReducer(
             senderDID,
             myPairwiseDID,
             logoUrl,
-            issueDate: moment().unix(),
+            issueDate,
           },
         },
       }

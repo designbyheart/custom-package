@@ -29,7 +29,7 @@ import {
   questionRoute,
 } from '../common'
 import { getConnections } from '../store/connections-store'
-import { NewConnectionInstructions } from '../my-connections/new-connection-instructions'
+import { HomeInstructions } from './home-instructions/home-instructions'
 import {
   getEnvironmentName,
   getUnacknowledgedMessages,
@@ -187,7 +187,14 @@ export class HomeScreen extends Component<HomeProps, void> {
           accessibilityLabel="home-container"
         >
           {this.props.hasNoConnection && (
-            <NewConnectionInstructions
+            <HomeInstructions
+              headline="You now have a digital wallet!"
+              title="Want to see how it works?"
+              prodNetworkText="We have setup an optional tutorial site for you to go through
+          using this Connect.Me app. To start this process, go to
+          try.connect.me in a desktop browser and click Start Tutorial."
+              devNetworkText="We see you are not on the live network. Get with an Evernym team
+          member to help you use Connect.Me!"
               usingProductionNetwork={
                 this.props.environmentName === SERVER_ENVIRONMENT.PROD
               }
@@ -283,7 +290,7 @@ const mapStateToProps = (state: Store) => {
         state.history.data.connections &&
         state.history.data.connections[connection.senderDID] &&
         state.history.data.connections[connection.senderDID].data) ||
-        []
+      []
     )
   })
 

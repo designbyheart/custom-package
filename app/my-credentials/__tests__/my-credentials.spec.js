@@ -8,7 +8,7 @@ import renderer, { act } from 'react-test-renderer'
 import { MyCredentials } from '../my-credentials'
 import { Provider } from 'react-redux'
 import { MockedNavigator } from '../../../__mocks__/mock-navigator'
-import { SERVER_ENVIRONMENT } from '../../store/type-config-store'
+import { defaultEnvironment } from '../../store/config-store'
 
 describe('my credentials screen', () => {
   jest.useFakeTimers()
@@ -20,6 +20,7 @@ describe('my credentials screen', () => {
       navigation: getNavigation(),
       claimMap: {
         uuid_1: {
+          claimOfferUuid: 'offer_uuid_1',
           senderDID: 'senderDID_1',
           myPairwiseDID: 'myPairwiseDID_1',
           logoUrl: 'https://logourl.com/logo.png',
@@ -54,7 +55,7 @@ describe('my credentials screen', () => {
           },
         },
       },
-      environmentName: SERVER_ENVIRONMENT.PROD,
+      environmentName: defaultEnvironment,
       route: {},
     }
   }

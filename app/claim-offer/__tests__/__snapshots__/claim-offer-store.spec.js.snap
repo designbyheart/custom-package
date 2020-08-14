@@ -20,6 +20,7 @@ Object {
       "version": "1.0.0",
     },
     "error": null,
+    "issueDate": 123456789,
     "issuer": Object {
       "did": "issuerDid",
       "name": "Test Issuer",
@@ -62,6 +63,7 @@ Object {
       "version": "1.0.0",
     },
     "error": null,
+    "issueDate": 123456789,
     "issuer": Object {
       "did": "issuerDid",
       "name": "Test Issuer",
@@ -112,6 +114,7 @@ Object {
       "version": "1.0.0",
     },
     "error": null,
+    "issueDate": 123456789,
     "issuer": Object {
       "did": "issuerDid",
       "name": "Test Issuer",
@@ -324,6 +327,7 @@ Object {
       "version": "1.0.0",
     },
     "error": null,
+    "issueDate": 123456789,
     "issuer": Object {
       "did": "issuerDid",
       "name": "Test Issuer",
@@ -392,6 +396,7 @@ Object {
       "version": "1.0.0",
     },
     "error": null,
+    "issueDate": 123456789,
     "issuer": Object {
       "did": "issuerDid",
       "name": "Test Issuer",

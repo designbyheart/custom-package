@@ -34,7 +34,9 @@ import {
   WALLET_KEY,
 } from '../common'
 import { STORAGE_KEY_USER_ONE_TIME_INFO } from '../store/user/type-user-store'
-import { CLAIM_OFFERS } from '../claim-offer/type-claim-offer'
+import {
+  CLAIM_OFFERS, CLAIM_OFFER_ACCEPTED,
+} from '../claim-offer/type-claim-offer'
 import { STORAGE_KEY_THEMES } from '../store/type-connection-store'
 import { HISTORY_EVENT_STORAGE_KEY } from '../connection-history/type-connection-history'
 import {
@@ -284,8 +286,10 @@ export function* hydrate(): any {
       yield* hydrateUserStoreSaga()
       yield* hydrateBackupSaga()
       yield* hydrateClaimMapSaga()
-      yield* hydrateClaimOffersSaga()
+      // NOTE: order of loadHistorySaga and hydrateClaimOffersSaga is significant
+      // as hydrateClaimOffersSaga uses connection history store to restore issue date of claim offers if required
       yield* loadHistorySaga()
+      yield* hydrateClaimOffersSaga()
       yield* hydrateQuestionSaga()
 
       if (inRecovery === 'true') {

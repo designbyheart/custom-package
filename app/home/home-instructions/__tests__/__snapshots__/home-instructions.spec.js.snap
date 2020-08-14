@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<NewCredentialInstructions /> should match snapshot 1`] = `
+exports[`<HomeInstructions /> should match snapshot 1`] = `
 <View
   accessibilityIgnoresInvertColors={true}
   style={
@@ -76,7 +76,7 @@ exports[`<NewCredentialInstructions /> should match snapshot 1`] = `
           ]
         }
       >
-        No Credentials yet!
+        Headline
       </Text>
       <Text
         style={
@@ -90,7 +90,7 @@ exports[`<NewCredentialInstructions /> should match snapshot 1`] = `
           ]
         }
       >
-        Want to see how this app works?
+        Title
       </Text>
       <Text
         style={
@@ -105,14 +105,14 @@ exports[`<NewCredentialInstructions /> should match snapshot 1`] = `
           ]
         }
       >
-        Go through the tutorial at www.try.connect.me. Connect.Me is for collecting digital Credentials. They will appear here.
+        Production network message
       </Text>
     </View>
   </View>
 </View>
 `;
 
-exports[`<NewCredentialInstructions /> should match snapshot for test network 1`] = `
+exports[`<HomeInstructions /> should match snapshot for test network 1`] = `
 <View
   accessibilityIgnoresInvertColors={true}
   style={
@@ -188,7 +188,7 @@ exports[`<NewCredentialInstructions /> should match snapshot for test network 1`
           ]
         }
       >
-        No Credentials yet!
+        Headline
       </Text>
       <Text
         style={
@@ -202,7 +202,7 @@ exports[`<NewCredentialInstructions /> should match snapshot for test network 1`
           ]
         }
       >
-        Want to see how this app works?
+        Title
       </Text>
       <Text
         style={
@@ -217,7 +217,7 @@ exports[`<NewCredentialInstructions /> should match snapshot for test network 1`
           ]
         }
       >
-        Connect.Me is for collecting digital Credentials. They will appear here.
+        Dev network message
       </Text>
     </View>
   </View>

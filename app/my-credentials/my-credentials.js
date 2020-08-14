@@ -2,58 +2,57 @@
 import React, { Component } from 'react'
 import { Text, View, FlatList, StyleSheet } from 'react-native'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
 import type { Store } from '../store/type-store'
 import type { ReactNavigation } from '../common/type-common'
 import type { MyCredentialsProps, Item } from './type-my-credentials'
 import type { ClaimOfferPayload } from '../claim-offer/type-claim-offer'
 import { PrimaryHeader, CameraButton } from '../components'
 import { CredentialCard } from './credential-card/credential-card'
-import { NewCredentialInstructions } from './new-credential-instructions'
+import { HomeInstructions } from '../home/home-instructions/home-instructions'
 import { myCredentialsRoute, qrCodeScannerTabRoute } from '../common'
 import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 import { withStatusBar } from '../components/status-bar/status-bar'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { getEnvironmentName } from '../store/config-store'
+import {
+  CLAIM_OFFER_STATUS,
+  CLAIM_REQUEST_STATUS,
+} from '../claim-offer/type-claim-offer'
 
 export class MyCredentials extends Component<MyCredentialsProps, void> {
-  keyExtractor = (item: Object) => item.claimUuid.toString()
+  keyExtractor = (item: Object) => item.claimOfferUuid.toString()
 
   renderItem = ({ item }: { item: Object }) => {
-    const { logoUrl, credentialName, date, attributesCount, claimUuid } = item
+    const { logoUrl, credentialName, date, attributesCount } = item
     return (
       <CredentialCard
         credentialName={credentialName}
         image={logoUrl}
-        claimUuid={claimUuid}
         date={date}
         attributesCount={attributesCount}
       />
     )
   }
   render() {
-    const { claimMap, offers } = this.props
+    const { offers } = this.props
 
-    const offersData: Array<ClaimOfferPayload> = Object.keys(offers).map(
-      (uid) => offers[uid]
-    )
     const credentials: Array<Item> = []
-    Object.keys(claimMap).forEach((uid) => {
-      const claimData = claimMap[uid]
-      const offerData = offersData.find(
-        (offer) => offer.remotePairwiseDID === claimData.senderDID
-      )
-      if (offerData) {
+    Object.keys(offers).forEach((uid) => {
+      const offer: ClaimOfferPayload = offers[uid]
+      if (offer.claimRequestStatus == CLAIM_REQUEST_STATUS.CLAIM_REQUEST_SUCCESS) {
         credentials.push({
-          claimUuid: claimData.senderDID,
-          credentialName: offerData.data.name,
-          date: claimData.issueDate,
-          attributesCount: offerData.data.revealedAttributes.length,
-          logoUrl: claimData.logoUrl,
+          claimOfferUuid: offer.uid,
+          credentialName: offer.data.name,
+          date: offer.issueDate,
+          attributesCount: offer.data.revealedAttributes.length,
+          logoUrl: offer.senderLogoUrl,
         })
       }
     })
+
     credentials.sort((a, b) => a.credentialName.localeCompare(b.credentialName))
 
     const hasNoCredentials = credentials.length == 0
@@ -62,7 +61,12 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
       <View style={styles.outerContainer}>
         <View style={styles.container} testID="my-credentials-container">
           {hasNoCredentials && (
-            <NewCredentialInstructions
+            <HomeInstructions
+              headline="No Credentials yet!"
+              title="Want to see how this app works?"
+              prodNetworkText="Go through the tutorial at www.try.connect.me. 
+              Connect.Me is for collecting digital Credentials. They will appear here."
+              devNetworkText="Connect.Me is for collecting digital Credentials. They will appear here."
               usingProductionNetwork={
                 this.props.environmentName === SERVER_ENVIRONMENT.PROD
               }
@@ -86,13 +90,9 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
 }
 
 const mapStateToProps = (state: Store) => {
-  const claimMap = state.claim.claimMap
-  const { claimOffer } = state
-
-  const { vcxSerializedClaimOffers: serializedOffers, ...offers } = claimOffer
+  const { vcxSerializedClaimOffers: serializedOffers, ...offers } = state.claimOffer
 
   return {
-    claimMap,
     offers,
     environmentName: getEnvironmentName(state.config),
   }
