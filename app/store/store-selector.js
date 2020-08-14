@@ -99,6 +99,8 @@ export const getInitializedState = (state: Store) => state.config.isInitialized
 export const getClaimOffer = (state: Store, claimOfferId: string) =>
   state.claimOffer[claimOfferId]
 
+export const getConnectionHistory = (state: Store) => state.history
+
 //TODO - delete this selector and handle it in the reducer (no need to filter twice)
 export const getPendingHistoryEvent = (
   state: Store,

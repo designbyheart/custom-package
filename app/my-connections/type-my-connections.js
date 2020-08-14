@@ -7,10 +7,6 @@ import type {
 import type { ConnectionHistoryStore } from '../connection-history/type-connection-history'
 import type { MessageDownloadStatus } from '../store/type-config-store'
 
-export type NewConnectionInstructionsProps = {
-  usingProductionNetwork: boolean,
-}
-
 export type Item = {
   index: Number,
   date: string,

@@ -99,8 +99,8 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
               testID={`${credentialName}-avatar`}
             />
           ) : (
-            <DefaultLogo text={credentialName} size={32} fontSize={17} />
-          )}
+              <DefaultLogo text={credentialName} size={32} fontSize={17} />
+            )}
         </View>
         <View style={styles.infoSection}>
           <View style={styles.infoSectionTopRow}>
@@ -126,13 +126,15 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
             </View>
           </View>
         </View>
-        <View style={styles.dateSection}>
-          <View style={styles.dateSectionRow}>
-            <Text style={styles.dateText}>
-              {this.getCorrectDateLabel(date * 1000)}
-            </Text>
+        {date &&
+          <View style={styles.dateSection}>
+            <View style={styles.dateSectionRow}>
+              <Text style={styles.dateText}>
+                {this.getCorrectDateLabel(date * 1000)}
+              </Text>
+            </View>
           </View>
-        </View>
+        }
       </TouchableOpacity>
     )
   }

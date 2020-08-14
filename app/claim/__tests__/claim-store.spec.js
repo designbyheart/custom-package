@@ -24,6 +24,7 @@ import {
   myPairWiseConnectionDetails,
   poolConfig,
   claimMap,
+  claimOfferIssueDate,
 } from '../../../__mocks__/static-data'
 import type { ClaimWithUuid } from '../../claim/type-claim'
 import { promptBackupBanner } from '../../backup/backup-store'
@@ -52,7 +53,7 @@ describe('Claim Store', () => {
   it('should match snapshot when claim storage is success', () => {
     const nextState = claimReducer(
       afterClaimReceived,
-      claimStorageSuccess(claim.messageId)
+      claimStorageSuccess(claim.messageId, claimOfferIssueDate)
     )
     expect(nextState).toMatchSnapshot()
   })

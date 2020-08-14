@@ -45,6 +45,7 @@ export const CLAIM_STORAGE_SUCCESS = 'CLAIM_STORAGE_SUCCESS'
 export type ClaimStorageSuccessAction = {
   type: typeof CLAIM_STORAGE_SUCCESS,
   messageId: string,
+  issueDate: number,
 }
 
 export const CLAIM_STORAGE_FAIL = 'CLAIM_STORAGE_FAIL'
@@ -61,6 +62,7 @@ export type MapClaimToSenderAction = {
   senderDID: string,
   myPairwiseDID: string,
   logoUrl: string,
+  issueDate: number,
 }
 
 export type ClaimMap = {

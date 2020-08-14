@@ -31,7 +31,7 @@ import { getConnections } from '../store/connections-store'
 import { connectionHistRoute } from '../common/route-constants'
 import { getUnseenMessages } from '../store/store-selector'
 import { externalStyles } from './styles'
-import { NewConnectionInstructions } from './new-connection-instructions'
+import { HomeInstructions } from '../home/home-instructions/home-instructions'
 import {
   getEnvironmentName,
   getUnacknowledgedMessages,
@@ -48,7 +48,7 @@ import { colors, fontFamily } from '../common/styles/constant'
 export class MyConnections extends Component<
   MyConnectionsProps,
   MyConnectionsState
-> {
+  > {
   componentDidUpdate(prevProps: MyConnectionsProps) {
     const noUnSeenMessages =
       prevProps.unSeenMessagesCount && !this.props.unSeenMessagesCount
@@ -142,7 +142,14 @@ export class MyConnections extends Component<
           accessibilityLabel="my-connections-container"
         >
           {this.props.hasNoConnection && (
-            <NewConnectionInstructions
+            <HomeInstructions
+              headline="You now have a digital wallet!"
+              title="Want to see how it works?"
+              prodNetworkText="We have setup an optional tutorial site for you to go through
+            using this Connect.Me app. To start this process, go to
+            try.connect.me in a desktop browser and click Start Tutorial."
+              devNetworkText="We see you are not on the live network. Get with an Evernym team
+            member to help you use Connect.Me!"
               usingProductionNetwork={
                 this.props.environmentName === SERVER_ENVIRONMENT.PROD
               }
@@ -192,7 +199,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-            state.history.data.connections[connection.senderDID].data.length - 1
+          state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -203,7 +210,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-            state.history.data.connections[connection.senderDID].data.length - 1
+          state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -214,7 +221,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-            state.history.data.connections[connection.senderDID].data.length - 1
+          state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -225,7 +232,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-            state.history.data.connections[connection.senderDID].data.length - 1
+          state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -236,7 +243,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-            state.history.data.connections[connection.senderDID].data.length - 1
+          state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1

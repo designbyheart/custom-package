@@ -518,10 +518,11 @@ export async function getClaimVcx(
   if (!credential || !credential_id) {
     throw new Error('credential not found in vcx')
   }
-
+  
+  const credentialPayload: ClaimPushPayload = JSON.parse(credential)
   return {
     claimUuid: credential_id,
-    claim: credential,
+    claim: credentialPayload,
   }
 }
 

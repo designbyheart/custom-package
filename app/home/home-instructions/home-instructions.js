@@ -14,41 +14,36 @@ import Snackbar from 'react-native-snackbar'
 
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
-import type { NewCredentialInstructionsProps } from './type-my-credentials'
-import { colors, fontFamily } from '../common/styles/constant'
+import type { HomeInstructionsProps } from './type-home-instructions'
+import { colors, fontFamily } from '../../common/styles/constant'
 
-export class NewCredentialInstructions extends PureComponent<
-  NewCredentialInstructionsProps,
+export class HomeInstructions extends PureComponent<
+  HomeInstructionsProps,
   void
 > {
   render() {
-    const { usingProductionNetwork } = this.props
+    const { headline, title, prodNetworkText, devNetworkText, usingProductionNetwork } = this.props
     return (
       <ImageBackground
-        source={require('../images/connection-items-placeholder.png')}
+        source={require('../../images/connection-items-placeholder.png')}
         style={styles.backgroundImage}
       >
         <View style={[styles.contentContainer]}>
           <View>
             <Image
-              source={require('../images/CredentialGraphic.png')}
+              source={require('../../images/CredentialGraphic.png')}
               resizeMode="contain"
               style={styles.image}
             />
             <Text style={[styles.headline]}>
-              No Credentials yet!
+              {headline}
             </Text>
-            <Text style={[styles.title]}>Want to see how this app works?</Text>
+            <Text style={[styles.title]}>{title}</Text>
             {usingProductionNetwork && (
-              <Text style={[styles.text]}>
-                Go through the tutorial at www.try.connect.me. 
-                Connect.Me is for collecting digital Credentials. They will appear here.
-              </Text>
+              <Text style={[styles.text]}>{prodNetworkText}</Text>
             )}
             {!usingProductionNetwork && (
-              <Text style={[styles.text]}>
-                Connect.Me is for collecting digital Credentials. They will appear here.
-              </Text>
+              <Text style={[styles.text]}>{devNetworkText}</Text>
             )}
           </View>
         </View>

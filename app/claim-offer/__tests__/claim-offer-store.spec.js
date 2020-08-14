@@ -38,6 +38,7 @@ import {
   getAgencyVerificationKey,
   getRemotePairwiseDidAndName,
   getPoolConfig,
+  getConnectionHistory,
 } from '../../store/store-selector'
 import {
   serializeClaimOffer,
@@ -54,6 +55,7 @@ import { MESSAGE_TYPE } from '../../api/api-constants'
 import {
   claimOffer,
   claimOfferId as uid,
+  claimOfferIssueDate as issueDate,
   pairwiseConnection,
   claimRequest,
   claimOfferPayload,
@@ -61,6 +63,7 @@ import {
   serializedClaimOffers,
   serializedClaimOffer,
   vcxSerializedConnection,
+  connectionHistory,
 } from '../../../__mocks__/static-data'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
@@ -129,7 +132,7 @@ describe('claim offer store', () => {
   })
 
   it('claim request is success', () => {
-    newState = claimOfferStore(newState, claimRequestSuccess(uid))
+    newState = claimOfferStore(newState, claimRequestSuccess(uid, issueDate))
     expect(newState).toMatchSnapshot()
   })
 
@@ -241,11 +244,25 @@ describe('claim offer store', () => {
   })
 
   it('saga: hydrateClaimOffersSaga, success', () => {
+    const history = {
+      data: {
+        connections: {
+          pairwiseIdentifier1: {
+            data: connectionHistory['September 2017'].data,
+          }
+        }
+      }
+    }
+
     return expectSaga(hydrateClaimOffersSaga)
       .provide([
         [
           matchers.call.fn(getHydrationItem, CLAIM_OFFERS),
           serializedClaimOffers,
+        ],
+        [
+          matchers.select.selector(getConnectionHistory),
+          history
         ],
       ])
       .put(hydrateClaimOffers(JSON.parse(serializedClaimOffers)))

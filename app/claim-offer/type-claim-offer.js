@@ -125,6 +125,7 @@ export const CLAIM_REQUEST_SUCCESS = 'CLAIM_REQUEST_SUCCESS'
 export type ClaimRequestSuccessAction = {
   type: typeof CLAIM_REQUEST_SUCCESS,
   uid: string,
+  issueDate: number,
 }
 
 export const INSUFFICIENT_BALANCE = 'INSUFFICIENT_BALANCE'
@@ -226,6 +227,7 @@ export type ClaimOfferPayload = AdditionalDataPayload & {
   status: ClaimOfferStatus,
   claimRequestStatus: ClaimRequestStatus,
   payTokenValue?: string,
+  issueDate?: number,
 }
 
 export type SerializedClaimOffer = {
