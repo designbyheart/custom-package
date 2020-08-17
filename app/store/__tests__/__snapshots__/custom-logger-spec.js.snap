@@ -55,7 +55,7 @@ Object {
 exports[`fn:PiiHiddenActionTransformer should hide senderDID and pairwiseDID in MAP_CLAIM_TO_SENDER 1`] = `
 Object {
   "claimUuid": "****",
-  "issueDate": 123456789,
+  "issueDate": "****",
   "logoUrl": "****",
   "myPairwiseDID": "****",
   "senderDID": "****",

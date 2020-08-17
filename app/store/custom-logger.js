@@ -528,6 +528,7 @@ export function PiiHiddenActionTransformer(action: any) {
       'senderDID',
       'myPairwiseDID',
       'logoUrl',
+      'issueDate',
     ],
     [CLAIM_RECEIVED_VCX]: ['claim'],
     [CLAIM_OFFER_RECEIVED]: ['payload', 'payloadInfo'],

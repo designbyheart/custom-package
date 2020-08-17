@@ -135,16 +135,18 @@ class ConnectionCardComponent extends PureComponent<
                 </View>
               )}
               <View style={styles.button}>
-                <TouchableOpacity onPress={this.updateAndShowModal}>
-                  <Text
-                    style={[
-                      styles.buttonText,
-                      { color: this.props.colorBackground },
-                    ]}
-                  >
-                    {this.props.buttonText}
-                  </Text>
-                </TouchableOpacity>
+                { !!this.props.noOfAttributes &&
+                  <TouchableOpacity onPress={this.updateAndShowModal}>
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        { color: this.props.colorBackground },
+                      ]}
+                    >
+                      {this.props.buttonText}
+                    </Text>
+                  </TouchableOpacity>
+                }
                 {canDelete && (
                   <Text
                     style={[

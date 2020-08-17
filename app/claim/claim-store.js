@@ -20,11 +20,10 @@ import type {
   ClaimStorageSuccessAction,
   MapClaimToSenderAction,
   ClaimMap,
-  HydrateClaimMapAction,
-  HydrateClaimMapFailAction,
-  ClaimWithUuid,
   ClaimReceivedVcxAction,
   ClaimVcx,
+  DeleteClaimAction,
+  DeleteClaimSuccessAction,
 } from './type-claim'
 import type { GetClaimVcxResult } from '../push-notification/type-push-notification'
 import {
@@ -36,30 +35,37 @@ import {
   HYDRATE_CLAIM_MAP_FAIL,
   ERROR_CLAIM_HYDRATE_FAIL,
   CLAIM_RECEIVED_VCX,
+  DELETE_CLAIM,
+  DELETE_CLAIM_SUCCESS,
 } from './type-claim'
-import type { CustomError } from '../common/type-common'
+import type { CustomError, GenericObject } from '../common/type-common'
 import {
   getClaimHandleBySerializedClaimOffer,
   updateClaimOfferState,
   getClaimVcx,
   fetchPublicEntitiesForCredentials,
+  deleteCredential,
 } from '../bridge/react-native-cxs/RNCxs'
 import { CLAIM_STORAGE_ERROR } from '../services/error/error-code'
 import {
-  getConnectionLogoUrl,
-  getPoolConfig,
   getClaimMap,
   getSerializedClaimOffers,
   getConnectionByUserDid,
+  getClaimOffers,
+  getSerializedClaimOffer,
+  getConnection,
 } from '../store/store-selector'
 import { secureSet, getHydrationItem } from '../services/storage'
 import { CLAIM_MAP } from '../common/secure-storage-constants'
 import { RESET } from '../common/type-common'
 import { updateMessageStatus } from '../store/config-store'
 import { ensureVcxInitSuccess } from '../store/route-store'
-import type { SerializedClaimOffer } from '../claim-offer/type-claim-offer'
-import { VCX_CLAIM_OFFER_STATE } from '../claim-offer/type-claim-offer'
-import { saveSerializedClaimOffer } from '../claim-offer/claim-offer-store'
+import type { ClaimOfferPayload, ClaimOfferStore, SerializedClaimOffer } from '../claim-offer/type-claim-offer'
+import { CLAIM_OFFERS, VCX_CLAIM_OFFER_STATE } from '../claim-offer/type-claim-offer'
+import {
+  deleteClaimOffer,
+  saveSerializedClaimOffer,
+} from '../claim-offer/claim-offer-store'
 import type { Connection } from '../store/type-connection-store'
 import { promptBackupBanner } from '../backup/backup-store'
 import { captureError } from '../services/error/error-handler'
@@ -274,6 +280,54 @@ export function* saveClaimUuidMap(): Generator<*, *, *> {
   }
 }
 
+export const deleteClaim = (
+  uuid: string,
+): DeleteClaimAction => ({
+  type: DELETE_CLAIM,
+  uuid,
+})
+
+export const deleteClaimSuccess = (
+  claimMap: ClaimMap,
+  messageId: string,
+): DeleteClaimSuccessAction => ({
+  type: DELETE_CLAIM_SUCCESS,
+  claimMap,
+  messageId,
+})
+
+export function* deleteClaimSaga(
+  action: DeleteClaimAction,
+): Generator<*, *, *> {
+  try {
+    const claims: GenericObject = yield select(getClaimMap)
+    const claimOffers = yield select(getClaimOffers)
+    const claimOfferPayload: ClaimOfferPayload = claimOffers[action.uuid]
+
+    const remoteDid = claimOfferPayload.remotePairwiseDID
+    const [connection]: Connection[] = yield select(getConnection, remoteDid)
+
+    const vcxSerializedClaimOffer: SerializedClaimOffer = yield select(
+      getSerializedClaimOffer,
+      connection.identifier,
+      action.uuid,
+    )
+
+    const claimHandle = yield call(
+      getClaimHandleBySerializedClaimOffer,
+      vcxSerializedClaimOffer.serialized,
+    )
+    yield call(deleteCredential, claimHandle)
+    yield put(deleteClaimOffer(action.uuid, connection.identifier))
+
+    // ideally we need to delete Claim from Claim Store as well but we don't have an claimUuid
+    // investigate if we can get claimUuid during hydration
+    yield put(deleteClaimSuccess(claims, vcxSerializedClaimOffer.messageId))
+  } catch (e) {
+    captureError(e)
+  }
+}
+
 export function* watchClaimReceivedVcx(): any {
   yield takeEvery(CLAIM_RECEIVED_VCX, claimReceivedVcxSaga)
 }
@@ -282,13 +336,17 @@ export function* watchClaim(): any {
   yield all([watchClaimReceivedVcx()])
 }
 
+export function* watchDeleteClaim(): any {
+  yield takeEvery(DELETE_CLAIM, deleteClaimSaga)
+}
+
 const initialState = {
   claimMap: {},
 }
 
 export default function claimReducer(
   state: ClaimStore = initialState,
-  action: ClaimAction
+  action: ClaimAction,
 ) {
   switch (action.type) {
     case CLAIM_RECEIVED:
@@ -329,6 +387,12 @@ export default function claimReducer(
       }
 
     case HYDRATE_CLAIM_MAP:
+      return {
+        ...state,
+        claimMap: action.claimMap,
+      }
+
+    case DELETE_CLAIM_SUCCESS:
       return {
         ...state,
         claimMap: action.claimMap,

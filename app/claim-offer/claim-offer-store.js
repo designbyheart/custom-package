@@ -11,7 +11,6 @@ import {
   fork,
 } from 'redux-saga/effects'
 import delay from '@redux-saga/delay-p'
-import { Platform } from 'react-native'
 import {
   CLAIM_OFFER_STATUS,
   CLAIM_OFFER_RECEIVED,
@@ -46,18 +45,21 @@ import {
   DENY_CLAIM_OFFER,
   DENY_CLAIM_OFFER_SUCCESS,
   DENY_CLAIM_OFFER_FAIL,
+  CLAIM_OFFER_DELETED,
+  DELETE_CLAIM_OFFER,
 } from './type-claim-offer'
 import type {
   ClaimOfferStore,
   ClaimOfferAction,
   ClaimOfferDenyAction,
-  ClaimOfferShownAction,
   ClaimOfferAcceptedAction,
-  ClaimOfferResponse,
   ClaimOfferPayload,
   AddSerializedClaimOfferAction,
   SerializedClaimOffer,
   ClaimRequestSuccessAction,
+  ClaimOfferDeletedAction,
+  DeleteClaimOfferAction,
+  SerializedClaimOffers,
 } from './type-claim-offer'
 import type {
   AdditionalDataPayload,
@@ -65,21 +67,14 @@ import type {
 } from '../push-notification/type-push-notification'
 import type { CustomError } from '../common/type-common'
 import {
-  getAgencyUrl,
   getClaimOffer,
   getUserPairwiseDid,
-  getUserOneTimeInfo,
-  getAgencyVerificationKey,
-  getRemotePairwiseDidAndName,
-  getPoolConfig,
   getClaimOffers,
   getConnection,
-  getHistoryEvent,
   getSerializedClaimOffer,
   getWalletBalance,
   getConnectionHistory,
 } from '../store/store-selector'
-import type { IndyClaimOffer } from '../bridge/react-native-cxs/type-cxs'
 import {
   getHandleBySerializedConnection,
   getClaimHandleBySerializedClaimOffer,
@@ -88,12 +83,10 @@ import {
   sendClaimRequest as sendClaimRequestApi,
   getLedgerFees,
 } from '../bridge/react-native-cxs/RNCxs'
-import type { IndyClaimRequest } from '../bridge/react-native-cxs/type-cxs'
 import { CLAIM_STORAGE_FAIL, CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
 import { CLAIM_STORAGE_ERROR } from '../services/error/error-code'
 import { MESSAGE_TYPE } from '../api/api-constants'
 import type { ApiClaimRequest, EdgeClaimRequest } from '../api/type-api'
-import type { UserOneTimeInfo } from '../store/user/type-user-store'
 import type { Connection } from '../store/type-connection-store'
 import { RESET } from '../common/type-common'
 import { secureSet, secureDelete, getHydrationItem } from '../services/storage'
@@ -462,6 +455,7 @@ export function* watchAddSerializedClaimOffer(): any {
       CLAIM_OFFER_RECEIVED,
       SEND_CLAIM_REQUEST,
       CLAIM_OFFER_SHOWN,
+      CLAIM_OFFER_DELETED,
     ],
     saveClaimOffersSaga
   )
@@ -549,12 +543,48 @@ export const hydrateClaimOffers = (claimOffers: ClaimOfferStore) => ({
   claimOffers,
 })
 
+export const deleteClaimOffer = (uid: string, userDID: string): DeleteClaimOfferAction => ({
+  type: DELETE_CLAIM_OFFER,
+  uid,
+  userDID,
+})
+
+export const claimOfferDeleted = (uid: string,
+                                  vcxSerializedClaimOffers: SerializedClaimOffers): ClaimOfferDeletedAction => ({
+  type: CLAIM_OFFER_DELETED,
+  uid,
+  vcxSerializedClaimOffers,
+})
+
+function* deleteClaimOfferSaga(
+  action: DeleteClaimOfferAction
+): Generator<*, *, *> {
+  try {
+    const claimOffers = yield select(getClaimOffers)
+
+    const {[action.uid]: deleted , ...restSerializedOffers} = claimOffers.vcxSerializedClaimOffers[action.userDID]
+    const serializedOffers = {
+      ...claimOffers.vcxSerializedClaimOffers,
+      [action.userDID]: restSerializedOffers
+    }
+
+    yield put(claimOfferDeleted(action.uid, serializedOffers))
+  } catch (e) {
+    captureError(e)
+  }
+}
+
+export function* watchDeleteClaimOffer(): any {
+  yield takeEvery(DELETE_CLAIM_OFFER, deleteClaimOfferSaga)
+}
+
 export function* watchClaimOffer(): any {
   yield all([
     watchClaimOfferAccepted(),
     watchAddSerializedClaimOffer(),
     watchClaimStorageSuccess(),
     watchClaimStorageFail(),
+    watchDeleteClaimOffer(),
   ])
 }
 
@@ -733,6 +763,16 @@ export default function claimOfferReducer(
           ...state[action.uid],
           claimRequestStatus: CLAIM_REQUEST_STATUS.SEND_CLAIM_REQUEST_FAIL,
         },
+      }
+    case CLAIM_OFFER_DELETED:
+      return {
+        ...state,
+        [action.uid]: {
+          ...state[action.uid],
+          status: CLAIM_OFFER_STATUS.DELETED,
+          claimRequestStatus: CLAIM_REQUEST_STATUS.DELETED,
+        },
+        vcxSerializedClaimOffers: action.vcxSerializedClaimOffers
       }
     default:
       return state

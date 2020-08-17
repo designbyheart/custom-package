@@ -1510,4 +1510,22 @@ RCT_EXPORT_METHOD(connectionSendAnswer: (NSInteger) connectionHandle
    }];
 }
 
+// delete connection
+RCT_EXPORT_METHOD(deleteCredential:(NSInteger) credentialHandle
+                          resolver: (RCTPromiseResolveBlock) resolve
+                          rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] deleteCredential:credentialHandle
+                                     completion:^(NSError *error)
+  {
+     if (error != nil && error.code != 0)
+     {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, @"Error occurred while deleting connection", error);
+     } else {
+        resolve(@{});
+     }
+  }];
+}
+
 @end

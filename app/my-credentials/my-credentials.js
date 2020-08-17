@@ -1,10 +1,17 @@
 // @flow
 import React, { Component } from 'react'
-import { Text, View, FlatList, StyleSheet } from 'react-native'
-import { verticalScale, moderateScale } from 'react-native-size-matters'
+import {
+  Text,
+  View,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableHighlight,
+  Alert
+} from 'react-native'
+import { verticalScale, moderateScale, scale } from 'react-native-size-matters'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-
 import type { Store } from '../store/type-store'
 import type { ReactNavigation } from '../common/type-common'
 import type { MyCredentialsProps, CredentialItem } from './type-my-credentials'
@@ -20,17 +27,39 @@ import { withStatusBar } from '../components/status-bar/status-bar'
 import { credentialDetailsRoute } from '../common/route-constants'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { getEnvironmentName } from '../store/config-store'
-import {
-  CLAIM_OFFER_STATUS,
-  CLAIM_REQUEST_STATUS,
-} from '../claim-offer/type-claim-offer'
+import { CLAIM_OFFER_STATUS, CLAIM_REQUEST_STATUS } from '../claim-offer/type-claim-offer'
+import { SwipeListView } from 'react-native-swipe-list-view'
+import { deleteClaim } from '../claim/claim-store'
+import { MESSAGE_DELETE_CLAIM_DESCRIPTION, MESSAGE_DELETE_CLAIM_TITLE } from './type-my-credentials'
 
-export class MyCredentials extends Component<MyCredentialsProps, void> {
+class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
   keyExtractor = (item: Object) => item.claimOfferUuid.toString()
+
+  onDelete = (item: Object) => {
+    setTimeout(() => {
+      Alert.alert(
+        MESSAGE_DELETE_CLAIM_TITLE,
+        MESSAGE_DELETE_CLAIM_DESCRIPTION,
+        [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Delete',
+            onPress: () => {
+              this.props.deleteClaim(item.claimOfferUuid)
+            },
+          },
+        ],
+        { cancelable: false }
+      )
+    }, 300)
+  }
 
   renderItem = ({ item }: { item: Object }) => {
     const { logoUrl, credentialName, issuerName, date, attributes, claimUuid, remoteDid, uid } = item
     return (
+      <TouchableHighlight style={styles.rowFront}>
       <CredentialCard
         onPress={() =>
           this.onCardPress(credentialName, issuerName, date, attributes, logoUrl, claimUuid, remoteDid, uid)
@@ -40,6 +69,7 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
         date={date}
         attributesCount={attributes.length}
       />
+      </TouchableHighlight>
     )
   }
 
@@ -65,13 +95,25 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
     })
   }
 
+
+  renderHiddenItem = (data: Object) => (
+    <View style={styles.rowBack}>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => this.onDelete(data.item)}
+      >
+        <Text style={styles.deleteButtonText}>Delete</Text>
+      </TouchableOpacity>
+    </View>
+  )
+
   render() {
     const { offers } = this.props
 
     const credentials: Array<CredentialItem> = []
     Object.keys(offers).forEach((uid) => {
       const offer: ClaimOfferPayload = offers[uid]
-      if (offer.claimRequestStatus == CLAIM_REQUEST_STATUS.CLAIM_REQUEST_SUCCESS) {
+      if (offer.claimRequestStatus === CLAIM_REQUEST_STATUS.CLAIM_REQUEST_SUCCESS) {
         credentials.push({
           claimOfferUuid: offer.uid,
           credentialName: offer.data.name,
@@ -96,7 +138,7 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
             <HomeInstructions
               headline="No Credentials yet!"
               title="Want to see how this app works?"
-              prodNetworkText="Go through the tutorial at www.try.connect.me. 
+              prodNetworkText="Go through the tutorial at www.try.connect.me.
               Connect.Me is for collecting digital Credentials. They will appear here."
               devNetworkText="Connect.Me is for collecting digital Credentials. They will appear here."
               usingProductionNetwork={
@@ -104,15 +146,17 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
               }
             />
           )}
-          <FlatList
+
+          <SwipeListView
             keyExtractor={this.keyExtractor}
-            style={styles.flatListContainer}
             contentContainerStyle={styles.flatListInnerContainer}
             data={credentials}
             renderItem={this.renderItem}
-          ></FlatList>
+            renderHiddenItem={this.renderHiddenItem}
+            rightOpenValue={-100}
+          />
         </View>
-        <PrimaryHeader headline="My Credentials" />
+        <PrimaryHeader headline="My Credentials"/>
         <CameraButton
           onPress={() => this.props.navigation.navigate(qrCodeScannerTabRoute)}
         />
@@ -130,9 +174,14 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ deleteClaim }, dispatch)
+
+export const MyCredentials = connect(mapStateToProps, mapDispatchToProps)(MyCredentialsComponent)
+
 export const myCredentialsScreen = {
   routeName: myCredentialsRoute,
-  screen: connect(mapStateToProps)(MyCredentials),
+  screen: MyCredentials,
 }
 
 const styles = StyleSheet.create({
@@ -140,28 +189,38 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: colors.cmWhite,
-  },
-  flatListContainer: {
-    width: '100%',
-    height: '100%',
     backgroundColor: colors.cmWhite,
   },
   flatListInnerContainer: {
     paddingTop: verticalScale(90),
   },
-  textInner: {
-    width: '100%',
-    height: moderateScale(70),
+  rowFront: {
+    alignItems: 'center',
+    backgroundColor: colors.cmWhite,
+    justifyContent: 'center',
   },
-  content: {
-    fontSize: verticalScale(fontSizes.size5),
-    fontWeight: '400',
-    color: colors.cmGray1,
-    width: '100%',
-    textAlign: 'left',
+  rowBack: {
+    alignItems: 'center',
+    backgroundColor: colors.cmWhite,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 15,
+  },
+  deleteButton: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    width: 75,
+    backgroundColor: colors.cmRed,
+    right: 0,
+  },
+  deleteButtonText: {
+    color: colors.cmWhite,
+    alignItems: 'center',
     fontFamily: fontFamily,
+    fontSize: scale(12),
   },
 })

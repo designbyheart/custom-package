@@ -1693,4 +1693,20 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
             promise.reject("VcxException", e.getMessage());
         }
     }
+
+    @ReactMethod
+    public void deleteCredential(int credentialHandle, Promise promise) {
+        try {
+            CredentialApi.deleteCredential(credentialHandle).whenComplete((result, t) -> {
+                if (t != null) {
+                    Log.e(TAG, "deleteCredential: ", t);
+                    promise.reject("FutureException", t.getMessage());
+                } else {
+                    promise.resolve(0);
+                }
+            });
+        } catch (VcxException e) {
+            promise.reject("VCXException", e.getMessage());
+        }
+    }
 }

@@ -49,6 +49,7 @@ import {
   PAID_CREDENTIAL_REQUEST_FAIL,
 } from '../claim-offer/type-claim-offer'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
+import { DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
 
 export class HomeScreen extends Component<HomeProps, void> {
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
@@ -162,6 +163,8 @@ export class HomeScreen extends Component<HomeProps, void> {
     else if (status === UPDATE_ATTRIBUTE_CLAIM) statusMessage = `Sending...`
     else if (status === ERROR_SEND_PROOF)
       statusMessage = `Failed to send "${action}"`
+    else if (status === HISTORY_EVENT_STATUS.DELETE_CLAIM_SUCCESS)
+      statusMessage = `You deleted the credential "${action}"`
 
     return (
       <RecentCard

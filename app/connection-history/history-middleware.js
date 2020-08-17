@@ -12,7 +12,7 @@ import {
   DENY_CLAIM_OFFER_FAIL,
   DENY_CLAIM_OFFER_SUCCESS,
 } from '../claim-offer/type-claim-offer'
-import { CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
+import { CLAIM_STORAGE_SUCCESS, DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
 import {
   PROOF_REQUEST_RECEIVED,
   SEND_PROOF_SUCCESS,
@@ -54,6 +54,7 @@ const actionToRecord = [
   DENY_CLAIM_OFFER,
   DENY_CLAIM_OFFER_FAIL,
   DENY_CLAIM_OFFER_SUCCESS,
+  DELETE_CLAIM_SUCCESS,
 ]
 
 // TODO:KS Fix any type using `redux` provided Generic Types
