@@ -1,4 +1,5 @@
 // @flow
+/*global spyOn*/
 import 'react-native'
 import { Platform } from 'react-native'
 import React, { PureComponent } from 'react'
