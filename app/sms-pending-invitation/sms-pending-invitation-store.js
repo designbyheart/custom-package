@@ -119,14 +119,14 @@ export function convertAriesPayloadToInvitation(
     senderName: payload.label || 'Unknown',
     senderDID: payload.recipientKeys[0],
     // TODO:KS Need to discuss with architects to know how to fulfill this requirement
-    senderLogoUrl: null,
+    senderLogoUrl: payload.profileUrl || null,
     senderVerificationKey: payload.recipientKeys[0],
     targetName: payload.label || 'Unknown',
     senderDetail: {
       name: payload.label || 'Unknown',
       agentKeyDlgProof: senderAgentKeyDelegationProof,
       DID: payload.recipientKeys[0],
-      logoUrl: null,
+      logoUrl: payload.profileUrl || null,
       verKey: payload.recipientKeys[0],
       publicDID: payload.recipientKeys[0],
     },
