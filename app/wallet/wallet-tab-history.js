@@ -86,14 +86,14 @@ export class WalletTabHistory extends Component<WalletHistoryProps, void> {
 
   render() {
     const { transactions, status } = this.props.walletHistory
-    const walletHistory = transactions.map(transaction => {
+    const walletHistory = transactions.map((transaction, index) => {
       let itemProps = {
         key: transaction.id,
         leftAvatar: this.getHistoryIcons(transaction.action),
         subtitle: <HistoryItem {...transaction} />,
         containerStyle: styles.listItemContainer,
       }
-      return <ListItem {...itemProps} />
+      return <ListItem key={index} {...itemProps} />
     })
 
     return (
@@ -128,7 +128,7 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ refreshWalletHistory }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletTabHistory)
