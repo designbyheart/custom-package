@@ -2,15 +2,13 @@
 
 import {
   all,
-  takeLatest,
   takeEvery,
   put,
   call,
   select,
-  take,
 } from 'redux-saga/effects'
 import merge from 'lodash.merge'
-import { CONNECTIONS } from '../common'
+import { claimOfferRoute, proofRequestRoute, questionRoute } from '../common'
 import {
   LOAD_HISTORY,
   LOAD_HISTORY_SUCCESS,
@@ -20,15 +18,12 @@ import {
   SHOW_USER_BACKUP_ALERT,
   ERROR_LOADING_HISTORY,
   HISTORY_EVENT_OCCURRED,
-  EventTypeToEventStatusMap,
   HISTORY_EVENT_STATUS,
   HISTORY_EVENT_TYPE,
   HISTORY_EVENT_STORAGE_KEY,
-  ERROR_HISTORY_EVENT_OCCURRED,
+  ERROR_HISTORY_EVENT_OCCURRED, REMOVE_EVENT,
 } from './type-connection-history'
 import type {
-  HistoryEventType,
-  HistoryEventStatus,
   ConnectionHistoryEvent,
   ConnectionHistoryData,
   ConnectionHistoryAction,
@@ -38,13 +33,9 @@ import type {
   DeleteHistoryEventAction,
   ShowUserBackupAlertAction,
   RecordHistoryEventAction,
+  RemoveEventAction,
 } from './type-connection-history'
-import type { Connection } from '../store/type-connection-store'
-import type {
-  CustomError,
-  GenericObject,
-  GenericStringObject,
-} from '../common/type-common'
+import type { CustomError } from '../common/type-common'
 import type { InvitationPayload } from '../invitation/type-invitation'
 import { uuid } from '../services/uuid'
 import { INVITATION_RECEIVED } from '../invitation/type-invitation'
@@ -97,7 +88,6 @@ import {
   SEND_PROOF_SUCCESS,
   DENY_PROOF_REQUEST_SUCCESS,
   DENY_PROOF_REQUEST,
-  PROOF_REQUEST_ACCEPTED,
   DENY_PROOF_REQUEST_FAIL,
 } from '../proof-request/type-proof-request'
 import { secureSet, getHydrationItem } from '../services/storage'
@@ -112,7 +102,6 @@ import {
   getClaimReceivedHistory,
 } from '../store/store-selector'
 import { CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
-import type { UserOneTimeInfo } from '../store/user/type-user-store'
 import { RESET } from '../common/type-common'
 import {
   CLAIM_OFFER_RECEIVED,
@@ -157,6 +146,13 @@ export const loadHistoryFail = (error: CustomError) => ({
   type: LOAD_HISTORY_FAIL,
   error,
 })
+
+export const removeEvent = (uid: string, navigationRoute: string): RemoveEventAction => ({
+  type: REMOVE_EVENT,
+  uid,
+  navigationRoute,
+})
+
 
 export function* loadHistorySaga(): Generator<*, *, *> {
   yield put(loadHistory())
@@ -328,6 +324,7 @@ export function convertClaimOfferAcceptedToHistoryEvent(
   action: ClaimOfferAcceptedAction,
   credentialOfferReceivedHistoryEvent: ConnectionHistoryEvent
 ): ConnectionHistoryEvent {
+
   return {
     action: HISTORY_EVENT_STATUS[CLAIM_OFFER_ACCEPTED],
     data: credentialOfferReceivedHistoryEvent.data,
@@ -905,6 +902,45 @@ export function* historyEventOccurredSaga(
   }
 }
 
+export function* removeEventSaga(
+  action: RemoveEventAction
+): Generator<*, *, *> {
+
+  let eventType
+  let remotePairwiseDID
+
+  if (action.navigationRoute === claimOfferRoute) {
+    const claimOffer = yield select(getClaimOffer, action.uid)
+    eventType = CLAIM_OFFER_RECEIVED
+    remotePairwiseDID = claimOffer.remotePairwiseDID
+  } else if (action.navigationRoute === proofRequestRoute) {
+    const proofRequest: ProofRequestPayload = yield select(
+      getProofRequest,
+      action.uid
+    )
+    eventType = PROOF_REQUEST_RECEIVED
+    remotePairwiseDID = proofRequest.remotePairwiseDID
+  } else if (action.navigationRoute === questionRoute) {
+    const questionPayload: QuestionPayload = yield select(
+      selectQuestion,
+      action.uid
+    )
+    eventType = MESSAGE_TYPE.QUESTION
+    remotePairwiseDID = questionPayload.remotePairwiseDID
+  }
+
+  if (eventType && remotePairwiseDID) {
+    const event = yield select(
+      getHistoryEvent,
+      action.uid,
+      remotePairwiseDID,
+      eventType
+    )
+
+    if (event) yield put(deleteHistoryEvent(event))
+  }
+}
+
 export function* watchRecordHistoryEvent(): any {
   yield takeEvery([RECORD_HISTORY_EVENT, DELETE_HISTORY_EVENT], persistHistory)
 }
@@ -942,12 +978,17 @@ export function* watchHistoryEventOccurred(): any {
   yield takeEvery(HISTORY_EVENT_OCCURRED, historyEventOccurredSaga)
 }
 
+export function* watchRemoveEvent(): any {
+  yield takeEvery(REMOVE_EVENT, removeEventSaga)
+}
+
 export function* watchConnectionHistory(): any {
   yield all([
     watchHistoryEventOccurred(),
     watchRecordHistoryEvent(),
     watchNewConnectionSeen(),
     watchConnectionHistoryBackedUp(),
+    watchRemoveEvent(),
   ])
 }
 
