@@ -23,7 +23,7 @@ const QuestionSenderDetail = (props: {
       style={props.questionStyles.questionSenderContainer}
       center
     >
-      {props.source ? (
+      {props.source && props.source.uri ? (
         <Image
           style={[props.questionStyles.questionSenderLogo]}
           source={props.source}

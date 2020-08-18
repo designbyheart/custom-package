@@ -17,7 +17,7 @@ import questionReducer, {
 } from '../question-store'
 import { initialTestAction, STORAGE_STATUS } from '../../common/type-common'
 import {
-  mockQuestionPayload,
+  mockQuestionPayload, mockQuestionPayload3,
   mockQuestionReceivedState,
 } from '../../../__mocks__/data/question-store-mock-data'
 import {
@@ -39,16 +39,9 @@ import {
 import { retrySaga } from '../../api/api-utils'
 
 describe('Question Store', () => {
-  const { uid, valid_responses } = mockQuestionPayload
+  const { uid, valid_responses, messageId } = mockQuestionPayload
   const answer = valid_responses[0]
   const answerMsgId = 'answerMsgId'
-  const thread = {
-    thid: '7b4a3d0c-03bd-449f-9f05-765524a73f6e',
-    sender_order: 0,
-    received_orders: {
-      CaGwcvJSWvoz1oMxej1nMm: 0,
-    },
-  }
 
   let initialState
   beforeEach(() => {
@@ -66,7 +59,7 @@ describe('Question Store', () => {
     expect(
       questionReducer(
         afterQuestionReceivedState,
-        sendAnswerToQuestion(uid, answer, thread)
+        sendAnswerToQuestion(uid, answer)
       )
     ).toMatchSnapshot()
   })
@@ -148,13 +141,10 @@ describe('Question Store', () => {
       signature: 'signatureInBase64GenerateByDataInBase64',
     }
 
-    const message = getUserAnswer(signDataResponse)
-    if (thread) {
-      message['~thread'] = thread
-    }
+    const message = getUserAnswer(signDataResponse, messageId)
     return expectSaga(
       answerToQuestionSaga,
-      sendAnswerToQuestion(uid, answer, thread)
+      sendAnswerToQuestion(uid, answer)
     )
       .withState(stateWithConnectionQuestionVcxSuccess)
       .provide([

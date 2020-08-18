@@ -7,14 +7,17 @@ import { connect } from 'react-redux'
 
 import type { Store } from '../store/type-store'
 import type { ReactNavigation } from '../common/type-common'
-import type { MyCredentialsProps, Item } from './type-my-credentials'
+import type { MyCredentialsProps, CredentialItem } from './type-my-credentials'
 import type { ClaimOfferPayload } from '../claim-offer/type-claim-offer'
+import type { Attribute } from '../push-notification/type-push-notification'
+
 import { PrimaryHeader, CameraButton } from '../components'
 import { CredentialCard } from './credential-card/credential-card'
 import { HomeInstructions } from '../home/home-instructions/home-instructions'
 import { myCredentialsRoute, qrCodeScannerTabRoute } from '../common'
 import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 import { withStatusBar } from '../components/status-bar/status-bar'
+import { credentialDetailsRoute } from '../common/route-constants'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { getEnvironmentName } from '../store/config-store'
 import {
@@ -26,29 +29,58 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
   keyExtractor = (item: Object) => item.claimOfferUuid.toString()
 
   renderItem = ({ item }: { item: Object }) => {
-    const { logoUrl, credentialName, date, attributesCount } = item
+    const { logoUrl, credentialName, issuerName, date, attributes, claimUuid, remoteDid, uid } = item
     return (
       <CredentialCard
+        onPress={() =>
+          this.onCardPress(credentialName, issuerName, date, attributes, logoUrl, claimUuid, remoteDid, uid)
+        }
         credentialName={credentialName}
         image={logoUrl}
         date={date}
-        attributesCount={attributesCount}
+        attributesCount={attributes.length}
       />
     )
   }
+
+  onCardPress = (
+    credentialName: string,
+    issuerName: string,
+    date: number,
+    attributes: Array<Attribute>,
+    logoUrl: string,
+    claimUuid: string,
+    remoteDid: string,
+    uid: string,
+  ) => {
+    this.props.navigation.navigate(credentialDetailsRoute, {
+      credentialName,
+      issuerName,
+      date,
+      attributes,
+      logoUrl,
+      claimUuid, 
+      remoteDid, 
+      uid,
+    })
+  }
+
   render() {
     const { offers } = this.props
 
-    const credentials: Array<Item> = []
+    const credentials: Array<CredentialItem> = []
     Object.keys(offers).forEach((uid) => {
       const offer: ClaimOfferPayload = offers[uid]
       if (offer.claimRequestStatus == CLAIM_REQUEST_STATUS.CLAIM_REQUEST_SUCCESS) {
         credentials.push({
           claimOfferUuid: offer.uid,
           credentialName: offer.data.name,
+          issuerName: offer.issuer.name,
           date: offer.issueDate,
-          attributesCount: offer.data.revealedAttributes.length,
+          attributes: offer.data.revealedAttributes,
           logoUrl: offer.senderLogoUrl,
+          remoteDid: offer.remotePairwiseDID,
+          uid: uid,
         })
       }
     })

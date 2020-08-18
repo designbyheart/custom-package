@@ -12,8 +12,6 @@ import type {
   QuestionStatus,
   QuestionResponse,
   QuestionStoreData,
-  UpdateQuestionStorageStatusAction,
-  QuestionThread,
 } from './type-question'
 import type { Store } from '../store/type-store'
 import type { Connection } from '../store/type-connection-store'
@@ -32,7 +30,7 @@ import {
   UPDATE_QUESTION_ANSWER,
   ERROR_GET_CONNECTION_HANDLE,
   ERROR_SIGN_DATA,
-  QUESTION_ANSWER_PROTOCOL1,
+  COMMITEDANSWER_QUESTION_PROTOCOL,
   ERROR_QUESTION_ANSWER_SEND,
   MESSAGE_TYPE_ANSWER,
   MESSAGE_TITLE_ANSWER,
@@ -45,6 +43,9 @@ import {
   ERROR_RESPONSE_NOT_PROPERLY_FORMATTED,
   ERROR_RESPONSE_NOT_UNIQUE_NONCE,
   ERROR_TOO_MANY_RESPONSES,
+  ERROR_RESPONSE_NOT_UNIQUE_ANSWERS,
+  ERROR_NO_QUESTION_NONCE,
+  QUESTIONANSWER_PROTOCOL,
 } from './type-question'
 import {
   put,
@@ -52,8 +53,6 @@ import {
   call,
   all,
   select,
-  takeEvery,
-  fork,
   take,
 } from 'redux-saga/effects'
 import {
@@ -62,21 +61,18 @@ import {
   STORAGE_STATUS,
 } from '../common/type-common'
 import { ensureVcxInitSuccess } from '../store/route-store'
-import { VCX_INIT_SUCCESS } from '../store/type-config-store'
 import { getConnection } from '../store/store-selector'
 import {
   getHandleBySerializedConnection,
   connectionSignData,
-  connectionSendMessage,
+  connectionSendMessage, connectionSendAnswer,
 } from '../bridge/react-native-cxs/RNCxs'
 import {
   secureSet,
-  safeSet,
-  safeGet,
-  safeDelete,
   getHydrationItem,
 } from '../services/storage'
 import { retrySaga } from '../api/api-utils'
+import { uuid } from '../services/uuid'
 
 export function* watchQuestion(): any {
   yield all([
@@ -99,9 +95,9 @@ function* watchQuestionSeen(): any {
 }
 
 export function* answerToQuestionSaga(
-  action: SendAnswerToQuestionAction
+  action: SendAnswerToQuestionAction,
 ): Generator<*, *, *> {
-  const { answer, uid, thread } = action
+  const { answer, uid } = action
   yield put(updateQuestionStatus(uid, QUESTION_STATUS.SEND_ANSWER_IN_PROGRESS))
 
   const vcxResult = yield* ensureVcxInitSuccess()
@@ -110,71 +106,74 @@ export function* answerToQuestionSaga(
       updateQuestionStatus(
         uid,
         QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
-        ERROR_VCX_INIT_FAIL()
-      )
+        ERROR_VCX_INIT_FAIL(),
+      ),
     )
+    return
   }
 
   try {
     const question: QuestionPayload = yield select(selectQuestion, uid)
     const [connection]: Connection[] = yield select(
       getConnection,
-      question.from_did
+      question.from_did,
     )
     const connectionHandle: number = yield call(
       getHandleBySerializedConnection,
-      connection.vcxSerializedConnection
+      connection.vcxSerializedConnection,
     )
+
     try {
-      const { data, signature }: SignDataResponse = yield call(
-        connectionSignData,
-        connectionHandle,
-        answer.nonce
-      )
+      let answerMsgId = ''
 
-      try {
-        let userAnswer = getUserAnswer({ data, signature })
+      if (question.protocol === QUESTIONANSWER_PROTOCOL) {
+        if (!question.originalQuestion) return
+        yield* retrySaga(
+          yield call(
+            connectionSendAnswer,
+            connectionHandle,
+            question.originalQuestion,
+            JSON.stringify(answer),
+          ),
+        )
+      } else {
+        if (!answer.nonce) return
+        const { data, signature }: SignDataResponse = yield call(
+          connectionSignData,
+          connectionHandle,
+          answer.nonce,
+        )
 
-        // Aries compatibility questions
-        if (thread !== null) {
-          userAnswer['~thread'] = thread
-        }
+        let userAnswer = getUserAnswer({ data, signature }, question.messageId)
 
-        const answerMsgId: string = yield* retrySaga(
+        answerMsgId = yield* retrySaga(
           call(connectionSendMessage, connectionHandle, {
             message: JSON.stringify(userAnswer),
             messageType: MESSAGE_TYPE_ANSWER,
             messageTitle: MESSAGE_TITLE_ANSWER,
             refMessageId: uid,
-          })
-        )
-        yield put(
-          updateQuestionStatus(
-            uid,
-            QUESTION_STATUS.SEND_ANSWER_SUCCESS_TILL_CLOUD_AGENT
-          )
-        )
-
-        yield put(updateQuestionAnswer(uid, answer, answerMsgId))
-
-        // since answer is complete, we need to persist new state
-        yield call(persistQuestionSaga)
-      } catch (e) {
-        yield put(
-          updateQuestionStatus(
-            uid,
-            QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
-            ERROR_QUESTION_ANSWER_SEND(e.message)
-          )
+          }),
         )
       }
+
+      yield put(
+        updateQuestionStatus(
+          uid,
+          QUESTION_STATUS.SEND_ANSWER_SUCCESS_TILL_CLOUD_AGENT,
+        ),
+      )
+
+      yield put(updateQuestionAnswer(uid, answer, answerMsgId))
+
+      // since answer is complete, we need to persist new state
+      yield call(persistQuestionSaga)
     } catch (e) {
       yield put(
         updateQuestionStatus(
           uid,
           QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
-          ERROR_SIGN_DATA(e.message)
-        )
+          ERROR_QUESTION_ANSWER_SEND(e.message),
+        ),
       )
     }
   } catch (e) {
@@ -182,18 +181,18 @@ export function* answerToQuestionSaga(
       updateQuestionStatus(
         uid,
         QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
-        ERROR_GET_CONNECTION_HANDLE(e.message)
-      )
+        ERROR_GET_CONNECTION_HANDLE(e.message),
+      ),
     )
   }
 }
 
 export function* persistQuestionSaga(
-  action: ?QuestionReceivedAction
+  action: ?QuestionReceivedAction,
 ): Generator<*, *, *> {
   try {
     const storageStatus: StorageStatus = yield select(
-      selectQuestionStorageStatus
+      selectQuestionStorageStatus,
     )
     if (storageStatus === STORAGE_STATUS.RESTORE_START) {
       yield take(isQuestionRestoreConcluded)
@@ -202,7 +201,7 @@ export function* persistQuestionSaga(
     // once we know that now there is nothing new being restored
     // we can take state from redux store as current state
     const questionState: QuestionStoreData = yield select(
-      selectQuestionStoreData
+      selectQuestionStoreData,
     )
     yield call(secureSet, QUESTION_STORAGE_KEY, JSON.stringify(questionState))
     yield put(updateQuestionStorageStatus(STORAGE_STATUS.PERSIST_SUCCESS))
@@ -224,20 +223,23 @@ export function* hydrateQuestionSaga(): Generator<*, *, *> {
   }
 }
 
-export function getUserAnswer({ data, signature }: SignDataResponse) {
+export function getUserAnswer({ data, signature }: SignDataResponse, thid: string) {
   return {
-    '@type': QUESTION_ANSWER_PROTOCOL1,
+    '@type': COMMITEDANSWER_QUESTION_PROTOCOL,
+    '@id': uuid(),
     'response.@sig': {
       signature,
       sig_data: data,
       timestamp: moment().format(),
     },
-    '~thread': {},
+    '~thread': {
+      thid: thid,
+    },
   }
 }
 
 export const questionReceived = (
-  question: QuestionPayload
+  question: QuestionPayload,
 ): QuestionReceivedAction => {
   return {
     type: QUESTION_RECEIVED,
@@ -248,18 +250,16 @@ export const questionReceived = (
 export const sendAnswerToQuestion = (
   uid?: string,
   answer: QuestionResponse,
-  thread?: QuestionThread = null
 ) => ({
   type: SEND_ANSWER_TO_QUESTION,
   uid,
   answer,
-  thread,
 })
 
 export const updateQuestionStatus = (
   uid: string,
   status: QuestionStatus,
-  error: ?CustomError
+  error: ?CustomError,
 ) => ({
   type: UPDATE_QUESTION_STATUS,
   uid,
@@ -270,7 +270,7 @@ export const updateQuestionStatus = (
 export const updateQuestionAnswer = (
   uid: string,
   answer: QuestionResponse,
-  answerMsgId: string
+  answerMsgId: string,
 ) => ({
   type: UPDATE_QUESTION_ANSWER,
   uid,
@@ -333,7 +333,7 @@ export function selectQuestionStoreData(state: Store) {
 }
 
 export function getScreenStatus(
-  questionStatus?: QuestionStatus
+  questionStatus?: QuestionStatus,
 ): ComponentStatus {
   const errorStates = [
     QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
@@ -369,6 +369,14 @@ export function getQuestionValidity(question: any): null | CustomError {
     return ERROR_NO_QUESTION_DATA
   }
 
+  if (question.protocol === QUESTIONANSWER_PROTOCOL) {
+    return getQuestionanswerQuestionValidity(question)
+  } else {
+    return getCommitedanswerQuestionValidity(question)
+  }
+}
+
+export function getCommitedanswerQuestionValidity(question: any): null | CustomError {
   const { valid_responses } = question
   if (!Array.isArray(valid_responses)) {
     return ERROR_NO_RESPONSE_ARRAY
@@ -389,7 +397,7 @@ export function getQuestionValidity(question: any): null | CustomError {
       return (
         typeof text === 'string' && typeof nonce === 'string' && text && nonce
       )
-    }
+    },
   )
   if (!everyResponseValid) {
     return ERROR_RESPONSE_NOT_PROPERLY_FORMATTED
@@ -404,9 +412,49 @@ export function getQuestionValidity(question: any): null | CustomError {
   return null
 }
 
+export function getQuestionanswerQuestionValidity(question: any): null | CustomError {
+  if (!question.nonce) {
+    return ERROR_NO_QUESTION_NONCE
+  }
+
+  const { valid_responses } = question
+  if (!Array.isArray(valid_responses)) {
+    return ERROR_NO_RESPONSE_ARRAY
+  }
+
+  if (valid_responses.length === 0) {
+    return ERROR_NOT_ENOUGH_RESPONSES
+  }
+
+  if (valid_responses.length > 1000) {
+    return ERROR_TOO_MANY_RESPONSES
+  }
+
+  const everyResponseValid = valid_responses.every(
+    (response: QuestionResponse) => {
+      const { text } = response
+      // check text is string and has some value
+      return (
+        typeof text === 'string' && text
+      )
+    },
+  )
+  if (!everyResponseValid) {
+    return ERROR_RESPONSE_NOT_PROPERLY_FORMATTED
+  }
+
+  const uniqueResponses = uniqBy(valid_responses, 'text')
+  const isEveryAnswerUnique = uniqueResponses.length === valid_responses.length
+  if (!isEveryAnswerUnique) {
+    return ERROR_RESPONSE_NOT_UNIQUE_ANSWERS
+  }
+
+  return null
+}
+
 export default function questionReducer(
   state: QuestionStore = initialState,
-  action: QuestionAction
+  action: QuestionAction,
 ) {
   switch (action.type) {
     case QUESTION_RECEIVED:

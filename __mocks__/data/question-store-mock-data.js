@@ -1,7 +1,7 @@
 // @flow
 
 import {
-  QUESTION_ANSWER_PROTOCOL1,
+  COMMITEDANSWER_QUESTION_PROTOCOL,
   QUESTION_STATUS,
 } from '../../app/question/type-question'
 import { STORAGE_STATUS } from '../../app/common/type-common'
@@ -20,7 +20,7 @@ export const mockExternalLinks = [mockExternalLink, mockExternalLinkNoText]
 export const mockQuestionPayload = {
   messageTitle: 'Message Title',
   messageText: 'Message Text',
-  '@type': QUESTION_ANSWER_PROTOCOL1,
+  '@type': COMMITEDANSWER_QUESTION_PROTOCOL,
   messageId: 'MSG-ID',
   question_text: 'Question Text',
   question_detail: 'Question Detail',
@@ -40,7 +40,7 @@ export const mockQuestionPayload = {
 export const mockQuestionPayload2 = {
   messageTitle: 'Survey request for family members',
   messageText: 'Hi User,',
-  '@type': QUESTION_ANSWER_PROTOCOL1,
+  '@type': COMMITEDANSWER_QUESTION_PROTOCOL,
   messageId: 'MSG-ID-2',
   question_text: 'How many members are in your family',
   question_detail:
@@ -62,7 +62,7 @@ export const mockQuestionPayload2 = {
 export const mockQuestionPayload3 = {
   messageTitle: 'Are you trying to sign in?',
   messageText: 'Hi User,',
-  '@type': QUESTION_ANSWER_PROTOCOL1,
+  '@type': COMMITEDANSWER_QUESTION_PROTOCOL,
   messageId: 'MSG-ID-3',
   question_text: 'Are you trying to sign in to gmail.com?',
   question_detail: 'Are you trying to sign in to gmail.com?',

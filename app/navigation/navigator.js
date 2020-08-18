@@ -67,6 +67,7 @@ import { onfidoScreen } from '../onfido/onfido'
 import { restorePassphraseScreen } from '../restore/restore-passphrase'
 import { privacyTNCScreen } from '../privacy-tnc/privacy-tnc-screen'
 import { connectionHistoryScreen } from '../connection-details/connection-details'
+import { credentialDetailsScreen } from '../credential-details/credential-details'
 import {
   splashScreenRoute,
   homeRoute,
@@ -459,6 +460,11 @@ function CardStackScreen() {
         name={sendLogsScreen.routeName}
         component={sendLogsScreen.screen}
         options={sendLogsScreen.options}
+      />
+      <CardStack.Screen
+        name={credentialDetailsScreen.routeName}
+        component={credentialDetailsScreen.screen}
+        options={credentialDetailsScreen.options}
       />
     </CardStack.Navigator>
   )
