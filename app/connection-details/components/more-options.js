@@ -23,6 +23,7 @@ import {
   font,
 } from '../../common/styles/constant'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
+import { EvaIcon, DELETE_ICON, CLOSE_ICON } from '../../common/icons'
 
 const defaultAvatar = require('../../images/UserAvatar.png')
 // TODO: Fix the <any, void> to be the correct types for props and state
@@ -67,11 +68,12 @@ class MoreOptions extends Component<any, void> {
             style={styles.deleteButton}
             onPress={() => this.onDeleteConnection(params.senderDID)}
           >
-            <SvgCustomIcon
-              name="TrashCan"
-              fill={colors.cmBlue}
+            <EvaIcon
+              name={DELETE_ICON}
+              color={colors.cmBlue}
               width={moderateScale(24)}
               height={moderateScale(24)}
+              style={styles.image}
             />
             <Text style={styles.buttonText}>Delete Connection</Text>
           </TouchableOpacity>
@@ -81,11 +83,10 @@ class MoreOptions extends Component<any, void> {
             style={styles.closeButton}
             onPress={this.props.moreOptionsClose}
           >
-            <SvgCustomIcon
-              name="CloseIcon"
-              fill={colors.cmGray2}
-              width={moderateScale(12)}
-              height={moderateScale(12)}
+            <EvaIcon
+              name={CLOSE_ICON}
+              width={moderateScale(32)}
+              height={moderateScale(32)}
             />
           </TouchableOpacity>
         </View>
@@ -103,7 +104,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(MoreOptions)
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    paddingTop: verticalScale(40),
+    paddingTop: verticalScale(54),
     zIndex: 999,
     alignItems: 'flex-end',
     width: '100%',
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
     width: moderateScale(40),
     height: moderateScale(40),
-    top: moderateScale(40),
+    top: moderateScale(56),
     right: '2%',
     elevation: 8,
   },
@@ -142,10 +143,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cmWhite,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  closeIcon: {
-    width: moderateScale(14),
-    height: moderateScale(14),
   },
   contentWrapper: {
     position: 'relative',
@@ -175,17 +172,12 @@ const styles = StyleSheet.create({
     fontSize: verticalScale(fontSizes.size5),
     color: colors.cmGray2,
     fontFamily: fontFamily,
+    marginRight: moderateScale(24),
   },
   deleteButton: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  trashCanIcon: {
-    width: moderateScale(19),
-    height: moderateScale(24),
-    marginRight: moderateScale(8),
-    marginLeft: moderateScale(3),
   },
   buttonText: {
     textAlign: 'left',
@@ -193,5 +185,6 @@ const styles = StyleSheet.create({
     fontSize: verticalScale(fontSizes.size5),
     color: colors.cmBlue,
     fontFamily: fontFamily,
+    marginLeft: moderateScale(3),
   },
 })

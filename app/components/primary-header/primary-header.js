@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import type { PrimaryHeaderProps } from './type-primary-header'
 
 import { SvgCustomIcon } from '../svg-custom-icon'
+import { EvaIcon, HOME_MENU_ICON } from '../../common/icons'
 import UnreadMessagesBadge from '../unread-messages-badge/unread-messages-badge'
 import { styles } from './styles'
 import { colors } from '../../common/styles/constant'
@@ -25,12 +26,11 @@ export const PrimaryHeader = ({ headline }: PrimaryHeaderProps) => {
         style={styles.iconSection}
       >
         <TouchableOpacity testID="burger-menu" onPress={toggleDrawer}>
-          <SvgCustomIcon
-            name="BurgerMenu"
+          <EvaIcon
+            name={HOME_MENU_ICON}
             width={moderateScale(32)}
             height={moderateScale(32)}
-            fill={colors.cmGray2}
-            style={styles.svgIcon}
+            style={styles.menuIcon}
           />
         </TouchableOpacity>
         {headline !== 'Home' && <UnreadMessagesBadge absolutePosition={true} />}

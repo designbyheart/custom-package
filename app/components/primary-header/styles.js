@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     paddingBottom: moderateScale(15),
     width: '85%',
   },
-  svgIcon: {
+  menuIcon: {
     marginLeft: moderateScale(15),
   },
   label: {

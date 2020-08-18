@@ -2,6 +2,12 @@
 import React, { PureComponent } from 'react'
 import SvgCustomIcon from '../../components/svg-custom-icon'
 import {
+  EvaIcon,
+  ANDROID_BACK_ARROW_ICON,
+  IOS_BACK_ARROW_ICON,
+  MORE_ICON,
+} from '../../common/icons'
+import {
   Text,
   View,
   Image,
@@ -17,16 +23,16 @@ import { DefaultLogo } from '../../components/default-logo/default-logo'
 class ConnectionDetailsNav extends PureComponent<any, void> {
   render() {
     const { params } = this.props.route
+    const iOS = Platform.OS === 'ios'
 
     return (
       <View style={styles.container}>
         <View style={styles.buttonBackWrapper}>
           <TouchableOpacity testID="back-arrow-touchable" onPress={this.goBack}>
-            <SvgCustomIcon
-              name="ChevronLeft"
-              fill={colors.cmGray2}
-              width={moderateScale(24)}
-              height={moderateScale(36)}
+            <EvaIcon
+              name={iOS ? IOS_BACK_ARROW_ICON : ANDROID_BACK_ARROW_ICON}
+              width={moderateScale(32)}
+              height={moderateScale(32)}
             />
           </TouchableOpacity>
         </View>
@@ -60,11 +66,10 @@ class ConnectionDetailsNav extends PureComponent<any, void> {
         </View>
         <View style={styles.buttonMoreOptionsWrapper}>
           <TouchableOpacity onPress={this.props.moreOptionsOpen}>
-            <SvgCustomIcon
-              name="ThreeDots"
-              fill={colors.cmGray2}
-              width={moderateScale(24)}
-              height={moderateScale(24)}
+            <EvaIcon
+              name={MORE_ICON}
+              width={moderateScale(32)}
+              height={moderateScale(32)}
             />
           </TouchableOpacity>
         </View>
@@ -110,7 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     flexDirection: 'row',
-    paddingBottom: verticalScale(7),
+    paddingBottom: verticalScale(14),
   },
   iconAndNameWrapper: {
     width: '70%',

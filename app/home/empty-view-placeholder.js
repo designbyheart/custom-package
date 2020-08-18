@@ -4,13 +4,20 @@ import { View, Text, Image, StyleSheet, Dimensions } from 'react-native'
 import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 
+import { EvaIcon, CHECK_MARK_ICON } from '../common/icons'
+
 const checkmarkImage = require('../images/homeCheckmark.png')
 const { height } = Dimensions.get('screen')
 
 export const EmptyViewPlaceholder = () => {
   return (
     <View style={styles.container}>
-      <Image style={styles.checkmarkImage} source={checkmarkImage} />
+      <EvaIcon
+        name={CHECK_MARK_ICON}
+        width={moderateScale(100)}
+        height={moderateScale(100)}
+        color={colors.cmGray5}
+      />
       <Text style={styles.infoText}>No new notifications.</Text>
     </View>
   )

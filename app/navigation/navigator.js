@@ -79,6 +79,13 @@ import {
 import { walletTabsScreen } from '../wallet/wallet-tab-send-details'
 import { checkIfAnimationToUse } from '../bridge/react-native-cxs/RNCxs'
 import SvgCustomIcon from '../components/svg-custom-icon'
+import {
+  EvaIcon,
+  HOME_ICON,
+  CONNECTIONS_ICON,
+  CREDENTIALS_ICON,
+  SETTINGS_ICON,
+} from '../common/icons'
 import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 import {
   Icon,
@@ -217,6 +224,11 @@ const drawerStyle = {
   width: verticalScale(0.75 * width),
   backgroundColor: 'transparent',
 }
+
+const drawerEvaIcon = (title: string) => ({ color }) => (
+  <EvaIcon name={title} color={color} />
+)
+
 const drawerItemIcon = (title: string) => ({ color }) => (
   <SvgCustomIcon
     name={title}
@@ -225,6 +237,7 @@ const drawerItemIcon = (title: string) => ({ color }) => (
     fill={color}
   />
 )
+
 const drawerItemLabel = (
   title: string,
   extraComponent?: React.Node = null
@@ -237,7 +250,7 @@ const drawerItemLabel = (
   </View>
 )
 const homeDrawerItemOptions = {
-  drawerIcon: drawerItemIcon('Home'),
+  drawerIcon: drawerEvaIcon(HOME_ICON),
   drawerLabel: drawerItemLabel(
     'Home',
     <UnreadMessagesBadge
@@ -246,15 +259,16 @@ const homeDrawerItemOptions = {
   ),
 }
 const connectionDrawerItemOptions = {
-  drawerIcon: drawerItemIcon('Connections'),
+  drawerIcon: drawerEvaIcon(CONNECTIONS_ICON),
   drawerLabel: drawerItemLabel('My Connections'),
 }
 const credentialsDrawerItemOptions = {
+  // TODO: DA replace credentials icon
   drawerIcon: drawerItemIcon('Credentials'),
   drawerLabel: drawerItemLabel('My Credentials'),
 }
 const settingsDrawerItemOptions = {
-  drawerIcon: drawerItemIcon('Settings'),
+  drawerIcon: drawerEvaIcon(SETTINGS_ICON),
   drawerLabel: drawerItemLabel('Settings'),
 }
 function AppDrawer() {
