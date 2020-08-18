@@ -169,6 +169,8 @@ import {
   registerCloudAgentWithoutToken,
 } from './user/cloud-agent'
 import { updateAriesConnectionState } from '../invitation/invitation-store'
+import type { AriesQuestionRequest } from '../question/type-question'
+import { COMMITEDANSWER_PROTOCOL, QUESTIONANSWER_PROTOCOL } from '../question/type-question'
 
 /**
  * this file contains configuration which is changed only from user action
@@ -966,19 +968,13 @@ export const convertDecryptedPayloadToQuestion = (
   senderDID: string,
   messageTitle: string,
   messageText: string,
-  thread: Object = null
 ): QuestionPayload => {
   const parsedPayload = JSON.parse(decryptedPayload)
   const parsedMsg: QuestionRequest = JSON.parse(parsedPayload['@msg'])
 
-  if (thread !== null) {
-    // Fallback when we don't receive thid in the ~thread object, we should then use @id
-    if (!thread['thid']) {
-      thread['thid'] = parsedMsg['@id']
-    }
-  }
   return {
     '@type': parsedMsg['@type'],
+    protocol: COMMITEDANSWER_PROTOCOL,
     messageId: parsedMsg['@id'],
     question_text: parsedMsg.question_text,
     question_detail: parsedMsg.question_detail,
@@ -994,7 +990,40 @@ export const convertDecryptedPayloadToQuestion = (
     messageTitle: parsedMsg.question_text || messageTitle,
     messageText: parsedMsg.question_detail || messageText,
     externalLinks: parsedMsg.external_links || [],
-    ...(thread ? { '~thread': thread } : {}),
+    originalQuestion: parsedPayload['@msg'],
+  }
+}
+
+export const convertDecryptedPayloadToAriesQuestion = (
+  connectionHandle: number,
+  decryptedPayload: string,
+  uid: string,
+  forDID: string,
+  senderDID: string,
+): QuestionPayload => {
+  const parsedPayload = JSON.parse(decryptedPayload)
+  const parsedMsg: AriesQuestionRequest = JSON.parse(parsedPayload['@msg'])
+
+  return {
+    '@type': parsedMsg['@type'],
+    protocol: QUESTIONANSWER_PROTOCOL,
+    messageId: parsedMsg['@id'],
+    question_text: parsedMsg.question_text,
+    question_detail: parsedMsg.question_detail,
+    valid_responses: parsedMsg.valid_responses,
+    nonce: parsedMsg.nonce,
+    timing: parsedMsg['~timing'],
+    issuer_did: senderDID,
+    remoteDid: '',
+    uid,
+    from_did: senderDID,
+    forDID,
+    connectionHandle,
+    remotePairwiseDID: senderDID,
+    messageTitle: parsedMsg.question_text,
+    messageText: parsedMsg.question_detail,
+    externalLinks: [],
+    originalQuestion: parsedPayload['@msg'],
   }
 }
 
@@ -1217,24 +1246,7 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
     const payload = JSON.parse(decryptedPayload)
     const payloadType = payload['@type']
 
-    if (payloadType.name === 'question') {
-      // TODO: it will be changed on committed-question  in VCX 0.10.0
-      const message = JSON.parse(payload['@msg'])
-      const thread = message['~thread']
-
-      additionalData = convertDecryptedPayloadToQuestion(
-        connectionHandle,
-        decryptedPayload,
-        uid,
-        forDID,
-        senderDID,
-        '',
-        '',
-        thread
-      )
-
-      messageType = MESSAGE_TYPE.QUESTION
-    }
+    console.log(payload)
 
     if (
       payloadType.name === 'CRED_OFFER' ||
@@ -1298,6 +1310,40 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
       // if we have just ack data then for now send acknowledge to server
       // so that we don't download it again
       yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
+    }
+
+    if (payloadType.name === 'committed-question') {
+      additionalData = convertDecryptedPayloadToQuestion(
+        connectionHandle,
+        decryptedPayload,
+        uid,
+        forDID,
+        senderDID,
+        '',
+        '',
+      )
+
+      messageType = MESSAGE_TYPE.QUESTION
+
+      yield fork(updateMessageStatus, [
+        { pairwiseDID: forDID, uids: [uid] },
+      ])
+    }
+
+    if (payloadType.name === 'question') {
+      additionalData = convertDecryptedPayloadToAriesQuestion(
+        connectionHandle,
+        decryptedPayload,
+        uid,
+        forDID,
+        senderDID,
+      )
+
+      messageType = MESSAGE_TYPE.QUESTION
+
+      yield fork(updateMessageStatus, [
+        { pairwiseDID: forDID, uids: [uid] },
+      ])
     }
 
     if (payloadType && payloadType.name === 'aries' && payload['@msg']) {

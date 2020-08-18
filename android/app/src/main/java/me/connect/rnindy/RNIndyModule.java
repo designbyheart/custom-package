@@ -1676,4 +1676,21 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
             promise.reject(String.valueOf(e.getSdkErrorCode()), e.getSdkMessage());
         }
     }
+
+    @ReactMethod
+    public void connectionSendAnswer(int connectionHandle, String question, String answer, Promise promise) {
+        Log.d(TAG, "connectionSendAnswer() called");
+        try {
+            ConnectionApi.connectionSendAnswer(connectionHandle, question, answer).whenComplete((result, e) -> {
+                if (e != null) {
+                    Log.e(TAG, "connectionSendAnswer", e);
+                    promise.reject("VcxException", e.getMessage());
+                } else {
+                    promise.resolve(0);
+                }
+            });
+        } catch (VcxException e) {
+            promise.reject("VcxException", e.getMessage());
+        }
+    }
 }

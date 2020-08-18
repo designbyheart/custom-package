@@ -864,3 +864,11 @@ export async function connectionUpdateState(connectionHandle: number) {
 export async function fetchPublicEntitiesForCredentials(): Promise<void> {
   return await RNIndy.fetchPublicEntities()
 }
+
+export async function connectionSendAnswer(
+  connectionHandle: number,
+  question: string,
+  answer: string,
+): Promise<void> {
+  return await RNIndy.connectionSendAnswer(connectionHandle, question, answer)
+}
