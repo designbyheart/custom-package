@@ -418,7 +418,7 @@ PODS:
     - SSZipArchive (= 2.2.2)
   - SSZipArchive (2.2.2)
   - TOCropViewController (2.5.4)
-  - vcx (0.0.167)
+  - vcx (0.0.166)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -489,7 +489,7 @@ DEPENDENCIES:
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNZipArchive (from `../node_modules/react-native-zip-archive`)
-  - vcx (= 0.0.167)
+  - vcx (= 0.0.168)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -725,7 +725,7 @@ SPEC CHECKSUMS:
   RNZipArchive: ab51bc004a31657f34010254a9182014c6a81217
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   TOCropViewController: 2a1ae1242600b1f2d996fd91a5268b2309a33b5c
-  vcx: 029ea046885de426cda87598993eaf62ea9a494a
+  vcx: a63bc79c6a72945b71e90da6493c4b7e4f2617df
   Yoga: ba3d99dbee6c15ea6bbe3783d1f0cb1ffb79af0f
 
 PODFILE CHECKSUM: 6529e0b46247706924baf0e1602eb631a9eaa595
