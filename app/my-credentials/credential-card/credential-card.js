@@ -1,9 +1,9 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Avatar } from '../../components/avatar/avatar'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 import type { CredentialCardProps } from './type-credential-card'
+import { Avatar } from '../../components/avatar/avatar'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 
@@ -84,13 +84,16 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
     }
   }
 
+  onButtonPress = () => this.props.onPress()
+
   render() {
     const { image, date, credentialName, attributesCount } = this.props
 
     const attributesLabel = attributesCount == 1 ? 'attribute' : `attributes`
 
     return (
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity style={styles.container}
+      onPress={this.onButtonPress}>
         <View style={styles.avatarSection}>
           {typeof image === 'string' ? (
             <Avatar
