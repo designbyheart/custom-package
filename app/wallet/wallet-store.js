@@ -100,7 +100,7 @@ import {
   getWalletBalance as getWalletBalanceSelector,
 } from '../store/store-selector'
 import { WALLET_ENCRYPTION_KEY } from '../common/secure-storage-constants'
-import { ensureVcxInitSuccess } from '../store/route-store'
+import { ensureVcxInitAndPoolConnectSuccess, ensureVcxInitSuccess } from '../store/route-store'
 import type { LedgerFeesData } from '../ledger/type-ledger-store'
 import { BigNumber } from 'bignumber.js'
 import { captureError } from '../services/error/error-handler'
@@ -353,7 +353,7 @@ export function* getAmountToTransfer(
 
 export function* sendTokensSaga(action: SendTokensAction): Generator<*, *, *> {
   try {
-    const vcxResult = yield* ensureVcxInitSuccess()
+    const vcxResult = yield* ensureVcxInitAndPoolConnectSuccess()
     if (vcxResult && vcxResult.fail) {
       throw new Error(JSON.stringify(vcxResult.fail.message))
     }

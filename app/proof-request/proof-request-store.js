@@ -74,6 +74,7 @@ import { customLogger } from '../store/custom-logger'
 import { resetTempProofData, errorSendProofFail } from '../proof/proof-store'
 import { secureSet, getHydrationItem } from '../services/storage'
 import { retrySaga } from '../api/api-utils'
+import { ensureVcxInitAndPoolConnectSuccess } from '../store/route-store'
 
 const proofRequestInitialState = {}
 
@@ -192,6 +193,9 @@ export function* hydrateProofRequestsSaga(): Generator<*, *, *> {
   }
 }
 
+export const ERROR_ACCEPT_PROOF_REQUEST_FAIL =
+  'Unable to generate proof. Check your internet connection or try to restart app.'
+
 export function* proofAccepted(
   action: ProofRequestAcceptedAction
 ): Generator<*, *, *> {
@@ -217,6 +221,12 @@ export function* proofAccepted(
   if (typeof connectionHandle === 'undefined') {
     // connection handle was returned as undefined by getConnectionHandle
     // so we stop processing further
+    return
+  }
+
+  const vcxResult = yield* ensureVcxInitAndPoolConnectSuccess()
+  if (vcxResult && vcxResult.fail) {
+    errorSendProofFail(uid, remotePairwiseDID, ERROR_SEND_PROOF(ERROR_ACCEPT_PROOF_REQUEST_FAIL))
     return
   }
 
