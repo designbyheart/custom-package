@@ -59,7 +59,7 @@ import { secureSet, getHydrationItem } from '../services/storage'
 import { CLAIM_MAP } from '../common/secure-storage-constants'
 import { RESET } from '../common/type-common'
 import { updateMessageStatus } from '../store/config-store'
-import { ensureVcxInitSuccess } from '../store/route-store'
+import { ensureVcxInitAndPoolConnectSuccess, ensureVcxInitSuccess } from '../store/route-store'
 import type { ClaimOfferPayload, ClaimOfferStore, SerializedClaimOffer } from '../claim-offer/type-claim-offer'
 import { CLAIM_OFFERS, VCX_CLAIM_OFFER_STATE } from '../claim-offer/type-claim-offer'
 import {
@@ -156,7 +156,7 @@ export function* claimReceivedVcxSaga(
   action: ClaimReceivedAction
 ): Generator<*, *, *> {
   const { forDID, remotePairwiseDID, connectionHandle, uid } = action.claim
-  const vcxResult = yield* ensureVcxInitSuccess()
+  const vcxResult = yield* ensureVcxInitAndPoolConnectSuccess()
   if (vcxResult && vcxResult.fail) {
     return
   }

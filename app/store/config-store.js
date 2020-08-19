@@ -10,6 +10,7 @@ import {
   select,
   takeLatest,
   takeLeading,
+  spawn,
 } from 'redux-saga/effects'
 import delay from '@redux-saga/delay-p'
 import uniqueId from 'react-native-unique-id'
@@ -72,6 +73,10 @@ import {
   GET_UN_ACKNOWLEDGED_MESSAGES,
   SHOW_SNACK_ERROR,
   CLEAR_SNACK_ERROR,
+  VCX_INIT_POOL_FAIL,
+  VCX_INIT_POOL_SUCCESS,
+  VCX_INIT_POOL_NOT_STARTED,
+  VCX_INIT_POOL_START,
 } from './type-config-store'
 import type {
   ServerEnvironment,
@@ -115,6 +120,7 @@ import {
   createCredentialWithProprietaryOffer,
   createCredentialWithAriesOffer,
   proofCreateWithRequest,
+  initPool,
 } from '../bridge/react-native-cxs/RNCxs'
 import { RESET } from '../common/type-common'
 import type { Connection } from './type-connection-store'
@@ -123,7 +129,7 @@ import {
   fetchAdditionalDataError,
   updatePayloadToRelevantStoreSaga,
 } from '../push-notification/push-notification-store'
-import type { VcxProvisionResult } from '../bridge/react-native-cxs/type-cxs'
+import type { CxsPoolConfig, VcxProvisionResult } from '../bridge/react-native-cxs/type-cxs'
 import type { UserOneTimeInfo } from './user/type-user-store'
 import { connectRegisterCreateAgentDone } from './user/user-store'
 import findKey from 'lodash.findkey'
@@ -304,6 +310,8 @@ const initialState: ConfigStore = {
   // to call bridge methods that deals claims, connections, proofs, etc.
   vcxInitializationState: VCX_INIT_NOT_STARTED,
   vcxInitializationError: null,
+  vcxPoolInitializationState: VCX_INIT_POOL_NOT_STARTED,
+  vcxPoolInitializationError: null,
   isInitialized: false,
   messageDownloadStatus: GET_MESSAGES_SUCCESS,
   snackError: null,
@@ -589,6 +597,15 @@ export const vcxInitFail = (error: CustomError) => ({
   error,
 })
 
+export const vcxInitPoolSuccess = () => ({
+  type: VCX_INIT_POOL_SUCCESS,
+})
+
+export const vcxInitPoolFail = (error: CustomError) => ({
+  type: VCX_INIT_POOL_FAIL,
+  error,
+})
+
 export const vcxInitReset = () => ({
   type: VCX_INIT_NOT_STARTED,
 })
@@ -701,6 +718,10 @@ export function* initVcx(findingWallet?: any): Generator<*, *, *> {
   // once we reach here, we are sure that either user one time info is loaded from disk
   // or we provisioned one time agent for current user if not already available
 
+  // Connection to Pool Ledger is not required for some operations like Connection establishing, answering questions etc.
+  // We must be connected to Pool Ledger only when accept Credential Offer or Proof Request.
+  // So, we can skip connecting to pool ledger during vcx library initialization and run it in a background later.
+
   // re-try vcx init 4 times, if it does not get success in 4 attempts, raise fail
   let retryCount = 0
   let lastInitException = new Error('')
@@ -712,7 +733,6 @@ export function* initVcx(findingWallet?: any): Generator<*, *, *> {
           ...userOneTimeInfo,
           ...agencyConfig,
         },
-        getGenesisFileName(agencyUrl)
       )
       if (findingWallet !== true) {
         yield put(vcxInitSuccess())
@@ -728,9 +748,51 @@ export function* initVcx(findingWallet?: any): Generator<*, *, *> {
   if (retryCount > 3) {
     if (findingWallet !== true) {
       yield put(vcxInitFail(ERROR_VCX_INIT_FAIL(lastInitException.message)))
+      return
     }
   }
+
+  // start connecting to pool ledger process
+  yield spawn(connectToPool)
 }
+
+export function* connectToPool(): Generator<*, *, *> {
+  const {
+    agencyUrl,
+    poolConfig,
+  }: ConfigStore = yield select(getConfig)
+
+  const config: CxsPoolConfig = {
+    poolConfig: poolConfig,
+  }
+  const genesisFileName = getGenesisFileName(agencyUrl)
+
+  // re-try init pool 2 times, if it does not get success, raise fail
+  let lastInitException = new Error('')
+  for (let i = 0; i < 2; i++) {
+    try {
+      yield call(
+        initPool,
+        config,
+        genesisFileName,
+      )
+      yield put(vcxInitPoolSuccess())
+      return
+    } catch (e) {
+      captureError(e)
+      lastInitException = e
+      // wait for 10 seconds before trying again
+      yield call(delay, 10000)
+    }
+  }
+
+  // we could not connect to the pool - raise error
+  yield put(vcxInitPoolFail(ERROR_VCX_INIT_FAIL(lastInitException.message)))
+  yield call(showSnackError, ERROR_POOL_INIT_FAIL)
+}
+
+export const ERROR_POOL_INIT_FAIL =
+  'Unable to connect to pool ledger. Check your internet connection or try to restart app.'
 
 export const getGenesisFileName = (agencyUrl: string) => {
   return (
@@ -740,8 +802,26 @@ export const getGenesisFileName = (agencyUrl: string) => {
   )
 }
 
+export function* showSnackError(error: string): Generator<*, *, *> {
+  // show snack error
+  yield put({
+    type: SHOW_SNACK_ERROR,
+    error: error,
+  })
+
+  // clear error for snack after 5 seconds
+  yield call(delay, 5000)
+  yield put({
+    type: CLEAR_SNACK_ERROR,
+  })
+}
+
 export function* watchVcxInitStart(): any {
-  yield takeLatest(VCX_INIT_START, initVcx)
+  yield takeLeading(VCX_INIT_START, initVcx)
+}
+
+export function* watchVcxInitPoolStart(): any {
+  yield takeLeading(VCX_INIT_POOL_START, connectToPool)
 }
 
 export function* getMessagesSaga(): Generator<*, *, *> {
@@ -841,7 +921,7 @@ export function* processMessages(
       }
 
       let { myPairwiseDid: pairwiseDID, senderDID } =
-        connection && connection[0]
+      connection && connection[0]
 
       if (
         !(
@@ -1427,7 +1507,7 @@ export function* acknowledgeServer(
             isAries = decryptedPayload['@type']['name'] === 'aries'
             isMsgTypeAriesQuestion = JSON.parse(decryptedPayload['@msg'])[
               '@type'
-            ].includes('question')
+              ].includes('question')
           }
 
           if (isAries) {
@@ -1539,6 +1619,7 @@ export function* watchConfig(): any {
     watchSwitchEnvironment(),
     watchChangeEnvironmentUrl(),
     watchVcxInitStart(),
+    watchVcxInitPoolStart(),
     watchOnHydrationDownloadMessages(),
     persistEnvironmentDetails(),
   ])
@@ -1617,6 +1698,29 @@ export default function configReducer(
         ...state,
         vcxInitializationState: VCX_INIT_FAIL,
         vcxInitializationError: action.error,
+      }
+    case VCX_INIT_POOL_NOT_STARTED:
+      return {
+        ...state,
+        vcxPoolInitializationState: VCX_INIT_POOL_NOT_STARTED,
+        vcxPoolInitializationError: null,
+      }
+    case VCX_INIT_POOL_START:
+      return {
+        ...state,
+        vcxPoolInitializationState: VCX_INIT_POOL_START,
+        vcxPoolInitializationError: null,
+      }
+    case VCX_INIT_POOL_SUCCESS:
+      return {
+        ...state,
+        vcxPoolInitializationState: VCX_INIT_POOL_SUCCESS,
+      }
+    case VCX_INIT_POOL_FAIL:
+      return {
+        ...state,
+        vcxPoolInitializationState: VCX_INIT_POOL_FAIL,
+        vcxPoolInitializationError: action.error,
       }
     case GET_MESSAGES_FAIL:
     case GET_MESSAGES_LOADING:

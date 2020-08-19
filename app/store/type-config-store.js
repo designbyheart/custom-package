@@ -116,6 +116,24 @@ export type VcxInitFailAction = {
   error: CustomError,
 }
 
+export const VCX_INIT_POOL_NOT_STARTED = 'VCX_INIT_POOL_NOT_STARTED'
+
+export const VCX_INIT_POOL_START = 'VCX_INIT_POOL_START'
+export type VcxInitPoolStartAction = {
+  type: typeof VCX_INIT_POOL_START,
+}
+
+export const VCX_INIT_POOL_SUCCESS = 'VCX_INIT_POOL_SUCCESS'
+export type VcxInitPoolSuccessAction = {
+  type: typeof VCX_INIT_POOL_SUCCESS,
+}
+
+export const VCX_INIT_POOL_FAIL = 'VCX_INIT_POOL_FAIL'
+export type VcxInitPoolFailAction = {
+  type: typeof VCX_INIT_POOL_FAIL,
+  error: CustomError,
+}
+
 export const USE_VCX = 'USE_VCX'
 export type UseVcxAction = {
   type: typeof USE_VCX,
@@ -139,12 +157,21 @@ export type ConfigAction =
   | UseVcxAction
   | ShowSnackErrorAction
   | ClearSnackErrorAction
+  | VcxInitPoolStartAction
+  | VcxInitPoolSuccessAction
+  | VcxInitPoolFailAction
 
 export type VcxInitializationState =
   | typeof VCX_INIT_NOT_STARTED
   | typeof VCX_INIT_START
   | typeof VCX_INIT_SUCCESS
   | typeof VCX_INIT_FAIL
+
+export type VcxPoolInitializationState =
+  | typeof VCX_INIT_POOL_NOT_STARTED
+  | typeof VCX_INIT_POOL_START
+  | typeof VCX_INIT_POOL_SUCCESS
+  | typeof VCX_INIT_POOL_FAIL
 
 export type AgencyPoolConfig = {
   agencyUrl: string,
@@ -169,6 +196,8 @@ export type ConfigStore = {
   showErrorAlerts: boolean,
   vcxInitializationState: VcxInitializationState,
   vcxInitializationError: null | CustomError,
+  vcxPoolInitializationState: VcxPoolInitializationState,
+  vcxPoolInitializationError: null | CustomError,
   isInitialized: boolean,
   messageDownloadStatus: MessageDownloadStatus,
   snackError: ?string,

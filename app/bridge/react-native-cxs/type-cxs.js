@@ -102,10 +102,7 @@ export type VcxInitConfig = {
   agency_endpoint: string,
   agency_did: string,
   agency_verkey: string,
-  genesis_path: string,
   wallet_key: string,
-  config: string,
-  pool_name: string,
   wallet_name: string,
   remote_to_sdk_did: string,
   remote_to_sdk_verkey: string,
@@ -123,6 +120,17 @@ export type VcxPushTokenConfig = {
 export type CxsPushTokenConfig = {
   uniqueId: string,
   pushToken: string,
+}
+
+export type CxsPoolConfig = {
+  poolConfig: string,
+}
+
+export type CxsPoolConfigWithGenesisPath  = CxsPoolConfig & { genesis_path: string }
+
+export type VcxPoolInitConfig = {
+  genesis_path: string,
+  pool_name?: string,
 }
 
 export type VcxCreateConnection = {

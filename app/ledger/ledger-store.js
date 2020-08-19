@@ -20,7 +20,7 @@ import {
   RESET_LEDGER_FEES,
 } from './type-ledger-store'
 import { getLedgerFees } from '../bridge/react-native-cxs/RNCxs'
-import { ensureVcxInitSuccess } from '../store/route-store'
+import { ensureVcxInitAndPoolConnectSuccess, ensureVcxInitSuccess } from '../store/route-store'
 import { captureError } from '../services/error/error-handler'
 
 const initialState = {
@@ -38,7 +38,7 @@ const initialState = {
 
 export function* getLedgerFeesSaga(): Generator<*, *, *> {
   try {
-    const vcxResult = yield* ensureVcxInitSuccess()
+    const vcxResult = yield* ensureVcxInitAndPoolConnectSuccess()
     if (vcxResult && vcxResult.fail) {
       throw new Error(JSON.stringify(vcxResult.fail.message))
     }
