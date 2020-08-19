@@ -919,46 +919,81 @@ exports[`user settings screen should render properly and snapshot should match i
                                     <View
                                       width={16}
                                     />
-                                    <RNSVGSvgView
-                                      align="xMidYMid"
-                                      bbHeight="7.147058823529411"
-                                      bbWidth="6.352941176470588"
-                                      focusable={false}
-                                      height="7.147058823529411"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
+                                    <View
                                       style={
-                                        Array [
-                                          Object {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          Object {
-                                            "flex": 0,
-                                            "height": 7,
-                                            "width": 6,
-                                          },
-                                        ]
+                                        Object {
+                                          "transform": Array [
+                                            Object {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        }
                                       }
-                                      vbHeight={10}
-                                      vbWidth={7}
-                                      width="6.352941176470588"
                                     >
-                                      <RNSVGGroup>
-                                        <RNSVGPath
-                                          d="M.727 1.653C.102 1.055.525 0 1.39 0a.96.96 0 0 1 .664.266l4.191 4.012a1 1 0 0 1 0 1.444L2.054 9.734A.96.96 0 0 1 1.39 10C.525 10 .102 8.945.727 8.347L3.47 5.722a1 1 0 0 0 0-1.444L.727 1.653z"
+                                      <RNSVGSvgView
+                                        align="xMidYMid"
+                                        bbHeight={21.057142857142857}
+                                        bbWidth={21.057142857142857}
+                                        color={4289045925}
+                                        fill="#A5A5A5"
+                                        focusable={false}
+                                        height={21.057142857142857}
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          Array [
+                                            Object {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            Object {
+                                              "flex": 0,
+                                              "height": 21,
+                                              "width": 21,
+                                            },
+                                          ]
+                                        }
+                                        tintColor={4289045925}
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={21.057142857142857}
+                                      >
+                                        <RNSVGGroup
                                           fill={4289045925}
-                                          fillRule={0}
                                           propList={
                                             Array [
                                               "fill",
-                                              "fillRule",
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          <RNSVGGroup>
+                                            <RNSVGGroup>
+                                              <RNSVGRect
+                                                height="24"
+                                                matrix={
+                                                  Array [
+                                                    6.123233995736766e-17,
+                                                    -1,
+                                                    1,
+                                                    6.123233995736766e-17,
+                                                    0,
+                                                    24,
+                                                  ]
+                                                }
+                                                opacity={0}
+                                                width="24"
+                                                x={0}
+                                                y={0}
+                                              />
+                                              <RNSVGPath
+                                                d="M10.5 17a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.42L13.1 12 9.92 8.69a1 1 0 0 1 0-1.41 1 1 0 0 1 1.42 0l3.86 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-.7.32z"
+                                              />
+                                            </RNSVGGroup>
+                                          </RNSVGGroup>
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                                 <View
@@ -1001,47 +1036,84 @@ exports[`user settings screen should render properly and snapshot should match i
                                         }
                                       }
                                     >
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="21.441176470588236"
-                                        bbWidth="21.441176470588236"
-                                        focusable={false}
-                                        height="21.441176470588236"
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
+                                      <View
                                         style={
-                                          Array [
-                                            Object {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            Object {
-                                              "flex": 0,
-                                              "height": 21,
-                                              "width": 21,
-                                            },
-                                          ]
+                                          Object {
+                                            "transform": Array [
+                                              Object {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          }
                                         }
-                                        vbHeight={28}
-                                        vbWidth={28}
-                                        width="21.441176470588236"
                                       >
-                                        <RNSVGGroup>
-                                          <RNSVGPath
-                                            clipRule={0}
-                                            d="M27.32 3.333A2.663 2.663 0 0 0 24.666.667H3.334A2.675 2.675 0 0 0 .667 3.333v16C.667 20.8 1.867 22 3.333 22H22l5.333 5.333-.013-24zm-2.654 0v17.56l-1.56-1.56H3.334v-16h21.334zM22 14H6v2.666h16V14zM6 10h16v2.666H6V10zm16-4H6v2.666h16V6z"
+                                        <RNSVGSvgView
+                                          align="xMidYMid"
+                                          bbHeight={21.441176470588236}
+                                          bbWidth={21.441176470588236}
+                                          fill="#777777"
+                                          focusable={false}
+                                          height={21.441176470588236}
+                                          meetOrSlice={0}
+                                          minX={0}
+                                          minY={0}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "transparent",
+                                                "borderWidth": 0,
+                                              },
+                                              Object {
+                                                "flex": 0,
+                                                "height": 21,
+                                                "width": 21,
+                                              },
+                                            ]
+                                          }
+                                          vbHeight={24}
+                                          vbWidth={24}
+                                          width={21.441176470588236}
+                                        >
+                                          <RNSVGGroup
                                             fill={4286019447}
-                                            fillRule={0}
                                             propList={
                                               Array [
                                                 "fill",
-                                                "fillRule",
                                               ]
                                             }
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
+                                          >
+                                            <RNSVGGroup>
+                                              <RNSVGGroup>
+                                                <RNSVGRect
+                                                  height="24"
+                                                  opacity={0}
+                                                  width="24"
+                                                  x={0}
+                                                  y={0}
+                                                />
+                                                <RNSVGCircle
+                                                  cx="12"
+                                                  cy="11"
+                                                  r="1"
+                                                />
+                                                <RNSVGCircle
+                                                  cx="16"
+                                                  cy="11"
+                                                  r="1"
+                                                />
+                                                <RNSVGCircle
+                                                  cx="8"
+                                                  cy="11"
+                                                  r="1"
+                                                />
+                                                <RNSVGPath
+                                                  d="M19 3H5a3 3 0 0 0-3 3v15a1 1 0 0 0 .51.87A1 1 0 0 0 3 22a1 1 0 0 0 .51-.14L8 19.14a1 1 0 0 1 .55-.14H19a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3zm1 13a1 1 0 0 1-1 1H8.55a3 3 0 0 0-1.55.43l-3 1.8V6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1z"
+                                                />
+                                              </RNSVGGroup>
+                                            </RNSVGGroup>
+                                          </RNSVGGroup>
+                                        </RNSVGSvgView>
+                                      </View>
                                     </View>
                                     <View
                                       width={16}
@@ -1158,46 +1230,81 @@ exports[`user settings screen should render properly and snapshot should match i
                                     <View
                                       width={16}
                                     />
-                                    <RNSVGSvgView
-                                      align="xMidYMid"
-                                      bbHeight="7.147058823529411"
-                                      bbWidth="6.352941176470588"
-                                      focusable={false}
-                                      height="7.147058823529411"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
+                                    <View
                                       style={
-                                        Array [
-                                          Object {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          Object {
-                                            "flex": 0,
-                                            "height": 7,
-                                            "width": 6,
-                                          },
-                                        ]
+                                        Object {
+                                          "transform": Array [
+                                            Object {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        }
                                       }
-                                      vbHeight={10}
-                                      vbWidth={7}
-                                      width="6.352941176470588"
                                     >
-                                      <RNSVGGroup>
-                                        <RNSVGPath
-                                          d="M.727 1.653C.102 1.055.525 0 1.39 0a.96.96 0 0 1 .664.266l4.191 4.012a1 1 0 0 1 0 1.444L2.054 9.734A.96.96 0 0 1 1.39 10C.525 10 .102 8.945.727 8.347L3.47 5.722a1 1 0 0 0 0-1.444L.727 1.653z"
+                                      <RNSVGSvgView
+                                        align="xMidYMid"
+                                        bbHeight={21.057142857142857}
+                                        bbWidth={21.057142857142857}
+                                        color={4289045925}
+                                        fill="#A5A5A5"
+                                        focusable={false}
+                                        height={21.057142857142857}
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          Array [
+                                            Object {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            Object {
+                                              "flex": 0,
+                                              "height": 21,
+                                              "width": 21,
+                                            },
+                                          ]
+                                        }
+                                        tintColor={4289045925}
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={21.057142857142857}
+                                      >
+                                        <RNSVGGroup
                                           fill={4289045925}
-                                          fillRule={0}
                                           propList={
                                             Array [
                                               "fill",
-                                              "fillRule",
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          <RNSVGGroup>
+                                            <RNSVGGroup>
+                                              <RNSVGRect
+                                                height="24"
+                                                matrix={
+                                                  Array [
+                                                    6.123233995736766e-17,
+                                                    -1,
+                                                    1,
+                                                    6.123233995736766e-17,
+                                                    0,
+                                                    24,
+                                                  ]
+                                                }
+                                                opacity={0}
+                                                width="24"
+                                                x={0}
+                                                y={0}
+                                              />
+                                              <RNSVGPath
+                                                d="M10.5 17a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.42L13.1 12 9.92 8.69a1 1 0 0 1 0-1.41 1 1 0 0 1 1.42 0l3.86 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-.7.32z"
+                                              />
+                                            </RNSVGGroup>
+                                          </RNSVGGroup>
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                                 <View
@@ -1240,47 +1347,87 @@ exports[`user settings screen should render properly and snapshot should match i
                                         }
                                       }
                                     >
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="21.441176470588236"
-                                        bbWidth="21.441176470588236"
-                                        focusable={false}
-                                        height="21.441176470588236"
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
+                                      <View
                                         style={
-                                          Array [
-                                            Object {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            Object {
-                                              "flex": 0,
-                                              "height": 21,
-                                              "width": 21,
-                                            },
-                                          ]
+                                          Object {
+                                            "transform": Array [
+                                              Object {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          }
                                         }
-                                        vbHeight={28}
-                                        vbWidth={28}
-                                        width="21.441176470588236"
                                       >
-                                        <RNSVGGroup>
-                                          <RNSVGPath
-                                            clipRule={0}
-                                            d="M14 .667C6.64.667.667 6.64.667 14S6.64 27.333 14 27.333 27.333 21.36 27.333 14 21.36.667 14 .667zm-1.334 6.666V10h2.667V7.333h-2.667zm0 5.333v8h2.667v-8h-2.667zM3.333 14c0 5.88 4.787 10.666 10.667 10.666S24.666 19.88 24.666 14C24.666 8.12 19.88 3.333 14 3.333 8.12 3.333 3.333 8.12 3.333 14z"
+                                        <RNSVGSvgView
+                                          align="xMidYMid"
+                                          bbHeight={21.441176470588236}
+                                          bbWidth={21.441176470588236}
+                                          fill="#777777"
+                                          focusable={false}
+                                          height={21.441176470588236}
+                                          meetOrSlice={0}
+                                          minX={0}
+                                          minY={0}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "transparent",
+                                                "borderWidth": 0,
+                                              },
+                                              Object {
+                                                "flex": 0,
+                                                "height": 21,
+                                                "width": 21,
+                                              },
+                                            ]
+                                          }
+                                          vbHeight={24}
+                                          vbWidth={24}
+                                          width={21.441176470588236}
+                                        >
+                                          <RNSVGGroup
                                             fill={4286019447}
-                                            fillRule={0}
                                             propList={
                                               Array [
                                                 "fill",
-                                                "fillRule",
                                               ]
                                             }
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
+                                          >
+                                            <RNSVGGroup>
+                                              <RNSVGGroup>
+                                                <RNSVGRect
+                                                  height="24"
+                                                  matrix={
+                                                    Array [
+                                                      -1,
+                                                      1.2246467991473532e-16,
+                                                      -1.2246467991473532e-16,
+                                                      -1,
+                                                      24,
+                                                      24,
+                                                    ]
+                                                  }
+                                                  opacity={0}
+                                                  width="24"
+                                                  x={0}
+                                                  y={0}
+                                                />
+                                                <RNSVGPath
+                                                  d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"
+                                                />
+                                                <RNSVGCircle
+                                                  cx="12"
+                                                  cy="8"
+                                                  r="1"
+                                                />
+                                                <RNSVGPath
+                                                  d="M12 10a1 1 0 0 0-1 1v5a1 1 0 0 0 2 0v-5a1 1 0 0 0-1-1z"
+                                                />
+                                              </RNSVGGroup>
+                                            </RNSVGGroup>
+                                          </RNSVGGroup>
+                                        </RNSVGSvgView>
+                                      </View>
                                     </View>
                                     <View
                                       width={16}
@@ -1397,46 +1544,81 @@ exports[`user settings screen should render properly and snapshot should match i
                                     <View
                                       width={16}
                                     />
-                                    <RNSVGSvgView
-                                      align="xMidYMid"
-                                      bbHeight="7.147058823529411"
-                                      bbWidth="6.352941176470588"
-                                      focusable={false}
-                                      height="7.147058823529411"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
+                                    <View
                                       style={
-                                        Array [
-                                          Object {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          Object {
-                                            "flex": 0,
-                                            "height": 7,
-                                            "width": 6,
-                                          },
-                                        ]
+                                        Object {
+                                          "transform": Array [
+                                            Object {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        }
                                       }
-                                      vbHeight={10}
-                                      vbWidth={7}
-                                      width="6.352941176470588"
                                     >
-                                      <RNSVGGroup>
-                                        <RNSVGPath
-                                          d="M.727 1.653C.102 1.055.525 0 1.39 0a.96.96 0 0 1 .664.266l4.191 4.012a1 1 0 0 1 0 1.444L2.054 9.734A.96.96 0 0 1 1.39 10C.525 10 .102 8.945.727 8.347L3.47 5.722a1 1 0 0 0 0-1.444L.727 1.653z"
+                                      <RNSVGSvgView
+                                        align="xMidYMid"
+                                        bbHeight={21.057142857142857}
+                                        bbWidth={21.057142857142857}
+                                        color={4289045925}
+                                        fill="#A5A5A5"
+                                        focusable={false}
+                                        height={21.057142857142857}
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          Array [
+                                            Object {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            Object {
+                                              "flex": 0,
+                                              "height": 21,
+                                              "width": 21,
+                                            },
+                                          ]
+                                        }
+                                        tintColor={4289045925}
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={21.057142857142857}
+                                      >
+                                        <RNSVGGroup
                                           fill={4289045925}
-                                          fillRule={0}
                                           propList={
                                             Array [
                                               "fill",
-                                              "fillRule",
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          <RNSVGGroup>
+                                            <RNSVGGroup>
+                                              <RNSVGRect
+                                                height="24"
+                                                matrix={
+                                                  Array [
+                                                    6.123233995736766e-17,
+                                                    -1,
+                                                    1,
+                                                    6.123233995736766e-17,
+                                                    0,
+                                                    24,
+                                                  ]
+                                                }
+                                                opacity={0}
+                                                width="24"
+                                                x={0}
+                                                y={0}
+                                              />
+                                              <RNSVGPath
+                                                d="M10.5 17a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.42L13.1 12 9.92 8.69a1 1 0 0 1 0-1.41 1 1 0 0 1 1.42 0l3.86 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-.7.32z"
+                                              />
+                                            </RNSVGGroup>
+                                          </RNSVGGroup>
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                                 <View
@@ -1608,46 +1790,81 @@ exports[`user settings screen should render properly and snapshot should match i
                                     <View
                                       width={16}
                                     />
-                                    <RNSVGSvgView
-                                      align="xMidYMid"
-                                      bbHeight="7.147058823529411"
-                                      bbWidth="6.352941176470588"
-                                      focusable={false}
-                                      height="7.147058823529411"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
+                                    <View
                                       style={
-                                        Array [
-                                          Object {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          Object {
-                                            "flex": 0,
-                                            "height": 7,
-                                            "width": 6,
-                                          },
-                                        ]
+                                        Object {
+                                          "transform": Array [
+                                            Object {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        }
                                       }
-                                      vbHeight={10}
-                                      vbWidth={7}
-                                      width="6.352941176470588"
                                     >
-                                      <RNSVGGroup>
-                                        <RNSVGPath
-                                          d="M.727 1.653C.102 1.055.525 0 1.39 0a.96.96 0 0 1 .664.266l4.191 4.012a1 1 0 0 1 0 1.444L2.054 9.734A.96.96 0 0 1 1.39 10C.525 10 .102 8.945.727 8.347L3.47 5.722a1 1 0 0 0 0-1.444L.727 1.653z"
+                                      <RNSVGSvgView
+                                        align="xMidYMid"
+                                        bbHeight={21.057142857142857}
+                                        bbWidth={21.057142857142857}
+                                        color={4289045925}
+                                        fill="#A5A5A5"
+                                        focusable={false}
+                                        height={21.057142857142857}
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          Array [
+                                            Object {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            Object {
+                                              "flex": 0,
+                                              "height": 21,
+                                              "width": 21,
+                                            },
+                                          ]
+                                        }
+                                        tintColor={4289045925}
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={21.057142857142857}
+                                      >
+                                        <RNSVGGroup
                                           fill={4289045925}
-                                          fillRule={0}
                                           propList={
                                             Array [
                                               "fill",
-                                              "fillRule",
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          <RNSVGGroup>
+                                            <RNSVGGroup>
+                                              <RNSVGRect
+                                                height="24"
+                                                matrix={
+                                                  Array [
+                                                    6.123233995736766e-17,
+                                                    -1,
+                                                    1,
+                                                    6.123233995736766e-17,
+                                                    0,
+                                                    24,
+                                                  ]
+                                                }
+                                                opacity={0}
+                                                width="24"
+                                                x={0}
+                                                y={0}
+                                              />
+                                              <RNSVGPath
+                                                d="M10.5 17a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.42L13.1 12 9.92 8.69a1 1 0 0 1 0-1.41 1 1 0 0 1 1.42 0l3.86 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-.7.32z"
+                                              />
+                                            </RNSVGGroup>
+                                          </RNSVGGroup>
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                                 <View
@@ -1690,47 +1907,87 @@ exports[`user settings screen should render properly and snapshot should match i
                                         }
                                       }
                                     >
-                                      <RNSVGSvgView
-                                        align="xMidYMid"
-                                        bbHeight="21.441176470588236"
-                                        bbWidth="21.441176470588236"
-                                        focusable={false}
-                                        height="21.441176470588236"
-                                        meetOrSlice={0}
-                                        minX={0}
-                                        minY={0}
+                                      <View
                                         style={
-                                          Array [
-                                            Object {
-                                              "backgroundColor": "transparent",
-                                              "borderWidth": 0,
-                                            },
-                                            Object {
-                                              "flex": 0,
-                                              "height": 21,
-                                              "width": 21,
-                                            },
-                                          ]
+                                          Object {
+                                            "transform": Array [
+                                              Object {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          }
                                         }
-                                        vbHeight={28}
-                                        vbWidth={28}
-                                        width="21.441176470588236"
                                       >
-                                        <RNSVGGroup>
-                                          <RNSVGPath
-                                            clipRule={0}
-                                            d="M14 .667C6.64.667.667 6.64.667 14S6.64 27.333 14 27.333 27.333 21.36 27.333 14 21.36.667 14 .667zm-1.334 6.666V10h2.667V7.333h-2.667zm0 5.333v8h2.667v-8h-2.667zM3.333 14c0 5.88 4.787 10.666 10.667 10.666S24.666 19.88 24.666 14C24.666 8.12 19.88 3.333 14 3.333 8.12 3.333 3.333 8.12 3.333 14z"
+                                        <RNSVGSvgView
+                                          align="xMidYMid"
+                                          bbHeight={21.441176470588236}
+                                          bbWidth={21.441176470588236}
+                                          fill="#777777"
+                                          focusable={false}
+                                          height={21.441176470588236}
+                                          meetOrSlice={0}
+                                          minX={0}
+                                          minY={0}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "backgroundColor": "transparent",
+                                                "borderWidth": 0,
+                                              },
+                                              Object {
+                                                "flex": 0,
+                                                "height": 21,
+                                                "width": 21,
+                                              },
+                                            ]
+                                          }
+                                          vbHeight={24}
+                                          vbWidth={24}
+                                          width={21.441176470588236}
+                                        >
+                                          <RNSVGGroup
                                             fill={4286019447}
-                                            fillRule={0}
                                             propList={
                                               Array [
                                                 "fill",
-                                                "fillRule",
                                               ]
                                             }
-                                          />
-                                        </RNSVGGroup>
-                                      </RNSVGSvgView>
+                                          >
+                                            <RNSVGGroup>
+                                              <RNSVGGroup>
+                                                <RNSVGRect
+                                                  height="24"
+                                                  matrix={
+                                                    Array [
+                                                      -1,
+                                                      1.2246467991473532e-16,
+                                                      -1.2246467991473532e-16,
+                                                      -1,
+                                                      24,
+                                                      24,
+                                                    ]
+                                                  }
+                                                  opacity={0}
+                                                  width="24"
+                                                  x={0}
+                                                  y={0}
+                                                />
+                                                <RNSVGPath
+                                                  d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"
+                                                />
+                                                <RNSVGCircle
+                                                  cx="12"
+                                                  cy="8"
+                                                  r="1"
+                                                />
+                                                <RNSVGPath
+                                                  d="M12 10a1 1 0 0 0-1 1v5a1 1 0 0 0 2 0v-5a1 1 0 0 0-1-1z"
+                                                />
+                                              </RNSVGGroup>
+                                            </RNSVGGroup>
+                                          </RNSVGGroup>
+                                        </RNSVGSvgView>
+                                      </View>
                                     </View>
                                     <View
                                       width={16}
@@ -1847,46 +2104,81 @@ exports[`user settings screen should render properly and snapshot should match i
                                     <View
                                       width={16}
                                     />
-                                    <RNSVGSvgView
-                                      align="xMidYMid"
-                                      bbHeight="7.147058823529411"
-                                      bbWidth="6.352941176470588"
-                                      focusable={false}
-                                      height="7.147058823529411"
-                                      meetOrSlice={0}
-                                      minX={0}
-                                      minY={0}
+                                    <View
                                       style={
-                                        Array [
-                                          Object {
-                                            "backgroundColor": "transparent",
-                                            "borderWidth": 0,
-                                          },
-                                          Object {
-                                            "flex": 0,
-                                            "height": 7,
-                                            "width": 6,
-                                          },
-                                        ]
+                                        Object {
+                                          "transform": Array [
+                                            Object {
+                                              "scale": 1,
+                                            },
+                                          ],
+                                        }
                                       }
-                                      vbHeight={10}
-                                      vbWidth={7}
-                                      width="6.352941176470588"
                                     >
-                                      <RNSVGGroup>
-                                        <RNSVGPath
-                                          d="M.727 1.653C.102 1.055.525 0 1.39 0a.96.96 0 0 1 .664.266l4.191 4.012a1 1 0 0 1 0 1.444L2.054 9.734A.96.96 0 0 1 1.39 10C.525 10 .102 8.945.727 8.347L3.47 5.722a1 1 0 0 0 0-1.444L.727 1.653z"
+                                      <RNSVGSvgView
+                                        align="xMidYMid"
+                                        bbHeight={21.057142857142857}
+                                        bbWidth={21.057142857142857}
+                                        color={4289045925}
+                                        fill="#A5A5A5"
+                                        focusable={false}
+                                        height={21.057142857142857}
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          Array [
+                                            Object {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            Object {
+                                              "flex": 0,
+                                              "height": 21,
+                                              "width": 21,
+                                            },
+                                          ]
+                                        }
+                                        tintColor={4289045925}
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={21.057142857142857}
+                                      >
+                                        <RNSVGGroup
                                           fill={4289045925}
-                                          fillRule={0}
                                           propList={
                                             Array [
                                               "fill",
-                                              "fillRule",
                                             ]
                                           }
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGSvgView>
+                                        >
+                                          <RNSVGGroup>
+                                            <RNSVGGroup>
+                                              <RNSVGRect
+                                                height="24"
+                                                matrix={
+                                                  Array [
+                                                    6.123233995736766e-17,
+                                                    -1,
+                                                    1,
+                                                    6.123233995736766e-17,
+                                                    0,
+                                                    24,
+                                                  ]
+                                                }
+                                                opacity={0}
+                                                width="24"
+                                                x={0}
+                                                y={0}
+                                              />
+                                              <RNSVGPath
+                                                d="M10.5 17a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.42L13.1 12 9.92 8.69a1 1 0 0 1 0-1.41 1 1 0 0 1 1.42 0l3.86 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-.7.32z"
+                                              />
+                                            </RNSVGGroup>
+                                          </RNSVGGroup>
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -1971,6 +2263,7 @@ exports[`user settings screen should render properly and snapshot should match i
                                           "borderWidth": 0,
                                         },
                                         Object {
+                                          "marginBottom": 1.9142857142857141,
                                           "marginLeft": 14.357142857142858,
                                         },
                                         Object {

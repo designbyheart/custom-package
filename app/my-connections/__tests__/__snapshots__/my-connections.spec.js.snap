@@ -632,6 +632,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
                                         "borderWidth": 0,
                                       },
                                       Object {
+                                        "marginBottom": 1.9142857142857141,
                                         "marginLeft": 14.357142857142858,
                                       },
                                       Object {
@@ -1488,6 +1489,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
                                         "borderWidth": 0,
                                       },
                                       Object {
+                                        "marginBottom": 1.9142857142857141,
                                         "marginLeft": 14.357142857142858,
                                       },
                                       Object {

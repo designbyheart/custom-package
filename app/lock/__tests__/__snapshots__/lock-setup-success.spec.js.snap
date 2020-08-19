@@ -26,46 +26,87 @@ exports[`<LockSetupSuccess /> should display Loading while fetching the invitati
     }
   >
     <View
-      accessibilityLabel="lock-success-lock-logo"
-      accessible={true}
-      clearBg={true}
-      extraLarge={true}
-      resizeMode="cover"
-      src={
-        Object {
-          "default": "RelativeImageStub",
-        }
-      }
       style={
         Object {
-          "backgroundColor": "transparent",
+          "alignItems": "center",
+          "borderColor": "#86B93B",
+          "borderRadius": 34.457142857142856,
+          "borderWidth": 2,
+          "height": 68.91428571428571,
+          "justifyContent": "center",
+          "width": 68.91428571428571,
         }
       }
-      testID="lock-success-lock-logo"
     >
       <View
-        style={Object {}}
-      >
-        <Image
-          accessibilityLabel="lock-success-lock-logo"
-          accessible={true}
-          resizeMode="cover"
-          source={
-            Object {
-              "default": "RelativeImageStub",
-            }
+        style={
+          Object {
+            "transform": Array [
+              Object {
+                "scale": 1,
+              },
+            ],
           }
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight={38.285714285714285}
+          bbWidth={38.285714285714285}
+          color={4287019323}
+          fill="#86B93B"
+          focusable={false}
+          height={38.285714285714285}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
           style={
             Array [
               Object {
-                "height": 80,
-                "width": 80,
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
               },
-              null,
+              Object {
+                "flex": 0,
+                "height": 38,
+                "width": 38,
+              },
             ]
           }
-          testID="lock-success-lock-logo"
-        />
+          tintColor={4287019323}
+          vbHeight={24}
+          vbWidth={24}
+          width={38.285714285714285}
+        >
+          <RNSVGGroup
+            fill={4287019323}
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          >
+            <RNSVGGroup>
+              <RNSVGGroup>
+                <RNSVGRect
+                  height="24"
+                  opacity={0}
+                  width="24"
+                  x={0}
+                  y={0}
+                />
+                <RNSVGCircle
+                  cx="12"
+                  cy="15"
+                  r="1"
+                />
+                <RNSVGPath
+                  d="M17 8h-1V6.11a4 4 0 1 0-8 0V8H7a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-8a3 3 0 0 0-3-3zm-7-1.89A2.06 2.06 0 0 1 12 4a2.06 2.06 0 0 1 2 2.11V8h-4zM12 18a3 3 0 1 1 3-3 3 3 0 0 1-3 3z"
+                />
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGGroup>
+        </RNSVGSvgView>
       </View>
     </View>
     <Text
@@ -258,46 +299,87 @@ exports[`<LockSetupSuccess /> should render Lock setup success Screen 1`] = `
     }
   >
     <View
-      accessibilityLabel="lock-success-lock-logo"
-      accessible={true}
-      clearBg={true}
-      extraLarge={true}
-      resizeMode="cover"
-      src={
-        Object {
-          "default": "RelativeImageStub",
-        }
-      }
       style={
         Object {
-          "backgroundColor": "transparent",
+          "alignItems": "center",
+          "borderColor": "#86B93B",
+          "borderRadius": 34.457142857142856,
+          "borderWidth": 2,
+          "height": 68.91428571428571,
+          "justifyContent": "center",
+          "width": 68.91428571428571,
         }
       }
-      testID="lock-success-lock-logo"
     >
       <View
-        style={Object {}}
-      >
-        <Image
-          accessibilityLabel="lock-success-lock-logo"
-          accessible={true}
-          resizeMode="cover"
-          source={
-            Object {
-              "default": "RelativeImageStub",
-            }
+        style={
+          Object {
+            "transform": Array [
+              Object {
+                "scale": 1,
+              },
+            ],
           }
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight={38.285714285714285}
+          bbWidth={38.285714285714285}
+          color={4287019323}
+          fill="#86B93B"
+          focusable={false}
+          height={38.285714285714285}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
           style={
             Array [
               Object {
-                "height": 80,
-                "width": 80,
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
               },
-              null,
+              Object {
+                "flex": 0,
+                "height": 38,
+                "width": 38,
+              },
             ]
           }
-          testID="lock-success-lock-logo"
-        />
+          tintColor={4287019323}
+          vbHeight={24}
+          vbWidth={24}
+          width={38.285714285714285}
+        >
+          <RNSVGGroup
+            fill={4287019323}
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          >
+            <RNSVGGroup>
+              <RNSVGGroup>
+                <RNSVGRect
+                  height="24"
+                  opacity={0}
+                  width="24"
+                  x={0}
+                  y={0}
+                />
+                <RNSVGCircle
+                  cx="12"
+                  cy="15"
+                  r="1"
+                />
+                <RNSVGPath
+                  d="M17 8h-1V6.11a4 4 0 1 0-8 0V8H7a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-8a3 3 0 0 0-3-3zm-7-1.89A2.06 2.06 0 0 1 12 4a2.06 2.06 0 0 1 2 2.11V8h-4zM12 18a3 3 0 1 1 3-3 3 3 0 0 1-3 3z"
+                />
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGGroup>
+        </RNSVGSvgView>
       </View>
     </View>
     <Text

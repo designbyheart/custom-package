@@ -322,85 +322,77 @@ exports[`user about app screen should render properly and snapshot should match 
         <View
           style={
             Object {
-              "overflow": "hidden",
+              "transform": Array [
+                Object {
+                  "scale": 1,
+                },
+              ],
             }
           }
         >
-          <View
-            theme={
-              Object {
-                "colors": Object {
-                  "disabled": "hsl(208, 8%, 90%)",
-                  "divider": "#bcbbc1",
-                  "error": "#ff190c",
-                  "grey0": "#393e42",
-                  "grey1": "#43484d",
-                  "grey2": "#5e6977",
-                  "grey3": "#86939e",
-                  "grey4": "#bdc6cf",
-                  "grey5": "#e1e8ee",
-                  "greyOutline": "#bbb",
-                  "platform": Object {
-                    "android": Object {
-                      "error": "#f44336",
-                      "primary": "#2196f3",
-                      "secondary": "#9C27B0",
-                      "success": "#4caf50",
-                      "warning": "#ffeb3b",
-                    },
-                    "ios": Object {
-                      "error": "#ff3b30",
-                      "primary": "#007aff",
-                      "secondary": "#5856d6",
-                      "success": "#4cd964",
-                      "warning": "#ffcc00",
-                    },
-                  },
-                  "primary": "#2089dc",
-                  "searchBg": "#303337",
-                  "secondary": "#8F0CE8",
-                  "success": "#52c41a",
-                  "warning": "#faad14",
-                },
-              }
-            }
-          >
-            <View
-              style={
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={21.057142857142857}
+            bbWidth={21.057142857142857}
+            color={4289045925}
+            fill="#A5A5A5"
+            focusable={false}
+            height={21.057142857142857}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              Array [
                 Object {
-                  "alignItems": "center",
                   "backgroundColor": "transparent",
-                  "justifyContent": "center",
-                }
+                  "borderWidth": 0,
+                },
+                Object {
+                  "flex": 0,
+                  "height": 21,
+                  "width": 21,
+                },
+              ]
+            }
+            tintColor={4289045925}
+            vbHeight={24}
+            vbWidth={24}
+            width={21.057142857142857}
+          >
+            <RNSVGGroup
+              fill={4289045925}
+              propList={
+                Array [
+                  "fill",
+                ]
               }
             >
-              <Text
-                allowFontScaling={false}
-                brand={false}
-                solid={false}
-                style={
-                  Array [
-                    Object {
-                      "color": "#686868",
-                      "fontSize": 24,
-                    },
-                    Object {
-                      "backgroundColor": "transparent",
-                    },
-                    Object {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    Object {},
-                  ]
-                }
-                testID="iconIcon"
-              >
-                
-              </Text>
-            </View>
-          </View>
+              <RNSVGGroup>
+                <RNSVGGroup>
+                  <RNSVGRect
+                    height="24"
+                    matrix={
+                      Array [
+                        6.123233995736766e-17,
+                        -1,
+                        1,
+                        6.123233995736766e-17,
+                        0,
+                        24,
+                      ]
+                    }
+                    opacity={0}
+                    width="24"
+                    x={0}
+                    y={0}
+                  />
+                  <RNSVGPath
+                    d="M10.5 17a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.42L13.1 12 9.92 8.69a1 1 0 0 1 0-1.41 1 1 0 0 1 1.42 0l3.86 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-.7.32z"
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGSvgView>
         </View>
       </View>
     </View>
@@ -479,85 +471,77 @@ exports[`user about app screen should render properly and snapshot should match 
         <View
           style={
             Object {
-              "overflow": "hidden",
+              "transform": Array [
+                Object {
+                  "scale": 1,
+                },
+              ],
             }
           }
         >
-          <View
-            theme={
-              Object {
-                "colors": Object {
-                  "disabled": "hsl(208, 8%, 90%)",
-                  "divider": "#bcbbc1",
-                  "error": "#ff190c",
-                  "grey0": "#393e42",
-                  "grey1": "#43484d",
-                  "grey2": "#5e6977",
-                  "grey3": "#86939e",
-                  "grey4": "#bdc6cf",
-                  "grey5": "#e1e8ee",
-                  "greyOutline": "#bbb",
-                  "platform": Object {
-                    "android": Object {
-                      "error": "#f44336",
-                      "primary": "#2196f3",
-                      "secondary": "#9C27B0",
-                      "success": "#4caf50",
-                      "warning": "#ffeb3b",
-                    },
-                    "ios": Object {
-                      "error": "#ff3b30",
-                      "primary": "#007aff",
-                      "secondary": "#5856d6",
-                      "success": "#4cd964",
-                      "warning": "#ffcc00",
-                    },
-                  },
-                  "primary": "#2089dc",
-                  "searchBg": "#303337",
-                  "secondary": "#8F0CE8",
-                  "success": "#52c41a",
-                  "warning": "#faad14",
-                },
-              }
-            }
-          >
-            <View
-              style={
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={21.057142857142857}
+            bbWidth={21.057142857142857}
+            color={4289045925}
+            fill="#A5A5A5"
+            focusable={false}
+            height={21.057142857142857}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              Array [
                 Object {
-                  "alignItems": "center",
                   "backgroundColor": "transparent",
-                  "justifyContent": "center",
-                }
+                  "borderWidth": 0,
+                },
+                Object {
+                  "flex": 0,
+                  "height": 21,
+                  "width": 21,
+                },
+              ]
+            }
+            tintColor={4289045925}
+            vbHeight={24}
+            vbWidth={24}
+            width={21.057142857142857}
+          >
+            <RNSVGGroup
+              fill={4289045925}
+              propList={
+                Array [
+                  "fill",
+                ]
               }
             >
-              <Text
-                allowFontScaling={false}
-                brand={false}
-                solid={false}
-                style={
-                  Array [
-                    Object {
-                      "color": "#686868",
-                      "fontSize": 24,
-                    },
-                    Object {
-                      "backgroundColor": "transparent",
-                    },
-                    Object {
-                      "fontFamily": "Material Icons",
-                      "fontStyle": "normal",
-                      "fontWeight": "normal",
-                    },
-                    Object {},
-                  ]
-                }
-                testID="iconIcon"
-              >
-                
-              </Text>
-            </View>
-          </View>
+              <RNSVGGroup>
+                <RNSVGGroup>
+                  <RNSVGRect
+                    height="24"
+                    matrix={
+                      Array [
+                        6.123233995736766e-17,
+                        -1,
+                        1,
+                        6.123233995736766e-17,
+                        0,
+                        24,
+                      ]
+                    }
+                    opacity={0}
+                    width="24"
+                    x={0}
+                    y={0}
+                  />
+                  <RNSVGPath
+                    d="M10.5 17a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.42L13.1 12 9.92 8.69a1 1 0 0 1 0-1.41 1 1 0 0 1 1.42 0l3.86 4a1 1 0 0 1 0 1.4l-4 4a1 1 0 0 1-.7.32z"
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGSvgView>
         </View>
       </View>
     </View>
