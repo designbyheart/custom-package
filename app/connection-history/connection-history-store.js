@@ -22,6 +22,7 @@ import {
   HISTORY_EVENT_TYPE,
   HISTORY_EVENT_STORAGE_KEY,
   ERROR_HISTORY_EVENT_OCCURRED, REMOVE_EVENT,
+  UPDATE_HISTORY_EVENT,
 } from './type-connection-history'
 import type {
   ConnectionHistoryEvent,
@@ -34,6 +35,7 @@ import type {
   ShowUserBackupAlertAction,
   RecordHistoryEventAction,
   RemoveEventAction,
+  UpdateHistoryEventAction,
 } from './type-connection-history'
 import type { CustomError } from '../common/type-common'
 import type { InvitationPayload } from '../invitation/type-invitation'
@@ -51,7 +53,7 @@ import type {
   SendClaimRequestFailAction,
   PaidCredentialRequestFailAction,
 } from '../claim-offer/type-claim-offer'
-import type { ClaimStorageSuccessAction } from '../claim/type-claim'
+import type { ClaimStorageSuccessAction, DeleteClaimSuccessAction } from '../claim/type-claim'
 import type {
   Proof,
   UpdateAttributeClaimAction,
@@ -101,7 +103,7 @@ import {
   getHistoryEvent,
   getClaimReceivedHistory,
 } from '../store/store-selector'
-import { CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
+import { CLAIM_STORAGE_SUCCESS, DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
 import { RESET } from '../common/type-common'
 import {
   CLAIM_OFFER_RECEIVED,
@@ -410,6 +412,28 @@ function convertErrorSendProofToHistoryEvent(
   }
 }
 
+function convertDeleteClaimSuccessToHistoryEvent(
+  action: DeleteClaimSuccessAction,
+  claim: ClaimOfferPayload
+): ConnectionHistoryEvent {
+  return {
+    action: HISTORY_EVENT_STATUS[action.type],
+    // $FlowFixMe
+    data: {},
+    id: uuid(),
+    name: claim.data.name,
+    status: HISTORY_EVENT_STATUS[action.type],
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.CLAIM,
+    remoteDid: claim.remotePairwiseDID,
+    originalPayload: {
+      ...action,
+      data: {},
+      remotePairwiseDID: claim.remotePairwiseDID,
+    },
+  }
+}
+
 function mapSentAttributes(
   revealedGroupAttributes: *,
   revealedAttributes: *,
@@ -566,6 +590,13 @@ export const deleteHistoryEvent = (
   historyEvent: ConnectionHistoryEvent
 ): DeleteHistoryEventAction => ({
   type: DELETE_HISTORY_EVENT,
+  historyEvent,
+})
+
+export const updateHistoryEvent = (
+  historyEvent: ConnectionHistoryEvent
+): UpdateHistoryEventAction => ({
+  type: UPDATE_HISTORY_EVENT,
   historyEvent,
 })
 
@@ -737,6 +768,32 @@ export function* historyEventOccurredSaga(
       const pendingHistory = yield select(getPendingHistoryEvent, claim)
 
       if (pendingHistory) yield put(deleteHistoryEvent(pendingHistory))
+    }
+
+    if (event.type === DELETE_CLAIM_SUCCESS) {
+      const claim: ClaimOfferPayload = yield select(
+        getClaimOffer,
+        event.messageId
+      )
+      historyEvent = convertDeleteClaimSuccessToHistoryEvent(event, claim)
+      const claimReceivedEvent = yield select(
+        getClaimReceivedHistory,
+        historyEvent.originalPayload.messageId,
+        historyEvent.remoteDid,
+        CLAIM_STORAGE_SUCCESS
+      )
+      if (claimReceivedEvent) {
+        // Delete attributes from received credential history item
+        const event = {
+          ...claimReceivedEvent,
+          data: {},
+          originalPayload: {
+            ...claimReceivedEvent.originalPayload,
+            data: {}
+          }
+        }
+        yield put(updateHistoryEvent(event))
+      }
     }
 
     if (event.type === PROOF_REQUEST_RECEIVED) {
@@ -1057,6 +1114,38 @@ export default function connectionHistoryReducer(
               // $FlowFixMe
               return item !== action.historyEvent
             })
+          : []
+      return {
+        ...state,
+        data: {
+          ...(state.data ? state.data : {}),
+          connections: {
+            ...(state.data && state.data.connections
+              ? state.data.connections
+              : {}),
+            [remoteDid]: {
+              data: filteredDataArr,
+              newBadge: false,
+            },
+          },
+          connectionsUpdated: true,
+        },
+      }
+    }
+
+    case UPDATE_HISTORY_EVENT: {
+      const { remoteDid } = action.historyEvent
+      const filteredDataArr =
+        state.data &&
+        state.data.connections &&
+        state.data.connections[remoteDid] &&
+        state.data.connections[remoteDid].data
+          ? state.data.connections[remoteDid].data.map((item) => {
+            // $FlowFixMe
+            return item.id === action.historyEvent.id ?
+              action.historyEvent :
+              item
+          })
           : []
       return {
         ...state,

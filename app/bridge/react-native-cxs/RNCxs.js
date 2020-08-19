@@ -872,3 +872,7 @@ export async function connectionSendAnswer(
 ): Promise<void> {
   return await RNIndy.connectionSendAnswer(connectionHandle, question, answer)
 }
+
+export async function deleteCredential(credentialHandle: number) {
+  return await RNIndy.deleteCredential(credentialHandle)
+}

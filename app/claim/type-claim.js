@@ -7,6 +7,8 @@ import type {
   ResetAction,
   NotificationPayload,
 } from '../common/type-common'
+import type { Connection, Connections } from '../store/type-connection-store'
+import type { ClaimOfferStore } from '../claim-offer/type-claim-offer'
 
 export type Claim = {
   messageId: string,
@@ -97,6 +99,20 @@ export type ClaimReceivedVcxAction = {
   claim: ClaimVcx,
 }
 
+export const DELETE_CLAIM = 'DELETE_CLAIM'
+export type DeleteClaimAction = {
+  type: typeof DELETE_CLAIM,
+  uuid: string,
+}
+
+export const DELETE_CLAIM_SUCCESS = 'DELETE_CLAIM_SUCCESS'
+
+export type DeleteClaimSuccessAction = {
+  type: typeof DELETE_CLAIM_SUCCESS,
+  claimMap: ClaimMap,
+  messageId: string,
+}
+
 export type ClaimAction =
   | ClaimReceivedAction
   | ClaimStorageSuccessAction
@@ -107,6 +123,7 @@ export type ClaimAction =
   | InitialTestAction
   | ResetAction
   | ClaimReceivedVcxAction
+  | DeleteClaimSuccessAction
 
 export type ClaimStore = {
   +[string]: {

@@ -24,6 +24,7 @@ export const CLAIM_OFFER_STATUS = {
   ACCEPTED: 'ACCEPTED',
   IGNORED: 'IGNORED',
   REJECTED: 'REJECTED',
+  DELETED: 'DELETED',
 }
 export const VCX_CLAIM_OFFER_STATE = {
   NONE: 0,
@@ -198,6 +199,20 @@ export type ConnectionHistoryBackedUpAction = {
   type: typeof CONNECTION_HISTORY_BACKED_UP,
 }
 
+export const DELETE_CLAIM_OFFER = 'DELETE_CLAIM_OFFER'
+export type DeleteClaimOfferAction = {
+  type: typeof DELETE_CLAIM_OFFER,
+  uid: string,
+  userDID: string,
+}
+
+export const CLAIM_OFFER_DELETED = 'CLAIM_OFFER_DELETED'
+export type ClaimOfferDeletedAction = {
+  type: typeof CLAIM_OFFER_DELETED,
+  uid: string,
+  vcxSerializedClaimOffers: SerializedClaimOffers,
+}
+
 export type ClaimOfferAction =
   | ClaimOfferReceivedAction
   | ClaimOfferFailedAction
@@ -219,6 +234,7 @@ export type ClaimOfferAction =
   | ResetClaimRequestStatusAction
   | SendClaimRequestSuccessAction
   | SendClaimRequestFailAction
+  | ClaimOfferDeletedAction
 
 export type ClaimOfferPayload = AdditionalDataPayload & {
   uid: string,
@@ -396,6 +412,7 @@ export const CLAIM_REQUEST_STATUS = {
   CLAIM_REQUEST_SUCCESS,
   PAID_CREDENTIAL_REQUEST_SUCCESS,
   PAID_CREDENTIAL_REQUEST_FAIL,
+  DELETED: 'DELETED',
 }
 
 export type ClaimRequestStatus = $Keys<typeof CLAIM_REQUEST_STATUS>

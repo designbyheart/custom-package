@@ -60,14 +60,14 @@ import {
   DENY_CLAIM_OFFER_SUCCESS,
 } from '../claim-offer/type-claim-offer'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
+import { DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
 import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
 import type { AriesOutOfBandInvite } from '../invitation/type-invitation'
 
 let ScreenWidth = Dimensions.get('window').width
-export class ConnectionDetails extends Component<
-  ConnectionHistoryProps,
-  ConnectionHistoryState
-> {
+
+export class ConnectionDetails extends Component<ConnectionHistoryProps,
+  ConnectionHistoryState> {
   state = {
     hideMoreOptions: true,
     moveMoreOptions: new Animated.Value(ScreenWidth),
@@ -280,7 +280,6 @@ export class ConnectionDetails extends Component<
           data={item}
           imageUrl={this.props.route.params.image}
           institutionalName={this.props.route.params.senderName}
-          colorBackground={this.props.activeConnectionThemePrimary}
           secondColorBackground={this.props.activeConnectionThemeSecondary}
         />
       )
@@ -362,6 +361,15 @@ export class ConnectionDetails extends Component<
           secondColorBackground={colors.cmRed}
         />
       )
+    } else if (item.action === 'DELETED') {
+      return (
+        <CredentialCard
+          messageDate={formattedTime}
+          messageTitle={'Deleted Credential'}
+          messageContent={'You deleted the credential "' + item.name + '"'}
+          showButtons={false}
+        />
+      )
     }
 
     return null
@@ -402,7 +410,7 @@ export class ConnectionDetails extends Component<
   scrollToEnd = () => {
     setTimeout(() => {
       this.flatList.current &&
-        this.flatList.current.scrollToEnd({ animated: true })
+      this.flatList.current.scrollToEnd({ animated: true })
     }, 300)
   }
 

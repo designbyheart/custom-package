@@ -17,9 +17,7 @@ import type {
 } from '../invitation/type-invitation'
 import type { NewConnectionAction } from '../store/type-connection-store'
 import type { SendClaimRequestAction } from './components/types/type-details-claim-offer'
-import type { ClaimReceivedAction } from './components/types/type-details-claim'
 import type { ClaimOfferReceivedAction } from './components/types/type-details-claim-offer'
-import type { Connection } from '../connection/type-connection'
 import type {
   ProofRequestReceivedAction,
   SendProofSuccessAction,
@@ -54,12 +52,12 @@ import {
   SEND_PROOF_SUCCESS,
 } from './components/types/type-details-proof-request'
 import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
-import { PROOF_SUCCESS } from './components/types/type-details-proof'
 import {
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
 } from '../question/type-question'
 import { sendConnectionRedirect } from '../store/connections-store'
+import { DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
 import { sendConnectionReuse } from '../store/connections-store'
 
 export const HISTORY_EVENT_STATUS = {
@@ -78,6 +76,7 @@ export const HISTORY_EVENT_STATUS = {
   [SEND_PROOF_SUCCESS]: 'SHARED',
   [QUESTION_RECEIVED]: QUESTION_RECEIVED,
   [UPDATE_QUESTION_ANSWER]: UPDATE_QUESTION_ANSWER,
+  [DELETE_CLAIM_SUCCESS]: 'DELETED'
 }
 
 export type HistoryEventStatus = $Keys<typeof HISTORY_EVENT_STATUS>
