@@ -4,33 +4,36 @@ import { StyleSheet, Image } from 'react-native'
 import { connect } from 'react-redux'
 import VersionNumber from 'react-native-version-number'
 import { ListItem } from 'react-native-elements'
+import { EvaIcon, ARROW_RIGHT_ICON } from '../common/icons'
 
 import type { AboutAppProps, AboutAppListItemProps } from './type-about-app'
 import type { Store } from '../store/type-store'
-import type { ReactNavigation } from '../common/type-common'
 
-import {
-  Container,
-  CustomText,
-  CustomView,
-  Icon,
-  CustomHeader,
-} from '../components'
-import {
-  color,
-  OFFSET_1X,
-  OFFSET_2X,
-  OFFSET_6X,
-  OFFSET_7X,
-  dimGray,
-  lightGray,
-} from '../common/styles'
+import { Container, CustomText, CustomView } from '../components'
+import { OFFSET_1X, OFFSET_2X, lightGray } from '../common/styles'
 import { aboutAppRoute, privacyTNCRoute } from '../common'
 import { PrivacyTNC } from '../privacy-tnc/privacy-tnc-screen'
 import { getEnvironmentName } from '../store/config-store'
 import { headerNavigationOptions } from '../navigation/navigation-header-config'
+import { moderateScale } from 'react-native-size-matters'
+import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 
 const styles = StyleSheet.create({
+  itemContainer: {
+    marginStart: moderateScale(16),
+    width: '100%',
+    height: moderateScale(56),
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  itemText: {
+    fontSize: moderateScale(fontSizes.size5),
+    fontWeight: '400',
+    width: '100%',
+    color: colors.cmGray1,
+    textAlign: 'left',
+    fontFamily: fontFamily,
+  },
   headerLeft: {
     width: OFFSET_2X,
   },
@@ -62,15 +65,13 @@ export const AboutAppListItem = ({
         </CustomView>
       }
       onPress={onPress}
-      rightIcon={rightIconConfig}
+      rightIcon={rightIcon}
     />
   )
 }
 
-const rightIconConfig = {
-  name: 'chevron-right',
-  color: dimGray,
-}
+const rightIcon = <EvaIcon name={ARROW_RIGHT_ICON} color={colors.cmGray3} />
+
 const logoConnectMe = <Image source={require('../images/logo_connectme.png')} />
 const logoEvernym = <Image source={require('../images/logo_evernym.png')} />
 const logoSovrin = <Image source={require('../images/logo_sovrin.png')} />

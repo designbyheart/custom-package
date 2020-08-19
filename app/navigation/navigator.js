@@ -1,19 +1,11 @@
 // @flow
 import * as React from 'react'
-import {
-  View,
-  StyleSheet,
-  Platform,
-  Dimensions,
-  Image,
-  Text,
-} from 'react-native'
+import { View, StyleSheet, Dimensions, Image, Text } from 'react-native'
 import {
   createStackNavigator,
   TransitionPresets,
 } from '@react-navigation/stack'
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer'
-import DeviceInfo from 'react-native-device-info'
 import VersionNumber from 'react-native-version-number'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { enableScreens } from 'react-native-screens'
@@ -71,7 +63,6 @@ import { credentialDetailsScreen } from '../credential-details/credential-detail
 import {
   splashScreenRoute,
   homeRoute,
-  walletTabSendDetailsRoute,
   connectionsDrawerRoute,
   credentialsDrawerRoute,
   homeDrawerRoute,
@@ -84,20 +75,12 @@ import {
   EvaIcon,
   HOME_ICON,
   CONNECTIONS_ICON,
-  CREDENTIALS_ICON,
   SETTINGS_ICON,
 } from '../common/icons'
-import { colors, fontFamily, fontSizes } from '../common/styles/constant'
-import {
-  Icon,
-  CustomView,
-  UserAvatar,
-  CustomText,
-  Avatar,
-  UnreadMessagesBadge,
-} from '../components'
+import { colors, fontFamily } from '../common/styles/constant'
+import { UserAvatar, Avatar, UnreadMessagesBadge } from '../components'
 import { unreadMessageContainerCommonStyle } from '../components/unread-messages-badge/unread-messages-badge'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 enableScreens()
 

@@ -1,24 +1,34 @@
 // @flow
 
 import React, { useCallback } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, Platform } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { SvgCustomIcon } from '../svg-custom-icon'
 import { mediumGray } from '../../common/styles'
+import { moderateScale } from 'react-native-size-matters'
+import {
+  EvaIcon,
+  ANDROID_BACK_ARROW_ICON,
+  IOS_BACK_ARROW_ICON,
+} from '../../common/icons'
 
 export const BackButton = () => {
   const navigation = useNavigation()
   const onPress = useCallback(() => {
     navigation.goBack()
   }, [])
-
+  const iOS = Platform.OS === 'ios'
   return (
     <TouchableOpacity
       testID="back-button-component"
       onPress={onPress}
       hitSlop={hitSlop}
     >
-      <SvgCustomIcon name="Arrow" fill={mediumGray} />
+      <EvaIcon
+        name={iOS ? IOS_BACK_ARROW_ICON : ANDROID_BACK_ARROW_ICON}
+        width={moderateScale(32)}
+        height={moderateScale(32)}
+      />
     </TouchableOpacity>
   )
 }

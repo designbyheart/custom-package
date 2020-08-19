@@ -9,6 +9,7 @@ type IconProps = {
   height?: number,
   color?: string,
   style?: any,
+  onPress?: any,
 }
 
 type CommonIconProps = {
@@ -28,19 +29,26 @@ export const IOS_BACK_ARROW_ICON = 'arrow-ios-back-outline'
 export const MORE_ICON = 'more-vertical-outline'
 export const DELETE_ICON = 'trash-2-outline'
 export const CLOSE_ICON = 'close-outline'
+export const CHAT_ICON = 'message-square-outline'
+export const INFO_ICON = 'info-outline'
+export const ARROW_RIGHT_ICON = 'chevron-right-outline'
+export const LOCK_ICON = 'lock'
+export const SAVE_ICON = 'save-outline'
+export const BACKUP_ICON = 'cloud-upload-outline'
+export const ATTACHMENT_ICON = 'attach-2-outline'
+export const PHOTO_ATTACHMENT_ICON = 'image-outline'
 
 // common icon class is implemented to set default values (except name) for icons
 // in that case we should only set icon name and get an icon with default color and size
 export const EvaIcon = (props: CommonIconProps) => {
-  const { name, width, height, color, style } = props
+  const { width, height, color } = props
 
   return (
     <Icon
-      name={name}
+      {...props}
       width={width ? width : moderateScale(22)}
       height={height ? height : moderateScale(22)}
       fill={color ? color : colors.cmGray2}
-      style={style}
     />
   )
 }

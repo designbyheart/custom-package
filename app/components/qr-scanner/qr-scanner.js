@@ -25,6 +25,7 @@ import {
   OFFSET_2X,
   OFFSET_3X,
   OFFSET_5X,
+  colors,
 } from '../../common/styles/constant'
 import { isValidShortInviteQrCode } from './qr-code-types/qr-code-short-invite'
 import {
@@ -54,6 +55,8 @@ import { flatTryCatch } from '../../common/flat-try-catch'
 import { flatJsonParse } from '../../common/flat-json-parse'
 import { isValidSMSInvitation } from '../../sms-pending-invitation/sms-invitation-validator'
 import { validateEphemeralProofQrCode } from '../../proof-request/ephemeral-proof-request-qr-code-reader'
+import { EvaIcon, CLOSE_ICON } from '../../common/icons'
+import { moderateScale } from 'react-native-size-matters'
 
 export default class QRScanner extends PureComponent<
   QrScannerProps,
@@ -333,11 +336,13 @@ export class CameraMarker extends PureComponent<CameraMarkerProps, void> {
           style={[closeIconStyle.closeIcon]}
           testID={'close-qr-scanner-container'}
         >
-          <Icon
-            src={require('../../images/close_white.png')}
+          <EvaIcon
+            name={CLOSE_ICON}
+            width={moderateScale(36)}
+            height={moderateScale(36)}
             testID={'close-qr-scanner-icon'}
             onPress={onClose}
-            small
+            color={colors.cmWhite}
           />
         </CustomView>
       </CustomView>

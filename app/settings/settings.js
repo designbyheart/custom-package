@@ -3,32 +3,22 @@ import React, { Component } from 'react'
 import {
   ActivityIndicator,
   Alert,
-  Text,
   Switch,
   StyleSheet,
-  NativeModules,
   Platform,
   ScrollView,
   Image,
   View,
-  TouchableOpacity,
   Dimensions,
 } from 'react-native'
 import * as RNLocalize from 'react-native-localize'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { Apptentive } from 'apptentive-react-native'
 import moment from 'moment'
 import { ListItem } from 'react-native-elements'
 import get from 'lodash.get'
 
-import {
-  UserAvatar,
-  CustomText,
-  Icon,
-  Avatar,
-  PrimaryHeader,
-  CameraButton,
-} from '../components'
+import { CustomText, PrimaryHeader, CameraButton } from '../components'
 import { CustomView, Container } from '../components/layout'
 import {
   cloudBackupRoute,
@@ -38,7 +28,6 @@ import {
   aboutAppRoute,
   designStyleGuideRoute,
   onfidoRoute,
-  privacyTNCRoute,
   genRecoveryPhraseRoute,
   walletRoute,
   exportBackupFileRoute,
@@ -50,26 +39,9 @@ import ToggleSwitch from 'react-native-flip-toggle-button'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { colors, fontFamily, fontSizes } from '../common/styles/constant'
-import {
-  EDIT_ICON_DIMENSIONS,
-  PASS_CODE_ASTERISK_TOP_OFFSET,
-  PASS_CODE_ASTERISK_TEST_ID,
-  PASS_CODE_TEST_ID,
-  TOUCH_ID_TEST_ID,
-  USERNAME_TEST_ID,
-  CHAT_TEST_ID,
-  USER_AVATAR_TEST_ID,
-  BACKUP_DATA_WALLET,
-  ABOUT_APP_TEST_ID,
-  ONFIDO_TEST_ID,
-} from './settings-constant'
-import {
-  SOVRIN_TOKEN_AMOUNT_TEST_ID,
-  SOVRIN_TOKEN_TEST_ID,
-} from '../my-connections/my-connections-constants'
+import { EDIT_ICON_DIMENSIONS } from './settings-constant'
 import type { Store } from '../store/type-store'
 import type { SettingsProps, SettingsState } from './type-settings'
-import type { ImageSource, ReactNavigation } from '../common/type-common'
 import { selectUserAvatar } from '../store/user/user-store'
 import {
   exportBackup,
@@ -82,10 +54,8 @@ import {
   viewedWalletError,
 } from '../backup/backup-actions'
 
-import { WalletBalance } from '../wallet/wallet-balance'
 import {
   getWalletBalance,
-  getAutoCloudBackupEnabled,
   getHasVerifiedRecoveryPhrase,
 } from '../store/store-selector'
 import SvgCustomIcon from '../components/svg-setting-icons'
@@ -95,17 +65,21 @@ import {
   CLOUD_BACKUP_FAILURE,
   AUTO_CLOUD_BACKUP_ENABLED,
   WALLET_BACKUP_FAILURE,
-  WALLET_BACKUP_FAILURE_VIEWED,
 } from '../backup/type-backup'
-import { secureSet, walletSet, safeSet } from '../services/storage'
+import { walletSet, safeSet } from '../services/storage'
 import { addPendingRedirection } from '../lock/lock-store'
 import { cloudBackupStart } from '../backup/backup-store'
-import { newConnectionSeen } from '../connection-history/connection-history-store'
 import { setupApptentive } from '../feedback'
 import { customLogger } from '../store/custom-logger'
-import { getConnections } from '../store/connections-store'
-import type { Connection } from '../store/type-connection-store'
 import { NotificationCard } from '../in-app-notification/in-app-notification-card'
+import {
+  EvaIcon,
+  CHAT_ICON,
+  INFO_ICON,
+  ARROW_RIGHT_ICON,
+  SAVE_ICON,
+  BACKUP_ICON,
+} from '../common/icons'
 
 // Use this variable to show/hide token amount
 // if we just comment out code, then we need to adjust other styles as well
@@ -291,7 +265,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
     const {
       generateRecoveryPhrase,
       hasVerifiedRecoveryPhrase,
-      navigation: { navigate, state, goBack },
+      navigation: { navigate, state },
     } = this.props
     // If no there is no route, then default to Settings
     const initialRoute = get(state, 'routeName', settingsRoute)
@@ -491,7 +465,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       return
     }
     const {
-      navigation: { navigate, state, goBack },
+      navigation: { navigate },
     } = this.props
     navigate(cloudBackupRoute, {})
   }
@@ -557,9 +531,6 @@ export class Settings extends Component<SettingsProps, SettingsState> {
 
   render() {
     const {
-      walletBalance,
-      lastSuccessfulCloudBackup,
-      lastSuccessfulBackup,
       cloudBackupStatus,
       hasVerifiedRecoveryPhrase,
       cloudBackupError,
@@ -569,52 +540,6 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       this.props.cloudBackupStatus === WALLET_BACKUP_FAILURE ||
       this.props.cloudBackupStatus === CLOUD_BACKUP_FAILURE ||
       cloudBackupError === WALLET_BACKUP_FAILURE
-
-    const userAvatar = (
-      <CustomView center style={[style.userAvatarContainer]}>
-        <CustomView verticalSpace>
-          <UserAvatar testID={USER_AVATAR_TEST_ID} userCanChange>
-            {/* {this.renderAvatarWithSource} */}
-          </UserAvatar>
-        </CustomView>
-        {!hideTokenScreen && (
-          <TouchableOpacity
-            onPress={this.openTokenScreen}
-            testID={SOVRIN_TOKEN_AMOUNT_TEST_ID}
-          >
-            <CustomView row center>
-              <Icon
-                small
-                testID={SOVRIN_TOKEN_TEST_ID}
-                src={require('../images/sovrinTokenOrange.png')}
-              />
-              <CustomText
-                h5
-                demiBold
-                center
-                style={[
-                  style.floatTokenAmount,
-                  {
-                    fontSize: tokenAmountSize(
-                      walletBalance ? walletBalance.length : 0
-                    ),
-                  },
-                ]}
-                transparentBg
-                formatNumber
-              >
-                {walletBalance}
-              </CustomText>
-            </CustomView>
-            <CustomView>
-              <CustomText transparentBg darkgray style={[style.tokenText]}>
-                TOKENS
-              </CustomText>
-            </CustomView>
-          </TouchableOpacity>
-        )}
-      </CustomView>
-    )
 
     const toggleSwitch =
       Platform.OS === 'ios' ? (
@@ -672,14 +597,16 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         title: this.renderBackupTitleText(),
         subtitle: this.getLastBackupTitle(),
         avatar: (
-          <SvgCustomIcon
-            fill={
+          <EvaIcon
+            name={SAVE_ICON}
+            width={verticalScale(27)}
+            height={verticalScale(27)}
+            color={
               this.props.connectionsUpdated && !this.props.isAutoBackupEnabled
                 ? // || (this.props.connectionsUpdated && this.props.isAutoBackupEnabled && hasCloudBackupFailed)
                   colors.cmRed
                 : colors.cmGray2
             }
-            name="Backup"
           />
         ),
         rightIcon: '',
@@ -690,9 +617,11 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         title: 'Automatic Cloud Backups',
         subtitle: this.getCloudBackupSubtitle(),
         avatar: (
-          <SvgCustomIcon
-            fill={hasCloudBackupFailed ? colors.cmRed : colors.cmGray2}
-            name="CloudBackup"
+          <EvaIcon
+            name={BACKUP_ICON}
+            width={verticalScale(27)}
+            height={verticalScale(27)}
+            color={hasCloudBackupFailed ? colors.cmRed : colors.cmGray2}
           />
         ),
         rightIcon:
@@ -728,14 +657,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
             />
           </View>
         ),
-        rightIcon: (
-          <SvgCustomIcon
-            name="ListItemArrow"
-            fill={colors.cmGray3}
-            width={verticalScale(8)}
-            height={verticalScale(9)}
-          />
-        ),
+        rightIcon: <EvaIcon name={ARROW_RIGHT_ICON} color={colors.cmGray3} />,
         onPress: this.onChangePinClick,
       },
       {
@@ -752,14 +674,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
             />
           </View>
         ),
-        rightIcon: (
-          <SvgCustomIcon
-            name="ListItemArrow"
-            fill={colors.cmGray3}
-            width={verticalScale(8)}
-            height={verticalScale(9)}
-          />
-        ),
+        rightIcon: <EvaIcon name={ARROW_RIGHT_ICON} color={colors.cmGray3} />,
         onPress: this.viewRecoveryPhrase,
       },
       {
@@ -768,22 +683,14 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: 'Tell us what you think of Connect.Me',
         avatar: (
           <View style={styles.avatarView}>
-            <SvgCustomIcon
-              name="Chat"
-              fill={colors.cmGray2}
+            <EvaIcon
+              name={CHAT_ICON}
               width={verticalScale(27)}
               height={verticalScale(27)}
             />
           </View>
         ),
-        rightIcon: (
-          <SvgCustomIcon
-            name="ListItemArrow"
-            fill={colors.cmGray3}
-            width={verticalScale(8)}
-            height={verticalScale(9)}
-          />
-        ),
+        rightIcon: <EvaIcon name={ARROW_RIGHT_ICON} color={colors.cmGray3} />,
         onPress: this.openFeedback,
       },
       {
@@ -792,22 +699,14 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: 'Legal, Version, and Network Information',
         avatar: (
           <View style={styles.avatarView}>
-            <SvgCustomIcon
-              name="About"
-              fill={colors.cmGray2}
+            <EvaIcon
+              name={INFO_ICON}
               width={verticalScale(27)}
               height={verticalScale(27)}
             />
           </View>
         ),
-        rightIcon: (
-          <SvgCustomIcon
-            name="ListItemArrow"
-            fill={colors.cmGray3}
-            width={verticalScale(8)}
-            height={verticalScale(9)}
-          />
-        ),
+        rightIcon: <EvaIcon name={ARROW_RIGHT_ICON} color={colors.cmGray3} />,
         onPress: this.openAboutApp,
       },
       {
@@ -823,14 +722,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
           </View>
         ),
 
-        rightIcon: (
-          <SvgCustomIcon
-            name="ListItemArrow"
-            fill={colors.cmGray3}
-            width={verticalScale(8)}
-            height={verticalScale(9)}
-          />
-        ),
+        rightIcon: <EvaIcon name={ARROW_RIGHT_ICON} color={colors.cmGray3} />,
         onPress: this.openOnfido,
       },
     ]
@@ -841,23 +733,15 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: 'Development only',
         avatar: (
           <View style={styles.avatarView}>
-            <SvgCustomIcon
-              name="About"
-              fill={colors.cmGray2}
+            <EvaIcon
+              name={INFO_ICON}
               width={verticalScale(27)}
               height={verticalScale(27)}
             />
           </View>
         ),
 
-        rightIcon: (
-          <SvgCustomIcon
-            name="ListItemArrow"
-            fill={colors.cmGray3}
-            width={verticalScale(8)}
-            height={verticalScale(9)}
-          />
-        ),
+        rightIcon: <EvaIcon name={ARROW_RIGHT_ICON} color={colors.cmGray3} />,
         onPress: this.openStyleGuide,
       })
     }

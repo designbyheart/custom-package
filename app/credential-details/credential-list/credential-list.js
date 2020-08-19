@@ -1,40 +1,39 @@
 // @flow
-import React, { useMemo, useCallback, useState, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import {
   Text,
   View,
-  ScrollView,
   StyleSheet,
   Image,
   TouchableOpacity,
   Alert,
-  InteractionManager,
 } from 'react-native'
 import RNFetchBlob from 'rn-fetch-blob'
 import FileViewer from 'react-native-file-viewer'
 
-import { Avatar } from '../../components/avatar/avatar'
 import { BLANK_ATTRIBUTE_DATA_TEXT } from './type-credential-list'
 import { flattenAsync } from '../../common/flatten-async'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
-import type { CredentialListProps, AttachmentPropType, PhotoAttachmentPropType } from './type-credential-list'
-import {
-  photoMimeTypes,
-  docMimeTypes,
-  excelMimeTypes,
-  pptMimeTypes,
-  pdfMimeTypes,
-  audioVideoMimeType
+import type {
+  CredentialListProps,
+  AttachmentPropType,
+  PhotoAttachmentPropType,
 } from './type-credential-list'
+import { photoMimeTypes } from './type-credential-list'
+
+import {
+  EvaIcon,
+  ATTACHMENT_ICON,
+  PHOTO_ATTACHMENT_ICON,
+} from '../../common/icons'
 
 export const CredentialList = ({
   uid,
   remotePairwiseDID,
   content,
 }: CredentialListProps) => {
-
   return (
     <View style={styles.container}>
       {content.map((userData, index) => (
@@ -62,13 +61,12 @@ function DataRenderer(props: {
   const { label, data, uid, remotePairwiseDID } = props
   const labelComponent = (
     <Text style={styles.label}>
-      {label.toLowerCase().endsWith('_link')
-        ? label.slice(0, -5)
-        : label}
-    </Text>)
+      {label.toLowerCase().endsWith('_link') ? label.slice(0, -5) : label}
+    </Text>
+  )
 
   if (!data) {
-    // Replace empty data string with (none) in lighter gray    
+    // Replace empty data string with (none) in lighter gray
     return (
       <View>
         {labelComponent}
@@ -108,11 +106,13 @@ function DataRenderer(props: {
     // We can render either photo sent inside data, or we can render icon for file
     if (photoMimeTypes.includes(attachment['mime-type'].toLowerCase())) {
       const type = attachment.extension.toUpperCase()
-      return <PhotoAttachment
-        label={formattedLabel}
-        extension={type}
-        base64={attachment.data.base64}
-      />
+      return (
+        <PhotoAttachment
+          label={formattedLabel}
+          extension={type}
+          base64={attachment.data.base64}
+        />
+      )
     }
 
     return (
@@ -139,13 +139,18 @@ function PhotoAttachment(props: PhotoAttachmentPropType) {
   return (
     <View>
       <View style={styles.photoAttachmentWrapper}>
-        <Image
-          style={styles.photoAttachmentIcon}
-          source={require('../../images/imageAttachment.png')}
+        <EvaIcon
+          style={styles.attachmentIcon}
+          name={PHOTO_ATTACHMENT_ICON}
+          width={moderateScale(24)}
+          height={moderateScale(24)}
+          color={colors.cmGray1}
         />
         <View>
           <Text style={styles.label}>{props.label}</Text>
-          <Text style={styles.attachmentContent}>{props.extension + " file"}</Text>
+          <Text style={styles.attachmentContent}>
+            {props.extension + ' file'}
+          </Text>
         </View>
       </View>
       <Image
@@ -217,15 +222,19 @@ function Attachment(props: AttachmentPropType) {
   return (
     <TouchableOpacity
       onPress={onKnownAttachmentOpen}
-      style={styles.nameIconContainer}>
+      style={styles.nameIconContainer}
+    >
       <View style={styles.photoAttachmentWrapper}>
-        <Image
-          style={styles.photoAttachmentIcon}
-          source={require('../../images/attachment.png')}
+        <EvaIcon
+          style={styles.attachmentIcon}
+          name={ATTACHMENT_ICON}
+          width={moderateScale(24)}
+          height={moderateScale(24)}
+          color={colors.cmGray1}
         />
         <View>
           <Text style={styles.label}>{props.label}</Text>
-          <Text style={styles.attachmentContent}>{extension + " file"}</Text>
+          <Text style={styles.attachmentContent}>{extension + ' file'}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -286,10 +295,8 @@ const styles = StyleSheet.create({
     width: moderateScale(150),
     height: moderateScale(150),
   },
-  photoAttachmentIcon: {
+  attachmentIcon: {
     marginEnd: moderateScale(16),
-    width: moderateScale(24),
-    height: moderateScale(24),
   },
   nameIconContainer: {
     flexDirection: 'row',
@@ -298,5 +305,5 @@ const styles = StyleSheet.create({
   photoAttachmentWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-  }
+  },
 })

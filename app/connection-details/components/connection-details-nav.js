@@ -1,6 +1,5 @@
 // @flow
 import React, { PureComponent } from 'react'
-import SvgCustomIcon from '../../components/svg-custom-icon'
 import {
   EvaIcon,
   ANDROID_BACK_ARROW_ICON,
@@ -15,7 +14,7 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 

@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   },
   menuIcon: {
     marginLeft: moderateScale(15),
+    marginBottom: moderateScale(2),
   },
   label: {
     fontFamily: fontFamily,

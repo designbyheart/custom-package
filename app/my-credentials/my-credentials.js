@@ -1,12 +1,10 @@
 // @flow
 import React, { Component } from 'react'
-import { Text, View, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList, StyleSheet } from 'react-native'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import type { Store } from '../store/type-store'
-import type { ReactNavigation } from '../common/type-common'
 import type { MyCredentialsProps, CredentialItem } from './type-my-credentials'
 import type { ClaimOfferPayload } from '../claim-offer/type-claim-offer'
 import type { Attribute } from '../push-notification/type-push-notification'
@@ -16,24 +14,38 @@ import { CredentialCard } from './credential-card/credential-card'
 import { HomeInstructions } from '../home/home-instructions/home-instructions'
 import { myCredentialsRoute, qrCodeScannerTabRoute } from '../common'
 import { colors, fontFamily, fontSizes } from '../common/styles/constant'
-import { withStatusBar } from '../components/status-bar/status-bar'
 import { credentialDetailsRoute } from '../common/route-constants'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { getEnvironmentName } from '../store/config-store'
-import {
-  CLAIM_OFFER_STATUS,
-  CLAIM_REQUEST_STATUS,
-} from '../claim-offer/type-claim-offer'
+import { CLAIM_REQUEST_STATUS } from '../claim-offer/type-claim-offer'
 
 export class MyCredentials extends Component<MyCredentialsProps, void> {
   keyExtractor = (item: Object) => item.claimOfferUuid.toString()
 
   renderItem = ({ item }: { item: Object }) => {
-    const { logoUrl, credentialName, issuerName, date, attributes, claimUuid, remoteDid, uid } = item
+    const {
+      logoUrl,
+      credentialName,
+      issuerName,
+      date,
+      attributes,
+      claimUuid,
+      remoteDid,
+      uid,
+    } = item
     return (
       <CredentialCard
         onPress={() =>
-          this.onCardPress(credentialName, issuerName, date, attributes, logoUrl, claimUuid, remoteDid, uid)
+          this.onCardPress(
+            credentialName,
+            issuerName,
+            date,
+            attributes,
+            logoUrl,
+            claimUuid,
+            remoteDid,
+            uid
+          )
         }
         credentialName={credentialName}
         image={logoUrl}
@@ -51,7 +63,7 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
     logoUrl: string,
     claimUuid: string,
     remoteDid: string,
-    uid: string,
+    uid: string
   ) => {
     this.props.navigation.navigate(credentialDetailsRoute, {
       credentialName,
@@ -59,8 +71,8 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
       date,
       attributes,
       logoUrl,
-      claimUuid, 
-      remoteDid, 
+      claimUuid,
+      remoteDid,
       uid,
     })
   }
@@ -71,7 +83,9 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
     const credentials: Array<CredentialItem> = []
     Object.keys(offers).forEach((uid) => {
       const offer: ClaimOfferPayload = offers[uid]
-      if (offer.claimRequestStatus == CLAIM_REQUEST_STATUS.CLAIM_REQUEST_SUCCESS) {
+      if (
+        offer.claimRequestStatus == CLAIM_REQUEST_STATUS.CLAIM_REQUEST_SUCCESS
+      ) {
         credentials.push({
           claimOfferUuid: offer.uid,
           credentialName: offer.data.name,
@@ -122,7 +136,10 @@ export class MyCredentials extends Component<MyCredentialsProps, void> {
 }
 
 const mapStateToProps = (state: Store) => {
-  const { vcxSerializedClaimOffers: serializedOffers, ...offers } = state.claimOffer
+  const {
+    vcxSerializedClaimOffers: serializedOffers,
+    ...offers
+  } = state.claimOffer
 
   return {
     offers,
