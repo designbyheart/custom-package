@@ -27,9 +27,7 @@ const initialState = {
   fees: {
     data: {
       transfer: '0',
-      refreshTime: moment()
-        .year(2000)
-        .format(),
+      refreshTime: moment().year(2000).format(),
     },
     status: STORE_STATUS.IDLE,
     error: null,

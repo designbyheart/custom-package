@@ -6,6 +6,7 @@ export const ANDROID = 'android'
 
 // Don't access via static import, use getDeviceType
 let DEVICE_TYPE = IOS
+// let DEVICE_TYPE = ANDROID
 export function setDeviceType(platform: string) {
   DEVICE_TYPE = platform
 }

@@ -10,6 +10,7 @@ import fs from 'fs'
 import { post, get } from 'axios'
 import R from 'ramda'
 import { v4 as uuidv4 } from 'uuid'
+import { exec } from 'child-process-async'
 import chalk from 'chalk'
 
 import { waitForElementAndTap } from '../utils/detox-selectors'
@@ -26,13 +27,14 @@ const TIMEOUT = 10000
 
 describe('Connection via SMS link as QR code', () => {
   it('Connection via SMS link as QR code', async () => {
-    const link = await main()
+    const jsonData = await main()
 
     const { resolve, promise: invitationPushed } = getDeferred()
     const server = http
       .createServer(function (request, response) {
         response.writeHead(200, { 'Content-Type': 'application/json' })
-        response.write(link)
+        // response.writeHead(200, { 'Content-Type': 'text/plain' })
+        response.write(jsonData.trim())
         response.end()
         resolve && resolve()
       })
@@ -40,6 +42,8 @@ describe('Connection via SMS link as QR code', () => {
     console.log(
       chalk.greenBright('Invitation server is listening on port 1337...')
     )
+
+    await new Promise((r) => setTimeout(r, 10000))
 
     await waitForElementAndTap('text', SCAN_BUTTON, TIMEOUT)
 
@@ -117,7 +121,7 @@ const main = async () => {
       comMethod: {
         id: 'webhook',
         type: 2,
-        value: 'http://888dd83cfdca.ngrok.io', // it changes everytime you run ngrok
+        value: 'http://94cdbe722ac2.ngrok.io', // it changes everytime you run ngrok
         packaging: {
           pkgType: 'plain',
         },
@@ -152,7 +156,7 @@ const main = async () => {
   const THREAD_ID = lastResponse['~thread']['thid']
   console.log(`THREAD ID: ${THREAD_ID}`)
   await post(
-    `${VASconfig['verityUrl']}${VASconfig['domainDID']}/relationship/1.0/${lastResponse['~thread']['thid']}`,
+    `${VASconfig['verityUrl']}${VASconfig['domainDID']}/relationship/1.0/${THREAD_ID}`,
     {
       '@type':
         'did:sov:123456789abcdefghi1234;spec/relationship/1.0/connection-invitation',
@@ -167,15 +171,23 @@ const main = async () => {
   await new Promise((r) => setTimeout(r, 10000))
   //$FlowFixMe
   lastResponse = JSON.parse(VASresponse)
-  const qrCode = lastResponse['inviteURL']
-  console.log(qrCode)
+  let link = lastResponse['inviteURL']
+  console.log(link)
+  // link = link.substr(45)
+  // console.log(link)
+  // const { stdout } = await exec(
+  //   `echo "${link}" | base64 --decode`
+  // )
+  // console.log(chalk.cyan(stdout))
+  // const jsonData = stdout
 
   // Shutdown server
-  await new Promise((r) => setTimeout(r, 20000))
+  await new Promise((r) => setTimeout(r, 10000))
   server.close()
   console.log(chalk.redBright('VAS server has been stopped.'))
 
-  return qrCode
+  // return jsonData
+  return link
 }
 
 function getDeferred() {
