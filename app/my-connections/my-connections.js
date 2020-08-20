@@ -48,7 +48,7 @@ import { colors, fontFamily } from '../common/styles/constant'
 export class MyConnections extends Component<
   MyConnectionsProps,
   MyConnectionsState
-  > {
+> {
   componentDidUpdate(prevProps: MyConnectionsProps) {
     const noUnSeenMessages =
       prevProps.unSeenMessagesCount && !this.props.unSeenMessagesCount
@@ -199,7 +199,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-          state.history.data.connections[connection.senderDID].data.length - 1
+            state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -210,7 +210,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-          state.history.data.connections[connection.senderDID].data.length - 1
+            state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -221,7 +221,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-          state.history.data.connections[connection.senderDID].data.length - 1
+            state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -232,7 +232,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-          state.history.data.connections[connection.senderDID].data.length - 1
+            state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
@@ -243,7 +243,7 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID] &&
           state.history.data.connections[connection.senderDID].data &&
           state.history.data.connections[connection.senderDID].data[
-          state.history.data.connections[connection.senderDID].data.length - 1
+            state.history.data.connections[connection.senderDID].data.length - 1
           ] &&
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1

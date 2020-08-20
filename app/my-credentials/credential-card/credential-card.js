@@ -92,8 +92,7 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
     const attributesLabel = attributesCount == 1 ? 'attribute' : `attributes`
 
     return (
-      <TouchableOpacity style={styles.container}
-      onPress={this.onButtonPress}>
+      <TouchableOpacity style={styles.container} onPress={this.onButtonPress}>
         <View style={styles.avatarSection}>
           {typeof image === 'string' ? (
             <Avatar
@@ -102,8 +101,8 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
               testID={`${credentialName}-avatar`}
             />
           ) : (
-              <DefaultLogo text={credentialName} size={32} fontSize={17} />
-            )}
+            <DefaultLogo text={credentialName} size={32} fontSize={17} />
+          )}
         </View>
         <View style={styles.infoSection}>
           <View style={styles.infoSectionTopRow}>
@@ -129,7 +128,7 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
             </View>
           </View>
         </View>
-        {date &&
+        {date && (
           <View style={styles.dateSection}>
             <View style={styles.dateSectionRow}>
               <Text style={styles.dateText}>
@@ -137,7 +136,7 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
               </Text>
             </View>
           </View>
-        }
+        )}
       </TouchableOpacity>
     )
   }

@@ -19,14 +19,18 @@ import { flattenAsync } from '../../common/flatten-async'
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
-import type { CredentialListProps, AttachmentPropType, PhotoAttachmentPropType } from './type-credential-list'
+import type {
+  CredentialListProps,
+  AttachmentPropType,
+  PhotoAttachmentPropType,
+} from './type-credential-list'
 import {
   photoMimeTypes,
   docMimeTypes,
   excelMimeTypes,
   pptMimeTypes,
   pdfMimeTypes,
-  audioVideoMimeType
+  audioVideoMimeType,
 } from './type-credential-list'
 
 export const CredentialList = ({
@@ -34,7 +38,6 @@ export const CredentialList = ({
   remotePairwiseDID,
   content,
 }: CredentialListProps) => {
-
   return (
     <View style={styles.container}>
       {content.map((userData, index) => (
@@ -62,13 +65,12 @@ function DataRenderer(props: {
   const { label, data, uid, remotePairwiseDID } = props
   const labelComponent = (
     <Text style={styles.label}>
-      {label.toLowerCase().endsWith('_link')
-        ? label.slice(0, -5)
-        : label}
-    </Text>)
+      {label.toLowerCase().endsWith('_link') ? label.slice(0, -5) : label}
+    </Text>
+  )
 
   if (!data) {
-    // Replace empty data string with (none) in lighter gray    
+    // Replace empty data string with (none) in lighter gray
     return (
       <View>
         {labelComponent}
@@ -108,11 +110,13 @@ function DataRenderer(props: {
     // We can render either photo sent inside data, or we can render icon for file
     if (photoMimeTypes.includes(attachment['mime-type'].toLowerCase())) {
       const type = attachment.extension.toUpperCase()
-      return <PhotoAttachment
-        label={formattedLabel}
-        extension={type}
-        base64={attachment.data.base64}
-      />
+      return (
+        <PhotoAttachment
+          label={formattedLabel}
+          extension={type}
+          base64={attachment.data.base64}
+        />
+      )
     }
 
     return (
@@ -145,7 +149,9 @@ function PhotoAttachment(props: PhotoAttachmentPropType) {
         />
         <View>
           <Text style={styles.label}>{props.label}</Text>
-          <Text style={styles.attachmentContent}>{props.extension + " file"}</Text>
+          <Text style={styles.attachmentContent}>
+            {props.extension + ' file'}
+          </Text>
         </View>
       </View>
       <Image
@@ -217,7 +223,8 @@ function Attachment(props: AttachmentPropType) {
   return (
     <TouchableOpacity
       onPress={onKnownAttachmentOpen}
-      style={styles.nameIconContainer}>
+      style={styles.nameIconContainer}
+    >
       <View style={styles.photoAttachmentWrapper}>
         <Image
           style={styles.photoAttachmentIcon}
@@ -225,7 +232,7 @@ function Attachment(props: AttachmentPropType) {
         />
         <View>
           <Text style={styles.label}>{props.label}</Text>
-          <Text style={styles.attachmentContent}>{extension + " file"}</Text>
+          <Text style={styles.attachmentContent}>{extension + ' file'}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -298,5 +305,5 @@ const styles = StyleSheet.create({
   photoAttachmentWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-  }
+  },
 })

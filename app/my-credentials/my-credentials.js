@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TouchableHighlight,
-  Alert
+  Alert,
 } from 'react-native'
 import { verticalScale, moderateScale, scale } from 'react-native-size-matters'
 import { bindActionCreators } from 'redux'
@@ -27,10 +27,16 @@ import { withStatusBar } from '../components/status-bar/status-bar'
 import { credentialDetailsRoute } from '../common/route-constants'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { getEnvironmentName } from '../store/config-store'
-import { CLAIM_OFFER_STATUS, CLAIM_REQUEST_STATUS } from '../claim-offer/type-claim-offer'
+import {
+  CLAIM_OFFER_STATUS,
+  CLAIM_REQUEST_STATUS,
+} from '../claim-offer/type-claim-offer'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { deleteClaim } from '../claim/claim-store'
-import { MESSAGE_DELETE_CLAIM_DESCRIPTION, MESSAGE_DELETE_CLAIM_TITLE } from './type-my-credentials'
+import {
+  MESSAGE_DELETE_CLAIM_DESCRIPTION,
+  MESSAGE_DELETE_CLAIM_TITLE,
+} from './type-my-credentials'
 
 class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
   keyExtractor = (item: Object) => item.claimOfferUuid.toString()
@@ -57,18 +63,36 @@ class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
   }
 
   renderItem = ({ item }: { item: Object }) => {
-    const { logoUrl, credentialName, issuerName, date, attributes, claimUuid, remoteDid, uid } = item
+    const {
+      logoUrl,
+      credentialName,
+      issuerName,
+      date,
+      attributes,
+      claimUuid,
+      remoteDid,
+      uid,
+    } = item
     return (
       <TouchableHighlight style={styles.rowFront}>
-      <CredentialCard
-        onPress={() =>
-          this.onCardPress(credentialName, issuerName, date, attributes, logoUrl, claimUuid, remoteDid, uid)
-        }
-        credentialName={credentialName}
-        image={logoUrl}
-        date={date}
-        attributesCount={attributes.length}
-      />
+        <CredentialCard
+          onPress={() =>
+            this.onCardPress(
+              credentialName,
+              issuerName,
+              date,
+              attributes,
+              logoUrl,
+              claimUuid,
+              remoteDid,
+              uid
+            )
+          }
+          credentialName={credentialName}
+          image={logoUrl}
+          date={date}
+          attributesCount={attributes.length}
+        />
       </TouchableHighlight>
     )
   }
@@ -81,7 +105,7 @@ class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
     logoUrl: string,
     claimUuid: string,
     remoteDid: string,
-    uid: string,
+    uid: string
   ) => {
     this.props.navigation.navigate(credentialDetailsRoute, {
       credentialName,
@@ -89,12 +113,11 @@ class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
       date,
       attributes,
       logoUrl,
-      claimUuid, 
-      remoteDid, 
+      claimUuid,
+      remoteDid,
       uid,
     })
   }
-
 
   renderHiddenItem = (data: Object) => (
     <View style={styles.rowBack}>
@@ -113,7 +136,9 @@ class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
     const credentials: Array<CredentialItem> = []
     Object.keys(offers).forEach((uid) => {
       const offer: ClaimOfferPayload = offers[uid]
-      if (offer.claimRequestStatus === CLAIM_REQUEST_STATUS.CLAIM_REQUEST_SUCCESS) {
+      if (
+        offer.claimRequestStatus === CLAIM_REQUEST_STATUS.CLAIM_REQUEST_SUCCESS
+      ) {
         credentials.push({
           claimOfferUuid: offer.uid,
           credentialName: offer.data.name,
@@ -156,7 +181,7 @@ class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
             rightOpenValue={-100}
           />
         </View>
-        <PrimaryHeader headline="My Credentials"/>
+        <PrimaryHeader headline="My Credentials" />
         <CameraButton
           onPress={() => this.props.navigation.navigate(qrCodeScannerTabRoute)}
         />
@@ -166,7 +191,10 @@ class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
 }
 
 const mapStateToProps = (state: Store) => {
-  const { vcxSerializedClaimOffers: serializedOffers, ...offers } = state.claimOffer
+  const {
+    vcxSerializedClaimOffers: serializedOffers,
+    ...offers
+  } = state.claimOffer
 
   return {
     offers,
@@ -177,7 +205,10 @@ const mapStateToProps = (state: Store) => {
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ deleteClaim }, dispatch)
 
-export const MyCredentials = connect(mapStateToProps, mapDispatchToProps)(MyCredentialsComponent)
+export const MyCredentials = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MyCredentialsComponent)
 
 export const myCredentialsScreen = {
   routeName: myCredentialsRoute,

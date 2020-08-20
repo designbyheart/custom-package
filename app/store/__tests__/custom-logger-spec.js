@@ -50,7 +50,7 @@ describe('fn:PiiHiddenActionTransformer', () => {
       'senderDID',
       'userDID',
       'logoUrl',
-      123456789,
+      123456789
     )
     expect(PiiHiddenActionTransformer(action)).toMatchSnapshot()
   })

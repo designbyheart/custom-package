@@ -166,7 +166,7 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
             let routeName = invitationRoute
             let params = { senderDID, token: invitationToken }
             if (connectionAlreadyExist && publicDID) {
-              routeName = connectionHistRoute
+              routeName = homeRoute // --> This needs to be homeRoute, because that is the name of the DrawerNavigator
               const {
                 senderName,
                 identifier,
@@ -195,8 +195,15 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
             }
 
             if (this.props.lock.isAppLocked === false) {
-              this.props.navigation.push &&
-                this.props.navigation.push(routeName, params)
+              if (routeName === homeRoute) {
+                this.props.navigation.navigate(homeRoute, {
+                  screen: homeDrawerRoute,
+                  params: params,
+                })
+              } else {
+                this.props.navigation.push &&
+                  this.props.navigation.push(routeName, params)
+              }
             }
 
             return {

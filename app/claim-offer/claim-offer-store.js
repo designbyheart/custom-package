@@ -171,7 +171,10 @@ export const sendClaimRequestFail = (uid: string, remoteDid: string) => ({
   remoteDid,
 })
 
-export const claimRequestSuccess = (uid: string, issueDate: number): ClaimRequestSuccessAction => ({
+export const claimRequestSuccess = (
+  uid: string,
+  issueDate: number
+): ClaimRequestSuccessAction => ({
   type: CLAIM_REQUEST_SUCCESS,
   uid,
   issueDate,
@@ -505,21 +508,30 @@ export function* hydrateClaimOffersSaga(): Generator<*, *, *> {
     const connectionHistory = yield select(getConnectionHistory)
     if (claimOffersJson) {
       const serializedClaimOffers = JSON.parse(claimOffersJson)
-      const { vcxSerializedClaimOffers: serializedOffers, ...offers } = serializedClaimOffers
+      const {
+        vcxSerializedClaimOffers: serializedOffers,
+        ...offers
+      } = serializedClaimOffers
 
       // To make sure that all claim offers has issue date
       // we have to look through connection history and extract issue date from it if current date is empty
       let storageSuccessHistory = []
       Object.keys(connectionHistory.data.connections)
-        .map(uid => connectionHistory.data.connections[uid])
-        .forEach(connection => {
-          storageSuccessHistory.push(...connection.data.filter(event => event.originalPayload.type === CLAIM_STORAGE_SUCCESS))
+        .map((uid) => connectionHistory.data.connections[uid])
+        .forEach((connection) => {
+          storageSuccessHistory.push(
+            ...connection.data.filter(
+              (event) => event.originalPayload.type === CLAIM_STORAGE_SUCCESS
+            )
+          )
         })
 
       Object.keys(offers).forEach((uid) => {
         const offer = offers[uid]
         if (!offer.issueDate) {
-          const historyEvent = storageSuccessHistory.find(event => event.originalPayload.messageId === uid)
+          const historyEvent = storageSuccessHistory.find(
+            (event) => event.originalPayload.messageId === uid
+          )
           if (historyEvent) {
             offer.issueDate = historyEvent.originalPayload.issueDate
           }
@@ -543,14 +555,19 @@ export const hydrateClaimOffers = (claimOffers: ClaimOfferStore) => ({
   claimOffers,
 })
 
-export const deleteClaimOffer = (uid: string, userDID: string): DeleteClaimOfferAction => ({
+export const deleteClaimOffer = (
+  uid: string,
+  userDID: string
+): DeleteClaimOfferAction => ({
   type: DELETE_CLAIM_OFFER,
   uid,
   userDID,
 })
 
-export const claimOfferDeleted = (uid: string,
-                                  vcxSerializedClaimOffers: SerializedClaimOffers): ClaimOfferDeletedAction => ({
+export const claimOfferDeleted = (
+  uid: string,
+  vcxSerializedClaimOffers: SerializedClaimOffers
+): ClaimOfferDeletedAction => ({
   type: CLAIM_OFFER_DELETED,
   uid,
   vcxSerializedClaimOffers,
@@ -562,10 +579,13 @@ function* deleteClaimOfferSaga(
   try {
     const claimOffers = yield select(getClaimOffers)
 
-    const {[action.uid]: deleted , ...restSerializedOffers} = claimOffers.vcxSerializedClaimOffers[action.userDID]
+    const {
+      [action.uid]: deleted,
+      ...restSerializedOffers
+    } = claimOffers.vcxSerializedClaimOffers[action.userDID]
     const serializedOffers = {
       ...claimOffers.vcxSerializedClaimOffers,
-      [action.userDID]: restSerializedOffers
+      [action.userDID]: restSerializedOffers,
     }
 
     yield put(claimOfferDeleted(action.uid, serializedOffers))
@@ -663,7 +683,7 @@ export default function claimOfferReducer(
         [action.uid]: {
           ...state[action.uid],
           claimRequestStatus: CLAIM_REQUEST_STATUS.CLAIM_REQUEST_SUCCESS,
-          issueDate: action.issueDate
+          issueDate: action.issueDate,
         },
       }
     case CLAIM_REQUEST_FAIL:
@@ -772,7 +792,7 @@ export default function claimOfferReducer(
           status: CLAIM_OFFER_STATUS.DELETED,
           claimRequestStatus: CLAIM_REQUEST_STATUS.DELETED,
         },
-        vcxSerializedClaimOffers: action.vcxSerializedClaimOffers
+        vcxSerializedClaimOffers: action.vcxSerializedClaimOffers,
       }
     default:
       return state

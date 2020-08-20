@@ -47,14 +47,7 @@ import {
   ERROR_NO_QUESTION_NONCE,
   QUESTIONANSWER_PROTOCOL,
 } from './type-question'
-import {
-  put,
-  takeLatest,
-  call,
-  all,
-  select,
-  take,
-} from 'redux-saga/effects'
+import { put, takeLatest, call, all, select, take } from 'redux-saga/effects'
 import {
   RESET,
   ERROR_VCX_INIT_FAIL,
@@ -65,12 +58,10 @@ import { getConnection } from '../store/store-selector'
 import {
   getHandleBySerializedConnection,
   connectionSignData,
-  connectionSendMessage, connectionSendAnswer,
+  connectionSendMessage,
+  connectionSendAnswer,
 } from '../bridge/react-native-cxs/RNCxs'
-import {
-  secureSet,
-  getHydrationItem,
-} from '../services/storage'
+import { secureSet, getHydrationItem } from '../services/storage'
 import { retrySaga } from '../api/api-utils'
 import { uuid } from '../services/uuid'
 
@@ -95,7 +86,7 @@ function* watchQuestionSeen(): any {
 }
 
 export function* answerToQuestionSaga(
-  action: SendAnswerToQuestionAction,
+  action: SendAnswerToQuestionAction
 ): Generator<*, *, *> {
   const { answer, uid } = action
   yield put(updateQuestionStatus(uid, QUESTION_STATUS.SEND_ANSWER_IN_PROGRESS))
@@ -106,8 +97,8 @@ export function* answerToQuestionSaga(
       updateQuestionStatus(
         uid,
         QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
-        ERROR_VCX_INIT_FAIL(),
-      ),
+        ERROR_VCX_INIT_FAIL()
+      )
     )
     return
   }
@@ -116,11 +107,11 @@ export function* answerToQuestionSaga(
     const question: QuestionPayload = yield select(selectQuestion, uid)
     const [connection]: Connection[] = yield select(
       getConnection,
-      question.from_did,
+      question.from_did
     )
     const connectionHandle: number = yield call(
       getHandleBySerializedConnection,
-      connection.vcxSerializedConnection,
+      connection.vcxSerializedConnection
     )
 
     try {
@@ -133,15 +124,15 @@ export function* answerToQuestionSaga(
             connectionSendAnswer,
             connectionHandle,
             question.originalQuestion,
-            JSON.stringify(answer),
-          ),
+            JSON.stringify(answer)
+          )
         )
       } else {
         if (!answer.nonce) return
         const { data, signature }: SignDataResponse = yield call(
           connectionSignData,
           connectionHandle,
-          answer.nonce,
+          answer.nonce
         )
 
         let userAnswer = getUserAnswer({ data, signature }, question.messageId)
@@ -152,15 +143,15 @@ export function* answerToQuestionSaga(
             messageType: MESSAGE_TYPE_ANSWER,
             messageTitle: MESSAGE_TITLE_ANSWER,
             refMessageId: uid,
-          }),
+          })
         )
       }
 
       yield put(
         updateQuestionStatus(
           uid,
-          QUESTION_STATUS.SEND_ANSWER_SUCCESS_TILL_CLOUD_AGENT,
-        ),
+          QUESTION_STATUS.SEND_ANSWER_SUCCESS_TILL_CLOUD_AGENT
+        )
       )
 
       yield put(updateQuestionAnswer(uid, answer, answerMsgId))
@@ -172,8 +163,8 @@ export function* answerToQuestionSaga(
         updateQuestionStatus(
           uid,
           QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
-          ERROR_QUESTION_ANSWER_SEND(e.message),
-        ),
+          ERROR_QUESTION_ANSWER_SEND(e.message)
+        )
       )
     }
   } catch (e) {
@@ -181,18 +172,18 @@ export function* answerToQuestionSaga(
       updateQuestionStatus(
         uid,
         QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
-        ERROR_GET_CONNECTION_HANDLE(e.message),
-      ),
+        ERROR_GET_CONNECTION_HANDLE(e.message)
+      )
     )
   }
 }
 
 export function* persistQuestionSaga(
-  action: ?QuestionReceivedAction,
+  action: ?QuestionReceivedAction
 ): Generator<*, *, *> {
   try {
     const storageStatus: StorageStatus = yield select(
-      selectQuestionStorageStatus,
+      selectQuestionStorageStatus
     )
     if (storageStatus === STORAGE_STATUS.RESTORE_START) {
       yield take(isQuestionRestoreConcluded)
@@ -201,7 +192,7 @@ export function* persistQuestionSaga(
     // once we know that now there is nothing new being restored
     // we can take state from redux store as current state
     const questionState: QuestionStoreData = yield select(
-      selectQuestionStoreData,
+      selectQuestionStoreData
     )
     yield call(secureSet, QUESTION_STORAGE_KEY, JSON.stringify(questionState))
     yield put(updateQuestionStorageStatus(STORAGE_STATUS.PERSIST_SUCCESS))
@@ -223,7 +214,10 @@ export function* hydrateQuestionSaga(): Generator<*, *, *> {
   }
 }
 
-export function getUserAnswer({ data, signature }: SignDataResponse, thid: string) {
+export function getUserAnswer(
+  { data, signature }: SignDataResponse,
+  thid: string
+) {
   return {
     '@type': COMMITEDANSWER_QUESTION_PROTOCOL,
     '@id': uuid(),
@@ -239,7 +233,7 @@ export function getUserAnswer({ data, signature }: SignDataResponse, thid: strin
 }
 
 export const questionReceived = (
-  question: QuestionPayload,
+  question: QuestionPayload
 ): QuestionReceivedAction => {
   return {
     type: QUESTION_RECEIVED,
@@ -249,7 +243,7 @@ export const questionReceived = (
 
 export const sendAnswerToQuestion = (
   uid?: string,
-  answer: QuestionResponse,
+  answer: QuestionResponse
 ) => ({
   type: SEND_ANSWER_TO_QUESTION,
   uid,
@@ -259,7 +253,7 @@ export const sendAnswerToQuestion = (
 export const updateQuestionStatus = (
   uid: string,
   status: QuestionStatus,
-  error: ?CustomError,
+  error: ?CustomError
 ) => ({
   type: UPDATE_QUESTION_STATUS,
   uid,
@@ -270,7 +264,7 @@ export const updateQuestionStatus = (
 export const updateQuestionAnswer = (
   uid: string,
   answer: QuestionResponse,
-  answerMsgId: string,
+  answerMsgId: string
 ) => ({
   type: UPDATE_QUESTION_ANSWER,
   uid,
@@ -333,7 +327,7 @@ export function selectQuestionStoreData(state: Store) {
 }
 
 export function getScreenStatus(
-  questionStatus?: QuestionStatus,
+  questionStatus?: QuestionStatus
 ): ComponentStatus {
   const errorStates = [
     QUESTION_STATUS.SEND_ANSWER_FAIL_TILL_CLOUD_AGENT,
@@ -376,7 +370,9 @@ export function getQuestionValidity(question: any): null | CustomError {
   }
 }
 
-export function getCommitedanswerQuestionValidity(question: any): null | CustomError {
+export function getCommitedanswerQuestionValidity(
+  question: any
+): null | CustomError {
   const { valid_responses } = question
   if (!Array.isArray(valid_responses)) {
     return ERROR_NO_RESPONSE_ARRAY
@@ -397,7 +393,7 @@ export function getCommitedanswerQuestionValidity(question: any): null | CustomE
       return (
         typeof text === 'string' && typeof nonce === 'string' && text && nonce
       )
-    },
+    }
   )
   if (!everyResponseValid) {
     return ERROR_RESPONSE_NOT_PROPERLY_FORMATTED
@@ -412,7 +408,9 @@ export function getCommitedanswerQuestionValidity(question: any): null | CustomE
   return null
 }
 
-export function getQuestionanswerQuestionValidity(question: any): null | CustomError {
+export function getQuestionanswerQuestionValidity(
+  question: any
+): null | CustomError {
   if (!question.nonce) {
     return ERROR_NO_QUESTION_NONCE
   }
@@ -434,10 +432,8 @@ export function getQuestionanswerQuestionValidity(question: any): null | CustomE
     (response: QuestionResponse) => {
       const { text } = response
       // check text is string and has some value
-      return (
-        typeof text === 'string' && text
-      )
-    },
+      return typeof text === 'string' && text
+    }
   )
   if (!everyResponseValid) {
     return ERROR_RESPONSE_NOT_PROPERLY_FORMATTED
@@ -454,7 +450,7 @@ export function getQuestionanswerQuestionValidity(question: any): null | CustomE
 
 export default function questionReducer(
   state: QuestionStore = initialState,
-  action: QuestionAction,
+  action: QuestionAction
 ) {
   switch (action.type) {
     case QUESTION_RECEIVED:

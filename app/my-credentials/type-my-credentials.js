@@ -14,7 +14,7 @@ export type MyCredentialsProps = {
 export type CredentialItem = {
   claimOfferUuid: string,
   credentialName: string,
-  issuerName: string, 
+  issuerName: string,
   date?: number,
   attributes: Array<Attribute>,
   logoUrl?: ?string,

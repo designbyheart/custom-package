@@ -35,7 +35,8 @@ import {
 } from '../common'
 import { STORAGE_KEY_USER_ONE_TIME_INFO } from '../store/user/type-user-store'
 import {
-  CLAIM_OFFERS, CLAIM_OFFER_ACCEPTED,
+  CLAIM_OFFERS,
+  CLAIM_OFFER_ACCEPTED,
 } from '../claim-offer/type-claim-offer'
 import { STORAGE_KEY_THEMES } from '../store/type-connection-store'
 import { HISTORY_EVENT_STORAGE_KEY } from '../connection-history/type-connection-history'

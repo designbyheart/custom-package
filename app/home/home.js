@@ -23,12 +23,17 @@ import { HISTORY_EVENT_STATUS } from '../connection-history/type-connection-hist
 import { PrimaryHeader, CameraButton } from '../components'
 import {
   homeRoute,
+  homeDrawerRoute,
   qrCodeScannerTabRoute,
   proofRequestRoute,
   claimOfferRoute,
   questionRoute,
 } from '../common'
-import { getConnections } from '../store/connections-store'
+import {
+  getConnections,
+  sendConnectionRedirect,
+  sendConnectionReuse,
+} from '../store/connections-store'
 import { HomeInstructions } from './home-instructions/home-instructions'
 import {
   getEnvironmentName,
@@ -48,13 +53,127 @@ import {
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
 } from '../claim-offer/type-claim-offer'
+import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
+import type { AriesOutOfBandInvite } from '../invitation/type-invitation'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
+import { MESSAGE_TYPE } from '../api/api-constants'
+import { CONNECTION_ALREADY_EXIST } from '../connection-details/type-connection-details'
 import { DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
 
 export class HomeScreen extends Component<HomeProps, void> {
+  unsubscribe = null
+
   static navigationOptions = ({ navigation }: ReactNavigation) => ({
     header: null,
   })
+
+  showSnackBar = () => {
+    // NOTE: This logic is moved here from Connection Details screen.
+    // this.navigateToModal()
+    const showExistingConnectionSnack =
+      (this.props.route &&
+        this.props.route.params &&
+        this.props.route.params.showExistingConnectionSnack) ||
+      false
+    if (showExistingConnectionSnack) {
+      Snackbar.show({
+        text: CONNECTION_ALREADY_EXIST,
+        duration: Snackbar.LENGTH_LONG,
+      })
+    }
+  }
+
+  navigateToModal = () => {
+    // NOTE: This logic is moved here from Connection Details screen.
+    // this.navigateToModal()
+    const notificationOpenOptions =
+      this.props.route &&
+      this.props.route.params &&
+      this.props.route.params.notificationOpenOptions
+    if (
+      !notificationOpenOptions ||
+      !notificationOpenOptions.openMessageDirectly
+    ) {
+      // the param 'notificationOpenOptions' helps us decide if we need to open
+      // modal of clicked message directly
+      // if we don't get any options or if openMessageDirectly is false
+      // then we just return from here
+      return
+    }
+
+    // If we reach here, then we have param indicating that we need open
+    // a message. Now, we need to know what is messageId and messageType
+    // so that we can open correct modal
+
+    const messageType = this.props.route.params.messageType
+    const uid = this.props.route.params.uid
+
+    if (messageType && uid) {
+      switch (messageType) {
+        case MESSAGE_TYPE.CLAIM_OFFER:
+          this.props.navigation.navigate(claimOfferRoute, { uid })
+          break
+
+        case MESSAGE_TYPE.PROOF_REQUEST:
+          this.props.navigation.navigate(proofRequestRoute, { uid })
+          break
+
+        case MESSAGE_TYPE.QUESTION:
+          this.props.navigation.navigate(questionRoute, { uid })
+          break
+      }
+    }
+  }
+
+  componentDidMount() {
+    // NOTE: This logic is moved here from Connection Details screen.
+    // this.navigateToModal()
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      // Since this screen in Drawer Navigator only mounts once, we need to add a listener
+      // here to listen when the Home screen is in focus and run logic for snackbar
+      // and connection redirect.
+      if (
+        this.props.route &&
+        this.props.route.params &&
+        this.props.route.params.showExistingConnectionSnack
+      ) {
+        this.showSnackBar()
+
+        const invite =
+          this.props.route &&
+          this.props.route.params &&
+          this.props.route.params.qrCodeInvitationPayload
+
+        if (invite.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR) {
+          this.props.sendConnectionRedirect(invite, {
+            senderDID:
+              this.props.route &&
+              this.props.route.params &&
+              this.props.route.params.senderDID,
+            identifier:
+              this.props.route &&
+              this.props.route.params &&
+              this.props.route.params.identifier,
+          })
+        } else if (invite.type === CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND) {
+          if (!invite.originalObject) {
+            return
+          }
+
+          this.props.sendConnectionReuse(
+            ((invite.originalObject: any): AriesOutOfBandInvite),
+            {
+              senderDID: this.props.route.params.senderDID,
+            }
+          )
+        }
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe !== null && this.unsubscribe()
+  }
 
   formatTimestamp = (timestamp: string) => {
     const now = moment().valueOf()
@@ -293,7 +412,7 @@ const mapStateToProps = (state: Store) => {
         state.history.data.connections &&
         state.history.data.connections[connection.senderDID] &&
         state.history.data.connections[connection.senderDID].data) ||
-      []
+        []
     )
   })
 
@@ -342,7 +461,7 @@ const mapDispatchToProps = (dispatch) =>
   )
 
 export const homeScreen = {
-  routeName: homeRoute,
+  routeName: homeDrawerRoute, // --> This route name needs to be homeDrawerRoute, because homeRoute is the name of the entire DrawerNavigator.
   screen: connect(mapStateToProps, mapDispatchToProps)(HomeScreen),
 }
 

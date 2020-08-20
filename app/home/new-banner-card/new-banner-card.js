@@ -2,31 +2,30 @@
 import React, { useCallback } from 'react'
 import { TouchableOpacity, Text, View, Image, StyleSheet } from 'react-native'
 import { isiPhone5 } from '../../common/styles'
-import { colors, font, fontFamily, fontSizes } from '../../common/styles/constant'
+import {
+  colors,
+  font,
+  fontFamily,
+  fontSizes,
+} from '../../common/styles/constant'
 import { scale, moderateScale } from 'react-native-size-matters'
 
 import type { NewBannerCardProps } from './type-new-banner-card'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import { removeEvent } from '../../connection-history/connection-history-store'
-import { bindActionCreators } from "redux"
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 const NewBannerCardComponent = (props: NewBannerCardProps) => {
-
   const onDelete = useCallback(() => {
-    props.removeEvent(props.uid, props.navigationRoute);
-  }, [props.navigationRoute, props.uid]);
+    props.removeEvent(props.uid, props.navigationRoute)
+  }, [props.navigationRoute, props.uid])
 
   return (
-    <SwipeRow
-      rightOpenValue={-scale(75)}
-    >
+    <SwipeRow rightOpenValue={-scale(75)}>
       <View style={styles.rowBack}>
-        <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={onDelete}
-        >
+        <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
           <Text style={styles.deleteButtonText}>Delete</Text>
         </TouchableOpacity>
       </View>
@@ -39,7 +38,10 @@ const NewBannerCardComponent = (props: NewBannerCardProps) => {
         >
           <View style={styles.iconSection}>
             {typeof props.logoUrl === 'string' ? (
-              <Image source={{ uri: props.logoUrl }} style={styles.issuerLogo}/>
+              <Image
+                source={{ uri: props.logoUrl }}
+                style={styles.issuerLogo}
+              />
             ) : (
               <DefaultLogo
                 text={props.issuerName[0]}
@@ -59,7 +61,9 @@ const NewBannerCardComponent = (props: NewBannerCardProps) => {
               </Text>
             </View>
             <View style={styles.textMessageSection}>
-              <Text style={styles.newMessageText}>NEW MESSAGE - TAP TO OPEN</Text>
+              <Text style={styles.newMessageText}>
+                NEW MESSAGE - TAP TO OPEN
+              </Text>
             </View>
           </View>
           <View style={styles.textDateSection}>
@@ -79,7 +83,10 @@ const mapDispatchToProps = (dispatch) =>
     dispatch
   )
 
-export const NewBannerCard = connect(null, mapDispatchToProps)(NewBannerCardComponent)
+export const NewBannerCard = connect(
+  null,
+  mapDispatchToProps
+)(NewBannerCardComponent)
 
 const styles = StyleSheet.create({
   rowFront: {

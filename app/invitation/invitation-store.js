@@ -145,7 +145,9 @@ export function* sendResponse(
   } catch (e) {
     captureError(e)
     if (e.code === CONNECTION_ALREADY_EXISTS) {
-      yield put(invitationFail(ERROR_INVITATION_ALREADY_ACCEPTED(e.message), senderDID))
+      yield put(
+        invitationFail(ERROR_INVITATION_ALREADY_ACCEPTED(e.message), senderDID)
+      )
     } else {
       yield put(invitationFail(ERROR_INVITATION_CONNECT(e.message), senderDID))
     }

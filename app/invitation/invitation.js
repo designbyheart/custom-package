@@ -16,7 +16,10 @@ import type {
   InvitationNavigation,
 } from './type-invitation'
 
-import { CONNECTION_INVITE_TYPES, ERROR_INVITATION_ALREADY_ACCEPTED_CODE } from './type-invitation'
+import {
+  CONNECTION_INVITE_TYPES,
+  ERROR_INVITATION_ALREADY_ACCEPTED_CODE,
+} from './type-invitation'
 import { captureError } from '../services/error/error-handler'
 import { schemaValidator } from '../services/schema-validator'
 import {
@@ -119,9 +122,7 @@ export class Invitation extends Component<InvitationProps, void> {
         isDuplicateConnection && error && payload
           ? `${error.message}${payload.senderName}`
           : ERROR_INVITATION_RESPONSE_FAILED
-      okAction = isDuplicateConnection
-        ? this.onDuplicateConnectionError
-        : noop
+      okAction = isDuplicateConnection ? this.onDuplicateConnectionError : noop
       errorTitle = isDuplicateConnection ? ERROR_ALREADY_EXIST_TITLE : null
     }
 
