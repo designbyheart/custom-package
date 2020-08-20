@@ -33,7 +33,12 @@ export const pptMimeTypes = [
   'application/vnd.ms-powerpoint.slideshow.macroEnabled.12',
 ]
 export const pdfMimeTypes = ['application/pdf']
-export const audioVideoMimeType = ['audio/mp4', 'audio/mpeg', 'audio/mp3', 'video/mp4']
+export const audioVideoMimeType = [
+  'audio/mp4',
+  'audio/mpeg',
+  'audio/mp3',
+  'video/mp4',
+]
 
 export type PhotoAttachmentPropType = {
   label: string,
@@ -56,11 +61,10 @@ export type AttachmentPropType = {
 }
 
 export type CredentialListProps = {
-    uid: string,
-    remotePairwiseDID: string,
-    content: Array<{
-      label: string,
-      data?: string,
-    }>,
-  }
-  
+  uid: string,
+  remotePairwiseDID: string,
+  content: Array<{
+    label: string,
+    data?: string,
+  }>,
+}

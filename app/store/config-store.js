@@ -170,7 +170,10 @@ import {
 } from './user/cloud-agent'
 import { updateAriesConnectionState } from '../invitation/invitation-store'
 import type { AriesQuestionRequest } from '../question/type-question'
-import { COMMITEDANSWER_PROTOCOL, QUESTIONANSWER_PROTOCOL } from '../question/type-question'
+import {
+  COMMITEDANSWER_PROTOCOL,
+  QUESTIONANSWER_PROTOCOL,
+} from '../question/type-question'
 
 /**
  * this file contains configuration which is changed only from user action
@@ -967,7 +970,7 @@ export const convertDecryptedPayloadToQuestion = (
   forDID: string,
   senderDID: string,
   messageTitle: string,
-  messageText: string,
+  messageText: string
 ): QuestionPayload => {
   const parsedPayload = JSON.parse(decryptedPayload)
   const parsedMsg: QuestionRequest = JSON.parse(parsedPayload['@msg'])
@@ -999,7 +1002,7 @@ export const convertDecryptedPayloadToAriesQuestion = (
   decryptedPayload: string,
   uid: string,
   forDID: string,
-  senderDID: string,
+  senderDID: string
 ): QuestionPayload => {
   const parsedPayload = JSON.parse(decryptedPayload)
   const parsedMsg: AriesQuestionRequest = JSON.parse(parsedPayload['@msg'])
@@ -1320,14 +1323,12 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
         forDID,
         senderDID,
         '',
-        '',
+        ''
       )
 
       messageType = MESSAGE_TYPE.QUESTION
 
-      yield fork(updateMessageStatus, [
-        { pairwiseDID: forDID, uids: [uid] },
-      ])
+      yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
     }
 
     if (payloadType.name === 'question') {
@@ -1336,14 +1337,12 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
         decryptedPayload,
         uid,
         forDID,
-        senderDID,
+        senderDID
       )
 
       messageType = MESSAGE_TYPE.QUESTION
 
-      yield fork(updateMessageStatus, [
-        { pairwiseDID: forDID, uids: [uid] },
-      ])
+      yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
     }
 
     if (payloadType && payloadType.name === 'aries' && payload['@msg']) {

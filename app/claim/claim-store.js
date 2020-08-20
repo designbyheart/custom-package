@@ -60,8 +60,15 @@ import { CLAIM_MAP } from '../common/secure-storage-constants'
 import { RESET } from '../common/type-common'
 import { updateMessageStatus } from '../store/config-store'
 import { ensureVcxInitSuccess } from '../store/route-store'
-import type { ClaimOfferPayload, ClaimOfferStore, SerializedClaimOffer } from '../claim-offer/type-claim-offer'
-import { CLAIM_OFFERS, VCX_CLAIM_OFFER_STATE } from '../claim-offer/type-claim-offer'
+import type {
+  ClaimOfferPayload,
+  ClaimOfferStore,
+  SerializedClaimOffer,
+} from '../claim-offer/type-claim-offer'
+import {
+  CLAIM_OFFERS,
+  VCX_CLAIM_OFFER_STATE,
+} from '../claim-offer/type-claim-offer'
 import {
   deleteClaimOffer,
   saveSerializedClaimOffer,
@@ -78,11 +85,11 @@ export const claimReceived = (claim: Claim): ClaimReceivedAction => ({
 
 export const claimStorageSuccess = (
   messageId: string,
-  issueDate: number,
+  issueDate: number
 ): ClaimStorageSuccessAction => ({
   type: CLAIM_STORAGE_SUCCESS,
   messageId,
-  issueDate
+  issueDate,
 })
 
 export const claimStorageFail = (
@@ -99,7 +106,7 @@ export const mapClaimToSender = (
   senderDID: string,
   myPairwiseDID: string,
   logoUrl: string,
-  issueDate: number,
+  issueDate: number
 ): MapClaimToSenderAction => ({
   type: MAP_CLAIM_TO_SENDER,
   claimUuid,
@@ -280,16 +287,14 @@ export function* saveClaimUuidMap(): Generator<*, *, *> {
   }
 }
 
-export const deleteClaim = (
-  uuid: string,
-): DeleteClaimAction => ({
+export const deleteClaim = (uuid: string): DeleteClaimAction => ({
   type: DELETE_CLAIM,
   uuid,
 })
 
 export const deleteClaimSuccess = (
   claimMap: ClaimMap,
-  messageId: string,
+  messageId: string
 ): DeleteClaimSuccessAction => ({
   type: DELETE_CLAIM_SUCCESS,
   claimMap,
@@ -297,7 +302,7 @@ export const deleteClaimSuccess = (
 })
 
 export function* deleteClaimSaga(
-  action: DeleteClaimAction,
+  action: DeleteClaimAction
 ): Generator<*, *, *> {
   try {
     const claims: GenericObject = yield select(getClaimMap)
@@ -310,12 +315,12 @@ export function* deleteClaimSaga(
     const vcxSerializedClaimOffer: SerializedClaimOffer = yield select(
       getSerializedClaimOffer,
       connection.identifier,
-      action.uuid,
+      action.uuid
     )
 
     const claimHandle = yield call(
       getClaimHandleBySerializedClaimOffer,
-      vcxSerializedClaimOffer.serialized,
+      vcxSerializedClaimOffer.serialized
     )
     yield call(deleteCredential, claimHandle)
     yield put(deleteClaimOffer(action.uuid, connection.identifier))
@@ -346,7 +351,7 @@ const initialState = {
 
 export default function claimReducer(
   state: ClaimStore = initialState,
-  action: ClaimAction,
+  action: ClaimAction
 ) {
   switch (action.type) {
     case CLAIM_RECEIVED:

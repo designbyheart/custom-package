@@ -1,12 +1,6 @@
 // @flow
 
-import {
-  all,
-  takeEvery,
-  put,
-  call,
-  select,
-} from 'redux-saga/effects'
+import { all, takeEvery, put, call, select } from 'redux-saga/effects'
 import merge from 'lodash.merge'
 import { claimOfferRoute, proofRequestRoute, questionRoute } from '../common'
 import {
@@ -21,7 +15,8 @@ import {
   HISTORY_EVENT_STATUS,
   HISTORY_EVENT_TYPE,
   HISTORY_EVENT_STORAGE_KEY,
-  ERROR_HISTORY_EVENT_OCCURRED, REMOVE_EVENT,
+  ERROR_HISTORY_EVENT_OCCURRED,
+  REMOVE_EVENT,
   UPDATE_HISTORY_EVENT,
 } from './type-connection-history'
 import type {
@@ -53,7 +48,10 @@ import type {
   SendClaimRequestFailAction,
   PaidCredentialRequestFailAction,
 } from '../claim-offer/type-claim-offer'
-import type { ClaimStorageSuccessAction, DeleteClaimSuccessAction } from '../claim/type-claim'
+import type {
+  ClaimStorageSuccessAction,
+  DeleteClaimSuccessAction,
+} from '../claim/type-claim'
 import type {
   Proof,
   UpdateAttributeClaimAction,
@@ -103,7 +101,10 @@ import {
   getHistoryEvent,
   getClaimReceivedHistory,
 } from '../store/store-selector'
-import { CLAIM_STORAGE_SUCCESS, DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
+import {
+  CLAIM_STORAGE_SUCCESS,
+  DELETE_CLAIM_SUCCESS,
+} from '../claim/type-claim'
 import { RESET } from '../common/type-common'
 import {
   CLAIM_OFFER_RECEIVED,
@@ -149,12 +150,14 @@ export const loadHistoryFail = (error: CustomError) => ({
   error,
 })
 
-export const removeEvent = (uid: string, navigationRoute: string): RemoveEventAction => ({
+export const removeEvent = (
+  uid: string,
+  navigationRoute: string
+): RemoveEventAction => ({
   type: REMOVE_EVENT,
   uid,
   navigationRoute,
 })
-
 
 export function* loadHistorySaga(): Generator<*, *, *> {
   yield put(loadHistory())
@@ -326,7 +329,6 @@ export function convertClaimOfferAcceptedToHistoryEvent(
   action: ClaimOfferAcceptedAction,
   credentialOfferReceivedHistoryEvent: ConnectionHistoryEvent
 ): ConnectionHistoryEvent {
-
   return {
     action: HISTORY_EVENT_STATUS[CLAIM_OFFER_ACCEPTED],
     data: credentialOfferReceivedHistoryEvent.data,
@@ -460,12 +462,12 @@ function mapSentAttributes(
 
   if (revealedGroupAttributes) {
     const attributes = revealedGroupAttributes
-    Object.keys(attributes).forEach(attributeKey => {
+    Object.keys(attributes).forEach((attributeKey) => {
       const revealedAttribute = attributes[attributeKey]
       sentAttributes.push({
         key: attributeKey,
         values: revealedAttribute.values,
-        claimUuid: revealedAttribute.claimUuid
+        claimUuid: revealedAttribute.claimUuid,
       })
     })
   }
@@ -495,7 +497,13 @@ export function convertProofSendToHistoryEvent(
     originalProofRequestData: { requested_attributes },
     remotePairwiseDID: remoteDid,
   }: ProofRequestPayload,
-  { requested_proof: { revealed_group_attrs, revealed_attrs, self_attested_attrs } }: Proof
+  {
+    requested_proof: {
+      revealed_group_attrs,
+      revealed_attrs,
+      self_attested_attrs,
+    },
+  }: Proof
 ): ConnectionHistoryEvent {
   return {
     action: HISTORY_EVENT_STATUS[SEND_PROOF_SUCCESS],
@@ -789,8 +797,8 @@ export function* historyEventOccurredSaga(
           data: {},
           originalPayload: {
             ...claimReceivedEvent.originalPayload,
-            data: {}
-          }
+            data: {},
+          },
         }
         yield put(updateHistoryEvent(event))
       }
@@ -962,7 +970,6 @@ export function* historyEventOccurredSaga(
 export function* removeEventSaga(
   action: RemoveEventAction
 ): Generator<*, *, *> {
-
   let eventType
   let remotePairwiseDID
 
@@ -1089,8 +1096,8 @@ export default function connectionHistoryReducer(
             [remoteDid]: {
               data: [
                 ...(state.data &&
-                  state.data.connections &&
-                  state.data.connections[remoteDid]
+                state.data.connections &&
+                state.data.connections[remoteDid]
                   ? state.data.connections[remoteDid].data
                   : []),
                 action.historyEvent,
@@ -1141,11 +1148,11 @@ export default function connectionHistoryReducer(
         state.data.connections[remoteDid] &&
         state.data.connections[remoteDid].data
           ? state.data.connections[remoteDid].data.map((item) => {
-            // $FlowFixMe
-            return item.id === action.historyEvent.id ?
-              action.historyEvent :
-              item
-          })
+              // $FlowFixMe
+              return item.id === action.historyEvent.id
+                ? action.historyEvent
+                : item
+            })
           : []
       return {
         ...state,
@@ -1187,8 +1194,8 @@ export default function connectionHistoryReducer(
             [action.senderDid]: {
               data: [
                 ...(state.data &&
-                  state.data.connections &&
-                  state.data.connections[action.senderDid]
+                state.data.connections &&
+                state.data.connections[action.senderDid]
                   ? state.data.connections[action.senderDid].data
                   : []),
               ],

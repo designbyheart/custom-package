@@ -6,9 +6,7 @@ import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 
 import { credentialDetailsScreen } from '../credential-details'
-import {
-  getStore, getNavigation,
-} from '../../../__mocks__/static-data'
+import { getStore, getNavigation } from '../../../__mocks__/static-data'
 
 describe('<CredentialDetails />', () => {
   const CredentialDetails = credentialDetailsScreen.screen
@@ -24,15 +22,15 @@ describe('<CredentialDetails />', () => {
           attributes: [
             {
               label: 'attr_1',
-              data: 'data_1'
+              data: 'data_1',
             },
             {
               label: 'attr_2',
-              data: 'data_2'
+              data: 'data_2',
             },
             {
               label: 'attr_3',
-              data: 'data_3'
+              data: 'data_3',
             },
           ],
           logoUrl: 'https://robothash.com/logo.png',
@@ -47,7 +45,7 @@ describe('<CredentialDetails />', () => {
   it('should CredentialDetails render properly', () => {
     const component = renderer.create(
       <Provider store={store}>
-        <CredentialDetails {...getProps()}/>
+        <CredentialDetails {...getProps()} />
       </Provider>
     )
     expect(component).toMatchSnapshot()

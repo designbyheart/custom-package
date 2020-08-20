@@ -17,16 +17,12 @@ describe('<HomeInstructions />', () => {
   }
 
   it('should match snapshot', () => {
-    const component = renderer.create(
-      <HomeInstructions {...getProps(true)} />
-    )
+    const component = renderer.create(<HomeInstructions {...getProps(true)} />)
     expect(component.toJSON()).toMatchSnapshot()
   })
 
   it('should match snapshot for test network', () => {
-    const component = renderer.create(
-      <HomeInstructions {...getProps(false)} />
-    )
+    const component = renderer.create(<HomeInstructions {...getProps(false)} />)
     expect(component.toJSON()).toMatchSnapshot()
   })
 })

@@ -135,7 +135,7 @@ class ConnectionCardComponent extends PureComponent<
                 </View>
               )}
               <View style={styles.button}>
-                { !!this.props.noOfAttributes &&
+                {!!this.props.noOfAttributes && (
                   <TouchableOpacity onPress={this.updateAndShowModal}>
                     <Text
                       style={[
@@ -146,7 +146,7 @@ class ConnectionCardComponent extends PureComponent<
                       {this.props.buttonText}
                     </Text>
                   </TouchableOpacity>
-                }
+                )}
                 {canDelete && (
                   <Text
                     style={[

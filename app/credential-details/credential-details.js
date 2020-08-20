@@ -1,5 +1,11 @@
 //@flow
-import React, { useMemo, useCallback, useState, useEffect, Component } from 'react'
+import React, {
+  useMemo,
+  useCallback,
+  useState,
+  useEffect,
+  Component,
+} from 'react'
 import {
   Text,
   View,
@@ -30,9 +36,9 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
     uid,
   } = props.route.params
 
-  const data = attributes.map(attribute => ({
+  const data = attributes.map((attribute) => ({
     label: attribute.label,
-    data: attribute.data
+    data: attribute.data,
   }))
 
   return (
@@ -40,7 +46,13 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
       <ScrollView>
         <View style={styles.headerWrapper}>
           <Text style={styles.headerSubText}>Issued by</Text>
-          <Text style={styles.headerText} ellipsizeMode="tail" numberOfLines={2}>{issuerName}</Text>
+          <Text
+            style={styles.headerText}
+            ellipsizeMode="tail"
+            numberOfLines={2}
+          >
+            {issuerName}
+          </Text>
 
           <View style={styles.avatarSection}>
             {typeof logoUrl === 'string' ? (
@@ -50,15 +62,20 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
                 testID={`${credentialName}-avatar`}
               />
             ) : (
-                <DefaultLogo text={credentialName} size={96} fontSize={26} />
-              )}
+              <DefaultLogo text={credentialName} size={96} fontSize={26} />
+            )}
           </View>
           <View style={styles.contentWrapper}>
-            <Text style={styles.contentText} ellipsizeMode="tail" numberOfLines={2}>{credentialName}</Text>
+            <Text
+              style={styles.contentText}
+              ellipsizeMode="tail"
+              numberOfLines={2}
+            >
+              {credentialName}
+            </Text>
           </View>
         </View>
         <View style={styles.listContainer}>
-
           <CredentialList
             content={data}
             uid={uid}
@@ -75,7 +92,7 @@ export const credentialDetailsScreen = {
   screen: connect()(CredentialDetails),
   options: {
     ...headerNavigationOptions({ title: 'Credential Details' }),
-  }
+  },
 }
 
 const styles = StyleSheet.create({
@@ -129,5 +146,5 @@ const styles = StyleSheet.create({
   listContainer: {
     width: '100%',
     marginTop: verticalScale(4),
-  }
+  },
 })

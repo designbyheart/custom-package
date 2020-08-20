@@ -12,6 +12,6 @@ export type CredentialDetailsProps = {
       logoUrl: string,
       remoteDid: string,
       uid: string,
-    }
-  }
+    },
+  },
 }

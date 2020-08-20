@@ -518,7 +518,7 @@ export async function getClaimVcx(
   if (!credential || !credential_id) {
     throw new Error('credential not found in vcx')
   }
-  
+
   const credentialPayload: ClaimPushPayload = JSON.parse(credential)
   return {
     claimUuid: credential_id,
@@ -868,7 +868,7 @@ export async function fetchPublicEntitiesForCredentials(): Promise<void> {
 export async function connectionSendAnswer(
   connectionHandle: number,
   question: string,
-  answer: string,
+  answer: string
 ): Promise<void> {
   return await RNIndy.connectionSendAnswer(connectionHandle, question, answer)
 }

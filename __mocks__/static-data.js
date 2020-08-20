@@ -1268,7 +1268,10 @@ export const sendClaimRequestSuccessEvent = sendClaimRequestSuccess(
   claimOfferPayload
 )
 
-export const claimReceivedSuccessEvent = claimStorageSuccess(uid, claimOfferIssueDate)
+export const claimReceivedSuccessEvent = claimStorageSuccess(
+  uid,
+  claimOfferIssueDate
+)
 
 export const proofRequestReceivedEvent = proofRequestReceived(
   proofRequest.payload,

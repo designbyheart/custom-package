@@ -8,6 +8,8 @@ import type { ConnectionHistoryStore } from '../connection-history/type-connecti
 import type { MessageDownloadStatus } from '../store/type-config-store'
 
 export type HomeProps = {
+  sendConnectionReuse: Function,
+  sendConnectionRedirect: Function,
   environmentName: string,
   newBannerConnections: Array<Object>,
   recentConnections: Array<Object>,

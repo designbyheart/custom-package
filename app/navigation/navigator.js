@@ -264,6 +264,7 @@ function AppDrawer() {
       drawerContent={drawerComponent}
       drawerContentOptions={drawerContentOptions}
       drawerStyle={drawerStyle}
+      initialRouteName={homeDrawerRoute}
     >
       <Drawer.Screen
         name={homeDrawerRoute}
