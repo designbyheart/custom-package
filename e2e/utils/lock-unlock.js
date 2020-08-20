@@ -50,8 +50,8 @@ async function setEnvironment() {
 async function setupPassCode() {
   await element(by.id(LOCK_SELECTION_PIN_CODE)).tap()
 
-  await element(by.id(PIN_CODE_INPUT_BOX)).replaceText(TEST_PASS_CODE)
-  // await element(by.id(PIN_CODE_INPUT_BOX)).replaceText(TEST_PASS_CODE)
+  await element(by.id(PIN_CODE_INPUT_BOX)).replaceText(TEST_PASS_CODE) // for ios
+  // await element(by.id(PIN_CODE_INPUT_BOX)).typeText(TEST_PASS_CODE) // for android
 
   await element(by.id(LOCK_SETUP_SUCCESS_CLOSE_BUTTON)).tap()
 

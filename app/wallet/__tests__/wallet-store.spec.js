@@ -280,7 +280,7 @@ describe('store: wallet-store: ', () => {
       })
       .provide([[matchers.call.fn(getLedgerFees), ledgerFees]])
       .run()
-      .then(finalAmount => {
+      .then((finalAmount) => {
         expect(finalAmount.returnValue.toJSON()).toMatchSnapshot()
       })
   }

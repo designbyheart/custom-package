@@ -34,7 +34,14 @@ const args = yargs
   .option('s', {
     alias: 'simulators',
     describe: 'simulators on which tests need to run',
-    choices: ['iphone5s', 'iphone7', 'iphone8', 'iphonex', 'iphonexsmax', 'nexus'], // android check
+    choices: [
+      'iphone5s',
+      'iphone7',
+      'iphone8',
+      'iphonex',
+      'iphonexsmax',
+      'nexus5x',
+    ], // android check
     default: ['iphonexsmax'],
     array: true,
   })
@@ -173,7 +180,7 @@ async function runTests(args) {
     iphonex: 'iPhone X',
     iphonexsmax: 'iPhone XS Max',
     iphone8: 'iPhone 8',
-    nexus: 'connectme', // android check
+    nexus5x: 'Nexus_5X_API_29', // android check
   }
 
   // set environment variables that are going to be used by our tests
@@ -200,7 +207,7 @@ async function runTests(args) {
     if (!args.skip) {
       const initialTestRun = spawn(
         'detox',
-        [...initialTestArgs, 'e2e/__tests__/initial.spec.js'], // path to initila test is absolute - we must use it for any test folder
+        [...initialTestArgs, 'e2e/__tests__/initial.spec.js'], // path to initial test is absolute - we must use it for any test folder
         { stdio: 'inherit' }
       )
       // wait for initial test run to finish
