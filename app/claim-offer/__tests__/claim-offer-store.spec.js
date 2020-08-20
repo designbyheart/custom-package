@@ -73,7 +73,6 @@ import {
   secureDelete,
   getHydrationItem,
 } from '../../services/storage'
-import { VCX_INIT_POOL_SUCCESS, VCX_INIT_SUCCESS } from '../../store/type-config-store'
 
 describe('claim offer store', () => {
   const initialAction = { type: 'INITIAL_TEST_ACTION' }
@@ -298,10 +297,6 @@ describe('claim offer store', () => {
             vcxSerializedConnection: vcxSerializedConnection,
           },
         },
-      },
-      config: {
-        vcxInitializationState: VCX_INIT_SUCCESS,
-        vcxPoolInitializationState: VCX_INIT_POOL_SUCCESS,
       },
     }
     const claimHandle = 1

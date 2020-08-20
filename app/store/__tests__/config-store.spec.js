@@ -36,9 +36,9 @@ import configReducer, {
   processMessages,
   acknowledgeServer,
   acknowledgeMessagesFail,
-  updateMessageStatus, vcxInitPoolFail, vcxInitPoolSuccess,
+  updateMessageStatus,
 } from '../config-store'
-import { vcxInitStart, ensureVcxInitSuccess, vcxInitPoolStart } from '../route-store'
+import { vcxInitStart, ensureVcxInitSuccess } from '../route-store'
 import {
   SERVER_ENVIRONMENT_CHANGED,
   SERVER_ENVIRONMENT,
@@ -446,22 +446,6 @@ describe('reducer:config', () => {
     const initialState = getConfigStoreInitialState()
     const error = ERROR_VCX_INIT_FAIL('error from test')
     expect(configReducer(initialState, vcxInitFail(error))).toMatchSnapshot()
-  })
-
-  it('action:VCX_INIT_POOL_START', () => {
-    const initialState = getConfigStoreInitialState()
-    expect(configReducer(initialState, vcxInitPoolStart())).toMatchSnapshot()
-  })
-
-  it('action:VCX_INIT_POOL_SUCCESS', () => {
-    const initialState = getConfigStoreInitialState()
-    expect(configReducer(initialState, vcxInitPoolSuccess())).toMatchSnapshot()
-  })
-
-  it('action:VCX_INIT_POOL_FAIL', () => {
-    const initialState = getConfigStoreInitialState()
-    const error = ERROR_VCX_INIT_FAIL('error from test')
-    expect(configReducer(initialState, vcxInitPoolFail(error))).toMatchSnapshot()
   })
 })
 

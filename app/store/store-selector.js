@@ -275,9 +275,6 @@ export const getThemes = (state: Store) => state.connections.connectionThemes
 export const getVcxInitializationState = (state: Store) =>
   state.config.vcxInitializationState
 
-export const getVcxPoolInitializationState = (state: Store) =>
-  state.config.vcxPoolInitializationState
-
 export const getIsLockEnabledState = (state: Store) => state.lock.isLockEnabled
 export const getIsAppLocked = (state: Store) => state.lock.isAppLocked
 

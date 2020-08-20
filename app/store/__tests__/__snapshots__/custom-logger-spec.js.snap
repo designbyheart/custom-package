@@ -90,8 +90,6 @@ Object {
     "showErrorAlerts": false,
     "vcxInitializationError": null,
     "vcxInitializationState": "VCX_INIT_SUCCESS",
-    "vcxPoolInitializationError": null,
-    "vcxPoolInitializationState": "VCX_INIT_POOL_SUCCESS",
   },
   "connections": Object {
     "connectionThemes": Object {

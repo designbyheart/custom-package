@@ -101,7 +101,6 @@ import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import { retrySaga } from '../api/api-utils'
-import { ensureVcxInitAndPoolConnectSuccess } from '../store/route-store'
 
 const claimOfferInitialState = {
   vcxSerializedClaimOffers: {},
@@ -259,9 +258,6 @@ export function* denyClaimOfferSaga(
   }
 }
 
-export const ERROR_ACCEPT_CLAIM_OFFER_FAIL =
-  'Unable to accept credential. Check your internet connection or try to restart app.'
-
 export function* claimOfferAccepted(
   action: ClaimOfferAcceptedAction
 ): Generator<*, *, *> {
@@ -286,12 +282,6 @@ export function* claimOfferAccepted(
       claimRequestFail(messageId, ERROR_NO_SERIALIZED_CLAIM_OFFER(messageId))
     )
 
-    return
-  }
-
-  const vcxResult = yield* ensureVcxInitAndPoolConnectSuccess()
-  if (vcxResult && vcxResult.fail) {
-    yield put(sendClaimRequestFail(messageId, remoteDid))
     return
   }
 

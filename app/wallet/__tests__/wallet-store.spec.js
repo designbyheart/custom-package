@@ -56,7 +56,7 @@ import {
   sendTokenAmount,
 } from '../../bridge/react-native-cxs/RNCxs'
 import BigNumber from 'bignumber.js'
-import { VCX_INIT_POOL_SUCCESS, VCX_INIT_SUCCESS } from '../../store/type-config-store'
+import { VCX_INIT_SUCCESS } from '../../store/type-config-store'
 
 describe('store: wallet-store: ', () => {
   let initialState
@@ -362,7 +362,6 @@ describe('store: wallet-store: ', () => {
     const stateWithVcxInitSuccess = {
       config: {
         vcxInitializationState: VCX_INIT_SUCCESS,
-        vcxPoolInitializationState: VCX_INIT_POOL_SUCCESS,
       },
       wallet: { walletBalance: { data: walletBalance } },
     }
@@ -388,7 +387,6 @@ describe('store: wallet-store: ', () => {
     const stateWithVcxInitSuccess = {
       config: {
         vcxInitializationState: VCX_INIT_SUCCESS,
-        vcxPoolInitializationState: VCX_INIT_POOL_SUCCESS,
       },
       wallet: { walletBalance: { data: walletBalance } },
     }
