@@ -11,9 +11,6 @@ export const paymentMethod = 'sov'
 export const vcxInitializationState = 'VCX_INIT_SUCCESS'
 export const vcxInitializationError = null
 
-export const vcxPoolInitializationState = 'VCX_INIT_POOL_SUCCESS'
-export const vcxPoolInitializationError = null
-
 export const configStoreNotHydratedInstalledVcxInit = {
   isHydrated: false,
   isAlreadyInstalled: true,
@@ -24,8 +21,6 @@ export const configStoreNotHydratedInstalledVcxInit = {
   poolConfig,
   vcxInitializationError,
   vcxInitializationState,
-  vcxPoolInitializationError,
-  vcxPoolInitializationState,
   isInitialized: false,
   paymentMethod,
 }
@@ -40,8 +35,6 @@ export const configStoreHydratedInstalledVcxInitSuccess = {
   poolConfig,
   vcxInitializationError,
   vcxInitializationState,
-  vcxPoolInitializationError,
-  vcxPoolInitializationState,
   isInitialized: true,
   paymentMethod,
 }
