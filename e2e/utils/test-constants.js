@@ -115,6 +115,8 @@ export const SWITCH_ENVIRONMENT_SAVE_BUTTON = 'switch-environment-footer-accept'
 
 // screenshot names
 export const SCREENSHOT_HOME = 'home.png'
+export const SCREENSHOT_HOME_SMALL_HISTORY = 'home2.png'
+export const SCREENSHOT_HOME_BIG_HISTORY = 'home3.png'
 export const SCREENSHOT_CONNECTIONS = 'connections.png'
 export const SCREENSHOT_CREDENTIALS = 'credentials.png'
 export const SCREENSHOT_SETTINGS = 'settings.png'
