@@ -43,6 +43,7 @@ import {
   SCREENSHOT_CLAIM_OFFER_CONTACT,
   SCREENSHOT_CLAIM_OFFER_MIXED,
   SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
+  SCREENSHOT_PROOF_TEMPLATE_TWO_CLAIM_FULFILLED,
   SCREENSHOT_TEST_CONNECTION,
   SCREENSHOT_HOME_SMALL_HISTORY,
   SCREENSHOT_HOME_BIG_HISTORY,
@@ -316,6 +317,8 @@ describe('Connection via QR code and SMS link', () => {
       await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
+
+    await matchScreenshot(SCREENSHOT_PROOF_TEMPLATE_TWO_CLAIM_FULFILLED) // screenshot
 
     await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
   })
