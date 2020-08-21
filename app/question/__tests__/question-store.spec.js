@@ -17,7 +17,8 @@ import questionReducer, {
 } from '../question-store'
 import { initialTestAction, STORAGE_STATUS } from '../../common/type-common'
 import {
-  mockQuestionPayload, mockQuestionPayload3,
+  mockQuestionPayload,
+  mockQuestionPayload3,
   mockQuestionReceivedState,
 } from '../../../__mocks__/data/question-store-mock-data'
 import {
@@ -142,10 +143,7 @@ describe('Question Store', () => {
     }
 
     const message = getUserAnswer(signDataResponse, messageId)
-    return expectSaga(
-      answerToQuestionSaga,
-      sendAnswerToQuestion(uid, answer)
-    )
+    return expectSaga(answerToQuestionSaga, sendAnswerToQuestion(uid, answer))
       .withState(stateWithConnectionQuestionVcxSuccess)
       .provide([
         [matchers.call.fn(getHandleBySerializedConnection), connectionHandle],

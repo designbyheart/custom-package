@@ -147,7 +147,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 70052
+        versionCode 70055
         versionName "1.3.2"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8

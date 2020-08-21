@@ -60,10 +60,12 @@ import {
   DENY_CLAIM_OFFER_SUCCESS,
 } from '../claim-offer/type-claim-offer'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
+import { DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
 import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
 import type { AriesOutOfBandInvite } from '../invitation/type-invitation'
 
 let ScreenWidth = Dimensions.get('window').width
+
 export class ConnectionDetails extends Component<
   ConnectionHistoryProps,
   ConnectionHistoryState
@@ -78,71 +80,35 @@ export class ConnectionDetails extends Component<
 
   componentDidMount() {
     this.props.updateStatusBarTheme(this.props.activeConnectionThemePrimary)
-    this.navigateToModal()
+
+    // NOTE: This logic is moved to Home screen and commented out here to be available should we
+    // want to revert back quickly.
 
     // since componentDidMount is always getting called when navigating to this screen
     // the check if snack bar should be displayed can be done in componentDidMount
-    if (this.props.route.params.showExistingConnectionSnack) {
-      this.showSnackBar()
+    // if (this.props.route.params.showExistingConnectionSnack) {
+    //   this.showSnackBar()
 
-      const invite = this.props.route.params.qrCodeInvitationPayload
+    //   const invite = this.props.route.params.qrCodeInvitationPayload
 
-      if (invite.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR) {
-        this.props.sendConnectionRedirect(invite, {
-          senderDID: this.props.route.params.senderDID,
-          identifier: this.props.route.params.identifier,
-        })
-      } else if (invite.type === CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND) {
-        if (!invite.originalObject) {
-          return
-        }
+    //   if (invite.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR) {
+    //     this.props.sendConnectionRedirect(invite, {
+    //       senderDID: this.props.route.params.senderDID,
+    //       identifier: this.props.route.params.identifier,
+    //     })
+    //   } else if (invite.type === CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND) {
+    //     if (!invite.originalObject) {
+    //       return
+    //     }
 
-        this.props.sendConnectionReuse(
-          ((invite.originalObject: any): AriesOutOfBandInvite),
-          {
-            senderDID: this.props.route.params.senderDID,
-          }
-        )
-      }
-    }
-  }
-
-  navigateToModal = () => {
-    const notificationOpenOptions = this.props.route.params
-      .notificationOpenOptions
-    if (
-      !notificationOpenOptions ||
-      !notificationOpenOptions.openMessageDirectly
-    ) {
-      // the param 'notificationOpenOptions' helps us decide if we need to open
-      // modal of clicked message directly
-      // if we don't get any options or if openMessageDirectly is false
-      // then we just return from here
-      return
-    }
-
-    // If we reach here, then we have param indicating that we need open
-    // a message. Now, we need to know what is messageId and messageType
-    // so that we can open correct modal
-
-    const messageType = this.props.route.params.messageType
-    const uid = this.props.route.params.uid
-
-    if (messageType && uid) {
-      switch (messageType) {
-        case MESSAGE_TYPE.CLAIM_OFFER:
-          this.props.navigation.navigate(claimOfferRoute, { uid })
-          break
-
-        case MESSAGE_TYPE.PROOF_REQUEST:
-          this.props.navigation.navigate(proofRequestRoute, { uid })
-          break
-
-        case MESSAGE_TYPE.QUESTION:
-          this.props.navigation.navigate(questionRoute, { uid })
-          break
-      }
-    }
+    //     this.props.sendConnectionReuse(
+    //       ((invite.originalObject: any): AriesOutOfBandInvite),
+    //       {
+    //         senderDID: this.props.route.params.senderDID,
+    //       }
+    //     )
+    //   }
+    // }
   }
 
   keyExtractor = (item: Object) => item.timestamp
@@ -280,7 +246,6 @@ export class ConnectionDetails extends Component<
           data={item}
           imageUrl={this.props.route.params.image}
           institutionalName={this.props.route.params.senderName}
-          colorBackground={this.props.activeConnectionThemePrimary}
           secondColorBackground={this.props.activeConnectionThemeSecondary}
         />
       )
@@ -362,20 +327,18 @@ export class ConnectionDetails extends Component<
           secondColorBackground={colors.cmRed}
         />
       )
+    } else if (item.action === 'DELETED') {
+      return (
+        <CredentialCard
+          messageDate={formattedTime}
+          messageTitle={'Deleted Credential'}
+          messageContent={'You deleted the credential "' + item.name + '"'}
+          showButtons={false}
+        />
+      )
     }
 
     return null
-  }
-
-  showSnackBar = () => {
-    const showExistingConnectionSnack =
-      this.props.route.params?.showExistingConnectionSnack || false
-    if (showExistingConnectionSnack) {
-      Snackbar.show({
-        text: CONNECTION_ALREADY_EXIST,
-        duration: Snackbar.LENGTH_LONG,
-      })
-    }
   }
 
   moreOptionsClose = () => {

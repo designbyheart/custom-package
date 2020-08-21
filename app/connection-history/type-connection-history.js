@@ -49,8 +49,12 @@ import {
   DENY_CLAIM_OFFER,
   DENY_CLAIM_OFFER_SUCCESS,
   DENY_CLAIM_OFFER_FAIL,
+  CLAIM_OFFER_DELETED,
 } from '../claim-offer/type-claim-offer'
-import { CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
+import {
+  CLAIM_STORAGE_SUCCESS,
+  DELETE_CLAIM_SUCCESS,
+} from '../claim/type-claim'
 import {
   PROOF_REQUEST_RECEIVED,
   PROOF_REQUEST_ACCEPTED,
@@ -85,6 +89,7 @@ export const HISTORY_EVENT_STATUS = {
   [DENY_CLAIM_OFFER_SUCCESS]: DENY_CLAIM_OFFER_SUCCESS,
   [DENY_CLAIM_OFFER_FAIL]: DENY_CLAIM_OFFER_FAIL,
   [CLAIM_STORAGE_SUCCESS]: 'RECEIVED',
+  [DELETE_CLAIM_SUCCESS]: 'DELETED',
   [PROOF_REQUEST_RECEIVED]: 'PROOF RECEIVED',
   [PROOF_REQUEST_IGNORED]: 'IGNORED',
   [PROOF_REQUEST_REJECTED]: 'REJECTED',
@@ -261,6 +266,13 @@ export const ERROR_LOADING_HISTORY = {
 export const ERROR_HISTORY_EVENT_OCCURRED = {
   code: 'CN003',
   message: 'Error while history event occurred',
+}
+
+export const UPDATE_HISTORY_EVENT = 'UPDATE_HISTORY_EVENT'
+
+export type UpdateHistoryEventAction = {
+  type: typeof UPDATE_HISTORY_EVENT,
+  historyEvent: ConnectionHistoryEvent,
 }
 
 export type ConnectionHistoryAction =

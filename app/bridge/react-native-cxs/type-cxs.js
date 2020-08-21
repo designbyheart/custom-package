@@ -4,9 +4,7 @@ import type { SMSPendingInvitationPayload } from '../../sms-pending-invitation/t
 import type { UserOneTimeInfo } from '../../store/user/type-user-store'
 import type { AgencyPoolConfig } from '../../store/type-config-store'
 import type { GenericObject } from '../../common/type-common'
-import type {
-  ClaimOfferPushPayload,
-} from '../../push-notification/type-push-notification'
+import type { ClaimOfferPushPayload } from '../../push-notification/type-push-notification'
 import type { ProofRequestPushPayload } from '../../proof-request/type-proof-request'
 
 export type Metadata = {

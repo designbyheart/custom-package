@@ -22,7 +22,13 @@ export class HomeInstructions extends PureComponent<
   void
 > {
   render() {
-    const { headline, title, prodNetworkText, devNetworkText, usingProductionNetwork } = this.props
+    const {
+      headline,
+      title,
+      prodNetworkText,
+      devNetworkText,
+      usingProductionNetwork,
+    } = this.props
     return (
       <ImageBackground
         source={require('../../images/connection-items-placeholder.png')}
@@ -35,9 +41,7 @@ export class HomeInstructions extends PureComponent<
               resizeMode="contain"
               style={styles.image}
             />
-            <Text style={[styles.headline]}>
-              {headline}
-            </Text>
+            <Text style={[styles.headline]}>{headline}</Text>
             <Text style={[styles.title]}>{title}</Text>
             {usingProductionNetwork && (
               <Text style={[styles.text]}>{prodNetworkText}</Text>

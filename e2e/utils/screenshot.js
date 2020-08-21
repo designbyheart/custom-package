@@ -7,7 +7,7 @@ import fs from 'fs'
 import { pathExists, move, remove } from 'fs-extra'
 import chalk from 'chalk'
 import { flatten, compose, values, filter, prop, tap, head } from 'ramda'
-import { getDeviceType, ANDROID } from './test-constants'
+import { getDeviceType, IOS, ANDROID } from './test-constants'
 
 const PNG = require('pngjs').PNG
 const JPEG = require('jpeg-js')
@@ -17,6 +17,7 @@ const iPhone8 = 'iPhone8'.toLowerCase()
 const iPhoneX = 'iPhoneX'.toLowerCase()
 const iPhone5s = 'iPhone5s'.toLowerCase()
 const iPhoneXSMax = 'iPhoneXSMax'.toLowerCase()
+const Nexus5X = 'Nexus5X'.toLowerCase()
 
 // all images are switched from JPG to PNG because pixelmatch works with PNG only and GraphicsMagick works with both
 
@@ -68,6 +69,15 @@ const SIZE = {
       height: 3.3,
     },
   },
+  [Nexus5X]: {
+    width: 1080,
+    height: 1920,
+    cropHeight: 50,
+    scaleFactor: {
+      width: 2,
+      height: 2,
+    },
+  },
 }
 
 const SIMULATOR_NAME_MAP = {
@@ -76,6 +86,7 @@ const SIMULATOR_NAME_MAP = {
   [iPhoneX]: 'iPhone X',
   [iPhone5s]: 'iPhone 5s',
   [iPhoneXSMax]: 'iPhone XS Max',
+  [Nexus5X]: 'Nexus_5X_API_29',
 }
 
 const COMPARE_ERROR_TOLERANCE = 0.0001
@@ -208,14 +219,21 @@ export async function matchScreenshot(
   name: string,
   options?: ScreenShotOptions
 ) {
-  // TODO:KS Add support for screenshot testing for Android as well
-  if (getDeviceType() === ANDROID) {
-    return
-  }
+  // // TODO:KS Add support for screenshot testing for Android as well
+  // if (getDeviceType() === ANDROID) {
+  //   return
+  // }
 
   const newScreenshot = getNewScreenshotPath(name)
 
-  await exec(`xcrun simctl io ${bootedDeviceId} screenshot ${newScreenshot}`)
+  if (getDeviceType() === IOS) {
+    // ios screenshot capturing
+    await exec(`xcrun simctl io ${bootedDeviceId} screenshot ${newScreenshot}`)
+  } else {
+    // android screenshot capturing
+    await exec(`adb shell /system/bin/screencap -p /sdcard/screenshot.png`)
+    await exec(`adb pull /sdcard/screenshot.png ${newScreenshot}`)
+  }
   await removeHeader(newScreenshot)
 
   if (options) {

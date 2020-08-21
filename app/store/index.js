@@ -42,7 +42,7 @@ import proofRequest, {
   watchProofRequestDeny,
 } from '../proof-request/proof-request-store'
 import invitation, { watchInvitation } from '../invitation/invitation-store'
-import claim, { watchClaim } from '../claim/claim-store'
+import claim, { watchClaim, watchDeleteClaim } from '../claim/claim-store'
 import question, { watchQuestion } from '../question/question-store'
 import txnAuthorAgreement, {
   watchTxnAuthorAgreement,
@@ -144,6 +144,7 @@ sagaMiddleware.run(function* (): Generator<*, *, *> {
     watchPushNotification(),
     watchInvitation(),
     watchClaim(),
+    watchDeleteClaim(),
     watchPressEventInLockSelectionScreen(),
     watchEnableTouchId(),
     watchDisableTouchId(),

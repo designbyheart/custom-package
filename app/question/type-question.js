@@ -19,7 +19,7 @@ export type QuestionScreenProps = {
   ) => UpdateQuestionStatusAction,
   sendAnswerToQuestion: (
     uid: string,
-    answer: QuestionResponse,
+    answer: QuestionResponse
   ) => SendAnswerToQuestionAction,
   question?: QuestionStoreMessage,
   senderLogoUrl?: null | number | GenericObject,

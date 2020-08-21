@@ -16,7 +16,11 @@ import type {
   SMSPendingInvitationPayload,
   SMSPendingInvitationRequestAction,
 } from './type-sms-pending-invitation'
-import type { InvitationPayload, AriesConnectionInvite, AriesConnectionInvitePayload } from '../invitation/type-invitation'
+import type {
+  InvitationPayload,
+  AriesConnectionInvite,
+  AriesConnectionInvitePayload,
+} from '../invitation/type-invitation'
 import {
   SMS_PENDING_INVITATION_REQUEST,
   SMS_PENDING_INVITATION_RECEIVED,
@@ -236,24 +240,30 @@ export function* callSmsPendingInvitationRequest(
           ),
         })
       )
-      yield put(smsPendingInvitationReceived(smsToken, pendingInvitationPayload))
+      yield put(
+        smsPendingInvitationReceived(smsToken, pendingInvitationPayload)
+      )
       return
     }
 
     const original = JSON.stringify(pendingInvitationPayload)
-    const ariesV1Invite = isValidAriesV1InviteData(pendingInvitationPayload, original)
+    const ariesV1Invite = isValidAriesV1InviteData(
+      pendingInvitationPayload,
+      original
+    )
     if (ariesV1Invite) {
       yield put(
         invitationReceived({
           payload: convertAriesPayloadToInvitation(ariesV1Invite),
         })
       )
-      yield put(smsPendingInvitationReceived(smsToken, pendingInvitationPayload))
+      yield put(
+        smsPendingInvitationReceived(smsToken, pendingInvitationPayload)
+      )
       return
     }
 
     throw new Error('Invitation payload object format is not as expected')
-
   } catch (e) {
     let error: CustomError = {
       code: ERROR_PENDING_INVITATION_RESPONSE_PARSE_CODE,

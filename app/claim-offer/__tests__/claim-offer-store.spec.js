@@ -249,9 +249,9 @@ describe('claim offer store', () => {
         connections: {
           pairwiseIdentifier1: {
             data: connectionHistory['September 2017'].data,
-          }
-        }
-      }
+          },
+        },
+      },
     }
 
     return expectSaga(hydrateClaimOffersSaga)
@@ -260,10 +260,7 @@ describe('claim offer store', () => {
           matchers.call.fn(getHydrationItem, CLAIM_OFFERS),
           serializedClaimOffers,
         ],
-        [
-          matchers.select.selector(getConnectionHistory),
-          history
-        ],
+        [matchers.select.selector(getConnectionHistory), history],
       ])
       .put(hydrateClaimOffers(JSON.parse(serializedClaimOffers)))
       .run()

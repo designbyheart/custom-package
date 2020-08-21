@@ -104,6 +104,7 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
       CONNECTED: 'You connected with ' + senderName + '.',
       RECEIVED: senderName + ' issued you ' + credentialName + '.',
       'ACCEPTED & SAVED': 'Accepted on',
+      DELETED: `You deleted the credential "${credentialName}"`,
       SHARED: 'You shared ' + credentialName + ' with ' + senderName,
       'PROOF RECEIVED': senderName + ' wants you to share some information',
       'CLAIM OFFER RECEIVED': 'Offering ' + credentialName,

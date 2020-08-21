@@ -37,6 +37,8 @@ import {
   invitationRoute,
   qrCodeScannerTabRoute,
   homeRoute,
+  homeDrawerRoute,
+  myConnectionsRoute,
   connectionHistRoute,
   openIdConnectRoute,
   proofRequestRoute,
@@ -195,7 +197,10 @@ export class QRCodeScannerScreen extends Component<
         showExistingConnectionSnack: true,
         qrCodeInvitationPayload: invitation.payload,
       }
-      navigation.navigate(connectionHistRoute, params)
+      navigation.navigate(homeRoute, {
+        screen: homeDrawerRoute,
+        params: params,
+      })
 
       return
     }

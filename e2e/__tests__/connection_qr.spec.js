@@ -15,6 +15,7 @@ import {
   INVITATION_SUCCESS_MODAL_CONTINUE,
   INVITATION_ACCEPT,
   PIN_CODE_INPUT_BOX,
+  HOME_HEADER,
   HOME_NEW_MESSAGE,
   CLAIM_OFFER_ACCEPT,
   CLAIM_OFFER_REJECT,
@@ -43,6 +44,8 @@ import {
   SCREENSHOT_CLAIM_OFFER_MIXED,
   SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
   SCREENSHOT_TEST_CONNECTION,
+  SCREENSHOT_HOME_SMALL_HISTORY,
+  SCREENSHOT_HOME_BIG_HISTORY,
   BACK_ARROW,
   MENU_HOME,
 } from '../utils/test-constants'
@@ -131,13 +134,7 @@ describe('Connection via QR code and SMS link', () => {
 
     await new Promise((r) => setTimeout(r, 10000)) // sync issue
 
-    try {
-      await expect(element(by.text('Evernym QA-RC'))).toBeVisible()
-
-      await element(by.id(BACK_ARROW)).tap()
-    } catch (e) {
-      await element(by.text('Ok')).tap() // invitation has been expired
-    }
+    await matchScreenshot(SCREENSHOT_HOME_SMALL_HISTORY) // screenshot
   })
 
   it('Case 2.1: create and reject profile credential', async () => {
@@ -469,20 +466,15 @@ describe('Connection via QR code and SMS link', () => {
   })
 
   it('Case 6: open connection using SMS link when connection is already expired', async () => {
-    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+    // await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
-    await waitForElementAndTap('text', MENU_HOME, TIMEOUT)
+    // await waitForElementAndTap('text', MENU_HOME, TIMEOUT)
 
     await exec(`xcrun simctl openurl booted ${URL}`)
 
     await new Promise((r) => setTimeout(r, 10000)) // sync issue
 
-    try {
-      await expect(element(by.text('Evernym QA-RC'))).toBeVisible()
-      await element(by.id(BACK_ARROW)).tap()
-    } catch (e) {
-      await element(by.text('Ok')).tap() // invitation has been expired
-    }
+    await matchScreenshot(SCREENSHOT_HOME_BIG_HISTORY) // screenshot
   })
 })
 
