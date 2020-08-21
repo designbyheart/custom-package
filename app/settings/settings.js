@@ -599,8 +599,6 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         avatar: (
           <EvaIcon
             name={SAVE_ICON}
-            width={verticalScale(27)}
-            height={verticalScale(27)}
             color={
               this.props.connectionsUpdated && !this.props.isAutoBackupEnabled
                 ? // || (this.props.connectionsUpdated && this.props.isAutoBackupEnabled && hasCloudBackupFailed)
@@ -619,8 +617,6 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         avatar: (
           <EvaIcon
             name={BACKUP_ICON}
-            width={verticalScale(27)}
-            height={verticalScale(27)}
             color={hasCloudBackupFailed ? colors.cmRed : colors.cmGray2}
           />
         ),
@@ -666,12 +662,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: 'View your Recovery Phrase',
         avatar: (
           <View style={styles.avatarView}>
-            <SvgCustomIcon
-              name="ViewPassPhrase"
-              fill={colors.cmGray2}
-              width={verticalScale(27)}
-              height={verticalScale(27)}
-            />
+            <SvgCustomIcon name="ViewPassPhrase" fill={colors.cmGray2} />
           </View>
         ),
         rightIcon: <EvaIcon name={ARROW_RIGHT_ICON} color={colors.cmGray3} />,
@@ -683,11 +674,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: 'Tell us what you think of Connect.Me',
         avatar: (
           <View style={styles.avatarView}>
-            <EvaIcon
-              name={CHAT_ICON}
-              width={verticalScale(27)}
-              height={verticalScale(27)}
-            />
+            <EvaIcon name={CHAT_ICON} />
           </View>
         ),
         rightIcon: <EvaIcon name={ARROW_RIGHT_ICON} color={colors.cmGray3} />,
@@ -699,11 +686,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: 'Legal, Version, and Network Information',
         avatar: (
           <View style={styles.avatarView}>
-            <EvaIcon
-              name={INFO_ICON}
-              width={verticalScale(27)}
-              height={verticalScale(27)}
-            />
+            <EvaIcon name={INFO_ICON} />
           </View>
         ),
         rightIcon: <EvaIcon name={ARROW_RIGHT_ICON} color={colors.cmGray3} />,
@@ -733,11 +716,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
         subtitle: 'Development only',
         avatar: (
           <View style={styles.avatarView}>
-            <EvaIcon
-              name={INFO_ICON}
-              width={verticalScale(27)}
-              height={verticalScale(27)}
-            />
+            <EvaIcon name={INFO_ICON} />
           </View>
         ),
 

@@ -1,16 +1,14 @@
 // @flow
-import React, { PureComponent, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 import type { PrimaryHeaderProps } from './type-primary-header'
 
-import { SvgCustomIcon } from '../svg-custom-icon'
 import { EvaIcon, HOME_MENU_ICON } from '../../common/icons'
 import UnreadMessagesBadge from '../unread-messages-badge/unread-messages-badge'
 import { styles } from './styles'
-import { colors } from '../../common/styles/constant'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { moderateScale } from 'react-native-size-matters'
 
 export const PrimaryHeader = ({ headline }: PrimaryHeaderProps) => {
   const navigation = useNavigation()

@@ -332,12 +332,12 @@ exports[`user about app screen should render properly and snapshot should match 
         >
           <RNSVGSvgView
             align="xMidYMid"
-            bbHeight={21.057142857142857}
-            bbWidth={21.057142857142857}
+            bbHeight={22.97142857142857}
+            bbWidth={22.97142857142857}
             color={4289045925}
             fill="#A5A5A5"
             focusable={false}
-            height={21.057142857142857}
+            height={22.97142857142857}
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -349,15 +349,15 @@ exports[`user about app screen should render properly and snapshot should match 
                 },
                 Object {
                   "flex": 0,
-                  "height": 21,
-                  "width": 21,
+                  "height": 22,
+                  "width": 22,
                 },
               ]
             }
             tintColor={4289045925}
             vbHeight={24}
             vbWidth={24}
-            width={21.057142857142857}
+            width={22.97142857142857}
           >
             <RNSVGGroup
               fill={4289045925}
@@ -481,12 +481,12 @@ exports[`user about app screen should render properly and snapshot should match 
         >
           <RNSVGSvgView
             align="xMidYMid"
-            bbHeight={21.057142857142857}
-            bbWidth={21.057142857142857}
+            bbHeight={22.97142857142857}
+            bbWidth={22.97142857142857}
             color={4289045925}
             fill="#A5A5A5"
             focusable={false}
-            height={21.057142857142857}
+            height={22.97142857142857}
             meetOrSlice={0}
             minX={0}
             minY={0}
@@ -498,15 +498,15 @@ exports[`user about app screen should render properly and snapshot should match 
                 },
                 Object {
                   "flex": 0,
-                  "height": 21,
-                  "width": 21,
+                  "height": 22,
+                  "width": 22,
                 },
               ]
             }
             tintColor={4289045925}
             vbHeight={24}
             vbWidth={24}
-            width={21.057142857142857}
+            width={22.97142857142857}
           >
             <RNSVGGroup
               fill={4289045925}

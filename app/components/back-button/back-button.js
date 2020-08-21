@@ -3,8 +3,6 @@
 import React, { useCallback } from 'react'
 import { TouchableOpacity, Platform } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { SvgCustomIcon } from '../svg-custom-icon'
-import { mediumGray } from '../../common/styles'
 import { moderateScale } from 'react-native-size-matters'
 import {
   EvaIcon,

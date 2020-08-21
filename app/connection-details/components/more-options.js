@@ -1,12 +1,10 @@
 // @flow
 import React, { Component } from 'react'
-import SvgCustomIcon from '../../components/svg-custom-icon'
 import {
   View,
   Image,
   TouchableOpacity,
   Text,
-  Platform,
   StyleSheet,
   Dimensions,
 } from 'react-native'
@@ -15,13 +13,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getUserAvatarSource } from '../../store/store-selector'
 import type { Store } from '../../store/type-store'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
-import {
-  colors,
-  fontFamily,
-  fontSizes,
-  font,
-} from '../../common/styles/constant'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
+import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 import { EvaIcon, DELETE_ICON, CLOSE_ICON } from '../../common/icons'
 
@@ -71,8 +64,6 @@ class MoreOptions extends Component<any, void> {
             <EvaIcon
               name={DELETE_ICON}
               color={colors.cmBlue}
-              width={moderateScale(24)}
-              height={moderateScale(24)}
               style={styles.image}
             />
             <Text style={styles.buttonText}>Delete Connection</Text>

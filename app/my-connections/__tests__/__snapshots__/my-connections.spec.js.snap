@@ -778,11 +778,11 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={21.057142857142857}
-                              bbWidth={21.057142857142857}
+                              bbHeight={22.97142857142857}
+                              bbWidth={22.97142857142857}
                               fill="#777777"
                               focusable={false}
-                              height={21.057142857142857}
+                              height={22.97142857142857}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -794,14 +794,14 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
                                   },
                                   Object {
                                     "flex": 0,
-                                    "height": 21,
-                                    "width": 21,
+                                    "height": 22,
+                                    "width": 22,
                                   },
                                 ]
                               }
                               vbHeight={24}
                               vbWidth={24}
-                              width={21.057142857142857}
+                              width={22.97142857142857}
                             >
                               <RNSVGGroup
                                 fill={4286019447}
@@ -1635,11 +1635,11 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
                           >
                             <RNSVGSvgView
                               align="xMidYMid"
-                              bbHeight={21.057142857142857}
-                              bbWidth={21.057142857142857}
+                              bbHeight={22.97142857142857}
+                              bbWidth={22.97142857142857}
                               fill="#777777"
                               focusable={false}
-                              height={21.057142857142857}
+                              height={22.97142857142857}
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
@@ -1651,14 +1651,14 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
                                   },
                                   Object {
                                     "flex": 0,
-                                    "height": 21,
-                                    "width": 21,
+                                    "height": 22,
+                                    "width": 22,
                                   },
                                 ]
                               }
                               vbHeight={24}
                               vbWidth={24}
-                              width={21.057142857142857}
+                              width={22.97142857142857}
                             >
                               <RNSVGGroup
                                 fill={4286019447}

@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import type { Store } from '../store/type-store'
 import type { LockSetupSuccessProps, LockSetupSuccessState } from './type-lock'
 
-import { Container, CustomText, CustomButton, Icon } from '../components'
+import { Container, CustomText, CustomButton } from '../components'
 import {
   settingsDrawerRoute,
   lockSetupSuccessRoute,

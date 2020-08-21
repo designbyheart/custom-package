@@ -1,13 +1,10 @@
 // @flow
 import React from 'react'
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { colors, fontFamily, fontSizes } from '../common/styles/constant'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 import { EvaIcon, CHECK_MARK_ICON } from '../common/icons'
-
-const checkmarkImage = require('../images/homeCheckmark.png')
-const { height } = Dimensions.get('screen')
 
 export const EmptyViewPlaceholder = () => {
   return (

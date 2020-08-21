@@ -142,8 +142,6 @@ function PhotoAttachment(props: PhotoAttachmentPropType) {
         <EvaIcon
           style={styles.attachmentIcon}
           name={PHOTO_ATTACHMENT_ICON}
-          width={moderateScale(24)}
-          height={moderateScale(24)}
           color={colors.cmGray1}
         />
         <View>
@@ -228,8 +226,6 @@ function Attachment(props: AttachmentPropType) {
         <EvaIcon
           style={styles.attachmentIcon}
           name={ATTACHMENT_ICON}
-          width={moderateScale(24)}
-          height={moderateScale(24)}
           color={colors.cmGray1}
         />
         <View>

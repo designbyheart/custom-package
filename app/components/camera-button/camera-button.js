@@ -1,9 +1,8 @@
 // @flow
 import React from 'react'
-import SvgCustomIcon from '../svg-custom-icon'
 import { TouchableOpacity, StyleSheet, Text, Platform } from 'react-native'
 import { colors, fontFamily } from '../../common/styles/constant'
-import { verticalScale, moderateScale } from 'react-native-size-matters'
+import { moderateScale } from 'react-native-size-matters'
 
 import { EvaIcon, CAMERA_ICON } from '../../common/icons'
 
