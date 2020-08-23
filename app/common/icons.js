@@ -8,8 +8,6 @@ type IconProps = {
   width?: number,
   height?: number,
   color?: string,
-  style?: any,
-  onPress?: any,
 }
 
 type CommonIconProps = {

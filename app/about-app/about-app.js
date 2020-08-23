@@ -15,25 +15,9 @@ import { aboutAppRoute, privacyTNCRoute } from '../common'
 import { PrivacyTNC } from '../privacy-tnc/privacy-tnc-screen'
 import { getEnvironmentName } from '../store/config-store'
 import { headerNavigationOptions } from '../navigation/navigation-header-config'
-import { moderateScale } from 'react-native-size-matters'
-import { colors, fontFamily, fontSizes } from '../common/styles/constant'
+import { colors } from '../common/styles/constant'
 
 const styles = StyleSheet.create({
-  itemContainer: {
-    marginStart: moderateScale(16),
-    width: '100%',
-    height: moderateScale(56),
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  itemText: {
-    fontSize: moderateScale(fontSizes.size5),
-    fontWeight: '400',
-    width: '100%',
-    color: colors.cmGray1,
-    textAlign: 'left',
-    fontFamily: fontFamily,
-  },
   headerLeft: {
     width: OFFSET_2X,
   },
