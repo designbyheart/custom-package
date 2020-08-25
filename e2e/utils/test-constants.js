@@ -130,6 +130,8 @@ export const SCREENSHOT_CLAIM_OFFER_CONTACT = 'claim_offer_3.png'
 export const SCREENSHOT_CLAIM_OFFER_MIXED = 'claim_offer_4.png'
 export const SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED =
   'proof_request_1.png'
+export const SCREENSHOT_PROOF_TEMPLATE_TWO_CLAIM_FULFILLED =
+  'proof_request_2.png'
 export const SCREENSHOT_TEST_CONNECTION = 'test_connection.png'
 export const SCREENSHOT_EMPTY_CHAT = 'empty_chat.png'
 export const SCREENSHOT_NOT_EMPTY_CHAT = 'not_empty_chat.png'
