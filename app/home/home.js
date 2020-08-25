@@ -167,6 +167,8 @@ export class HomeScreen extends Component<HomeProps, void> {
             }
           )
         }
+
+        this.props.route.params = {}
       }
     })
   }
@@ -456,6 +458,8 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       getUnacknowledgedMessages,
+      sendConnectionRedirect,
+      sendConnectionReuse,
     },
     dispatch
   )
