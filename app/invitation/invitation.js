@@ -266,7 +266,7 @@ const ariesOutOfBandInviteSchema = {
       items: [{ type: 'string' }],
     },
     'request~attach': {
-      type: 'array',
+      type: ['null', 'array'],
       items: [
         {
           type: 'object',

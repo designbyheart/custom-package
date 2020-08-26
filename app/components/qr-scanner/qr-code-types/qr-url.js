@@ -3,7 +3,7 @@ import urlParse, { type Url } from 'url-parse'
 
 import type {
   AriesConnectionInvite,
-  AriesConnectionInvitePayload,
+  AriesOutOfBandInvite,
 } from '../../../invitation/type-invitation'
 import type {
   QrCodeOIDC,
@@ -16,6 +16,7 @@ import { flatFetch } from '../../../common/flat-fetch'
 import { flatJsonParse } from '../../../common/flat-json-parse'
 import { isAriesConnectionInviteQrCode } from './qr-code-aries-connection-invite'
 import { isValidOIDCQrCode } from './qr-code-oidc'
+import { isAriesOutOfBandInviteQrCode } from './qr-code-aries-out-of-band-invite'
 
 export function isValidUrlQrCode(urlQrCode: string): Url | false {
   const parsedUrl = urlParse(urlQrCode, {}, true)
@@ -45,6 +46,11 @@ export async function getUrlQrCodeData(
   const ariesConnectionInvite = await isAriesConnectionInviteQrCode(parsedUrl)
   if (ariesConnectionInvite) {
     return [null, ariesConnectionInvite]
+  }
+
+  const ariesOutofbandConnectionInvite = await isAriesOutOfBandInviteQrCode(parsedUrl)
+  if (ariesOutofbandConnectionInvite) {
+    return [null, ariesOutofbandConnectionInvite]
   }
 
   // 2. get OIDC authentication data from url
