@@ -24,26 +24,7 @@ import { PushNotification } from './push-notification'
 import DeepLink from './deep-link'
 import { colors } from './common/styles/constant'
 import { ConnectMeAppNavigator } from './navigation/navigator'
-import {
-  qrCodeScannerTabRoute,
-  homeRoute,
-  genRecoveryPhraseRoute,
-  backupCompleteRoute,
-  lockPinSetupHomeRoute,
-  settingsTabRoute,
-  settingsRoute,
-  lockSetupSuccessRoute,
-  invitationRoute,
-  lockEnterPinRoute,
-  splashScreenRoute,
-  eulaRoute,
-  lockSelectionRoute,
-  lockAuthorizationHomeRoute,
-  restoreRoute,
-  restoreWaitRoute,
-  expiredTokenRoute,
-  sendLogsRoute,
-} from './common'
+import { sendLogsRoute } from './common'
 
 import type { AppProps } from './type-app'
 import type {
@@ -51,7 +32,6 @@ import type {
   NavigationParams,
   NavigationRoute,
 } from './common/type-common'
-import { exitAppAndroid } from './bridge/react-native-cxs/RNCxs'
 import AppStatus from './app-status/app-status'
 import RNShake from 'react-native-shake'
 import Offline from './offline/offline'
@@ -79,38 +59,6 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 
-const backButtonDisableRoutes = [
-  lockEnterPinRoute,
-  homeRoute,
-  splashScreenRoute,
-  settingsRoute,
-  qrCodeScannerTabRoute,
-  invitationRoute,
-  lockSetupSuccessRoute,
-  eulaRoute,
-  lockSelectionRoute,
-  lockPinSetupHomeRoute,
-  lockAuthorizationHomeRoute,
-  genRecoveryPhraseRoute,
-  backupCompleteRoute,
-  restoreRoute,
-  restoreWaitRoute,
-  expiredTokenRoute,
-]
-
-const backButtonExitRoutes = [
-  homeRoute,
-  settingsRoute,
-  qrCodeScannerTabRoute,
-  eulaRoute,
-  lockSelectionRoute,
-]
-
-const backButtonConditionalRoutes = [
-  lockPinSetupHomeRoute,
-  lockAuthorizationHomeRoute,
-]
-
 export class ConnectMeApp extends Component<AppProps, void> {
   currentRouteKey: string = ''
   currentRoute: string = ''
@@ -131,71 +79,10 @@ export class ConnectMeApp extends Component<AppProps, void> {
         this.navigateToRoute(sendLogsRoute)
       }
     })
-
-    if (Platform.OS === 'android') {
-      BackHandler.addEventListener(
-        'hardwareBackPress',
-        this.handleBackButtonClick
-      )
-    }
   }
 
   componentWillUnmount() {
     RNShake.removeEventListener('ShakeEvent', () => {})
-
-    if (Platform.OS === 'android') {
-      BackHandler.removeEventListener(
-        'hardwareBackPress',
-        this.handleBackButtonClick
-      )
-    }
-  }
-
-  handleBackButtonClick = () => {
-    if (this.currentRouteKey !== '' && this.currentRoute !== '') {
-      if (backButtonDisableRoutes.indexOf(this.currentRoute) < 0) {
-        return false
-      }
-
-      if (backButtonConditionalRoutes.indexOf(this.currentRoute) >= 0) {
-        let navigateAction = null
-        switch (this.currentRoute) {
-          case lockPinSetupHomeRoute:
-            this.currentRouteParams &&
-            typeof this.currentRouteParams.existingPin === 'boolean' &&
-            this.currentRouteParams.existingPin === true
-              ? (navigateAction = CommonActions.navigate({
-                  name: settingsTabRoute,
-                }))
-              : (navigateAction = CommonActions.navigate({
-                  name: lockSelectionRoute,
-                }))
-            this.navigatorRef.current &&
-              this.navigatorRef.current.dispatch(navigateAction)
-            return true
-          case lockAuthorizationHomeRoute:
-            this.currentRouteParams &&
-              this.currentRouteParams.onAvoid &&
-              typeof this.currentRouteParams.onAvoid === 'function' &&
-              this.currentRouteParams.onAvoid()
-            return false
-        }
-      }
-
-      if (backButtonExitRoutes.indexOf(this.currentRoute) >= 0) {
-        this.onBackPressExit()
-      }
-    }
-    return true
-  }
-
-  onBackPressExit() {
-    if (this.exitTimeout && this.exitTimeout + 2000 >= Date.now()) {
-      exitAppAndroid()
-      return
-    }
-    this.exitTimeout = Date.now()
-    ToastAndroid.show('Press again to exit!', ToastAndroid.SHORT)
   }
 
   // gets the current screen from navigation state
@@ -212,7 +99,7 @@ export class ConnectMeApp extends Component<AppProps, void> {
 
   navigationChangeHandler = (navigationState: NavigationState) => {
     const { name, key, params } = this.navigatorRef.current
-      ? this.navigatorRef.current.getCurrentRoute()
+      ? this.navigatorRef.current.getCurrentRoute(navigationState)
       : {}
     const currentScreen = name
 

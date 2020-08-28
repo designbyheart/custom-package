@@ -91,6 +91,7 @@ import {
 } from '../components'
 import { unreadMessageContainerCommonStyle } from '../components/unread-messages-badge/unread-messages-badge'
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import useBackHandler from '../hooks/use-back-handler'
 
 enableScreens()
 
@@ -305,6 +306,9 @@ const cardStackOptions = {
   headerShown: false,
 }
 function CardStackScreen() {
+  // Back button press listening needs to be initialized on a screen inside of a navigator.
+  // This is highest screen in the stack that we can put this hook in.
+  useBackHandler()
   return (
     <CardStack.Navigator
       initialRouteName={splashScreenRoute}
