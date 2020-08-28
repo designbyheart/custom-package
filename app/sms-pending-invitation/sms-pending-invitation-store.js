@@ -50,6 +50,7 @@ import { isValidInvitationUrl } from './sms-invitation-validator'
 import { schemaValidator } from '../services/schema-validator'
 import { ID } from '../common/type-common'
 import { isValidAriesV1InviteData } from '../invitation/invitation'
+import isUrl from 'validator/lib/isURL'
 
 const initialState = {}
 
@@ -123,14 +124,14 @@ export function convertAriesPayloadToInvitation(
     senderName: payload.label || 'Unknown',
     senderDID: payload.recipientKeys[0],
     // TODO:KS Need to discuss with architects to know how to fulfill this requirement
-    senderLogoUrl: payload.profileUrl || null,
+    senderLogoUrl: payload.profileUrl && isUrl(payload.profileUrl) ? payload.profileUrl: null,
     senderVerificationKey: payload.recipientKeys[0],
     targetName: payload.label || 'Unknown',
     senderDetail: {
       name: payload.label || 'Unknown',
       agentKeyDlgProof: senderAgentKeyDelegationProof,
       DID: payload.recipientKeys[0],
-      logoUrl: payload.profileUrl || null,
+      logoUrl: payload.profileUrl && isUrl(payload.profileUrl) ? payload.profileUrl: null,
       verKey: payload.recipientKeys[0],
       publicDID: payload.recipientKeys[0],
     },

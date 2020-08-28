@@ -1,7 +1,7 @@
 // @flow
 
 import urlParse from 'url-parse'
-import isURL from 'validator/lib/isURL'
+import isUrl from 'validator/lib/isURL'
 
 import type { CustomError } from '../common/type-common'
 import type {

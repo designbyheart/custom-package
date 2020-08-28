@@ -78,6 +78,7 @@ import {
 } from '../open-id-connect/open-id-connect-actions'
 import { ID } from '../common/type-common'
 import { proofRequestReceived } from '../proof-request/proof-request-store'
+import isUrl from 'validator/lib/isURL'
 
 export function convertQrCodeToInvitation(qrCode: QrCodeShortInvite) {
   const qrSenderDetail = qrCode[QR_CODE_SENDER_DETAIL]
@@ -303,14 +304,14 @@ export class QRCodeScannerScreen extends Component<
       senderAgentKeyDelegationProof,
       senderName: payload.label || 'Unknown',
       senderDID: payload.recipientKeys[0],
-      senderLogoUrl: payload.profileUrl || null,
+      senderLogoUrl: payload.profileUrl && isUrl(payload.profileUrl) ? payload.profileUrl: null,
       senderVerificationKey: payload.recipientKeys[0],
       targetName: payload.label || 'Unknown',
       senderDetail: {
         name: payload.label || 'Unknown',
         agentKeyDlgProof: senderAgentKeyDelegationProof,
         DID: payload.recipientKeys[0],
-        logoUrl: payload.profileUrl || null,
+        logoUrl: payload.profileUrl && isUrl(payload.profileUrl) ? payload.profileUrl: null,
         verKey: payload.recipientKeys[0],
         publicDID: payload.recipientKeys[0],
       },
@@ -376,14 +377,14 @@ export class QRCodeScannerScreen extends Component<
         senderAgentKeyDelegationProof,
         senderName: payload.label || 'Unknown',
         senderDID: serviceEntry.recipientKeys[0],
-        senderLogoUrl: payload.profileUrl || null,
+        senderLogoUrl: payload.profileUrl && isUrl(payload.profileUrl) ? payload.profileUrl: null,
         senderVerificationKey: serviceEntry.recipientKeys[0],
         targetName: payload.label || 'Unknown',
         senderDetail: {
           name: payload.label || 'Unknown',
           agentKeyDlgProof: senderAgentKeyDelegationProof,
           DID: serviceEntry.recipientKeys[0],
-          logoUrl: payload.profileUrl || null,
+          logoUrl: payload.profileUrl && isUrl(payload.profileUrl) ? payload.profileUrl: null,
           verKey: serviceEntry.recipientKeys[0],
           publicDID: serviceEntry.recipientKeys[0],
         },

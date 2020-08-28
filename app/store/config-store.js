@@ -1249,8 +1249,6 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
     const payload = JSON.parse(decryptedPayload)
     const payloadType = payload['@type']
 
-    console.log(payload)
-
     if (
       payloadType.name === 'CRED_OFFER' ||
       payloadType.name === 'credential-offer'
