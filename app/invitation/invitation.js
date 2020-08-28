@@ -228,6 +228,7 @@ const ariesConnectionInviteQrSchema = {
       minItems: 0,
     },
     serviceEndpoint: { type: 'string' },
+    profileUrl: {type: ['null', 'string']},
   },
   required: [ID, TYPE, 'recipientKeys', 'serviceEndpoint'],
 }

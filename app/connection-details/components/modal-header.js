@@ -34,7 +34,15 @@ export const ModalHeader = ({
     <View style={styles.container}>
       <View style={styles.topSection}>
         <View style={styles.imageSection}>
-          <Image style={styles.image} source={source} resizeMode="cover" />
+          {source && source.uri ? (
+            <Image style={styles.image} source={source} resizeMode="cover"/>
+          ) : (
+            <DefaultLogo
+              text={institutionalName[0]}
+              size={moderateScale(24)}
+              fontSize={12}
+            />
+          )}
         </View>
         <View style={styles.issuerAndInfoSection}>
           <Text style={styles.issuerNameText}>{institutionalName}</Text>
