@@ -59,6 +59,7 @@ import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 import { MESSAGE_TYPE } from '../api/api-constants'
 import { CONNECTION_ALREADY_EXIST } from '../connection-details/type-connection-details'
 import { DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
+import { PROOF_REQUEST_RECEIVED } from '../proof-request/type-proof-request'
 
 export class HomeScreen extends Component<HomeProps, void> {
   unsubscribe = null
@@ -286,6 +287,8 @@ export class HomeScreen extends Component<HomeProps, void> {
       statusMessage = `Failed to send "${action}"`
     else if (status === HISTORY_EVENT_STATUS.DELETE_CLAIM_SUCCESS)
       statusMessage = `You deleted the credential "${action}"`
+    else if (status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED)
+      statusMessage = `You received request to share "${action}"`
 
     return (
       <RecentCard
@@ -371,7 +374,6 @@ export class HomeScreen extends Component<HomeProps, void> {
       Snackbar.show({
         text: this.props.snackError,
         backgroundColor: venetianRed,
-        fontFamily: fontFamily,
         duration: Snackbar.LENGTH_LONG,
       })
     }
@@ -379,12 +381,12 @@ export class HomeScreen extends Component<HomeProps, void> {
 }
 
 const mapStateToProps = (state: Store) => {
-  const isNewConnection = (status: string) => {
-    if (
+  const isNewConnection = (status: string, show?: boolean) => {
+    if ((
       status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
       status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
       status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED
-    ) {
+    ) && show) {
       return true
     } else return false
   }
@@ -434,11 +436,10 @@ const mapStateToProps = (state: Store) => {
   const newBannerConnections = []
   const recentConnections = []
   flattenPlaceholderArray.map((connection) => {
-    if (isNewConnection(connection.status)) {
+    if (isNewConnection(connection.status, connection.showBadge)) {
       newBannerConnections.push(connection)
     } else recentConnections.push(connection)
   })
-
   const hasNoConnection = state.connections.hydrated
     ? connections.length === 0
     : false

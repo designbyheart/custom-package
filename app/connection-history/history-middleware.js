@@ -1,6 +1,5 @@
 // @flow
 import type { Middleware, MiddlewareAPI, Dispatch } from 'redux'
-import { INVITATION_RECEIVED } from '../invitation/type-invitation'
 import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import {
   SEND_CLAIM_REQUEST_SUCCESS,
@@ -11,6 +10,7 @@ import {
   DENY_CLAIM_OFFER,
   DENY_CLAIM_OFFER_FAIL,
   DENY_CLAIM_OFFER_SUCCESS,
+  OUTOFBAND_CLAIM_OFFER_ACCEPTED,
 } from '../claim-offer/type-claim-offer'
 import {
   CLAIM_STORAGE_SUCCESS,
@@ -50,6 +50,7 @@ const actionToRecord = [
   DENY_PROOF_REQUEST_FAIL,
   DENY_PROOF_REQUEST_SUCCESS,
   CLAIM_OFFER_ACCEPTED,
+  OUTOFBAND_CLAIM_OFFER_ACCEPTED,
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
   UPDATE_ATTRIBUTE_CLAIM,

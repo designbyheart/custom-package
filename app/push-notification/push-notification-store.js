@@ -99,7 +99,6 @@ import type {
 import type { ClaimPushPayloadVcx } from '../claim/type-claim'
 import type { Claim } from '../claim/type-claim'
 import type { QuestionPayload } from './../question/type-question'
-import { saveSerializedClaimOffer } from '../claim-offer/claim-offer-store'
 import { safeGet, safeSet, secureGet, walletSet } from '../services/storage'
 import {
   PUSH_COM_METHOD,
@@ -266,6 +265,7 @@ export function convertProofRequestPushPayloadToAppProofRequest(
     remoteName,
     proofHandle,
     ephemeralProofRequest,
+    outofbandProofRequest,
   } = pushPayload
   const { requested_attributes, name, version } = proof_request_data
 
@@ -311,6 +311,7 @@ export function convertProofRequestPushPayloadToAppProofRequest(
     originalProofRequestData: proof_request_data,
     proofHandle,
     ephemeralProofRequest,
+    outofbandProofRequest,
   }
 }
 

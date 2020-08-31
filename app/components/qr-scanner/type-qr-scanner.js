@@ -85,7 +85,7 @@ export type QrScannerProps = {
   onInvitationUrl: (InvitationPayload) => void,
   onOIDCAuthenticationRequest: (OIDCAuthenticationRequest) => void,
   onAriesConnectionInviteRead: (AriesConnectionInvite) => void,
-  onAriesOutOfBandInviteRead: (AriesOutOfBandInvite) => void,
+  onAriesOutOfBandInviteRead: (AriesOutOfBandInvite) => Promise<void>,
   onEphemeralProofRequest: (QrCodeEphemeralProofRequest) => void,
 }
 
@@ -118,6 +118,7 @@ export const QR_CODE_TYPES = {
   // it could be a base64 encoded data, so we need to keep this type
   // so that other types of QR handler can handle such type of qr codes
   URL_NON_JSON_RESPONSE: 'URL_NON_JSON_RESPONSE',
+  OUTOFBAND_PROOF_REQUEST: 'OUTOFBAND_PROOF_REQUEST',
 }
 export type QrCodeTypes = $Keys<typeof QR_CODE_TYPES>
 

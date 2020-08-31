@@ -30,8 +30,10 @@ import type {
   AriesOutOfBandInvite,
   InvitationPayload,
 } from '../../invitation/type-invitation'
+import type { CredentialOffer } from '../../claim-offer/type-claim-offer'
 import {
   convertAgencyConfigToVcxProvision,
+  convertAriesCredentialOfferToCxsClaimOffer,
   convertVcxProvisionResultToUserOneTimeInfo,
   convertCxsInitToVcxInit,
   convertCxsPushConfigToVcxPushTokenConfig,
@@ -57,7 +59,6 @@ import type {
   WalletHistoryEvent,
   WalletPayload,
 } from '../../wallet/type-wallet'
-import type { GenericStringObject } from '../../common/type-common'
 import type { Passphrase } from '../../backup/type-backup'
 import uniqueId from 'react-native-unique-id'
 import { smallDeviceMemory, signDataResponseSchema } from './type-cxs'
@@ -97,7 +98,6 @@ export async function acceptInvitationVcx(
 
   const {
     data,
-    version = '1.0',
   }: {
     data: VcxConnectionConnectResult,
     version: string,
@@ -358,6 +358,21 @@ export async function createCredentialWithAriesOffer(
   return {
     claimHandle: credential_handle,
     claimOffer: convertVcxCredentialOfferToCxsClaimOffer(vcxCredentialOffer),
+  }
+}
+
+export async function createCredentialWithAriesOfferObject(
+  sourceId: string,
+  credentialOffer: CredentialOffer
+): Promise<CxsCredentialOfferResult> {
+  const credential_handle = await credentialCreateWithOffer(
+    sourceId,
+    JSON.stringify(credentialOffer),
+  )
+
+  return {
+    claimHandle: credential_handle,
+    claimOffer: convertAriesCredentialOfferToCxsClaimOffer(credentialOffer),
   }
 }
 

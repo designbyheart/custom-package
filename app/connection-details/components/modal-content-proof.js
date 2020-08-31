@@ -16,21 +16,11 @@ import { bindActionCreators } from 'redux'
 import Carousel from 'react-native-snap-carousel'
 
 import {
-  Container,
-  CustomView,
-  CustomButton,
-  CustomText,
-  Avatar,
   Icon,
-  ConnectionTheme,
-  Separator,
-  UserAvatar,
-  headerStyles,
   Loader,
 } from '../../components'
 import type {
   ProofRequestProps,
-  AdditionalProofDataPayload,
   ProofRequestAttributeListState,
   MissingAttributes,
   ProofRequestState,
@@ -46,16 +36,15 @@ import {
   proofRequestShown,
   proofRequestShowStart,
   denyProofRequest,
+  acceptOutofbandPresentationRequest,
 } from '../../proof-request/proof-request-store'
 import {
   getConnectionLogoUrl,
   getUserAvatarSource,
 } from '../../store/store-selector'
-import { ERROR_CODE_MISSING_ATTRIBUTE } from '../../proof/type-proof'
 import {
   PRIMARY_ACTION_SEND,
   PRIMARY_ACTION_GENERATE_PROOF,
-  SECONDARY_ACTION_IGNORE,
   MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION,
   MESSAGE_MISSING_ATTRIBUTES_TITLE,
   MESSAGE_ERROR_PROOF_GENERATION_TITLE,
@@ -78,14 +67,14 @@ import type {
 } from '../../common/type-common'
 import type { Attribute } from '../../push-notification/type-push-notification'
 import type { Store } from '../../store/type-store'
-import { customLogger } from '../../store/custom-logger'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import {
   colors,
   fontFamily,
   fontSizes,
   font,
 } from '../../common/styles/constant'
+import { acceptOutOfBandInvitation } from '../../invitation/invitation-store'
 
 const screenWidth = Dimensions.get('window').width
 const sliderWidth = screenWidth - screenWidth * 0.1
@@ -613,11 +602,25 @@ class ModalContentProof extends Component<
         disableSendButton: true,
       })
       this.props.newConnectionSeen(this.props.remotePairwiseDID)
-      this.props.updateAttributeClaim(
-        this.props.uid,
-        this.props.remotePairwiseDID,
-        this.state.selectedClaims
-      )
+
+      if (this.props.invitationPayload){
+        // if properties contains invitation it means we accepted out-of-band presentation request
+        this.props.acceptOutOfBandInvitation(
+          this.props.invitationPayload,
+          this.props.attachedRequest
+        )
+        this.props.acceptOutofbandPresentationRequest(
+          this.props.uid,
+          this.state.selectedClaims
+        )
+      } else  {
+        this.props.updateAttributeClaim(
+          this.props.uid,
+          this.props.remotePairwiseDID,
+          this.state.selectedClaims
+        )
+      }
+
       this.props.hideModal()
     } else {
       this.setState({
@@ -739,6 +742,8 @@ const mapDispatchToProps = (dispatch) =>
       ignoreProofRequest,
       rejectProofRequest,
       updateAttributeClaim,
+      acceptOutOfBandInvitation,
+      acceptOutofbandPresentationRequest,
       getProof,
       userSelfAttestedAttributes,
       proofRequestShowStart,

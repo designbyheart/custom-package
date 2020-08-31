@@ -99,6 +99,7 @@ Object {
     "requested_predicates": Object {},
     "version": "0.1",
   },
+  "outofbandProofRequest": undefined,
   "proofHandle": 1,
   "requester": Object {
     "name": "Evernym",

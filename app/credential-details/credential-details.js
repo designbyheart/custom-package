@@ -34,6 +34,7 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
     logoUrl,
     remoteDid,
     uid,
+    date,
   } = props.route.params
 
   const data = attributes.map((attribute) => ({
@@ -45,7 +46,7 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.headerWrapper}>
-          <Text style={styles.headerSubText}>Issued by</Text>
+          <Text style={styles.headerSubText}>{date ? "Issued by" : "Offered by"}</Text>
           <Text
             style={styles.headerText}
             ellipsizeMode="tail"
