@@ -228,6 +228,7 @@ const ariesConnectionInviteQrSchema = {
       minItems: 0,
     },
     serviceEndpoint: { type: 'string' },
+    profileUrl: {type: ['null', 'string']},
   },
   required: [ID, TYPE, 'recipientKeys', 'serviceEndpoint'],
 }
@@ -266,7 +267,7 @@ const ariesOutOfBandInviteSchema = {
       items: [{ type: 'string' }],
     },
     'request~attach': {
-      type: 'array',
+      type: ['null', 'array'],
       items: [
         {
           type: 'object',
