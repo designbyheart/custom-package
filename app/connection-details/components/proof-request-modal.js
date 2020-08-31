@@ -1,12 +1,11 @@
 // @flow
-import React, { Component, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { View, StyleSheet } from 'react-native'
 
 import type { Store } from '../../store/type-store'
 import type { ClaimProofNavigation } from '../../claim-offer/type-claim-offer'
 
 import { ModalHeader } from './modal-header'
-import { ModalContent } from './modal-content'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ModalContentProof from './modal-content-proof'
@@ -21,33 +20,43 @@ import { newConnectionSeen } from '../../connection-history/connection-history-s
 // TODO: Fix any type
 const ProofRequestModal = (props: any) => {
   const hideModal = useCallback(() => {
-    props.navigation.goBack(null)
+    const backRedirectRoute = props.backRedirectRoute
+    if (backRedirectRoute) {
+      props.navigation.navigate(backRedirectRoute)
+    } else {
+      props.navigation.goBack(null)
+    }
   }, [])
 
   return (
-    <View style={styles.modalWrapper}>
-      <ModalHeader
-        institutionalName={props.name}
-        credentialName={props.data.name}
-        credentialText={'Wants you to fill out a form:'}
-        imageUrl={props.logoUrl}
-        colorBackground={props.claimThemePrimary}
-      />
-      <ModalContentProof
-        content={props.data.requestedAttributes}
-        uid={props.uid}
-        colorBackground={props.claimThemePrimary}
-        secondColorBackground={props.claimThemeSecondary}
-        hideModal={hideModal}
-        newConnectionSeen={props.newConnectionSeen}
-      />
-    </View>
+    props && props.data ?
+      <View style={styles.modalWrapper}>
+        <ModalHeader
+          institutionalName={props.name}
+          credentialName={props.data.name}
+          credentialText={'Wants you to fill out a form:'}
+          imageUrl={props.logoUrl}
+          colorBackground={props.claimThemePrimary}
+        />
+        <ModalContentProof
+          content={props.data.requestedAttributes}
+          uid={props.uid}
+          invitationPayload={props.invitationPayload}
+          attachedRequest={props.attachedRequest}
+          colorBackground={props.claimThemePrimary}
+          secondColorBackground={props.claimThemeSecondary}
+          hideModal={hideModal}
+          newConnectionSeen={props.newConnectionSeen}
+        />
+      </View> :
+      <View/>
   )
 }
 
 const mapStateToProps = (state: Store, props: ClaimProofNavigation) => {
   const { proofRequest } = state
-  const { uid } = props.route.params
+
+  const { uid, invitationPayload, attachedRequest, backRedirectRoute } = props.route.params
   const proofRequestData = proofRequest[uid] || {}
   const {
     data,
@@ -82,6 +91,9 @@ const mapStateToProps = (state: Store, props: ClaimProofNavigation) => {
     missingAttributes,
     userAvatarSource: getUserAvatarSource(state.user.avatarName),
     errorProofSendData,
+    invitationPayload,
+    attachedRequest,
+    backRedirectRoute,
   }
 }
 

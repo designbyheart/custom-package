@@ -1,14 +1,10 @@
 // @flow
 import {
   put,
-  takeLatest,
-  take,
-  race,
   call,
   all,
   select,
   takeEvery,
-  fork,
 } from 'redux-saga/effects'
 import delay from '@redux-saga/delay-p'
 import {
@@ -45,6 +41,7 @@ import {
   DENY_CLAIM_OFFER,
   DENY_CLAIM_OFFER_SUCCESS,
   DENY_CLAIM_OFFER_FAIL,
+  OUTOFBAND_CLAIM_OFFER_ACCEPTED,
   CLAIM_OFFER_DELETED,
   DELETE_CLAIM_OFFER,
 } from './type-claim-offer'
@@ -217,6 +214,12 @@ export const acceptClaimOffer = (uid: string, remoteDid: string) => ({
   remoteDid,
 })
 
+export const acceptOutofbandClaimOffer = (uid: string, remoteDid: string) => ({
+  type: OUTOFBAND_CLAIM_OFFER_ACCEPTED,
+  uid,
+  remoteDid,
+})
+
 export function convertClaimRequestToEdgeClaimRequest(
   claimRequest: ApiClaimRequest
 ): EdgeClaimRequest {
@@ -273,6 +276,15 @@ export function* claimOfferAccepted(
   const isPaidCredential = payTokenAmount.isGreaterThan(0)
   const remoteDid = claimOfferPayload.remotePairwiseDID
   const [connection]: Connection[] = yield select(getConnection, remoteDid)
+  if (!connection) {
+    captureError(new Error(ERROR_NO_SERIALIZED_CLAIM_OFFER(messageId)))
+    yield put(
+      claimRequestFail(messageId, ERROR_NO_SERIALIZED_CLAIM_OFFER(messageId))
+    )
+
+    return
+  }
+
   const vcxSerializedClaimOffer: SerializedClaimOffer | null = yield select(
     getSerializedClaimOffer,
     connection.identifier,
@@ -646,6 +658,14 @@ export default function claimOfferReducer(
         },
       }
     case CLAIM_OFFER_ACCEPTED:
+      return {
+        ...state,
+        [action.uid]: {
+          ...state[action.uid],
+          status: CLAIM_OFFER_STATUS.ACCEPTED,
+        },
+      }
+    case OUTOFBAND_CLAIM_OFFER_ACCEPTED:
       return {
         ...state,
         [action.uid]: {

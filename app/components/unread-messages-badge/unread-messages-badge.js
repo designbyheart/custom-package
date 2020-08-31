@@ -46,12 +46,12 @@ const mapStateToProps = (state: Store) => {
 
   const customFlat = (array: Array<Array<Object>>) => [].concat(...array)
 
-  const isNewConnection = (status: string) => {
-    if (
+  const isNewConnection = (status: string, show?: boolean) => {
+    if ((
       status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
       status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
       status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED
-    ) {
+    ) && show) {
       return true
     } else return false
   }
@@ -71,7 +71,7 @@ const mapStateToProps = (state: Store) => {
 
   let numberOfNewMessages = 0
   flattenPlaceholderArray.map((message) => {
-    if (isNewConnection(message.status)) numberOfNewMessages++
+    if (isNewConnection(message.status, message.showBadge)) numberOfNewMessages++
   })
 
   return {

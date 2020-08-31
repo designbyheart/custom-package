@@ -47,6 +47,7 @@ import type {
   ClaimOfferAcceptedAction,
   SendClaimRequestFailAction,
   PaidCredentialRequestFailAction,
+  OutofbandClaimOfferAcceptedAction,
 } from '../claim-offer/type-claim-offer'
 import type {
   ClaimStorageSuccessAction,
@@ -66,6 +67,7 @@ import {
   DENY_CLAIM_OFFER,
   DENY_CLAIM_OFFER_SUCCESS,
   DENY_CLAIM_OFFER_FAIL,
+  OUTOFBAND_CLAIM_OFFER_ACCEPTED,
 } from '../claim-offer/type-claim-offer'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 import type {
@@ -305,6 +307,7 @@ export function convertProofRequestToHistoryEvent(
     type: HISTORY_EVENT_TYPE.PROOF,
     remoteDid: action.payloadInfo.remotePairwiseDID,
     originalPayload: action,
+    showBadge: !action.payloadInfo.hidden
   }
 }
 
@@ -322,11 +325,12 @@ export function convertClaimOfferToHistoryEvent(
     type: HISTORY_EVENT_TYPE.CLAIM,
     remoteDid: action.payload.issuer.did,
     originalPayload: action,
+    showBadge: !action.payloadInfo.hidden
   }
 }
 
 export function convertClaimOfferAcceptedToHistoryEvent(
-  action: ClaimOfferAcceptedAction,
+  action: ClaimOfferAcceptedAction | OutofbandClaimOfferAcceptedAction,
   credentialOfferReceivedHistoryEvent: ConnectionHistoryEvent
 ): ConnectionHistoryEvent {
   return {
@@ -683,6 +687,23 @@ export function* historyEventOccurredSaga(
       if (oldHistoryEvent) yield put(deleteHistoryEvent(oldHistoryEvent))
     }
 
+    if (event.type === OUTOFBAND_CLAIM_OFFER_ACCEPTED) {
+      const existingCredentialOfferReceivedEvent: ConnectionHistoryEvent = yield select(
+        getHistoryEvent,
+        event.uid,
+        event.remoteDid,
+        CLAIM_OFFER_RECEIVED
+      )
+      if (existingCredentialOfferReceivedEvent) {
+        yield put(deleteHistoryEvent(existingCredentialOfferReceivedEvent))
+      }
+      const credentialOfferAcceptedEvent = convertClaimOfferAcceptedToHistoryEvent(
+        event,
+        existingCredentialOfferReceivedEvent
+      )
+      historyEvent = credentialOfferAcceptedEvent
+    }
+
     if (event.type === CLAIM_OFFER_ACCEPTED) {
       const existingCredentialOfferReceivedEvent: ConnectionHistoryEvent = yield select(
         getHistoryEvent,
@@ -705,14 +726,23 @@ export function* historyEventOccurredSaga(
         event.remoteDid,
         PAID_CREDENTIAL_REQUEST_FAIL
       )
+      const existingOutofbandClaimOfferAcceptedEvent: ConnectionHistoryEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        event.remoteDid,
+        OUTOFBAND_CLAIM_OFFER_ACCEPTED
+      )
       const existingEvent =
         existingCredentialOfferReceivedEvent ||
         existingCredRequestFailEvent ||
-        existingPaidCredRequestFailEvent
+        existingPaidCredRequestFailEvent ||
+        existingOutofbandClaimOfferAcceptedEvent
+
       const credentialOfferAcceptedEvent = convertClaimOfferAcceptedToHistoryEvent(
         event,
         existingEvent
       )
+
       if (existingEvent) {
         yield put(deleteHistoryEvent(existingEvent))
       }

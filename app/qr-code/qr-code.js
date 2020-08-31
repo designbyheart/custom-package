@@ -1,20 +1,22 @@
 // @flow
 import React, { Component } from 'react'
-import { Alert, Platform, PermissionsAndroid, AppState } from 'react-native'
+import { Alert, AppState } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { detox } from 'react-native-dotenv'
 
+import { convertAriesCredentialOfferToCxsClaimOffer } from '../bridge/react-native-cxs/vcx-transformers'
+import {
+  convertClaimOfferPushPayloadToAppClaimOffer,
+} from '../push-notification/push-notification-store'
+import { ariesOutOfBandInvitationToInvitationPayload } from '../invitation/aries-out-of-band'
+
 import { Container, QRScanner } from '../components'
 import {
   color,
-  barStyleLight,
-  barStyleDark,
-  whiteSmokeSecondary,
 } from '../common/styles/constant'
 import { invitationReceived } from '../invitation/invitation-store'
 import {
-  PENDING_CONNECTION_REQUEST_CODE,
   QR_CODE_SENDER_DID,
   QR_CODE_SENDER_VERIFICATION_KEY,
   QR_CODE_LOGO_URL,
@@ -34,14 +36,14 @@ import {
   QR_CODE_VERSION,
 } from '../api/api-constants'
 import {
+  claimOfferRoute,
   invitationRoute,
   qrCodeScannerTabRoute,
   homeRoute,
   homeDrawerRoute,
-  myConnectionsRoute,
-  connectionHistRoute,
   openIdConnectRoute,
   proofRequestRoute,
+  credentialDetailsRoute,
 } from '../common/'
 
 import type {
@@ -53,32 +55,33 @@ import type {
   InvitationPayload,
   AriesConnectionInvite,
   AriesOutOfBandInvite,
-  AriesServiceEntry,
 } from '../invitation/type-invitation'
 import type {
   QRCodeScannerScreenState,
   QRCodeScannerScreenProps,
 } from './type-qr-code'
-import type { QrCodeEphemeralProofRequest } from '../proof-request/type-proof-request'
-import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
-
-import {
-  MESSAGE_NO_CAMERA_PERMISSION,
-  MESSAGE_ALLOW_CAMERA_PERMISSION,
-  MESSAGE_RESET_CONNECT_ME,
-  MESSAGE_RESET_DETAILS,
-} from './type-qr-code'
+import type { AriesPresentationRequest, QrCodeEphemeralProofRequest } from '../proof-request/type-proof-request'
+import type {
+  ClaimOfferPayload,
+  CredentialOffer,
+} from '../claim-offer/type-claim-offer'
 import { changeEnvironmentUrl } from '../store/config-store'
-import { captureError } from '../services/error/error-handler'
-import { getAllPublicDid } from '../store/store-selector'
+import { getAllPublicDid, getClaimOffers } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import {
   openIdConnectUpdateStatus,
   OPEN_ID_CONNECT_STATE,
 } from '../open-id-connect/open-id-connect-actions'
-import { ID } from '../common/type-common'
+import { ID, TYPE } from '../common/type-common'
+import {
+  CLAIM_OFFER_STATUS,
+} from '../claim-offer/type-claim-offer'
 import { proofRequestReceived } from '../proof-request/proof-request-store'
 import isUrl from 'validator/lib/isURL'
+import { getAttachedRequest } from '../invitation/invitation-store'
+import { claimOfferReceived } from '../claim-offer/claim-offer-store'
+import { validateOutofbandProofRequestQrCode, } from '../proof-request/proof-request-qr-code-reader'
+import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
 
 export function convertQrCodeToInvitation(qrCode: QrCodeShortInvite) {
   const qrSenderDetail = qrCode[QR_CODE_SENDER_DETAIL]
@@ -93,7 +96,7 @@ export function convertQrCodeToInvitation(qrCode: QrCodeShortInvite) {
       signature:
         qrSenderDetail[QR_CODE_SENDER_KEY_DELEGATION][
           QR_CODE_DELEGATION_SIGNATURE
-        ],
+          ],
     },
     DID: qrSenderDetail[QR_CODE_SENDER_DID],
     logoUrl: qrSenderDetail[QR_CODE_LOGO_URL],
@@ -122,10 +125,8 @@ export function convertQrCodeToInvitation(qrCode: QrCodeShortInvite) {
   }
 }
 
-export class QRCodeScannerScreen extends Component<
-  QRCodeScannerScreenProps,
-  QRCodeScannerScreenState
-> {
+export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
+  QRCodeScannerScreenState> {
   state = {
     appState: AppState.currentState,
     isCameraEnabled: true,
@@ -170,7 +171,7 @@ export class QRCodeScannerScreen extends Component<
     }
   }
 
-  checkExistingConnectionAndRedirect = (invitation: {
+  checkExistingConnectionAndRedirect = async (invitation: {
     payload: InvitationPayload,
   }) => {
     const { navigation } = this.props
@@ -181,6 +182,11 @@ export class QRCodeScannerScreen extends Component<
     // otherwise redirect to invitation screen
     const { publicDID = '' } = invitation.payload.senderDetail
     const connectionAlreadyExist = publicDID in this.props.publicDIDs
+
+    // Apparently navigation.push can be null, and hence we are protecting
+    // against null fn call, so if push is not available, navigate is
+    // guaranteed to be available
+    const navigationFn = navigation.push || navigation.navigate
 
     if (connectionAlreadyExist) {
       const {
@@ -207,10 +213,7 @@ export class QRCodeScannerScreen extends Component<
     }
 
     this.props.invitationReceived(invitation)
-    // Apparently navigation.push can be null, and hence we are protecting
-    // against null fn call, so if push is not available, navigate is
-    // guaranteed to be available
-    const navigationFn = navigation.push || navigation.navigate
+
     navigationFn(invitationRoute, {
       senderDID: invitation.payload.senderDID,
     })
@@ -320,6 +323,7 @@ export class QRCodeScannerScreen extends Component<
         verKey: payload.recipientKeys[1],
         endpoint: payload.serviceEndpoint,
       },
+      type: CONNECTION_INVITE_TYPES.ARIES_V1_QR,
       version: '1.0',
       original,
     }
@@ -327,83 +331,135 @@ export class QRCodeScannerScreen extends Component<
     this.checkExistingConnectionAndRedirect({ payload: invitation })
   }
 
-  onAriesOutOfBandInviteRead = (invite: AriesOutOfBandInvite) => {
-    const payload = invite
+  onAriesOutOfBandInviteRead = async (invite: AriesOutOfBandInvite) => {
+    const { navigation } = this.props
+    const navigationFn = navigation.push || navigation.navigate
 
-    const serviceEntry = payload.service
-      ? ((payload.service.find(
-          (serviceEntry) => typeof serviceEntry === 'object'
-        ): any): AriesServiceEntry)
-      : null
-    if (!serviceEntry) {
+    const invitation = ariesOutOfBandInvitationToInvitationPayload(invite)
+    if (!invitation) {
       this.props.navigation.goBack(null)
-
-      Alert.alert(
-        'Unsupported or invalid invitation format',
-        'Failed to establish connection.'
-      )
+      Alert.alert('Invalid invitation', 'QR code contains invalid formatted invitation.')
       return
     }
 
-    const publicDID = serviceEntry.recipientKeys[0]
-    const connectionAlreadyExist = publicDID in this.props.publicDIDs
-
     if (
-      (!payload.handshake_protocols || !payload.handshake_protocols.length) &&
-      (!payload['request~attach'] || !payload['request~attach'].length)
+      !invite.handshake_protocols?.length &&
+      !invite['request~attach']?.length
     ) {
+      // Invite: No `handshake_protocols` and `request~attach`
+      // Action: show alert about invalid formatted invitation
       this.props.navigation.goBack(null)
-
-      Alert.alert('Invalid invitation', 'Failed to establish connection.')
+      Alert.alert('Invalid invitation', 'QR code contains invalid formatted invitation.')
       return
     } else if (
-      payload.handshake_protocols &&
-      payload.handshake_protocols.length &&
-      (!payload['request~attach'] || !payload['request~attach'].length)
+      invite.handshake_protocols?.length &&
+      !invite['request~attach']?.length
     ) {
-      // Call create_connection_with_outofband_invitation function to process invite.
-      // Complete connection with regular flow.
-      // UI: show invite and follow reglar connection steps.
-
-      const senderAgentKeyDelegationProof = {
-        agentDID: serviceEntry.recipientKeys[0],
-        agentDelegatedKey: serviceEntry.recipientKeys[0],
-        signature: '<no-signature-supplied>',
-      }
-
-      const invitation = {
-        senderEndpoint: serviceEntry.serviceEndpoint,
-        requestId: payload[ID],
-        senderAgentKeyDelegationProof,
-        senderName: payload.label || 'Unknown',
-        senderDID: serviceEntry.recipientKeys[0],
-        senderLogoUrl: payload.profileUrl && isUrl(payload.profileUrl) ? payload.profileUrl: null,
-        senderVerificationKey: serviceEntry.recipientKeys[0],
-        targetName: payload.label || 'Unknown',
-        senderDetail: {
-          name: payload.label || 'Unknown',
-          agentKeyDlgProof: senderAgentKeyDelegationProof,
-          DID: serviceEntry.recipientKeys[0],
-          logoUrl: payload.profileUrl && isUrl(payload.profileUrl) ? payload.profileUrl: null,
-          verKey: serviceEntry.recipientKeys[0],
-          publicDID: serviceEntry.recipientKeys[0],
-        },
-        senderAgencyDetail: {
-          DID: serviceEntry.recipientKeys[0],
-          verKey: serviceEntry.recipientKeys[1],
-          endpoint: serviceEntry.serviceEndpoint,
-        },
-        type: CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND,
-        version: '1.0',
-        original: JSON.stringify(invite),
-        originalObject: invite,
-      }
-
+      // Invite: Has `handshake_protocols` but no `request~attach`
+      // Action: Create a new connection or reuse existing.
+      // UI: Show Connection invite
       this.checkExistingConnectionAndRedirect({ payload: invitation })
+    } else if (
+      // invite.handshake_protocols?.length &&
+      invite['request~attach']?.length
+    ) {
+      // Invite: Has `handshake_protocols` and has `request~attach`
+      // Action:
+      //  1. Create a new connection or reuse existing
+      //  2. Rut protocol connected to attached action
+      // UI: Show view related to attached action
+
+      const req = await getAttachedRequest(invite)
+      if (!req || !req[TYPE]) {
+        this.props.navigation.goBack(null)
+        Alert.alert('Unsupported request', 'QR code contains unsupported message.')
+        return
+      }
+
+      if (req[TYPE].endsWith('offer-credential')) {
+        const credentialOffer = (req: CredentialOffer)
+        const claimOffer = convertAriesCredentialOfferToCxsClaimOffer(credentialOffer)
+        const uid = credentialOffer[ID]
+
+        const existingCredential: ClaimOfferPayload = this.props.claimOffers[uid]
+        if (existingCredential && existingCredential.status === CLAIM_OFFER_STATUS.ACCEPTED) {
+          // we already have accepted that offer so we can redirect on credential details screen
+          this.props.navigation.navigate(credentialDetailsRoute, {
+            claimOfferUuid: existingCredential.uid,
+            credentialName: existingCredential.data.name,
+            issuerName: existingCredential.issuer.name,
+            date: existingCredential.issueDate,
+            attributes: existingCredential.data.revealedAttributes,
+            logoUrl: existingCredential.senderLogoUrl,
+            remoteDid: existingCredential.remotePairwiseDID,
+            uid: existingCredential.uid,
+          })
+          return
+        }
+
+        this.props.claimOfferReceived(
+          convertClaimOfferPushPayloadToAppClaimOffer(
+            {
+              ...claimOffer,
+              remoteName: invitation.senderName,
+              issuer_did: invitation.senderDID,
+              from_did: invitation.senderDID,
+              to_did: '',
+            },
+            {
+              remotePairwiseDID: invitation.senderDID,
+            },
+          ),
+          {
+            uid,
+            senderLogoUrl: invitation.senderLogoUrl,
+            remotePairwiseDID: invitation.senderDID,
+            hidden: true,
+          },
+        )
+
+        navigationFn(claimOfferRoute, {
+          backRedirectRoute: homeRoute,
+          uid: credentialOffer[ID],
+          logoUrl: invite.profileUrl,
+          invitationPayload: invitation,
+          attachedRequest: req,
+        })
+      } else if (req[TYPE].endsWith('request-presentation')) {
+        const presentationRequest = (req: AriesPresentationRequest)
+        const uid = presentationRequest[ID]
+
+        const [
+          outofbandProofError,
+          outofbandProofRequest,
+        ] = await validateOutofbandProofRequestQrCode(presentationRequest)
+
+        if (outofbandProofError || !outofbandProofRequest){
+          Alert.alert('Invalid invitation', outofbandProofError)
+          return
+        }
+
+        this.props.proofRequestReceived(
+          outofbandProofRequest,
+          {
+            uid,
+            senderLogoUrl: invitation.senderLogoUrl,
+            remotePairwiseDID: invitation.senderDID,
+            hidden: true,
+          }
+        )
+
+        navigationFn(proofRequestRoute, {
+          uid: uid,
+          backRedirectRoute: homeRoute,
+          invitationPayload: invitation,
+          attachedRequest: req,
+        })
+      }
     } else {
       // Implement this case
       this.props.navigation.goBack(null)
-      Alert.alert('Invalid invitation', 'Failed to establish connection.')
+      Alert.alert('Unsupported request', 'QR code contains unsupported message.')
       return
     }
   }
@@ -428,6 +484,7 @@ export class QRCodeScannerScreen extends Component<
 const mapStateToProps = (state: Store) => ({
   currentScreen: state.route.currentScreen,
   publicDIDs: getAllPublicDid(state.connections),
+  claimOffers: getClaimOffers(state),
 })
 
 const mapDispatchToProps = (dispatch) =>
@@ -436,6 +493,7 @@ const mapDispatchToProps = (dispatch) =>
       invitationReceived,
       changeEnvironmentUrl,
       openIdConnectUpdateStatus,
+      claimOfferReceived,
       proofRequestReceived,
     },
     dispatch

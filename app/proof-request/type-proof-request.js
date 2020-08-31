@@ -2,14 +2,12 @@
 import { INITIAL_TEST_ACTION } from '../common/type-common'
 import type {
   CustomError,
-  GenericObject,
   MessageAnnotation,
   TopicAnnotation,
   ReactNavigation,
   GenericStringObject,
   ResetAction,
   ImageSource,
-  NotificationPayload,
   RequestedAttrsJson,
 } from '../common/type-common'
 import type {
@@ -85,6 +83,7 @@ export type ProofRequestPushPayload = {
   remoteName: string,
   proofHandle: number,
   ephemeralProofRequest?: string,
+  outofbandProofRequest?: string,
 }
 
 export type ProofApiData = {
@@ -114,6 +113,7 @@ export type AdditionalProofDataPayload = {
   statusMsg?: string,
   proofHandle: number,
   ephemeralProofRequest?: string,
+  outofbandProofRequest?: string,
 }
 
 export type ProofRequestAttributeListProp = {
@@ -166,6 +166,7 @@ export type ProofRequestPayload = AdditionalProofDataPayload & {
   // nor user can fill self attested values inside empty attributes
   // value inside this key will tell reason that cannot fulfill each attribute
   dissatisfiedAttributes?: DissatisfiedAttribute[],
+  requestedAttrsJson?: RequestedAttrsJson,
 }
 
 export type ProofRequestProps = {
@@ -199,6 +200,11 @@ export type ProofRequestProps = {
   hideModal: () => void,
   dissatisfiedAttributes: DissatisfiedAttribute[],
   denyProofRequest: (uid: string) => void,
+  acceptOutOfBandInvitation: any,
+  acceptOutofbandPresentationRequest: (uid: string, requestedAttrsJson: RequestedAttrsJson) => void,
+  invitation?: any,
+  invitationPayload?: any,
+  attachedRequest?: any,
 } & ReactNavigation
 
 export type ProofRequestState = {
@@ -371,6 +377,19 @@ export type DenyProofRequestSuccessAction = {
   uid: string,
 }
 
+export const ACCEPT_OUTOFBAND_PRESENTATION_REQUEST = 'ACCEPT_OUTOFBAND_PRESENTATION_REQUEST'
+export type AcceptOutofbandPresentationRequestAction = {
+  type: typeof ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
+  uid: string,
+  requestedAttrsJson: RequestedAttrsJson,
+}
+
+export const OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED = 'OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED'
+export type OutOfBandConnectionForPresentationEstablishedAction = {
+  type: typeof OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
+  uid: string,
+}
+
 export type ProofRequestAction =
   | ProofRequestReceivedAction
   | SendProofSuccessAction
@@ -391,6 +410,7 @@ export type ProofRequestAction =
   | DenyProofRequestAction
   | DenyProofRequestSuccessAction
   | DenyProofRequestFailAction
+  | AcceptOutofbandPresentationRequestAction
 
 export type ProofRequestStore = {
   +[string]: ProofRequestPayload,
@@ -416,6 +436,19 @@ export type QrCodeEphemeralProofRequest = {
     },
   },
   proofRequestPayload: AdditionalProofDataPayload,
+}
+
+export type AriesPresentationRequest = {
+  '@id': string,
+  '@type': string,
+  comment: string,
+  'request_presentations~attach': Array<{
+    '@id': string,
+    'mime-type': string,
+    data: {
+      base64: string,
+    },
+  }>,
 }
 
 export const PRIMARY_ACTION_SEND = 'Send'

@@ -1,4 +1,5 @@
 // @flow
+import type { GenericObject } from '../../common/type-common'
 import type { AgencyPoolConfig } from '../../store/type-config-store'
 import type {
   VcxProvision,
@@ -16,6 +17,7 @@ import type {
 } from './type-cxs'
 import type { UserOneTimeInfo } from '../../store/user/type-user-store'
 import type { InvitationPayload } from '../../invitation/type-invitation'
+import type { CredentialOffer } from '../../claim-offer/type-claim-offer'
 import type { MyPairwiseInfo } from '../../store/type-connection-store'
 import type { ClaimOfferPushPayload } from '../../push-notification/type-push-notification'
 import { getWalletKey } from '../../services/storage'
@@ -165,5 +167,28 @@ export function convertVcxCredentialOfferToCxsClaimOffer(
     // should override it when generating claim offer object
     remoteName: '',
     price: vcxCredentialOffer.price,
+  }
+}
+
+export function convertAriesCredentialOfferToCxsClaimOffer(
+  credentialOffer: CredentialOffer
+): ClaimOfferPushPayload {
+  let claim: GenericObject = {}
+
+  for (const a of credentialOffer.credential_preview.attributes) {
+    claim[a.name] = a.value
+  }
+
+  return {
+    msg_type: 'credential-offer',
+    version: '0.1',
+    to_did: '',
+    from_did: '',
+    claim: claim,
+    claim_name: credentialOffer.comment || 'Unknown',
+    schema_seq_no: 0,
+    issuer_did: '',
+    // should override it when generating claim offer object
+    remoteName: '',
   }
 }

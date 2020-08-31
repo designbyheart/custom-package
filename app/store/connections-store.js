@@ -10,10 +10,6 @@ import {
 import { secureSet, secureDelete, getHydrationItem } from '../services/storage'
 import { CONNECTIONS } from '../common'
 import {
-  getAgencyUrl,
-  getAgencyVerificationKey,
-  getUserOneTimeInfo,
-  getPoolConfig,
   getAllConnection,
   getThemes,
   getConnection as getConnectionBySenderDid,
@@ -26,6 +22,8 @@ import type {
   Connection,
   Connections,
   ConnectionThemes,
+  ConnectionAttachRequestAction,
+  ConnectionDeleteAttachedRequestAction,
   DeleteConnectionSuccessEventAction,
   DeleteConnectionFailureEventAction,
   DeleteConnectionEventAction,
@@ -39,6 +37,8 @@ import type {
   InvitationPayload,
 } from '../invitation/type-invitation'
 import {
+  CONNECTION_ATTACH_REQUEST,
+  CONNECTION_DELETE_ATTACHED_REQUEST,
   NEW_CONNECTION,
   DELETE_CONNECTION_SUCCESS,
   DELETE_CONNECTION_FAILURE,
@@ -56,6 +56,7 @@ import {
   SEND_REDIRECT_SUCCESS,
   SEND_REUSE_SUCCESS,
   UPDATE_CONNECTION_FAIL,
+  NEW_ONE_TIME_CONNECTION,
 } from './type-connection-store'
 import {
   deleteConnection,
@@ -65,7 +66,6 @@ import {
   connectionReuse,
 } from '../bridge/react-native-cxs/RNCxs'
 import { RESET } from '../common/type-common'
-import type { UserOneTimeInfo } from './user/type-user-store'
 import { promptBackupBanner } from '../backup/backup-store'
 import { HYDRATED } from './type-config-store'
 import { captureError } from '../services/error/error-handler'
@@ -125,6 +125,11 @@ export const saveNewConnection = (connection: GenericObject) => ({
   connection,
 })
 
+export const saveNewOneTimeConnection = (connection: GenericObject) => ({
+  type: NEW_ONE_TIME_CONNECTION,
+  connection,
+})
+
 //TODO refactor create a new store for ui
 export const updateStatusBarTheme = (statusColor?: string) => ({
   type: UPDATE_STATUS_BAR_THEME,
@@ -141,6 +146,22 @@ export const deleteConnectionAction = (
 ): DeleteConnectionEventAction => ({
   type: DELETE_CONNECTION,
   senderDID,
+})
+
+export const connectionAttachRequest = (
+  identifier: string,
+  request: GenericObject
+): ConnectionAttachRequestAction => ({
+  type: CONNECTION_ATTACH_REQUEST,
+  identifier,
+  request,
+})
+
+export const connectionDeleteAttachedRequest = (
+  identifier: string
+): ConnectionDeleteAttachedRequestAction => ({
+  type: CONNECTION_DELETE_ATTACHED_REQUEST,
+  identifier,
 })
 
 export function* deleteConnectionOccurredSaga(
@@ -189,10 +210,11 @@ export function* loadNewConnectionSaga(
     myPairwisePeerVerKey,
     vcxSerializedConnection,
     publicDID,
+    attachedRequest,
   }: Connection = action.connection.newConnection
 
   try {
-    const connection = {
+    const connection: Connection = {
       identifier,
       logoUrl,
       senderDID,
@@ -205,6 +227,7 @@ export function* loadNewConnectionSaga(
       myPairwisePeerVerKey,
       vcxSerializedConnection,
       publicDID,
+      attachedRequest,
     }
 
     yield put(promptBackupBanner(true))
@@ -495,7 +518,11 @@ export function* watchConnection(): any {
 
 export default function connections(
   state: ConnectionStore = initialState,
-  action: any | UpdateConnectionSerializedStateAction
+  action:
+    | any
+    | UpdateConnectionSerializedStateAction
+    | ConnectionAttachRequestAction
+    | ConnectionDeleteAttachedRequestAction
 ) {
   switch (action.type) {
     case UPDATE_CONNECTION_THEME:
@@ -523,6 +550,15 @@ export default function connections(
         isFetching: true,
         isPristine: false,
         error: initialState.error,
+      }
+    case NEW_ONE_TIME_CONNECTION:
+      return {
+        ...state,
+        isFetching: false,
+        oneTimeConnections: {
+          ...state.oneTimeConnections,
+          [action.connection.identifier]: action.connection,
+        },
       }
     case NEW_CONNECTION_SUCCESS:
       const {
@@ -581,6 +617,35 @@ export default function connections(
         isFetching: false,
         error: action.error,
       }
+    case CONNECTION_ATTACH_REQUEST: {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [action.identifier]: {
+            ...state.data?.[action.identifier],
+            attachedRequest: action.request,
+          },
+        },
+      }
+    }
+    case CONNECTION_DELETE_ATTACHED_REQUEST: {
+      if (state.data && state.data[action.identifier]) {
+        // eslint-disable-next-line no-unused-vars
+        const { attachedRequest, ...connection } =
+        state.data?.[action.identifier] ?? {}
+
+        return {
+          ...state,
+          data: {
+            ...state.data,
+            [action.identifier]: connection,
+          },
+        }
+      } else {
+        return state
+      }
+    }
     case RESET:
       return initialState
     default:
