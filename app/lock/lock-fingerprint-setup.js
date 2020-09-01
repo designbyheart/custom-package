@@ -14,6 +14,7 @@ import {
   settingsTabRoute,
   settingsRoute,
   lockTouchIdSetupRoute,
+  eulaRoute,
 } from '../common'
 
 import {
@@ -63,6 +64,11 @@ export class LockFingerprintSetup extends PureComponent<
     this.props.navigation.navigate(lockPinSetupRoute, { touchIdActive: true })
   }
 
+  goToEulaScreen = () => {
+    this.props.enableTouchIdAction()
+    this.props.navigation.navigate(eulaRoute)
+  }
+
   popUpNativeAlert = (message: string) => {
     Alert &&
       Alert.alert(
@@ -98,9 +104,15 @@ export class LockFingerprintSetup extends PureComponent<
           )
             .then(() => {
               TouchId.release()
-              this.props.fromSettings
-                ? this.goToSettingsScreen()
-                : this.goToPinSetupScreen()
+              if (this.props.fromSettings) {
+                this.goToSettingsScreen()
+                return
+              }
+              if (this.props.fromSetup) {
+                this.goToEulaScreen()
+                return
+              }
+              this.goToPinSetupScreen()
             })
             .catch((error) => {
               if (AllowedFallbackToucheIDErrors.indexOf(error.name) >= 0) {
@@ -156,6 +168,8 @@ const mapStateToProps = (state: Store, props) => ({
   currentScreen: state.route.currentScreen,
   fromSettings:
     props.route.params !== undefined ? props.route.params.fromSettings : false,
+  fromSetup:
+    props.route.params !== undefined ? props.route.params.fromSetup : false,
 })
 
 const mapDispatchToProps = (dispatch) =>

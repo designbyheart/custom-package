@@ -94,6 +94,7 @@ export class LockEnterFingerprint extends Component<
   }
 
   handleFailedAuth = (error: Error) => {
+    TouchId.release()
     const { failedAttempts } = this.state
     TouchId.release()
     if (failedAttempts > 0) {

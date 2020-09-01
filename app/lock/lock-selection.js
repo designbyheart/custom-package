@@ -2,25 +2,26 @@
 import React, { Component } from 'react'
 import {
   Image,
-  View,
   StyleSheet,
-  TouchableHighlight,
   Alert,
-  Keyboard,
   Platform,
   Switch,
+  Dimensions,
+  TouchableOpacity,
 } from 'react-native'
 import { connect } from 'react-redux'
-import { select } from 'redux-saga/effects'
 import { bindActionCreators } from 'redux'
 import ToggleSwitch from 'react-native-flip-toggle-button'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import type { Store } from '../store/type-store'
 import { Container, CustomText, CustomView } from '../components'
+import { SvgCustomIcon } from '../components/svg-custom-icon'
 import {
   lockPinSetupRoute,
   lockTouchIdSetupRoute,
   switchEnvironmentRoute,
   lockSelectionRoute,
+  eulaRoute,
 } from '../common/'
 import type { LockSelectionProps } from './type-lock'
 import {
@@ -28,7 +29,6 @@ import {
   OFFSET_2X,
   OFFSET_3X,
   OFFSET_5X,
-  OFFSET_6X,
   OFFSET_7X,
   color,
   isiPhone5,
@@ -36,6 +36,9 @@ import {
   mantis,
   lightWhite,
   white,
+  colors,
+  fontFamily,
+  grey,
 } from '../common/styles/constant'
 import {
   switchErrorAlerts,
@@ -52,6 +55,7 @@ import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pendi
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { headerOptionsWithNoBack } from '../navigation/navigation-header-config'
 
+const { width } = Dimensions.get('screen')
 export class LockSelection extends Component<LockSelectionProps, *> {
   constructor(props: LockSelectionProps) {
     super(props)
@@ -62,7 +66,9 @@ export class LockSelection extends Component<LockSelectionProps, *> {
 
   goTouchIdSetup = () => {
     if (this.props.navigation.isFocused()) {
-      this.props.navigation.navigate(lockTouchIdSetupRoute)
+      this.props.navigation.navigate(lockTouchIdSetupRoute, {
+        fromSetup: true,
+      })
       this.props.safeToDownloadSmsInvitation()
     }
   }
@@ -100,104 +106,59 @@ export class LockSelection extends Component<LockSelectionProps, *> {
   render() {
     return (
       <Container tertiary style={[style.pinSelectionContainer]}>
-        <CustomView style={[style.messageText]}>
-          <CustomText h5 bg="tertiary" tertiary bold center>
-            This application must be protected by Biometrics or a passcode at
-            all times.
-          </CustomText>
+        <CustomView center>
+          <SvgCustomIcon
+            name="ConnectMe"
+            width={moderateScale(218.54)}
+            height={moderateScale(28.74)}
+            fill={colors.cmGray2}
+          />
         </CustomView>
-        <Container spaceAround>
-          <CustomView
-            center
-            fifth
-            shadowNoOffset
-            testID="touch-id-selection"
-            style={[style.touchIdPinContainer]}
-            onPress={this.goTouchIdSetup}
-            onLongPress={this._onLongPressButton}
-          >
-            <Image
-              style={style.fingerPrintIcon}
-              source={require('../images/icon_fingerPrint.png')}
-            />
-            <CustomText
-              h5
-              semiBold
-              center
-              tertiary
-              transparentBg
-              testID="use-touch-id-text"
-              onPress={this.goTouchIdSetup}
-              onLongPress={this._onLongPressButton}
-            >
-              Use Biometrics
-            </CustomText>
-          </CustomView>
-          <CustomView
-            testID="lock-selection-or-text"
-            onLongPress={this._onLongPressButton}
-            onPress={this._onTextPressButton}
-            debounceAction={false}
-          >
-            <CustomText h4 bg="tertiary" tertiary transparentBg thick center>
-              or
-            </CustomText>
-          </CustomView>
-          <CustomView
-            fifth
-            shadowNoOffset
-            testID="pin-code-selection"
-            style={[style.touchIdPinContainer]}
-            onPress={this.goPinCodeSetup}
-            onLongPress={this._onLongPressButton}
-          >
-            <CustomView row center style={[style.pinContainer]}>
-              <CustomView style={[style.pin]}>
-                <CustomText h4 thick center bg="fifth">
-                  1
-                </CustomText>
-              </CustomView>
-              <CustomView style={[style.pin]}>
-                <CustomText h4 thick center bg="fifth">
-                  2
-                </CustomText>
-              </CustomView>
-              <CustomView style={[style.pin]}>
-                <CustomText h4 thick center bg="fifth">
-                  3
-                </CustomText>
-              </CustomView>
-              <CustomView style={[style.pin]}>
-                <CustomText h4 thick center bg="fifth">
-                  4
-                </CustomText>
-              </CustomView>
-              <CustomView style={[style.pin]}>
-                <CustomText h4 thick center bg="fifth">
-                  5
-                </CustomText>
-              </CustomView>
-              <CustomView style={[style.pin]}>
-                <CustomText h4 thick center bg="fifth">
-                  6
-                </CustomText>
-              </CustomView>
-            </CustomView>
-            <CustomText
-              h5
-              semiBold
-              center
-              tertiary
-              transparentBg
-              style={[style.usePinText]}
-              onPress={this.goPinCodeSetup}
-              testID="use-pass-code-text"
-              onLongPress={this._onLongPressButton}
-            >
-              Use Passcode
-            </CustomText>
-          </CustomView>
-        </Container>
+        <CustomText
+          center
+          h4
+          bg="tertiary"
+          style={[style.title]}
+          tertiary
+          thick
+        >
+          Biometrics are faster.
+        </CustomText>
+        <CustomView
+          testID="lock-selection-or-text"
+          onLongPress={this._onLongPressButton}
+          onPress={this._onTextPressButton}
+          debounceAction={false}
+        ></CustomView>
+        <CustomView
+          center
+          style={[style.image]}
+          onPress={this._onTextPressButton}
+          onLongPress={this._onLongPressButton}
+          debounceAction={false}
+        >
+          <Image source={require('../images/biometricsGroup.png')} />
+        </CustomView>
+        <CustomText bg="tertiary" tertiary style={[style.message]}>
+          You can use your face or finger to unlock this app. Your passcode will
+          still be required if biometrics fail.
+        </CustomText>
+        <TouchableOpacity onPress={this.goTouchIdSetup} style={[style.button]}>
+          <CustomText center h4 transparentBg thick>
+            Use biometrics
+          </CustomText>
+        </TouchableOpacity>
+        <CustomText
+          center
+          style={[style.noThanks]}
+          bg="tertiary"
+          tertiary
+          h5
+          bold
+          onPress={() => this.props.navigation.navigate(eulaRoute)}
+        >
+          No thanks
+        </CustomText>
         <CustomView tertiary style={[style.devSwitchContainer]}>
           <CustomView tertiary row spaceBetween>
             <CustomView tertiary style={[style.devSwitchText]}>
@@ -288,52 +249,63 @@ export const lockSelectionScreen = {
   routeName: lockSelectionRoute,
   screen: connect(mapStateToProps, mapDispatchToProps)(LockSelection),
   options: headerOptionsWithNoBack({
-    title: 'Choose how to unlock App',
+    title: '',
   }),
 }
 
 const style = StyleSheet.create({
   pinSelectionContainer: {
-    paddingTop: OFFSET_3X,
     paddingBottom: isiPhone5 ? OFFSET_1X / 2 : OFFSET_1X,
     paddingHorizontal: OFFSET_2X,
-  },
-  messageText: {
-    paddingHorizontal: isiPhone5 ? 0 : OFFSET_5X / 2,
-    paddingBottom: isiPhone5 ? OFFSET_3X / 2 : OFFSET_7X / 2,
-  },
-  touchIdPinContainer: {
-    paddingTop: OFFSET_1X / 2,
-    paddingHorizontal: OFFSET_2X,
-    paddingBottom: OFFSET_2X,
-    borderRadius: 13,
-    marginHorizontal: OFFSET_3X,
-  },
-  fingerPrintIcon: {
-    marginVertical: OFFSET_3X / 2,
-    height: 60,
-    width: 60,
-  },
-  pinContainer: {
-    marginVertical: OFFSET_3X,
-    marginBottom: OFFSET_5X / 2,
-  },
-  pin: {
-    borderBottomColor: color.bg.fifth.font.primary,
-    borderBottomWidth: PIN_CODE_BORDER_BOTTOM,
-    marginRight: OFFSET_1X / 2,
-    paddingHorizontal: OFFSET_1X / 2,
-    paddingBottom: OFFSET_1X,
-  },
-  usePinText: {
-    lineHeight: 22,
-    paddingBottom: OFFSET_1X / 2,
+    flexDirection: 'column',
   },
   devSwitchContainer: {
     marginHorizontal: OFFSET_3X,
-    marginTop: OFFSET_2X,
+    marginTop: moderateScale(OFFSET_2X),
   },
   devSwitchText: {
     alignSelf: 'center',
+  },
+  title: {
+    fontFamily,
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: moderateScale(26),
+    lineHeight: moderateScale(31),
+    marginTop: verticalScale(49.26),
+    marginBottom: verticalScale(69),
+    paddingHorizontal: OFFSET_2X,
+    textAlign: 'center',
+  },
+  message: {
+    fontSize: moderateScale(19),
+    lineHeight: moderateScale(23),
+  },
+  button: {
+    borderRadius: 5,
+    marginTop: verticalScale(50),
+    marginBottom: verticalScale(17.5),
+    backgroundColor: colors.cmGreen1,
+    width: width - OFFSET_2X * 2,
+    padding: moderateScale(17),
+    paddingLeft: moderateScale(10),
+    paddingRight: moderateScale(10),
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: grey,
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
+    shadowRadius: 5,
+    shadowOpacity: 0.3,
+    elevation: 7,
+  },
+  noThanks: {
+    color: colors.cmGreen1,
+    lineHeight: moderateScale(34),
+  },
+  image: {
+    marginBottom: verticalScale(59),
   },
 })

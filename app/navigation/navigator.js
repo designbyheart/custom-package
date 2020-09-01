@@ -67,6 +67,7 @@ import {
   credentialsDrawerRoute,
   homeDrawerRoute,
   settingsDrawerRoute,
+  lockPinSetupHomeRoute,
 } from '../common'
 import { walletTabsScreen } from '../wallet/wallet-tab-send-details'
 import { checkIfAnimationToUse } from '../bridge/react-native-cxs/RNCxs'
@@ -81,6 +82,7 @@ import { colors, fontFamily } from '../common/styles/constant'
 import { UserAvatar, Avatar, UnreadMessagesBadge } from '../components'
 import { unreadMessageContainerCommonStyle } from '../components/unread-messages-badge/unread-messages-badge'
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { startUpScreen } from '../start-up/start-up-screen'
 import useBackHandler from '../hooks/use-back-handler'
 
 enableScreens()
@@ -367,6 +369,11 @@ function CardStackScreen() {
         name={lockSelectionScreen.routeName}
         component={lockSelectionScreen.screen}
         options={lockSelectionScreen.options}
+      />
+      <CardStack.Screen
+        name={startUpScreen.routeName}
+        component={startUpScreen.screen}
+        options={startUpScreen.options}
       />
       <CardStack.Screen
         name={expiredTokenScreen.routeName}

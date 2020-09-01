@@ -274,6 +274,7 @@ export type LockAuthorizationProps = {} & LockAuthorizationNavigation
 export type LockFingerprintSetupProps = {
   touchIdActive: boolean,
   fromSettings: boolean,
+  fromSetup?: boolean,
   currentScreen: string,
   disableTouchIdAction: () => void,
   enableTouchIdAction: () => void,
