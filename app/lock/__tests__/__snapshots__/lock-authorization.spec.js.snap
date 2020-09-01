@@ -150,8 +150,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "borderBottomColor": "#777777",
-                "borderBottomWidth": 5,
                 "height": 66,
                 "justifyContent": "center",
                 "marginHorizontal": 5,
@@ -159,7 +157,28 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
               }
             }
             testID="pin-code-digit-0-touchable"
-          />
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#EAEAEA",
+                    "fontSize": 26,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
           <View
             accessibilityLabel="pin-code-digit-1-touchable"
             accessible={false}
@@ -183,8 +202,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "borderBottomColor": "#777777",
-                "borderBottomWidth": 5,
                 "height": 66,
                 "justifyContent": "center",
                 "marginHorizontal": 5,
@@ -192,7 +209,28 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
               }
             }
             testID="pin-code-digit-1-touchable"
-          />
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#EAEAEA",
+                    "fontSize": 26,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
           <View
             accessibilityLabel="pin-code-digit-2-touchable"
             accessible={false}
@@ -216,8 +254,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "borderBottomColor": "#777777",
-                "borderBottomWidth": 5,
                 "height": 66,
                 "justifyContent": "center",
                 "marginHorizontal": 5,
@@ -225,7 +261,28 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
               }
             }
             testID="pin-code-digit-2-touchable"
-          />
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#EAEAEA",
+                    "fontSize": 26,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
           <View
             accessibilityLabel="pin-code-digit-3-touchable"
             accessible={false}
@@ -249,8 +306,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "borderBottomColor": "#777777",
-                "borderBottomWidth": 5,
                 "height": 66,
                 "justifyContent": "center",
                 "marginHorizontal": 5,
@@ -258,7 +313,28 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
               }
             }
             testID="pin-code-digit-3-touchable"
-          />
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#EAEAEA",
+                    "fontSize": 26,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
           <View
             accessibilityLabel="pin-code-digit-4-touchable"
             accessible={false}
@@ -282,8 +358,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "borderBottomColor": "#777777",
-                "borderBottomWidth": 5,
                 "height": 66,
                 "justifyContent": "center",
                 "marginHorizontal": 5,
@@ -291,7 +365,28 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
               }
             }
             testID="pin-code-digit-4-touchable"
-          />
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#EAEAEA",
+                    "fontSize": 26,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
           <View
             accessibilityLabel="pin-code-digit-5-touchable"
             accessible={false}
@@ -315,8 +410,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "borderBottomColor": "#777777",
-                "borderBottomWidth": 5,
                 "height": 66,
                 "justifyContent": "center",
                 "marginHorizontal": 5,
@@ -324,7 +417,28 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
               }
             }
             testID="pin-code-digit-5-touchable"
-          />
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#EAEAEA",
+                    "fontSize": 26,
+                  },
+                  undefined,
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
         </View>
         <TextInput
           accessibilityLabel="pin-code-input-box"

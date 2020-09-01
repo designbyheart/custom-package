@@ -29,11 +29,17 @@ export const headerNavigationOptions = ({
   }
 }
 
-export const headerOptionsWithNoBack = ({ title }: { title: string }) => ({
-  headerShown: true,
+export const headerOptionsWithNoBack = ({
+  title,
+  headerShown = true,
+}: {
+  title: string,
+  headerShown?: boolean,
+}) => ({
   title,
   gestureEnabled: false,
   headerHideBackButton: true,
   headerTitleStyle: headerTitleStyle.title,
   headerHideShadow: true,
+  headerShown,
 })

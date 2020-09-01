@@ -1,5 +1,6 @@
 // @flow
 export const splashScreenRoute = 'SplashScreenHide'
+export const startUpRoute = 'StartUp'
 export const homeRoute = 'Home'
 export const homeDrawerRoute = 'HomeDrawer'
 export const myConnectionsRoute = 'MyConnections'

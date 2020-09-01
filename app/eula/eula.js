@@ -16,7 +16,12 @@ import type {
 } from '../common/type-common'
 
 import { Container, FooterActions } from '../components'
-import { eulaRoute, restoreRoute, lockSelectionRoute } from '../common'
+import {
+  eulaRoute,
+  restoreRoute,
+  lockSelectionRoute,
+  homeRoute,
+} from '../common'
 import { eulaAccept } from './eula-store'
 import { EULA_URL, localEulaSource } from './type-eula'
 import { OrangeLoader } from '../components/loader-gif/loader-gif'
@@ -29,6 +34,7 @@ import {
 export const EulaScreen = ({
   dispatch,
   navigation,
+  route,
 }: ReactNavigation & ReduxConnect) => {
   const [error, setError] = useState<CustomError | null>(null)
   const onReject = useCallback(() => {
@@ -40,8 +46,8 @@ export const EulaScreen = ({
 
   const onAccept = useCallback(() => {
     dispatch(eulaAccept(true))
-    // if we have to enable choice for restore and start fresh screen, then redirect user to restoreRoute instead of lockSelectionRoute
-    navigation.navigate(lockSelectionRoute)
+    // if we have to enable choice for restore and start fresh screen, then redirect user to restoreRoute instead of homeRoute
+    navigation.navigate(homeRoute)
   }, [])
 
   const renderLoader = useCallback(() => Loader, [])

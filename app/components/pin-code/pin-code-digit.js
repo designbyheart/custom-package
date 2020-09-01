@@ -22,13 +22,11 @@ export default class PinCodeDigit extends PureComponent<
         style={[styles.digit, style]}
         testID={testID}
       >
-        {entered && (
-          <Icon
-            size={styles.icon.height}
-            name="brightness-1"
-            color={styles.icon.color}
-          />
-        )}
+        <Icon
+          size={styles.icon.height}
+          name="brightness-1"
+          color={entered ? styles.icon.color : '#EAEAEA'}
+        />
       </CustomView>
     )
   }
@@ -38,8 +36,6 @@ const iconDimension = 26
 
 const styles = StyleSheet.create({
   digit: {
-    borderBottomWidth: 5,
-    borderBottomColor: color.bg.tertiary.font.tertiary,
     marginHorizontal: OFFSET_1X / 2,
     height: 66,
     width: 38,
