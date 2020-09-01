@@ -386,7 +386,7 @@ const mapStateToProps = (state: Store) => {
       status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
       status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
       status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED
-    ) && show) {
+    ) && show === undefined || show) {
       return true
     } else return false
   }

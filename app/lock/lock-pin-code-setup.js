@@ -32,7 +32,7 @@ export function LockPinSetup(props: ReactNavigation) {
   const existingPin = route && route.params && route.params.existingPin === true
   const enterPasscodeText = existingPin
     ? 'Create new passcode'
-    : 'Create a passcode to \n secure this app'
+    : 'Create a passcode to\n secure this app'
   const handleKeyboardChange = useCallback((status, event) => {
     if (keyboardHidden !== status) {
       setKeyboardHidden(status)

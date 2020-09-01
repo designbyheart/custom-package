@@ -84,6 +84,8 @@ import { unreadMessageContainerCommonStyle } from '../components/unread-messages
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 import { startUpScreen } from '../start-up/start-up-screen'
 import useBackHandler from '../hooks/use-back-handler'
+import { CustomValuesScreen } from '../connection-details/components/custom-values'
+import { AttributeValuesScreen } from '../connection-details/components/attribute-values'
 
 enableScreens()
 
@@ -228,7 +230,7 @@ const drawerItemIcon = (title: string) => ({ color }) => (
 const drawerItemLabel = (
   title: string,
   extraComponent?: React.Node = null
-) => ({ focused, tintColor }) => (
+) => ({ focused }) => (
   <View style={styles.labelContainer}>
     <Text style={[styles.labelText, focused && styles.labelTextFocusedColor]}>
       {title}
@@ -469,9 +471,12 @@ const ModalStack = createStackNavigator()
 const modalStackOptions = {
   headerShown: false,
   gestureEnabled: true,
+  cardOverlayEnabled: true,
+  safeAreaInsets: { top: 1250 },
   animationEnabled: !checkIfAnimationToUse(),
   ...TransitionPresets.ModalPresentationIOS,
 }
+
 export function ConnectMeAppNavigator() {
   return (
     <ModalStack.Navigator mode="modal" screenOptions={modalStackOptions}>
@@ -479,46 +484,67 @@ export function ConnectMeAppNavigator() {
       <ModalStack.Screen
         name={claimOfferScreen.routeName}
         component={claimOfferScreen.screen}
+        options={claimOfferScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={cloudBackupScreen.routeName}
         component={cloudBackupScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
       <ModalStack.Screen
         name={cloudRestoreModalScreen.routeName}
         component={cloudRestoreModalScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
       <ModalStack.Screen
         name={proofScreen.routeName}
         component={proofScreen.screen}
+        options={proofScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={fulfilledMessageScreen.routeName}
         component={fulfilledMessageScreen.screen}
+        options={fulfilledMessageScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={openIdConnectScreen.routeName}
         component={openIdConnectScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
       <ModalStack.Screen
         name={proofRequestScreen.routeName}
         component={proofRequestScreen.screen}
+        options={proofRequestScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={questionScreen.routeName}
         component={questionScreen.screen}
+        options={questionScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={txnAuthorAgreementScreen.routeName}
         component={txnAuthorAgreementScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
       <ModalStack.Screen
         name={walletScreen.routeName}
         component={walletScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
       <ModalStack.Screen
         name={walletTabsScreen.routeName}
         component={walletTabsScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
+      />
+      <ModalStack.Screen
+        name={CustomValuesScreen.routeName}
+        component={CustomValuesScreen.screen}
+        options={CustomValuesScreen.screen.navigationOptions}
+      />
+      <ModalStack.Screen
+        name={AttributeValuesScreen.routeName}
+        component={AttributeValuesScreen.screen}
+        options={AttributeValuesScreen.screen.navigationOptions}
       />
     </ModalStack.Navigator>
   )

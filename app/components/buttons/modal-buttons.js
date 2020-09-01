@@ -1,23 +1,36 @@
 // @flow
 import React, { PureComponent } from 'react'
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native'
+import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import debounce from 'lodash.debounce'
-import { scale, moderateScale, verticalScale } from 'react-native-size-matters'
-import CredentialPriceInfo from '../labels/credential-price-info'
-import { shadeColor } from '../../utilities/color'
+import { moderateScale, verticalScale } from 'react-native-size-matters'
 import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 import { CustomText } from '../../components'
+import SvgCustomIcon from '../../components/svg-custom-icon'
 
-// TODO: Fix the <any, {}> to be the correct types for props and state
-class ModalButtons extends PureComponent<any, {}> {
-  constructor(props: any) {
+type BottomButtonProps = {
+  colorBackground: string,
+  debounceButtonPress: (event: any) => void,
+  disableAccept: boolean,
+  bottomBtnText: string,
+  svgIcon: any,
+}
+
+type TopButtonProps = {
+  topBtnText: string,
+  onIgnore: (event: any) => void,
+}
+
+// TODO: Fix the any type
+type ModalButtonProps = {
+  containerStyles?: any,
+  children?: any,
+  primaryActionValue: (event: any) => void,
+  onPress: (event: any) => void,
+} & BottomButtonProps &
+  TopButtonProps
+
+class ModalButtons extends PureComponent<any, ModalButtonProps> {
+  constructor(props: ModalButtonProps) {
     super(props)
   }
 
@@ -39,75 +52,109 @@ class ModalButtons extends PureComponent<any, {}> {
   render() {
     const {
       onIgnore,
-      onPress,
       disableAccept = false,
       colorBackground,
-      secondColorBackground,
-      leftBtnText,
-      rightBtnText,
+      topBtnText,
+      bottomBtnText,
       containerStyles,
       children,
-      buttonsWrapperStyles,
+      svgIcon,
     } = this.props
-
-    const { width: screenWidth } = Dimensions.get('window')
-
-    let themeType = colorBackground
-    if (disableAccept) {
-      const colorsWithoutOpacity = this.props.colorBackground.split(',', 3)
-      colorsWithoutOpacity.push('0.4)')
-      themeType = colorsWithoutOpacity.join(',')
-    }
+    const { container } = styles
+    const { debounceButtonPress } = this
 
     return (
-      <View style={[styles.container, containerStyles]}>
+      <View style={[container, containerStyles]}>
         {children}
-        <View style={[styles.innerWrapper, buttonsWrapperStyles]}>
-          {leftBtnText && (
-            <TouchableOpacity
-              style={[
-                styles.buttonIgnore,
-                {
-                  backgroundColor:
-                    secondColorBackground || shadeColor(colorBackground, 60),
-                },
-              ]}
-              onPress={onIgnore}
-            >
-              <CustomText h4 transparentBg thick style={styles.ignore}>
-                {leftBtnText}
-              </CustomText>
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity
-            style={[styles.buttonAccept, { backgroundColor: themeType }]}
-            disabled={disableAccept}
-            onPress={this.debounceButtonPress}
-          >
-            <View style={{ opacity: disableAccept ? 0.4 : 1 }}>
-              <CustomText h4 transparentBg thick center>
-                {rightBtnText}
-              </CustomText>
-            </View>
-          </TouchableOpacity>
-        </View>
+        {topBtnText && (
+          <TopButton
+            {...{
+              topBtnText,
+              onIgnore,
+            }}
+          />
+        )}
+        <BottomButton
+          {...{
+            disableAccept,
+            bottomBtnText,
+            debounceButtonPress,
+            svgIcon,
+            colorBackground,
+          }}
+        />
       </View>
     )
   }
+}
+
+const TopButton = ({ topBtnText, onIgnore }: TopButtonProps) => {
+  const { buttonIgnore, ignoreTextStyle, buttonParentWrapper } = styles
+
+  return (
+    <TouchableOpacity onPress={onIgnore}>
+      <View
+        style={[
+          buttonParentWrapper,
+          buttonIgnore,
+          { marginBottom: moderateScale(16) },
+        ]}
+      >
+        <CustomText errorText h4 transparentBg demiBold style={ignoreTextStyle}>
+          {topBtnText}
+        </CustomText>
+      </View>
+    </TouchableOpacity>
+  )
+}
+
+const BottomButton = ({
+  debounceButtonPress,
+  disableAccept,
+  bottomBtnText,
+  svgIcon,
+  colorBackground,
+}: BottomButtonProps) => {
+  const {
+    buttonAccept,
+    acceptTextStyle,
+    buttonParentWrapper,
+    svgIconStyles,
+  } = styles
+
+  return (
+    <TouchableOpacity disabled={disableAccept} onPress={debounceButtonPress}>
+      <View
+        style={[
+          buttonParentWrapper,
+          buttonAccept,
+          {
+            backgroundColor: colorBackground,
+            opacity: disableAccept ? 0.4 : 1,
+          },
+        ]}
+      >
+        <CustomText h4 transparentBg thick center style={acceptTextStyle}>
+          {bottomBtnText}
+        </CustomText>
+        {svgIcon && <SvgCustomIcon style={svgIconStyles} name={svgIcon} />}
+      </View>
+    </TouchableOpacity>
+  )
 }
 
 export { ModalButtons }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'transparent',
+    backgroundColor: colors.cmWhite,
     width: '100%',
     maxWidth: '100%',
     padding: moderateScale(15),
-    paddingBottom: moderateScale(45),
+    paddingBottom: moderateScale(1),
     flexDirection: 'column',
   },
-  innerWrapper: {
+  buttonParentWrapper: {
     borderRadius: 5,
     width: '100%',
     flexDirection: 'row',
@@ -116,29 +163,31 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   buttonIgnore: {
+    borderWidth: 1,
+    borderColor: colors.cmRed,
     padding: moderateScale(17),
     paddingLeft: moderateScale(10),
     paddingRight: moderateScale(10),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.cmGray4,
     minWidth: '35%',
   },
-  ignore: {
-    fontSize: verticalScale(fontSizes.size5),
-    fontWeight: '700',
-    color: colors.cmWhite,
-    fontFamily: fontFamily,
-  },
   buttonAccept: {
-    flex: 1,
+    borderRadius: 5,
     padding: moderateScale(17),
     paddingLeft: moderateScale(10),
     paddingRight: moderateScale(10),
     alignItems: 'center',
     justifyContent: 'center',
+    minWidth: '35%',
   },
-  accept: {
+  ignoreTextStyle: {
+    fontSize: verticalScale(fontSizes.size5),
+    fontWeight: '700',
+    color: colors.cmRed,
+    fontFamily: fontFamily,
+  },
+  acceptTextStyle: {
     fontSize: verticalScale(fontSizes.size5),
     fontWeight: '700',
     color: colors.cmWhite,
@@ -150,4 +199,5 @@ const styles = StyleSheet.create({
   fullIgnore: {
     width: '100%',
   },
+  svgIconStyles: { position: 'absolute', right: 10 },
 })

@@ -114,8 +114,8 @@ export class TxnAuthorAgreement extends Component<
             onIgnore={this.afterSuccessShown}
             colorBackground={'#EB9B2D'}
             secondColorBackground={'#B37622'}
-            leftBtnText={'Ignore'}
-            rightBtnText={'Try Again'}
+            topBtnText={'Ignore'}
+            bottomBtnText={'Try Again'}
           />
         </View>
       )
@@ -138,8 +138,8 @@ export class TxnAuthorAgreement extends Component<
             onIgnore={this.afterSuccessShown}
             colorBackground={'#EB9B2D'}
             secondColorBackground={'#B37622'}
-            leftBtnText={'Ignore'}
-            rightBtnText={'Accept'}
+            topBtnText={'Ignore'}
+            bottomBtnText={'Accept'}
           />
         </View>
       )

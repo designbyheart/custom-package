@@ -23,8 +23,8 @@ class DesignStyleguide extends Component<void, void> {
             disableAccept={false}
             payTokenValue={0}
             colorBackground={buttonGreen}
-            leftBtnText={'Ignore'}
-            rightBtnText={'Read and Sign TAA'}
+            topBtnText={'Ignore'}
+            bottomBtnText={'Read and Sign TAA'}
             buttonsWrapperStyles={{
               borderTopLeftRadius: 0,
               borderTopRightRadius: 0,

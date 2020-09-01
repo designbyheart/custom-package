@@ -7,6 +7,7 @@ import CloseButton from './components/atoms/close-button'
 import QuestionDetails from './components/atoms/question-details'
 import QuestionScreenText from './components/atoms/question-screen-text'
 import QuestionSenderDetail from './components/atoms/question-sender-details'
+import { ModalHeaderBar } from '../components/modal-header-bar/modal-header-bar'
 import {
   QuestionError,
   QuestionLoader,
@@ -26,6 +27,7 @@ import type { Connection } from '../store/type-connection-store'
 
 import { CustomView } from '../components'
 import { questionRoute } from '../common/route-constants'
+import { colors } from '../common/styles/constant'
 import { QUESTION_STATUS } from './type-question'
 import {
   updateQuestionStatus,
@@ -82,7 +84,6 @@ export class Question extends Component<
             question={this.props.question}
           />
         )}
-        <CloseButton onPress={this.onGoBack} icon={'CloseIcon'} />
       </SafeAreaView>
     )
   }
@@ -301,3 +302,23 @@ export const questionScreen = {
   routeName: questionRoute,
   screen: connect(mapStateToProps, mapDispatchToProps)(Question),
 }
+
+questionScreen.screen.navigationOptions = ({
+  navigation: { goBack, isFocused },
+}) => ({
+  safeAreaInsets: { top: 85 },
+  cardStyle: {
+    marginLeft: '2.5%',
+    marginRight: '2.5%',
+    marginBottom: '4%',
+    borderRadius: 10,
+    backgroundColor: colors.cmWhite,
+  },
+  cardOverlay: () => (
+    <ModalHeaderBar
+      headerTitle={isFocused() ? 'Question' : ''}
+      dismissIconType={isFocused() ? 'CloseIcon' : null}
+      onPress={() => goBack(null)}
+    />
+  ),
+})
