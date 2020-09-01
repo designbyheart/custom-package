@@ -49,6 +49,9 @@ import {
   SCREENSHOT_HOME_BIG_HISTORY,
   BACK_ARROW,
   MENU_HOME,
+  CONNECTION_SUBMENU_BUTTON,
+  CONNECTION_SUBMENU_CLOSE_BUTTON,
+  CONNECTION_DELETE_BUTTON,
 } from '../utils/test-constants'
 import { waitForElementAndTap } from '../utils/detox-selectors'
 import { element, by, waitFor, expect, device } from 'detox'
@@ -77,7 +80,7 @@ let credDef
 let credential
 let proof
 let URL
-const TIMEOUT = 60000
+const TIMEOUT = 30000
 
 describe('Connection via QR code and SMS link', () => {
   it('Case 1.1: user should be able to establish connection via scanning QR code', async () => {
@@ -121,7 +124,9 @@ describe('Connection via QR code and SMS link', () => {
 
     await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
 
-    await new Promise((r) => setTimeout(r, 30000)) // sync issue
+    await new Promise((r) => setTimeout(r, 40000)) // sync issue
+
+    global.CONN_ID = connectionId
     // await waitFor(element(by.id(PIN_CODE_INPUT_BOX)).atIndex(1))
     //   .toExist()
     //   .withTimeout(10000)
@@ -130,7 +135,7 @@ describe('Connection via QR code and SMS link', () => {
     //   .replaceText(TEST_PASS_CODE)
   })
 
-  it('Case 1.2: open connection using SMS link right after establishing connection', async () => {
+  it('Case 1.2: open connection using SMS link from the same invitation right after establishing connection', async () => {
     await exec(`xcrun simctl openurl booted ${URL}`)
 
     await new Promise((r) => setTimeout(r, 10000)) // sync issue
@@ -148,11 +153,7 @@ describe('Connection via QR code and SMS link', () => {
     try {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
-      console.error(e)
-      // await device.launchApp({
-      //   newInstance: true,
-      // })
-      // await unlock()
+      console.warn(e)
       await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
@@ -170,11 +171,7 @@ describe('Connection via QR code and SMS link', () => {
     try {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
-      console.error(e)
-      // await device.launchApp({
-      //   newInstance: true,
-      // })
-      // await unlock()
+      console.warn(e)
       await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
@@ -193,11 +190,7 @@ describe('Connection via QR code and SMS link', () => {
     try {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
-      console.error(e)
-      // await device.launchApp({
-      //   newInstance: true,
-      // })
-      // await unlock()
+      console.warn(e)
       await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
@@ -216,11 +209,7 @@ describe('Connection via QR code and SMS link', () => {
     try {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
-      console.error(e)
-      // await device.launchApp({
-      //   newInstance: true,
-      // })
-      // await unlock()
+      console.warn(e)
       await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
@@ -239,11 +228,7 @@ describe('Connection via QR code and SMS link', () => {
     try {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
-      console.error(e)
-      // await device.launchApp({
-      //   newInstance: true,
-      // })
-      // await unlock()
+      console.warn(e)
       await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
@@ -263,11 +248,7 @@ describe('Connection via QR code and SMS link', () => {
     try {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
-      console.error(e)
-      // await device.launchApp({
-      //   newInstance: true,
-      // })
-      // await unlock()
+      console.warn(e)
       await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
@@ -285,11 +266,7 @@ describe('Connection via QR code and SMS link', () => {
     try {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
-      console.error(e)
-      // await device.launchApp({
-      //   newInstance: true,
-      // })
-      // await unlock()
+      console.warn(e)
       await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
@@ -309,11 +286,7 @@ describe('Connection via QR code and SMS link', () => {
     try {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
-      console.error(e)
-      // await device.launchApp({
-      //   newInstance: true,
-      // })
-      // await unlock()
+      console.warn(e)
       await element(by.id(HOME_CONTAINER)).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
@@ -333,7 +306,7 @@ describe('Connection via QR code and SMS link', () => {
     try {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
-      console.error(e)
+      console.warn(e)
       // await device.launchApp({
       //   newInstance: true,
       // })
@@ -420,7 +393,7 @@ describe('Connection via QR code and SMS link', () => {
     await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
   })
 
-  it('Case 4.2: check my connections screenshot with test connection', async () => {
+  it('Case 4: check my connections screenshot with test connection', async () => {
     await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
     await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
@@ -429,9 +402,9 @@ describe('Connection via QR code and SMS link', () => {
   })
 
   it('Case 5: drill down to connection and check its elements', async () => {
-    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+    // await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
-    await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
+    // await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
 
     await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
 
@@ -468,16 +441,144 @@ describe('Connection via QR code and SMS link', () => {
     await element(by.id(BACK_ARROW)).tap()
   })
 
-  it('Case 6: open connection using SMS link when connection is already expired', async () => {
-    // await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
-
-    // await waitForElementAndTap('text', MENU_HOME, TIMEOUT)
-
+  it('Case 6: open connection using SMS link from the same connection when connection is already expired', async () => {
     await exec(`xcrun simctl openurl booted ${URL}`)
 
     await new Promise((r) => setTimeout(r, 10000)) // sync issue
 
     await matchScreenshot(SCREENSHOT_HOME_BIG_HISTORY) // screenshot
+  })
+
+  it('Case 7: delete existing connection', async () => {
+    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+
+    await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
+
+    await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
+
+    await waitForElementAndTap('id', CONNECTION_SUBMENU_BUTTON, TIMEOUT) // open connection menu
+
+    await waitForElementAndTap('id', CONNECTION_SUBMENU_CLOSE_BUTTON, TIMEOUT) // close it
+
+    await waitForElementAndTap('id', CONNECTION_SUBMENU_BUTTON, TIMEOUT) // open menu again
+
+    await waitForElementAndTap('id', CONNECTION_DELETE_BUTTON, TIMEOUT) // delete connection
+  })
+
+  it('Case 8: establish new connection using new SMS link', async () => {
+    let [
+      token,
+      invitationId,
+      fetchingInvitation,
+      invitationUrl,
+      jsonData,
+    ] = await getInvitation()
+
+    console.log(chalk.cyanBright(`${invitationUrl}`))
+
+    connectionId = invitationId
+
+    await exec(`xcrun simctl openurl booted ${invitationUrl}`)
+
+    await new Promise((r) => setTimeout(r, 10000)) // sync issue
+
+    try {
+      await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+    } catch (e) {
+      token,
+        invitationId,
+        fetchingInvitation,
+        invitationUrl,
+        (jsonData = await getInvitation())
+
+      console.log(chalk.cyanBright(`${invitationUrl}`))
+      connectionId = invitationId
+      await exec(`xcrun simctl openurl booted ${invitationUrl}`)
+      await new Promise((r) => setTimeout(r, 10000)) // sync issue
+      await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+    }
+
+    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+
+    await waitForElementAndTap('text', MENU_HOME, TIMEOUT)
+
+    await new Promise((r) => setTimeout(r, 30000)) // sync issue
+  })
+
+  it('Case 9.1: create and reject profile credential using new connection id', async () => {
+    credential = await sendClaimOffer(
+      CLAIM_OFFER_PROFILE_INFO,
+      connectionId
+    ).catch(console.error)
+
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
+
+    await waitForElementAndTap('text', CLAIM_OFFER_REJECT, TIMEOUT)
+  })
+
+  it('Case 9.2: create and accept profile credential using new connection id', async () => {
+    credential = await sendClaimOffer(
+      CLAIM_OFFER_PROFILE_INFO,
+      connectionId
+    ).catch(console.error)
+
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
+
+    await matchScreenshot(SCREENSHOT_CLAIM_OFFER_PROFILE_INFO) // screenshot
+
+    await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
+  })
+
+  it('Case 10.1: create and reject proof request using new connection id', async () => {
+    proof = await sendProofRequest(
+      PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
+      connectionId
+    ).catch(console.error)
+
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
+
+    await waitForElementAndTap('text', PROOF_REQUEST_REJECT, TIMEOUT)
+  })
+
+  it('Case 10.2: create and send proof request using new connection id', async () => {
+    proof = await sendProofRequest(
+      PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
+      connectionId
+    ).catch(console.error)
+
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
+
+    await matchScreenshot(SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED) // screenshot
+
+    await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
   })
 })
 

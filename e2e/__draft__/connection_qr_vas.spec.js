@@ -13,12 +13,20 @@ import { v4 as uuidv4 } from 'uuid'
 import { exec } from 'child-process-async'
 import chalk from 'chalk'
 
+import { element, by, waitFor, expect, device } from 'detox'
 import { waitForElementAndTap } from '../utils/detox-selectors'
 import {
   SCAN_BUTTON,
   ALLOW_BUTTON,
   INVITATION_ACCEPT,
+  HOME_CONTAINER,
+  HOME_NEW_MESSAGE,
+  CLAIM_OFFER_ACCEPT,
+  PROOF_REQUEST_SEND,
 } from '../utils/test-constants'
+
+import { VAS } from '../utils/api_new'
+import type { InvitationType, QRType } from '../utils/api_new'
 
 //$FlowFixMe
 require('tls').DEFAULT_ECDH_CURVE = 'auto'
@@ -27,13 +35,35 @@ const TIMEOUT = 10000
 
 describe('Connection via SMS link as QR code', () => {
   it('Connection via SMS link as QR code', async () => {
-    const jsonData = await main()
+    // // Start server to listen VAS responses
+    let instance = new VAS(VASconfig)
+
+    // // Register server endpoint in VAS - run it once
+    let result1 = await instance.registerEndpoint(
+      'http://94cdbe722ac2.ngrok.io'
+    )
+    console.warn(result1)
+
+    // // CreateRelationship request :: VAS returns RelationshipCreated
+    let [
+      relationshipThreadID,
+      DID,
+      result2,
+    ] = await instance.createRelationship('New Test Label')
+    console.warn([relationshipThreadID, DID, result2])
+
+    let jsonData = await instance.relationshipInvitation(
+      relationshipThreadID,
+      DID,
+      'connection-invitation',
+      'ARIES_V1_QR'
+    )
+    console.warn(jsonData)
 
     const { resolve, promise: invitationPushed } = getDeferred()
     const server = http
       .createServer(function (request, response) {
         response.writeHead(200, { 'Content-Type': 'application/json' })
-        // response.writeHead(200, { 'Content-Type': 'text/plain' })
         response.write(jsonData.trim())
         response.end()
         resolve && resolve()
@@ -42,8 +72,6 @@ describe('Connection via SMS link as QR code', () => {
     console.log(
       chalk.greenBright('Invitation server is listening on port 1337...')
     )
-
-    await new Promise((r) => setTimeout(r, 10000))
 
     await waitForElementAndTap('text', SCAN_BUTTON, TIMEOUT)
 
@@ -55,9 +83,59 @@ describe('Connection via SMS link as QR code', () => {
     await waitForElementAndTap('text', ALLOW_BUTTON, TIMEOUT)
 
     await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+
+    await new Promise((r) => setTimeout(r, 30000)) // sync
+
+    // // WriteSchema
+    let [schemaID, result3] = await instance.createSchema([
+      'firstname',
+      'lastname',
+    ])
+    console.warn([schemaID, result3])
+
+    // // WriteCredDef
+    let [credDefID, result4] = await instance.createCredentialDef(schemaID)
+    console.warn([credDefID, result4])
+
+    // // SendOffer
+    let result5 = await instance.sendCredentialOffer(DID, credDefID, {
+      firstname: 'Leonid',
+      lastname: 'Azadovskiy',
+    })
+    console.warn(result5)
+
+    await new Promise((r) => setTimeout(r, 10000)) // wait for new message
+    await element(by.id(HOME_CONTAINER)).swipe('down')
+    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
+    await new Promise((r) => setTimeout(r, 10000))
+
+    // // IssueCredential
+    let result6 = await instance.issueCredential(DID)
+    console.warn(result6)
+
+    await new Promise((r) => setTimeout(r, 30000)) // wait for credential issuance
+
+    // // PresentProof
+    let result7 = await instance.presentProof(
+      DID,
+      'proof request',
+      ['firstname', 'lastname'],
+      true
+    )
+    console.warn(result7)
+
+    await new Promise((r) => setTimeout(r, 10000)) // wait for new message
+    await element(by.id(HOME_CONTAINER)).swipe('down')
+    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
+
+    instance.endpointServer.close()
+    console.log(chalk.redBright('VAS server has been stopped.'))
   })
 })
 
+// QA RC
 const VASconfig = {
   verityUrl: 'https://vas.pqa.evernym.com/api/',
   verityPublicDID: 'D6tuzxJe4Vpyz2XwTwnf7T',
@@ -71,123 +149,27 @@ const VASconfig = {
     'AxgDQMEvACUxYE6oEpYSNC43EyawKpBSfD19xwx8kkko:2WCxXCjFhrpRUtz93XQZxsqGcqaBpPnmkvJa8FEH16HPEnMXCAzChVsCdqcNh9bYieBCYma77pZAMKqtXdzADu3z',
 }
 
+// // Dev Team 1
+// const VASconfig = {
+//   verityUrl: 'https://vas-team1.pdev.evernym.com/api/',
+//   domainDID: 'XNRkA8tboikwHD3x1Yh7Uz',
+//   apiKey: 'HZ3Ak6pj9ryFASKbA9fpwqjVh42F35UDiCLQ13J58Xoh:4Wf6JtGy9enwwXVKcUgADPq7Pnf9T2YZ8LupMEVxcQQf98uuRYxWGHLAwXWp8DtaEYHo4cUeExDjApMfvLJQ48Kp'
+// }
+
+// // Dev RC
+// const VASconfig = {
+//   verityUrl: 'https://vas.pdev.evernym.com/api/',
+//   domainDID: '32djqLcu9WGsZL4MwyAjVn',
+//   apiKey:
+//     'C6jtgbRwzTHp1T1mQSFGDf2YTdHeN1kj2sJr7VJbvT5P:4iBetiYFD998So2APxqRRdjYFg7qhjQvLnkwpJ6vDBszoWGuRpj75YKvLJKBhsXSQtPvXTGghCyKaPMLJEVwX6v7',
+// }
+
 const httpsConfig = {
   timeout: 180000,
   httpsAgent: new https.Agent({}),
   headers: {
     'X-API-KEY': VASconfig['apiKey'],
   },
-}
-
-const main = async () => {
-  // Start server to listen VAS responses
-  let VASresponse // keep the latest VAS response here
-  const server = http
-    .createServer(function (request, response) {
-      const { headers, method, url } = request
-      let body = ''
-      request
-        .on('error', (err) => {
-          console.error(err)
-        })
-        .on('data', (chunk) => {
-          console.log(`On data chunk >>> ${chunk}`)
-          body += chunk.toString()
-        })
-        .on('end', () => {
-          VASresponse = body
-          console.log(
-            '----------------\n',
-            `Headers: ${JSON.stringify(headers)}\n`,
-            `Method: ${method}\n`,
-            `URL: ${url}\n`,
-            `Body: ${body}\n`,
-            '----------------\n'
-          )
-        })
-    })
-    .listen(1338)
-  console.log(chalk.greenBright('VAS server is listening on port 1338...'))
-
-  // Register server endpoint in VAS - run it once
-  await post(
-    `${VASconfig['verityUrl']}${
-      VASconfig['domainDID']
-    }/configs/0.6/${uuidv4()}`,
-    {
-      '@id': uuidv4(),
-      '@type':
-        'did:sov:123456789abcdefghi1234;spec/configs/0.6/UPDATE_COM_METHOD',
-      comMethod: {
-        id: 'webhook',
-        type: 2,
-        value: 'http://94cdbe722ac2.ngrok.io', // it changes everytime you run ngrok
-        packaging: {
-          pkgType: 'plain',
-        },
-      },
-    },
-    httpsConfig
-  )
-    .catch((err) => console.error(err))
-    .then((res) => console.log(res.data))
-
-  // CreateRelationship request :: VAS returns RelationshipCreated
-  await post(
-    `${VASconfig['verityUrl']}${
-      VASconfig['domainDID']
-    }/relationship/1.0/${uuidv4()}`,
-    {
-      '@type': 'did:sov:123456789abcdefghi1234;spec/relationship/1.0/create',
-      '@id': uuidv4(),
-      label: 'Alex',
-    },
-    httpsConfig
-  )
-    .catch((err) => console.error(err))
-    .then((res) => console.log(res.data))
-
-  await new Promise((r) => setTimeout(r, 10000))
-
-  // RelationshipInvitationRequest request :: VAS returns RelationshipInvite
-  //$FlowFixMe
-  let lastResponse = JSON.parse(VASresponse)
-  console.log(`DID: ${lastResponse['did']}`)
-  const THREAD_ID = lastResponse['~thread']['thid']
-  console.log(`THREAD ID: ${THREAD_ID}`)
-  await post(
-    `${VASconfig['verityUrl']}${VASconfig['domainDID']}/relationship/1.0/${THREAD_ID}`,
-    {
-      '@type':
-        'did:sov:123456789abcdefghi1234;spec/relationship/1.0/connection-invitation',
-      '@id': uuidv4(),
-      '~forRelationship': lastResponse['did'],
-    },
-    httpsConfig
-  )
-    .catch((err) => console.error(err))
-    .then((res) => console.log(res.data))
-
-  await new Promise((r) => setTimeout(r, 10000))
-  //$FlowFixMe
-  lastResponse = JSON.parse(VASresponse)
-  let link = lastResponse['inviteURL']
-  console.log(link)
-  // link = link.substr(45)
-  // console.log(link)
-  // const { stdout } = await exec(
-  //   `echo "${link}" | base64 --decode`
-  // )
-  // console.log(chalk.cyan(stdout))
-  // const jsonData = stdout
-
-  // Shutdown server
-  await new Promise((r) => setTimeout(r, 10000))
-  server.close()
-  console.log(chalk.redBright('VAS server has been stopped.'))
-
-  // return jsonData
-  return link
 }
 
 function getDeferred() {

@@ -7,8 +7,18 @@ import {
   MENU_MY_CONNECTIONS,
   MY_CONNECTIONS_CONTAINER,
   MY_CONNECTIONS_HEADER,
+  SCREENSHOT_TEST_CONNECTION,
+  GENERAL_SCROLL_VIEW,
+  CONNECTION_ENTRY_HEADER,
+  VIEW_CREDENTIAL,
+  CREDENTIAL_HEADER,
+  CLOSE_BUTTON,
+  VIEW_PROOF,
+  PROOF_HEADER,
+  BACK_ARROW,
 } from '../utils/test-constants'
 import { waitForElementAndTap } from '../utils/detox-selectors'
+import { matchScreenshot } from '../utils/screenshot'
 
 const TIMEOUT = 15000
 
@@ -37,5 +47,9 @@ describe('My connections screen', () => {
     await waitFor(element(by.text(SCAN_BUTTON)))
       .toBeVisible()
       .withTimeout(TIMEOUT)
+
+    await matchScreenshot(SCREENSHOT_TEST_CONNECTION) // screenshot
   })
+
+  xit('Case 2: drill down to connection and check its elements', async () => {})
 })

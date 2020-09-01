@@ -110,6 +110,8 @@ export const SWITCH_ENVIRONMENT_QA_TEST1_BUTTON = 'switch-environment-qatest1'
 export const SWITCH_ENVIRONMENT_DEV_TEAM1_BUTTON = 'switch-environment-devteam1'
 export const APP_ENVIRONMENT = `switch-environment-${
   process.env.environment || 'qa'
+  // process.env.environment || 'devteam1'
+  // 'devrc'
 }`
 export const SWITCH_ENVIRONMENT_SAVE_BUTTON = 'switch-environment-footer-accept'
 
@@ -161,6 +163,9 @@ export const CREDENTIAL_HEADER = 'Accepted Credential'
 export const VIEW_PROOF = 'VIEW REQUEST DETAILS'
 export const PROOF_HEADER = 'You shared this information'
 export const CLOSE_BUTTON = 'Close'
+export const CONNECTION_SUBMENU_BUTTON = 'three-dots'
+export const CONNECTION_SUBMENU_CLOSE_BUTTON = 'delete-connection-close'
+export const CONNECTION_DELETE_BUTTON = 'delete-connection'
 
 // my credentials
 export const MY_CREDENTIALS_HEADER = 'My Credentials'
