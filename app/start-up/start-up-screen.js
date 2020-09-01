@@ -1,6 +1,6 @@
 // @flow
 import React, { useEffect, useRef, useCallback } from 'react'
-import { Container, CustomText } from '../components'
+import { Container, CustomText, Header } from '../components'
 import {
   View,
   TouchableOpacity,
@@ -69,12 +69,16 @@ export const startUpScreen = {
 }
 
 const style = StyleSheet.create({
+  startUpContainer: {
+    paddingTop: 0,
+  },
   backgroundImage: {
     width: '100%',
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    marginTop: moderateScale(28),
   },
   buttonWrapper: {
     alignSelf: 'flex-end',

@@ -15,6 +15,7 @@ import { PIN_SETUP_STATE } from './type-lock'
 import { Keyboard, StyleSheet, Platform } from 'react-native'
 import { colors, OFFSET_2X, fontFamily } from '../common/styles'
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters'
+import { Header } from '../components'
 
 let keyboardDidHideListener
 let keyboardDidShowListener
@@ -32,7 +33,7 @@ export function LockPinSetup(props: ReactNavigation) {
   const existingPin = route && route.params && route.params.existingPin === true
   const enterPasscodeText = existingPin
     ? 'Create new passcode'
-    : 'Create a passcode to\n secure this app'
+    : 'Set a passcode to secure this app'
   const handleKeyboardChange = useCallback((status, event) => {
     if (keyboardHidden !== status) {
       setKeyboardHidden(status)
@@ -105,11 +106,16 @@ export function LockPinSetup(props: ReactNavigation) {
 
   return (
     <Container tertiary>
+      <Header
+        navigation={props.navigation}
+        route={props.route}
+        transparent={true}
+      />
       <CustomView center>
         <SvgCustomIcon
           name="ConnectMe"
           width={moderateScale(218.54)}
-          height={moderateScale(28.74)}
+          height={moderateScale(28)}
           fill={colors.cmGray2}
         />
       </CustomView>
@@ -135,7 +141,6 @@ const styles = StyleSheet.create({
     fontFamily,
     fontStyle: 'normal',
     fontWeight: 'bold',
-    fontSize: 26,
     lineHeight: 31,
     marginTop: verticalScale(40),
     marginBottom: verticalScale(40),
@@ -158,9 +163,4 @@ const styles = StyleSheet.create({
 export const lockPinSetupScreen = {
   routeName: lockPinSetupRoute,
   screen: LockPinSetup,
-  options: {
-    ...headerNavigationOptions({
-      title: '',
-    }),
-  },
 }

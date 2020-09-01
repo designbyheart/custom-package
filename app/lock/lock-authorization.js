@@ -5,6 +5,7 @@
  * either by asking for TouchId or asking user to enter pin code
  */
 import React, { useCallback } from 'react'
+import { View, StyleSheet } from 'react-native'
 import { HeaderBackButton } from '@react-navigation/stack'
 
 import type { StackHeaderLeftButtonProps } from '@react-navigation/stack'
@@ -17,6 +18,8 @@ import { BackButton } from '../components/back-button/back-button'
 import { headerTitleStyle } from '../components/header-title/header-title'
 import { useInteractionDone } from '../hooks/use-interactions-done'
 import { OrangeLoader, LoaderGif } from '../components/loader-gif/loader-gif'
+import { Header } from '../components'
+import { colors } from '../common/styles/constant'
 
 export const LockAuthorization = ({
   navigation,
@@ -28,31 +31,28 @@ export const LockAuthorization = ({
     params && params.onSuccess && params.onSuccess()
   }, [])
 
-  return !interactionDone ? LoaderGif : <LockEnter onSuccess={onSuccess} />
+  return !interactionDone ? (
+    LoaderGif
+  ) : (
+    <View style={styles.container}>
+      <Header
+        transparent={true}
+        navigation={navigation}
+        route={route} />
+      <LockEnter onSuccess={onSuccess} />
+    </View>
+  )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: colors.cmWhite,
+  },
+})
 
 export const lockAuthorizationScreen = {
   routeName: lockAuthorizationHomeRoute,
   screen: LockAuthorization,
-  options({ route, navigation }: ReactNavigation) {
-    return {
-      headerShown: true,
-      headerTitle: 'App Security',
-      gestureEnabled: false,
-      headerLeft(props: StackHeaderLeftButtonProps) {
-        return (
-          <BackButton
-            {...props}
-            onPress={() => {
-              navigation.goBack(null)
-              const { params } = route
-              params && params.onAvoid && params.onAvoid()
-            }}
-          />
-        )
-      },
-      headerTitleStyle: headerTitleStyle.title,
-      headerHideShadow: true,
-    }
-  },
 }

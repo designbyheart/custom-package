@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { StyleSheet, StatusBar, Platform } from 'react-native'
+import { StyleSheet } from 'react-native'
 import type { CustomHeaderProps } from './type-custom-header'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Header } from 'react-native-elements'

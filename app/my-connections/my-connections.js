@@ -24,7 +24,7 @@ import type { Connection } from '../store/type-connection-store'
 import type { ReactNavigation } from '../common/type-common'
 
 import { newConnectionSeen } from '../connection-history/connection-history-store'
-import { PrimaryHeader, CameraButton } from '../components'
+import { HomeHeader, CameraButton } from '../components'
 import { ConnectionCard } from './connection-card/connection-card'
 import { qrCodeScannerTabRoute } from '../common'
 import { getConnections } from '../store/connections-store'
@@ -132,8 +132,12 @@ export class MyConnections extends Component<
 
     return (
       <View style={outerContainer}>
+        <HomeHeader
+          headline="My Connections"
+          navigation={this.props.navigation}
+          route={this.props.route}
+        />
         <NotificationCard />
-
         <View
           style={container}
           testID="my-connections-container"
@@ -166,7 +170,6 @@ export class MyConnections extends Component<
             }
           />
         </View>
-        <PrimaryHeader headline="My Connections" />
         <CameraButton
           onPress={() => this.props.navigation.navigate(qrCodeScannerTabRoute)}
         />

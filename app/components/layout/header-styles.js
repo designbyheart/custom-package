@@ -47,15 +47,6 @@ export default StyleSheet.create({
   },
 })
 
-export const primaryHeaderStyles = StyleSheet.create({
-  header: {
-    backgroundColor: whiteSmokeSecondary,
-    borderBottomColor: whisper,
-    borderBottomWidth: 1,
-    ...commonStyles,
-  },
-})
-
 export const tertiaryHeaderStyles = StyleSheet.create({
   header: {
     backgroundColor: color.bg.tertiary.color,

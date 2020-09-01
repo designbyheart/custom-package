@@ -101,7 +101,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(MoreOptions)
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    paddingTop: verticalScale(54),
+    paddingTop: verticalScale(60),
     zIndex: 999,
     alignItems: 'flex-end',
     width: '100%',

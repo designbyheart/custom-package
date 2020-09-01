@@ -17,7 +17,6 @@ const externalStyles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: colors.cmWhite,
-    marginTop: verticalScale(90),
   },
   flatListInnerContainer: {
     paddingBottom: moderateScale(170, 0.25),

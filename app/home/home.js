@@ -1,16 +1,9 @@
 // @flow
 import React, { Component } from 'react'
 import moment from 'moment'
-import {
-  StyleSheet,
-  Platform,
-  View,
-  Text,
-  FlatList,
-  Dimensions,
-} from 'react-native'
+import { StyleSheet, View, FlatList, Dimensions } from 'react-native'
 import { bindActionCreators } from 'redux'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { moderateScale } from 'react-native-size-matters'
 import { connect } from 'react-redux'
 import Snackbar from 'react-native-snackbar'
 
@@ -20,9 +13,8 @@ import type { Connection } from '../store/type-connection-store'
 import type { ReactNavigation } from '../common/type-common'
 
 import { HISTORY_EVENT_STATUS } from '../connection-history/type-connection-history'
-import { PrimaryHeader, CameraButton } from '../components'
+import { HomeHeader, CameraButton } from '../components'
 import {
-  homeRoute,
   homeDrawerRoute,
   qrCodeScannerTabRoute,
   proofRequestRoute,
@@ -307,6 +299,11 @@ export class HomeScreen extends Component<HomeProps, void> {
   render() {
     return (
       <View style={styles.outerContainer}>
+        <HomeHeader
+          headline="Home"
+          navigation={this.props.navigation}
+          route={this.props.route}
+        />
         <View
           style={styles.container}
           testID="home-container"
@@ -330,7 +327,6 @@ export class HomeScreen extends Component<HomeProps, void> {
           <View style={styles.checkmarkContainer}>
             <FlatList
               keyExtractor={this.keyExtractor}
-              style={styles.newBadgeFlatListContainer}
               contentContainerStyle={styles.newBadgeFlatListInnerContainer}
               data={this.props.newBannerConnections}
               renderItem={({ item }) => this.renderNewBannerCard(item)}
@@ -353,7 +349,6 @@ export class HomeScreen extends Component<HomeProps, void> {
             />
           </View>
         </View>
-        <PrimaryHeader headline="Home" navigation={this.props.navigation} />
         <CameraButton
           onPress={() => this.props.navigation.navigate(qrCodeScannerTabRoute)}
         />
@@ -483,11 +478,9 @@ const styles = StyleSheet.create({
   },
   checkmarkContainer: {
     width: '100%',
-    height: '60%',
+    height: '50%',
   },
-  newBadgeFlatListContainer: {
-    marginTop: verticalScale(90),
-  },
+  newBadgeFlatListContainer: {},
   newBadgeFlatListInnerContainer: {
     paddingBottom: moderateScale(20, 0.2),
     paddingTop: moderateScale(18, 0.1),

@@ -14,7 +14,6 @@ import {
   Icon,
   Loader,
 } from '../components'
-import { primaryHeaderStyles } from '../components/layout/header-styles'
 import {
   OFFSET_1X,
   OFFSET_2X,

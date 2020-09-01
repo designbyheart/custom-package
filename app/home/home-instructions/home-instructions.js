@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   contentContainer: {
+    marginTop: verticalScale(-56),
     width: '100%',
     height: '100%',
     alignItems: 'center',

@@ -7,25 +7,26 @@ import type { ReactNavigation } from '../common/type-common'
 import type { Store } from '../store/type-store'
 import type { LockEnterPinProps, LockEnterPinState } from './type-lock'
 
-import { safeGet, safeSet } from '../services/storage'
 import LockEnter from './lock-enter'
 import {
   lockEnterPinRoute,
   lockPinSetupRoute,
   homeRoute,
   lockSelectionRoute,
-  settingsDrawerRoute,
 } from '../common'
 import { clearPendingRedirect } from './lock-store'
 import {
   ENTER_PASS_CODE_MESSAGE,
   ENTER_YOUR_PASS_CODE_MESSAGE,
 } from '../common/message-constants'
-import { color } from '../common/styles'
+import { colors } from '../common/styles/constant'
 import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
 import { unlockApp } from './lock-store'
-import { CustomHeader, FlatHeader } from '../components'
-import { Keyboard, Platform } from 'react-native'
+import { View, Keyboard, Platform, StyleSheet } from 'react-native'
+import { Container, CustomView } from '../components/layout'
+import SvgCustomIcon from '../components/svg-custom-icon'
+import { moderateScale } from 'react-native-size-matters'
+import { Header } from '../components'
 
 export class LockEnterPin extends PureComponent<
   LockEnterPinProps,
@@ -39,22 +40,6 @@ export class LockEnterPin extends PureComponent<
 
   keyboardListener = null
   keyboardShowListener = null
-
-  static navigationOptions = ({ navigation, route }: ReactNavigation) => ({
-    header: () => {
-      return route.params && route.params.fromScreen === 'recovery' ? (
-        <CustomHeader flatHeader backgroundColor={color.bg.tertiary.color} />
-      ) : (
-        <FlatHeader
-          navigation={navigation}
-          svgIconName="Arrow"
-          label="App Security"
-          route={route}
-        />
-      )
-    },
-    headerShown: true,
-  })
 
   componentDidMount() {
     this.keyboardListener = Keyboard.addListener(
@@ -176,7 +161,7 @@ export class LockEnterPin extends PureComponent<
   }
 
   render() {
-    const { isFetchingInvitation, navigation, route, inRecovery } = this.props
+    const { isFetchingInvitation, route, navigation, inRecovery } = this.props
     let fromRecovery = false
     if (route) {
       fromRecovery =
@@ -193,16 +178,32 @@ export class LockEnterPin extends PureComponent<
     }
 
     return (
-      <LockEnter
-        fromRecovery={fromRecovery}
-        onSuccess={this.onSuccess}
-        message={message}
-        setupNewPassCode={this.redirectToSetupPasscode}
-        enableCustomKeyboard={this.state.showCustomKeyboard}
-      />
+      <View style={styles.container}>
+        <Header
+          hideBackButton={true}
+          transparent={true}
+          navigation={this.props.navigation}
+          route={this.props.route}
+        />
+        <LockEnter
+          fromRecovery={fromRecovery}
+          onSuccess={this.onSuccess}
+          message={message}
+          setupNewPassCode={this.redirectToSetupPasscode}
+          enableCustomKeyboard={this.state.showCustomKeyboard}
+        />
+      </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: colors.cmWhite,
+  },
+})
 
 const mapStateToProps = (
   state: Store,

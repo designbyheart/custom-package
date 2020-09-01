@@ -11,6 +11,147 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
   tertiary={true}
 >
   <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "height": 63.52941176470588,
+        "paddingTop": 19.058823529411764,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessibilityLabel="left-icon"
+      accessible={true}
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "15%",
+        }
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="left-icon"
+      >
+        <View
+          style={
+            Object {
+              "transform": Array [
+                Object {
+                  "scale": 1,
+                },
+              ],
+            }
+          }
+        >
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={30.628571428571426}
+            bbWidth={30.628571428571426}
+            fill="#777777"
+            focusable={false}
+            height={30.628571428571426}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                Object {
+                  "marginBottom": 1.9142857142857141,
+                  "marginLeft": 14.357142857142858,
+                },
+                Object {
+                  "flex": 0,
+                  "height": 30,
+                  "width": 30,
+                },
+              ]
+            }
+            vbHeight={24}
+            vbWidth={24}
+            width={30.628571428571426}
+          >
+            <RNSVGGroup
+              fill={4286019447}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            >
+              <RNSVGGroup>
+                <RNSVGGroup>
+                  <RNSVGRect
+                    height="24"
+                    matrix={
+                      Array [
+                        6.123233995736766e-17,
+                        1,
+                        -1,
+                        6.123233995736766e-17,
+                        24,
+                        0,
+                      ]
+                    }
+                    opacity={0}
+                    width="24"
+                    x={0}
+                    y={0}
+                  />
+                  <RNSVGPath
+                    d="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64z"
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGSvgView>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": "85%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#777777",
+            "fontFamily": "Lato",
+            "fontSize": 21.057142857142857,
+            "fontWeight": "bold",
+            "marginLeft": -47.85714285714286,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
     center={true}
     style={
       Object {
@@ -21,10 +162,10 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
   >
     <RNSVGSvgView
       align="xMidYMid"
-      bbHeight="27.508285714285712"
+      bbHeight="26.799999999999997"
       bbWidth="209.17399999999998"
       focusable={false}
-      height="27.508285714285712"
+      height="26.799999999999997"
       meetOrSlice={0}
       minX={0}
       minY={0}
@@ -36,7 +177,7 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
           },
           Object {
             "flex": 0,
-            "height": 27,
+            "height": 26,
             "width": 209,
           },
         ]
@@ -92,7 +233,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
         null,
         Object {
           "fontFamily": "Lato",
-          "fontSize": 26,
           "fontStyle": "normal",
           "fontWeight": "bold",
           "lineHeight": 31,
@@ -104,8 +244,7 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
       ]
     }
   >
-    Create a passcode to
- secure this app
+    Set a passcode to secure this app
   </Text>
   <Text
     allowFontScaling={false}
@@ -540,6 +679,147 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
   tertiary={true}
 >
   <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "height": 63.52941176470588,
+        "paddingTop": 19.058823529411764,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessibilityLabel="left-icon"
+      accessible={true}
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "15%",
+        }
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="left-icon"
+      >
+        <View
+          style={
+            Object {
+              "transform": Array [
+                Object {
+                  "scale": 1,
+                },
+              ],
+            }
+          }
+        >
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={30.628571428571426}
+            bbWidth={30.628571428571426}
+            fill="#777777"
+            focusable={false}
+            height={30.628571428571426}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                Object {
+                  "marginBottom": 1.9142857142857141,
+                  "marginLeft": 14.357142857142858,
+                },
+                Object {
+                  "flex": 0,
+                  "height": 30,
+                  "width": 30,
+                },
+              ]
+            }
+            vbHeight={24}
+            vbWidth={24}
+            width={30.628571428571426}
+          >
+            <RNSVGGroup
+              fill={4286019447}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            >
+              <RNSVGGroup>
+                <RNSVGGroup>
+                  <RNSVGRect
+                    height="24"
+                    matrix={
+                      Array [
+                        6.123233995736766e-17,
+                        1,
+                        -1,
+                        6.123233995736766e-17,
+                        24,
+                        0,
+                      ]
+                    }
+                    opacity={0}
+                    width="24"
+                    x={0}
+                    y={0}
+                  />
+                  <RNSVGPath
+                    d="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64z"
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGSvgView>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": "85%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#777777",
+            "fontFamily": "Lato",
+            "fontSize": 21.057142857142857,
+            "fontWeight": "bold",
+            "marginLeft": -47.85714285714286,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
     center={true}
     style={
       Object {
@@ -550,10 +830,10 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
   >
     <RNSVGSvgView
       align="xMidYMid"
-      bbHeight="27.508285714285712"
+      bbHeight="26.799999999999997"
       bbWidth="209.17399999999998"
       focusable={false}
-      height="27.508285714285712"
+      height="26.799999999999997"
       meetOrSlice={0}
       minX={0}
       minY={0}
@@ -565,7 +845,7 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
           },
           Object {
             "flex": 0,
-            "height": 27,
+            "height": 26,
             "width": 209,
           },
         ]
@@ -621,7 +901,6 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
         null,
         Object {
           "fontFamily": "Lato",
-          "fontSize": 26,
           "fontStyle": "normal",
           "fontWeight": "bold",
           "lineHeight": 31,
@@ -1068,6 +1347,147 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
   tertiary={true}
 >
   <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "height": 63.52941176470588,
+        "paddingTop": 19.058823529411764,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessibilityLabel="left-icon"
+      accessible={true}
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "15%",
+        }
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="left-icon"
+      >
+        <View
+          style={
+            Object {
+              "transform": Array [
+                Object {
+                  "scale": 1,
+                },
+              ],
+            }
+          }
+        >
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={30.628571428571426}
+            bbWidth={30.628571428571426}
+            fill="#777777"
+            focusable={false}
+            height={30.628571428571426}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                Object {
+                  "marginBottom": 1.9142857142857141,
+                  "marginLeft": 14.357142857142858,
+                },
+                Object {
+                  "flex": 0,
+                  "height": 30,
+                  "width": 30,
+                },
+              ]
+            }
+            vbHeight={24}
+            vbWidth={24}
+            width={30.628571428571426}
+          >
+            <RNSVGGroup
+              fill={4286019447}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            >
+              <RNSVGGroup>
+                <RNSVGGroup>
+                  <RNSVGRect
+                    height="24"
+                    matrix={
+                      Array [
+                        6.123233995736766e-17,
+                        1,
+                        -1,
+                        6.123233995736766e-17,
+                        24,
+                        0,
+                      ]
+                    }
+                    opacity={0}
+                    width="24"
+                    x={0}
+                    y={0}
+                  />
+                  <RNSVGPath
+                    d="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64z"
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGSvgView>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": "85%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#777777",
+            "fontFamily": "Lato",
+            "fontSize": 21.057142857142857,
+            "fontWeight": "bold",
+            "marginLeft": -47.85714285714286,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
     center={true}
     style={
       Object {
@@ -1078,10 +1498,10 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
   >
     <RNSVGSvgView
       align="xMidYMid"
-      bbHeight="27.508285714285712"
+      bbHeight="26.799999999999997"
       bbWidth="209.17399999999998"
       focusable={false}
-      height="27.508285714285712"
+      height="26.799999999999997"
       meetOrSlice={0}
       minX={0}
       minY={0}
@@ -1093,7 +1513,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
           },
           Object {
             "flex": 0,
-            "height": 27,
+            "height": 26,
             "width": 209,
           },
         ]
@@ -1149,7 +1569,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
         null,
         Object {
           "fontFamily": "Lato",
-          "fontSize": 26,
           "fontStyle": "normal",
           "fontWeight": "bold",
           "lineHeight": 31,
@@ -1161,8 +1580,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
       ]
     }
   >
-    Create a passcode to
- secure this app
+    Set a passcode to secure this app
   </Text>
   <Text
     allowFontScaling={false}
@@ -1599,6 +2017,147 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
   tertiary={true}
 >
   <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "height": 63.52941176470588,
+        "paddingTop": 19.058823529411764,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessibilityLabel="left-icon"
+      accessible={true}
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "15%",
+        }
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="left-icon"
+      >
+        <View
+          style={
+            Object {
+              "transform": Array [
+                Object {
+                  "scale": 1,
+                },
+              ],
+            }
+          }
+        >
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={30.628571428571426}
+            bbWidth={30.628571428571426}
+            fill="#777777"
+            focusable={false}
+            height={30.628571428571426}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                Object {
+                  "marginBottom": 1.9142857142857141,
+                  "marginLeft": 14.357142857142858,
+                },
+                Object {
+                  "flex": 0,
+                  "height": 30,
+                  "width": 30,
+                },
+              ]
+            }
+            vbHeight={24}
+            vbWidth={24}
+            width={30.628571428571426}
+          >
+            <RNSVGGroup
+              fill={4286019447}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            >
+              <RNSVGGroup>
+                <RNSVGGroup>
+                  <RNSVGRect
+                    height="24"
+                    matrix={
+                      Array [
+                        6.123233995736766e-17,
+                        1,
+                        -1,
+                        6.123233995736766e-17,
+                        24,
+                        0,
+                      ]
+                    }
+                    opacity={0}
+                    width="24"
+                    x={0}
+                    y={0}
+                  />
+                  <RNSVGPath
+                    d="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64z"
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGSvgView>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": "85%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#777777",
+            "fontFamily": "Lato",
+            "fontSize": 21.057142857142857,
+            "fontWeight": "bold",
+            "marginLeft": -47.85714285714286,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
     center={true}
     style={
       Object {
@@ -1609,10 +2168,10 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
   >
     <RNSVGSvgView
       align="xMidYMid"
-      bbHeight="27.508285714285712"
+      bbHeight="26.799999999999997"
       bbWidth="209.17399999999998"
       focusable={false}
-      height="27.508285714285712"
+      height="26.799999999999997"
       meetOrSlice={0}
       minX={0}
       minY={0}
@@ -1624,7 +2183,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
           },
           Object {
             "flex": 0,
-            "height": 27,
+            "height": 26,
             "width": 209,
           },
         ]
@@ -1680,7 +2239,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
         null,
         Object {
           "fontFamily": "Lato",
-          "fontSize": 26,
           "fontStyle": "normal",
           "fontWeight": "bold",
           "lineHeight": 31,
@@ -1692,8 +2250,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
       ]
     }
   >
-    Create a passcode to
- secure this app
+    Set a passcode to secure this app
   </Text>
   <Text
     allowFontScaling={false}
@@ -2130,6 +2687,147 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
   tertiary={true}
 >
   <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "height": 63.52941176470588,
+        "paddingTop": 19.058823529411764,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessibilityLabel="left-icon"
+      accessible={true}
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "width": "15%",
+        }
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="left-icon"
+      >
+        <View
+          style={
+            Object {
+              "transform": Array [
+                Object {
+                  "scale": 1,
+                },
+              ],
+            }
+          }
+        >
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={30.628571428571426}
+            bbWidth={30.628571428571426}
+            fill="#777777"
+            focusable={false}
+            height={30.628571428571426}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                Object {
+                  "marginBottom": 1.9142857142857141,
+                  "marginLeft": 14.357142857142858,
+                },
+                Object {
+                  "flex": 0,
+                  "height": 30,
+                  "width": 30,
+                },
+              ]
+            }
+            vbHeight={24}
+            vbWidth={24}
+            width={30.628571428571426}
+          >
+            <RNSVGGroup
+              fill={4286019447}
+              propList={
+                Array [
+                  "fill",
+                ]
+              }
+            >
+              <RNSVGGroup>
+                <RNSVGGroup>
+                  <RNSVGRect
+                    height="24"
+                    matrix={
+                      Array [
+                        6.123233995736766e-17,
+                        1,
+                        -1,
+                        6.123233995736766e-17,
+                        24,
+                        0,
+                      ]
+                    }
+                    opacity={0}
+                    width="24"
+                    x={0}
+                    y={0}
+                  />
+                  <RNSVGPath
+                    d="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64z"
+                  />
+                </RNSVGGroup>
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGSvgView>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": "85%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#777777",
+            "fontFamily": "Lato",
+            "fontSize": 21.057142857142857,
+            "fontWeight": "bold",
+            "marginLeft": -47.85714285714286,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
     center={true}
     style={
       Object {
@@ -2140,10 +2838,10 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
   >
     <RNSVGSvgView
       align="xMidYMid"
-      bbHeight="27.508285714285712"
+      bbHeight="26.799999999999997"
       bbWidth="209.17399999999998"
       focusable={false}
-      height="27.508285714285712"
+      height="26.799999999999997"
       meetOrSlice={0}
       minX={0}
       minY={0}
@@ -2155,7 +2853,7 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
           },
           Object {
             "flex": 0,
-            "height": 27,
+            "height": 26,
             "width": 209,
           },
         ]
@@ -2211,7 +2909,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
         null,
         Object {
           "fontFamily": "Lato",
-          "fontSize": 26,
           "fontStyle": "normal",
           "fontWeight": "bold",
           "lineHeight": 31,
