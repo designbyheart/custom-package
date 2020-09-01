@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Vibration, StyleSheet, View, Dimensions, Platform } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import { RNCamera } from 'react-native-camera'
 
 import type { GenericObject } from '../../common/type-common'
@@ -12,12 +12,10 @@ import type {
   CornerBoxProps,
   QR_SCAN_STATUS,
 } from './type-qr-scanner'
-import type { SMSPendingInvitationPayload } from '../../sms-pending-invitation/type-sms-pending-invitation'
 
 import { Container } from '../layout/container'
 import { CustomView } from '../layout/custom-view'
 import CustomText from '../text'
-import Icon from '../icon'
 import type { AriesConnectionInvite } from '../../invitation/type-invitation'
 import {
   isValidAriesV1InviteData,
@@ -28,6 +26,7 @@ import {
   OFFSET_2X,
   OFFSET_3X,
   OFFSET_5X,
+  colors,
 } from '../../common/styles/constant'
 import { isValidShortInviteQrCode } from './qr-code-types/qr-code-short-invite'
 import {
@@ -39,23 +38,19 @@ import {
   QR_CODE_TYPES,
 } from './type-qr-scanner'
 import { isValidUrlQrCode, getUrlQrCodeData } from './qr-code-types/qr-url'
-import { invitationDetailsRequest } from '../../api/api'
 import { convertSmsPayloadToInvitation } from '../../sms-pending-invitation/sms-pending-invitation-store'
-import {
-  isValidOIDCQrCode,
-  fetchValidateJWT,
-} from './qr-code-types/qr-code-oidc'
+import { fetchValidateJWT } from './qr-code-types/qr-code-oidc'
 import { uuid } from '../../services/uuid'
 import {
   MESSAGE_NO_CAMERA_PERMISSION,
   MESSAGE_ALLOW_CAMERA_PERMISSION,
 } from '../../qr-code/type-qr-code'
 import { CONNECTION_INVITE_TYPES } from '../../invitation/type-invitation'
-import { flatFetch } from '../../common/flat-fetch'
-import { flatTryCatch } from '../../common/flat-try-catch'
 import { flatJsonParse } from '../../common/flat-json-parse'
 import { isValidSMSInvitation } from '../../sms-pending-invitation/sms-invitation-validator'
 import { validateEphemeralProofQrCode } from '../../proof-request/proof-request-qr-code-reader'
+import { EvaIcon, CLOSE_ICON } from '../../common/icons'
+import { moderateScale } from 'react-native-size-matters'
 
 export default class QRScanner extends PureComponent<
   QrScannerProps,
@@ -337,11 +332,13 @@ export class CameraMarker extends PureComponent<CameraMarkerProps, void> {
           style={[closeIconStyle.closeIcon]}
           testID={'close-qr-scanner-container'}
         >
-          <Icon
-            src={require('../../images/close_white.png')}
+          <EvaIcon
+            name={CLOSE_ICON}
+            width={moderateScale(36)}
+            height={moderateScale(36)}
             testID={'close-qr-scanner-icon'}
             onPress={onClose}
-            small
+            color={colors.cmWhite}
           />
         </CustomView>
       </CustomView>

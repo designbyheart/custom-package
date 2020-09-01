@@ -1,21 +1,17 @@
 // @flow
 import React from 'react'
-import SvgCustomIcon from '../svg-custom-icon'
 import { TouchableOpacity, StyleSheet, Text, Platform } from 'react-native'
 import { colors, fontFamily } from '../../common/styles/constant'
-import { verticalScale, moderateScale } from 'react-native-size-matters'
+import { moderateScale } from 'react-native-size-matters'
+
+import { EvaIcon, CAMERA_ICON } from '../../common/icons'
 
 import type { CameraButtonProps } from './type-camera-button'
 
 export const CameraButton = (props: CameraButtonProps) => {
   return (
     <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
-      <SvgCustomIcon
-        name="Camera"
-        width={moderateScale(22)}
-        height={moderateScale(22)}
-        fill={colors.cmGray2}
-      />
+      <EvaIcon name={CAMERA_ICON} />
       <Text style={styles.text}>Scan</Text>
     </TouchableOpacity>
   )

@@ -7,23 +7,18 @@ import { bindActionCreators } from 'redux'
 import type { Store } from '../store/type-store'
 import type { LockSetupSuccessProps, LockSetupSuccessState } from './type-lock'
 
+import { Container, CustomText, CustomButton } from '../components'
 import {
-  Container,
-  CustomText,
-  CustomView,
-  CustomButton,
-  Icon,
-} from '../components'
-import {
-  settingsTabRoute,
-  homeDrawerRoute,
   settingsDrawerRoute,
   lockSetupSuccessRoute,
   homeRoute,
 } from '../common'
 import { unlockApp, clearPendingRedirect } from './lock-store'
-import { OFFSET_1X, OFFSET_2X, OFFSET_4X, color } from '../common/styles'
+import { OFFSET_1X, OFFSET_2X, OFFSET_4X, colors } from '../common/styles'
 import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
+
+import { EvaIcon, LOCK_ICON } from '../common/icons'
+import { moderateScale } from 'react-native-size-matters'
 
 export class LockSetupSuccess extends Component<
   LockSetupSuccessProps,
@@ -67,12 +62,14 @@ export class LockSetupSuccess extends Component<
     return (
       <Container tertiary safeArea>
         <Container clearBg center style={[style.successContainer]}>
-          <Icon
-            extraLarge
-            resizeMode="cover"
-            src={require('../images/lock.png')}
-            testID="lock-success-lock-logo"
-          />
+          <View style={style.iconBorder}>
+            <EvaIcon
+              name={LOCK_ICON}
+              width={moderateScale(40)}
+              height={moderateScale(40)}
+              color={colors.cmGreen1}
+            />
+          </View>
           <CustomText
             h4
             bg="tertiary"
@@ -142,6 +139,15 @@ export const lockSetupSuccessScreen = {
 }
 
 const style = StyleSheet.create({
+  iconBorder: {
+    width: moderateScale(72),
+    height: moderateScale(72),
+    borderWidth: 2,
+    borderColor: colors.cmGreen1,
+    borderRadius: moderateScale(36),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   successContainer: {
     paddingHorizontal: OFFSET_2X,
   },
