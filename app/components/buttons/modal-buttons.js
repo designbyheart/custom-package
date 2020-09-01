@@ -13,11 +13,15 @@ type BottomButtonProps = {
   disableAccept: boolean,
   bottomBtnText: string,
   svgIcon: any,
+  hideAccept?: boolean,
+  bottomTestID: string,
 }
 
 type TopButtonProps = {
+  disableDeny: boolean,
   topBtnText: string,
   onIgnore: (event: any) => void,
+  topTestID: string,
 }
 
 // TODO: Fix the any type
@@ -52,6 +56,7 @@ class ModalButtons extends PureComponent<any, ModalButtonProps> {
   render() {
     const {
       onIgnore,
+      disableDeny = false,
       disableAccept = false,
       colorBackground,
       topBtnText,
@@ -59,6 +64,9 @@ class ModalButtons extends PureComponent<any, ModalButtonProps> {
       containerStyles,
       children,
       svgIcon,
+      hideAccept,
+      topTestID,
+      bottomTestID,
     } = this.props
     const { container } = styles
     const { debounceButtonPress } = this
@@ -69,11 +77,14 @@ class ModalButtons extends PureComponent<any, ModalButtonProps> {
         {topBtnText && (
           <TopButton
             {...{
+              disableDeny,
               topBtnText,
               onIgnore,
+              topTestID,
             }}
           />
         )}
+        {!hideAccept &&
         <BottomButton
           {...{
             disableAccept,
@@ -81,18 +92,22 @@ class ModalButtons extends PureComponent<any, ModalButtonProps> {
             debounceButtonPress,
             svgIcon,
             colorBackground,
+            bottomTestID,
           }}
-        />
+        />}
       </View>
     )
   }
 }
 
-const TopButton = ({ topBtnText, onIgnore }: TopButtonProps) => {
+const TopButton = ({ topBtnText, onIgnore, disableDeny, topTestID }: TopButtonProps) => {
   const { buttonIgnore, ignoreTextStyle, buttonParentWrapper } = styles
 
   return (
-    <TouchableOpacity onPress={onIgnore}>
+    <TouchableOpacity
+      disabled={disableDeny}
+      onPress={onIgnore}
+      accessibilityLabel={topTestID}>
       <View
         style={[
           buttonParentWrapper,
@@ -114,6 +129,7 @@ const BottomButton = ({
   bottomBtnText,
   svgIcon,
   colorBackground,
+  bottomTestID,
 }: BottomButtonProps) => {
   const {
     buttonAccept,
@@ -123,7 +139,10 @@ const BottomButton = ({
   } = styles
 
   return (
-    <TouchableOpacity disabled={disableAccept} onPress={debounceButtonPress}>
+    <TouchableOpacity
+      disabled={disableAccept}
+      onPress={debounceButtonPress}
+      accessibilityLabel={bottomTestID}>
       <View
         style={[
           buttonParentWrapper,

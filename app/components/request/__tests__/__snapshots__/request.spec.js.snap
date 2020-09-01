@@ -318,193 +318,190 @@ exports[`<Request /> should match snapshot 1`] = `
       </View>
     </View>
   </View>
-  <RNCSafeAreaView
-    edges={
-      Array [
-        "bottom",
-      ]
-    }
+  <View
     style={
-      Object {
-        "backgroundColor": "rgba(119, 119, 119, 1.0)",
-      }
+      Array [
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "column",
+          "maxWidth": "100%",
+          "padding": 14.357142857142858,
+          "paddingBottom": 0.9571428571428571,
+          "width": "100%",
+        },
+        Object {
+          "padding": 14.357142857142858,
+          "paddingBottom": 9.571428571428571,
+        },
+      ]
     }
   >
     <View
-      fifth={true}
+      accessibilityLabel="request-deny"
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "#ffffff",
+          "opacity": 1,
         }
       }
     >
       <View
-        row={true}
         style={
-          Object {
-            "flexDirection": "row",
-          }
+          Array [
+            Object {
+              "alignItems": "stretch",
+              "borderRadius": 5,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "overflow": "hidden",
+              "width": "100%",
+            },
+            Object {
+              "alignItems": "center",
+              "borderColor": "#CE0B24",
+              "borderWidth": 1,
+              "justifyContent": "center",
+              "minWidth": "35%",
+              "padding": 16.271428571428572,
+              "paddingLeft": 9.571428571428571,
+              "paddingRight": 9.571428571428571,
+            },
+            Object {
+              "marginBottom": 15.314285714285713,
+            },
+          ]
         }
       >
-        <View
+        <Text
+          allowFontScaling={false}
           style={
-            Object {
-              "flex": 1,
-            }
+            Array [
+              Object {
+                "fontSize": 19,
+              },
+              Object {
+                "fontFamily": "Lato",
+              },
+              Object {
+                "backgroundColor": "#333333",
+                "color": "#ffffff",
+              },
+              Object {
+                "fontWeight": "600",
+              },
+              null,
+              Object {
+                "backgroundColor": "transparent",
+              },
+              null,
+              Object {
+                "color": "#d0021b",
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+            ]
           }
         >
-          <View
-            style={
-              Object {
-                "borderRadius": 3,
-                "marginLeft": 0,
-                "marginRight": 0,
-                "overflow": "hidden",
-              }
-            }
-          >
-            <View
-              accessibilityLabel="request-deny"
-              accessibilityRole="button"
-              accessibilityState={
-                Object {
-                  "busy": false,
-                  "disabled": false,
-                }
-              }
-              accessible={true}
-              focusable={true}
-              isTVSelectable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "opacity": 1,
-                }
-              }
-              testID="request-deny"
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "rgba(119, 119, 119, 1.0)",
-                    "borderColor": "#2089dc",
-                    "borderRadius": 3,
-                    "borderWidth": 0,
-                    "color": "#ffffff",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "padding": 8,
-                    "paddingVertical": 17,
-                    "textAlign": "center",
-                  }
-                }
-              >
-                <Text
-                  style={
-                    Object {
-                      "color": "white",
-                      "fontSize": 18,
-                      "paddingBottom": 1,
-                      "paddingTop": 2,
-                      "textAlign": "center",
-                    }
-                  }
-                >
-                  Deny
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "flex": 1,
-            }
-          }
-        >
-          <View
-            style={
-              Object {
-                "borderRadius": 3,
-                "marginLeft": 0,
-                "marginRight": 0,
-                "overflow": "hidden",
-              }
-            }
-          >
-            <View
-              accessibilityLabel="request-accept"
-              accessibilityRole="button"
-              accessibilityState={
-                Object {
-                  "busy": false,
-                  "disabled": false,
-                }
-              }
-              accessible={true}
-              focusable={true}
-              isTVSelectable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "borderColor": "#ffffff",
-                  "borderLeftWidth": 0.5,
-                  "opacity": 1,
-                }
-              }
-              testID="request-accept"
-            >
-              <View
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "backgroundColor": "rgba(119, 119, 119, 1.0)",
-                    "borderColor": "#ffffff",
-                    "borderLeftWidth": 0.5,
-                    "borderRadius": 3,
-                    "borderWidth": 0,
-                    "color": "#ffffff",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
-                    "padding": 8,
-                    "paddingVertical": 17,
-                    "textAlign": "center",
-                  }
-                }
-              >
-                <Text
-                  style={
-                    Object {
-                      "color": "white",
-                      "fontSize": 18,
-                      "paddingBottom": 1,
-                      "paddingTop": 2,
-                      "textAlign": "center",
-                    }
-                  }
-                >
-                  Connect
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
+          Deny
+        </Text>
       </View>
     </View>
-  </RNCSafeAreaView>
+    <View
+      accessibilityLabel="request-accept"
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "stretch",
+              "borderRadius": 5,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "overflow": "hidden",
+              "width": "100%",
+            },
+            Object {
+              "alignItems": "center",
+              "borderRadius": 5,
+              "justifyContent": "center",
+              "minWidth": "35%",
+              "padding": 16.271428571428572,
+              "paddingLeft": 9.571428571428571,
+              "paddingRight": 9.571428571428571,
+            },
+            Object {
+              "backgroundColor": "#86B93B",
+              "opacity": 1,
+            },
+          ]
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "fontSize": 19,
+              },
+              Object {
+                "fontFamily": "Lato",
+              },
+              Object {
+                "backgroundColor": "#333333",
+                "color": "#ffffff",
+              },
+              Object {
+                "fontWeight": "800",
+              },
+              Object {
+                "textAlign": "center",
+              },
+              Object {
+                "backgroundColor": "transparent",
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+            ]
+          }
+        >
+          Connect
+        </Text>
+      </View>
+    </View>
+  </View>
 </View>
 `;
