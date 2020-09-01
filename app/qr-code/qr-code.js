@@ -229,9 +229,13 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
         try {
           // get invitation from server running inside detox test
           const invitation = await (await fetch('http://localhost:1337')).json()
-          this.onRead(invitation)
+          if (invitation['payload']) {
+            this.onAriesConnectionInviteRead(invitation) // for VAS
+          } else {
+            this.onRead(invitation) // for VUI
+          }
         } catch (e) {
-          console.log('error')
+          // Alert.alert(e)
         }
       })
     }

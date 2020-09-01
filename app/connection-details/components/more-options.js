@@ -58,6 +58,9 @@ class MoreOptions extends Component<any, void> {
             <Text style={styles.text}>did: {params.identifier}</Text>
           </View>
           <TouchableOpacity
+            testID="delete-connection"
+            accessible={true}
+            accessibilityLabel="delete-connection"
             style={styles.deleteButton}
             onPress={() => this.onDeleteConnection(params.senderDID)}
           >
@@ -71,6 +74,9 @@ class MoreOptions extends Component<any, void> {
         </View>
         <View style={styles.closeButtonWrapper}>
           <TouchableOpacity
+            testID="delete-connection-close"
+            accessible={true}
+            accessibilityLabel="delete-connection-close"
             style={styles.closeButton}
             onPress={this.props.moreOptionsClose}
           >

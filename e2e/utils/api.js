@@ -90,7 +90,7 @@ export async function getInvitation() {
     httpsConfig
   ).then((res) => [res.data.id, res.data.qrCode])
 
-  console.log(chalk.cyan(invitationId))
+  console.log(chalk.magentaBright(invitationId))
   console.log(chalk.cyan(qrCode))
 
   const { stdout } = await exec(
@@ -99,7 +99,7 @@ export async function getInvitation() {
   console.log(chalk.cyan(stdout))
   const jsonData = stdout.substr(8)
 
-  await new Promise((r) => setTimeout(r, 30000)) // wait before fetching latest message
+  await new Promise((r) => setTimeout(r, 60000)) // wait before fetching latest message
 
   // not putting `await` here because we don't want to block here
   // it should run asynchronously, we will wait for inbox to open
@@ -131,7 +131,7 @@ export async function getInvitation() {
     appLinkIndex + appLink.length + tokenSize
   )
 
-  await new Promise((r) => setTimeout(r, 45000)) // wait until latest message will be processed
+  await new Promise((r) => setTimeout(r, 30000)) // wait until latest message will be processed
   await connection.end() // close mail server connection
 
   // no need to wait for invitation to be fetched

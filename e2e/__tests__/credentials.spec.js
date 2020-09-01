@@ -28,4 +28,8 @@ describe('My credentials screen', () => {
       .toBeVisible()
       .withTimeout(5000)
   })
+
+  xit('Case 2: check credential details', async () => {})
+
+  xit('Case 3: delete credential', async () => {})
 })
