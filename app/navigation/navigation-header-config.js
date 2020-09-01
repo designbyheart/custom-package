@@ -9,6 +9,7 @@ import {
   headerTitleStyle,
 } from '../components/header-title/header-title'
 
+// TODO: DA check if this code is still required after headers update
 export const headerNavigationOptions = ({
   title,
   ...rest
@@ -16,7 +17,7 @@ export const headerNavigationOptions = ({
   title: string,
 }) => {
   return {
-    headerShown: true,
+    headerShown: false,
     headerTitleAlign: 'center',
     headerCenter: () => {
       return <HeaderTitle title={title} />
@@ -24,11 +25,12 @@ export const headerNavigationOptions = ({
     headerLeft: () => {
       return <BackButton />
     },
-    headerHideShadow: true,
+    headerHideShadow: false,
     ...rest,
   }
 }
 
+// TODO: DA check if this code is still required after headers update
 export const headerOptionsWithNoBack = ({
   title,
   headerShown = true,

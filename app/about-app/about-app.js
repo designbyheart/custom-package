@@ -14,7 +14,7 @@ import { OFFSET_1X, OFFSET_2X, lightGray } from '../common/styles'
 import { aboutAppRoute, privacyTNCRoute } from '../common'
 import { PrivacyTNC } from '../privacy-tnc/privacy-tnc-screen'
 import { getEnvironmentName } from '../store/config-store'
-import { headerNavigationOptions } from '../navigation/navigation-header-config'
+import { Header } from '../components/header/common-header/header'
 import { colors } from '../common/styles/constant'
 
 const styles = StyleSheet.create({
@@ -76,6 +76,11 @@ export class AboutApp extends Component<AboutAppProps, void> {
   render() {
     return (
       <Container tertiary>
+        <Header
+          headline="About this App"
+          navigation={this.props.navigation}
+          route={this.props.route}
+        />
         <CustomView center doubleVerticalSpace>
           {logoConnectMe}
           <CustomView center doubleVerticalSpace>
@@ -139,7 +144,4 @@ const AboutAppScreen = connect(mapStateToProps)(AboutApp)
 export const aboutAppScreen = {
   routeName: aboutAppRoute,
   screen: AboutAppScreen,
-  options: {
-    ...headerNavigationOptions({ title: 'About this App' }),
-  },
 }

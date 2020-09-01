@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native'
 import WebView from 'react-native-webview'
 
 import type { PrivacyTNCProps, PrivacyTNCState } from './type-privacy-tnc'
-import type { CustomError, ReactNavigation } from '../common/type-common'
+import type { CustomError } from '../common/type-common'
 
 import {
   TermsAndConditionsTitle,
@@ -16,7 +16,7 @@ import {
 import { OrangeLoader } from '../components/loader-gif/loader-gif'
 import { localEulaSource } from '../eula/type-eula'
 import { privacyTNCRoute } from '../common'
-import { headerNavigationOptions } from '../navigation/navigation-header-config'
+import { Header } from '../components'
 
 export class PrivacyTNC extends PureComponent<
   PrivacyTNCProps,
@@ -36,8 +36,8 @@ export class PrivacyTNC extends PureComponent<
   }
 
   render() {
-    let webViewUri =
-      this.props.route.params?.url ?? PrivacyTNC.INFO_TYPE.PRIVACY.url
+    const { url, title } = this.props.route.params
+    let webViewUri = url ?? PrivacyTNC.INFO_TYPE.PRIVACY.url
     const isTNC = webViewUri === PrivacyTNC.INFO_TYPE.TNC.url
 
     if (this.state.error) {
@@ -45,13 +45,21 @@ export class PrivacyTNC extends PureComponent<
     }
 
     return (
-      <WebView
-        source={{ uri: webViewUri }}
-        startInLoadingState={true}
-        renderLoading={renderLoader}
-        onError={this.onError}
-        renderError={renderError}
-      />
+      <View style={styles.container}>
+        <Header
+          headline={title}
+          navigation={this.props.navigation}
+          route={this.props.route}
+        />
+        <WebView
+          source={{ uri: webViewUri }}
+          startInLoadingState={true}
+          renderLoading={renderLoader}
+          onError={this.onError}
+          renderError={renderError}
+          androidHardwareAccelerationDisabled={true}
+        />
+      </View>
     )
   }
 }
@@ -73,7 +81,4 @@ const styles = StyleSheet.create({
 export const privacyTNCScreen = {
   routeName: privacyTNCRoute,
   screen: PrivacyTNC,
-  options({ navigation, route }: *) {
-    return headerNavigationOptions({ title: route.params.title })
-  },
 }

@@ -42,6 +42,7 @@ exports[`<HomeInstructions /> should match snapshot 1`] = `
           "alignItems": "center",
           "height": "100%",
           "justifyContent": "center",
+          "marginTop": -44.470588235294116,
           "width": "100%",
         },
       ]
@@ -154,6 +155,7 @@ exports[`<HomeInstructions /> should match snapshot for test network 1`] = `
           "alignItems": "center",
           "height": "100%",
           "justifyContent": "center",
+          "marginTop": -44.470588235294116,
           "width": "100%",
         },
       ]

@@ -18,7 +18,14 @@ import moment from 'moment'
 import { ListItem } from 'react-native-elements'
 import get from 'lodash.get'
 
-import { CustomText, PrimaryHeader, CameraButton } from '../components'
+import {
+  UserAvatar,
+  CustomText,
+  Icon,
+  Avatar,
+  HomeHeader,
+  CameraButton,
+} from '../components'
 import { CustomView, Container } from '../components/layout'
 import {
   cloudBackupRoute,
@@ -94,34 +101,11 @@ const hideTokenScreen = true
 // positioned fine as well.
 // And now we have to show token balance in settings view, so we need to
 // take token height as well into consideration for height and padding
-let headerHeight = verticalScale(90)
-if (!hideTokenScreen) {
-  headerHeight += moderateScale(40)
-}
-let listTopPadding = headerHeight + verticalScale(2)
+// TODO: DA do we really need absolute positioning here? need to check
 
 const style = StyleSheet.create({
   secondaryContainer: {
     backgroundColor: colors.cmGray5,
-  },
-  userAvatarContainer: {
-    height: headerHeight,
-    width: '100%',
-    position: 'absolute',
-    zIndex: 1,
-    top: 0,
-    backgroundColor: colors.cmWhite,
-    shadowColor: colors.cmBlack,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: Platform.OS === 'android' ? 8 : 0,
-  },
-  userAvatarContainerBlur: {
-    position: 'absolute',
-    top: 0,
-    width: '100%',
-    height: headerHeight,
   },
   listContainer: {
     borderBottomWidth: 0,
@@ -728,26 +712,19 @@ export class Settings extends Component<SettingsProps, SettingsState> {
     return (
       <Container>
         <NotificationCard />
-
-        <CustomView
+        <View
           style={[style.secondaryContainer]}
-          tertiary
           testID="settings-container"
           accessible={true}
           accessibilityLabel="settings-container"
         >
+          <HomeHeader
+            headline="Settings"
+            navigation={this.props.navigation}
+            route={this.props.route}
+          />
           <ScrollView>
-            <CustomView
-              style={[
-                style.secondaryContainer,
-                style.listContainer,
-                {
-                  height: Dimensions.get('window').height,
-                  paddingTop: listTopPadding,
-                  paddingBottom: moderateScale(50),
-                },
-              ]}
-            >
+            <CustomView style={[style.secondaryContainer, style.listContainer]}>
               {settingsItemList.map((item, index) => {
                 // disable manual backup as well. Remove below line to enable manual backup in ConnectMe
                 if (index === 0) {
@@ -797,8 +774,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
               })}
             </CustomView>
           </ScrollView>
-          <PrimaryHeader headline="Settings" />
-        </CustomView>
+        </View>
         <CameraButton
           onPress={() => this.props.navigation.navigate(qrCodeScannerTabRoute)}
         />

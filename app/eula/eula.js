@@ -8,28 +8,22 @@ import React, { useState, useCallback, useMemo } from 'react'
 import { Alert, View, StyleSheet } from 'react-native'
 import WebView from 'react-native-webview'
 
-import type { EulaScreenState } from './type-eula'
 import type {
   CustomError,
   ReactNavigation,
   ReduxConnect,
 } from '../common/type-common'
-
+import { TermsAndConditionsTitle } from '../common/privacyTNC-constants'
 import { Container, FooterActions } from '../components'
 import {
   eulaRoute,
-  restoreRoute,
-  lockSelectionRoute,
   homeRoute,
 } from '../common'
 import { eulaAccept } from './eula-store'
 import { EULA_URL, localEulaSource } from './type-eula'
 import { OrangeLoader } from '../components/loader-gif/loader-gif'
 import { connect } from 'react-redux'
-import {
-  headerNavigationOptions,
-  headerOptionsWithNoBack,
-} from '../navigation/navigation-header-config'
+import { Header } from '../components'
 
 export const EulaScreen = ({
   dispatch,
@@ -79,9 +73,6 @@ export const EulaScreen = ({
 export const eulaScreen = {
   routeName: eulaRoute,
   screen: connect()(EulaScreen),
-  options: headerOptionsWithNoBack({
-    title: 'Terms and Conditions',
-  }),
 }
 const style = StyleSheet.create({
   loaderContainer: {

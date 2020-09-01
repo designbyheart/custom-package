@@ -20,7 +20,7 @@ import {
   Icon,
 } from '../components'
 import {
-  color,
+  color, colors, fontFamily,
   OFFSET_1X,
   OFFSET_2X,
   OFFSET_3X,
@@ -49,6 +49,8 @@ import {
   matterhornSecondary,
   cmRed,
 } from '../common/styles/constant'
+import SvgCustomIcon from '../components/svg-custom-icon'
+import { moderateScale } from 'react-native-size-matters'
 
 const lockImage = require('../images/lockCombo.png')
 const backgroundImg = require('../images/wave1.png')
@@ -61,7 +63,9 @@ const styles = StyleSheet.create({
     marginBottom: OFFSET_4X,
   },
   titleText: {
-    lineHeight: 28,
+    fontFamily,
+    fontStyle: 'normal',
+    fontWeight: 'bold',
     letterSpacing: 0.5,
   },
 })
@@ -164,6 +168,14 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
       <Container>
         {this.props.fromRecovery ? (
           <Container safeArea fifth>
+            <CustomView center>
+              <SvgCustomIcon
+                name="ConnectMe"
+                width={moderateScale(218.54)}
+                height={moderateScale(28)}
+                fill={colors.cmGray2}
+              />
+            </CustomView>
             <Image
               source={backgroundImg}
               style={[stylesRecovery.backgroundImg]}
@@ -213,6 +225,14 @@ export class LockEnter extends Component<LockEnterProps, LockEnterState> {
           </Container>
         ) : (
           <Container tertiary>
+            <CustomView center>
+              <SvgCustomIcon
+                name="ConnectMe"
+                width={moderateScale(218.54)}
+                height={moderateScale(28)}
+                fill={colors.cmGray2}
+              />
+            </CustomView>
             <CustomView
               style={[styles.text]}
               center

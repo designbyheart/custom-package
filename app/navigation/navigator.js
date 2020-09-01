@@ -323,7 +323,6 @@ function CardStackScreen() {
       <CardStack.Screen
         name={privacyTNCScreen.routeName}
         component={privacyTNCScreen.screen}
-        options={privacyTNCScreen.options}
       />
       <CardStack.Screen
         name={designStyleGuideScreen.routeName}
@@ -353,7 +352,6 @@ function CardStackScreen() {
       <CardStack.Screen
         name={lockAuthorizationScreen.routeName}
         component={lockAuthorizationScreen.screen}
-        options={lockAuthorizationScreen.options}
       />
       <CardStack.Screen
         name={lockSetupSuccessScreen.routeName}
@@ -370,7 +368,6 @@ function CardStackScreen() {
       <CardStack.Screen
         name={lockSelectionScreen.routeName}
         component={lockSelectionScreen.screen}
-        options={lockSelectionScreen.options}
       />
       <CardStack.Screen
         name={startUpScreen.routeName}
@@ -392,12 +389,10 @@ function CardStackScreen() {
       <CardStack.Screen
         name={lockPinSetupScreen.routeName}
         component={lockPinSetupScreen.screen}
-        options={lockPinSetupScreen.options}
       />
       <CardStack.Screen
         name={aboutAppScreen.routeName}
         component={aboutAppScreen.screen}
-        options={aboutAppScreen.options}
       />
       <CardStack.Screen
         name={onfidoScreen.routeName}
@@ -439,7 +434,6 @@ function CardStackScreen() {
       <CardStack.Screen
         name={eulaScreen.routeName}
         component={eulaScreen.screen}
-        options={eulaScreen.options}
       />
       <CardStack.Screen
         name={lockEnterPinScreen.routeName}
@@ -461,7 +455,6 @@ function CardStackScreen() {
       <CardStack.Screen
         name={credentialDetailsScreen.routeName}
         component={credentialDetailsScreen.screen}
-        options={credentialDetailsScreen.options}
       />
     </CardStack.Navigator>
   )

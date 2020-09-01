@@ -3,14 +3,14 @@ import React, { useCallback } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import type { PrimaryHeaderProps } from './type-primary-header'
+import type { HeaderProps } from '../type-header'
 
-import { EvaIcon, HOME_MENU_ICON } from '../../common/icons'
-import UnreadMessagesBadge from '../unread-messages-badge/unread-messages-badge'
-import { styles } from './styles'
+import { EvaIcon, HOME_MENU_ICON } from '../../../common/icons'
+import UnreadMessagesBadge from '../../unread-messages-badge/unread-messages-badge'
+import { styles } from '../type-header'
 import { moderateScale } from 'react-native-size-matters'
 
-export const PrimaryHeader = ({ headline }: PrimaryHeaderProps) => {
+export const HomeHeader = ({ headline }: HeaderProps) => {
   const navigation = useNavigation()
   const toggleDrawer = useCallback(() => {
     navigation.toggleDrawer()
@@ -20,10 +20,10 @@ export const PrimaryHeader = ({ headline }: PrimaryHeaderProps) => {
     <View style={styles.container}>
       <View
         accessible={true}
-        accessibilityLabel="burger-menu"
+        accessibilityLabel="left-icon"
         style={styles.iconSection}
       >
-        <TouchableOpacity testID="burger-menu" onPress={toggleDrawer}>
+        <TouchableOpacity testID="left-icon" onPress={toggleDrawer}>
           <EvaIcon
             name={HOME_MENU_ICON}
             width={moderateScale(32)}
