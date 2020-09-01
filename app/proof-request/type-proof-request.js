@@ -116,6 +116,14 @@ export type AdditionalProofDataPayload = {
   outofbandProofRequest?: string,
 }
 
+export type HeaderProofData = {
+  institutionalName: string,
+  credentialName: string,
+  credentialText: string,
+  imageUrl: string,
+  colorBackground: string,
+}
+
 export type ProofRequestAttributeListProp = {
   list: Array<Attribute>,
   claimMap?: ?ClaimMap,
@@ -128,6 +136,11 @@ export type ProofRequestAttributeListProp = {
   userAvatarSource: ?ImageSource,
   updateSelectedClaims: (item: Attribute) => void,
 }
+
+export type ProofRequestAttributeListAndHeaderProps = ProofRequestAttributeListProp &
+  HeaderProofData
+
+export type ProofRequestAndHeaderProps = ProofRequestProps & HeaderProofData
 
 export type ProofRequestAttributeListState = {
   [string]: string,

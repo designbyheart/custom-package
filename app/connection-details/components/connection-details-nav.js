@@ -64,7 +64,11 @@ class ConnectionDetailsNav extends PureComponent<any, void> {
           </View>
         </View>
         <View style={styles.buttonMoreOptionsWrapper}>
-          <TouchableOpacity onPress={this.props.moreOptionsOpen}>
+          <TouchableOpacity
+            testID="three-dots"
+            accessible={true}
+            accessibilityLabel="three-dots"
+            onPress={this.props.moreOptionsOpen}>
             <EvaIcon
               name={MORE_ICON}
               width={moderateScale(32)}

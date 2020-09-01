@@ -1,50 +1,24 @@
 // @flow
+
+// packages
 import React, { Component } from 'react'
 import {
-  Text,
   View,
   StyleSheet,
-  TextInput,
   Alert,
   Platform,
-  Dimensions,
   InteractionManager,
 } from 'react-native'
-import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import Carousel from 'react-native-snap-carousel'
+import { moderateScale } from 'react-native-size-matters'
 
-import {
-  Icon,
-  Loader,
-} from '../../components'
+// types
 import type {
-  ProofRequestProps,
-  ProofRequestAttributeListState,
-  MissingAttributes,
   ProofRequestState,
-  ProofRequestAttributeListProp,
-  SelfAttestedAttributes,
+  ProofRequestAndHeaderProps,
 } from '../../proof-request/type-proof-request'
-import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view'
-import debounce from 'lodash.debounce'
 import {
-  rejectProofRequest,
-  acceptProofRequest,
-  ignoreProofRequest,
-  proofRequestShown,
-  proofRequestShowStart,
-  denyProofRequest,
-  acceptOutofbandPresentationRequest,
-} from '../../proof-request/proof-request-store'
-import {
-  getConnectionLogoUrl,
-  getUserAvatarSource,
-} from '../../store/store-selector'
-import {
-  PRIMARY_ACTION_SEND,
-  PRIMARY_ACTION_GENERATE_PROOF,
   MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION,
   MESSAGE_MISSING_ATTRIBUTES_TITLE,
   MESSAGE_ERROR_PROOF_GENERATION_TITLE,
@@ -53,324 +27,50 @@ import {
   MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_TITLE,
   MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_DESCRIPTION,
 } from '../../proof-request/type-proof-request'
-import { BLANK_ATTRIBUTE_DATA_TEXT } from '../type-connection-details'
+import type { GenericStringObject } from '../../common/type-common'
+import type { Attribute } from '../../push-notification/type-push-notification'
+
+// store
+import {
+  getConnectionLogoUrl,
+  getUserAvatarSource,
+} from '../../store/store-selector'
+import {
+  rejectProofRequest,
+  acceptProofRequest,
+  ignoreProofRequest,
+  proofRequestShown,
+  proofRequestShowStart,
+  denyProofRequest,
+  acceptOutofbandPresentationRequest
+} from '../../proof-request/proof-request-store'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import {
   userSelfAttestedAttributes,
   updateAttributeClaim,
   getProof,
 } from '../../proof/proof-store'
-import type {
-  GenericObject,
-  GenericStringObject,
-  CustomError,
-} from '../../common/type-common'
-import type { Attribute } from '../../push-notification/type-push-notification'
 import type { Store } from '../../store/type-store'
-import { verticalScale, moderateScale } from 'react-native-size-matters'
-import {
-  colors,
-  fontFamily,
-  fontSizes,
-  font,
-} from '../../common/styles/constant'
 import { acceptOutOfBandInvitation } from '../../invitation/invitation-store'
 
-const screenWidth = Dimensions.get('window').width
-const sliderWidth = screenWidth - screenWidth * 0.1
+// components
+import { ModalButtons } from '../../components/buttons/modal-buttons'
+import { Loader } from '../../components'
+import ProofRequestAttributeList from './proof-request-attribute-list'
 
-export function generateStateForMissingAttributes(
-  missingAttributes: MissingAttributes | {}
-) {
-  return Object.keys(missingAttributes).reduce(
-    (acc, attributeName) => ({
-      ...acc,
-      [attributeName]: '',
-    }),
-    {}
-  )
-}
+// styles
+import { colors } from '../../common/styles/constant'
 
-export function isInvalidValues(
-  missingAttributes: MissingAttributes | {},
-  userFilledValues: GenericObject
-): boolean {
-  return Object.keys(missingAttributes).some((attributeName) => {
-    const userFilledValue = userFilledValues[attributeName]
-
-    if (!userFilledValue) {
-      return true
-    }
-
-    const adjustedUserFilledValue = userFilledValue.trim()
-
-    if (!adjustedUserFilledValue) {
-      return true
-    }
-
-    return false
-  })
-}
-
-class ProofRequestAttributeList extends Component<
-  ProofRequestAttributeListProp,
-  ProofRequestAttributeListState
-> {
-  constructor(props: ProofRequestAttributeListProp) {
-    super(props)
-    this.canEnableGenerateProof = debounce(
-      this.canEnableGenerateProof.bind(this),
-      250
-    )
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps: ProofRequestAttributeListProp) {
-    if (this.props.missingAttributes !== nextProps.missingAttributes) {
-      // once we know that there are missing attributes
-      // then we generate state variable for each of them
-      // because we will show user some input boxes and need to capture values
-      // that user fills in them, also we need to enable generate proof button
-      // once all the missing attributes are filled in by user
-      this.setState(
-        generateStateForMissingAttributes(nextProps.missingAttributes)
-      )
-    }
-  }
-
-  // this form is needed to fix flow error
-  // because methods of a class are by default covariant
-  // so we need an invariance to tell method signature
-  canEnableGenerateProof = function () {
-    const isInvalid = isInvalidValues(this.props.missingAttributes, this.state)
-    this.props.canEnablePrimaryAction(!isInvalid, this.state)
-  }
-
-  onTextChange = (e, name: string) => {
-    const { text } = e.nativeEvent
-    this.setState(
-      {
-        [name]: text,
-      },
-      this.canEnableGenerateProof
-    )
-  }
-
-  onSwipe = (item: Attribute) => {
-    this.props.updateSelectedClaims(item)
-  }
-
-  keyExtractor = ({ label }: Attribute, index: number) => `${label}${index}`
-
-  // once we are going to render multiple values
-  // then we have to render view for each pair in values and
-  // collect them into one wrapping view
-  renderValues = ({ item, index }) => {
-    if (!item.values) {
-      return <View></View>
-    }
-
-    let logoUrl
-
-    const views = Object.keys(item.values).map((label, keyIndex) => {
-      const adjustedLabel = item.label.toLocaleLowerCase()
-      const testID = 'proof-request-attribute-item'
-
-      const value = item.values[label]
-      const isDataEmptyString = value === ''
-
-      if (!logoUrl) {
-        logoUrl =
-          value || isDataEmptyString
-            ? item.claimUuid &&
-              this.props.claimMap &&
-              this.props.claimMap[item.claimUuid] &&
-              this.props.claimMap[item.claimUuid].logoUrl
-              ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
-              : this.props.userAvatarSource ||
-                require('../../images/UserAvatar.png')
-            : null
-      }
-
-      const showInputBox =
-        adjustedLabel in this.props.missingAttributes && !value
-
-      return (
-        <View key={`${index}_${keyIndex}`}>
-          <Text style={styles.title}>{label}</Text>
-          <View>
-            {showInputBox ? (
-              <TextInput
-                style={styles.contentInput}
-                autoCorrect={false}
-                blurOnSubmit={true}
-                clearButtonMode="always"
-                numberOfLines={3}
-                multiline={true}
-                maxLength={200}
-                placeholder={`Enter ${label}`}
-                returnKeyType="done"
-                testID={`${testID}-input-${adjustedLabel}`}
-                accessible={true}
-                accessibilityLabel={`${testID}-input-${adjustedLabel}`}
-                onChange={(e) => this.onTextChange(e, adjustedLabel)}
-                editable={!this.props.disableUserInputs}
-                underlineColorAndroid="transparent"
-              />
-            ) : // If data is empty string, show the BLANK text in gray instead
-            isDataEmptyString ? (
-              <Text style={styles.contentGray}>
-                {BLANK_ATTRIBUTE_DATA_TEXT}
-              </Text>
-            ) : (
-              <Text style={styles.content}>{value}</Text>
-            )}
-          </View>
-        </View>
-      )
-    })
-
-    return (
-      <View key={index} style={styles.wrapper}>
-        <View style={styles.textAvatarWrapper}>
-          <View style={styles.textInnerWrapper}>{views}</View>
-          <View style={styles.avatarInnerWrapper}>
-            <Icon
-              medium
-              round
-              resizeMode="cover"
-              src={logoUrl}
-              testID={`proof-requester-logo-${index}`}
-            />
-          </View>
-        </View>
-      </View>
-    )
-  }
-
-  renderItem = ({ item, index }) => {
-    // convert item to array of item
-    let items = item
-
-    if (!Array.isArray(items)) {
-      items = [items]
-    }
-
-    return (
-      <Carousel
-        layout={'default'}
-        sliderWidth={sliderWidth}
-        itemWidth={sliderWidth}
-        onSnapToItem={(swipeIndex) => this.onSwipe(items[swipeIndex])}
-        data={items}
-        loop={true}
-        renderItem={this.renderValues}
-      />
-    )
-  }
-
-  render() {
-    const attributes: Array<Attribute> = this.props.list
-    return (
-      <KeyboardAwareFlatList
-        scrollEnabled
-        enableOnAndroid
-        style={styles.keyboardFlatList}
-        data={attributes}
-        keyExtractor={this.keyExtractor}
-        renderItem={this.renderItem}
-        extraData={this.props}
-        extraScrollHeight={Platform.OS === 'ios' ? 170 : null}
-      />
-    )
-  }
-}
-
-export function convertUserFilledValuesToSelfAttested(
-  userFilledValues: GenericStringObject,
-  missingAttributes: MissingAttributes | {}
-): SelfAttestedAttributes {
-  return Object.keys(missingAttributes).reduce((acc, name) => {
-    return {
-      ...acc,
-      [name]: {
-        name,
-        data: userFilledValues[name],
-        key: missingAttributes[name].key,
-      },
-    }
-  }, {})
-}
-
-export function getPrimaryActionText(
-  missingAttributes: MissingAttributes | {},
-  generateProofClicked: boolean
-) {
-  if (generateProofClicked) {
-    return PRIMARY_ACTION_SEND
-  }
-
-  return Object.keys(missingAttributes).length > 0
-    ? PRIMARY_ACTION_GENERATE_PROOF
-    : PRIMARY_ACTION_SEND
-}
-
-export const isPropEmpty = (prop: string) => (
-  data: GenericObject | Array<Attribute>
-) => {
-  if (Array.isArray(data)) {
-    return data.some(missingData)
-  }
-  return !(data[prop] || data[prop] === '')
-}
-
-export const missingData = isPropEmpty('values')
-
-export function enablePrimaryAction(
-  missingAttributes: MissingAttributes | {},
-  generateProofClicked: boolean,
-  allMissingAttributesFilled: boolean,
-  error: ?CustomError,
-  requestedAttributes: Attribute[]
-) {
-  // we need to decide on whether to enable Send/Generate-Proof button
-
-  if (error) {
-    return false
-  }
-
-  const missingCount = Object.keys(missingAttributes).length
-  if (missingCount > 0) {
-    if (allMissingAttributesFilled === false) {
-      return false
-    }
-
-    if (generateProofClicked === false) {
-      return true
-    }
-  }
-
-  const isMissingData = requestedAttributes.some(missingData)
-  if (isMissingData) {
-    return false
-  }
-
-  return true
-}
-
-export function hasMissingAttributes(
-  missingAttributes: MissingAttributes | {}
-) {
-  return Object.keys(missingAttributes).length > 0
-}
-
-export function getMissingAttributeNames(
-  missingAttributes: MissingAttributes | {}
-) {
-  return Object.keys(missingAttributes).join(', ')
-}
+// utils
+import {
+  convertUserFilledValuesToSelfAttested,
+  getPrimaryActionText,
+  enablePrimaryAction,
+  hasMissingAttributes,
+} from '../utils'
 
 class ModalContentProof extends Component<
-  ProofRequestProps,
+  ProofRequestAndHeaderProps,
   ProofRequestState
 > {
   constructor(props) {
@@ -389,23 +89,8 @@ class ModalContentProof extends Component<
     }
     this.onSend = this.onSend.bind(this)
   }
-  convertUserFilledValuesToSelfAttested(
-    userFilledValues: GenericStringObject,
-    missingAttributes: MissingAttributes | {}
-  ): SelfAttestedAttributes {
-    return Object.keys(missingAttributes).reduce((acc, name) => {
-      return {
-        ...acc,
-        [name]: {
-          name,
-          data: userFilledValues[name],
-          key: missingAttributes[name].key,
-        },
-      }
-    }, {})
-  }
 
-  componentDidUpdate(prevProps: ProofRequestProps) {
+  componentDidUpdate(prevProps: ProofRequestAndHeaderProps) {
     if (
       prevProps.dissatisfiedAttributes !== this.props.dissatisfiedAttributes &&
       this.props.dissatisfiedAttributes.length > 0
@@ -441,7 +126,7 @@ class ModalContentProof extends Component<
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: ProofRequestProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: ProofRequestAndHeaderProps) {
     if (
       (this.props.proofGenerationError !== nextProps.proofGenerationError &&
         nextProps.proofGenerationError) ||
@@ -641,16 +326,18 @@ class ModalContentProof extends Component<
 
   render() {
     const {
-      data,
-      name,
-      uid,
-      isValid,
-      proofStatus,
-      remotePairwiseDID,
-      logoUrl,
       claimMap,
       missingAttributes,
       proofGenerationError,
+      userAvatarSource,
+      institutionalName,
+      credentialName,
+      credentialText,
+      imageUrl,
+      colorBackground,
+      secondColorBackground,
+      navigation,
+      route,
     } = this.props
 
     const primaryActionText = getPrimaryActionText(
@@ -669,29 +356,42 @@ class ModalContentProof extends Component<
       return <Loader />
     }
 
+    const { canEnablePrimaryAction, updateSelectedClaims } = this
+    const { disableUserInputs } = this.state
+
     return (
       <View style={styles.outerModalWrapper}>
         <View style={styles.innerModalWrapper}>
           <ProofRequestAttributeList
             list={this.props.data.requestedAttributes}
-            claimMap={this.props.claimMap}
-            missingAttributes={this.props.missingAttributes}
-            canEnablePrimaryAction={this.canEnablePrimaryAction}
-            disableUserInputs={this.state.disableUserInputs}
-            userAvatarSource={this.props.userAvatarSource}
-            updateSelectedClaims={this.updateSelectedClaims}
+            {...{
+              claimMap,
+              missingAttributes,
+              canEnablePrimaryAction,
+              disableUserInputs,
+              userAvatarSource,
+              updateSelectedClaims,
+              institutionalName,
+              credentialName,
+              credentialText,
+              imageUrl,
+              colorBackground,
+              navigation,
+              route,
+            }}
           />
         </View>
         <ModalButtons
           onPress={this.onSend}
           onIgnore={this.onDeny}
-          colorBackground={this.props.colorBackground}
-          secondColorBackground={this.props.secondColorBackground}
-          leftBtnText={'Reject'}
-          rightBtnText={primaryActionText}
+          topBtnText={'Reject'}
+          bottomBtnText={primaryActionText}
           disableAccept={
             !enablePrimaryActionStatus || this.state.disableSendButton
           }
+          svgIcon="Send"
+          colorBackground={colors.cmGreen1}
+          {...{ secondColorBackground }}
         />
       </View>
     )
@@ -717,6 +417,7 @@ const mapStateToProps = (state: Store, mergeProps) => {
     state.proof[uid] && state.proof[uid].proofData
       ? state.proof[uid].proofData.error
       : null
+
   return {
     isValid,
     data,
@@ -757,61 +458,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(ModalContentProof)
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: colors.cmGray5,
+    backgroundColor: colors.cmWhite,
     paddingTop: moderateScale(12),
-    borderBottomColor: colors.cmGray3,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  textAvatarWrapper: {
-    flexDirection: 'row',
-    width: '100%',
-  },
-  textInnerWrapper: {
-    width: '85%',
+    ...Platform.select({
+      ios: {
+        borderBottomColor: colors.cmGray5,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      },
+      android: {
+        borderBottomColor: colors.cmGray5,
+        borderBottomWidth: 1,
+      },
+    }),
   },
   avatarWrapper: {
     marginTop: moderateScale(-15),
     width: '15%',
-  },
-  avatarInnerWrapper: {
-    marginTop: moderateScale(12),
-  },
-  title: {
-    fontSize: verticalScale(fontSizes.size7),
-    fontWeight: '700',
-    color: colors.cmGray3,
-    width: '100%',
-    textAlign: 'left',
-    marginBottom: moderateScale(2),
-    fontFamily: fontFamily,
-  },
-  contentInput: {
-    fontSize: verticalScale(fontSizes.size5),
-    height: 48,
-    fontWeight: '400',
-    color: colors.cmGray1,
-    width: '100%',
-    textAlign: 'left',
-    fontFamily: fontFamily,
-  },
-  content: {
-    fontSize: verticalScale(fontSizes.size5),
-    marginBottom: moderateScale(12),
-    fontWeight: '400',
-    color: colors.cmGray1,
-    width: '100%',
-    textAlign: 'left',
-    fontFamily: fontFamily,
-  },
-  contentGray: {
-    fontSize: verticalScale(fontSizes.size5),
-    marginTop: moderateScale(10),
-    marginBottom: moderateScale(6),
-    fontWeight: '400',
-    color: colors.cmGray3,
-    width: '100%',
-    textAlign: 'left',
-    fontFamily: fontFamily,
   },
   outerModalWrapper: {
     width: '100%',
@@ -819,10 +481,6 @@ const styles = StyleSheet.create({
   },
   innerModalWrapper: {
     flex: 1,
-    backgroundColor: colors.cmGray5,
-  },
-  keyboardFlatList: {
-    paddingLeft: '5%',
-    paddingRight: '5%',
+    backgroundColor: colors.cmWhite,
   },
 })

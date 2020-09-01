@@ -1,5 +1,4 @@
 // @flow
-import React from 'react'
 import { StyleSheet, Dimensions, Platform, StatusBar } from 'react-native'
 import {
   blackTransparent,
@@ -179,7 +178,7 @@ export const getQuestionStylesObject = (
   questionDetails: {
     paddingTop: 20,
     paddingBottom: 20,
-    minHeight: 250,
+    minHeight: 150,
     justifyContent: 'center',
     marginBottom: 25,
   },

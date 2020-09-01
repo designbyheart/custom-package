@@ -563,6 +563,7 @@ export function convertQuestionReceivedToHistoryEvent(
       payloadInfo: action.question,
       type: MESSAGE_TYPE.QUESTION,
     },
+    showBadge: true
   }
 }
 
