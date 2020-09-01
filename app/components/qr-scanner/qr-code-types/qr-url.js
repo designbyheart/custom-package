@@ -3,6 +3,7 @@ import urlParse, { type Url } from 'url-parse'
 
 import type {
   AriesConnectionInvite,
+  AriesConnectionInvitePayload,
   AriesOutOfBandInvite,
 } from '../../../invitation/type-invitation'
 import type {
@@ -12,11 +13,14 @@ import type {
 } from '../type-qr-scanner'
 
 import { SCAN_STATUS, QR_CODE_TYPES } from '../type-qr-scanner'
+import type { GenericObject } from '../../../common/type-common'
 import { flatFetch } from '../../../common/flat-fetch'
 import { flatJsonParse } from '../../../common/flat-json-parse'
-import { isAriesConnectionInviteQrCode } from './qr-code-aries-connection-invite'
+import {
+  isAriesConnectionInviteQrCode,
+  isAriesOutOfBandInviteQrCode,
+} from './qr-code-aries-connection-invite'
 import { isValidOIDCQrCode } from './qr-code-oidc'
-import { isAriesOutOfBandInviteQrCode } from './qr-code-aries-out-of-band-invite'
 
 export function isValidUrlQrCode(urlQrCode: string): Url | false {
   const parsedUrl = urlParse(urlQrCode, {}, true)
@@ -34,13 +38,20 @@ export async function getUrlQrCodeData(
 ): Promise<
   [
     null | QR_SCAN_STATUS,
-    null | Object | AriesConnectionInvite | QrCodeOIDC | QrCodeNonJsonUrl
+    (
+      | null
+      | GenericObject
+      | AriesConnectionInvite
+      | AriesOutOfBandInvite
+      | QrCodeOIDC
+      | QrCodeNonJsonUrl
+    )
   ]
 > {
   // if we get url qr code, then there are three ways as of now that ConnectMe supports
   // to get data from url qr code
 
-  // Two ways are to get data directly from URL query params
+  // Three ways are to get data directly from URL query params
 
   // 1. get aries invitation data using url qr code
   const ariesConnectionInvite = await isAriesConnectionInviteQrCode(parsedUrl)
@@ -59,10 +70,16 @@ export async function getUrlQrCodeData(
     return [null, oidcQrCode]
   }
 
+  // 3. get out of band invitation data from URL query parameter
+  const outOfBandInvite = await isAriesOutOfBandInviteQrCode(parsedUrl)
+  if (outOfBandInvite) {
+    return [null, outOfBandInvite]
+  }
+
   // if there is no data available in url params, then try to download data
   // from the passed url and check if we get data from url
 
-  // 3. download data and get a valid json object
+  // 4. download data and get a valid json object
   const [downloadError, downloadedData] = await flatFetch(url)
   if (downloadedData) {
     // we are able to get data from url

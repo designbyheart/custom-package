@@ -1,6 +1,6 @@
 // @flow
-import { put, takeEvery, call, select, all } from 'redux-saga/effects'
-import type { CustomError } from '../common/type-common'
+import { put, takeEvery, call, select } from 'redux-saga/effects'
+import type { CustomError, RequestedAttrsJson } from '../common/type-common'
 import type {
   ProofRequestStore,
   ProofRequestAction,
@@ -14,19 +14,20 @@ import type {
   ProofRequestPayload,
   AdditionalProofDataPayload,
   MissingAttribute,
-  SelfAttestedAttributes,
   MissingAttributes,
   ProofRequestReceivedAction,
   DissatisfiedAttribute,
   DenyProofRequestAction,
   DenyProofRequestSuccessAction,
+  AcceptOutofbandPresentationRequestAction,
+  OutOfBandConnectionForPresentationEstablishedAction,
 } from './type-proof-request'
-import delay from '@redux-saga/delay-p'
 import {
   getUserPairwiseDid,
   getProofRequestPairwiseDid,
   getRemotePairwiseDidAndName,
   getProofRequest,
+  getConnection,
 } from '../store/store-selector'
 import {
   PROOF_REQUESTS,
@@ -51,6 +52,8 @@ import {
   DENY_PROOF_REQUEST,
   DENY_PROOF_REQUEST_SUCCESS,
   DENY_PROOF_REQUEST_FAIL,
+  ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
+  OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
 } from './type-proof-request'
 import type {
   NotificationPayloadInfo,
@@ -64,16 +67,14 @@ import {
   proofDeserialize,
 } from '../bridge/react-native-cxs/RNCxs'
 import type { Connection } from '../store/type-connection-store'
-import type { UserOneTimeInfo } from '../store/user/type-user-store'
-import { MESSAGE_TYPE } from '../api/api-constants'
 import { RESET } from '../common/type-common'
-import { PROOF_FAIL } from '../proof/type-proof'
 import { getProofRequests } from './../store/store-selector'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
-import { resetTempProofData, errorSendProofFail } from '../proof/proof-store'
+import { resetTempProofData, errorSendProofFail, updateAttributeClaim } from '../proof/proof-store'
 import { secureSet, getHydrationItem } from '../services/storage'
 import { retrySaga } from '../api/api-utils'
+import { PROOF_FAIL } from '../proof/type-proof'
 
 const proofRequestInitialState = {}
 
@@ -205,7 +206,6 @@ export function* proofAccepted(
     ephemeralProofRequest,
     remotePairwiseDID,
   } = proofRequestPayload
-
   // for ephemeral proof request there will be no pairwise connection
   // so we are keeping connection handle to 0
   let connectionHandle = 0
@@ -237,28 +237,7 @@ function* getConnectionHandle(
   uid: string
 ): Generator<*, *, *> {
   try {
-    const userPairwiseDid: string | null = yield select(
-      getUserPairwiseDid,
-      remoteDid
-    )
-    if (!userPairwiseDid) {
-      // if we don't find a pairwise connection
-      // and this proof request is also not ephemeral proof request
-      // then we raise error and tell user that sending proof failed
-      captureError(new Error('OCS-002 No pairwise connection found'))
-      yield put(
-        errorSendProofFail(uid, remoteDid, {
-          code: 'OCS-002',
-          message: 'No pairwise connection found',
-        })
-      )
-      return
-    }
-
-    const connection: {
-      remotePairwiseDID: string,
-      remoteName: string,
-    } & Connection = yield select(getRemotePairwiseDidAndName, userPairwiseDid)
+    const [connection]: [Connection] = yield select(getConnection, remoteDid)
 
     if (!connection.vcxSerializedConnection) {
       captureError(new Error('OCS-002 No pairwise connection found'))
@@ -321,8 +300,10 @@ export function* serializeProofRequestSaga(
 ): Generator<*, *, *> {
   try {
     const { proofHandle } = action.payload
-    const serializedProof: string = yield call(proofSerialize, proofHandle)
-    yield put(proofSerialized(serializedProof, action.payloadInfo.uid))
+    if (proofHandle) {
+      const serializedProof: string = yield call(proofSerialize, proofHandle)
+      yield put(proofSerialized(serializedProof, action.payloadInfo.uid))
+    }
   } catch (e) {
     captureError(e)
     // TODO:KS Add action for serialization failure
@@ -432,15 +413,59 @@ export const proofRequestShowStart = (uid: string) => ({
   uid,
 })
 
+export const acceptOutofbandPresentationRequest = (
+  uid: string,
+  requestedAttrsJson: RequestedAttrsJson,
+): AcceptOutofbandPresentationRequestAction => ({
+  type: ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
+  uid,
+  requestedAttrsJson,
+})
+
+export const outOfBandConnectionForPresentationEstablished = (
+  uid: string,
+): OutOfBandConnectionForPresentationEstablishedAction => ({
+  type: OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
+  uid,
+})
+
+function* outOfBandConnectionForPresentationEstablishedSaga(
+  action: OutOfBandConnectionForPresentationEstablishedAction,
+): Generator<*, *, *> {
+  const proofRequestPayload: ProofRequestPayload = yield select(
+    getProofRequest,
+    action.uid,
+  )
+
+  if (!proofRequestPayload.requestedAttrsJson) {
+    throw Error('Cannot get requestedAttrsJson')
+  }
+
+  yield put(
+    updateAttributeClaim(
+      proofRequestPayload.uid,
+      proofRequestPayload.remotePairwiseDID,
+      proofRequestPayload.requestedAttrsJson,
+    ),
+  )
+}
+
+export function* watchOutOfBandConnectionForPresentationEstablished(): any {
+  yield takeEvery(
+    OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
+    outOfBandConnectionForPresentationEstablishedSaga,
+  )
+}
+
 export default function proofRequestReducer(
   state: ProofRequestStore = proofRequestInitialState,
-  action: ProofRequestAction
+  action: ProofRequestAction,
 ) {
   switch (action.type) {
     case PROOF_REQUEST_RECEIVED:
-      if (state[action.payloadInfo.uid]) {
-        return state
-      }
+      // if (state[action.payloadInfo.uid]) {
+      //   return state
+      // }
       return {
         ...state,
         [action.payloadInfo.uid]: {
@@ -478,6 +503,15 @@ export default function proofRequestReducer(
         },
       }
     }
+
+    case ACCEPT_OUTOFBAND_PRESENTATION_REQUEST:
+      return {
+        ...state,
+        [action.uid]: {
+          ...state[action.uid],
+          requestedAttrsJson: action.requestedAttrsJson,
+        },
+      }
 
     case PROOF_REQUEST_SHOWN:
       return {

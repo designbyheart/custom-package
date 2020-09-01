@@ -3,7 +3,9 @@ import React, { PureComponent } from 'react'
 import { StyleSheet, Dimensions } from 'react-native'
 import { RNCamera } from 'react-native-camera'
 
+import type { GenericObject } from '../../common/type-common'
 import type {
+  QrCodeOIDC,
   QrScannerProps,
   QrScannerState,
   CameraMarkerProps,
@@ -14,6 +16,7 @@ import type {
 import { Container } from '../layout/container'
 import { CustomView } from '../layout/custom-view'
 import CustomText from '../text'
+import type { AriesConnectionInvite } from '../../invitation/type-invitation'
 import {
   isValidAriesV1InviteData,
   isValidAriesOutOfBandInviteData,
@@ -45,7 +48,7 @@ import {
 import { CONNECTION_INVITE_TYPES } from '../../invitation/type-invitation'
 import { flatJsonParse } from '../../common/flat-json-parse'
 import { isValidSMSInvitation } from '../../sms-pending-invitation/sms-invitation-validator'
-import { validateEphemeralProofQrCode } from '../../proof-request/ephemeral-proof-request-qr-code-reader'
+import { validateEphemeralProofQrCode } from '../../proof-request/proof-request-qr-code-reader'
 import { EvaIcon, CLOSE_ICON } from '../../common/icons'
 import { moderateScale } from 'react-native-size-matters'
 
@@ -170,7 +173,9 @@ export default class QRScanner extends PureComponent<
     // check if aries invite
     if (qrData.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR) {
       this.setState({ scanStatus: SCAN_STATUS.SCANNING })
-      return this.props.onAriesConnectionInviteRead(qrData)
+      return this.props.onAriesConnectionInviteRead(
+        ((qrData: any): AriesConnectionInvite)
+      )
     }
 
     // aries invitation can be directly copied as json string as well
@@ -187,7 +192,7 @@ export default class QRScanner extends PureComponent<
       // show user that we are downloading JWT token
       this.setState({ scanStatus: SCAN_STATUS.DOWNLOADING_AUTHENTICATION_JWT })
       const [jwtAuthenticationRequest, jwtError] = await fetchValidateJWT(
-        qrData
+        ((qrData: GenericObject): QrCodeOIDC)
       )
       if (jwtError !== null || jwtAuthenticationRequest === null) {
         // if we get error while validating JWT request
@@ -202,7 +207,7 @@ export default class QRScanner extends PureComponent<
       }
 
       return this.props.onOIDCAuthenticationRequest({
-        oidcAuthenticationQrCode: qrData,
+        oidcAuthenticationQrCode: ((qrData: GenericObject): QrCodeOIDC),
         jwtAuthenticationRequest,
         id: uuid(),
       })
@@ -214,7 +219,7 @@ export default class QRScanner extends PureComponent<
       ephemeralProofRequest,
     ] = await validateEphemeralProofQrCode(
       qrData.type === QR_CODE_TYPES.URL_NON_JSON_RESPONSE
-        ? qrData.data
+        ? (qrData: GenericObject).data
         : JSON.stringify(qrData)
     )
     if (

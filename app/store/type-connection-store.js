@@ -1,9 +1,10 @@
 // @flow
 import type {
+  AriesAttachedRequest,
   AriesOutOfBandInvite,
   InvitationPayload,
 } from '../invitation/type-invitation'
-import type { CustomError } from '../common/type-common'
+import type { CustomError, GenericObject } from '../common/type-common'
 
 export const UPDATE_CONNECTION_THEME = 'UPDATE_CONNECTION_THEME'
 export const UPDATE_STATUS_BAR_THEME = 'UPDATE_STATUS_BAR_THEME'
@@ -32,6 +33,7 @@ export type Connection = {
   vcxSerializedConnection: string,
   publicDID: ?string,
   timestamp?: string,
+  attachedRequest?: AriesAttachedRequest,
 } & MyPairwiseInfo
 
 export const DELETE_CONNECTION = 'DELETE_CONNECTION'
@@ -41,12 +43,13 @@ export type DeleteConnectionEventAction = {
   senderDID: string,
 }
 
-export type Connections = { [senderDID: string]: Connection }
+export type Connections = { [identifier: string]: Connection }
 
 export type ConnectionStore = {
   // TODO:PS Add specific keys in connection store
   [string]: any,
   data: ?Connections,
+  oneTimeConnections?: ?Connections,
 }
 
 export const DELETE_CONNECTION_SUCCESS = 'DELETE_CONNECTION_SUCCESS'
@@ -65,6 +68,8 @@ export type DeleteConnectionFailureEventAction = {
 }
 
 export const NEW_CONNECTION = 'NEW_CONNECTION'
+
+export const NEW_ONE_TIME_CONNECTION = 'NEW_ONE_TIME_CONNECTION'
 
 export type NewConnectionAction = {
   type: typeof NEW_CONNECTION,
@@ -135,3 +140,18 @@ export const ERROR_CONNECTION = (message: string) => ({
   code: 'CONNECTION-001',
   message: `Error while establishing a connection: ${message}`,
 })
+
+export const CONNECTION_ATTACH_REQUEST = 'CONNECTION_ATTACH_REQUEST'
+export type ConnectionAttachRequestAction = {
+  type: typeof CONNECTION_ATTACH_REQUEST,
+  identifier: string,
+  request: GenericObject,
+}
+
+export const CONNECTION_DELETE_ATTACHED_REQUEST =
+  'CONNECTION_DELETE_ATTACHED_REQUEST'
+
+export type ConnectionDeleteAttachedRequestAction = {
+  type: typeof CONNECTION_DELETE_ATTACHED_REQUEST,
+  identifier: string,
+}

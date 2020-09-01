@@ -5,7 +5,7 @@ import isUrl from 'validator/lib/isURL'
 
 import type { CustomError } from '../common/type-common'
 import type {
-  AdditionalProofDataPayload,
+  AdditionalProofDataPayload, AriesPresentationRequest,
   QrCodeEphemeralProofRequest,
 } from './type-proof-request'
 
@@ -118,8 +118,87 @@ export async function validateEphemeralProofQrCode(
   ]
 }
 
+export async function validateOutofbandProofRequestQrCode(
+  presentationRequest: AriesPresentationRequest
+): Promise<
+  [
+    null | string,
+    null | AdditionalProofDataPayload,
+  ]
+  > {
+  // we still need to get data from base64
+  const [decodeProofRequestError, decodedProofRequest] = await flattenAsync(
+    toUtf8FromBase64
+  )(presentationRequest['request_presentations~attach'][0].data.base64)
+  if (decodeProofRequestError || decodedProofRequest === null) {
+    return ['OOBPR-003::Invalid proof request.', null]
+  }
+
+  // check whether decoded data is valid json or not
+  const [parseProofRequestError, parsedProofRequest] = flatJsonParse(
+    decodedProofRequest
+  )
+  if (parseProofRequestError || parsedProofRequest === null) {
+    return ['OOBPR-004::Invalid proof request format.', null]
+  }
+
+  // check if parsed json is valid
+
+  if (!schemaValidator.validate(proofRequestDataSchema, parsedProofRequest)) {
+    return ['OOBPR-005::Invalid proof request data.', null]
+  }
+
+  return [
+    null,
+    convertProofRequestPushPayloadToAppProofRequest({
+      proof_request_data: {
+        ...parsedProofRequest,
+      },
+      '@topic': { mid: 0, tid: 0 },
+      '@type': { name: 'proof_request', version: '0.1' },
+      remoteName: presentationRequest.comment || 'Unknown',
+      proofHandle: 0,
+      outofbandProofRequest: JSON.stringify(presentationRequest)
+    })
+  ]
+}
+
 const validProofRequestUrlLength = 4096
 const trustedDomains = ['http', 'https']
+
+const ariesProofRequestSchema = {
+  type: 'object',
+  properties: {
+    '@id': { type: 'string', minLength: 4, maxLength: 1024 },
+    '@type': { type: 'string', minLength: 3, maxLength: 500 },
+    'request_presentations~attach': {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          '@id': { type: 'string', minLength: 4, maxLength: 1024 },
+          'mime-type': {
+            type: 'string',
+            minLength: 3,
+            maxLength: 100,
+            enum: ['application/json'],
+          },
+          data: {
+            type: 'object',
+            properties: {
+              base64: { type: 'string', minLength: 10 },
+            },
+            required: ['base64'],
+          },
+        },
+        required: ['@id', 'data'],
+      },
+      minLength: 1,
+    },
+    comment: { type: ['null', 'string'] },
+  },
+  required: ['request_presentations~attach', '@id', '@type'],
+}
 
 const ephemeralProofRequestSchema = {
   type: 'object',

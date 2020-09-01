@@ -34,6 +34,7 @@ import {
   claimOfferShowStart,
   resetClaimRequestStatus,
   denyClaimOffer,
+  acceptOutofbandClaimOffer,
 } from '../../claim-offer/claim-offer-store'
 import { txnAuthorAgreementRoute } from '../../common'
 import {
@@ -41,6 +42,11 @@ import {
   CLAIM_REQUEST_STATUS,
 } from '../../claim-offer/type-claim-offer'
 import { animateLayout } from '../../common/layout-animation'
+import {
+  acceptOutOfBandInvitation,
+  sendInvitationResponse,
+  invitationRejected,
+} from '../../invitation/invitation-store'
 
 export class ClaimOfferModal extends Component<any, *> {
   constructor(props: any) {
@@ -247,7 +253,13 @@ export class ClaimOfferModal extends Component<any, *> {
   }
 
   onDeny = () => {
-    this.props.denyClaimOffer(this.props.uid)
+    const { invitation } = this.props
+    if (!invitation) {
+      this.props.denyClaimOffer(this.props.uid)
+    } else {
+      this.props.invitationRejected(invitation.senderDID)
+    }
+
     this.hideModal()
   }
 
@@ -272,7 +284,12 @@ export class ClaimOfferModal extends Component<any, *> {
   }
 
   hideModal = () => {
-    this.props.navigation.goBack(null)
+    const backRedirectRoute = this.props.route.params?.backRedirectRoute
+    if (backRedirectRoute) {
+      this.props.navigation.navigate(backRedirectRoute)
+    } else {
+      this.props.navigation.goBack(null)
+    }
   }
 
   updateState = (status: string, feesData?: TokenFeesData) => {
@@ -289,10 +306,29 @@ export class ClaimOfferModal extends Component<any, *> {
   }
 
   onConfirmAndPay = (shouldHideModal: boolean = false) => {
-    this.props.acceptClaimOffer(
-      this.props.uid,
-      this.props.claimOfferData.issuer.did
-    )
+    const {
+      invitationPayload,
+      attachedRequest,
+    } = this.props.route.params
+    if (invitationPayload) {
+      // accept invite
+      // then we have real info for new claim offer
+      // anyway send action out of band accepted
+      this.props.acceptOutOfBandInvitation(
+        invitationPayload,
+        attachedRequest
+      )
+      this.props.acceptOutofbandClaimOffer(
+        this.props.uid,
+        this.props.claimOfferData.issuer.did
+      )
+    } else {
+      this.props.acceptClaimOffer(
+        this.props.uid,
+        this.props.claimOfferData.issuer.did
+      )
+    }
+
     if (shouldHideModal === true) {
       this.hideModal()
     } else {
@@ -311,7 +347,7 @@ const mapStateToProps = (
 ) => {
   const { claimOffer } = state
   const { uid } = params || { uid: '' }
-  const claimOfferData = claimOffer[uid]
+  const claimOfferData = params.claimOfferData || claimOffer[uid]
   const logoUrl = getConnectionLogoUrl(state, claimOfferData.remotePairwiseDID)
   const themeForLogo = getConnectionTheme(state, logoUrl)
   const isValid =
@@ -321,9 +357,10 @@ const mapStateToProps = (
     claimOfferData.data.revealedAttributes
 
   // NOTE:
-  const claimPrice = claimOfferData.payTokenValue
-    ? claimOfferData.payTokenValue
-    : '0'
+  const claimPrice =
+    claimOfferData && claimOfferData.payTokenValue
+      ? claimOfferData.payTokenValue
+      : '0'
 
   return {
     thereIsANewAgreement: getThereIsANewAgreement(state),
@@ -342,11 +379,15 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       acceptClaimOffer,
+      acceptOutOfBandInvitation,
+      acceptOutofbandClaimOffer,
       claimOfferIgnored,
       claimOfferShowStart,
       resetClaimRequestStatus,
       newConnectionSeen,
       denyClaimOffer,
+      sendInvitationResponse,
+      invitationRejected,
     },
     dispatch
   )

@@ -68,7 +68,6 @@ export class MyConnections extends Component<
       Snackbar.show({
         text: this.props.snackError,
         backgroundColor: colors.cmRed,
-        fontFamily: fontFamily,
         duration: Snackbar.LENGTH_LONG,
       })
     }

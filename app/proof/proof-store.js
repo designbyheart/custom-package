@@ -19,10 +19,7 @@ import type {
   ProofFailAction,
   IndyPreparedProof,
   IndyRequestedAttributes,
-  IndySelfAttestedAttributes,
   UserSelfAttestedAttributesAction,
-  IndyRequestedProof,
-  RequestedClaimsJson,
   VcxSelectedCredentials,
   RetrySendProofAction,
 } from './type-proof'
@@ -41,7 +38,6 @@ import {
   GENERATE_PROOF,
   PROOF_SUCCESS,
   PROOF_FAIL,
-  ERROR_MISSING_ATTRIBUTE_IN_CLAIMS,
   USER_SELF_ATTESTED_ATTRIBUTES,
   PROOF_REQUEST_SEND_PROOF_HANDLE,
   RESET_TEMP_PROOF_DATA,
@@ -66,10 +62,6 @@ import {
   dissatisfiedAttributesFound,
 } from '../proof-request/proof-request-store'
 import {
-  getOriginalProofRequestData,
-  getProofRequestPairwiseDid,
-  getPoolConfig,
-  getProofRequesterName,
   getProofRequest,
   getProofData,
   getClaimMap,
@@ -82,9 +74,6 @@ import {
   MISSING_ATTRIBUTES_FOUND,
   PROOF_REQUEST_AUTO_FILL,
 } from '../proof-request/type-proof-request'
-import { captureError } from '../services/error/error-handler'
-// import KeepScreenOn from 'react-native-keep-screen-on'
-import { customLogger } from '../store/custom-logger'
 
 export const updateAttributeClaim = (
   uid: string,
@@ -400,17 +389,19 @@ export function* generateProofSaga(action: GenerateProofAction): any {
       getProofRequest,
       uid
     )
-    const proofRequest = proofRequestPayload.originalProofRequestData
-    let { proofHandle, ephemeralProofRequest } = proofRequestPayload
+
+    const proofRequestData = proofRequestPayload.originalProofRequestData
+    let { proofHandle, ephemeralProofRequest, outofbandProofRequest } = proofRequestPayload
     let matchingCredentialsJson: ?string = undefined
 
     // we can have proofHandle as 0 as well
     // if we have proofHandle as 0, that means we need to get proofHandle again
-    if (proofHandle === 0 && ephemeralProofRequest) {
+    let proofRequest = ephemeralProofRequest || outofbandProofRequest
+    if (proofHandle === 0 && proofRequest) {
       proofHandle = yield call(
         proofCreateWithRequest,
         uid,
-        ephemeralProofRequest
+        proofRequest
       )
       // update proof handle in store, because it would be used by proof-request store
       yield put(updateProofHandle(proofHandle, uid))
@@ -493,7 +484,7 @@ export function* generateProofSaga(action: GenerateProofAction): any {
       dissatisfiedAttributes,
     ] = convertPreparedProofToRequestedAttributes(
       matchingCredentials,
-      proofRequest
+      proofRequestData
     )
     let selfAttestedAttributes: SelfAttestedAttributes = {}
 
@@ -531,7 +522,7 @@ export function* generateProofSaga(action: GenerateProofAction): any {
         ...matchingCredentials,
         self_attested_attrs: { ...selfAttestedAttributes },
       },
-      proofRequest.requested_attributes
+      proofRequestData.requested_attributes
     )
     yield put(proofRequestAutoFill(uid, requestedAttributes))
 

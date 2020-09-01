@@ -5,7 +5,7 @@ import 'react-native'
 import renderer from 'react-test-renderer'
 
 import * as vcx from '../../bridge/react-native-cxs/RNCxs'
-import { validateEphemeralProofQrCode } from '../ephemeral-proof-request-qr-code-reader'
+import { validateEphemeralProofQrCode } from '../proof-request-qr-code-reader'
 import { mockEphemeralProofRequestQrCode } from '../../../__mocks__/data/mock-qr-data'
 import { savePushTokenSaga } from '../../push-notification/push-notification-store'
 import { originalProofRequestData } from '../../../__mocks__/static-data'
