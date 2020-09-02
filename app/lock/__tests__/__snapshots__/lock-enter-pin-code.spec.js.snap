@@ -185,9 +185,10 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
               null,
               Object {
                 "fontFamily": "Lato",
+                "fontSize": 26,
                 "fontStyle": "normal",
-                "fontWeight": "bold",
                 "letterSpacing": 0.5,
+                "minHeight": 49.23529411764706,
               },
             ]
           }
@@ -764,9 +765,10 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
               null,
               Object {
                 "fontFamily": "Lato",
+                "fontSize": 26,
                 "fontStyle": "normal",
-                "fontWeight": "bold",
                 "letterSpacing": 0.5,
+                "minHeight": 49.23529411764706,
               },
             ]
           }
@@ -1343,9 +1345,10 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
               null,
               Object {
                 "fontFamily": "Lato",
+                "fontSize": 26,
                 "fontStyle": "normal",
-                "fontWeight": "bold",
                 "letterSpacing": 0.5,
+                "minHeight": 49.23529411764706,
               },
             ]
           }
@@ -1922,9 +1925,10 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
               null,
               Object {
                 "fontFamily": "Lato",
+                "fontSize": 26,
                 "fontStyle": "normal",
-                "fontWeight": "bold",
                 "letterSpacing": 0.5,
+                "minHeight": 49.23529411764706,
               },
             ]
           }

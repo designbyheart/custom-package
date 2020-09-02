@@ -464,7 +464,7 @@ export type AriesPresentationRequest = {
   }>,
 }
 
-export const PRIMARY_ACTION_SEND = 'Send'
+export const PRIMARY_ACTION_SEND = 'Share Attributes'
 export const PRIMARY_ACTION_GENERATE_PROOF = 'Generate'
 export const SECONDARY_ACTION_IGNORE = 'Ignore'
 

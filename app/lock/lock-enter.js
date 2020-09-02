@@ -50,7 +50,7 @@ import {
   cmRed,
 } from '../common/styles/constant'
 import SvgCustomIcon from '../components/svg-custom-icon'
-import { moderateScale } from 'react-native-size-matters'
+import { moderateScale, verticalScale } from 'react-native-size-matters'
 
 const lockImage = require('../images/lockCombo.png')
 const backgroundImg = require('../images/wave1.png')
@@ -64,9 +64,10 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontFamily,
+    fontSize: 26,
     fontStyle: 'normal',
-    fontWeight: 'bold',
     letterSpacing: 0.5,
+    minHeight:verticalScale(62),
   },
 })
 

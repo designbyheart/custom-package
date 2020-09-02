@@ -133,11 +133,6 @@ export class LockSelection extends Component<LockSelectionProps, *> {
          </CustomText>
          <CustomView
            testID="lock-selection-or-text"
-           onLongPress={this._onLongPressButton}
-           onPress={this._onTextPressButton}
-           debounceAction={false}
-         ></CustomView>
-         <CustomView
            center
            style={[style.image]}
            onPress={this._onTextPressButton}
@@ -271,8 +266,8 @@ const style = StyleSheet.create({
   },
   title: {
     fontFamily,
+    fontSize: 26,
     fontStyle: 'normal',
-    fontWeight: 'bold',
     lineHeight: moderateScale(31),
     marginTop: verticalScale(49.26),
     marginBottom: verticalScale(60),
