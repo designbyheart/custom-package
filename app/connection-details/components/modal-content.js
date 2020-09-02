@@ -37,6 +37,82 @@ type ModalContentProps = {
   credentialText: string,
 }
 
+export const getFileExtensionName = (mimeType: string) => {
+  switch (true) {
+    case docMimeTypes.includes(mimeType):
+      return 'docx'
+    case excelMimeTypes.includes(mimeType):
+      return 'xlsx'
+    case pptMimeTypes.includes(mimeType):
+      return 'ppt'
+    case pdfMimeTypes.includes(mimeType):
+      return 'pdf'
+    case audioVideoMimeType.includes(mimeType):
+      return 'audio'
+    case photoMimeTypes
+      .filter((type) => type !== 'image/png')
+      .includes(mimeType):
+      return 'JPG'
+    case photoMimeTypes.includes(mimeType):
+      return 'PDF'
+    default:
+      return 'unknown'
+  }
+}
+
+export const renderAttachmentIcon = (
+  label: string,
+  data: any,
+  remotePairwiseDID: string,
+  uid: string
+) => {
+  let attachment: $PropertyType<
+    AttachmentPropType,
+    'attachment'
+    > | null = null
+
+  if (label.toLowerCase().endsWith('_link')) {
+    try {
+      attachment = JSON.parse(data)
+
+      if (checkObjectTypes(attachment)) {
+        throw new Error('Invalid data')
+      }
+    } catch (e) {
+      console.log(e.message)
+      return null
+    }
+
+    return (
+      <View style={styles.parentWrapper}>
+        <SvgCustomIcon
+          name={
+            photoMimeTypes.includes(attachment['mime-type'].toLowerCase())
+              ? 'Image'
+              : 'Attachment'
+          }
+          style={styles.svgStyles}
+          width={24}
+        />
+        <View style={styles.textWrapper}>
+          <Text style={styles.title}>{label.slice(0, -5)}</Text>
+          <Text style={styles.extensionNameStyle}>
+            {`${getFileExtensionName(attachment['mime-type'])} file`}
+          </Text>
+          <DataRenderer {...{ label, data, uid, remotePairwiseDID }} />
+        </View>
+      </View>
+    )
+  }
+
+  return (
+    <View style={styles.textWrapper}>
+      <Text style={styles.title}>{label}</Text>
+      <DataRenderer {...{ label, data, uid, remotePairwiseDID }} />
+    </View>
+  )
+}
+
 const checkObjectTypes = (attachment) =>
   !attachment['mime-type'] ||
   !attachment.data ||
@@ -63,82 +139,6 @@ export const ModalContent = ({
     [imageUrl]
   )
   const [interactionDone, setInteractionDone] = useState(false)
-
-  const getFileExtensionName = (mimeType: string) => {
-    switch (true) {
-      case docMimeTypes.includes(mimeType):
-        return 'docx'
-      case excelMimeTypes.includes(mimeType):
-        return 'xlsx'
-      case pptMimeTypes.includes(mimeType):
-        return 'ppt'
-      case pdfMimeTypes.includes(mimeType):
-        return 'pdf'
-      case audioVideoMimeType.includes(mimeType):
-        return 'audio'
-      case photoMimeTypes
-        .filter((type) => type !== 'image/png')
-        .includes(mimeType):
-        return 'JPG'
-      case photoMimeTypes.includes(mimeType):
-        return 'PDF'
-      default:
-        return 'unknown'
-    }
-  }
-
-  const renderAttachmentIcon = (
-    label: string,
-    data: any,
-    remotePairwiseDID: string,
-    uid: string
-  ) => {
-    let attachment: $PropertyType<
-      AttachmentPropType,
-      'attachment'
-    > | null = null
-
-    if (label.toLowerCase().endsWith('_link')) {
-      try {
-        attachment = JSON.parse(data)
-
-        if (checkObjectTypes(attachment)) {
-          throw new Error('Invalid data')
-        }
-      } catch (e) {
-        console.log(e.message)
-        return null
-      }
-
-      return (
-        <View style={styles.parentWrapper}>
-          <SvgCustomIcon
-            name={
-              photoMimeTypes.includes(attachment['mime-type'].toLowerCase())
-                ? 'Image'
-                : 'Attachment'
-            }
-            style={styles.svgStyles}
-            width={24}
-          />
-          <View style={styles.textWrapper}>
-            <Text style={styles.title}>{label.slice(0, -5)}</Text>
-            <Text style={styles.extensionNameStyle}>
-              {`${getFileExtensionName(attachment['mime-type'])} file`}
-            </Text>
-            <DataRenderer {...{ label, data, uid, remotePairwiseDID }} />
-          </View>
-        </View>
-      )
-    }
-
-    return (
-      <View style={styles.textWrapper}>
-        <Text style={styles.title}>{label}</Text>
-        <DataRenderer {...{ label, data, uid, remotePairwiseDID }} />
-      </View>
-    )
-  }
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => setInteractionDone(true))

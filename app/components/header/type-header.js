@@ -48,7 +48,6 @@ export const styles = StyleSheet.create({
   },
   label: {
     fontFamily: fontFamily,
-    fontWeight: 'bold',
     fontSize: moderateScale(22),
     marginLeft: moderateScale(-50),
     color: colors.cmGray2,

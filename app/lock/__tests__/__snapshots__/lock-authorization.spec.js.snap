@@ -144,7 +144,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -285,6 +284,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "fontSize": 26,
                 "fontStyle": "normal",
                 "letterSpacing": 0.5,
+                "lineHeight": 31,
                 "minHeight": 49.23529411764706,
               },
             ]
