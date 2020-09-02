@@ -82,7 +82,7 @@ export class ClaimOfferModal extends Component<any, *> {
     // as soon as user accepts the cred offer, redux state will change
     const isClaimOfferAccepted = status === CLAIM_OFFER_STATUS.ACCEPTED
 
-    let acceptButtonText = payTokenValue ? 'Accept & Pay' : 'Accept'
+    let acceptButtonText = payTokenValue ? 'Accept & Pay' : 'Accept Credential'
     // NOTE: Just to be safe, we changed the hasNotAcceptedTAA to hardcoded false, so we can be sure 0 tokens doesn't affect the flow.
     const hasNotAcceptedTAA = false
     // (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
