@@ -135,6 +135,7 @@ exports[`<LockEnter /> should match snapshot 1`] = `
               "fontSize": 26,
               "fontStyle": "normal",
               "letterSpacing": 0.5,
+              "lineHeight": 31,
               "minHeight": 49.23529411764706,
             },
           ]

@@ -47,7 +47,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -188,6 +187,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "fontSize": 26,
                 "fontStyle": "normal",
                 "letterSpacing": 0.5,
+                "lineHeight": 31,
                 "minHeight": 49.23529411764706,
               },
             ]
@@ -627,7 +627,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -768,6 +767,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "fontSize": 26,
                 "fontStyle": "normal",
                 "letterSpacing": 0.5,
+                "lineHeight": 31,
                 "minHeight": 49.23529411764706,
               },
             ]
@@ -1207,7 +1207,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -1348,6 +1347,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "fontSize": 26,
                 "fontStyle": "normal",
                 "letterSpacing": 0.5,
+                "lineHeight": 31,
                 "minHeight": 49.23529411764706,
               },
             ]
@@ -1787,7 +1787,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -1928,6 +1927,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "fontSize": 26,
                 "fontStyle": "normal",
                 "letterSpacing": 0.5,
+                "lineHeight": 31,
                 "minHeight": 49.23529411764706,
               },
             ]

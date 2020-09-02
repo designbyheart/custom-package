@@ -67,12 +67,20 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontStyle: 'normal',
     letterSpacing: 0.5,
+    lineHeight: 31,
     minHeight:verticalScale(62),
   },
 })
 
 export const WrongPinText = (
-  <CustomText h4 bg="tertiary" tertiary center>
+  <CustomText
+    style={[styles.titleText]}
+    center
+    h4
+    bg="tertiary"
+    tertiary
+    thick
+  >
     Wrong passcode! Please try again
   </CustomText>
 )

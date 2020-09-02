@@ -47,12 +47,12 @@ export async function isAriesOutOfBandInviteQrCode(
 ): Promise<AriesOutOfBandInvite | false> {
   const { query } = parsedUrl
 
-  if (!query.oob) {
+  if (!query.oob && !query.c_i) { // TODO: remove c_i case once Verity fix it.
     return false
   }
 
   const [decodeError, decodedInvite] = await flattenAsync(toUtf8FromBase64)(
-    query.oob,
+    query.oob || query.c_i,
     'URL_SAFE'
   )
   if (decodeError || decodedInvite === null) {

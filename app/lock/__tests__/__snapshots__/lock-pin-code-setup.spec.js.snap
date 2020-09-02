@@ -144,7 +144,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -813,7 +812,6 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -1482,7 +1480,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -2153,7 +2150,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -2824,7 +2820,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }

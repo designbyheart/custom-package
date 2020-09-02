@@ -154,7 +154,6 @@ exports[`user about app screen should render properly and snapshot should match 
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
