@@ -40,26 +40,26 @@ import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 
 // utils
 import { generateStateForMissingAttributes, isInvalidValues } from '../utils'
+import { Avatar } from '../../components'
+import { renderAttachmentIcon } from './modal-content'
 
 const screenWidth = Dimensions.get('window').width
 const sliderWidth = screenWidth - screenWidth * 0.1
 
-class ProofRequestAttributeList extends Component<
-  ProofRequestAttributeListAndHeaderProps & ReactNavigation,
-  ProofRequestAttributeListState
-> {
+class ProofRequestAttributeList extends Component<ProofRequestAttributeListAndHeaderProps & ReactNavigation,
+  ProofRequestAttributeListState> {
   constructor(
-    props: ProofRequestAttributeListAndHeaderProps & ReactNavigation
+    props: ProofRequestAttributeListAndHeaderProps & ReactNavigation,
   ) {
     super(props)
     this.canEnableGenerateProof = debounce(
       this.canEnableGenerateProof.bind(this),
-      250
+      250,
     )
   }
 
   UNSAFE_componentWillReceiveProps(
-    nextProps: ProofRequestAttributeListAndHeaderProps
+    nextProps: ProofRequestAttributeListAndHeaderProps,
   ) {
     if (this.props.missingAttributes !== nextProps.missingAttributes) {
       // once we know that there are missing attributes
@@ -68,7 +68,7 @@ class ProofRequestAttributeList extends Component<
       // that user fills in them, also we need to enable generate proof button
       // once all the missing attributes are filled in by user
       this.setState(
-        generateStateForMissingAttributes(nextProps.missingAttributes)
+        generateStateForMissingAttributes(nextProps.missingAttributes),
       )
     }
   }
@@ -76,7 +76,7 @@ class ProofRequestAttributeList extends Component<
   // this form is needed to fix flow error
   // because methods of a class are by default covariant
   // so we need an invariance to tell method signature
-  canEnableGenerateProof = function () {
+  canEnableGenerateProof = function() {
     const isInvalid = isInvalidValues(this.props.missingAttributes, this.state)
     this.props.canEnablePrimaryAction(!isInvalid, this.state)
   }
@@ -87,7 +87,7 @@ class ProofRequestAttributeList extends Component<
       {
         [name]: text,
       },
-      this.canEnableGenerateProof
+      this.canEnableGenerateProof,
     )
   }
 
@@ -144,12 +144,12 @@ class ProofRequestAttributeList extends Component<
         logoUrl =
           value || isDataEmptyString
             ? item.claimUuid &&
-              this.props.claimMap &&
-              this.props.claimMap[item.claimUuid] &&
-              this.props.claimMap[item.claimUuid].logoUrl
-              ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
-              : this.props.userAvatarSource ||
-                require('../../images/UserAvatar.png')
+            this.props.claimMap &&
+            this.props.claimMap[item.claimUuid] &&
+            this.props.claimMap[item.claimUuid].logoUrl
+            ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
+            : this.props.userAvatarSource ||
+            require('../../images/UserAvatar.png')
             : null
       }
 
@@ -161,45 +161,48 @@ class ProofRequestAttributeList extends Component<
       } = this
       return (
         <View key={`${index}_${keyIndex}`}>
-          <Text style={styles.title}>{label}</Text>
           <View>
             {showInputBox ? (
-              <TouchableOpacity
-                onPress={() =>
-                  handleCustomValuesNavigation(label, adjustedLabel)
-                }
-              >
-                <TextInput
-                  style={styles.contentInput}
-                  defaultValue={
-                    this.state?.[adjustedLabel]
-                      ? this.state?.[adjustedLabel]
-                      : '-'
+                <TouchableOpacity
+                  onPress={() =>
+                    handleCustomValuesNavigation(label, adjustedLabel)
                   }
-                  autoCorrect={false}
-                  blurOnSubmit={true}
-                  clearButtonMode="always"
-                  numberOfLines={3}
-                  multiline={true}
-                  maxLength={200}
-                  placeholder={`Enter ${label}`}
-                  returnKeyType="done"
-                  testID={`${testID}-input-${adjustedLabel}`}
-                  accessible={true}
-                  accessibilityLabel={`${testID}-input-${adjustedLabel}`}
-                  underlineColorAndroid="transparent"
-                  editable={false}
-                  pointerEvents="none"
-                />
-              </TouchableOpacity>
-            ) : // If data is empty string, show the BLANK text in gray instead
-            isDataEmptyString ? (
-              <Text style={styles.contentGray}>
-                {BLANK_ATTRIBUTE_DATA_TEXT}
-              </Text>
-            ) : (
-              <Text style={styles.content}>{value}</Text>
-            )}
+                >
+                  <TextInput
+                    style={styles.contentInput}
+                    defaultValue={
+                      this.state?.[adjustedLabel]
+                        ? this.state?.[adjustedLabel]
+                        : '-'
+                    }
+                    autoCorrect={false}
+                    blurOnSubmit={true}
+                    clearButtonMode="always"
+                    numberOfLines={3}
+                    multiline={true}
+                    maxLength={200}
+                    placeholder={`Enter ${label}`}
+                    returnKeyType="done"
+                    testID={`${testID}-input-${adjustedLabel}`}
+                    accessible={true}
+                    accessibilityLabel={`${testID}-input-${adjustedLabel}`}
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    pointerEvents="none"
+                  />
+                </TouchableOpacity>
+              ) : // If data is empty string, show the BLANK text in gray instead
+              isDataEmptyString ? (
+                <Text style={styles.contentGray}>
+                  {BLANK_ATTRIBUTE_DATA_TEXT}
+                </Text>
+              ) : (
+                <View style={styles.wrapper}>
+                  <View style={styles.textAvatarWrapper}>
+                    {renderAttachmentIcon(label, value, item.claimUuid || '', item.claimUuid || '')}
+                  </View>
+                </View>
+              )}
           </View>
         </View>
       )
