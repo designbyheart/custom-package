@@ -188,7 +188,7 @@ export class HomeScreen extends Component<HomeProps, void> {
     else return 'Just now'
   }
 
-  keyExtractor = (item: Object) => item.timestamp
+  keyExtractor = (item: Object) => item.id
 
   renderNewBannerCard = (item: Object) => {
     const issuerName =
