@@ -215,6 +215,7 @@ export type ProofRequestProps = {
   denyProofRequest: (uid: string) => void,
   acceptOutOfBandInvitation: any,
   acceptOutofbandPresentationRequest: (uid: string, requestedAttrsJson: RequestedAttrsJson) => void,
+  deleteOutofbandPresentationRequest: (uid: string) => void,
   invitation?: any,
   invitationPayload?: any,
   attachedRequest?: any,
@@ -397,6 +398,12 @@ export type AcceptOutofbandPresentationRequestAction = {
   requestedAttrsJson: RequestedAttrsJson,
 }
 
+export const DELETE_OUTOFBAND_PRESENTATION_REQUEST = 'DELETE_OUTOFBAND_PRESENTATION_REQUEST'
+export type DeleteOutofbandPresentationRequestAction = {
+  type: typeof DELETE_OUTOFBAND_PRESENTATION_REQUEST,
+  uid: string,
+}
+
 export const OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED = 'OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED'
 export type OutOfBandConnectionForPresentationEstablishedAction = {
   type: typeof OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
@@ -424,6 +431,7 @@ export type ProofRequestAction =
   | DenyProofRequestSuccessAction
   | DenyProofRequestFailAction
   | AcceptOutofbandPresentationRequestAction
+  | DeleteOutofbandPresentationRequestAction
 
 export type ProofRequestStore = {
   +[string]: ProofRequestPayload,
