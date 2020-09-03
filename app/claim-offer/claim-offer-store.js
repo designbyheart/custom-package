@@ -42,6 +42,7 @@ import {
   DENY_CLAIM_OFFER_SUCCESS,
   DENY_CLAIM_OFFER_FAIL,
   OUTOFBAND_CLAIM_OFFER_ACCEPTED,
+  DELETE_OUTOFBAND_CLAIM_OFFER,
   CLAIM_OFFER_DELETED,
   DELETE_CLAIM_OFFER,
 } from './type-claim-offer'
@@ -218,6 +219,11 @@ export const acceptOutofbandClaimOffer = (uid: string, remoteDid: string) => ({
   type: OUTOFBAND_CLAIM_OFFER_ACCEPTED,
   uid,
   remoteDid,
+})
+
+export const deleteOutOfBandClaimOffer = (uid: string) => ({
+  type: DELETE_OUTOFBAND_CLAIM_OFFER,
+  uid,
 })
 
 export function convertClaimRequestToEdgeClaimRequest(
@@ -672,6 +678,11 @@ export default function claimOfferReducer(
           ...state[action.uid],
           status: CLAIM_OFFER_STATUS.ACCEPTED,
         },
+      }
+    case DELETE_OUTOFBAND_CLAIM_OFFER:
+      const { [action.uid]: claimOffer, ...newState } = state
+      return {
+        ...newState,
       }
     case CLAIM_OFFER_IGNORED:
       return {

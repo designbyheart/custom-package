@@ -92,6 +92,12 @@ export type ClaimOfferRejectedAction = {
   uid: string,
 }
 
+export const DELETE_OUTOFBAND_CLAIM_OFFER = 'DELETE_OUTOFBAND_CLAIM_OFFER'
+export type DeleteOutofbandClaimOfferAction = {
+  type: typeof DELETE_OUTOFBAND_CLAIM_OFFER,
+  uid: string,
+}
+
 export const DENY_CLAIM_OFFER = 'DENY_CLAIM_OFFER'
 export type ClaimOfferDenyAction = {
   type: typeof DENY_CLAIM_OFFER,
