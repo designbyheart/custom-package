@@ -2,7 +2,7 @@
 
 // packages
 import React, { useCallback } from 'react'
-import { View, Platform, StyleSheet, TextInput, Text } from 'react-native'
+import { View, Platform, StyleSheet, Text } from 'react-native'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 // constants
@@ -16,7 +16,7 @@ import { ModalHeaderBar } from '../../components/modal-header-bar/modal-header-b
 import type { ReactNavigation } from '../../common/type-common'
 
 // styles
-import { colors, fontSizes } from '../../common/styles/constant'
+import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 const AttributeValues = ({
   navigation: { goBack },
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     fontSize: verticalScale(fontSizes.size7),
     fontWeight: '300',
     marginBottom: moderateScale(16),
+    fontFamily: fontFamily,
   },
   modalWrapper: {
     flex: 1,
@@ -107,5 +108,6 @@ const styles = StyleSheet.create({
     fontSize: verticalScale(fontSizes.size4),
     fontWeight: '700',
     color: colors.cmGray1,
+    fontFamily: fontFamily,
   },
 })

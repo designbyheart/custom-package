@@ -1,14 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import {
-  InteractionManager,
-  StyleSheet,
-  Platform,
-  Dimensions,
-  Image,
-  Text,
-  View,
-} from 'react-native'
+import { StyleSheet, Platform, Image, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -20,19 +12,14 @@ import {
   Icon,
 } from '../components'
 import {
-  color, colors, fontFamily,
-  OFFSET_1X,
-  OFFSET_2X,
+  color,
+  colors,
+  fontFamily,
   OFFSET_3X,
   OFFSET_4X,
 } from '../common/styles'
 import { CHECK_PIN_IDLE, CHECK_PIN_SUCCESS, CHECK_PIN_FAIL } from './type-lock'
-import type {
-  LockEnterPinProps,
-  LockEnterState,
-  CheckPinStatus,
-  LockEnterProps,
-} from './type-lock'
+import type { LockEnterState, LockEnterProps } from './type-lock'
 import {
   checkPinAction,
   checkPinStatusIdle,
@@ -42,10 +29,7 @@ import { switchErrorAlerts } from '../store/config-store'
 import type { Store } from '../store/type-store'
 import { ENTER_YOUR_PASS_CODE_MESSAGE } from '../common/message-constants'
 import {
-  whiteSmokeRGBA,
-  whisper,
   isBiggerThanShortDevice,
-  grey,
   matterhornSecondary,
   cmRed,
 } from '../common/styles/constant'
@@ -68,19 +52,12 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     letterSpacing: 0.5,
     lineHeight: 31,
-    minHeight:verticalScale(62),
+    minHeight: verticalScale(62),
   },
 })
 
 export const WrongPinText = (
-  <CustomText
-    style={[styles.titleText]}
-    center
-    h4
-    bg="tertiary"
-    tertiary
-    thick
-  >
+  <CustomText style={[styles.titleText]} center h4 bg="tertiary" tertiary thick>
     Wrong passcode! Please try again
   </CustomText>
 )
@@ -275,7 +252,7 @@ const stylesRecovery = StyleSheet.create({
     color: cmRed,
     fontSize: 17,
     fontWeight: '500',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   backgroundImg: {
     position: 'absolute',

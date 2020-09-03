@@ -6,14 +6,18 @@ import {
   Image,
   StyleSheet,
   ActivityIndicator,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   LayoutAnimation,
 } from 'react-native'
 import { connect } from 'react-redux'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
-import { colors, font, fontFamily, fontSizes } from '../../common/styles/constant'
+import {
+  colors,
+  font,
+  fontFamily,
+  fontSizes,
+} from '../../common/styles/constant'
 import { isiPhone5 } from '../../common/styles'
 
 import type { RecentCardProps } from './type-recent-card'
@@ -23,7 +27,6 @@ import {
   PAID_CREDENTIAL_REQUEST_FAIL,
   DENY_CLAIM_OFFER,
   DENY_CLAIM_OFFER_FAIL,
-  DENY_CLAIM_OFFER_SUCCESS,
 } from '../../claim-offer/type-claim-offer'
 import { bindActionCreators } from 'redux'
 import {

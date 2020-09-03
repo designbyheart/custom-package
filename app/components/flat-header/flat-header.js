@@ -2,7 +2,7 @@
 import React from 'react'
 import SvgCustomIcon from '../../components/svg-custom-icon'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { color, mediumGray } from '../../common/styles'
+import { color, mediumGray, fontFamily } from '../../common/styles'
 
 import type { FlatHeaderProps } from './type-flat-header'
 
@@ -54,7 +54,7 @@ const styles = {
     flex: 1,
   },
   text: {
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
     fontWeight: '600',
     fontSize: 16,
     color: color.bg.tertiary.font.tertiary,

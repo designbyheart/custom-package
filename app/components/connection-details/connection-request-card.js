@@ -1,14 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
-import {
-  Text,
-  View,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native'
-
-let ScreenHeight = Dimensions.get('window').height
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { fontFamily } from '../../common/styles'
 
 // TODO: Fix the <any, void> to be the correct types for props and state
 class ConnectionRequestCard extends PureComponent<any, {}> {
@@ -64,21 +57,21 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 13,
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   requestStatus: {
     color: '#777',
     fontSize: 11,
     lineHeight: 13,
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   requestAction: {
     color: '#a5a5a5',
     fontSize: 14,
     fontWeight: '700',
     paddingTop: 3,
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   buttonUndo: {
     paddingLeft: 10,
@@ -90,6 +83,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 20,
     fontWeight: '700',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
 })

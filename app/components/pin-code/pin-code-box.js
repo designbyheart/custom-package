@@ -1,10 +1,9 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { TextInput, StyleSheet, Platform, Keyboard, Text } from 'react-native'
+import { TextInput, StyleSheet, Platform } from 'react-native'
 
 import type { PinCodeBoxProps, PinCodeBoxState } from './type-pin-code-box'
 
-import { PIN_SETUP_STATE } from '../../lock/type-lock'
 import PinCodeDigit from './pin-code-digit'
 import { CustomView } from '../layout/custom-view'
 import CustomKeyboard from '../keyboard/keyboard'
