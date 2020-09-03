@@ -10,6 +10,7 @@ import Icon from '../icon'
 import { getUserAvatarSource } from '../../store/store-selector'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
+import { renderAttachmentIcon } from '../../connection-details/components/modal-content'
 
 export class CustomListProofRequest extends Component<CustomListProps, void> {
   keyExtractor = ({ label, values }: Item, index: number) => {
@@ -47,7 +48,6 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
       <View key={index} style={styles.wrapper}>
         <View style={styles.textAvatarWrapper}>
           <View style={styles.textWrapper}>
-            <Text style={styles.title}>{item.label}</Text>
             {
               // Show (none) in a lighter gray if the data is actually a blank string
               isDataEmptyString ? (
@@ -55,7 +55,12 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
                   {BLANK_ATTRIBUTE_DATA_TEXT}
                 </Text>
               ) : (
-                <Text style={styles.content}>{item.data}</Text>
+                renderAttachmentIcon(
+                  item.label || '',
+                  item.data || '',
+                  item.claimUuid || '',
+                  item.claimUuid || ''
+                )
               )
             }
           </View>
@@ -199,7 +204,6 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     width: '85%',
-    paddingBottom: moderateScale(12),
   },
   textInnerWrapper: {
     width: '85%',
@@ -208,7 +212,6 @@ const styles = StyleSheet.create({
     paddingBottom: moderateScale(12),
   },
   avatarWrapper: {
-    marginTop: moderateScale(12),
     width: '15%',
     alignItems: 'center',
     justifyContent: 'center',

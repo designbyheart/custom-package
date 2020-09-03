@@ -201,7 +201,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
               "color": "#777777",
               "fontFamily": "Lato",
               "fontSize": 21.057142857142857,
-              "fontWeight": "bold",
               "marginLeft": -47.85714285714286,
             }
           }
@@ -735,7 +734,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
               "color": "#777777",
               "fontFamily": "Lato",
               "fontSize": 21.057142857142857,
-              "fontWeight": "bold",
               "marginLeft": -47.85714285714286,
             }
           }
@@ -1260,7 +1258,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
               "color": "#777777",
               "fontFamily": "Lato",
               "fontSize": 21.057142857142857,
-              "fontWeight": "bold",
               "marginLeft": -47.85714285714286,
             }
           }
@@ -1779,7 +1776,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
               "color": "#777777",
               "fontFamily": "Lato",
               "fontSize": 21.057142857142857,
-              "fontWeight": "bold",
               "marginLeft": -47.85714285714286,
             }
           }
@@ -2313,7 +2309,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
               "color": "#777777",
               "fontFamily": "Lato",
               "fontSize": 21.057142857142857,
-              "fontWeight": "bold",
               "marginLeft": -47.85714285714286,
             }
           }
@@ -3027,7 +3022,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
               "color": "#777777",
               "fontFamily": "Lato",
               "fontSize": 21.057142857142857,
-              "fontWeight": "bold",
               "marginLeft": -47.85714285714286,
             }
           }

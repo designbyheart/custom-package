@@ -78,7 +78,6 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    marginTop: moderateScale(28),
   },
   buttonWrapper: {
     alignSelf: 'flex-end',

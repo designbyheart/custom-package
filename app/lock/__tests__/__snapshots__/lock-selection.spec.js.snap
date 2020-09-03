@@ -144,7 +144,6 @@ exports[`app lock selection page should render properly 1`] = `
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -245,8 +244,8 @@ exports[`app lock selection page should render properly 1`] = `
           null,
           Object {
             "fontFamily": "Lato",
+            "fontSize": 26,
             "fontStyle": "normal",
-            "fontWeight": "bold",
             "lineHeight": 29.67142857142857,
             "marginBottom": 47.647058823529406,
             "marginTop": 39.118235294117646,
@@ -261,28 +260,6 @@ exports[`app lock selection page should render properly 1`] = `
     <View
       accessibilityLabel="lock-selection-or-text-touchable"
       accessible={false}
-      debounceAction={false}
-      focusable={true}
-      hitSlop={
-        Object {
-          "bottom": 20,
-          "left": 20,
-          "right": 20,
-          "top": 20,
-        }
-      }
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={Object {}}
-      testID="lock-selection-or-text-touchable"
-    />
-    <View
-      accessible={true}
       center={true}
       debounceAction={false}
       focusable={true}
@@ -308,6 +285,7 @@ exports[`app lock selection page should render properly 1`] = `
           "marginBottom": 39.705882352941174,
         }
       }
+      testID="lock-selection-or-text-touchable"
     >
       <Image
         source={

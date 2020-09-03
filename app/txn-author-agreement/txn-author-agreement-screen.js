@@ -6,35 +6,18 @@ import { bindActionCreators } from 'redux'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { withNavigation } from '@react-navigation/compat'
 
-import type {
-  NavigationScreenProp,
-  NavigationLeafRoute,
-} from '@react-navigation/native'
-import type { ReduxConnect, GenericObject } from '../common/type-common'
+import type { GenericObject } from '../common/type-common'
 import type { Store } from '../store/type-store'
-import type { Connection } from '../store/type-connection-store'
 
 import { withBottomUpSliderScreen } from '../components/bottom-up-slider-screen/bottom-up-slider-screen'
-import {
-  openIdConnectRoute,
-  txnAuthorAgreementRoute,
-  settingsRoute,
-  walletTabSendDetailsRoute,
-  walletRoute,
-} from '../common'
+import { txnAuthorAgreementRoute } from '../common'
 
 import { BottomUpSliderContentHeaderDetail } from '../components/bottom-up-slider-screen/components/bottom-up-slider-screen-header-detail'
-import { BottomUpSliderText } from '../components/bottom-up-slider-screen/components/bottom-up-slider-screen-text'
 import { BottomUpSliderLoader } from '../components/bottom-up-slider-screen/components/bottom-up-slider-loader'
-import { CustomView, Container, CustomButton } from '../components'
+import { CustomView } from '../components'
 
 import { BottomUpSliderSuccess } from '../components/bottom-up-slider-screen/components/bottom-up-slider-success'
 import { BottomUpSliderError } from '../components/bottom-up-slider-screen/components/bottom-up-slider-error'
-import { GENERIC_ERROR_MESSAGE } from '../common/type-common'
-import {
-  getConnectionByProp,
-  getDIDFromFullyQualifiedDID,
-} from '../store/store-selector'
 import {
   checkTxnAuthorAgreement,
   taaAccepted,
@@ -43,12 +26,10 @@ import {
 import { TAA_STATUS } from './type-txn-author-agreement'
 import type { TxnAuthorAgreementScreenNavigation } from './type-txn-author-agreement'
 
-import { getQuestionStylesObject } from '../question/question-screen-style'
-import { ModalHeader } from '../connection-details/components/modal-header'
 import { measurements } from '../common/styles/measurements'
 import { ModalButtons } from '../components/buttons/modal-buttons'
 import type { TxnAuthorAgreementScreenProps } from './type-txn-author-agreement'
-const questionStylesObject = getQuestionStylesObject(0, 0)
+import { fontFamily } from '../common/styles'
 const sovrinLogo = require('../images/iconTokenOrange.png')
 
 export class TxnAuthorAgreement extends Component<
@@ -125,7 +106,7 @@ export class TxnAuthorAgreement extends Component<
           <View style={styles.overflow}>
             <ScrollView style={styles.scrollViewWrapper}>
               <View style={styles.placeholderView} />
-              <Text>
+              <Text style={styles.text}>
                 {this.props.text !== ''
                   ? this.props.text
                   : `TAA is not active this is placeholder text until it is activated Transaction Author Agreement`}
@@ -200,6 +181,9 @@ export const txnAuthorAgreementScreen = withBottomUpSliderScreen(
 )
 
 const styles = StyleSheet.create({
+  text: {
+    fontFamily: fontFamily,
+  },
   container: {
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
@@ -232,7 +216,7 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'left',
     marginBottom: 2,
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
   },
   content: {
     fontSize: 17,
@@ -240,7 +224,7 @@ const styles = StyleSheet.create({
     color: '#505050',
     width: '100%',
     textAlign: 'left',
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
     paddingBottom: 12,
   },
   textAvatarWrapper: {

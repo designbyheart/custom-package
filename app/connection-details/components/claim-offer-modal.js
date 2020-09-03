@@ -82,7 +82,7 @@ export class ClaimOfferModal extends Component<any, *> {
     // as soon as user accepts the cred offer, redux state will change
     const isClaimOfferAccepted = status === CLAIM_OFFER_STATUS.ACCEPTED
 
-    let acceptButtonText = payTokenValue ? 'Accept & Pay' : 'Accept'
+    let acceptButtonText = payTokenValue ? 'Accept & Pay' : 'Accept Credential'
     // NOTE: Just to be safe, we changed the hasNotAcceptedTAA to hardcoded false, so we can be sure 0 tokens doesn't affect the flow.
     const hasNotAcceptedTAA = false
     // (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
@@ -296,18 +296,12 @@ export class ClaimOfferModal extends Component<any, *> {
   }
 
   onConfirmAndPay = (shouldHideModal: boolean = false) => {
-    const {
-      invitationPayload,
-      attachedRequest,
-    } = this.props.route.params
+    const { invitationPayload, attachedRequest } = this.props.route.params
     if (invitationPayload) {
       // accept invite
       // then we have real info for new claim offer
       // anyway send action out of band accepted
-      this.props.acceptOutOfBandInvitation(
-        invitationPayload,
-        attachedRequest
-      )
+      this.props.acceptOutOfBandInvitation(invitationPayload, attachedRequest)
       this.props.acceptOutofbandClaimOffer(
         this.props.uid,
         this.props.claimOfferData.issuer.did

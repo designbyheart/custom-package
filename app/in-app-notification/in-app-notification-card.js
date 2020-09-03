@@ -1,15 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-  Animated,
-} from 'react-native'
+import { View, Text, StyleSheet, Platform, Animated } from 'react-native'
 import {
   PanGestureHandler,
   State,
@@ -21,12 +13,11 @@ import { withNavigation } from '@react-navigation/compat'
 import type { NotificationCardProps } from './in-app-notification-type'
 import type { Store } from '../store/type-store'
 
-import SvgCustomIcon from '../components/svg-custom-icon'
 import { Avatar } from '../components/avatar/avatar'
 import { color, colors, fontFamily, fontSizes } from '../common/styles/constant'
 import { scheduleClearInAppNotification } from './in-app-notification-actions'
 import { connectionHistRoute } from '../common'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { DefaultLogo } from '../components/default-logo/default-logo'
 
 class NotificationCardComponent extends Component<NotificationCardProps, void> {

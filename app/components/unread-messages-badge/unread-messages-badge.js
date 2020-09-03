@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { getConnections } from '../../store/connections-store'
 import { colors, fontFamily } from '../../common/styles/constant'
@@ -11,8 +11,6 @@ import type { Connection } from '../../store/type-connection-store'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 import { HISTORY_EVENT_STATUS } from '../../connection-history/type-connection-history'
-
-const { width } = Dimensions.get('screen')
 
 export const UnreadMessagesBadge = ({
   customContainerStyle,
@@ -46,11 +44,12 @@ const mapStateToProps = (state: Store) => {
   const customFlat = (array: Array<Array<Object>>) => [].concat(...array)
 
   const isNewConnection = (status: string, show?: boolean) => {
-    if ((
-      status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
-      status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
-      status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED
-    ) && show) {
+    if (
+      (status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
+        status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
+        status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED) &&
+      show
+    ) {
       return true
     } else return false
   }
@@ -70,7 +69,8 @@ const mapStateToProps = (state: Store) => {
 
   let numberOfNewMessages = 0
   flattenPlaceholderArray.map((message) => {
-    if (isNewConnection(message.status, message.showBadge)) numberOfNewMessages++
+    if (isNewConnection(message.status, message.showBadge))
+      numberOfNewMessages++
   })
 
   return {

@@ -144,7 +144,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -233,11 +232,12 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
         null,
         Object {
           "fontFamily": "Lato",
+          "fontSize": 26,
           "fontStyle": "normal",
-          "fontWeight": "bold",
           "lineHeight": 31,
           "marginBottom": 31.76470588235294,
           "marginTop": 31.76470588235294,
+          "minHeight": 49.23529411764706,
           "paddingHorizontal": 20,
           "textAlign": "center",
         },
@@ -812,7 +812,6 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -901,11 +900,12 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
         null,
         Object {
           "fontFamily": "Lato",
+          "fontSize": 26,
           "fontStyle": "normal",
-          "fontWeight": "bold",
           "lineHeight": 31,
           "marginBottom": 31.76470588235294,
           "marginTop": 31.76470588235294,
+          "minHeight": 49.23529411764706,
           "paddingHorizontal": 20,
           "textAlign": "center",
         },
@@ -1480,7 +1480,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -1569,11 +1568,12 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
         null,
         Object {
           "fontFamily": "Lato",
+          "fontSize": 26,
           "fontStyle": "normal",
-          "fontWeight": "bold",
           "lineHeight": 31,
           "marginBottom": 31.76470588235294,
           "marginTop": 31.76470588235294,
+          "minHeight": 49.23529411764706,
           "paddingHorizontal": 20,
           "textAlign": "center",
         },
@@ -2150,7 +2150,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -2239,11 +2238,12 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
         null,
         Object {
           "fontFamily": "Lato",
+          "fontSize": 26,
           "fontStyle": "normal",
-          "fontWeight": "bold",
           "lineHeight": 31,
           "marginBottom": 31.76470588235294,
           "marginTop": 31.76470588235294,
+          "minHeight": 49.23529411764706,
           "paddingHorizontal": 20,
           "textAlign": "center",
         },
@@ -2820,7 +2820,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
             "color": "#777777",
             "fontFamily": "Lato",
             "fontSize": 21.057142857142857,
-            "fontWeight": "bold",
             "marginLeft": -47.85714285714286,
           }
         }
@@ -2909,11 +2908,12 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
         null,
         Object {
           "fontFamily": "Lato",
+          "fontSize": 26,
           "fontStyle": "normal",
-          "fontWeight": "bold",
           "lineHeight": 31,
           "marginBottom": 31.76470588235294,
           "marginTop": 31.76470588235294,
+          "minHeight": 49.23529411764706,
           "paddingHorizontal": 20,
           "textAlign": "center",
         },

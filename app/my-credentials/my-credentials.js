@@ -8,7 +8,7 @@ import {
   TouchableHighlight,
   Alert,
 } from 'react-native'
-import { verticalScale, scale } from 'react-native-size-matters'
+import { scale } from 'react-native-size-matters'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import type { Store } from '../store/type-store'

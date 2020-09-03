@@ -654,7 +654,7 @@ export class Settings extends Component<SettingsProps, SettingsState> {
       },
       {
         id: 6,
-        title: 'Chat With Us',
+        title: 'Give app feedback',
         subtitle: 'Tell us what you think of Connect.Me',
         avatar: (
           <View style={styles.avatarView}>

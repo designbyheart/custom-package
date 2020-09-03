@@ -3,10 +3,7 @@
 import React, { Component } from 'react'
 import {
   View,
-  Text,
-  Platform,
   Image,
-  UIManager,
   Animated,
   Dimensions,
   ActivityIndicator,

@@ -1,10 +1,11 @@
 // @flow
 import React from 'react'
 import { Text, View, Dimensions, StyleSheet } from 'react-native'
+import { fontFamily } from '../../common/styles/constant'
 
 let ScreenWidth = Dimensions.get('window').width
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     width: ScreenWidth,
     height: 26,
@@ -36,8 +37,9 @@ const styles = {
     fontSize: 10,
     fontWeight: '700',
     color: '#CE0B24',
+    fontFamily: fontFamily,
   },
-}
+})
 
 // TODO: Fix the <any, void> to be the correct types for props and state
 export const NewMessageBreakLine = () => (

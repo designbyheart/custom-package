@@ -1,16 +1,8 @@
 // @flow
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  Platform,
-  View,
-  Text,
-  FlatList,
-  AppState,
-} from 'react-native'
+import { Platform, View, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { BlurView } from '@react-native-community/blur'
 import Snackbar from 'react-native-snackbar'
 import PushNotificationIOS from '@react-native-community/push-notification-ios'
 
@@ -18,10 +10,8 @@ import type { Store } from '../store/type-store'
 import type {
   MyConnectionsProps,
   MyConnectionsState,
-  Item,
 } from './type-my-connections'
 import type { Connection } from '../store/type-connection-store'
-import type { ReactNavigation } from '../common/type-common'
 
 import { newConnectionSeen } from '../connection-history/connection-history-store'
 import { HomeHeader, CameraButton } from '../components'
@@ -41,9 +31,8 @@ import {
   GET_MESSAGES_LOADING,
 } from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
-import SvgCustomIcon from '../components/svg-custom-icon'
 import { NotificationCard } from '../in-app-notification/in-app-notification-card'
-import { colors, fontFamily } from '../common/styles/constant'
+import { colors } from '../common/styles/constant'
 
 export class MyConnections extends Component<
   MyConnectionsProps,

@@ -452,7 +452,6 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
                                   "color": "#777777",
                                   "fontFamily": "Lato",
                                   "fontSize": 21.057142857142857,
-                                  "fontWeight": "bold",
                                   "marginLeft": -47.85714285714286,
                                 }
                               }
@@ -1305,7 +1304,6 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
                                   "color": "#777777",
                                   "fontFamily": "Lato",
                                   "fontSize": 21.057142857142857,
-                                  "fontWeight": "bold",
                                   "marginLeft": -47.85714285714286,
                                 }
                               }

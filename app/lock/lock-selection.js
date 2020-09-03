@@ -269,8 +269,8 @@ const style = StyleSheet.create({
   },
   title: {
     fontFamily,
+    fontSize: 26,
     fontStyle: 'normal',
-    fontWeight: 'bold',
     lineHeight: moderateScale(31),
     marginTop: verticalScale(49.26),
     marginBottom: verticalScale(60),

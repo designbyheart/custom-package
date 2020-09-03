@@ -40,6 +40,8 @@ import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 
 // utils
 import { generateStateForMissingAttributes, isInvalidValues } from '../utils'
+import { Avatar } from '../../components'
+import { renderAttachmentIcon } from './modal-content'
 
 const screenWidth = Dimensions.get('window').width
 const sliderWidth = screenWidth - screenWidth * 0.1
@@ -161,7 +163,6 @@ class ProofRequestAttributeList extends Component<
       } = this
       return (
         <View key={`${index}_${keyIndex}`}>
-          <Text style={styles.title}>{label}</Text>
           <View>
             {showInputBox ? (
               <TouchableOpacity
@@ -198,7 +199,16 @@ class ProofRequestAttributeList extends Component<
                 {BLANK_ATTRIBUTE_DATA_TEXT}
               </Text>
             ) : (
-              <Text style={styles.content}>{value}</Text>
+              <View style={styles.wrapper}>
+                <View style={styles.textAvatarWrapper}>
+                  {renderAttachmentIcon(
+                    label,
+                    value,
+                    item.claimUuid || '',
+                    item.claimUuid || ''
+                  )}
+                </View>
+              </View>
             )}
           </View>
         </View>

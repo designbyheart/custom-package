@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { LoadingIndicator } from './loading-indicator'
 import type { LoaderProps, LoaderState } from './type-loader'
@@ -98,7 +98,7 @@ export default class Loader extends Component<LoaderProps, LoaderState> {
   }
 
   clearTimers() {
-    this.timers.forEach(id => {
+    this.timers.forEach((id) => {
       clearTimeout(id)
     })
     if (this.interval) {

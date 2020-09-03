@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Text, Image, View, StyleSheet, TouchableOpacity } from 'react-native'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { Text, Image, View, StyleSheet } from 'react-native'
+import { moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state

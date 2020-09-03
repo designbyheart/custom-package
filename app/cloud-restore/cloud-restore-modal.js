@@ -3,39 +3,24 @@
 import React, { Component } from 'react'
 import {
   View,
-  Text,
-  Platform,
   Image,
-  UIManager,
   Animated,
   Dimensions,
   ActivityIndicator,
 } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
 import type { Store } from '../store/type-store'
 
 import {
-  selectRecoveryMethodRoute,
-  exportBackupFileRoute,
-  settingsRoute,
-  settingsTabRoute,
   cloudRestoreModalRoute,
   cloudRestoreRoute,
   lockEnterPinRoute,
 } from '../common'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
-import {
-  Container,
-  CustomView,
-  CustomText,
-  Icon,
-  CustomButton,
-  CustomHeader,
-} from '../components'
+import { Container, CustomView, CustomText } from '../components'
 import { getCloudBackupStatus } from '../store/store-selector'
 import {
   cloudBackupStart,
@@ -44,25 +29,14 @@ import {
 import { setAutoCloudBackupEnabled } from '../backup/backup-actions'
 import { color } from '../common/styles/constant'
 //TODO: jy-copy and pasted questionStyles from the question modal, should put these in on place once generic modal is made
-import styles, { questionStyles } from '../backup/styles'
+import { questionStyles } from '../backup/styles'
 const cmImage = require('../images/cb-ConnectMe.png')
-const downloadImage = require('../images/Group.png')
-
-const successImg = require('../images/Success.png')
-const errorImg = require('../images/Sad_Face_Red_Error.png')
 
 import type { CloudBackupScreenProps } from '../backup/type-backup'
 import type { RestoreProps } from '../restore/type-restore'
 
 import { QuestionScreenHeader } from '../question/components/question-screen-header'
 
-import { Loader } from '../components'
-import {
-  CLOUD_BACKUP_LOADING,
-  CLOUD_BACKUP_COMPLETE,
-  CLOUD_BACKUP_FAILURE,
-} from '../backup/type-backup'
-import { safeSet } from '../services/storage'
 import { RestoreStatus } from '../restore/type-restore'
 
 const { height } = Dimensions.get('window')
