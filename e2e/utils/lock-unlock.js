@@ -23,15 +23,12 @@ export const unlock = async () => {
     await unlockAppViaPassCode()
   } catch (e) {
     // if lock is not setup then setup environment and pass code
-    await setEnvironment()
     await setupPassCode()
+    await setEnvironment()
   }
 }
 
 async function setEnvironment() {
-  const acceptButton = element(by.id('eula-accept')) // it taps but then throws error the
-  await acceptButton.tap()
-
   // We have hidden start-fresh button for now, Once we enable it then we can add this line again
   // const startFreshButton = element(by.id('start-fresh'))
   // await startFreshButton.tap()
@@ -45,17 +42,22 @@ async function setEnvironment() {
   await element(by.id(APP_ENVIRONMENT)).tap()
 
   await element(by.id(SWITCH_ENVIRONMENT_SAVE_BUTTON)).tap()
+
+  await element(by.text('No thanks')).tap()
+
+  await element(by.id('eula-accept')).tap()
+
+  await expect(element(by.id('home-container'))).toBeVisible()
 }
 
 async function setupPassCode() {
-  await element(by.id(LOCK_SELECTION_PIN_CODE)).tap()
+  await element(by.text('Set Up')).tap()
 
-  await element(by.id(PIN_CODE_INPUT_BOX)).replaceText(TEST_PASS_CODE) // for ios
-  // await element(by.id(PIN_CODE_INPUT_BOX)).typeText(TEST_PASS_CODE) // for android
+  // await element(by.id(LOCK_SELECTION_PIN_CODE)).tap()
 
-  await element(by.id(LOCK_SETUP_SUCCESS_CLOSE_BUTTON)).tap()
+  await element(by.id(PIN_CODE_INPUT_BOX)).replaceText(TEST_PASS_CODE)
 
-  await expect(element(by.id('home-container'))).toBeVisible()
+  // await element(by.id(LOCK_SETUP_SUCCESS_CLOSE_BUTTON)).tap()
 }
 
 async function unlockAppViaPassCode() {

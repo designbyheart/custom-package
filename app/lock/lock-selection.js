@@ -112,97 +112,95 @@ export class LockSelection extends Component<LockSelectionProps, *> {
           route={this.props.route}
           transparent={true}
         />
-       <Container tertiary style={[style.pinSelectionContainer]}>
-         <CustomView center>
-           <SvgCustomIcon
-             name="ConnectMe"
-             width={moderateScale(218.54)}
-             height={moderateScale(28)}
-             fill={colors.cmGray2}
-           />
-         </CustomView>
-         <CustomText
-           center
-           h4
-           bg="tertiary"
-           style={[style.title]}
-           tertiary
-           thick
-         >
-           Biometrics are faster.
-         </CustomText>
-         <CustomView
-           testID="lock-selection-or-text"
-           onLongPress={this._onLongPressButton}
-           onPress={this._onTextPressButton}
-           debounceAction={false}
-         ></CustomView>
-         <CustomView
-           center
-           style={[style.image]}
-           onPress={this._onTextPressButton}
-           onLongPress={this._onLongPressButton}
-           debounceAction={false}
-         >
-           <Image source={require('../images/biometricsGroup.png')} />
-         </CustomView>
-         <CustomText bg="tertiary" tertiary style={[style.message]}>
-           You can use your face or finger to unlock this app. Your passcode will
-           still be required if biometrics fail.
-         </CustomText>
-         <TouchableOpacity onPress={this.goTouchIdSetup} style={[style.button]}>
-           <CustomText center h4 transparentBg thick>
-             Use biometrics
-           </CustomText>
-         </TouchableOpacity>
-         <CustomText
-           center
-           style={[style.noThanks]}
-           bg="tertiary"
-           tertiary
-           h5
-           bold
-           onPress={() => this.props.navigation.navigate(eulaRoute)}
-         >
-           No thanks
-         </CustomText>
-         <CustomView tertiary style={[style.devSwitchContainer]}>
-           <CustomView tertiary row spaceBetween>
-             <CustomView tertiary style={[style.devSwitchText]}>
-               <CustomText bg="tertiary" tertiary h5 bold>
-                 Use Staging Net
-               </CustomText>
-               <CustomText bg="tertiary" tertiary h7>
-                 An alternative network for app developers
-               </CustomText>
-             </CustomView>
-             <CustomView tertiary>
-               {Platform.OS === 'ios' ? (
-                 <Switch
-                   trackColor={{ true: mantis }}
-                   onValueChange={this.onDevModeChange}
-                   value={this.state.devMode}
-                 />
-               ) : (
-                 <ToggleSwitch
-                   onToggle={this.onDevModeChange}
-                   value={this.state.devMode}
-                   buttonWidth={55}
-                   buttonHeight={30}
-                   buttonRadius={30}
-                   sliderWidth={28}
-                   sliderHeight={28}
-                   sliderRadius={58}
-                   buttonOnColor={mantis}
-                   buttonOffColor={lightWhite}
-                   sliderOnColor={white}
-                   sliderOffColor={white}
-                 />
-               )}
-             </CustomView>
-           </CustomView>
-         </CustomView>
-       </Container>
+        <Container tertiary style={[style.pinSelectionContainer]}>
+          <CustomView center>
+            <SvgCustomIcon
+              name="ConnectMe"
+              width={moderateScale(218.54)}
+              height={moderateScale(28)}
+              fill={colors.cmGray2}
+            />
+          </CustomView>
+          <CustomText
+            center
+            h4
+            bg="tertiary"
+            style={[style.title]}
+            tertiary
+            thick
+          >
+            Biometrics are faster.
+          </CustomText>
+          <CustomView
+            testID="lock-selection-or-text"
+            center
+            style={[style.image]}
+            onPress={this._onTextPressButton}
+            onLongPress={this._onLongPressButton}
+            debounceAction={false}
+          >
+            <Image source={require('../images/biometricsGroup.png')} />
+          </CustomView>
+          <CustomText bg="tertiary" tertiary style={[style.message]}>
+            You can use your face or finger to unlock this app. Your passcode
+            will still be required if biometrics fail.
+          </CustomText>
+          <TouchableOpacity
+            onPress={this.goTouchIdSetup}
+            style={[style.button]}
+          >
+            <CustomText center h4 transparentBg thick>
+              Use biometrics
+            </CustomText>
+          </TouchableOpacity>
+          <CustomText
+            center
+            style={[style.noThanks]}
+            bg="tertiary"
+            tertiary
+            h5
+            bold
+            onPress={() => this.props.navigation.navigate(eulaRoute)}
+          >
+            No thanks
+          </CustomText>
+          <CustomView tertiary style={[style.devSwitchContainer]}>
+            <CustomView tertiary row spaceBetween>
+              <CustomView tertiary style={[style.devSwitchText]}>
+                <CustomText bg="tertiary" tertiary h5 bold>
+                  Use Staging Net
+                </CustomText>
+                <CustomText bg="tertiary" tertiary h7>
+                  An alternative network for app developers
+                </CustomText>
+              </CustomView>
+              <CustomView tertiary>
+                {Platform.OS === 'ios' ? (
+                  <Switch
+                    trackColor={{ true: mantis }}
+                    onValueChange={this.onDevModeChange}
+                    value={this.state.devMode}
+                  />
+                ) : (
+                  <ToggleSwitch
+                    onToggle={this.onDevModeChange}
+                    value={this.state.devMode}
+                    buttonWidth={55}
+                    buttonHeight={30}
+                    buttonRadius={30}
+                    sliderWidth={28}
+                    sliderHeight={28}
+                    sliderRadius={58}
+                    buttonOnColor={mantis}
+                    buttonOffColor={lightWhite}
+                    sliderOnColor={white}
+                    sliderOffColor={white}
+                  />
+                )}
+              </CustomView>
+            </CustomView>
+          </CustomView>
+        </Container>
       </Container>
     )
   }
