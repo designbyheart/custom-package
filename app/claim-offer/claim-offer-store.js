@@ -98,6 +98,17 @@ import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import { retrySaga } from '../api/api-utils'
+import {
+  CREDENTIAL_DEFINITION_NOT_FOUND,
+  CREDENTIAL_DEFINITION_NOT_FOUND_MESSAGE,
+  INVALID_CREDENTIAL_OFFER,
+  INVALID_CREDENTIAL_OFFER_MESSAGE,
+  SCHEMA_NOT_FOUND,
+  SCHEMA_NOT_FOUND_MESSAGE,
+} from '../bridge/react-native-cxs/error-cxs'
+import Snackbar from 'react-native-snackbar'
+import { venetianRed, white } from '../common/styles'
+import { onfidoProcessStatus } from '../onfido/type-onfido'
 
 const claimOfferInitialState = {
   vcxSerializedClaimOffers: {},
@@ -361,6 +372,23 @@ export function* claimOfferAccepted(
         yield put(refreshWalletBalance())
       }
     } catch (e) {
+      const showSnackError = (text) => {
+        Snackbar.show({
+          text: text,
+          duration: Snackbar.LENGTH_LONG,
+          backgroundColor: venetianRed,
+          textColor: white,
+        })
+      }
+
+      if (e.code === CREDENTIAL_DEFINITION_NOT_FOUND) {
+        showSnackError(CREDENTIAL_DEFINITION_NOT_FOUND_MESSAGE)
+      } else if (e.code === SCHEMA_NOT_FOUND) {
+        showSnackError(SCHEMA_NOT_FOUND_MESSAGE)
+      } else if (e.code === INVALID_CREDENTIAL_OFFER) {
+        showSnackError(INVALID_CREDENTIAL_OFFER_MESSAGE)
+      }
+
       captureError(e)
       if (isPaidCredential) {
         yield put(paidCredentialRequestFail(messageId, remoteDid))
