@@ -524,7 +524,7 @@ exports[`user settings screen should render properly and snapshot should match i
                             }
                           >
                             <View
-                              accessibilityLabel="left-icon"
+                              accessibilityLabel="burger-menu"
                               accessible={true}
                               style={
                                 Object {
@@ -550,7 +550,7 @@ exports[`user settings screen should render properly and snapshot should match i
                                     "opacity": 1,
                                   }
                                 }
-                                testID="left-icon"
+                                testID="burger-menu"
                               >
                                 <View
                                   style={
