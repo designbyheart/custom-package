@@ -285,7 +285,7 @@ export const cloudBackupEnvironments = [
 // what settings should be in dev environment
 const isDevEnvironment = __DEV__ && process.env.NODE_ENV !== 'test'
 export const defaultEnvironment = isDevEnvironment
-  ? SERVER_ENVIRONMENT.DEVTEAM1
+  ? SERVER_ENVIRONMENT.QA
   : SERVER_ENVIRONMENT.PROD
 
 const initialState: ConfigStore = {
