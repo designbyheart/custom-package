@@ -13,17 +13,15 @@ import type {
   ReactNavigation,
   ReduxConnect,
 } from '../common/type-common'
-import { TermsAndConditionsTitle } from '../common/privacyTNC-constants'
 import { Container, FooterActions } from '../components'
 import {
   eulaRoute,
-  homeRoute,
+  lockSetupSuccessRoute,
 } from '../common'
 import { eulaAccept } from './eula-store'
 import { EULA_URL, localEulaSource } from './type-eula'
 import { OrangeLoader } from '../components/loader-gif/loader-gif'
 import { connect } from 'react-redux'
-import { Header } from '../components'
 
 export const EulaScreen = ({
   dispatch,
@@ -41,7 +39,7 @@ export const EulaScreen = ({
   const onAccept = useCallback(() => {
     dispatch(eulaAccept(true))
     // if we have to enable choice for restore and start fresh screen, then redirect user to restoreRoute instead of homeRoute
-    navigation.navigate(homeRoute)
+    navigation.navigate(lockSetupSuccessRoute)
   }, [])
 
   const renderLoader = useCallback(() => Loader, [])
