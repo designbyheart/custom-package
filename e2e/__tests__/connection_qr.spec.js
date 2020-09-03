@@ -335,7 +335,6 @@ describe('Connection via QR code and SMS link', () => {
     } catch (e) {
       try {
         await element(by.type('RCTScrollContentView')).atIndex(0).swipe('down')
-
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('1'))
         ).tap()
@@ -344,7 +343,6 @@ describe('Connection via QR code and SMS link', () => {
         )
       } catch (e) {
         await element(by.type('RCTScrollContentView')).atIndex(0).swipe('up')
-
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('1'))
         ).tap()
@@ -359,251 +357,263 @@ describe('Connection via QR code and SMS link', () => {
     try {
       await element(
         by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
-      ).typeText('test attribute 2')
+      ).tap()
+      await element(by.type('RCTSinglelineTextInputView')).typeText(
+        'test attribute 2'
+      )
     } catch (e) {
       try {
         await element(by.type('RCTScrollContentView')).atIndex(0).swipe('down')
-
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
-        ).typeText('test attribute 2')
+        ).tap()
+        await element(by.type('RCTSinglelineTextInputView')).typeText(
+          'test attribute 2'
+        )
       } catch (e) {
         await element(by.type('RCTScrollContentView')).atIndex(0).swipe('up')
-
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
-        ).typeText('test attribute 2')
+        ).tap()
+        await element(by.type('RCTSinglelineTextInputView')).typeText(
+          'test attribute 2'
+        )
       }
     }
-    await element(
-      by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
-    ).tapReturnKey()
+    await element(by.type('RCTSinglelineTextInputView')).tapReturnKey()
+    await element(by.text('Done')).tap()
 
     try {
       await element(
         by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
-      ).typeText('test attribute 3')
+      ).tap()
+      await element(by.type('RCTSinglelineTextInputView')).typeText(
+        'test attribute 3'
+      )
     } catch (e) {
       try {
         await element(by.type('RCTScrollContentView')).atIndex(0).swipe('down')
-
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
-        ).typeText('test attribute 3')
+        ).tap()
+        await element(by.type('RCTSinglelineTextInputView')).typeText(
+          'test attribute 3'
+        )
       } catch (e) {
         await element(by.type('RCTScrollContentView')).atIndex(0).swipe('up')
-
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
-        ).typeText('test attribute 3')
+        ).tap()
+        await element(by.type('RCTSinglelineTextInputView')).typeText(
+          'test attribute 3'
+        )
       }
     }
-    await element(
-      by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
-    ).tapReturnKey()
+    await element(by.type('RCTSinglelineTextInputView')).tapReturnKey()
+    await element(by.text('Done')).tap()
 
     await waitForElementAndTap('text', PROOF_REQUEST_GENERATE, TIMEOUT)
 
     await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
   })
 
-  // it('Case 4: check my connections screenshot with test connection', async () => {
-  //   await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+  it('Case 4: check my connections screenshot with test connection', async () => {
+    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
-  //   await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
+    await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
 
-  //   await matchScreenshot(SCREENSHOT_TEST_CONNECTION) // screenshot
-  // })
+    await matchScreenshot(SCREENSHOT_TEST_CONNECTION) // screenshot
+  })
 
-  // xit('Case 5: drill down to connection and check its elements', async () => {
-  //   // await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+  it('Case 5: drill down to connection and check its elements', async () => {
+    // await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
-  //   // await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
+    // await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
 
-  //   await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
+    await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
 
-  //   await element(by.type(GENERAL_SCROLL_VIEW))
-  //     .atIndex(0)
-  //     .swipe('down', 'fast', 0.5)
+    await element(by.type(GENERAL_SCROLL_VIEW))
+      .atIndex(0)
+      .swipe('down', 'fast', 0.5)
 
-  //   await expect(element(by.text(CONNECTION_ENTRY_HEADER))).toBeVisible()
+    await expect(element(by.text(CONNECTION_ENTRY_HEADER))).toBeVisible()
 
-  //   await element(by.text(VIEW_CREDENTIAL)).atIndex(3).tap()
+    await element(by.text(VIEW_CREDENTIAL)).atIndex(3).tap()
 
-  //   await expect(element(by.text(CREDENTIAL_HEADER))).toBeVisible()
+    await expect(element(by.text(CREDENTIAL_HEADER))).toBeVisible()
 
-  //   await expect(
-  //     element(by.text(CLAIM_OFFER_PROFILE_INFO)).atIndex(0)
-  //   ).toBeVisible()
+    await expect(
+      element(by.text(CLAIM_OFFER_PROFILE_INFO)).atIndex(0)
+    ).toBeVisible()
 
-  //   await waitForElementAndTap('text', CLOSE_BUTTON, TIMEOUT)
+    await waitForElementAndTap('text', CLOSE_BUTTON, TIMEOUT)
 
-  //   await element(by.type(GENERAL_SCROLL_VIEW))
-  //     .atIndex(0)
-  //     .swipe('up', 'fast', 0.5)
+    await element(by.type(GENERAL_SCROLL_VIEW))
+      .atIndex(0)
+      .swipe('up', 'fast', 0.5)
 
-  //   await element(by.text(VIEW_PROOF)).atIndex(0).tap()
+    await element(by.text(VIEW_PROOF)).atIndex(0).tap()
 
-  //   await expect(element(by.text(PROOF_HEADER))).toBeVisible()
+    await expect(element(by.text(PROOF_HEADER))).toBeVisible()
 
-  //   await expect(
-  //     element(by.text(PROOF_TEMPLATE_MISSING_ATTRIBUTES)).atIndex(0)
-  //   ).toBeVisible()
+    await expect(
+      element(by.text(PROOF_TEMPLATE_MISSING_ATTRIBUTES)).atIndex(0)
+    ).toBeVisible()
 
-  //   await waitForElementAndTap('text', CLOSE_BUTTON, TIMEOUT)
+    await waitForElementAndTap('text', CLOSE_BUTTON, TIMEOUT)
 
-  //   await element(by.id(BACK_ARROW)).tap()
-  // })
+    await element(by.id(BACK_ARROW)).tap()
+  })
 
-  // it('Case 6: open connection using SMS link from the same connection when connection is already expired', async () => {
-  //   await exec(`xcrun simctl openurl booted ${URL}`)
+  it('Case 6: open connection using SMS link from the same connection when connection is already expired', async () => {
+    await exec(`xcrun simctl openurl booted ${URL}`)
 
-  //   await new Promise((r) => setTimeout(r, 10000)) // sync issue
+    await new Promise((r) => setTimeout(r, 10000)) // sync issue
 
-  //   // await element(by.text('Ok')).tap()
+    // await element(by.text('Ok')).tap()
 
-  //   await matchScreenshot(SCREENSHOT_HOME_BIG_HISTORY) // screenshot
-  // })
+    await matchScreenshot(SCREENSHOT_HOME_BIG_HISTORY) // screenshot
+  })
 
-  // it('Case 7: delete existing connection', async () => {
-  //   await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+  it('Case 7: delete existing connection', async () => {
+    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
-  //   await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
+    await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
 
-  //   await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
+    await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
 
-  //   await waitForElementAndTap('id', CONNECTION_SUBMENU_BUTTON, TIMEOUT) // open connection menu
+    await waitForElementAndTap('id', CONNECTION_SUBMENU_BUTTON, TIMEOUT) // open connection menu
 
-  //   await waitForElementAndTap('id', CONNECTION_SUBMENU_CLOSE_BUTTON, TIMEOUT) // close it
+    await waitForElementAndTap('id', CONNECTION_SUBMENU_CLOSE_BUTTON, TIMEOUT) // close it
 
-  //   await waitForElementAndTap('id', CONNECTION_SUBMENU_BUTTON, TIMEOUT) // open menu again
+    await waitForElementAndTap('id', CONNECTION_SUBMENU_BUTTON, TIMEOUT) // open menu again
 
-  //   await waitForElementAndTap('id', CONNECTION_DELETE_BUTTON, TIMEOUT) // delete connection
-  // })
+    await waitForElementAndTap('id', CONNECTION_DELETE_BUTTON, TIMEOUT) // delete connection
+  })
 
-  // it('Case 8: establish new connection using new SMS link', async () => {
-  //   let [
-  //     token,
-  //     invitationId,
-  //     fetchingInvitation,
-  //     invitationUrl,
-  //     jsonData,
-  //   ] = await getInvitation()
+  it('Case 8: establish new connection using new SMS link', async () => {
+    let [
+      token,
+      invitationId,
+      fetchingInvitation,
+      invitationUrl,
+      jsonData,
+    ] = await getInvitation()
 
-  //   console.log(chalk.cyanBright(`${invitationUrl}`))
+    console.log(chalk.cyanBright(`${invitationUrl}`))
 
-  //   connectionId = invitationId
+    connectionId = invitationId
 
-  //   await exec(`xcrun simctl openurl booted ${invitationUrl}`)
+    await exec(`xcrun simctl openurl booted ${invitationUrl}`)
 
-  //   await new Promise((r) => setTimeout(r, 10000)) // sync issue
+    await new Promise((r) => setTimeout(r, 10000)) // sync issue
 
-  //   try {
-  //     // await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
-  //     await waitForElementAndTap('text', 'Connect', TIMEOUT)
-  //   } catch (e) {
-  //     [
-  //       token,
-  //       invitationId,
-  //       fetchingInvitation,
-  //       invitationUrl,
-  //       jsonData
-  //     ] = await getInvitation()
+    try {
+      // await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+      await waitForElementAndTap('text', 'Connect', TIMEOUT)
+    } catch (e) {
+      ;[
+        token,
+        invitationId,
+        fetchingInvitation,
+        invitationUrl,
+        jsonData,
+      ] = await getInvitation()
 
-  //     console.log(chalk.cyanBright(`${invitationUrl}`))
-  //     connectionId = invitationId
-  //     await exec(`xcrun simctl openurl booted ${invitationUrl}`)
-  //     await new Promise((r) => setTimeout(r, 10000)) // sync issue
-  //     // await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
-  //     await waitForElementAndTap('text', 'Connect', TIMEOUT)
-  //   }
+      console.log(chalk.cyanBright(`${invitationUrl}`))
+      connectionId = invitationId
+      await exec(`xcrun simctl openurl booted ${invitationUrl}`)
+      await new Promise((r) => setTimeout(r, 10000)) // sync issue
+      // await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+      await waitForElementAndTap('text', 'Connect', TIMEOUT)
+    }
 
-  //   await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
-  //   await waitForElementAndTap('text', MENU_HOME, TIMEOUT)
+    await waitForElementAndTap('text', MENU_HOME, TIMEOUT)
 
-  //   await new Promise((r) => setTimeout(r, 30000)) // sync issue
-  // })
+    await new Promise((r) => setTimeout(r, 30000)) // sync issue
+  })
 
-  // it('Case 9.1: create and reject profile credential using new connection id', async () => {
-  //   credential = await sendClaimOffer(
-  //     CLAIM_OFFER_PROFILE_INFO,
-  //     connectionId
-  //   ).catch(console.error)
+  it('Case 9.1: create and reject profile credential using new connection id', async () => {
+    credential = await sendClaimOffer(
+      CLAIM_OFFER_PROFILE_INFO,
+      connectionId
+    ).catch(console.error)
 
-  //   // catch intermittnet failure with new message absence
-  //   try {
-  //     await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
-  //   } catch (e) {
-  //     console.warn(e)
-  //     // await element(by.id(HOME_CONTAINER)).swipe('down')
-  //     await element(by.text('No new notifications.')).swipe('down')
-  //     await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
-  //   }
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
-  //   await waitForElementAndTap('text', CLAIM_OFFER_REJECT, TIMEOUT)
-  // })
+    await waitForElementAndTap('text', CLAIM_OFFER_REJECT, TIMEOUT)
+  })
 
-  // it('Case 9.2: create and accept profile credential using new connection id', async () => {
-  //   credential = await sendClaimOffer(
-  //     CLAIM_OFFER_PROFILE_INFO,
-  //     connectionId
-  //   ).catch(console.error)
+  it('Case 9.2: create and accept profile credential using new connection id', async () => {
+    credential = await sendClaimOffer(
+      CLAIM_OFFER_PROFILE_INFO,
+      connectionId
+    ).catch(console.error)
 
-  //   // catch intermittnet failure with new message absence
-  //   try {
-  //     await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
-  //   } catch (e) {
-  //     console.warn(e)
-  //     // await element(by.id(HOME_CONTAINER)).swipe('down')
-  //     await element(by.text('No new notifications.')).swipe('down')
-  //     await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
-  //   }
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
-  //   await matchScreenshot(SCREENSHOT_CLAIM_OFFER_PROFILE_INFO) // screenshot
+    await matchScreenshot(SCREENSHOT_CLAIM_OFFER_PROFILE_INFO) // screenshot
 
-  //   await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
-  // })
+    await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
+  })
 
-  // it('Case 10.1: create and reject proof request using new connection id', async () => {
-  //   proof = await sendProofRequest(
-  //     PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
-  //     connectionId
-  //   ).catch(console.error)
+  it('Case 10.1: create and reject proof request using new connection id', async () => {
+    proof = await sendProofRequest(
+      PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
+      connectionId
+    ).catch(console.error)
 
-  //   // catch intermittnet failure with new message absence
-  //   try {
-  //     await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
-  //   } catch (e) {
-  //     console.warn(e)
-  //     // await element(by.id(HOME_CONTAINER)).swipe('down')
-  //     await element(by.text('No new notifications.')).swipe('down')
-  //     await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
-  //   }
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
-  //   await waitForElementAndTap('text', PROOF_REQUEST_REJECT, TIMEOUT)
-  // })
+    await waitForElementAndTap('text', PROOF_REQUEST_REJECT, TIMEOUT)
+  })
 
-  // it('Case 10.2: create and send proof request using new connection id', async () => {
-  //   proof = await sendProofRequest(
-  //     PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
-  //     connectionId
-  //   ).catch(console.error)
+  it('Case 10.2: create and send proof request using new connection id', async () => {
+    proof = await sendProofRequest(
+      PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
+      connectionId
+    ).catch(console.error)
 
-  //   // catch intermittnet failure with new message absence
-  //   try {
-  //     await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
-  //   } catch (e) {
-  //     console.warn(e)
-  //     // await element(by.id(HOME_CONTAINER)).swipe('down')
-  //     await element(by.text('No new notifications.')).swipe('down')
-  //     await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
-  //   }
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
-  //   await matchScreenshot(SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED) // screenshot
+    await matchScreenshot(SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED) // screenshot
 
-  //   await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
-  // })
+    await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
+  })
 })
 
 function getDeferred() {
