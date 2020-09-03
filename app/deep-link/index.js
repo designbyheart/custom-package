@@ -44,11 +44,11 @@ export class DeepLink extends PureComponent<DeepLinkProps, void> {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   tokens: state.deepLink.tokens,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       deepLinkData,

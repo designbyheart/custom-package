@@ -68,6 +68,7 @@ import { restorePassphraseScreen } from '../restore/restore-passphrase'
 import { privacyTNCScreen } from '../privacy-tnc/privacy-tnc-screen'
 import { connectionHistoryScreen } from '../connection-details/connection-details'
 import { credentialDetailsScreen } from '../credential-details/credential-details'
+import { pushNotificationPermissionScreen } from '../push-notification/components/push-notification-permission-screen'
 import {
   splashScreenRoute,
   homeRoute,
@@ -76,6 +77,7 @@ import {
   credentialsDrawerRoute,
   homeDrawerRoute,
   settingsDrawerRoute,
+  pushNotificationPermissionRoute,
 } from '../common'
 import { walletTabsScreen } from '../wallet/wallet-tab-send-details'
 import { checkIfAnimationToUse } from '../bridge/react-native-cxs/RNCxs'
@@ -511,6 +513,10 @@ export function ConnectMeAppNavigator() {
       <ModalStack.Screen
         name={walletTabsScreen.routeName}
         component={walletTabsScreen.screen}
+      />
+      <ModalStack.Screen
+        name={pushNotificationPermissionScreen.routeName}
+        component={pushNotificationPermissionScreen.screen}
       />
     </ModalStack.Navigator>
   )

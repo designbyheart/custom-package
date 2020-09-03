@@ -1,4 +1,5 @@
 // @flow
+import messaging from '@react-native-firebase/messaging'
 import React, { Component } from 'react'
 import { Alert, Platform, PermissionsAndroid, AppState } from 'react-native'
 import { bindActionCreators } from 'redux'
@@ -42,6 +43,7 @@ import {
   connectionHistRoute,
   openIdConnectRoute,
   proofRequestRoute,
+  pushNotificationPermissionRoute,
 } from '../common/'
 
 import type {
@@ -169,6 +171,12 @@ export class QRCodeScannerScreen extends Component<
     }
   }
 
+  getAuthorizationStatus = async () => {
+    const authorizationStatus = await messaging().hasPermission()
+
+    return !!authorizationStatus
+  }
+
   checkExistingConnectionAndRedirect = (invitation: {
     payload: InvitationPayload,
   }) => {
@@ -210,9 +218,20 @@ export class QRCodeScannerScreen extends Component<
     // against null fn call, so if push is not available, navigate is
     // guaranteed to be available
     const navigationFn = navigation.push || navigation.navigate
-    navigationFn(invitationRoute, {
-      senderDID: invitation.payload.senderDID,
-    })
+    if (Platform.OS === 'ios') {
+      if (this.getAuthorizationStatus() && this.props.historyData) {
+        navigationFn(invitationRoute, {
+          senderDID: invitation.payload.senderDID,
+        })
+      } else {
+        navigationFn(pushNotificationPermissionRoute, {
+          senderDID: invitation.payload.senderDID,
+        })
+      }
+    } else
+      navigationFn(invitationRoute, {
+        senderDID: invitation.payload.senderDID,
+      })
   }
 
   onClose = () => {
@@ -427,6 +446,7 @@ export class QRCodeScannerScreen extends Component<
 const mapStateToProps = (state: Store) => ({
   currentScreen: state.route.currentScreen,
   publicDIDs: getAllPublicDid(state.connections),
+  historyData: state.history && state.history.data,
 })
 
 const mapDispatchToProps = (dispatch) =>

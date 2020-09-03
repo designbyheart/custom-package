@@ -28,6 +28,7 @@ import {
   proofRequestRoute,
   claimOfferRoute,
   questionRoute,
+  pushNotificationPermissionRoute,
 } from '../common'
 import {
   getConnections,

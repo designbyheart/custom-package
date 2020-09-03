@@ -1,4 +1,5 @@
 // @flow
+import messaging from '@react-native-firebase/messaging'
 import { Platform } from 'react-native'
 import {
   call,
@@ -32,6 +33,7 @@ import {
   getEncryptedFileLocation,
 } from '../store/store-selector'
 import {
+  ALLOW_PUSH_NOTIFICATIONS,
   PUSH_NOTIFICATION_PERMISSION,
   PUSH_NOTIFICATION_UPDATE_TOKEN,
   PUSH_NOTIFICATION_RECEIVED,
@@ -64,6 +66,7 @@ import type {
   updatePayloadToRelevantStoreAndRedirectAction,
   RedirectToRelevantScreen,
   NotificationOpenOptions,
+  AllowPushNotificationsAction,
 } from './type-push-notification'
 import type { Connections } from '../connection/type-connection'
 import type { UserOneTimeInfo } from '../store/user/type-user-store'
@@ -176,7 +179,7 @@ const blackListedRoute = {
 }
 
 const initialState = {
-  isAllowed: false,
+  isAllowed: null,
   notification: null,
   pushToken: null,
   isPristine: true,
@@ -326,6 +329,24 @@ export function convertClaimPushPayloadToAppClaim(
     uid,
     forDID,
   }
+}
+
+export const allowPushNotifications = () => ({
+  type: ALLOW_PUSH_NOTIFICATIONS,
+})
+
+function* allowPushNotificationsSaga(): Generator<*, *, *> {
+  const pushToken = yield call(safeGet, PUSH_COM_METHOD)
+  if (!pushToken) {
+    const authorizationStatus = yield call(() =>
+      messaging().requestPermission()
+    )
+    yield put(pushNotificationPermissionAction(!!authorizationStatus))
+  }
+}
+
+function* watchAllowPushNotification(): any {
+  yield takeLatest(ALLOW_PUSH_NOTIFICATIONS, allowPushNotificationsSaga)
 }
 
 function* watchPushTokenUpdate(): any {
@@ -919,6 +940,7 @@ export function* watchPushNotification(): any {
     watchFetchAdditionalData(),
     watchGoToUIScreen(),
     watchUpdateRelevantPushPayloadStoreAndRedirect(),
+    watchAllowPushNotification(),
   ])
 }
 

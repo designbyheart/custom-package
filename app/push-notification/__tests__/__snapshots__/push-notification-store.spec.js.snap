@@ -3,7 +3,7 @@
 exports[`push notification store should work properly should reset push notification store, if RESET action is raised 1`] = `
 Object {
   "error": null,
-  "isAllowed": false,
+  "isAllowed": null,
   "isFetching": false,
   "isPristine": true,
   "navigateRoute": null,

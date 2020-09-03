@@ -29,7 +29,11 @@ import {
   CustomText,
   CustomView,
 } from '../components'
-import { homeRoute, noop, invitationRoute } from '../common'
+import {
+  homeRoute,
+  noop,
+  invitationRoute,
+} from '../common'
 import { OFFSET_1X } from '../common/styles'
 import { ResponseType } from '../components/request/type-request'
 import { sendInvitationResponse, invitationRejected } from './invitation-store'
