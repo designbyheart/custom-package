@@ -40,6 +40,7 @@ import proofRequest, {
   watchPersistProofRequests,
   watchProofRequestReceived,
   watchProofRequestDeny,
+  watchOutOfBandConnectionForPresentationEstablished,
 } from '../proof-request/proof-request-store'
 import invitation, { watchInvitation } from '../invitation/invitation-store'
 import claim, { watchClaim, watchDeleteClaim } from '../claim/claim-store'
@@ -171,6 +172,7 @@ sagaMiddleware.run(function* (): Generator<*, *, *> {
     watchProofRequestDeny(),
     watchInAppNotificationActions(),
     watchMessageDownload(),
+    watchOutOfBandConnectionForPresentationEstablished(),
   ])
 })
 

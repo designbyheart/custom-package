@@ -1,19 +1,11 @@
 // @flow
 import * as React from 'react'
-import {
-  View,
-  StyleSheet,
-  Platform,
-  Dimensions,
-  Image,
-  Text,
-} from 'react-native'
+import { View, StyleSheet, Dimensions, Image, Text } from 'react-native'
 import {
   createStackNavigator,
   TransitionPresets,
 } from '@react-navigation/stack'
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer'
-import DeviceInfo from 'react-native-device-info'
 import VersionNumber from 'react-native-version-number'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { enableScreens } from 'react-native-screens'
@@ -72,27 +64,30 @@ import { pushNotificationPermissionScreen } from '../push-notification/component
 import {
   splashScreenRoute,
   homeRoute,
-  walletTabSendDetailsRoute,
   connectionsDrawerRoute,
   credentialsDrawerRoute,
   homeDrawerRoute,
   settingsDrawerRoute,
   pushNotificationPermissionRoute,
+  lockPinSetupHomeRoute,
 } from '../common'
 import { walletTabsScreen } from '../wallet/wallet-tab-send-details'
 import { checkIfAnimationToUse } from '../bridge/react-native-cxs/RNCxs'
 import SvgCustomIcon from '../components/svg-custom-icon'
-import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 import {
-  Icon,
-  CustomView,
-  UserAvatar,
-  CustomText,
-  Avatar,
-  UnreadMessagesBadge,
-} from '../components'
+  EvaIcon,
+  HOME_ICON,
+  CONNECTIONS_ICON,
+  SETTINGS_ICON,
+} from '../common/icons'
+import { colors, fontFamily } from '../common/styles/constant'
+import { UserAvatar, Avatar, UnreadMessagesBadge } from '../components'
 import { unreadMessageContainerCommonStyle } from '../components/unread-messages-badge/unread-messages-badge'
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { startUpScreen } from '../start-up/start-up-screen'
+import useBackHandler from '../hooks/use-back-handler'
+import { CustomValuesScreen } from '../connection-details/components/custom-values'
+import { AttributeValuesScreen } from '../connection-details/components/attribute-values'
 
 enableScreens()
 
@@ -220,6 +215,11 @@ const drawerStyle = {
   width: verticalScale(0.75 * width),
   backgroundColor: 'transparent',
 }
+
+const drawerEvaIcon = (title: string) => ({ color }) => (
+  <EvaIcon name={title} color={color} />
+)
+
 const drawerItemIcon = (title: string) => ({ color }) => (
   <SvgCustomIcon
     name={title}
@@ -228,10 +228,11 @@ const drawerItemIcon = (title: string) => ({ color }) => (
     fill={color}
   />
 )
+
 const drawerItemLabel = (
   title: string,
   extraComponent?: React.Node = null
-) => ({ focused, tintColor }) => (
+) => ({ focused }) => (
   <View style={styles.labelContainer}>
     <Text style={[styles.labelText, focused && styles.labelTextFocusedColor]}>
       {title}
@@ -240,7 +241,7 @@ const drawerItemLabel = (
   </View>
 )
 const homeDrawerItemOptions = {
-  drawerIcon: drawerItemIcon('Home'),
+  drawerIcon: drawerEvaIcon(HOME_ICON),
   drawerLabel: drawerItemLabel(
     'Home',
     <UnreadMessagesBadge
@@ -249,15 +250,16 @@ const homeDrawerItemOptions = {
   ),
 }
 const connectionDrawerItemOptions = {
-  drawerIcon: drawerItemIcon('Connections'),
+  drawerIcon: drawerEvaIcon(CONNECTIONS_ICON),
   drawerLabel: drawerItemLabel('My Connections'),
 }
 const credentialsDrawerItemOptions = {
+  // TODO: DA replace credentials icon
   drawerIcon: drawerItemIcon('Credentials'),
   drawerLabel: drawerItemLabel('My Credentials'),
 }
 const settingsDrawerItemOptions = {
-  drawerIcon: drawerItemIcon('Settings'),
+  drawerIcon: drawerEvaIcon(SETTINGS_ICON),
   drawerLabel: drawerItemLabel('Settings'),
 }
 function AppDrawer() {
@@ -307,6 +309,9 @@ const cardStackOptions = {
   headerShown: false,
 }
 function CardStackScreen() {
+  // Back button press listening needs to be initialized on a screen inside of a navigator.
+  // This is highest screen in the stack that we can put this hook in.
+  useBackHandler()
   return (
     <CardStack.Navigator
       initialRouteName={splashScreenRoute}
@@ -320,7 +325,6 @@ function CardStackScreen() {
       <CardStack.Screen
         name={privacyTNCScreen.routeName}
         component={privacyTNCScreen.screen}
-        options={privacyTNCScreen.options}
       />
       <CardStack.Screen
         name={designStyleGuideScreen.routeName}
@@ -350,7 +354,6 @@ function CardStackScreen() {
       <CardStack.Screen
         name={lockAuthorizationScreen.routeName}
         component={lockAuthorizationScreen.screen}
-        options={lockAuthorizationScreen.options}
       />
       <CardStack.Screen
         name={lockSetupSuccessScreen.routeName}
@@ -367,7 +370,11 @@ function CardStackScreen() {
       <CardStack.Screen
         name={lockSelectionScreen.routeName}
         component={lockSelectionScreen.screen}
-        options={lockSelectionScreen.options}
+      />
+      <CardStack.Screen
+        name={startUpScreen.routeName}
+        component={startUpScreen.screen}
+        options={startUpScreen.options}
       />
       <CardStack.Screen
         name={expiredTokenScreen.routeName}
@@ -384,12 +391,10 @@ function CardStackScreen() {
       <CardStack.Screen
         name={lockPinSetupScreen.routeName}
         component={lockPinSetupScreen.screen}
-        options={lockPinSetupScreen.options}
       />
       <CardStack.Screen
         name={aboutAppScreen.routeName}
         component={aboutAppScreen.screen}
-        options={aboutAppScreen.options}
       />
       <CardStack.Screen
         name={onfidoScreen.routeName}
@@ -431,7 +436,6 @@ function CardStackScreen() {
       <CardStack.Screen
         name={eulaScreen.routeName}
         component={eulaScreen.screen}
-        options={eulaScreen.options}
       />
       <CardStack.Screen
         name={lockEnterPinScreen.routeName}
@@ -453,7 +457,6 @@ function CardStackScreen() {
       <CardStack.Screen
         name={credentialDetailsScreen.routeName}
         component={credentialDetailsScreen.screen}
-        options={credentialDetailsScreen.options}
       />
     </CardStack.Navigator>
   )
@@ -463,9 +466,12 @@ const ModalStack = createStackNavigator()
 const modalStackOptions = {
   headerShown: false,
   gestureEnabled: true,
+  cardOverlayEnabled: true,
+  safeAreaInsets: { top: 1250 },
   animationEnabled: !checkIfAnimationToUse(),
   ...TransitionPresets.ModalPresentationIOS,
 }
+
 export function ConnectMeAppNavigator() {
   return (
     <ModalStack.Navigator mode="modal" screenOptions={modalStackOptions}>
@@ -473,50 +479,72 @@ export function ConnectMeAppNavigator() {
       <ModalStack.Screen
         name={claimOfferScreen.routeName}
         component={claimOfferScreen.screen}
+        options={claimOfferScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={cloudBackupScreen.routeName}
         component={cloudBackupScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
       <ModalStack.Screen
         name={cloudRestoreModalScreen.routeName}
         component={cloudRestoreModalScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
       <ModalStack.Screen
         name={proofScreen.routeName}
         component={proofScreen.screen}
+        options={proofScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={fulfilledMessageScreen.routeName}
         component={fulfilledMessageScreen.screen}
+        options={fulfilledMessageScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={openIdConnectScreen.routeName}
         component={openIdConnectScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
       <ModalStack.Screen
         name={proofRequestScreen.routeName}
         component={proofRequestScreen.screen}
+        options={proofRequestScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={questionScreen.routeName}
         component={questionScreen.screen}
+        options={questionScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={txnAuthorAgreementScreen.routeName}
         component={txnAuthorAgreementScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
       <ModalStack.Screen
         name={walletScreen.routeName}
         component={walletScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
       <ModalStack.Screen
         name={walletTabsScreen.routeName}
         component={walletTabsScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
+      />
+      <ModalStack.Screen
+        name={CustomValuesScreen.routeName}
+        component={CustomValuesScreen.screen}
+        options={CustomValuesScreen.screen.navigationOptions}
+      />
+      <ModalStack.Screen
+        name={AttributeValuesScreen.routeName}
+        component={AttributeValuesScreen.screen}
+        options={AttributeValuesScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={pushNotificationPermissionScreen.routeName}
         component={pushNotificationPermissionScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
     </ModalStack.Navigator>
   )

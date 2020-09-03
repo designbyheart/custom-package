@@ -1,23 +1,16 @@
 // @flow
 
 import React, { Component } from 'react'
-import { View, Text, Platform } from 'react-native'
+import { Platform } from 'react-native'
 
 import {
   selectRestoreMethodRoute,
   // selectRestoreMethod, not exported
-  splashScreenRoute,
   restoreRoute,
   cloudRestoreRoute,
   restorePassphraseRoute,
 } from '../common'
-import {
-  isBiggerThanShortDevice,
-  grey,
-  venetianRed,
-  cornFlowerBlue,
-  white,
-} from '../common/styles/constant'
+import { venetianRed, white } from '../common/styles/constant'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { updateStatusBarTheme } from '../store/connections-store'
 import type { Store } from '../store/type-store'
@@ -31,7 +24,6 @@ import {
   CustomView,
   CustomText,
   Icon,
-  CustomButton,
   CustomHeader,
 } from '../components'
 import { DocumentPicker } from 'react-native-document-picker'

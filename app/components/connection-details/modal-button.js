@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
@@ -29,10 +29,10 @@ export { ModalButton }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.cmGray5,
+    backgroundColor: colors.cmWhite,
     width: '100%',
     padding: moderateScale(15),
-    paddingBottom: moderateScale(45),
+    paddingBottom: moderateScale(1),
   },
   innerWrapper: {
     width: '100%',

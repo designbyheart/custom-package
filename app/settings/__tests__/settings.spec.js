@@ -20,7 +20,7 @@ import {
   onfidoRoute,
   lockAuthorizationHomeRoute,
 } from '../../common'
-import * as feedback from '../../feedback/'
+import * as feedback from '../../feedback'
 import { MockedNavigator } from '../../../__mocks__/mock-navigator'
 
 describe('user settings screen', () => {

@@ -7,7 +7,9 @@ import type { ReactNavigation } from '../common/type-common'
 import type { Connection } from '../store/type-connection-store'
 import type { OIDCAuthenticationRequest } from '../components/qr-scanner/type-qr-scanner'
 import type { OpenIdConnectState } from '../open-id-connect/open-id-connect-actions'
+import { claimOfferReceived } from '../claim-offer/claim-offer-store'
 import { proofRequestReceived } from '../proof-request/proof-request-store'
+import type { ClaimOfferPayload } from '../claim-offer/type-claim-offer'
 
 export type QRCodeScannerScreenState = {
   isCameraEnabled: boolean,
@@ -18,6 +20,7 @@ export type QRCodeScannerScreenProps = {
   historyData: Object,
   currentScreen: string,
   publicDIDs: { [publicDID: string]: Connection },
+  claimOffers: { [uid: string]: ClaimOfferPayload },
   invitationReceived: (
     data: InvitationReceivedActionData
   ) => InvitationReceivedAction,
@@ -26,6 +29,7 @@ export type QRCodeScannerScreenProps = {
     OIDCAuthenticationRequest,
     OpenIdConnectState
   ) => void,
+  claimOfferReceived: typeof claimOfferReceived,
   proofRequestReceived: typeof proofRequestReceived,
 } & ReactNavigation
 

@@ -1,15 +1,7 @@
 // @flow
 import React, { useMemo } from 'react'
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-} from 'react-native'
-import { CheckmarkBadge } from '../../components/connection-details/checkmark-badge'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { Text, View, Image, StyleSheet } from 'react-native'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 
@@ -18,7 +10,6 @@ type ModalHeaderProps = {
   credentialName: string,
   credentialText: string,
   imageUrl: string,
-  colorBackground: string,
 }
 
 export const ModalHeader = ({
@@ -26,24 +17,29 @@ export const ModalHeader = ({
   credentialName,
   credentialText,
   imageUrl,
-  colorBackground,
 }: ModalHeaderProps) => {
   const source = useMemo(() => ({ uri: imageUrl }), [imageUrl])
 
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
-        <View style={styles.imageSection}>
-          <Image style={styles.image} source={source} resizeMode="cover" />
-        </View>
         <View style={styles.issuerAndInfoSection}>
-          <Text style={styles.issuerNameText}>{institutionalName}</Text>
           <Text style={styles.infoText}>{credentialText}</Text>
-        </View>
-        <View style={styles.checkmarkSection}>
-          <CheckmarkBadge color={colorBackground} />
+          <Text style={styles.issuerNameText}>{institutionalName}</Text>
         </View>
       </View>
+      <View style={styles.imageContainer}>
+        {source && source.uri ? (
+          <Image style={styles.image} source={source} resizeMode="cover"/>
+        ) : (
+          <DefaultLogo
+            text={institutionalName[0]}
+            size={moderateScale(24)}
+            fontSize={12}
+          />
+        )}
+      </View>
+
       <View style={styles.bottomSection}>
         <Text
           numberOfLines={2}
@@ -61,31 +57,15 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.cmWhite,
     flexDirection: 'column',
-    width: '100%',
-    height: moderateScale(105),
-    shadowColor: colors.cmBlack,
-    shadowOpacity: 0.1,
-    shadowRadius: 14,
-    shadowOffset: {
-      height: 0,
-      width: 0,
-    },
-    elevation: Platform.OS === 'android' ? 8 : 0,
+    alignItems: 'center',
   },
   topSection: {
     flexDirection: 'row',
-    height: '50%',
-    width: '100%',
-  },
-  imageSection: {
-    height: '100%',
-    width: moderateScale(64),
-    paddingTop: moderateScale(16),
-    paddingLeft: moderateScale(16),
   },
   issuerAndInfoSection: {
     flex: 1,
-    paddingTop: moderateScale(10),
+    paddingTop: moderateScale(15),
+    paddingBottom: moderateScale(16),
   },
   checkmarkSection: {
     height: '100%',
@@ -99,29 +79,38 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.cmGray1,
     fontFamily: fontFamily,
+    textAlign: 'center',
   },
   infoText: {
-    fontSize: verticalScale(fontSizes.size7),
+    fontSize: verticalScale(fontSizes.size6),
     fontWeight: '400',
     color: colors.cmGray2,
     fontFamily: fontFamily,
+    textAlign: 'center',
+    paddingBottom: moderateScale(16),
   },
   image: {
-    width: moderateScale(32),
-    height: moderateScale(32),
+    width: moderateScale(96),
+    height: moderateScale(96),
+    borderRadius: moderateScale(96 / 2),
   },
   bottomSection: {
-    height: '50%',
     width: '100%',
-    paddingLeft: moderateScale(16),
-    paddingRight: moderateScale(16),
+    borderBottomColor: colors.cmGray1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    paddingTop: moderateScale(24),
     justifyContent: 'center',
+    marginBottom: moderateScale(12),
   },
   credentialProofQuestionText: {
     fontSize: verticalScale(fontSizes.size3),
     fontWeight: '400',
     color: colors.cmGray1,
     fontFamily: fontFamily,
-    marginBottom: moderateScale(4),
+    marginBottom: moderateScale(8),
+    textAlign: 'center',
+  },
+  imageContainer: {
+    borderRadius: moderateScale(96 / 2),
   },
 })

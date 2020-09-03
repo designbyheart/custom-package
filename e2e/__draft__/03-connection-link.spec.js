@@ -40,6 +40,7 @@ import {
   SCREENSHOT_CLAIM_OFFER_PROFILE_INFO,
   SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
   SCREENSHOT_TEST_CONNECTION,
+  SCREENSHOT_HOME_BIG_HISTORY,
   BACK_ARROW,
 } from '../utils/test-constants'
 import { device, element, by, waitFor } from 'detox'
@@ -66,10 +67,10 @@ let schema
 let credDef
 let credential
 let proof
-const TIMEOUT = 10000
+const TIMEOUT = 30000
 
 describe('Connection via SMS Link', () => {
-  it('Case 1: user should be able to establish connection via opening SMS link', async () => {
+  it('Case 1: user should be able to establish connection via opening SMS link (connection exists, but we use link from different invitation', async () => {
     let [
       token,
       invitationId,
@@ -82,104 +83,93 @@ describe('Connection via SMS Link', () => {
 
     connectionId = invitationId
 
-    // // option 1: close app and then open with url
-    // await device.launchApp({
-    //   // // uncomment to remove and install app again and then open with url
-    //   // delete: true,
-    //   newInstance: true,
-    //   url: invitationUrl,
-    //   sourceApp: 'com.evernym.connectme.callcenter'
-    // })
-
-    // // option 2: mock opening url on launched app
-    // await device.openURL({
-    // url: invitationUrl,
-    // sourceApp: 'com.evernym.connectme.callcenter'
-    // })
-
-    // option 3: mock url opening using xcode shell tools
-    await new Promise((r) => setTimeout(r, 5000)) // sync issue
+    await new Promise((r) => setTimeout(r, 10000)) // sync issue
 
     await exec(`xcrun simctl openurl booted ${invitationUrl}`)
 
     // await waitForElementAndTap('text', ALLOW_BUTTON, TIMEOUT) // for new connection only
 
-    await matchScreenshot(SCREENSHOT_INVITATION_LINK_TO_EXISTING_CONNECTION) // screenshot
-
     // await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT) // for new connection only
 
-    try {
-      await element(by.id(BACK_ARROW)).tap()
-    } catch (e) {
-      await element(by.text('Ok')).tap() // invitation has been expired
-    }
+    // await new Promise((r) => setTimeout(r, 30000)) // sync issue
+
+    await matchScreenshot(SCREENSHOT_HOME_BIG_HISTORY) // screenshot
   })
 
-  it('Case 2.1: create and reject credential', async () => {
+  it('Case 2.1: create and reject profile credential using previous connection id', async () => {
+    console.warn(global.CONN_ID)
+
     credential = await sendClaimOffer(
       CLAIM_OFFER_PROFILE_INFO,
-      connectionId
+      connectionId - 1
     ).catch(console.error)
 
-    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.error(e)
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
     await waitForElementAndTap('text', CLAIM_OFFER_REJECT, TIMEOUT)
   })
 
-  it('Case 2.2: create and accept credential', async () => {
+  it('Case 2.2: create and accept profile credential using previous connection id', async () => {
     credential = await sendClaimOffer(
       CLAIM_OFFER_PROFILE_INFO,
-      connectionId
+      connectionId - 1
     ).catch(console.error)
 
-    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.error(e)
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
     await matchScreenshot(SCREENSHOT_CLAIM_OFFER_PROFILE_INFO) // screenshot
 
     await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
   })
 
-  it('Case 2.3: create and accept another credential', async () => {
-    credential = await sendClaimOffer(CLAIM_OFFER_ADDRESS, connectionId).catch(
-      console.error
-    )
-
-    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
-
-    await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
-  })
-
-  it('Case 3.1: create and reject proof request', async () => {
+  it('Case 3.1: create and reject proof request using previous connection id', async () => {
     proof = await sendProofRequest(
       PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
-      connectionId
+      connectionId - 1
     ).catch(console.error)
 
-    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.error(e)
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
     await waitForElementAndTap('text', PROOF_REQUEST_REJECT, TIMEOUT)
   })
 
-  it('Case 3.2: create and send proof request', async () => {
+  it('Case 3.2: create and send proof request using previous connection id', async () => {
     proof = await sendProofRequest(
       PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
-      connectionId
+      connectionId - 1
     ).catch(console.error)
 
-    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.error(e)
+      await element(by.id(HOME_CONTAINER)).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
 
     await matchScreenshot(SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED) // screenshot
-
-    await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
-  })
-
-  it('Case 3.3: create and send another proof request', async () => {
-    proof = await sendProofRequest(
-      PROOF_TEMPLATE_TWO_CLAIM_FULFILLED,
-      connectionId
-    ).catch(console.error)
-
-    await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
 
     await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
   })

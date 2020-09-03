@@ -8,27 +8,25 @@ import React, { useState, useCallback, useMemo } from 'react'
 import { Alert, View, StyleSheet } from 'react-native'
 import WebView from 'react-native-webview'
 
-import type { EulaScreenState } from './type-eula'
 import type {
   CustomError,
   ReactNavigation,
   ReduxConnect,
 } from '../common/type-common'
-
 import { Container, FooterActions } from '../components'
-import { eulaRoute, restoreRoute, lockSelectionRoute } from '../common'
+import {
+  eulaRoute,
+  lockSetupSuccessRoute,
+} from '../common'
 import { eulaAccept } from './eula-store'
 import { EULA_URL, localEulaSource } from './type-eula'
 import { OrangeLoader } from '../components/loader-gif/loader-gif'
 import { connect } from 'react-redux'
-import {
-  headerNavigationOptions,
-  headerOptionsWithNoBack,
-} from '../navigation/navigation-header-config'
 
 export const EulaScreen = ({
   dispatch,
   navigation,
+  route,
 }: ReactNavigation & ReduxConnect) => {
   const [error, setError] = useState<CustomError | null>(null)
   const onReject = useCallback(() => {
@@ -40,8 +38,8 @@ export const EulaScreen = ({
 
   const onAccept = useCallback(() => {
     dispatch(eulaAccept(true))
-    // if we have to enable choice for restore and start fresh screen, then redirect user to restoreRoute instead of lockSelectionRoute
-    navigation.navigate(lockSelectionRoute)
+    // if we have to enable choice for restore and start fresh screen, then redirect user to restoreRoute instead of homeRoute
+    navigation.navigate(lockSetupSuccessRoute)
   }, [])
 
   const renderLoader = useCallback(() => Loader, [])
@@ -73,9 +71,6 @@ export const EulaScreen = ({
 export const eulaScreen = {
   routeName: eulaRoute,
   screen: connect()(EulaScreen),
-  options: headerOptionsWithNoBack({
-    title: 'Terms and Conditions',
-  }),
 }
 const style = StyleSheet.create({
   loaderContainer: {

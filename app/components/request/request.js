@@ -6,6 +6,14 @@ import type { RequestProps } from './type-request'
 import { Container } from '../layout/container'
 import RequestDetail from './request-detail'
 import FooterActions from '../footer-actions/footer-actions'
+import { CustomView } from '../layout'
+import { ModalButtons } from '../buttons/modal-buttons'
+import { colors, fontFamily, fontSizes } from '../../common/styles'
+import ImageColorPicker from '../image-color-picker/image-color-picker'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { CONNECT, DENY } from '../../common'
+import { StyleSheet } from 'react-native'
+import { moderateScale, verticalScale } from 'react-native-size-matters'
 
 export const Request = ({
   title,
@@ -48,15 +56,26 @@ export const Request = ({
           testID={testID}
         />
       </Container>
-      <FooterActions
-        disableAccept={disableActions}
+      <ModalButtons
+        onPress={onAccept}
+        onIgnore={onDecline}
+        colorBackground={colors.cmGreen1}
+        secondColorBackground={colors.cmGreen1}
+        topBtnText={DENY}
+        bottomBtnText={CONNECT}
         disableDeny={disableActions}
-        onAccept={onAccept}
-        onDecline={onDecline}
-        logoUrl={senderLogoUrl}
-        testID={testID}
-        useColorPicker={true}
+        disableAccept={disableActions}
+        topTestID={`${testID}-deny`}
+        bottomTestID={`${testID}-accept`}
+        containerStyles={styles.container}
       />
     </Container>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: moderateScale(15),
+    paddingBottom: moderateScale(10),
+  },
+})

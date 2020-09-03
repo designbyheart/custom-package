@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { claimOfferRoute } from '../../common/route-constants'
@@ -15,11 +15,10 @@ import type {
 import type { LedgerFeesStateEnum } from '../../ledger/components/ledger-fees/ledger-fees-type'
 
 import CredentialPriceInfo from '../../components/labels/credential-price-info'
-import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
+import { ModalHeaderBar } from '../../components/modal-header-bar/modal-header-bar'
 import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
-import { measurements } from '../../../app/common/styles/measurements'
 import { LedgerFees } from '../../ledger/components/ledger-fees/ledger-fees'
 import PaymentTransactionInfo from '../../claim-offer/components/payment-transaction-info'
 import {
@@ -34,6 +33,7 @@ import {
   claimOfferShowStart,
   resetClaimRequestStatus,
   denyClaimOffer,
+  acceptOutofbandClaimOffer,
 } from '../../claim-offer/claim-offer-store'
 import { txnAuthorAgreementRoute } from '../../common'
 import {
@@ -41,6 +41,12 @@ import {
   CLAIM_REQUEST_STATUS,
 } from '../../claim-offer/type-claim-offer'
 import { animateLayout } from '../../common/layout-animation'
+import { colors } from '../../common/styles/constant'
+import {
+  acceptOutOfBandInvitation,
+  sendInvitationResponse,
+  invitationRejected,
+} from '../../invitation/invitation-store'
 
 export class ClaimOfferModal extends Component<any, *> {
   constructor(props: any) {
@@ -57,7 +63,6 @@ export class ClaimOfferModal extends Component<any, *> {
   render() {
     const {
       claimOfferData,
-      isValid,
       logoUrl,
       claimThemePrimary,
       claimThemeSecondary,
@@ -67,7 +72,6 @@ export class ClaimOfferModal extends Component<any, *> {
       status,
       claimRequestStatus,
       issuer,
-      data,
       payTokenValue,
     }: ClaimOfferPayload = claimOfferData
     const { shouldShowTransactionInfo } = this.state
@@ -78,7 +82,7 @@ export class ClaimOfferModal extends Component<any, *> {
     // as soon as user accepts the cred offer, redux state will change
     const isClaimOfferAccepted = status === CLAIM_OFFER_STATUS.ACCEPTED
 
-    let acceptButtonText = payTokenValue ? 'Accept & Pay' : 'Accept'
+    let acceptButtonText = payTokenValue ? 'Accept & Pay' : 'Accept Credential'
     // NOTE: Just to be safe, we changed the hasNotAcceptedTAA to hardcoded false, so we can be sure 0 tokens doesn't affect the flow.
     const hasNotAcceptedTAA = false
     // (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) &&
@@ -86,22 +90,6 @@ export class ClaimOfferModal extends Component<any, *> {
 
     return (
       <View style={styles.modalWrapper}>
-        <ModalHeader
-          institutionalName={claimOfferData.issuer.name}
-          credentialName={
-            hasNotAcceptedTAA
-              ? 'Please sign the Transaction Author Agreement before continuing'
-              : claimOfferData.data.name
-          }
-          credentialText={
-            hasNotAcceptedTAA
-              ? 'is offering a paid credential'
-              : 'is offering to issue you'
-          }
-          imageUrl={this.props.logoUrl}
-          colorBackground={this.props.claimThemePrimary}
-        />
-
         {
           // if we don't show ledger txn fees, then show credential data
           // i.e. user has not taken any action on credential modal
@@ -113,6 +101,17 @@ export class ClaimOfferModal extends Component<any, *> {
             content={this.props.claimOfferData.data.revealedAttributes}
             uid={this.props.uid}
             remotePairwiseDID={issuer.did}
+            institutionalName={claimOfferData.issuer.name}
+            credentialName={
+              hasNotAcceptedTAA
+                ? 'Please sign the Transaction Author Agreement before continuing'
+                : claimOfferData.data.name
+            }
+            credentialText={
+              hasNotAcceptedTAA ? 'is offering a paid credential' : 'Issued by'
+            }
+            colorBackground={colors.cmGreen1}
+            imageUrl={logoUrl}
           />
         )}
 
@@ -128,7 +127,7 @@ export class ClaimOfferModal extends Component<any, *> {
           <LedgerFees
             render={this.renderLedgerFeesPhases}
             onStateChange={this.updateState}
-            transferAmount={this.props.claimPrice}
+            transferAmount={claimPrice}
           />
         )}
 
@@ -142,11 +141,11 @@ export class ClaimOfferModal extends Component<any, *> {
         }
         {shouldShowTransactionInfo && isClaimOfferAccepted && (
           <PaymentTransactionInfo
-            claimThemePrimary={this.props.claimThemePrimary}
-            claimThemeSecondary={this.props.claimThemeSecondary}
+            claimThemePrimary={claimThemePrimary}
+            claimThemeSecondary={claimThemeSecondary}
             onConfirmAndPay={this.onConfirmAndPay}
             onCancel={this.onIgnore}
-            credentialPrice={this.props.claimPrice}
+            credentialPrice={claimPrice}
             claimRequestStatus={claimRequestStatus}
             onSuccess={this.onPaymentSuccess}
             onRetry={this.onConfirmAndPay}
@@ -162,10 +161,10 @@ export class ClaimOfferModal extends Component<any, *> {
           <ModalButtons
             onPress={this.agree}
             onIgnore={this.onIgnore}
-            colorBackground={this.props.claimThemePrimary}
-            secondColorBackground={this.props.claimThemeSecondary}
-            leftBtnText={'Close'}
-            rightBtnText={'Read and Sign TAA'}
+            colorBackground={colors.cmGreen1}
+            secondColorBackground={claimThemeSecondary}
+            topBtnText={'Close'}
+            bottomBtnText={'Read and Sign TAA'}
           />
         )}
 
@@ -180,14 +179,11 @@ export class ClaimOfferModal extends Component<any, *> {
             <ModalButtons
               onPress={this.onAccept}
               onIgnore={this.onDeny}
-              colorBackground={this.props.claimThemePrimary}
-              secondColorBackground={this.props.claimThemeSecondary}
-              leftBtnText={'Reject'}
-              rightBtnText={acceptButtonText}
-              buttonsWrapperStyles={{
-                borderTopLeftRadius: 0,
-                borderTopRightRadius: 0,
-              }}
+              colorBackground={colors.cmGreen1}
+              secondColorBackground={claimThemeSecondary}
+              topBtnText={'Reject'}
+              bottomBtnText={acceptButtonText}
+              svgIcon="Download"
             >
               <CredentialPriceInfo price={payTokenValue || ''} />
             </ModalButtons>
@@ -247,7 +243,13 @@ export class ClaimOfferModal extends Component<any, *> {
   }
 
   onDeny = () => {
-    this.props.denyClaimOffer(this.props.uid)
+    const { invitation } = this.props
+    if (!invitation) {
+      this.props.denyClaimOffer(this.props.uid)
+    } else {
+      this.props.invitationRejected(invitation.senderDID)
+    }
+
     this.hideModal()
   }
 
@@ -272,7 +274,12 @@ export class ClaimOfferModal extends Component<any, *> {
   }
 
   hideModal = () => {
-    this.props.navigation.goBack(null)
+    const backRedirectRoute = this.props.route.params?.backRedirectRoute
+    if (backRedirectRoute) {
+      this.props.navigation.navigate(backRedirectRoute)
+    } else {
+      this.props.navigation.goBack(null)
+    }
   }
 
   updateState = (status: string, feesData?: TokenFeesData) => {
@@ -289,10 +296,29 @@ export class ClaimOfferModal extends Component<any, *> {
   }
 
   onConfirmAndPay = (shouldHideModal: boolean = false) => {
-    this.props.acceptClaimOffer(
-      this.props.uid,
-      this.props.claimOfferData.issuer.did
-    )
+    const {
+      invitationPayload,
+      attachedRequest,
+    } = this.props.route.params
+    if (invitationPayload) {
+      // accept invite
+      // then we have real info for new claim offer
+      // anyway send action out of band accepted
+      this.props.acceptOutOfBandInvitation(
+        invitationPayload,
+        attachedRequest
+      )
+      this.props.acceptOutofbandClaimOffer(
+        this.props.uid,
+        this.props.claimOfferData.issuer.did
+      )
+    } else {
+      this.props.acceptClaimOffer(
+        this.props.uid,
+        this.props.claimOfferData.issuer.did
+      )
+    }
+
     if (shouldHideModal === true) {
       this.hideModal()
     } else {
@@ -307,11 +333,11 @@ export class ClaimOfferModal extends Component<any, *> {
 
 const mapStateToProps = (
   state: Store,
-  { navigation, route: { params } }: ClaimProofNavigation
+  { route: { params } }: ClaimProofNavigation
 ) => {
   const { claimOffer } = state
   const { uid } = params || { uid: '' }
-  const claimOfferData = claimOffer[uid]
+  const claimOfferData = params.claimOfferData || claimOffer[uid]
   const logoUrl = getConnectionLogoUrl(state, claimOfferData.remotePairwiseDID)
   const themeForLogo = getConnectionTheme(state, logoUrl)
   const isValid =
@@ -321,9 +347,10 @@ const mapStateToProps = (
     claimOfferData.data.revealedAttributes
 
   // NOTE:
-  const claimPrice = claimOfferData.payTokenValue
-    ? claimOfferData.payTokenValue
-    : '0'
+  const claimPrice =
+    claimOfferData && claimOfferData.payTokenValue
+      ? claimOfferData.payTokenValue
+      : '0'
 
   return {
     thereIsANewAgreement: getThereIsANewAgreement(state),
@@ -342,11 +369,15 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       acceptClaimOffer,
+      acceptOutOfBandInvitation,
+      acceptOutofbandClaimOffer,
       claimOfferIgnored,
       claimOfferShowStart,
       resetClaimRequestStatus,
       newConnectionSeen,
       denyClaimOffer,
+      sendInvitationResponse,
+      invitationRejected,
     },
     dispatch
   )
@@ -355,6 +386,26 @@ export const claimOfferScreen = {
   routeName: claimOfferRoute,
   screen: connect(mapStateToProps, mapDispatchToProps)(ClaimOfferModal),
 }
+
+claimOfferScreen.screen.navigationOptions = ({
+  navigation: { goBack, isFocused },
+}) => ({
+  safeAreaInsets: { top: 85 },
+  cardStyle: {
+    marginLeft: '2.5%',
+    marginRight: '2.5%',
+    marginBottom: '4%',
+    borderRadius: 10,
+    backgroundColor: colors.cmWhite,
+  },
+  cardOverlay: () => (
+    <ModalHeaderBar
+      headerTitle="Credential Offer"
+      dismissIconType={isFocused() ? 'CloseIcon' : null}
+      onPress={() => goBack(null)}
+    />
+  ),
+})
 
 const styles = StyleSheet.create({
   modalWrapper: {

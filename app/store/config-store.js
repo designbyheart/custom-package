@@ -12,7 +12,6 @@ import {
   takeLeading,
 } from 'redux-saga/effects'
 import delay from '@redux-saga/delay-p'
-import uniqueId from 'react-native-unique-id'
 import PushNotificationIOS from '@react-native-community/push-notification-ios'
 
 import { secureSet, getHydrationItem } from '../services/storage'
@@ -22,17 +21,11 @@ import {
   getHydrationState,
   getConfig,
   getUserOneTimeInfo,
-  getVcxInitializationState,
   getCurrentScreen,
   getAllConnectionsPairwiseDid,
   getConnection,
-  getSerializedClaimOffer,
-  getPendingHistory,
-  getClaimOffer,
-  getClaimOffers,
   getAgencyUrl,
   getConnectionByProp,
-  getPushNotificationStore,
 } from '../store/store-selector'
 import {
   SERVER_ENVIRONMENT,
@@ -148,8 +141,6 @@ import type {
 import { MESSAGE_TYPE } from '../api/api-constants'
 import {
   saveSerializedClaimOffer,
-  claimOfferAccepted,
-  acceptClaimOffer,
   addSerializedClaimOffer,
 } from './../claim-offer/claim-offer-store'
 import {
@@ -168,7 +159,10 @@ import {
   registerCloudAgentWithToken,
   registerCloudAgentWithoutToken,
 } from './user/cloud-agent'
-import { updateAriesConnectionState } from '../invitation/invitation-store'
+import {
+  processAttachedRequest,
+  updateAriesConnectionState,
+} from '../invitation/invitation-store'
 import type { AriesQuestionRequest } from '../question/type-question'
 import {
   COMMITEDANSWER_PROTOCOL,
@@ -291,7 +285,7 @@ export const cloudBackupEnvironments = [
 // what settings should be in dev environment
 const isDevEnvironment = __DEV__ && process.env.NODE_ENV !== 'test'
 export const defaultEnvironment = isDevEnvironment
-  ? SERVER_ENVIRONMENT.DEVTEAM1
+  ? SERVER_ENVIRONMENT.QA
   : SERVER_ENVIRONMENT.PROD
 
 const initialState: ConfigStore = {
@@ -1249,8 +1243,6 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
     const payload = JSON.parse(decryptedPayload)
     const payloadType = payload['@type']
 
-    console.log(payload)
-
     if (
       payloadType.name === 'CRED_OFFER' ||
       payloadType.name === 'credential-offer'
@@ -1310,8 +1302,11 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
     }
 
     if (payloadType.name === 'handshake-reuse-accepted') {
-      // if we have just ack data then for now send acknowledge to server
-      // so that we don't download it again
+      yield call(
+        processAttachedRequest,
+        forDID,
+      )
+
       yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
     }
 

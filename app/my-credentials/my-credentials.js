@@ -3,34 +3,28 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
-  FlatList,
   StyleSheet,
   TouchableOpacity,
   TouchableHighlight,
   Alert,
 } from 'react-native'
-import { verticalScale, moderateScale, scale } from 'react-native-size-matters'
+import { scale } from 'react-native-size-matters'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import type { Store } from '../store/type-store'
-import type { ReactNavigation } from '../common/type-common'
 import type { MyCredentialsProps, CredentialItem } from './type-my-credentials'
 import type { ClaimOfferPayload } from '../claim-offer/type-claim-offer'
 import type { Attribute } from '../push-notification/type-push-notification'
 
-import { PrimaryHeader, CameraButton } from '../components'
+import { HomeHeader, CameraButton } from '../components'
 import { CredentialCard } from './credential-card/credential-card'
 import { HomeInstructions } from '../home/home-instructions/home-instructions'
 import { myCredentialsRoute, qrCodeScannerTabRoute } from '../common'
-import { colors, fontFamily, fontSizes } from '../common/styles/constant'
-import { withStatusBar } from '../components/status-bar/status-bar'
+import { colors, fontFamily } from '../common/styles/constant'
 import { credentialDetailsRoute } from '../common/route-constants'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { getEnvironmentName } from '../store/config-store'
-import {
-  CLAIM_OFFER_STATUS,
-  CLAIM_REQUEST_STATUS,
-} from '../claim-offer/type-claim-offer'
+import { CLAIM_REQUEST_STATUS } from '../claim-offer/type-claim-offer'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { deleteClaim } from '../claim/claim-store'
 import {
@@ -158,6 +152,11 @@ class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
 
     return (
       <View style={styles.outerContainer}>
+        <HomeHeader
+          headline="My Credentials"
+          navigation={this.props.navigation}
+          route={this.props.route}
+        />
         <View style={styles.container} testID="my-credentials-container">
           {hasNoCredentials && (
             <HomeInstructions
@@ -174,14 +173,12 @@ class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
 
           <SwipeListView
             keyExtractor={this.keyExtractor}
-            contentContainerStyle={styles.flatListInnerContainer}
             data={credentials}
             renderItem={this.renderItem}
             renderHiddenItem={this.renderHiddenItem}
             rightOpenValue={-100}
           />
         </View>
-        <PrimaryHeader headline="My Credentials" />
         <CameraButton
           onPress={() => this.props.navigation.navigate(qrCodeScannerTabRoute)}
         />
@@ -220,10 +217,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
+    width: '100%',
+    height: '100%',
     backgroundColor: colors.cmWhite,
-  },
-  flatListInnerContainer: {
-    paddingTop: verticalScale(90),
   },
   rowFront: {
     alignItems: 'center',

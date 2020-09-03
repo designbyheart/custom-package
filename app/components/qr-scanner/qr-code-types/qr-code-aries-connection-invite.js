@@ -5,11 +5,15 @@ import type { Url } from 'url-parse'
 import type {
   AriesConnectionInvite,
   AriesConnectionInvitePayload,
+  AriesOutOfBandInvite,
 } from '../../../invitation/type-invitation'
 
 import { flattenAsync } from '../../../common/flatten-async'
 import { toUtf8FromBase64 } from '../../../bridge/react-native-cxs/RNCxs'
-import { isValidAriesV1InviteData } from '../../../invitation/invitation'
+import {
+  isValidAriesV1InviteData,
+  isValidAriesOutOfBandInviteData,
+} from '../../../invitation/invitation'
 
 export async function isAriesConnectionInviteQrCode(
   parsedUrl: Url
@@ -36,4 +40,28 @@ export async function isAriesConnectionInviteQrCode(
   }
 
   return isValidAriesV1InviteData(qrData, decodedInvite)
+}
+
+export async function isAriesOutOfBandInviteQrCode(
+  parsedUrl: Url
+): Promise<AriesOutOfBandInvite | false> {
+  const { query } = parsedUrl
+
+  if (!query.oob && !query.c_i) { // TODO: remove c_i case once Verity fix it.
+    return false
+  }
+
+  const [decodeError, decodedInvite] = await flattenAsync(toUtf8FromBase64)(
+    query.oob || query.c_i,
+    'URL_SAFE'
+  )
+  if (decodeError || decodedInvite === null) {
+    return false
+  }
+
+  try {
+    return isValidAriesOutOfBandInviteData(JSON.parse(decodedInvite))
+  } catch (e) {
+    return false
+  }
 }

@@ -24,7 +24,6 @@ exports[`<PinCodeDigit /> when digit is entered 1`] = `
     Object {
       "alignItems": "center",
       "borderBottomColor": "#777777",
-      "borderBottomWidth": 5,
       "height": 66,
       "justifyContent": "center",
       "marginHorizontal": 5,
@@ -78,13 +77,32 @@ exports[`<PinCodeDigit /> when digit is not entered 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#777777",
-      "borderBottomWidth": 5,
       "height": 66,
       "justifyContent": "center",
       "marginHorizontal": 5,
       "width": 38,
     }
   }
-/>
+>
+  <Text
+    allowFontScaling={false}
+    style={
+      Array [
+        Object {
+          "color": "#EAEAEA",
+          "fontSize": 26,
+        },
+        undefined,
+        Object {
+          "fontFamily": "Material Icons",
+          "fontStyle": "normal",
+          "fontWeight": "normal",
+        },
+        Object {},
+      ]
+    }
+  >
+    
+  </Text>
+</View>
 `;

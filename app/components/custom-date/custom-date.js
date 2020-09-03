@@ -1,6 +1,5 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Text } from 'react-native'
 import moment from 'moment'
 
 import CustomText from '../text'

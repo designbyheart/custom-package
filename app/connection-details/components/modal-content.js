@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Alert,
   InteractionManager,
+  Platform,
 } from 'react-native'
 import RNFetchBlob from 'rn-fetch-blob'
 import FileViewer from 'react-native-file-viewer'
@@ -17,8 +18,10 @@ import { Avatar } from '../../components/avatar/avatar'
 import { BLANK_ATTRIBUTE_DATA_TEXT } from '../type-connection-details'
 import { flattenAsync } from '../../common/flatten-async'
 import { Loader } from '../../components'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
+import SvgCustomIcon from '../../components/svg-custom-icon'
+import { ModalHeader } from './modal-header'
 
 type ModalContentProps = {
   uid: string,
@@ -29,7 +32,95 @@ type ModalContentProps = {
   }>,
   showSidePicture?: boolean,
   imageUrl?: string,
+  institutionalName: string,
+  credentialName: string,
+  credentialText: string,
 }
+
+export const getFileExtensionName = (mimeType: string) => {
+  switch (true) {
+    case docMimeTypes.includes(mimeType):
+      return 'docx'
+    case excelMimeTypes.includes(mimeType):
+      return 'xlsx'
+    case pptMimeTypes.includes(mimeType):
+      return 'ppt'
+    case pdfMimeTypes.includes(mimeType):
+      return 'pdf'
+    case audioVideoMimeType.includes(mimeType):
+      return 'audio'
+    case photoMimeTypes
+      .filter((type) => type !== 'image/png')
+      .includes(mimeType):
+      return 'JPG'
+    case photoMimeTypes.includes(mimeType):
+      return 'PDF'
+    default:
+      return 'unknown'
+  }
+}
+
+export const renderAttachmentIcon = (
+  label: string,
+  data: any,
+  remotePairwiseDID: string,
+  uid: string
+) => {
+  let attachment: $PropertyType<
+    AttachmentPropType,
+    'attachment'
+    > | null = null
+
+  if (label.toLowerCase().endsWith('_link')) {
+    try {
+      attachment = JSON.parse(data)
+
+      if (checkObjectTypes(attachment)) {
+        throw new Error('Invalid data')
+      }
+    } catch (e) {
+      console.log(e.message)
+      return null
+    }
+
+    return (
+      <View style={styles.parentWrapper}>
+        <SvgCustomIcon
+          name={
+            photoMimeTypes.includes(attachment['mime-type'].toLowerCase())
+              ? 'Image'
+              : 'Attachment'
+          }
+          style={styles.svgStyles}
+          width={24}
+        />
+        <View style={styles.textWrapper}>
+          <Text style={styles.title}>{label.slice(0, -5)}</Text>
+          <Text style={styles.extensionNameStyle}>
+            {`${getFileExtensionName(attachment['mime-type'])} file`}
+          </Text>
+          <DataRenderer {...{ label, data, uid, remotePairwiseDID }} />
+        </View>
+      </View>
+    )
+  }
+
+  return (
+    <View style={styles.textWrapper}>
+      <Text style={styles.title}>{label}</Text>
+      <DataRenderer {...{ label, data, uid, remotePairwiseDID }} />
+    </View>
+  )
+}
+
+const checkObjectTypes = (attachment) =>
+  !attachment['mime-type'] ||
+  !attachment.data ||
+  !attachment.data.base64 ||
+  !attachment.extension ||
+  !attachment.name
+    ? true
+    : false
 
 export const ModalContent = ({
   uid,
@@ -37,6 +128,9 @@ export const ModalContent = ({
   content,
   imageUrl,
   showSidePicture = false,
+  institutionalName,
+  credentialName,
+  credentialText,
 }: ModalContentProps) => {
   const source = useMemo(
     () => ({
@@ -56,23 +150,22 @@ export const ModalContent = ({
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollViewWrapper}>
-        {content.map((userData, index) => (
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollViewWrapper}
+      >
+        <ModalHeader
+          {...{
+            institutionalName,
+            credentialName,
+            credentialText,
+            imageUrl,
+          }}
+        />
+        {content.map(({ label, data }, index) => (
           <View key={index} style={styles.wrapper}>
             <View style={styles.textAvatarWrapper}>
-              <View style={styles.textWrapper}>
-                <Text style={styles.title}>
-                  {userData.label.toLowerCase().endsWith('_link')
-                    ? userData.label.slice(0, -5)
-                    : userData.label}
-                </Text>
-                <DataRenderer
-                  label={userData.label}
-                  data={userData.data}
-                  uid={uid}
-                  remotePairwiseDID={remotePairwiseDID}
-                />
-              </View>
+              {renderAttachmentIcon(label, data, remotePairwiseDID, uid)}
               {showSidePicture && (
                 <View style={styles.avatarWrapper}>
                   <Avatar radius={16} src={source} />
@@ -113,13 +206,7 @@ function DataRenderer(props: {
       attachment = JSON.parse(data)
 
       // TODO:KS Harden security check around file extension
-      if (
-        !attachment['mime-type'] ||
-        !attachment.data ||
-        !attachment.data.base64 ||
-        !attachment.extension ||
-        !attachment.name
-      ) {
+      if (checkObjectTypes(attachment)) {
         throw new Error('Invalid data')
       }
     } catch (e) {
@@ -142,7 +229,6 @@ function DataRenderer(props: {
       />
     )
   }
-
   return <Text style={styles.content}>{data}</Text>
 }
 
@@ -297,22 +383,30 @@ type AttachmentPropType = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.cmWhite,
   },
   scrollViewWrapper: {
-    backgroundColor: colors.cmGray5,
+    backgroundColor: colors.cmWhite,
+    paddingLeft: '5%',
+    paddingRight: '5%',
   },
   wrapper: {
-    backgroundColor: colors.cmGray5,
-    width: '90%',
-    marginLeft: '5%',
+    backgroundColor: colors.cmWhite,
     paddingTop: moderateScale(12),
-    borderBottomColor: colors.cmGray2,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    ...Platform.select({
+      ios: {
+        borderBottomColor: colors.cmGray5,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+      },
+      android: {
+        borderBottomColor: colors.cmGray5,
+        borderBottomWidth: 1,
+      },
+    }),
   },
   title: {
-    fontSize: verticalScale(fontSizes.size7),
-    fontWeight: '700',
-    color: colors.cmGray2,
+    fontSize: verticalScale(fontSizes.size8),
+    color: colors.cmGray3,
     width: '100%',
     textAlign: 'left',
     marginBottom: moderateScale(2),
@@ -320,8 +414,8 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: verticalScale(fontSizes.size5),
-    fontWeight: '400',
-    color: colors.cmGray1,
+    fontWeight: '700',
+    color: '#505050',
     width: '100%',
     textAlign: 'left',
     fontFamily: fontFamily,
@@ -329,7 +423,7 @@ const styles = StyleSheet.create({
   contentGray: {
     fontSize: verticalScale(fontSizes.size5),
     fontWeight: '400',
-    color: colors.cmGray2,
+    color: colors.cmWhite,
     width: '100%',
     textAlign: 'left',
     fontFamily: fontFamily,
@@ -340,7 +434,7 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     width: '85%',
-    paddingBottom: moderateScale(12),
+    paddingBottom: moderateScale(10),
   },
   avatarWrapper: {
     width: '15%',
@@ -363,5 +457,19 @@ const styles = StyleSheet.create({
   attachmentNameContainer: {
     flex: 1,
     marginLeft: moderateScale(10),
+  },
+  parentWrapper: {
+    flexDirection: 'row',
+  },
+  svgStyles: {
+    marginRight: moderateScale(16),
+  },
+  extensionNameStyle: {
+    fontSize: verticalScale(fontSizes.size6),
+    fontWeight: '600',
+    color: colors.cmGray1,
+    width: '100%',
+    textAlign: 'left',
+    fontFamily: fontFamily,
   },
 })

@@ -17,7 +17,7 @@ beforeAll(async () => {
   setDeviceType(device.getPlatform())
 
   await unlock() // moved here to run before each `describe` only, not before each `it`
-  console.log('DETOX SETUP HAS BEEN FINISHED')
+  // console.log('DETOX SETUP HAS BEEN FINISHED')
 })
 
 beforeEach(async () => {})

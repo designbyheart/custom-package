@@ -23,6 +23,7 @@ import memoize from 'lodash.memoize'
 import { CLAIM_OFFER_STATUS } from './../claim-offer/type-claim-offer'
 import { PROOF_REQUEST_STATUS } from './../proof-request/type-proof-request'
 import { QUESTION_STATUS } from '../question/type-question'
+import { select } from "redux-saga/effects"
 
 export const getConfig = (state: Store) => state.config
 
@@ -40,6 +41,8 @@ export const getAgencyVerificationKey = (state: Store) =>
 export const getPushToken = (state: Store) => state.pushNotification.pushToken
 
 export const getAllConnection = (state: Store) => state.connections.data
+
+export const getAllOneTimeConnection = (state: Store) => state.connections.oneTimeConnections
 
 export const getConnectionTheme = (state: Store, logoUrl: string) =>
   state.connections.connectionThemes[logoUrl] ||
@@ -66,6 +69,8 @@ export const getConnection = (
   senderDID: string
 ): Array<Connection> => {
   const connections = getAllConnection(state)
+  let foundConnections: Array<Connection> = []
+
   if (connections) {
     // Had to use `any` type here even though we know `Array<Connection>`
     // will be returned, as of now Flow returns mixed type for
@@ -75,6 +80,26 @@ export const getConnection = (
     // key in advance which is not the case here because we don't know DIDs
     // with which we will make connections
     const savedConnections: Array<any> = Object.values(connections)
+    foundConnections = savedConnections.filter(
+      (connection: Connection) => connection.senderDID === senderDID
+    )
+  }
+
+  if (foundConnections && foundConnections.length) {
+    return foundConnections
+  }
+
+  // else try to find one-time connection
+  const oneTimeConnections = getAllOneTimeConnection(state)
+  if (oneTimeConnections) {
+    // Had to use `any` type here even though we know `Array<Connection>`
+    // will be returned, as of now Flow returns mixed type for
+    // all Object.{map,keys,values} operations and we can't do
+    // anything unless we specify $Exact type, which we can't define
+    // in this case, because for $Exact type, we should know each
+    // key in advance which is not the case here because we don't know DIDs
+    // with which we will make connections
+    const savedConnections: Array<any> = Object.values(oneTimeConnections)
     return savedConnections.filter(
       (connection: Connection) => connection.senderDID === senderDID
     )
@@ -122,7 +147,8 @@ export const getHistoryEvent = (
   type: string
 ) => {
   const historyItems =
-    state.history && state.history.data && state.history.data.connections
+    state.history && state.history.data && state.history.data.connections &&
+    state.history.data.connections[remoteDid]
       ? state.history.data.connections[remoteDid].data
       : []
   return historyItems.filter((item) => {
@@ -323,7 +349,19 @@ export const getConnectionByUserDid = (state: Store, userDID: string) => {
   const connections = getAllConnection(state)
 
   if (connections) {
-    return connections[userDID]
+    const connection = connections[userDID]
+    if (connection){
+      return connection
+    }
+  }
+
+  const oneTimeConnections = getAllOneTimeConnection(state)
+
+  if (oneTimeConnections) {
+    const connection = oneTimeConnections[userDID]
+    if (connection){
+      return connection
+    }
   }
 
   return null
@@ -451,6 +489,10 @@ export const getProofData = (state: Store, proofRequestId: string) =>
 
 export const getPrepareBackupStatus = (state: Store) =>
   state.backup.prepareBackupStatus
+
+export const getConnectionExists = (state: Store, publicDid: string) => {
+  return publicDid in getAllPublicDid(state.connections)
+}
 
 // get data from connections store for public DIDs
 // data is returned in format {"publicDID": ConnectionData}

@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react'
 import {
   Text,
   View,
-  Image,
   StyleSheet,
   TouchableOpacity,
   Platform,
@@ -14,11 +13,7 @@ import { bindActionCreators } from 'redux'
 
 import SvgCustomIcon from '../../components/svg-custom-icon'
 import CredentialPriceInfo from '../../components/labels/credential-price-info'
-import {
-  claimOfferRoute,
-  modalContentProofShared,
-  modalScreenRoute,
-} from '../../common'
+import { modalContentProofShared, modalScreenRoute } from '../../common'
 import {
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
@@ -30,7 +25,7 @@ import { reTryActions } from '../../home/recent-card/recent-card'
 import { deleteHistoryEvent } from '../../connection-history/connection-history-store'
 import { DENY_PROOF_REQUEST_FAIL } from '../../proof-request/type-proof-request'
 import { denyProofRequest } from '../../proof-request/proof-request-store'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state

@@ -2,25 +2,15 @@
 import React, { useCallback } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { useNavigation } from '@react-navigation/native'
 
-import type {
-  ReactNavigation,
-  ReduxConnect,
-  GenericObject,
-} from '../../common/type-common'
+import type { ReduxConnect } from '../../common/type-common'
+import { colors } from '../../common/styles/constant'
 
-import { ModalHeader } from './modal-header'
 import { ModalContent } from './modal-content'
-import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { ModalButton } from '../../components/connection-details/modal-button'
-import ModalContentProof from './modal-content-proof'
-import {
-  acceptClaimOffer,
-  claimOfferIgnored,
-} from '../../claim-offer/claim-offer-store'
 import { modalScreenRoute } from '../../common/route-constants'
+import { ModalHeaderBar } from '../../components/modal-header-bar/modal-header-bar'
 
 type CredentialReceivedProps = {
   route: {
@@ -35,12 +25,7 @@ type CredentialReceivedProps = {
 } & ReduxConnect
 
 const Modal = (props: CredentialReceivedProps) => {
-  const {
-    colorBackground,
-    institutionalName,
-    imageUrl,
-    secondColorBackground,
-  } = props.route.params
+  const { institutionalName, imageUrl } = props.route.params
   const navigation = useNavigation()
   const hideModal = useCallback(() => {
     navigation.goBack(null)
@@ -53,18 +38,15 @@ const Modal = (props: CredentialReceivedProps) => {
 
   return (
     <View style={styles.modalWrapper}>
-      <ModalHeader
-        institutionalName={institutionalName}
-        credentialName={data.name}
-        credentialText="Accepted Credential"
-        imageUrl={imageUrl}
-        colorBackground={props.route.params.colorBackground}
-      />
       <ModalContent
         content={data.data}
         imageUrl={imageUrl}
         uid={data.originalPayload.messageId}
         remotePairwiseDID={data.remoteDid}
+        institutionalName={institutionalName}
+        credentialName={data.name}
+        credentialText="Accepted Credential"
+        colorBackground={props.route.params.colorBackground}
       />
       <ModalButton
         onClose={hideModal}
@@ -78,6 +60,26 @@ export const fulfilledMessageScreen = {
   routeName: modalScreenRoute,
   screen: connect()(Modal),
 }
+
+fulfilledMessageScreen.screen.navigationOptions = ({
+  navigation: { goBack, isFocused },
+}) => ({
+  safeAreaInsets: { top: 85 },
+  cardStyle: {
+    marginLeft: '2.5%',
+    marginRight: '2.5%',
+    marginBottom: '4%',
+    borderRadius: 10,
+    backgroundColor: colors.cmWhite,
+  },
+  cardOverlay: () => (
+    <ModalHeaderBar
+      headerTitle={isFocused() ? 'My Credential' : ''}
+      dismissIconType={isFocused() ? 'Arrow' : null}
+      onPress={() => goBack(null)}
+    />
+  ),
+})
 
 const styles = StyleSheet.create({
   modalWrapper: {

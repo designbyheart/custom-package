@@ -1,7 +1,6 @@
 // @flow
 
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -22,7 +21,6 @@ import {
   CustomView,
   CustomText,
   Icon,
-  CustomButton,
   CustomHeader,
 } from '../components'
 import { color } from '../common/styles/constant'
@@ -31,7 +29,7 @@ import {
   hasVerifiedRecoveryPhrase,
   generateBackupFile,
 } from '../backup/backup-store'
-import { safeSet, secureSet, walletSet } from '../services/storage'
+import { safeSet, walletSet } from '../services/storage'
 import { HAS_VERIFIED_RECOVERY_PHRASE } from './type-backup'
 
 const closeImage = require('../images/icon-Close.png')

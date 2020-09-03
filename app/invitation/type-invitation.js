@@ -6,6 +6,7 @@ import type {
 } from '../components/request/type-request'
 import type {
   CustomError,
+  GenericObject,
   ReactNavigation,
   InitialTestAction,
   ResetAction,
@@ -43,15 +44,21 @@ export type AriesConnectionInvitePayload = {
 export type AriesOutOfBandInviteType =
   'https://didcomm.org/out-of-band/1.0/invitation'
 
-export type AriesServiceEntry = {
+export type AriesServiceEntry = {|
   id: string,
   type: string,
   recipientKeys: Array<string>,
   routingKeys?: ?Array<string>,
   serviceEndpoint: string,
+|}
+
+export type AriesAttachedRequest = {
+  '@id': string,
+  'mime-type': string,
+  data: {| json: string |} | {| base64: string |},
 }
 
-export type AriesOutOfBandInvite = {
+export type AriesOutOfBandInvite = {|
   '@type': AriesOutOfBandInviteType,
   '@id': string,
   label?: string,
@@ -59,11 +66,11 @@ export type AriesOutOfBandInvite = {
   goal_code?: string,
   goal?: string,
   handshake_protocols?: Array<string>,
-  'request~attach': Array<any | string>,
+  'request~attach': Array<AriesAttachedRequest>,
   service: Array<string | AriesServiceEntry>,
-}
+|}
 
-export type AriesConnectionInvite = {
+export type AriesConnectionInvite = {|
   payload: AriesConnectionInvitePayload,
   type: ConnectionInviteTypes,
   // this version is specific to CM's own data
@@ -71,7 +78,7 @@ export type AriesConnectionInvite = {
   // this would contain data that would be as it is that connect me receives
   // for example: this would have original QR code string
   original: string,
-}
+|}
 
 export type InvitationPayload = {
   senderEndpoint: string,
@@ -157,6 +164,15 @@ export type InvitationAction =
   | InvitationRejectedAction
   | InitialTestAction
   | ResetAction
+
+export const OUT_OF_BAND_INVITATION_ACCEPTED =
+  'OUT_OF_BAND_INVITATION_ACCEPTED'
+
+export type OutOfBandInvitationAcceptedAction = {
+  type: typeof OUT_OF_BAND_INVITATION_ACCEPTED,
+  invitationPayload: InvitationPayload,
+  attachedRequest: GenericObject,
+}
 
 export type InvitationNavigation = {
   navigation: NavigationScreenProp<{|

@@ -1,53 +1,70 @@
 // @flow
-import React, { Component, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { View, StyleSheet } from 'react-native'
-
-import type { Store } from '../../store/type-store'
-import type { ClaimProofNavigation } from '../../claim-offer/type-claim-offer'
-
-import { ModalHeader } from './modal-header'
-import { ModalContent } from './modal-content'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import ModalContentProof from './modal-content-proof'
+
+// store
+import type { Store } from '../../store/type-store'
+
 import {
   getConnectionLogoUrl,
   getConnectionTheme,
   getUserAvatarSource,
 } from '../../store/store-selector'
+
+// types
+import type { ClaimProofNavigation } from '../../claim-offer/type-claim-offer'
+
+// constants
 import { proofRequestRoute } from '../../common/route-constants'
+
+// components
+import ModalContentProof from './modal-content-proof'
+import { ModalHeaderBar } from '../../components/modal-header-bar/modal-header-bar'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
+
+// styles
+import { colors } from '../../common/styles/constant'
 
 // TODO: Fix any type
 const ProofRequestModal = (props: any) => {
   const hideModal = useCallback(() => {
-    props.navigation.goBack(null)
+    const backRedirectRoute = props.backRedirectRoute
+    if (backRedirectRoute) {
+      props.navigation.navigate(backRedirectRoute)
+    } else {
+      props.navigation.goBack(null)
+    }
   }, [])
 
   return (
-    <View style={styles.modalWrapper}>
-      <ModalHeader
-        institutionalName={props.name}
-        credentialName={props.data.name}
-        credentialText={'Wants you to fill out a form:'}
-        imageUrl={props.logoUrl}
-        colorBackground={props.claimThemePrimary}
-      />
-      <ModalContentProof
-        content={props.data.requestedAttributes}
-        uid={props.uid}
-        colorBackground={props.claimThemePrimary}
-        secondColorBackground={props.claimThemeSecondary}
-        hideModal={hideModal}
-        newConnectionSeen={props.newConnectionSeen}
-      />
-    </View>
+    props && props.data ?
+      <View style={styles.modalWrapper}>
+        <ModalContentProof
+          content={props.data.requestedAttributes}
+          uid={props.uid}
+          invitationPayload={props.invitationPayload}
+          colorBackground={props.claimThemePrimary}
+          secondColorBackground={props.claimThemeSecondary}
+          hideModal={hideModal}
+          newConnectionSeen={props.newConnectionSeen}
+          institutionalName={props.name}
+          credentialName={props.data.name}
+          credentialText={'Requested by'}
+          imageUrl={props.logoUrl}
+          navigation={props.navigation}
+          route={props.route}
+        />
+      </View> :
+      <View/>
   )
 }
 
 const mapStateToProps = (state: Store, props: ClaimProofNavigation) => {
   const { proofRequest } = state
-  const { uid } = props.route.params
+
+  const { uid, invitationPayload, attachedRequest, backRedirectRoute } = props.route.params
   const proofRequestData = proofRequest[uid] || {}
   const {
     data,
@@ -82,6 +99,9 @@ const mapStateToProps = (state: Store, props: ClaimProofNavigation) => {
     missingAttributes,
     userAvatarSource: getUserAvatarSource(state.user.avatarName),
     errorProofSendData,
+    invitationPayload,
+    attachedRequest,
+    backRedirectRoute,
   }
 }
 
@@ -90,13 +110,35 @@ const mapDispatchToProps = (dispatch) =>
     {
       newConnectionSeen,
     },
-    dispatch
+    dispatch,
   )
 
 export const proofRequestScreen = {
   routeName: proofRequestRoute,
   screen: connect(mapStateToProps, mapDispatchToProps)(ProofRequestModal),
 }
+
+proofRequestScreen.screen.navigationOptions = ({
+                                                 navigation: { goBack, isFocused },
+                                               }) => ({
+  safeAreaInsets: { top: isFocused() ? 85 : 100 },
+  cardStyle: {
+    marginLeft: '2.5%',
+    marginRight: '2.5%',
+    marginBottom: '4%',
+    borderRadius: 10,
+    backgroundColor: colors.cmWhite,
+  },
+  cardOverlay: () => {
+    return (
+      <ModalHeaderBar
+        headerTitle={isFocused() ? 'Proof Request' : ''}
+        dismissIconType={isFocused() ? 'CloseIcon' : null}
+        onPress={() => goBack(null)}
+      />
+    )
+  },
+})
 
 const styles = StyleSheet.create({
   modalWrapper: {

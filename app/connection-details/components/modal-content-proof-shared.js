@@ -1,8 +1,7 @@
 // @flow
-import React, { Component, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
 import type { Store } from '../../store/type-store'
 import type { ClaimProofNavigation } from '../../claim-offer/type-claim-offer'
@@ -14,10 +13,10 @@ import {
   getConnectionLogoUrl,
   getConnectionTheme,
 } from '../../store/store-selector'
-import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import { modalContentProofShared } from '../../common/route-constants'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
-import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
+import { moderateScale } from 'react-native-size-matters'
+import { colors } from '../../common/styles/constant'
+import { ModalHeaderBar } from '../../components/modal-header-bar/modal-header-bar'
 
 // TODO: Fix any type
 const ProofRequestModal = (props: any) => {
@@ -73,6 +72,26 @@ export const proofScreen = {
   screen: connect(mapStateToProps, null)(ProofRequestModal),
 }
 
+proofScreen.screen.navigationOptions = ({
+  navigation: { goBack, isFocused },
+}) => ({
+  safeAreaInsets: { top: 85 },
+  cardStyle: {
+    marginLeft: '2.5%',
+    marginRight: '2.5%',
+    marginBottom: '4%',
+    borderRadius: 10,
+    backgroundColor: colors.cmWhite,
+  },
+  cardOverlay: () => (
+    <ModalHeaderBar
+      headerTitle={isFocused() ? 'Proof Request' : ''}
+      dismissIconType={isFocused() ? 'Arrow' : null}
+      onPress={() => goBack(null)}
+    />
+  ),
+})
+
 const styles = StyleSheet.create({
   modalWrapper: {
     flex: 1,
@@ -83,7 +102,7 @@ const styles = StyleSheet.create({
   },
   innerModalWrapper: {
     flex: 1,
-    backgroundColor: colors.cmGray5,
+    backgroundColor: colors.cmWhite,
     paddingTop: moderateScale(5),
   },
 })

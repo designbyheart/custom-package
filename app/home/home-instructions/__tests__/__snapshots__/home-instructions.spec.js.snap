@@ -42,6 +42,7 @@ exports[`<HomeInstructions /> should match snapshot 1`] = `
           "alignItems": "center",
           "height": "100%",
           "justifyContent": "center",
+          "marginTop": -44.470588235294116,
           "width": "100%",
         },
       ]
@@ -83,6 +84,7 @@ exports[`<HomeInstructions /> should match snapshot 1`] = `
           Array [
             Object {
               "color": "#505050",
+              "fontFamily": "Lato",
               "fontSize": 16.854285714285716,
               "marginVertical": 4.785714285714286,
               "textAlign": "center",
@@ -97,6 +99,7 @@ exports[`<HomeInstructions /> should match snapshot 1`] = `
           Array [
             Object {
               "color": "#505050",
+              "fontFamily": "Lato",
               "fontSize": 14.871428571428572,
               "marginHorizontal": "5%",
               "marginVertical": 4.785714285714286,
@@ -154,6 +157,7 @@ exports[`<HomeInstructions /> should match snapshot for test network 1`] = `
           "alignItems": "center",
           "height": "100%",
           "justifyContent": "center",
+          "marginTop": -44.470588235294116,
           "width": "100%",
         },
       ]
@@ -195,6 +199,7 @@ exports[`<HomeInstructions /> should match snapshot for test network 1`] = `
           Array [
             Object {
               "color": "#505050",
+              "fontFamily": "Lato",
               "fontSize": 16.854285714285716,
               "marginVertical": 4.785714285714286,
               "textAlign": "center",
@@ -209,6 +214,7 @@ exports[`<HomeInstructions /> should match snapshot for test network 1`] = `
           Array [
             Object {
               "color": "#505050",
+              "fontFamily": "Lato",
               "fontSize": 14.871428571428572,
               "marginHorizontal": "5%",
               "marginVertical": 4.785714285714286,

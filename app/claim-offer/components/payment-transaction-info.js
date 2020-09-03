@@ -192,8 +192,8 @@ class PaymentTransactionInfo extends PureComponent<
               onIgnore={onCancel}
               colorBackground={claimThemePrimary}
               secondColorBackground={claimThemeSecondary}
-              leftBtnText={'Cancel'}
-              rightBtnText={'Retry'}
+              topBtnText={'Cancel'}
+              bottomBtnText={'Retry'}
             />
           ) : null}
         </View>

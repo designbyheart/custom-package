@@ -1,22 +1,19 @@
 // @flow
-import React, { useMemo, useCallback, useState, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import {
   Text,
   View,
-  ScrollView,
   StyleSheet,
   Image,
   TouchableOpacity,
   Alert,
-  InteractionManager,
 } from 'react-native'
 import RNFetchBlob from 'rn-fetch-blob'
 import FileViewer from 'react-native-file-viewer'
 
-import { Avatar } from '../../components/avatar/avatar'
 import { BLANK_ATTRIBUTE_DATA_TEXT } from './type-credential-list'
 import { flattenAsync } from '../../common/flatten-async'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 import type {
@@ -24,14 +21,13 @@ import type {
   AttachmentPropType,
   PhotoAttachmentPropType,
 } from './type-credential-list'
+import { photoMimeTypes } from './type-credential-list'
+
 import {
-  photoMimeTypes,
-  docMimeTypes,
-  excelMimeTypes,
-  pptMimeTypes,
-  pdfMimeTypes,
-  audioVideoMimeType,
-} from './type-credential-list'
+  EvaIcon,
+  ATTACHMENT_ICON,
+  PHOTO_ATTACHMENT_ICON,
+} from '../../common/icons'
 
 export const CredentialList = ({
   uid,
@@ -143,9 +139,10 @@ function PhotoAttachment(props: PhotoAttachmentPropType) {
   return (
     <View>
       <View style={styles.photoAttachmentWrapper}>
-        <Image
-          style={styles.photoAttachmentIcon}
-          source={require('../../images/imageAttachment.png')}
+        <EvaIcon
+          style={styles.attachmentIcon}
+          name={PHOTO_ATTACHMENT_ICON}
+          color={colors.cmGray1}
         />
         <View>
           <Text style={styles.label}>{props.label}</Text>
@@ -226,9 +223,10 @@ function Attachment(props: AttachmentPropType) {
       style={styles.nameIconContainer}
     >
       <View style={styles.photoAttachmentWrapper}>
-        <Image
-          style={styles.photoAttachmentIcon}
-          source={require('../../images/attachment.png')}
+        <EvaIcon
+          style={styles.attachmentIcon}
+          name={ATTACHMENT_ICON}
+          color={colors.cmGray1}
         />
         <View>
           <Text style={styles.label}>{props.label}</Text>
@@ -293,10 +291,8 @@ const styles = StyleSheet.create({
     width: moderateScale(150),
     height: moderateScale(150),
   },
-  photoAttachmentIcon: {
+  attachmentIcon: {
     marginEnd: moderateScale(16),
-    width: moderateScale(24),
-    height: moderateScale(24),
   },
   nameIconContainer: {
     flexDirection: 'row',

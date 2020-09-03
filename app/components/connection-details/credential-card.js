@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { proofRequestRoute, claimOfferRoute } from '../../common'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state

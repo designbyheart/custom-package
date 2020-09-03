@@ -1,29 +1,18 @@
 // @flow
 import * as React from 'react'
 import { Component } from 'react'
-import {
-  View,
-  FlatList,
-  Dimensions,
-  Animated,
-  StyleSheet,
-  Platform,
-} from 'react-native'
-import { ConnectionDetailsNav } from './components/connection-details-nav'
+import { View, FlatList, Dimensions, Animated, StyleSheet } from 'react-native'
+import { ConnectionDetailsHeader } from '../components'
 import { CredentialCard } from '../components/connection-details/credential-card'
 import { ConnectionCard } from '../components/connection-details/connection-card'
-import { NewMessageBreakLine } from '../components/connection-details/new-message-break-line'
 import MoreOptions from './components/more-options'
 import { ConnectionPending } from '../components/connection-details/connection-pending'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
 import {
   updateStatusBarTheme,
   sendConnectionRedirect,
   sendConnectionReuse,
 } from '../../app/store/connections-store'
 import { newConnectionSeen } from '../../app/connection-history/connection-history-store'
-import Snackbar from 'react-native-snackbar'
-import { measurements } from '../../app/common/styles/measurements'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import { bindActionCreators } from 'redux'
@@ -36,21 +25,14 @@ import type {
   ConnectionHistoryEvent,
   ConnectionHistoryNavigation,
 } from './type-connection-details'
-import { CONNECTION_ALREADY_EXIST } from './type-connection-details'
-import { getConnection, getConnectionTheme } from '../store/store-selector'
+import { getConnectionTheme } from '../store/store-selector'
 import { colors } from '../common/styles/constant'
 import {
   DENY_PROOF_REQUEST_SUCCESS,
   DENY_PROOF_REQUEST_FAIL,
   DENY_PROOF_REQUEST,
 } from '../proof-request/type-proof-request'
-import {
-  proofRequestRoute,
-  claimOfferRoute,
-  questionRoute,
-  connectionHistRoute,
-} from '../common'
-import { MESSAGE_TYPE } from '../api/api-constants'
+import { connectionHistRoute } from '../common'
 import {
   CLAIM_OFFER_ACCEPTED,
   SEND_CLAIM_REQUEST_FAIL,
@@ -60,9 +42,6 @@ import {
   DENY_CLAIM_OFFER_SUCCESS,
 } from '../claim-offer/type-claim-offer'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
-import { DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
-import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
-import type { AriesOutOfBandInvite } from '../invitation/type-invitation'
 
 let ScreenWidth = Dimensions.get('window').width
 
@@ -389,7 +368,7 @@ export class ConnectionDetails extends Component<
 
       return (
         <View style={styles.container}>
-          <ConnectionDetailsNav
+          <ConnectionDetailsHeader
             newConnectionSeen={this.props.newConnectionSeen}
             navigation={this.props.navigation}
             moreOptionsOpen={this.moreOptionsOpen}
@@ -414,7 +393,6 @@ export class ConnectionDetails extends Component<
             ref={this.flatList}
             keyExtractor={this.keyExtractor}
             style={styles.flatListContainer}
-            contentContainerStyle={styles.flatListInnerContainer}
             data={connectionHistory}
             renderItem={this.renderItem}
             onContentSizeChange={this.scrollToEnd}
@@ -478,14 +456,11 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: colors.cmWhite,
   },
-  flatListInnerContainer: {
-    paddingTop: verticalScale(90),
-  },
   moreOptionsWrapper: {
     position: 'absolute',
     width: ScreenWidth,
     zIndex: 999,
     elevation: 8,
-    height: Dimensions.get('screen').height - verticalScale(40),
+    height: Dimensions.get('screen').height,
   },
 })

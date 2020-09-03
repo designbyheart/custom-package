@@ -17,6 +17,7 @@ import {
   restoreRoute,
   homeDrawerRoute,
   connectionHistRoute,
+  startUpRoute,
 } from '../common/route-constants'
 import { Container, Loader } from '../components'
 import {
@@ -261,26 +262,27 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
     if (this.props.isInitialized) {
       SplashScreen.hide()
       // now we can safely check value of isAlreadyInstalled
+      // check for need for set up
       if (
         !this.props.lock.isLockEnabled ||
         this.props.lock.isLockEnabled === 'false'
       ) {
-        // user is opening the app for first time after installing
-        if (!this.props.eula.isEulaAccept) {
-          this.props.navigation.navigate(eulaRoute)
-        } else {
-          // if we need to enable choice of restore or start fresh, then un-comment below line and remove line after commented line
-          // this.props.navigation.navigate(restoreRoute)
-          this.props.navigation.navigate(lockSelectionRoute)
-        }
-      } else {
-        // not the first time user is opening app
-        if (this.props.lock.isTouchIdEnabled) {
-          this.props.navigation.navigate(lockEnterFingerprintRoute)
-        } else {
-          this.props.navigation.navigate(lockEnterPinRoute)
-        }
+        this.props.navigation.navigate(startUpRoute)
+        return
       }
+      // enabled lock but have not accepted EULA
+      if (!this.props.eula.isEulaAccept) {
+        // short term this will navigate to lock selection
+        // this.props.navigation.navigate(eulaRoute)
+        this.props.navigation.navigate(lockSelectionRoute)
+        return
+      }
+      // not the first time user is opening app
+      const initialRoute = this.props.lock.isTouchIdEnabled
+        ? lockEnterFingerprintRoute
+        : lockEnterPinRoute
+
+      this.props.navigation.navigate(initialRoute)
     }
   }
 

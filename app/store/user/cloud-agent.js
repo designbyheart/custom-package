@@ -36,6 +36,7 @@ import {
   genRecoveryPhraseRoute,
   walletRoute,
   cloudRestoreRoute,
+  claimOfferRoute, proofRequestRoute,
 } from '../../common'
 import { ROUTE_UPDATE, handleRouteUpdate } from '../route-store'
 import { OFFLINE_STATUS } from '../../offline/type-offline'
@@ -451,4 +452,6 @@ const routesForSpecialMessage = [
   genRecoveryPhraseRoute,
   walletRoute,
   cloudRestoreRoute,
+  claimOfferRoute,
+  proofRequestRoute,
 ]

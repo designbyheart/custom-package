@@ -2,16 +2,15 @@
 import React, { Component } from 'react'
 import { StyleSheet, FlatList, View, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
 import type { CustomListProps, Item } from './type-custom-list'
 import type { Store } from '../../store/type-store'
 import { BLANK_ATTRIBUTE_DATA_TEXT } from '../../connection-details/type-connection-details'
 
 import Icon from '../icon'
 import { getUserAvatarSource } from '../../store/store-selector'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
+import { renderAttachmentIcon } from '../../connection-details/components/modal-content'
 
 export class CustomListProofRequest extends Component<CustomListProps, void> {
   keyExtractor = ({ label, values }: Item, index: number) => {
@@ -19,7 +18,7 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
       return `${label}${index}`
     }
     if (values) {
-      return `${Object.keys(values).join("-")}${index}`
+      return `${Object.keys(values).join('-')}${index}`
     }
 
     return `${index}`
@@ -49,16 +48,13 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
       <View key={index} style={styles.wrapper}>
         <View style={styles.textAvatarWrapper}>
           <View style={styles.textWrapper}>
-            <Text style={styles.title}>{item.label}</Text>
             {
               // Show (none) in a lighter gray if the data is actually a blank string
               isDataEmptyString ? (
                 <Text style={styles.contentGray}>
                   {BLANK_ATTRIBUTE_DATA_TEXT}
                 </Text>
-              ) : (
-                <Text style={styles.content}>{item.data}</Text>
-              )
+              ) : renderAttachmentIcon(item.label  || '', item.data || '', item.claimUuid || '', item.claimUuid || '')
             }
           </View>
           <View style={styles.avatarWrapper}>
@@ -76,14 +72,13 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
   }
 
   renderMultipleValues = ({ item, index }: { item: Item, index: number }) => {
-
     let logoUrl
     if (!item.values) {
       return <View></View>
     }
 
     const views = Object.keys(item.values).map((label, keyIndex) => {
-      let value = ""
+      let value = ''
       if (item.values) {
         value = item.values[label]
       }
@@ -91,28 +86,31 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
       const isDataEmptyString = value === ''
 
       if (!logoUrl) {
-        logoUrl = value || isDataEmptyString
-          ? item.claimUuid &&
-            this.props.claimMap &&
-            this.props.claimMap[item.claimUuid] &&
-            this.props.claimMap[item.claimUuid].logoUrl
-            ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
-            : this.props.avatarSource ||
-            require('../../images/UserAvatar.png')
-          : null
+        logoUrl =
+          value || isDataEmptyString
+            ? item.claimUuid &&
+              this.props.claimMap &&
+              this.props.claimMap[item.claimUuid] &&
+              this.props.claimMap[item.claimUuid].logoUrl
+              ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
+              : this.props.avatarSource ||
+                require('../../images/UserAvatar.png')
+            : null
       }
 
       return (
         <View key={`${index}_${keyIndex}`} style={styles.textInnerItemWrapper}>
           <Text style={styles.title}>{label}</Text>
-          {// Show (none) in a lighter gray if the data is actually a blank string
+          {
+            // Show (none) in a lighter gray if the data is actually a blank string
             isDataEmptyString ? (
               <Text style={styles.contentGray}>
                 {BLANK_ATTRIBUTE_DATA_TEXT}
               </Text>
             ) : (
-                <Text style={styles.content}>{value}</Text>
-              )}
+              <Text style={styles.content}>{value}</Text>
+            )
+          }
         </View>
       )
     })
@@ -120,9 +118,7 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
     return (
       <View key={index} style={styles.wrapper}>
         <View style={styles.textAvatarWrapper}>
-          <View style={styles.textInnerWrapper}>
-            {views}
-          </View>
+          <View style={styles.textInnerWrapper}>{views}</View>
           <View style={styles.avatarWrapper}>
             <Icon
               medium
@@ -163,7 +159,7 @@ export default connect(mapStateToProps)(CustomListProofRequest)
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: colors.cmGray5,
+    backgroundColor: colors.cmWhite,
     width: '100%',
     position: 'relative',
     paddingTop: moderateScale(12),
@@ -201,7 +197,6 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     width: '85%',
-    paddingBottom: moderateScale(12),
   },
   textInnerWrapper: {
     width: '85%',
@@ -210,7 +205,6 @@ const styles = StyleSheet.create({
     paddingBottom: moderateScale(12),
   },
   avatarWrapper: {
-    marginTop: moderateScale(12),
     width: '15%',
     alignItems: 'center',
     justifyContent: 'center',

@@ -8,7 +8,7 @@ import type {
 import type {
   CustomError,
   ResetAction,
-  NotificationPayload,
+  NotificationPayload, GenericObject,
 } from '../common/type-common'
 import type {
   AdditionalDataPayload,
@@ -16,6 +16,7 @@ import type {
   NotificationPayloadInfo,
 } from '../push-notification/type-push-notification'
 import type { LedgerFeesStateEnum } from '../ledger/components/ledger-fees/ledger-fees-type'
+import type { AriesOutOfBandInvite, InvitationPayload } from '../invitation/type-invitation'
 
 export const CLAIM_OFFER_STATUS = {
   IDLE: 'IDLE',
@@ -74,6 +75,13 @@ export type ClaimOfferShownAction = {
 export const CLAIM_OFFER_ACCEPTED = 'CLAIM_OFFER_ACCEPTED'
 export type ClaimOfferAcceptedAction = {
   type: typeof CLAIM_OFFER_ACCEPTED,
+  uid: string,
+  remoteDid: string,
+}
+
+export const OUTOFBAND_CLAIM_OFFER_ACCEPTED = 'OUTOFBAND_CLAIM_OFFER_ACCEPTED'
+export type OutofbandClaimOfferAcceptedAction = {
+  type: typeof OUTOFBAND_CLAIM_OFFER_ACCEPTED,
   uid: string,
   remoteDid: string,
 }
@@ -236,6 +244,27 @@ export type ClaimOfferAction =
   | SendClaimRequestFailAction
   | ClaimOfferDeletedAction
 
+export type CredentialOffer = {
+  '@id': string,
+  '@type': string,
+  comment: string,
+  credential_preview: {
+    '@type': string,
+    attributes: Array<{
+      name: string,
+      'mime-type': string,
+      value: any,
+    }>,
+  },
+  'offers~attach': Array<{
+    '@id': string,
+    'mime-type': string,
+    data: {
+      base64: string,
+    },
+  }>,
+}
+
 export type ClaimOfferPayload = AdditionalDataPayload & {
   uid: string,
   senderLogoUrl?: ?string,
@@ -274,6 +303,10 @@ export type ClaimProofNavigation = {
   route: {
     params: {|
       uid: string,
+      claimOfferData?: ClaimOfferPayload,
+      backRedirectRoute?: string,
+      invitationPayload?: InvitationPayload | null,
+      attachedRequest?: GenericObject,
     |},
   },
 }

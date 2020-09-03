@@ -1,17 +1,16 @@
 // @flow
-import React, { PureComponent, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import type { PrimaryHeaderProps } from './type-primary-header'
+import type { HeaderProps } from '../type-header'
 
-import { SvgCustomIcon } from '../svg-custom-icon'
-import UnreadMessagesBadge from '../unread-messages-badge/unread-messages-badge'
-import { styles } from './styles'
-import { colors } from '../../common/styles/constant'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { EvaIcon, HOME_MENU_ICON } from '../../../common/icons'
+import UnreadMessagesBadge from '../../unread-messages-badge/unread-messages-badge'
+import { styles } from '../type-header'
+import { moderateScale } from 'react-native-size-matters'
 
-export const PrimaryHeader = ({ headline }: PrimaryHeaderProps) => {
+export const HomeHeader = ({ headline }: HeaderProps) => {
   const navigation = useNavigation()
   const toggleDrawer = useCallback(() => {
     navigation.toggleDrawer()
@@ -21,16 +20,15 @@ export const PrimaryHeader = ({ headline }: PrimaryHeaderProps) => {
     <View style={styles.container}>
       <View
         accessible={true}
-        accessibilityLabel="burger-menu"
+        accessibilityLabel="left-icon"
         style={styles.iconSection}
       >
-        <TouchableOpacity testID="burger-menu" onPress={toggleDrawer}>
-          <SvgCustomIcon
-            name="BurgerMenu"
+        <TouchableOpacity testID="left-icon" onPress={toggleDrawer}>
+          <EvaIcon
+            name={HOME_MENU_ICON}
             width={moderateScale(32)}
             height={moderateScale(32)}
-            fill={colors.cmGray2}
-            style={styles.svgIcon}
+            style={styles.menuIcon}
           />
         </TouchableOpacity>
         {headline !== 'Home' && <UnreadMessagesBadge absolutePosition={true} />}

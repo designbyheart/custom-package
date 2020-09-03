@@ -174,6 +174,7 @@ export type NotificationPayloadInfo = {
   uid: string,
   senderLogoUrl: ?string,
   remotePairwiseDID: string,
+  hidden?: boolean,
 }
 
 export type ClaimPushPayload = {

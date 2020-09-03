@@ -129,9 +129,11 @@ const styles = StyleSheet.create({
   slideHeaderUpText: {
     color: colors.cmGray1,
     fontWeight: '600',
+    fontFamily: fontFamily,
   },
   slideHeaderUpAboutText: {
     color: colors.cmGray2,
     fontSize: verticalScale(10),
+    fontFamily: fontFamily,
   },
 })

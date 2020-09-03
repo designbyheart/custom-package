@@ -25,7 +25,9 @@ describe('<QRScannerScreen />', () => {
       enableCamera: jest.fn(),
       isCameraEnabled: true,
       publicDIDs: {},
+      claimOffers: {},
       openIdConnectUpdateStatus: jest.fn(),
+      claimOfferReceived: jest.fn(),
       proofRequestReceived: jest.fn(),
     }
   }

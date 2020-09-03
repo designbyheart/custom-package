@@ -1,30 +1,15 @@
 //@flow
-import React, {
-  useMemo,
-  useCallback,
-  useState,
-  useEffect,
-  Component,
-} from 'react'
-import {
-  Text,
-  View,
-  ScrollView,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Alert,
-  InteractionManager,
-} from 'react-native'
+import React from 'react'
+import { Text, View, ScrollView, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 import { credentialDetailsRoute } from '../common/route-constants'
 import type { CredentialDetailsProps } from './type-credential-details'
-import { headerNavigationOptions } from '../navigation/navigation-header-config'
 import { Avatar } from '../components/avatar/avatar'
 import { DefaultLogo } from '../components/default-logo/default-logo'
 import { CredentialList } from './credential-list/credential-list'
+import { Header } from '../components'
 
 const CredentialDetails = (props: CredentialDetailsProps) => {
   const {
@@ -34,6 +19,7 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
     logoUrl,
     remoteDid,
     uid,
+    date,
   } = props.route.params
 
   const data = attributes.map((attribute) => ({
@@ -43,9 +29,14 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
 
   return (
     <View style={styles.container}>
+      <Header
+        headline="Credential Details"
+        navigation={props.navigation}
+        route={props.route}
+      />
       <ScrollView>
         <View style={styles.headerWrapper}>
-          <Text style={styles.headerSubText}>Issued by</Text>
+          <Text style={styles.headerSubText}>{date ? "Issued by" : "Offered by"}</Text>
           <Text
             style={styles.headerText}
             ellipsizeMode="tail"
@@ -90,9 +81,6 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
 export const credentialDetailsScreen = {
   routeName: credentialDetailsRoute,
   screen: connect()(CredentialDetails),
-  options: {
-    ...headerNavigationOptions({ title: 'Credential Details' }),
-  },
 }
 
 const styles = StyleSheet.create({

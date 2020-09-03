@@ -1,303 +1,167 @@
 // @flow
-import React, { PureComponent } from 'react'
-import { StyleSheet, Keyboard, Platform, TouchableOpacity } from 'react-native'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
-import type { LockPinSetupState, LockPinCodeSetupProps } from './type-lock'
-import type { ReactNavigation } from '../common/type-common'
-
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import {
-  Container,
-  CustomText,
-  CustomButton,
-  CustomView,
-  PinCodeBox,
-  Icon,
-  CustomHeader,
-  FlatHeader,
-} from '../components'
-import {
-  lockSelectionRoute,
-  lockPinSetupHomeRoute,
-  lockSetupSuccessRoute,
-  settingsTabRoute,
-  lockEnterPinRoute,
   lockPinSetupRoute,
-  settingsDrawerRoute,
+  lockSelectionRoute,
+  lockSetupSuccessRoute,
 } from '../common'
-import {
-  color,
-  mediumGray,
-  OFFSET_1X,
-  OFFSET_2X,
-  OFFSET_6X,
-  OFFSET_7X,
-  font,
-} from '../common/styles'
-import { setPinAction, enableTouchIdAction } from './lock-store'
-import { PIN_SETUP_STATE } from './type-lock'
-import { tertiaryHeaderStyles } from '../components/layout/header-styles'
+import type { ReactNavigation } from '../common/type-common'
 import { headerNavigationOptions } from '../navigation/navigation-header-config'
+import { Container, CustomText, PinCodeBox, CustomView } from '../components'
+import SvgCustomIcon from '../components/svg-custom-icon'
+import { setPinAction } from './lock-store'
+import { PIN_SETUP_STATE } from './type-lock'
+import { Keyboard, StyleSheet, Platform } from 'react-native'
+import { colors, OFFSET_2X, fontFamily } from '../common/styles'
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters'
+import { Header } from '../components'
+
+let keyboardDidHideListener
+let keyboardDidShowListener
+
+export function LockPinSetup(props: ReactNavigation) {
+  const { navigation, route } = props
+  const dispatch = useDispatch()
+  const [pinSetupState, setPinSetupState] = useState(PIN_SETUP_STATE.INITIAL)
+  const [failedPin, setFailedPin] = useState(false)
+  const [enteredPin, setEnteredPin] = useState(null)
+  const [confirmedPin, setConfirmedPin] = useState(null)
+  const [keyboardHidden, setKeyboardHidden] = useState(false)
+  const [showCustomKeyboard, setShowCustomKeyboard] = useState(false)
+  const pinCodeBox = useRef<any>()
+  const existingPin = route && route.params && route.params.existingPin === true
+  const enterPasscodeText = existingPin
+    ? 'Create new passcode'
+    : 'Set a passcode to secure this app'
+  const handleKeyboardChange = useCallback((status, event) => {
+    if (keyboardHidden !== status) {
+      setKeyboardHidden(status)
+      setShowCustomKeyboard(false)
+      return
+    }
+    const shouldShowCustomKeyboard =
+      status === false &&
+      event &&
+      event.endCoordinates.height < 100 &&
+      !keyboardHidden &&
+      Platform.OS === 'ios'
+
+    setShowCustomKeyboard(shouldShowCustomKeyboard)
+  })
+
+  const handlePinComplete = useCallback((pin: string) => {
+    if (!enteredPin) {
+      setEnteredPin(pin)
+      setPinSetupState(PIN_SETUP_STATE.REENTER)
+      setFailedPin(false)
+      pinCodeBox.current.clear()
+      return
+    }
+    if (enteredPin !== pin) {
+      // handle error state
+      setEnteredPin(null)
+      setPinSetupState(PIN_SETUP_STATE.REENTER_FAIL)
+      setFailedPin(true)
+      pinCodeBox.current.clear()
+      setTimeout(() => setPinSetupState(PIN_SETUP_STATE.INITIAL), 1000)
+      return
+    }
+    pinCodeBox.current.hideKeyboard()
+    setConfirmedPin(pin)
+    setPinSetupState(PIN_SETUP_STATE.REENTER_SUCCESS)
+    setFailedPin(false)
+  })
+
+  useEffect(() => {
+    keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      handleKeyboardChange(true)
+    })
+    keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      (event) => {
+        handleKeyboardChange(false, event)
+      }
+    )
+    return () => {
+      keyboardDidShowListener && keyboardDidShowListener.remove()
+      keyboardDidHideListener && keyboardDidHideListener.remove()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (
+      keyboardHidden &&
+      pinSetupState === PIN_SETUP_STATE.REENTER_SUCCESS &&
+      navigation.isFocused()
+    ) {
+      dispatch(setPinAction(confirmedPin || ''))
+      existingPin
+        ? navigation.navigate(lockSetupSuccessRoute, {
+            changePin: true,
+          })
+        : navigation.navigate(lockSelectionRoute)
+    }
+  }, [keyboardHidden, pinSetupState])
+
+  return (
+    <Container tertiary>
+      <Header
+        navigation={props.navigation}
+        route={props.route}
+        transparent={true}
+      />
+      <CustomView center>
+        <SvgCustomIcon
+          name="ConnectMe"
+          width={moderateScale(218.54)}
+          height={moderateScale(28)}
+          fill={colors.cmGray2}
+        />
+      </CustomView>
+      <CustomText center h4 bg="tertiary" style={[styles.title]} tertiary thick>
+        {`${enteredPin ? 'Re-enter passcode' : enterPasscodeText}`}
+      </CustomText>
+      <CustomText center bg="tertiary" tertiary style={[styles.message]}>
+        {failedPin && 'Your passcodes do not match'}
+      </CustomText>
+      <CustomView center>
+        <PinCodeBox
+          ref={pinCodeBox}
+          onPinComplete={handlePinComplete}
+          enableCustomKeyboard={showCustomKeyboard}
+        />
+      </CustomView>
+    </Container>
+  )
+}
 
 const styles = StyleSheet.create({
-  headerLeft: {
-    width: OFFSET_2X,
-  },
   title: {
-    marginTop: OFFSET_6X,
-    marginBottom: OFFSET_7X,
+    fontFamily,
+    fontSize: 26,
+    fontStyle: 'normal',
+    lineHeight: 31,
+    minHeight:verticalScale(62),
+    marginTop: verticalScale(40),
+    marginBottom: verticalScale(40),
+    paddingHorizontal: OFFSET_2X,
+    textAlign: 'center',
   },
-  titleText: {
-    lineHeight: 28,
-    letterSpacing: 0.5,
-    paddingHorizontal: OFFSET_1X,
+  message: {
+    height: scale(20),
+    marginBottom: scale(12),
+    fontFamily,
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: 17,
+    lineHeight: 20,
+    justifyContent: 'center',
+    color: colors.cmRed,
   },
 })
 
-const ReEnterPinFailText = (
-  <CustomText style={[styles.titleText]} center h4 bg="tertiary" tertiary thick>
-    Your passcodes do not match, please start over.
-  </CustomText>
-)
-
-export class LockPinSetup extends PureComponent<
-  LockPinCodeSetupProps,
-  LockPinSetupState
-> {
-  state: LockPinSetupState = {
-    pinSetupState: PIN_SETUP_STATE.INITIAL,
-    enteredPin: null,
-    pinReEnterSuccessPin: null,
-    keyboardHidden: false,
-    showCustomKeyboard: false,
-  }
-
-  pinCodeBox = null
-  keyboardDidHideListener = null
-  keyboardDidShowListener = null
-
-  setPinSetupStateToInitial = () => {
-    this.setState({ pinSetupState: PIN_SETUP_STATE.INITIAL })
-  }
-
-  setPinSetupStateToInitialDelayed = () => {
-    setTimeout(this.setPinSetupStateToInitial, 1000)
-  }
-
-  onPinSetup = (pin: string) => {
-    this.props.setPinAction(pin)
-    this.props.route &&
-    this.props.route.params &&
-    this.props.route.params.existingPin === true
-      ? this.props.navigation.navigate(lockSetupSuccessRoute, {
-          changePin: true,
-        })
-      : this.props.navigation.navigate(lockSetupSuccessRoute)
-  }
-
-  onTouchIdSetup = () => {
-    this.props.enableTouchIdAction()
-  }
-
-  onPinReEnterFail = () => {
-    this.setState({
-      pinSetupState: PIN_SETUP_STATE.REENTER_FAIL,
-      enteredPin: null,
-    })
-    this.pinCodeBox && this.pinCodeBox.clear()
-    this.setPinSetupStateToInitialDelayed()
-  }
-
-  onPinReEnterSuccess = (pin: string) => {
-    this.pinCodeBox && this.pinCodeBox.hideKeyboard()
-    this.setState({
-      pinSetupState: PIN_SETUP_STATE.REENTER_SUCCESS,
-      pinReEnterSuccessPin: pin,
-    })
-  }
-
-  onKeyboardHide = (status: boolean, event: any = null) => {
-    if (this.state.keyboardHidden !== status) {
-      this.setState({
-        keyboardHidden: status,
-        showCustomKeyboard: false,
-      })
-    } else {
-      if (
-        status === false &&
-        event &&
-        event.endCoordinates.height < 100 &&
-        !this.state.keyboardHidden &&
-        Platform.OS === 'ios'
-      ) {
-        this.setState({
-          showCustomKeyboard: true,
-        })
-      } else {
-        this.setState({
-          showCustomKeyboard: false,
-        })
-      }
-    }
-  }
-
-  onFirstPinEnter = (enteredPin: string) => {
-    this.setState({
-      pinSetupState: PIN_SETUP_STATE.REENTER,
-      enteredPin,
-    })
-    this.pinCodeBox && this.pinCodeBox.clear()
-  }
-
-  onPinComplete = (pin: string) => {
-    if (this.state.enteredPin) {
-      // if we found a entered pin, that means user is re-entering pin
-      if (this.state.enteredPin === pin) {
-        this.onPinReEnterSuccess(pin)
-      } else {
-        this.onPinReEnterFail()
-      }
-    } else {
-      // this is the first time user has entered pin
-      this.onFirstPinEnter(pin)
-    }
-  }
-
-  componentDidMount() {
-    this.keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        this.onKeyboardHide(true)
-      }
-    )
-    this.keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      (e) => {
-        this.onKeyboardHide(false, e)
-      }
-    )
-  }
-
-  componentDidUpdate(prevProps: LockPinCodeSetupProps) {
-    if (
-      this.state.keyboardHidden &&
-      this.state.pinSetupState === PIN_SETUP_STATE.REENTER_SUCCESS &&
-      this.props.navigation.isFocused()
-    ) {
-      const pin = this.state.pinReEnterSuccessPin || ''
-      this.onPinSetup(pin)
-    }
-    if (this.props.navigation.isFocused()) {
-      if (!this.keyboardDidHideListener && !this.keyboardDidShowListener) {
-        this.keyboardDidHideListener = Keyboard.addListener(
-          'keyboardDidHide',
-          () => {
-            this.onKeyboardHide(true)
-          }
-        )
-        this.keyboardDidShowListener = Keyboard.addListener(
-          'keyboardDidShow',
-          (e) => {
-            this.onKeyboardHide(false, e)
-          }
-        )
-      }
-    } else {
-      if (this.state.pinSetupState === PIN_SETUP_STATE.REENTER_SUCCESS) {
-        this.setState({
-          pinSetupState: PIN_SETUP_STATE.INITIAL,
-          pinReEnterSuccessPin: null,
-          keyboardHidden: false,
-        })
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    this.keyboardDidShowListener && this.keyboardDidShowListener.remove()
-    this.keyboardDidHideListener && this.keyboardDidHideListener.remove()
-  }
-
-  render() {
-    const { pinSetupState } = this.state
-    const passCodeSetupText =
-      this.props.route &&
-      this.props.route.params &&
-      this.props.route.params.touchIdActive === true
-        ? 'Set up a passcode in case Biometrics fails'
-        : 'Set up a passcode'
-
-    const EnterPinText = (
-      <CustomText
-        style={[styles.titleText]}
-        center
-        h4
-        bg="tertiary"
-        tertiary
-        thick
-      >
-        {this.props.route &&
-        this.props.route.params &&
-        this.props.route.params.existingPin === true
-          ? 'Set up a new passcode'
-          : passCodeSetupText}
-      </CustomText>
-    )
-    const ReEnterPinText = (
-      <CustomText
-        style={[styles.titleText]}
-        center
-        h4
-        bg="tertiary"
-        tertiary
-        thick
-      >
-        {this.props.route &&
-        this.props.route.params &&
-        this.props.route.params.existingPin === true
-          ? 'Re-enter new passcode'
-          : 'Re-enter passcode'}
-      </CustomText>
-    )
-
-    return (
-      <Container tertiary>
-        <CustomView style={[styles.title]}>
-          {pinSetupState === PIN_SETUP_STATE.INITIAL && EnterPinText}
-          {pinSetupState === PIN_SETUP_STATE.REENTER && ReEnterPinText}
-          {pinSetupState === PIN_SETUP_STATE.REENTER_SUCCESS && ReEnterPinText}
-          {pinSetupState === PIN_SETUP_STATE.REENTER_FAIL && ReEnterPinFailText}
-        </CustomView>
-        <CustomView center>
-          <PinCodeBox
-            ref={(pinCodeBox) => {
-              this.pinCodeBox = pinCodeBox
-            }}
-            onPinComplete={this.onPinComplete}
-            enableCustomKeyboard={this.state.showCustomKeyboard}
-          />
-        </CustomView>
-      </Container>
-    )
-  }
-}
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      setPinAction,
-      enableTouchIdAction,
-    },
-    dispatch
-  )
-
 export const lockPinSetupScreen = {
   routeName: lockPinSetupRoute,
-  screen: connect(null, mapDispatchToProps)(LockPinSetup),
-  options: {
-    ...headerNavigationOptions({
-      title: 'App Security',
-    }),
-  },
+  screen: LockPinSetup,
 }

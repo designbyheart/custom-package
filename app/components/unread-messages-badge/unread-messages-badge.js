@@ -1,19 +1,16 @@
 // @flow
-import React, { Component } from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { getConnections } from '../../store/connections-store'
-import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
+import { colors, fontFamily } from '../../common/styles/constant'
 
 import type { Store } from '../../store/type-store'
 import type { UnreadMessagesBadgeProps } from './type-unread-messages-badge'
 import type { Connection } from '../../store/type-connection-store'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 import { HISTORY_EVENT_STATUS } from '../../connection-history/type-connection-history'
-
-const { width } = Dimensions.get('screen')
-const marginTop = verticalScale(90 - 42)
 
 export const UnreadMessagesBadge = ({
   customContainerStyle,
@@ -46,11 +43,12 @@ const mapStateToProps = (state: Store) => {
 
   const customFlat = (array: Array<Array<Object>>) => [].concat(...array)
 
-  const isNewConnection = (status: string) => {
+  const isNewConnection = (status: string, show?: boolean) => {
     if (
-      status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
-      status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
-      status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED
+      (status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
+        status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
+        status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED) &&
+      show
     ) {
       return true
     } else return false
@@ -71,7 +69,8 @@ const mapStateToProps = (state: Store) => {
 
   let numberOfNewMessages = 0
   flattenPlaceholderArray.map((message) => {
-    if (isNewConnection(message.status)) numberOfNewMessages++
+    if (isNewConnection(message.status, message.showBadge))
+      numberOfNewMessages++
   })
 
   return {
@@ -92,14 +91,11 @@ export const unreadMessageContainerCommonStyle = {
 const styles = StyleSheet.create({
   container: {
     ...unreadMessageContainerCommonStyle,
-    marginTop: marginTop + 5,
+    marginTop: verticalScale(2),
     marginLeft: moderateScale(5),
   },
   containerAbsolute: {
     ...unreadMessageContainerCommonStyle,
-    top: verticalScale(marginTop - 3),
-    left: moderateScale(width * 0.1 + 5),
-    position: 'absolute',
   },
   numberText: {
     fontFamily: fontFamily,

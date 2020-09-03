@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react'
 import { Text, View } from 'react-native'
 import type { DefaultLogoProps } from './type-default-logo'
-import { grey, white } from '../../common/styles'
+import { grey, white, fontFamily } from '../../common/styles'
 
 export class DefaultLogo extends PureComponent<DefaultLogoProps, void> {
   render() {
@@ -46,7 +46,7 @@ const styles = {
     shadowRadius: 8,
   },
   defaultText: {
-    fontFamily: 'Lato',
+    fontFamily: fontFamily,
     fontWeight: 'bold',
     color: white,
   },

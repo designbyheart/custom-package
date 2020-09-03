@@ -1,14 +1,10 @@
 // @flow
 import {
   put,
-  takeLatest,
-  take,
-  race,
   call,
   all,
   select,
   takeEvery,
-  fork,
 } from 'redux-saga/effects'
 import delay from '@redux-saga/delay-p'
 import {
@@ -45,6 +41,7 @@ import {
   DENY_CLAIM_OFFER,
   DENY_CLAIM_OFFER_SUCCESS,
   DENY_CLAIM_OFFER_FAIL,
+  OUTOFBAND_CLAIM_OFFER_ACCEPTED,
   CLAIM_OFFER_DELETED,
   DELETE_CLAIM_OFFER,
 } from './type-claim-offer'
@@ -101,6 +98,17 @@ import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import { retrySaga } from '../api/api-utils'
+import {
+  CREDENTIAL_DEFINITION_NOT_FOUND,
+  CREDENTIAL_DEFINITION_NOT_FOUND_MESSAGE,
+  INVALID_CREDENTIAL_OFFER,
+  INVALID_CREDENTIAL_OFFER_MESSAGE,
+  SCHEMA_NOT_FOUND,
+  SCHEMA_NOT_FOUND_MESSAGE,
+} from '../bridge/react-native-cxs/error-cxs'
+import Snackbar from 'react-native-snackbar'
+import { venetianRed, white } from '../common/styles'
+import { onfidoProcessStatus } from '../onfido/type-onfido'
 
 const claimOfferInitialState = {
   vcxSerializedClaimOffers: {},
@@ -217,6 +225,12 @@ export const acceptClaimOffer = (uid: string, remoteDid: string) => ({
   remoteDid,
 })
 
+export const acceptOutofbandClaimOffer = (uid: string, remoteDid: string) => ({
+  type: OUTOFBAND_CLAIM_OFFER_ACCEPTED,
+  uid,
+  remoteDid,
+})
+
 export function convertClaimRequestToEdgeClaimRequest(
   claimRequest: ApiClaimRequest
 ): EdgeClaimRequest {
@@ -273,6 +287,15 @@ export function* claimOfferAccepted(
   const isPaidCredential = payTokenAmount.isGreaterThan(0)
   const remoteDid = claimOfferPayload.remotePairwiseDID
   const [connection]: Connection[] = yield select(getConnection, remoteDid)
+  if (!connection) {
+    captureError(new Error(ERROR_NO_SERIALIZED_CLAIM_OFFER(messageId)))
+    yield put(
+      claimRequestFail(messageId, ERROR_NO_SERIALIZED_CLAIM_OFFER(messageId))
+    )
+
+    return
+  }
+
   const vcxSerializedClaimOffer: SerializedClaimOffer | null = yield select(
     getSerializedClaimOffer,
     connection.identifier,
@@ -349,6 +372,23 @@ export function* claimOfferAccepted(
         yield put(refreshWalletBalance())
       }
     } catch (e) {
+      const showSnackError = (text) => {
+        Snackbar.show({
+          text: text,
+          duration: Snackbar.LENGTH_LONG,
+          backgroundColor: venetianRed,
+          textColor: white,
+        })
+      }
+
+      if (e.code === CREDENTIAL_DEFINITION_NOT_FOUND) {
+        showSnackError(CREDENTIAL_DEFINITION_NOT_FOUND_MESSAGE)
+      } else if (e.code === SCHEMA_NOT_FOUND) {
+        showSnackError(SCHEMA_NOT_FOUND_MESSAGE)
+      } else if (e.code === INVALID_CREDENTIAL_OFFER) {
+        showSnackError(INVALID_CREDENTIAL_OFFER_MESSAGE)
+      }
+
       captureError(e)
       if (isPaidCredential) {
         yield put(paidCredentialRequestFail(messageId, remoteDid))
@@ -646,6 +686,14 @@ export default function claimOfferReducer(
         },
       }
     case CLAIM_OFFER_ACCEPTED:
+      return {
+        ...state,
+        [action.uid]: {
+          ...state[action.uid],
+          status: CLAIM_OFFER_STATUS.ACCEPTED,
+        },
+      }
+    case OUTOFBAND_CLAIM_OFFER_ACCEPTED:
       return {
         ...state,
         [action.uid]: {

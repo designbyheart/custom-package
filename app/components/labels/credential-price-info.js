@@ -1,10 +1,9 @@
 // @flow
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { BigNumber } from 'bignumber.js'
 import { scale } from 'react-native-size-matters'
 
-import { maroonRed } from '../../common/styles'
 import {
   orange,
   whiteSolid,
@@ -23,7 +22,6 @@ const CredentialPriceInfo = ({
 }) => {
   const priceAmount = new BigNumber(price)
 
-  const isBigNumberPrice = priceAmount.toString().length > 15
   const textStyles = isPaid ? styles.paidText : styles.text
   return priceAmount > 0 ? (
     <View style={[styles.priceContainer, isPaid ? styles.paidContainer : {}]}>

@@ -5,12 +5,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import isUrl from 'validator/lib/isURL'
 
+import type { GenericObject } from '../common/type-common'
 import { ID, TYPE } from '../common/type-common'
 import type { Store } from '../store/type-store'
 import type { ResponseTypes } from '../components/request/type-request'
 import type {
   AriesConnectionInvite,
-  AriesConnectionInvitePayload,
   AriesOutOfBandInvite,
   InvitationProps,
   InvitationNavigation,
@@ -232,12 +232,13 @@ const ariesConnectionInviteQrSchema = {
       minItems: 0,
     },
     serviceEndpoint: { type: 'string' },
+    profileUrl: {type: ['null', 'string']},
   },
   required: [ID, TYPE, 'recipientKeys', 'serviceEndpoint'],
 }
 
 export function isValidAriesOutOfBandInviteData(
-  invite: any
+  invite: GenericObject
 ): false | AriesOutOfBandInvite {
   if (!schemaValidator.validate(ariesOutOfBandInviteSchema, invite)) {
     return false
@@ -254,7 +255,7 @@ export function isValidAriesOutOfBandInviteData(
     return false
   }
 
-  return invite
+  return ((invite: any): AriesOutOfBandInvite)
 }
 
 const ariesOutOfBandInviteSchema = {

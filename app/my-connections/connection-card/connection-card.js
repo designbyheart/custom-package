@@ -2,12 +2,7 @@
 import React, { PureComponent } from 'react'
 import SvgCustomIcon from '../../components/svg-custom-icon'
 import { Avatar } from '../../components/avatar/avatar'
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-} from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import type { ConnectionCardProps } from './type-connection-card'
 import { styles } from './styles'
 import { colors } from '../../common/styles/constant'
