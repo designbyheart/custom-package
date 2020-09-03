@@ -3,7 +3,7 @@ import React, { useCallback } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { questionRoute } from '../../common'
 import { useNavigation } from '@react-navigation/native'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 export const QuestionCard = ({

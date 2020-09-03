@@ -36,6 +36,7 @@ exports[`<Badge /> should render dark colored badge 1`] = `
     style={
       Array [
         Object {
+          "fontFamily": "Lato",
           "fontSize": 12,
           "fontWeight": "bold",
         },
@@ -91,6 +92,7 @@ exports[`<Badge /> should render light colored badge 1`] = `
     style={
       Array [
         Object {
+          "fontFamily": "Lato",
           "fontSize": 12,
           "fontWeight": "bold",
         },

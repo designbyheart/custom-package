@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     marginBottom: moderateScale(16),
     textAlign: 'center',
+    fontFamily: fontFamily,
   },
   contentInput: {
     fontSize: verticalScale(fontSizes.size5),
@@ -136,5 +137,6 @@ const styles = StyleSheet.create({
   },
   labelText: {
     marginBottom: moderateScale(8),
+    fontFamily: fontFamily,
   },
 })

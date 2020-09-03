@@ -4,7 +4,6 @@ import React, { PureComponent } from 'react'
 import {
   ImageBackground,
   Image,
-  TouchableOpacity,
   StyleSheet,
   Linking,
   Text,
@@ -12,7 +11,7 @@ import {
 } from 'react-native'
 import Snackbar from 'react-native-snackbar'
 
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 import type { HomeInstructionsProps } from './type-home-instructions'
 import { colors, fontFamily } from '../../common/styles/constant'
@@ -99,6 +98,7 @@ const styles = StyleSheet.create({
     marginVertical: moderateScale(5),
     color: colors.cmGray1,
     textAlign: 'center',
+    fontFamily: fontFamily,
   },
   text: {
     fontSize: moderateScale(15, 0.1),
@@ -106,5 +106,6 @@ const styles = StyleSheet.create({
     marginHorizontal: '5%',
     color: colors.cmGray1,
     textAlign: 'center',
+    fontFamily: fontFamily,
   },
 })

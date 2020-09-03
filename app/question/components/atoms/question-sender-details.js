@@ -1,15 +1,11 @@
 // @flow
 import React from 'react'
-import { Image, Platform, StyleSheet, Text, View } from 'react-native'
+import { Image } from 'react-native'
 
 import type { ImageURISource } from 'react-native/Libraries/Image/ImageSource'
 
-import type { ImageSource } from '../../../common/type-common'
-
 import { CustomView } from '../../../components/layout'
 import QuestionScreenText from './question-screen-text'
-import { measurements } from '../../../common/styles/measurements'
-import { grey, white } from '../../../common/styles'
 import { DefaultLogo } from '../../../components/default-logo/default-logo'
 
 const QuestionSenderDetail = (props: {

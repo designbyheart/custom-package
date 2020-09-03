@@ -1,12 +1,11 @@
 // @flow
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 export const QuestionViewCard = ({
   messageDate,
-  uid,
   requestStatus,
   requestAction,
 }: QuestionViewCardProps) => {

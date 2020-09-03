@@ -2,7 +2,7 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { colors, fontFamily } from '../common/styles/constant'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { moderateScale } from 'react-native-size-matters'
 
 export const RecentCardSeparator = () => {
   return (
