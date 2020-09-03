@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   },
   image: {
     position: 'absolute',
-    bottom: -moderateScale(50),
+    bottom: -verticalScale(50),
   },
   headline: {
     fontFamily: fontFamily,
