@@ -20,10 +20,10 @@ export const HomeHeader = ({ headline }: HeaderProps) => {
     <View style={styles.container}>
       <View
         accessible={true}
-        accessibilityLabel="left-icon"
+        accessibilityLabel="burger-menu"
         style={styles.iconSection}
       >
-        <TouchableOpacity testID="left-icon" onPress={toggleDrawer}>
+        <TouchableOpacity testID="burger-menu" onPress={toggleDrawer}>
           <EvaIcon
             name={HOME_MENU_ICON}
             width={moderateScale(32)}

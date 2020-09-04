@@ -54,7 +54,14 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
                 <Text style={styles.contentGray}>
                   {BLANK_ATTRIBUTE_DATA_TEXT}
                 </Text>
-              ) : renderAttachmentIcon(item.label  || '', item.data || '', item.claimUuid || '', item.claimUuid || '')
+              ) : (
+                renderAttachmentIcon(
+                  item.label || '',
+                  item.data || '',
+                  item.claimUuid || '',
+                  item.claimUuid || ''
+                )
+              )
             }
           </View>
           <View style={styles.avatarWrapper}>

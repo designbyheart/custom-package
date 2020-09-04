@@ -66,10 +66,7 @@ export const renderAttachmentIcon = (
   remotePairwiseDID: string,
   uid: string
 ) => {
-  let attachment: $PropertyType<
-    AttachmentPropType,
-    'attachment'
-    > | null = null
+  let attachment: $PropertyType<AttachmentPropType, 'attachment'> | null = null
 
   if (label.toLowerCase().endsWith('_link')) {
     try {

@@ -122,7 +122,8 @@ describe('Connection via QR code and SMS link', () => {
 
     await matchScreenshot(SCREENSHOT_INVITATION) // screenshot
 
-    await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+    // await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+    await waitForElementAndTap('text', 'Connect', TIMEOUT)
 
     await new Promise((r) => setTimeout(r, 40000)) // sync issue
 
@@ -154,7 +155,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -172,7 +174,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -191,7 +194,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -210,7 +214,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -229,7 +234,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -249,7 +255,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -267,7 +274,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -287,7 +295,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -307,86 +316,101 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      // await device.launchApp({
-      //   newInstance: true,
-      // })
-      // await unlock()
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
     await waitForElementAndTap('text', OK_TEXT_ALERT, TIMEOUT)
 
-    await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('down')
+    await element(by.type('RCTScrollContentView')).atIndex(0).swipe('down')
 
     try {
       await element(
         by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('1'))
-      ).typeText('test attribute 1')
+      ).tap()
+      await element(by.type('RCTSinglelineTextInputView')).typeText(
+        'test attribute 1'
+      )
     } catch (e) {
       try {
-        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('down')
-
+        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('down')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('1'))
-        ).typeText('test attribute 1')
+        ).tap()
+        await element(by.type('RCTSinglelineTextInputView')).typeText(
+          'test attribute 1'
+        )
       } catch (e) {
-        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('up')
-
+        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('up')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('1'))
-        ).typeText('test attribute 1')
+        ).tap()
+        await element(by.type('RCTSinglelineTextInputView')).typeText(
+          'test attribute 1'
+        )
       }
     }
-    await element(
-      by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('1'))
-    ).tapReturnKey()
+    await element(by.type('RCTSinglelineTextInputView')).tapReturnKey()
+    await element(by.text('Done')).tap()
 
     try {
       await element(
         by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
-      ).typeText('test attribute 2')
+      ).tap()
+      await element(by.type('RCTSinglelineTextInputView')).typeText(
+        'test attribute 2'
+      )
     } catch (e) {
       try {
-        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('down')
-
+        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('down')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
-        ).typeText('test attribute 2')
+        ).tap()
+        await element(by.type('RCTSinglelineTextInputView')).typeText(
+          'test attribute 2'
+        )
       } catch (e) {
-        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('up')
-
+        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('up')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
-        ).typeText('test attribute 2')
+        ).tap()
+        await element(by.type('RCTSinglelineTextInputView')).typeText(
+          'test attribute 2'
+        )
       }
     }
-    await element(
-      by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
-    ).tapReturnKey()
+    await element(by.type('RCTSinglelineTextInputView')).tapReturnKey()
+    await element(by.text('Done')).tap()
 
     try {
       await element(
         by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
-      ).typeText('test attribute 3')
+      ).tap()
+      await element(by.type('RCTSinglelineTextInputView')).typeText(
+        'test attribute 3'
+      )
     } catch (e) {
       try {
-        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('down')
-
+        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('down')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
-        ).typeText('test attribute 3')
+        ).tap()
+        await element(by.type('RCTSinglelineTextInputView')).typeText(
+          'test attribute 3'
+        )
       } catch (e) {
-        await element(by.type(GENERAL_SCROLL_VIEW)).atIndex(2).swipe('up')
-
+        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('up')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
-        ).typeText('test attribute 3')
+        ).tap()
+        await element(by.type('RCTSinglelineTextInputView')).typeText(
+          'test attribute 3'
+        )
       }
     }
-    await element(
-      by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
-    ).tapReturnKey()
+    await element(by.type('RCTSinglelineTextInputView')).tapReturnKey()
+    await element(by.text('Done')).tap()
 
     await waitForElementAndTap('text', PROOF_REQUEST_GENERATE, TIMEOUT)
 
@@ -446,6 +470,8 @@ describe('Connection via QR code and SMS link', () => {
 
     await new Promise((r) => setTimeout(r, 10000)) // sync issue
 
+    // await element(by.text('Ok')).tap()
+
     await matchScreenshot(SCREENSHOT_HOME_BIG_HISTORY) // screenshot
   })
 
@@ -483,19 +509,23 @@ describe('Connection via QR code and SMS link', () => {
     await new Promise((r) => setTimeout(r, 10000)) // sync issue
 
     try {
-      await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+      // await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+      await waitForElementAndTap('text', 'Connect', TIMEOUT)
     } catch (e) {
-      token,
+      ;[
+        token,
         invitationId,
         fetchingInvitation,
         invitationUrl,
-        (jsonData = await getInvitation())
+        jsonData,
+      ] = await getInvitation()
 
       console.log(chalk.cyanBright(`${invitationUrl}`))
       connectionId = invitationId
       await exec(`xcrun simctl openurl booted ${invitationUrl}`)
       await new Promise((r) => setTimeout(r, 10000)) // sync issue
-      await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+      // await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+      await waitForElementAndTap('text', 'Connect', TIMEOUT)
     }
 
     await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
@@ -516,7 +546,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -534,7 +565,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -554,7 +586,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
@@ -572,7 +605,8 @@ describe('Connection via QR code and SMS link', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
       console.warn(e)
-      await element(by.id(HOME_CONTAINER)).swipe('down')
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 

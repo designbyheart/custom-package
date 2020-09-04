@@ -64,7 +64,7 @@ describe('Settings screen', () => {
     }
     await element(by.text(SETTINGS_ABOUT)).tap()
     await element(by.id(ABOUT_BACK_ARROW)).tap()
-    await element(by.text(SETTINGS_ONFIDO)).tap()
-    await element(by.id(ONFIDO_BACK_ARROW)).tap()
+    // await element(by.text(SETTINGS_ONFIDO)).tap()
+    // await element(by.id(ONFIDO_BACK_ARROW)).tap()
   })
 })

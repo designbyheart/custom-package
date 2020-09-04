@@ -27,7 +27,7 @@ export const BACK_ARROW = 'back-arrow-touchable'
 export const BURGER_MENU = 'burger-menu'
 export const SCAN_BUTTON = 'Scan'
 export const ALLOW_BUTTON = 'Allow'
-export const NEW_BACK_ARROW = 'back-button-component'
+export const NEW_BACK_ARROW = 'left-icon'
 
 // home
 export const HOME_FEEDBACK_BUTTON = 'home-feedback-id-label'
@@ -39,7 +39,7 @@ export const HOME_NEW_MESSAGE = 'NEW MESSAGE - TAP TO OPEN'
 export const CLAIM_OFFER_ICON_CLOSE = 'claim-offer-icon-close-touchable'
 // export const CLAIM_OFFER_ACCEPT = 'claim-offer-footer-accept'
 // export const CLAIM_OFFER_DENY = 'claim-offer-footer-deny'
-export const CLAIM_OFFER_ACCEPT = 'Accept'
+export const CLAIM_OFFER_ACCEPT = 'Accept Credential'
 export const CLAIM_OFFER_REJECT = 'Reject'
 export const CLAIM_OFFER_SUCCESS_MODAL_CONTINUE =
   'claim-request-success-continue'
@@ -72,12 +72,13 @@ export const PIN_CODE_INPUT_BOX = 'pin-code-input-box'
 // proof request
 // export const PROOF_REQUEST_ACCEPT = 'proof-request-accept'
 // export const PROOF_REQUEST_DENY = 'proof-request-deny'
-export const PROOF_REQUEST_SEND = 'Send'
+export const PROOF_REQUEST_SEND = 'Share Attributes'
 export const PROOF_REQUEST_REJECT = 'Reject'
 export const PROOF_REQUEST_GENERATE = 'Generate'
 export const PROOF_REQUEST_ICON_CLOSE = 'proof-request-icon-close-touchable'
 export const PROOF_REQUEST_MODAL_CONTINUE = 'send-proof-success-continue'
 export const GENERAL_SCROLL_VIEW = 'RCTCustomScrollView'
+// export const GENERAL_SCROLL_VIEW = 'RCTScrollContentView'
 export const PROOF_REQUEST_MISSING_ATTRIBUTE_BASE =
   'proof-request-attribute-item-input-missing attribute '
 
@@ -99,8 +100,8 @@ export const BACKUP_CLOSE = 'recovery-header-close-image'
 export const SETTINGS_BIOMETRICS = 'Biometrics'
 export const BIOMETRICS_OK = 'Ok'
 export const SETTINGS_PASSCODE = 'Passcode'
-export const PASSCODE_BACK_ARROW = 'back-button-component'
-export const SETTINGS_CHAT = 'Chat With Us'
+export const PASSCODE_BACK_ARROW = 'left-icon'
+export const SETTINGS_CHAT = 'Give app feedback'
 export const SETTINGS_ABOUT = 'About'
 export const SETTINGS_ONFIDO = 'ONFIDO'
 
@@ -180,12 +181,12 @@ export const CHAT_SEND_BUTTON = 'Send'
 export const CHAT_SUCCESS_MESSAGE = 'We will respond to your message soon.'
 
 // about
-export const ABOUT_BACK_ARROW = 'back-button-component'
+export const ABOUT_BACK_ARROW = 'left-icon'
 export const ABOUT_HEADER = 'About this App'
 export const ABOUT_TAC_BUTTON_HEADER = 'Terms and Conditions'
 export const ABOUT_PP_BUTTON_HEADER = 'Privacy Policy'
 
 // onfido
-export const ONFIDO_BACK_ARROW = 'back-button-component'
+export const ONFIDO_BACK_ARROW = 'left-icon'
 export const ONFIDO_CUSTOM_BACK_ARROW = 'back'
 export const ONFIDO_ACCEPT_BUTTON = 'I accept'
