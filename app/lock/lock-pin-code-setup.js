@@ -7,7 +7,6 @@ import {
   lockSetupSuccessRoute,
 } from '../common'
 import type { ReactNavigation } from '../common/type-common'
-import { headerNavigationOptions } from '../navigation/navigation-header-config'
 import { Container, CustomText, PinCodeBox, CustomView } from '../components'
 import SvgCustomIcon from '../components/svg-custom-icon'
 import { setPinAction } from './lock-store'
@@ -16,20 +15,44 @@ import { Keyboard, StyleSheet, Platform } from 'react-native'
 import { colors, OFFSET_2X, fontFamily } from '../common/styles'
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters'
 import { Header } from '../components'
+import { useFocusEffect } from '@react-navigation/native'
 
 let keyboardDidHideListener
 let keyboardDidShowListener
 
+const defaults = {
+  pinSetupState: PIN_SETUP_STATE.INITIAL,
+  failedPin: false,
+  enteredPin: null,
+  confirmedPin: null,
+  keyboardHidden: false,
+  showCustomKeyboard: false,
+}
+
 export function LockPinSetup(props: ReactNavigation) {
   const { navigation, route } = props
   const dispatch = useDispatch()
-  const [pinSetupState, setPinSetupState] = useState(PIN_SETUP_STATE.INITIAL)
-  const [failedPin, setFailedPin] = useState(false)
-  const [enteredPin, setEnteredPin] = useState(null)
-  const [confirmedPin, setConfirmedPin] = useState(null)
-  const [keyboardHidden, setKeyboardHidden] = useState(false)
-  const [showCustomKeyboard, setShowCustomKeyboard] = useState(false)
+  const [pinSetupState, setPinSetupState] = useState(defaults.pinSetupState)
+  const [failedPin, setFailedPin] = useState(defaults.failedPin)
+  const [enteredPin, setEnteredPin] = useState(defaults.enteredPin)
+  const [confirmedPin, setConfirmedPin] = useState(defaults.confirmedPin)
+  const [keyboardHidden, setKeyboardHidden] = useState(defaults.keyboardHidden)
+  const [showCustomKeyboard, setShowCustomKeyboard] = useState(defaults.showCustomKeyboard)
   const pinCodeBox = useRef<any>()
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setPinSetupState(defaults.pinSetupState)
+      setFailedPin(defaults.failedPin)
+      setEnteredPin(defaults.enteredPin)
+      setConfirmedPin(defaults.confirmedPin)
+      setKeyboardHidden(defaults.keyboardHidden)
+      setShowCustomKeyboard(defaults.showCustomKeyboard)
+      pinCodeBox.current.clear()
+      pinCodeBox.current.showKeyboard()
+    }, [])
+  );
+
   const existingPin = route && route.params && route.params.existingPin === true
   const enterPasscodeText = existingPin
     ? 'Create new passcode'

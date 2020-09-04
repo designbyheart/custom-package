@@ -10,6 +10,8 @@ import { getNavigation } from '../../../__mocks__/static-data'
 import { pinHash } from '../pin-hash'
 import { createStore } from 'redux'
 import { PinCodeBox } from '../../components'
+import { MockedNavigator } from '../../../__mocks__/mock-navigator'
+import { OpenIdConnectScreen } from '../../open-id-connect/open-id-connect-screen'
 
 describe('<LockPinCodeSetup />', () => {
   const getProps = () => ({
@@ -37,11 +39,12 @@ describe('<LockPinCodeSetup />', () => {
 
   beforeEach(() => {
     props = getProps()
+
+    const intermediateComponent = () => <Provider store={mockStore}>
+      <LockPinSetup {...props} />
+    </Provider>
     component = renderer.create(
-      <Provider store={mockStore}>
-        <LockPinSetup {...props} />
-      </Provider>,
-      options
+      <MockedNavigator component={intermediateComponent} />
     )
   })
 
