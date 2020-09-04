@@ -1,20 +1,17 @@
 // @flow
+import messaging from '@react-native-firebase/messaging'
 import React, { Component } from 'react'
-import { Alert, AppState } from 'react-native'
+import { Alert, AppState, Platform } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { detox } from 'react-native-dotenv'
 
 import { convertAriesCredentialOfferToCxsClaimOffer } from '../bridge/react-native-cxs/vcx-transformers'
-import {
-  convertClaimOfferPushPayloadToAppClaimOffer,
-} from '../push-notification/push-notification-store'
+import { convertClaimOfferPushPayloadToAppClaimOffer } from '../push-notification/push-notification-store'
 import { ariesOutOfBandInvitationToInvitationPayload } from '../invitation/aries-out-of-band'
 
 import { Container, QRScanner } from '../components'
-import {
-  color,
-} from '../common/styles/constant'
+import { color } from '../common/styles/constant'
 import { invitationReceived } from '../invitation/invitation-store'
 import {
   QR_CODE_SENDER_DID,
@@ -43,6 +40,7 @@ import {
   homeDrawerRoute,
   openIdConnectRoute,
   proofRequestRoute,
+  pushNotificationPermissionRoute,
   credentialDetailsRoute,
 } from '../common/'
 
@@ -60,7 +58,10 @@ import type {
   QRCodeScannerScreenState,
   QRCodeScannerScreenProps,
 } from './type-qr-code'
-import type { AriesPresentationRequest, QrCodeEphemeralProofRequest } from '../proof-request/type-proof-request'
+import type {
+  AriesPresentationRequest,
+  QrCodeEphemeralProofRequest,
+} from '../proof-request/type-proof-request'
 import type {
   ClaimOfferPayload,
   CredentialOffer,
@@ -73,14 +74,12 @@ import {
   OPEN_ID_CONNECT_STATE,
 } from '../open-id-connect/open-id-connect-actions'
 import { ID, TYPE } from '../common/type-common'
-import {
-  CLAIM_OFFER_STATUS,
-} from '../claim-offer/type-claim-offer'
+import { CLAIM_OFFER_STATUS } from '../claim-offer/type-claim-offer'
 import { proofRequestReceived } from '../proof-request/proof-request-store'
 import isUrl from 'validator/lib/isURL'
 import { getAttachedRequest } from '../invitation/invitation-store'
 import { claimOfferReceived } from '../claim-offer/claim-offer-store'
-import { validateOutofbandProofRequestQrCode, } from '../proof-request/proof-request-qr-code-reader'
+import { validateOutofbandProofRequestQrCode } from '../proof-request/proof-request-qr-code-reader'
 import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
 
 export function convertQrCodeToInvitation(qrCode: QrCodeShortInvite) {
@@ -96,7 +95,7 @@ export function convertQrCodeToInvitation(qrCode: QrCodeShortInvite) {
       signature:
         qrSenderDetail[QR_CODE_SENDER_KEY_DELEGATION][
           QR_CODE_DELEGATION_SIGNATURE
-          ],
+        ],
     },
     DID: qrSenderDetail[QR_CODE_SENDER_DID],
     logoUrl: qrSenderDetail[QR_CODE_LOGO_URL],
@@ -125,8 +124,10 @@ export function convertQrCodeToInvitation(qrCode: QrCodeShortInvite) {
   }
 }
 
-export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
-  QRCodeScannerScreenState> {
+export class QRCodeScannerScreen extends Component<
+  QRCodeScannerScreenProps,
+  QRCodeScannerScreenState
+> {
   state = {
     appState: AppState.currentState,
     isCameraEnabled: true,
@@ -171,6 +172,12 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
     }
   }
 
+  getAuthorizationStatus = async () => {
+    const authorizationStatus = await messaging().hasPermission()
+
+    return !!authorizationStatus
+  }
+
   checkExistingConnectionAndRedirect = async (invitation: {
     payload: InvitationPayload,
   }) => {
@@ -182,11 +189,6 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
     // otherwise redirect to invitation screen
     const { publicDID = '' } = invitation.payload.senderDetail
     const connectionAlreadyExist = publicDID in this.props.publicDIDs
-
-    // Apparently navigation.push can be null, and hence we are protecting
-    // against null fn call, so if push is not available, navigate is
-    // guaranteed to be available
-    const navigationFn = navigation.push || navigation.navigate
 
     if (connectionAlreadyExist) {
       const {
@@ -213,10 +215,24 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
     }
 
     this.props.invitationReceived(invitation)
-
-    navigationFn(invitationRoute, {
-      senderDID: invitation.payload.senderDID,
-    })
+    // Apparently navigation.push can be null, and hence we are protecting
+    // against null fn call, so if push is not available, navigate is
+    // guaranteed to be available
+    const navigationFn = navigation.push || navigation.navigate
+    if (Platform.OS === 'ios') {
+      if (this.getAuthorizationStatus() && this.props.historyData) {
+        navigationFn(invitationRoute, {
+          senderDID: invitation.payload.senderDID,
+        })
+      } else {
+        navigationFn(pushNotificationPermissionRoute, {
+          senderDID: invitation.payload.senderDID,
+        })
+      }
+    } else
+      navigationFn(invitationRoute, {
+        senderDID: invitation.payload.senderDID,
+      })
   }
 
   onClose = () => {
@@ -311,14 +327,20 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
       senderAgentKeyDelegationProof,
       senderName: payload.label || 'Unknown',
       senderDID: payload.recipientKeys[0],
-      senderLogoUrl: payload.profileUrl && isUrl(payload.profileUrl) ? payload.profileUrl: null,
+      senderLogoUrl:
+        payload.profileUrl && isUrl(payload.profileUrl)
+          ? payload.profileUrl
+          : null,
       senderVerificationKey: payload.recipientKeys[0],
       targetName: payload.label || 'Unknown',
       senderDetail: {
         name: payload.label || 'Unknown',
         agentKeyDlgProof: senderAgentKeyDelegationProof,
         DID: payload.recipientKeys[0],
-        logoUrl: payload.profileUrl && isUrl(payload.profileUrl) ? payload.profileUrl: null,
+        logoUrl:
+          payload.profileUrl && isUrl(payload.profileUrl)
+            ? payload.profileUrl
+            : null,
         verKey: payload.recipientKeys[0],
         publicDID: payload.recipientKeys[0],
       },
@@ -342,7 +364,10 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
     const invitation = ariesOutOfBandInvitationToInvitationPayload(invite)
     if (!invitation) {
       this.props.navigation.goBack(null)
-      Alert.alert('Invalid invitation', 'QR code contains invalid formatted invitation.')
+      Alert.alert(
+        'Invalid invitation',
+        'QR code contains invalid formatted invitation.'
+      )
       return
     }
 
@@ -353,7 +378,10 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
       // Invite: No `handshake_protocols` and `request~attach`
       // Action: show alert about invalid formatted invitation
       this.props.navigation.goBack(null)
-      Alert.alert('Invalid invitation', 'QR code contains invalid formatted invitation.')
+      Alert.alert(
+        'Invalid invitation',
+        'QR code contains invalid formatted invitation.'
+      )
       return
     } else if (
       invite.handshake_protocols?.length &&
@@ -376,17 +404,27 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
       const req = await getAttachedRequest(invite)
       if (!req || !req[TYPE]) {
         this.props.navigation.goBack(null)
-        Alert.alert('Unsupported request', 'QR code contains unsupported message.')
+        Alert.alert(
+          'Unsupported request',
+          'QR code contains unsupported message.'
+        )
         return
       }
 
       if (req[TYPE].endsWith('offer-credential')) {
         const credentialOffer = (req: CredentialOffer)
-        const claimOffer = convertAriesCredentialOfferToCxsClaimOffer(credentialOffer)
+        const claimOffer = convertAriesCredentialOfferToCxsClaimOffer(
+          credentialOffer
+        )
         const uid = credentialOffer[ID]
 
-        const existingCredential: ClaimOfferPayload = this.props.claimOffers[uid]
-        if (existingCredential && existingCredential.status === CLAIM_OFFER_STATUS.ACCEPTED) {
+        const existingCredential: ClaimOfferPayload = this.props.claimOffers[
+          uid
+        ]
+        if (
+          existingCredential &&
+          existingCredential.status === CLAIM_OFFER_STATUS.ACCEPTED
+        ) {
           // we already have accepted that offer so we can redirect on credential details screen
           this.props.navigation.navigate(credentialDetailsRoute, {
             claimOfferUuid: existingCredential.uid,
@@ -412,14 +450,14 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
             },
             {
               remotePairwiseDID: invitation.senderDID,
-            },
+            }
           ),
           {
             uid,
             senderLogoUrl: invitation.senderLogoUrl,
             remotePairwiseDID: invitation.senderDID,
             hidden: true,
-          },
+          }
         )
 
         navigationFn(claimOfferRoute, {
@@ -438,20 +476,17 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
           outofbandProofRequest,
         ] = await validateOutofbandProofRequestQrCode(presentationRequest)
 
-        if (outofbandProofError || !outofbandProofRequest){
+        if (outofbandProofError || !outofbandProofRequest) {
           Alert.alert('Invalid invitation', outofbandProofError)
           return
         }
 
-        this.props.proofRequestReceived(
-          outofbandProofRequest,
-          {
-            uid,
-            senderLogoUrl: invitation.senderLogoUrl,
-            remotePairwiseDID: invitation.senderDID,
-            hidden: true,
-          }
-        )
+        this.props.proofRequestReceived(outofbandProofRequest, {
+          uid,
+          senderLogoUrl: invitation.senderLogoUrl,
+          remotePairwiseDID: invitation.senderDID,
+          hidden: true,
+        })
 
         navigationFn(proofRequestRoute, {
           uid: uid,
@@ -463,7 +498,10 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
     } else {
       // Implement this case
       this.props.navigation.goBack(null)
-      Alert.alert('Unsupported request', 'QR code contains unsupported message.')
+      Alert.alert(
+        'Unsupported request',
+        'QR code contains unsupported message.'
+      )
       return
     }
   }
@@ -488,6 +526,7 @@ export class QRCodeScannerScreen extends Component<QRCodeScannerScreenProps,
 const mapStateToProps = (state: Store) => ({
   currentScreen: state.route.currentScreen,
   publicDIDs: getAllPublicDid(state.connections),
+  historyData: state.history && state.history.data,
   claimOffers: getClaimOffers(state),
 })
 

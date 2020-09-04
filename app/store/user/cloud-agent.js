@@ -309,22 +309,23 @@ function* showInitialPopUp({
   title: string,
   text: string,
 }): Generator<*, *, *> {
-  if (Platform.OS === 'android') {
-    return ALLOW
-  }
+  return ALLOW
+  // if (Platform.OS === 'android') {
+  //   return ALLOW
+  // }
 
-  const userChoice = yield call(
-    AlertAsync,
-    title,
-    text,
-    [
-      { text: DENY, style: 'destructive', onPress: () => DENY },
-      { text: ALLOW, style: 'default', onPress: () => ALLOW },
-    ],
-    { cancelable: false }
-  )
+  // const userChoice = yield call(
+  //   AlertAsync,
+  //   title,
+  //   text,
+  //   [
+  //     { text: DENY, style: 'destructive', onPress: () => DENY },
+  //     { text: ALLOW, style: 'default', onPress: () => ALLOW },
+  //   ],
+  //   { cancelable: false }
+  // )
 
-  return userChoice
+  // return userChoice
 }
 
 function isUserOnInitNeedRoute(action: *) {

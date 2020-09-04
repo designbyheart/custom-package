@@ -8,8 +8,13 @@ import type {
   ResetAction,
   NotificationPayload,
   MatchingCredential,
-  AttributeNames
+  AttributeNames,
 } from '../common/type-common'
+
+export const ALLOW_PUSH_NOTIFICATIONS = 'ALLOW_PUSH_NOTIFICATIONS'
+export type AllowPushNotificationsAction = {
+  type: typeof ALLOW_PUSH_NOTIFICATIONS,
+}
 
 export const PUSH_NOTIFICATION_PERMISSION = 'PUSH_NOTIFICATION_PERMISSION'
 export type PushNotificationPermissionAction = {
@@ -76,7 +81,7 @@ export type DownloadedNotification = {
 }
 
 export type PushNotificationStore = {
-  isAllowed: boolean,
+  isAllowed: boolean | null,
   notification: ?DownloadedNotification,
   pushToken: ?string,
   isPristine: boolean,
@@ -230,8 +235,8 @@ export type PushNotificationProps = {
     payload: NotificationPayload,
     options: ?NotificationOpenOptions
   ) => void,
-  pushNotificationPermissionAction: boolean => void,
-  updatePushToken: string => void,
+  pushNotificationPermissionAction: (boolean) => void,
+  updatePushToken: (string) => void,
   navigateToRoute: (routeName: string, params: NavigationParams) => void,
   isAllowed: boolean,
   pushToken?: string,
