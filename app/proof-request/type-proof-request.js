@@ -316,6 +316,13 @@ export type ProofRequestAutoFillAction = {
   requestedAttributes: Array<Attribute>,
 }
 
+export const PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES = 'PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES'
+export type ProofRequestApplySelfAttestedAttributesAction = {
+  type: typeof PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES,
+  uid: string,
+  selfAttestedAttributes: SelfAttestedAttributes,
+}
+
 export type MissingAttribute = {
   key: string,
   name: string,
@@ -429,6 +436,7 @@ export type ProofRequestAction =
   | DenyProofRequestSuccessAction
   | DenyProofRequestFailAction
   | AcceptOutofbandPresentationRequestAction
+  | ProofRequestApplySelfAttestedAttributesAction
 
 export type ProofRequestStore = {
   +[string]: ProofRequestPayload,

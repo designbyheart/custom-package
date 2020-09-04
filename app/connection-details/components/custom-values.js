@@ -40,6 +40,7 @@ const CustomValues = ({
           <TextInput
             onChange={(e) => params.onTextChange(e, adjustedLabel)}
             placeholder="Please type..."
+            placeholderTextColor={colors.cmGray2}
             defaultValue={params?.labelValue ? params?.labelValue : ''}
             style={styles.contentInput}
           />

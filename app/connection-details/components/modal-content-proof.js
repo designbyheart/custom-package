@@ -78,8 +78,9 @@ class ModalContentProof extends Component<
     if (this.props.uid) {
       props.proofRequestShowStart(this.props.uid)
     }
+
     this.state = {
-      allMissingAttributesFilled: false,
+      allMissingAttributesFilled: !hasMissingAttributes(this.props.missingAttributes),
       generateProofClicked: false,
       selfAttestedAttributes: {},
       disableUserInputs: false,
@@ -123,6 +124,9 @@ class ModalContentProof extends Component<
         MESSAGE_MISSING_ATTRIBUTES_TITLE,
         MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION(this.props.name)
       )
+      this.setState({
+        disableSendButton: true,
+      })
     }
   }
 
@@ -218,6 +222,7 @@ class ModalContentProof extends Component<
     this.setState({
       allMissingAttributesFilled: canEnable,
       selfAttestedAttributes,
+      disableSendButton: false,
     })
   }
   updateFirstTimeClaim() {

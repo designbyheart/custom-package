@@ -175,9 +175,10 @@ class ProofRequestAttributeList extends Component<
                     <TextInput
                       style={styles.contentInput}
                       defaultValue={
-                        this.state?.[adjustedLabel]
-                          ? this.state?.[adjustedLabel]
-                          : '-'
+                        value
+                          ? value
+                          : this.state?.[adjustedLabel]
+                            ? this.state?.[adjustedLabel] : '-'
                       }
                       autoCorrect={false}
                       blurOnSubmit={true}
@@ -334,7 +335,7 @@ const styles = StyleSheet.create({
   contentInput: {
     fontSize: verticalScale(fontSizes.size5),
     height: 48,
-    fontWeight: '400',
+    fontWeight: '700',
     color: colors.cmGray1,
     width: '100%',
     textAlign: 'left',
