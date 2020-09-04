@@ -138,5 +138,10 @@ const styles = StyleSheet.create({
   labelText: {
     marginBottom: moderateScale(8),
     fontFamily: fontFamily,
+    fontSize: verticalScale(fontSizes.size6),
+    fontWeight: '700',
+    color: colors.cmGray1,
+    width: '100%',
+    textAlign: 'left',
   },
 })
