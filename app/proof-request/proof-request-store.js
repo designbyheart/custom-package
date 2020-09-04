@@ -20,6 +20,7 @@ import type {
   DenyProofRequestAction,
   DenyProofRequestSuccessAction,
   AcceptOutofbandPresentationRequestAction,
+  DeleteOutofbandPresentationRequestAction,
   OutOfBandConnectionForPresentationEstablishedAction,
 } from './type-proof-request'
 import {
@@ -53,6 +54,7 @@ import {
   DENY_PROOF_REQUEST_SUCCESS,
   DENY_PROOF_REQUEST_FAIL,
   ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
+  DELETE_OUTOFBAND_PRESENTATION_REQUEST,
   OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
 } from './type-proof-request'
 import type {
@@ -422,6 +424,13 @@ export const acceptOutofbandPresentationRequest = (
   requestedAttrsJson,
 })
 
+export const deleteOutofbandPresentationRequest = (
+  uid: string,
+): DeleteOutofbandPresentationRequestAction => ({
+  type: DELETE_OUTOFBAND_PRESENTATION_REQUEST,
+  uid,
+})
+
 export const outOfBandConnectionForPresentationEstablished = (
   uid: string,
 ): OutOfBandConnectionForPresentationEstablishedAction => ({
@@ -512,6 +521,10 @@ export default function proofRequestReducer(
           requestedAttrsJson: action.requestedAttrsJson,
         },
       }
+
+    case DELETE_OUTOFBAND_PRESENTATION_REQUEST:
+      const { [action.uid]: proofRequest, ...newState } = state
+      return newState
 
     case PROOF_REQUEST_SHOWN:
       return {

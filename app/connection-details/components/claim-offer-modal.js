@@ -34,6 +34,7 @@ import {
   resetClaimRequestStatus,
   denyClaimOffer,
   acceptOutofbandClaimOffer,
+  deleteOutOfBandClaimOffer,
 } from '../../claim-offer/claim-offer-store'
 import { txnAuthorAgreementRoute } from '../../common'
 import {
@@ -58,6 +59,7 @@ export class ClaimOfferModal extends Component<any, *> {
 
   state = {
     shouldShowTransactionInfo: false,
+    scheduledDeleteion: false,
   }
 
   render() {
@@ -220,6 +222,11 @@ export class ClaimOfferModal extends Component<any, *> {
   }
 
   componentWillUnmount() {
+    if (this.state.scheduledDeleteion) {
+      this.props.deleteOutOfBandClaimOffer(this.props.uid)
+      return
+    }
+
     // if modal is being closed, and status of claim request is error
     // then we need to reset status for next time
     const errorStates = [
@@ -238,22 +245,37 @@ export class ClaimOfferModal extends Component<any, *> {
   }
 
   onIgnore = () => {
-    this.props.claimOfferIgnored(this.props.uid)
+    const { invitationPayload } = this.props.route.params
+
+    if (!invitationPayload) {
+      this.props.claimOfferIgnored(this.props.uid)
+    } else {
+      this.setState({ ...this.state, scheduledDeleteion: true })
+    }
+    
     this.hideModal()
   }
 
   onDeny = () => {
-    const { invitation } = this.props
-    if (!invitation) {
+    const { invitationPayload } = this.props.route.params
+    console.log({props: this.props})
+
+    if (!invitationPayload) {
       this.props.denyClaimOffer(this.props.uid)
     } else {
-      this.props.invitationRejected(invitation.senderDID)
+      this.setState({ ...this.state, scheduledDeleteion: true })
     }
 
     this.hideModal()
   }
 
   onClose = () => {
+    const { invitationPayload } = this.props.route.params
+
+    if (invitationPayload) {
+      this.setState({ ...this.state, scheduledDeleteion: true })
+    }
+
     this.hideModal()
   }
 
@@ -268,7 +290,7 @@ export class ClaimOfferModal extends Component<any, *> {
     // if paid cred, then start loading ledger txn fees
     const { shouldShowTransactionInfo } = this.state
     if (shouldShowTransactionInfo === false) {
-      this.setState({ shouldShowTransactionInfo: true })
+      this.setState({ ...this.state, shouldShowTransactionInfo: true })
       animateLayout()
     }
   }
@@ -370,6 +392,7 @@ const mapDispatchToProps = (dispatch) =>
       resetClaimRequestStatus,
       newConnectionSeen,
       denyClaimOffer,
+      deleteOutOfBandClaimOffer,
       sendInvitationResponse,
       invitationRejected,
     },

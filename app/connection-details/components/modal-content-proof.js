@@ -42,7 +42,8 @@ import {
   proofRequestShown,
   proofRequestShowStart,
   denyProofRequest,
-  acceptOutofbandPresentationRequest
+  acceptOutofbandPresentationRequest,
+  deleteOutofbandPresentationRequest,
 } from '../../proof-request/proof-request-store'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import {
@@ -71,7 +72,7 @@ import {
 
 class ModalContentProof extends Component<
   ProofRequestAndHeaderProps,
-  ProofRequestState
+  ProofRequestState & { scheduledDeletion: boolean },
 > {
   constructor(props) {
     super(props)
@@ -86,6 +87,7 @@ class ModalContentProof extends Component<
       selectedClaims: {},
       disableSendButton: false,
       interactionsDone: false,
+      scheduledDeletion: false,
     }
     this.onSend = this.onSend.bind(this)
   }
@@ -250,14 +252,30 @@ class ModalContentProof extends Component<
     })
   }
 
+  componentWillUnmount() {
+    if (this.state.scheduledDeletion) {
+      this.props.deleteOutofbandPresentationRequest(this.props.uid)
+    }
+  }
+
   onIgnore = () => {
-    this.props.newConnectionSeen(this.props.remotePairwiseDID)
-    this.props.ignoreProofRequest(this.props.uid)
+    if (this.props.invitationPayload) {
+      this.setState({ scheduledDeletion: true })
+    } else {
+      this.props.newConnectionSeen(this.props.remotePairwiseDID)
+      this.props.ignoreProofRequest(this.props.uid)
+    }
+
     this.props.hideModal()
   }
 
   onReject = () => {
-    this.props.rejectProofRequest(this.props.uid)
+    if (this.props.invitationPayload) {
+      this.setState({ scheduledDeletion: true })
+    } else {
+      this.props.rejectProofRequest(this.props.uid)
+    }
+
     this.props.hideModal()
   }
 
@@ -270,7 +288,12 @@ class ModalContentProof extends Component<
   }
 
   onDeny = () => {
-    this.props.denyProofRequest(this.props.uid)
+    if (this.props.invitationPayload) {
+      this.setState({ scheduledDeletion: true })
+    } else {
+      this.props.denyProofRequest(this.props.uid)
+    }
+
     this.props.hideModal()
   }
 
@@ -445,6 +468,7 @@ const mapDispatchToProps = (dispatch) =>
       updateAttributeClaim,
       acceptOutOfBandInvitation,
       acceptOutofbandPresentationRequest,
+      deleteOutofbandPresentationRequest,
       getProof,
       userSelfAttestedAttributes,
       proofRequestShowStart,

@@ -58,7 +58,7 @@ class PushNotificationPermission extends Component<
     ) {
       const authorizationStatus = await messaging().hasPermission()
 
-      if (!!authorizationStatus) {
+      if (authorizationStatus) {
         this.props.navigation.navigate(invitationRoute, {
           senderDID: this.props.route.params.senderDID,
         })

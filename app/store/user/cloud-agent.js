@@ -104,17 +104,17 @@ export function* registerCloudAgentWithToken(
   if (!userPreviousChoice) {
     if (routesForSpecialMessage.includes(currentScreen)) {
       // this falls in case #3, #4 from ./cloud-agent-readme.md
-      userCurrentChoice = yield* showInitialPopUp(routeSpecificPushDialogue)
+      userCurrentChoice = showInitialPopUp(routeSpecificPushDialogue)
     } else {
       // this falls in case #1, #2 from ./cloud-agent-readme.md
-      userCurrentChoice = yield* showInitialPopUp(genericPushDialogue)
+      userCurrentChoice = showInitialPopUp(genericPushDialogue)
     }
   }
 
   if (userPreviousChoice === DENY) {
     if (routesForSpecialMessage.includes(currentScreen)) {
       // this falls in case #10, #12
-      userCurrentChoice = yield* showInitialPopUp(routeSpecificPushDialogue)
+      userCurrentChoice = showInitialPopUp(routeSpecificPushDialogue)
     } else {
       // this falls in case #6
       // TODO:KS Confirm with Tyler that if we are on non special screen
@@ -302,13 +302,13 @@ function getFirebaseToken() {
   )
 }
 
-function* showInitialPopUp({
+function showInitialPopUp({
   title,
   text,
 }: {
   title: string,
   text: string,
-}): Generator<*, *, *> {
+}) {
   return ALLOW
   // if (Platform.OS === 'android') {
   //   return ALLOW
