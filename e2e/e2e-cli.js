@@ -218,6 +218,20 @@ async function runTests(args) {
       }
     }
 
+    if (!args.skip) {
+      const connectionTestRun = spawn(
+        'detox',
+        [...initialTestArgs, 'e2e/__tests__/connection_invitation.spec.js'], // path to initial test is absolute - we must use it for any test folder
+        { stdio: 'inherit' }
+      )
+      // wait for initial test run to finish
+      const { stdout, stderr, exitCode } = await connectionTestRun
+
+      if (exitCode) {
+        return exitCode
+      }
+    }
+
     const extraArgs = []
     // is there single test that user wants to run
     if (args.testToRun) {
@@ -231,7 +245,11 @@ async function runTests(args) {
       extraArgs.push(
         ...fileNames
           .map((file) => {
-            if (file === 'initial.spec.js') return ''
+            if (
+              file === 'initial.spec.js' ||
+              file === 'connection_invitation.spec.js'
+            )
+              return ''
             return `${testsDirectory}/${file}`
           })
           .filter((_) => _)

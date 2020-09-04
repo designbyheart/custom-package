@@ -8,6 +8,7 @@ import {
   MY_CONNECTIONS_CONTAINER,
   MY_CONNECTIONS_HEADER,
   SCREENSHOT_TEST_CONNECTION,
+  MY_CONNECTIONS_CONNECTION,
   GENERAL_SCROLL_VIEW,
   CONNECTION_ENTRY_HEADER,
   VIEW_CREDENTIAL,
@@ -16,6 +17,8 @@ import {
   VIEW_PROOF,
   PROOF_HEADER,
   BACK_ARROW,
+  CLAIM_OFFER_PROFILE_INFO,
+  PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
 } from '../utils/test-constants'
 import { waitForElementAndTap } from '../utils/detox-selectors'
 import { matchScreenshot } from '../utils/screenshot'
@@ -51,5 +54,39 @@ describe('My connections screen', () => {
     await matchScreenshot(SCREENSHOT_TEST_CONNECTION) // screenshot
   })
 
-  xit('Case 2: drill down to connection and check its elements', async () => {})
+  it('Case 2: drill down to connection and check its elements', async () => {
+    await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
+
+    await element(by.type(GENERAL_SCROLL_VIEW))
+      .atIndex(0)
+      .swipe('down', 'fast', 0.5)
+
+    await expect(element(by.text(CONNECTION_ENTRY_HEADER))).toBeVisible()
+
+    await element(by.text(VIEW_CREDENTIAL)).tap()
+
+    await expect(element(by.text(CREDENTIAL_HEADER))).toBeVisible()
+
+    await expect(
+      element(by.text(CLAIM_OFFER_PROFILE_INFO)).atIndex(0)
+    ).toBeVisible()
+
+    await waitForElementAndTap('text', CLOSE_BUTTON, TIMEOUT)
+
+    await element(by.type(GENERAL_SCROLL_VIEW))
+      .atIndex(0)
+      .swipe('up', 'fast', 0.5)
+
+    await element(by.text(VIEW_PROOF)).tap()
+
+    await expect(element(by.text(PROOF_HEADER))).toBeVisible()
+
+    await expect(
+      element(by.text(PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED)).atIndex(0)
+    ).toBeVisible()
+
+    await waitForElementAndTap('text', CLOSE_BUTTON, TIMEOUT)
+
+    await element(by.id(BACK_ARROW)).tap()
+  })
 })

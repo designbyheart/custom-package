@@ -190,3 +190,8 @@ export const ABOUT_PP_BUTTON_HEADER = 'Privacy Policy'
 export const ONFIDO_BACK_ARROW = 'left-icon'
 export const ONFIDO_CUSTOM_BACK_ARROW = 'back'
 export const ONFIDO_ACCEPT_BUTTON = 'I accept'
+
+// from api
+export const CLAIM_OFFER_PROFILE_INFO = 'Profile Info'
+export const PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED =
+  'Automated Single claim fulfilled'
