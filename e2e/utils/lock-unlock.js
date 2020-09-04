@@ -47,6 +47,8 @@ async function setEnvironment() {
 
   await element(by.id('eula-accept')).tap()
 
+  await element(by.id(LOCK_SETUP_SUCCESS_CLOSE_BUTTON)).tap()
+
   await expect(element(by.id('home-container'))).toBeVisible()
 }
 
