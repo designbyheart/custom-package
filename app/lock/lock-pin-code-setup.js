@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontStyle: 'normal',
     lineHeight: 31,
-    minHeight:verticalScale(62),
+    minHeight: verticalScale(62),
     marginTop: verticalScale(40),
     marginBottom: verticalScale(40),
     paddingHorizontal: OFFSET_2X,

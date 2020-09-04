@@ -16,6 +16,7 @@ import {
 describe('<QRScannerScreen />', () => {
   function getProps() {
     return {
+      historyData: {},
       navigation: getNavigation(),
       route: {},
       invitationReceived: jest.fn(),

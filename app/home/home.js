@@ -20,6 +20,7 @@ import {
   proofRequestRoute,
   claimOfferRoute,
   questionRoute,
+  pushNotificationPermissionRoute,
 } from '../common'
 import {
   getConnections,
@@ -377,11 +378,13 @@ export class HomeScreen extends Component<HomeProps, void> {
 
 const mapStateToProps = (state: Store) => {
   const isNewConnection = (status: string, show?: boolean) => {
-    if ((
-      status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
-      status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
-      status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED
-    ) && show === undefined || show) {
+    if (
+      ((status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
+        status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
+        status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED) &&
+        show === undefined) ||
+      show
+    ) {
       return true
     } else return false
   }

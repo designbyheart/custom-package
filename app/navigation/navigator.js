@@ -60,6 +60,7 @@ import { restorePassphraseScreen } from '../restore/restore-passphrase'
 import { privacyTNCScreen } from '../privacy-tnc/privacy-tnc-screen'
 import { connectionHistoryScreen } from '../connection-details/connection-details'
 import { credentialDetailsScreen } from '../credential-details/credential-details'
+import { pushNotificationPermissionScreen } from '../push-notification/components/push-notification-permission-screen'
 import {
   splashScreenRoute,
   homeRoute,
@@ -67,6 +68,7 @@ import {
   credentialsDrawerRoute,
   homeDrawerRoute,
   settingsDrawerRoute,
+  pushNotificationPermissionRoute,
   lockPinSetupHomeRoute,
 } from '../common'
 import { walletTabsScreen } from '../wallet/wallet-tab-send-details'
@@ -538,6 +540,11 @@ export function ConnectMeAppNavigator() {
         name={AttributeValuesScreen.routeName}
         component={AttributeValuesScreen.screen}
         options={AttributeValuesScreen.screen.navigationOptions}
+      />
+      <ModalStack.Screen
+        name={pushNotificationPermissionScreen.routeName}
+        component={pushNotificationPermissionScreen.screen}
+        options={{ safeAreaInsets: { top: 0 } }}
       />
     </ModalStack.Navigator>
   )

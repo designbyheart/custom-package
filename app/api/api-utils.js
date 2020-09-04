@@ -11,18 +11,19 @@ import { captureError } from '../services/error/error-handler'
 
 export function* retrySaga(callEffect: any): Generator<*, *, *> {
   let answerMsgId: string = '' // --> Only for structured messages.
+  let resultError;
   for (let i = 0; i < 3; i++) {
     try {
       answerMsgId = yield callEffect
       return answerMsgId
     } catch (error) {
+      resultError = error
       if (i < 2) {
         yield call(delay, 2000)
       }
     }
   }
-  // TODO: We should send error from API call directly which will be rethrown from here, so we can know which API call failed.
-  throw new Error('Sending Proof Request Failed.')
+  throw resultError
 }
 
 export const options = (

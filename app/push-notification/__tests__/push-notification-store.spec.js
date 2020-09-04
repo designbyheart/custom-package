@@ -29,7 +29,7 @@ import { VCX_INIT_SUCCESS } from '../../store/type-config-store'
 
 describe('push notification store should work properly', () => {
   let initialState = {
-    isAllowed: false,
+    isAllowed: null,
     notification: null,
     pushToken: null,
     isPristine: true,
@@ -59,7 +59,7 @@ describe('push notification store should work properly', () => {
   it('should set new push notification flag true', () => {
     const expectedState = {
       ...initialState,
-      isAllowed: false,
+      isAllowed: null,
       notification: claimOfferPushNotification,
     }
     const actualState = pushNotificationReducer(
