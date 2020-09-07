@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: verticalScale(fontSizes.size5),
-    fontWeight: '400',
+    fontWeight: '700',
     color: colors.cmGray1,
     width: '100%',
     textAlign: 'left',

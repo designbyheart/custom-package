@@ -22,6 +22,7 @@ import type {
   AcceptOutofbandPresentationRequestAction,
   DeleteOutofbandPresentationRequestAction,
   OutOfBandConnectionForPresentationEstablishedAction,
+  SelfAttestedAttributes,
 } from './type-proof-request'
 import {
   getUserPairwiseDid,
@@ -56,6 +57,7 @@ import {
   ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   DELETE_OUTOFBAND_PRESENTATION_REQUEST,
   OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
+  PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES,
 } from './type-proof-request'
 import type {
   NotificationPayloadInfo,
@@ -280,6 +282,15 @@ export const proofRequestAutoFill = (
   type: PROOF_REQUEST_AUTO_FILL,
   uid,
   requestedAttributes,
+})
+
+export const proofRequestApplySelfAttestedAttributes = (
+  uid: string,
+  selfAttestedAttributes: SelfAttestedAttributes
+) => ({
+  type: PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES,
+  uid,
+  selfAttestedAttributes,
 })
 
 export const proofRequestReceived = (
@@ -570,6 +581,34 @@ export default function proofRequestReducer(
           data: {
             ...state[action.uid].data,
             requestedAttributes: [...action.requestedAttributes],
+          },
+        },
+      }
+
+    case PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES:
+      let filledAttributes = state[action.uid].data.requestedAttributes
+        .map((attributes) => {
+          const attribute = attributes[0]
+          if (action.selfAttestedAttributes.hasOwnProperty(attribute.key)){
+            return [{
+              ...attribute,
+              data: action.selfAttestedAttributes[attribute.key].data,
+              values: {
+                [attribute.label]: action.selfAttestedAttributes[attribute.key].data
+              },
+            }]
+          } else {
+            return [attribute]
+          }
+        })
+
+      return {
+        ...state,
+        [action.uid]: {
+          ...state[action.uid],
+          data: {
+            ...state[action.uid].data,
+            requestedAttributes: filledAttributes
           },
         },
       }

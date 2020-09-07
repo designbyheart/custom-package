@@ -60,6 +60,7 @@ import {
   sendProof,
   updateProofHandle,
   dissatisfiedAttributesFound,
+  proofRequestApplySelfAttestedAttributes,
 } from '../proof-request/proof-request-store'
 import {
   getProofRequest,
@@ -297,6 +298,7 @@ export function convertIndyPreparedProofToAttributes(
       {
         label,
         data: selfAttestedAttribute,
+        key: attributeKey,
         values: {
           [label]: selfAttestedAttribute
         },
@@ -501,6 +503,14 @@ export function* generateProofSaga(action: GenerateProofAction): any {
       return
     }
 
+    const requestedAttributes = convertIndyPreparedProofToAttributes(
+      {
+        ...matchingCredentials,
+      },
+      proofRequestData.requested_attributes
+    )
+    yield put(proofRequestAutoFill(uid, requestedAttributes))
+
     if (missingAttributes.length > 0) {
       // if we find that there are some attributes that are not available
       // in any of the claims stored in user wallet
@@ -514,17 +524,9 @@ export function* generateProofSaga(action: GenerateProofAction): any {
         USER_SELF_ATTESTED_ATTRIBUTES
       )
       selfAttestedAttributes = selfAttestedFilledAction.selfAttestedAttributes
-    }
 
-    // auto-fill proof request
-    const requestedAttributes = convertIndyPreparedProofToAttributes(
-      {
-        ...matchingCredentials,
-        self_attested_attrs: { ...selfAttestedAttributes },
-      },
-      proofRequestData.requested_attributes
-    )
-    yield put(proofRequestAutoFill(uid, requestedAttributes))
+      yield put(proofRequestApplySelfAttestedAttributes(uid, selfAttestedAttributes))
+    }
 
     yield put(proofRequestDataToStore(uid, proofHandle, selfAttestedAttributes))
   } catch (e) {
