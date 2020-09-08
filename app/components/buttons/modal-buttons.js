@@ -84,30 +84,37 @@ class ModalButtons extends PureComponent<any, ModalButtonProps> {
             }}
           />
         )}
-        {!hideAccept &&
-        <BottomButton
-          {...{
-            disableAccept,
-            bottomBtnText,
-            debounceButtonPress,
-            svgIcon,
-            colorBackground,
-            bottomTestID,
-          }}
-        />}
+        {!hideAccept && (
+          <BottomButton
+            {...{
+              disableAccept,
+              bottomBtnText,
+              debounceButtonPress,
+              svgIcon,
+              colorBackground,
+              bottomTestID,
+            }}
+          />
+        )}
       </View>
     )
   }
 }
 
-const TopButton = ({ topBtnText, onIgnore, disableDeny, topTestID }: TopButtonProps) => {
+const TopButton = ({
+  topBtnText,
+  onIgnore,
+  disableDeny,
+  topTestID,
+}: TopButtonProps) => {
   const { buttonIgnore, ignoreTextStyle, buttonParentWrapper } = styles
 
   return (
     <TouchableOpacity
       disabled={disableDeny}
       onPress={onIgnore}
-      accessibilityLabel={topTestID}>
+      accessibilityLabel={topTestID}
+    >
       <View
         style={[
           buttonParentWrapper,
@@ -142,7 +149,8 @@ const BottomButton = ({
     <TouchableOpacity
       disabled={disableAccept}
       onPress={debounceButtonPress}
-      accessibilityLabel={bottomTestID}>
+      accessibilityLabel={bottomTestID}
+    >
       <View
         style={[
           buttonParentWrapper,

@@ -59,7 +59,8 @@ class ConnectionDetailsHeader extends PureComponent<any, void> {
             testID="three-dots"
             accessible={true}
             accessibilityLabel="three-dots"
-            onPress={this.props.moreOptionsOpen}>
+            onPress={this.props.moreOptionsOpen}
+          >
             <EvaIcon
               name={MORE_ICON}
               width={moderateScale(32)}

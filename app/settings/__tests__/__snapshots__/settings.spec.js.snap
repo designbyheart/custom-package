@@ -312,7 +312,7 @@ exports[`user settings screen should render properly and snapshot should match i
                             <View
                               style={
                                 Object {
-                                  "backgroundColor": "#fff",
+                                  "backgroundColor": "#FFFFFF",
                                   "borderRadius": 10,
                                   "elevation": 0,
                                   "flexDirection": "row",
@@ -498,6 +498,7 @@ exports[`user settings screen should render properly and snapshot should match i
                             Array [
                               Object {
                                 "backgroundColor": "#F2F2F2",
+                                "flex": 1,
                               },
                             ]
                           }
@@ -684,6 +685,7 @@ exports[`user settings screen should render properly and snapshot should match i
                                     "backgroundColor": "#F2F2F2",
                                     "borderBottomWidth": 0,
                                     "borderTopWidth": 0,
+                                    "flex": 1,
                                     "padding": 0,
                                   }
                                 }
@@ -2371,7 +2373,7 @@ exports[`user settings screen should render properly and snapshot should match i
                             Object {
                               "alignItems": "center",
                               "backgroundColor": "#FFFFFF",
-                              "borderRadius": 30,
+                              "borderRadius": 15.599999999999998,
                               "bottom": 20,
                               "elevation": 0,
                               "height": 31.199999999999996,

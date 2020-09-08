@@ -37,7 +37,9 @@ export function LockPinSetup(props: ReactNavigation) {
   const [enteredPin, setEnteredPin] = useState(defaults.enteredPin)
   const [confirmedPin, setConfirmedPin] = useState(defaults.confirmedPin)
   const [keyboardHidden, setKeyboardHidden] = useState(defaults.keyboardHidden)
-  const [showCustomKeyboard, setShowCustomKeyboard] = useState(defaults.showCustomKeyboard)
+  const [showCustomKeyboard, setShowCustomKeyboard] = useState(
+    defaults.showCustomKeyboard
+  )
   const pinCodeBox = useRef<any>()
 
   useFocusEffect(
@@ -51,7 +53,7 @@ export function LockPinSetup(props: ReactNavigation) {
       pinCodeBox.current.clear()
       pinCodeBox.current.showKeyboard()
     }, [])
-  );
+  )
 
   const existingPin = route && route.params && route.params.existingPin === true
   const enterPasscodeText = existingPin
@@ -162,9 +164,9 @@ export function LockPinSetup(props: ReactNavigation) {
 const styles = StyleSheet.create({
   title: {
     fontFamily,
-    fontSize: 26,
+    fontSize: moderateScale(26, 0.1),
     fontStyle: 'normal',
-    lineHeight: 31,
+    lineHeight: moderateScale(31, 0.1),
     minHeight: verticalScale(62),
     marginTop: verticalScale(40),
     marginBottom: verticalScale(40),
@@ -177,8 +179,8 @@ const styles = StyleSheet.create({
     fontFamily,
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: 17,
-    lineHeight: 20,
+    fontSize: moderateScale(17, 0.1),
+    lineHeight: moderateScale(20, 0.1),
     justifyContent: 'center',
     color: colors.cmRed,
   },

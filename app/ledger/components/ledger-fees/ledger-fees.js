@@ -147,7 +147,10 @@ function getLedgerFeeState(
   walletBalance: $PropertyType<LedgerFeesProps, 'walletBalance'>,
   toTransfer: $PropertyType<LedgerFeesProps, 'transferAmount'>
 ): { state: LedgerFeesStateEnum, data?: LedgerFeesData } {
-  const { data: { transfer }, status: feesStatus } = ledgerFees
+  const {
+    data: { transfer },
+    status: feesStatus,
+  } = ledgerFees
   const { data: balance, status: balanceStatus } = walletBalance
 
   switch (true) {

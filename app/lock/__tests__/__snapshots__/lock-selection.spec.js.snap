@@ -244,7 +244,7 @@ exports[`app lock selection page should render properly 1`] = `
           null,
           Object {
             "fontFamily": "Lato",
-            "fontSize": 26,
+            "fontSize": 25.777142857142856,
             "fontStyle": "normal",
             "lineHeight": 29.67142857142857,
             "marginBottom": 47.647058823529406,

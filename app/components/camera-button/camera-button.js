@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: moderateScale(42, 3),
     height: moderateScale(42, 3),
-    borderRadius: 30,
+    borderRadius: moderateScale(42, 3) / 2,
     backgroundColor: colors.cmWhite,
     position: 'absolute',
     shadowColor: colors.cmBlack,

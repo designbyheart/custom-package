@@ -7,11 +7,6 @@ import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
 class CredentialCard extends PureComponent<any, {}> {
-  constructor(props: any) {
-    super(props)
-    this.state = {}
-  }
-
   updateAndShowModal = () => {
     if (this.props.proof) {
       this.props.navigation.navigate(proofRequestRoute, { uid: this.props.uid })
