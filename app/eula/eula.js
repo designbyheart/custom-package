@@ -5,7 +5,7 @@
 // on click accept take user to lock selection screen
 
 import React, { useState, useCallback, useMemo } from 'react'
-import { Alert, View, StyleSheet } from 'react-native'
+import { Alert, View, StyleSheet, Platform } from 'react-native'
 import WebView from 'react-native-webview'
 
 import type {
@@ -16,12 +16,14 @@ import type {
 import { Container, FooterActions } from '../components'
 import {
   eulaRoute,
-  lockSetupSuccessRoute,
+  homeRoute,
 } from '../common'
 import { eulaAccept } from './eula-store'
 import { EULA_URL, localEulaSource } from './type-eula'
 import { OrangeLoader } from '../components/loader-gif/loader-gif'
 import { connect } from 'react-redux'
+import { unlockApp } from '../lock/lock-store'
+import { vcxInitStart } from '../store/route-store'
 
 export const EulaScreen = ({
   dispatch,
@@ -38,8 +40,15 @@ export const EulaScreen = ({
 
   const onAccept = useCallback(() => {
     dispatch(eulaAccept(true))
+    dispatch(unlockApp())
+    if (Platform.OS === 'android') {
+      // Android bypasses request for push notification permissions.
+      // So we can run VCX provisioning/initialization immediately.
+      // For ios devices, it will be requested after accepting the very first connection
+      dispatch(vcxInitStart())
+    }
     // if we have to enable choice for restore and start fresh screen, then redirect user to restoreRoute instead of homeRoute
-    navigation.navigate(lockSetupSuccessRoute)
+    navigation.navigate(homeRoute)
   }, [])
 
   const renderLoader = useCallback(() => Loader, [])

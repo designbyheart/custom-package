@@ -2,19 +2,17 @@
 
 import { Platform, AppState, Linking } from 'react-native'
 import delay from '@redux-saga/delay-p'
-import { put, take, call, select, race, all } from 'redux-saga/effects'
-import { eventChannel, END } from 'redux-saga'
+import { put, take, call, select, race } from 'redux-saga/effects'
+import { eventChannel } from 'redux-saga'
 import uniqueId from 'react-native-unique-id'
 import messaging from '@react-native-firebase/messaging'
 import AlertAsync from 'react-native-alert-async'
 
-import type { PushNotificationStore } from '../../push-notification/type-push-notification'
 import type { UserOneTimeInfo } from './type-user-store'
 import type { RouteUpdateAction } from '../route-store'
 
 import { flattenAsync } from '../../common/flatten-async'
 import {
-  getPushNotificationStore,
   getCurrentScreen,
   getIsAppLocked,
   getOfflineStatus,
@@ -26,7 +24,6 @@ import {
   vcxShutdown,
 } from '../../bridge/react-native-cxs/RNCxs'
 import {
-  LONG_PRESSED_IN_LOCK_SELECTION_SCREEN,
   UNLOCK_APP,
 } from '../../lock/type-lock'
 import { safeSet, safeGet } from '../../services/storage'
@@ -36,9 +33,9 @@ import {
   genRecoveryPhraseRoute,
   walletRoute,
   cloudRestoreRoute,
-  claimOfferRoute, proofRequestRoute,
+  claimOfferRoute, proofRequestRoute, homeRoute, homeDrawerRoute,
 } from '../../common'
-import { ROUTE_UPDATE, handleRouteUpdate } from '../route-store'
+import { ROUTE_UPDATE } from '../route-store'
 import { OFFLINE_STATUS } from '../../offline/type-offline'
 import { pushNotificationPermissionAction } from '../../push-notification/push-notification-store'
 
@@ -446,7 +443,17 @@ const routeSpecificPushDialogue = {
 }
 // TODO:KS Confirm with Tyler about other screens as well
 // screens such as Onfido, Backup, Cloud Restore, Token
-const routesForSpecialMessage = [
+const routesForSpecialMessage = Platform.OS === 'android' ? [
+  invitationRoute,
+  onfidoRoute,
+  genRecoveryPhraseRoute,
+  walletRoute,
+  cloudRestoreRoute,
+  claimOfferRoute,
+  proofRequestRoute,
+  homeDrawerRoute,
+  homeRoute,
+]: [
   invitationRoute,
   onfidoRoute,
   genRecoveryPhraseRoute,

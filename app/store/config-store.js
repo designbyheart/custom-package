@@ -96,15 +96,10 @@ import { schemaValidator } from '../services/schema-validator'
 import type { EnvironmentDetailUrlDownloaded } from '../api/type-api'
 import {
   init,
-  createOneTimeInfoWithToken,
-  getProvisionToken,
-  simpleInit,
   vcxShutdown,
   downloadMessages,
   updateMessages,
   getHandleBySerializedConnection,
-  getClaimHandleBySerializedClaimOffer,
-  proofDeserialize,
   createCredentialWithProprietaryOffer,
   createCredentialWithAriesOffer,
   proofCreateWithRequest,
@@ -116,7 +111,6 @@ import {
   fetchAdditionalDataError,
   updatePayloadToRelevantStoreSaga,
 } from '../push-notification/push-notification-store'
-import type { VcxProvisionResult } from '../bridge/react-native-cxs/type-cxs'
 import type { UserOneTimeInfo } from './user/type-user-store'
 import { connectRegisterCreateAgentDone } from './user/user-store'
 import findKey from 'lodash.findkey'
@@ -125,13 +119,11 @@ import { GENESIS_FILE_NAME } from '../api/api-constants'
 import type {
   ClaimOfferMessagePayload,
   ClaimPushPayload,
-  PushNotificationStore,
 } from './../push-notification/type-push-notification'
 import type {
   ProofRequestPushPayload,
   StringifiableProofRequest,
   ProofRequest,
-  ProofRequestData,
 } from '../proof-request/type-proof-request'
 import type { ClaimPushPayloadVcx } from './../claim/type-claim'
 import type {
@@ -141,20 +133,12 @@ import type {
 import { MESSAGE_TYPE } from '../api/api-constants'
 import {
   saveSerializedClaimOffer,
-  addSerializedClaimOffer,
 } from './../claim-offer/claim-offer-store'
-import {
-  CLAIM_REQUEST_STATUS,
-  VCX_CLAIM_OFFER_STATE,
-} from './../claim-offer/type-claim-offer'
-import type { SerializedClaimOffer } from '../claim-offer/type-claim-offer'
-import { SEND_CLAIM_REQUEST } from '../claim-offer/type-claim-offer'
 import { getPendingFetchAdditionalDataKey } from './store-selector'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import { ensureVcxInitSuccess } from './route-store'
 import { convertSovrinAtomsToSovrinTokens } from '../sovrin-token/sovrin-token-converter'
-import { flattenAsync } from '../common/flatten-async'
 import {
   registerCloudAgentWithToken,
   registerCloudAgentWithoutToken,
