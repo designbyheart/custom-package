@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
     }),
   },
   title: {
-    fontSize: verticalScale(fontSizes.size8),
+    fontSize: verticalScale(fontSizes.size7),
     color: colors.cmGray3,
     width: '100%',
     textAlign: 'left',

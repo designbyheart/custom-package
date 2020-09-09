@@ -35,6 +35,8 @@ export const SAVE_ICON = 'save-outline'
 export const BACKUP_ICON = 'cloud-upload-outline'
 export const ATTACHMENT_ICON = 'attach-2-outline'
 export const PHOTO_ATTACHMENT_ICON = 'image-outline'
+export const ALERT_ICON = 'alert-circle-outline'
+export const ARROW_FORWARD_ICON = 'arrow-ios-forward-outline'
 
 // common icon class is implemented to set default values (except name) for icons
 // in that case we should only set icon name and get an icon with default color and size

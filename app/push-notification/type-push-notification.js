@@ -113,6 +113,7 @@ export type Attribute = {
   claimUuid?: string,
   cred_info?: MatchingCredential,
   self_attest_allowed?: boolean,
+  dissatisfied?: boolean,
 }
 
 export type AdditionalData = {

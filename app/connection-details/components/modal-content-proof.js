@@ -108,19 +108,19 @@ class ModalContentProof extends Component<
         ),
         [
           {
-            text: 'Ignore',
+            text: 'Ok',
             onPress: this.onIgnore,
-          },
-          {
-            text: 'Reject',
-            onPress: this.onDeny,
-          },
+          }
         ],
-        { cancelable: false }
       )
+      this.setState({
+        disableSendButton: true,
+      })
+      return
     }
 
     if (
+      this.props.dissatisfiedAttributes.length === 0 &&
       this.props.missingAttributes !== prevProps.missingAttributes &&
       hasMissingAttributes(this.props.missingAttributes)
     ) {
@@ -272,8 +272,6 @@ class ModalContentProof extends Component<
       this.props.newConnectionSeen(this.props.remotePairwiseDID)
       this.props.ignoreProofRequest(this.props.uid)
     }
-
-    this.props.hideModal()
   }
 
   onReject = () => {
@@ -417,7 +415,8 @@ class ModalContentProof extends Component<
           topBtnText={'Reject'}
           bottomBtnText={primaryActionText}
           disableAccept={
-            !enablePrimaryActionStatus || this.state.disableSendButton
+            !enablePrimaryActionStatus || this.state.disableSendButton ||
+            this.props.dissatisfiedAttributes && this.props.dissatisfiedAttributes.length > 0
           }
           svgIcon="Send"
           colorBackground={colors.cmGreen1}

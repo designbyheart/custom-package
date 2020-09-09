@@ -29,7 +29,7 @@ import {
   customValuesRoute,
   attributeValueRoute,
 } from '../../common/route-constants'
-import { BLANK_ATTRIBUTE_DATA_TEXT } from '../type-connection-details'
+import { BLANK_ATTRIBUTE_DATA_TEXT, DISSATISFIED_ATTRIBUTE_DATA_TEXT } from '../type-connection-details'
 
 // components
 import SvgCustomIcon from '../../components/svg-setting-icons'
@@ -42,6 +42,8 @@ import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 import { generateStateForMissingAttributes, isInvalidValues } from '../utils'
 import { Avatar } from '../../components'
 import { renderAttachmentIcon } from './modal-content'
+import { ALERT_ICON, ARROW_FORWARD_ICON, EvaIcon, PHOTO_ATTACHMENT_ICON } from '../../common/icons'
+import Icon from '../../components/icon'
 
 const screenWidth = Dimensions.get('window').width
 const sliderWidth = screenWidth - screenWidth * 0.1
@@ -83,8 +85,7 @@ class ProofRequestAttributeList extends Component<
     this.props.canEnablePrimaryAction(!isInvalid, this.state)
   }
 
-  onTextChange = (e: any, name: string) => {
-    const { text } = e.nativeEvent
+  onTextChange = (text: string, name: string) => {
     this.setState(
       {
         [name]: text,
@@ -129,10 +130,6 @@ class ProofRequestAttributeList extends Component<
   // then we have to render view for each pair in values and
   // collect them into one wrapping view
   renderValues = ({ item, index }: any) => {
-    if (!item.values) {
-      return <View />
-    }
-
     let logoUrl
 
     const views = Object.keys(item.values).map((label, keyIndex) => {
@@ -155,85 +152,116 @@ class ProofRequestAttributeList extends Component<
             : null
       }
 
-      const showInputBox =
-        adjustedLabel in this.props.missingAttributes && !value
+      const selfAttestedAttribute = adjustedLabel in this.props.missingAttributes && !value && !item.dissatisfied
+      const dissatisfiedAttribute = !value && item.dissatisfied
+
       const {
         handleCustomValuesNavigation,
         handleAttributeValuesNavigation,
       } = this
       return (
-        <View key={`${index}_${keyIndex}`}>
-          <View>
-            {showInputBox ? (
-              <View style={styles.wrapper}>
-                <Text style={styles.title}>{label}</Text>
-                <TouchableOpacity
-                  onPress={() =>
-                    handleCustomValuesNavigation(label, adjustedLabel)
-                  }
-                >
-                  <TextInput
-                    style={styles.contentInput}
-                    defaultValue={
-                      value
-                        ? value
-                        : this.state?.[adjustedLabel]
-                        ? this.state?.[adjustedLabel]
-                        : '-'
+        <View key={`${index}_${keyIndex}`} style={styles.textAvatarWrapper}>
+          <View style={styles.textInnerWrapper}>
+            {selfAttestedAttribute ? ( // attribute can be self attested
+                <View style={styles.wrapper}>
+                  <Text style={styles.title}>{label}</Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      handleCustomValuesNavigation(label, adjustedLabel)
                     }
-                    autoCorrect={false}
-                    blurOnSubmit={true}
-                    clearButtonMode="always"
-                    numberOfLines={3}
-                    multiline={true}
-                    maxLength={200}
-                    placeholder={`Enter ${label}`}
-                    returnKeyType="done"
-                    testID={`${testID}-input-${adjustedLabel}`}
-                    accessible={true}
-                    accessibilityLabel={`${testID}-input-${adjustedLabel}`}
-                    underlineColorAndroid="transparent"
-                    editable={false}
-                    pointerEvents="none"
-                  />
-                </TouchableOpacity>
-              </View>
-            ) : // If data is empty string, show the BLANK text in gray instead
-            isDataEmptyString ? (
-              <View>
-                <Text style={styles.title}>{label}</Text>
-                <Text style={styles.contentGray}>
-                  {BLANK_ATTRIBUTE_DATA_TEXT}
-                </Text>
-              </View>
-            ) : (
-              <View style={styles.textAvatarWrapper}>
-                {renderAttachmentIcon(
-                  label,
-                  value,
-                  item.claimUuid || '',
-                  item.claimUuid || ''
+                  >
+                    <TextInput
+                      style={styles.contentInput}
+                      defaultValue={
+                        value
+                          ? value
+                          : this.state?.[adjustedLabel]
+                          ? this.state?.[adjustedLabel] : '-'
+                      }
+                      autoCorrect={false}
+                      blurOnSubmit={true}
+                      clearButtonMode="always"
+                      numberOfLines={3}
+                      multiline={true}
+                      maxLength={200}
+                      placeholder={`Enter ${label}`}
+                      returnKeyType="done"
+                      testID={`${testID}-input-${adjustedLabel}`}
+                      accessible={true}
+                      accessibilityLabel={`${testID}-input-${adjustedLabel}`}
+                      underlineColorAndroid="transparent"
+                      editable={false}
+                      pointerEvents="none"
+                    />
+                  </TouchableOpacity>
+                </View>
+              ) :
+              dissatisfiedAttribute ? ( // attribute cannot be fulfilled
+                  <View>
+                    <Text style={styles.title}>{label}</Text>
+                    <Text style={styles.dissatisfiedAttribute}>
+                      {DISSATISFIED_ATTRIBUTE_DATA_TEXT}
+                    </Text>
+                  </View>
+                ):  // If data is empty string, show the BLANK text in gray instead
+              isDataEmptyString ? (
+                <View>
+                  <Text style={styles.title}>{label}</Text>
+                    <Text style={styles.contentGray}>
+                      {BLANK_ATTRIBUTE_DATA_TEXT}
+                    </Text>
+                  </View>
+                ) : (
+                  <View>
+                    <View style={styles.textAvatarWrapper}>
+                      <View style={styles.textInnerWrapper}>
+                        {renderAttachmentIcon(
+                          label,
+                          value,
+                          item.claimUuid || '',
+                          item.claimUuid || '',
+                        )}
+                      </View>
+                      {
+                        keyIndex === 0 &&
+                        <View style={styles.avatarWrapper}>
+                          <Icon
+                            medium
+                            round
+                            resizeMode="cover"
+                            src={logoUrl}
+                          />
+                        </View>
+                      }
+                    </View>
+                  </View>
                 )}
-              </View>
-            )}
           </View>
+          {
+            !dissatisfiedAttribute && keyIndex === 0 &&
+            <View style={styles.iconWrapper}>
+              <EvaIcon
+                name={ARROW_FORWARD_ICON}
+                fill={colors.cmBlack}
+              />
+            </View>
+          }
+          {
+            dissatisfiedAttribute && keyIndex === 0 &&
+            <View style={styles.iconWrapper}>
+              <EvaIcon
+                name={ALERT_ICON}
+                color={colors.cmRed}
+              />
+            </View>
+          }
         </View>
       )
     })
 
     return (
       <View key={index} style={styles.wrapper}>
-        <View style={styles.textAvatarWrapper}>
-          <View style={styles.textInnerWrapper}>{views}</View>
-          <View style={styles.avatarInnerWrapper}>
-            <SvgCustomIcon
-              name="ListItemArrow"
-              width={verticalScale(10)}
-              height={verticalScale(11)}
-              fill={colors.cmBlack}
-            />
-          </View>
-        </View>
+        <View>{views}</View>
       </View>
     )
   }
@@ -319,18 +347,17 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   textInnerWrapper: {
-    width: '92%',
+    width: '85%',
   },
-  avatarInnerWrapper: {
+  iconWrapper: {
     marginTop: moderateScale(16),
   },
   title: {
     fontSize: verticalScale(fontSizes.size7),
-    fontWeight: '700',
+    fontWeight: '400',
     color: colors.cmGray3,
     width: '100%',
     textAlign: 'left',
-    // marginBottom: moderateScale(2),
     fontFamily: fontFamily,
   },
   contentInput: {
@@ -361,8 +388,23 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontFamily: fontFamily,
   },
+  dissatisfiedAttribute: {
+    fontSize: verticalScale(fontSizes.size4),
+    marginTop: moderateScale(4),
+    marginBottom: moderateScale(6),
+    fontWeight: '700',
+    color: colors.cmRed,
+    width: '100%',
+    textAlign: 'left',
+    fontFamily: fontFamily,
+  },
   keyboardFlatList: {
     paddingLeft: '5%',
     paddingRight: '5%',
+  },
+  avatarWrapper: {
+    width: '15%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })

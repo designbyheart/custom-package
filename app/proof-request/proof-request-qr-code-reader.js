@@ -264,8 +264,7 @@ const proofRequestDataSchema = {
           type: 'object',
           properties: {
             name: { type: 'string' },
-            self_attest_allowed: { type: 'boolean' },
-            restrictions: { type: 'array' },
+            restrictions: { type: ['array', 'object'] },
           },
           required: ['name'],
         },

@@ -122,6 +122,7 @@ Object {
       ],
       "version": "1.0.0",
     },
+    "dissatisfiedAttributes": Array [],
     "missingAttributes": Object {},
     "originalProofRequestData": Object {
       "name": "proof_req_1",
