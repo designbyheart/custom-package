@@ -505,6 +505,7 @@ export default function proofRequestReducer(
           status: PROOF_REQUEST_STATUS.RECEIVED,
           proofStatus: PROOF_STATUS.NONE,
           missingAttributes: {},
+          dissatisfiedAttributes: [],
           data: {
             ...data,
             requestedAttributes: data.requestedAttributes.map((attribute) => {

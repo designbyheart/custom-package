@@ -4,15 +4,6 @@ import SvgIcon from 'react-native-svg-icon'
 import { Path, Svg, Ellipse } from 'react-native-svg'
 
 export const svgIcons = {
-  ListItemArrow: {
-    svg: (
-      <Path
-        d="M.727 1.653C.102 1.055.525 0 1.39 0a.96.96 0 0 1 .664.266l4.191 4.012a1 1 0 0 1 0 1.444L2.054 9.734A.96.96 0 0 1 1.39 10C.525 10 .102 8.945.727 8.347L3.47 5.722a1 1 0 0 0 0-1.444L.727 1.653z"
-        fill="#A5A5A5"
-      />
-    ),
-    viewBox: '0 0 7 10',
-  },
   UserAvatar: {
     svg: (
       <Path

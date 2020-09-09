@@ -9,6 +9,7 @@ import type {
   ResetAction,
   ImageSource,
   RequestedAttrsJson,
+  GenericObject,
 } from '../common/type-common'
 import type {
   Attribute,
@@ -21,6 +22,7 @@ export type RequestedAttribute = {|
   name?: string,
   names?: Array<string>,
   self_attest_allowed?: boolean,
+  restrictions?: GenericObject,
 |}
 
 export type RequestedPredicates = {
@@ -517,6 +519,6 @@ Specifically, you are missing credentials with the following attributes:
 
 Contact ${connectionName} for more information.
 
-Pressing IGNORE will dismiss the request, and allow you to find and fulfill it later when you are able to fulfill this request, and will send no response notification back to ${connectionName}.
+Closing the dialog will dismiss the request, and allow you to find and fulfill it later when you are able to fulfill this request, and will send no response notification back to ${connectionName}.
 
 Pressing REJECT will notify ${connectionName}. They will not know you are unable to fulfill the request, only that you have rejected it.`

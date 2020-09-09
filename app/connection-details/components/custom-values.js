@@ -1,7 +1,7 @@
 // @flow
 
 // packages
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { View, Platform, StyleSheet, TextInput, Text } from 'react-native'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 
@@ -22,9 +22,17 @@ const CustomValues = ({
   navigation: { goBack },
   route: { params },
 }: ReactNavigation) => {
+  const [value, setValue] = useState('')
+
   const hideModal = useCallback(() => {
     goBack(null)
   }, [])
+
+  const onDone = useCallback(() => {
+    params.onTextChange(value, adjustedLabel)
+    goBack(null)
+  }, [value])
+
   const adjustedLabel = params.label.toLocaleLowerCase()
 
   return (
@@ -38,16 +46,20 @@ const CustomValues = ({
         <Text style={styles.labelText}>{params?.label || 'Attribute'}</Text>
         <View style={styles.customValuesWrapper}>
           <TextInput
-            onChange={(e) => params.onTextChange(e, adjustedLabel)}
+            onChangeText={setValue}
             placeholder="Please type..."
             placeholderTextColor={colors.cmGray2}
             defaultValue={params?.labelValue ? params?.labelValue : ''}
             style={styles.contentInput}
+            keyboardType="default"
+            returnKeyType="done"
+            multiline={true}
+            blurOnSubmit={true}
           />
         </View>
       </View>
       <ModalButtons
-        onPress={() => goBack(null)}
+        onPress={onDone}
         onIgnore={hideModal}
         topBtnText="Cancel"
         bottomBtnText="Done"
@@ -114,7 +126,6 @@ const styles = StyleSheet.create({
   },
   contentInput: {
     fontSize: verticalScale(fontSizes.size5),
-    height: 48,
     fontWeight: '400',
     color: colors.cmGray2,
     width: '100%',

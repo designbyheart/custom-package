@@ -162,6 +162,8 @@ export type ConnectionHistoryDetailsProps = {
 
 export const BLANK_ATTRIBUTE_DATA_TEXT = '(none)'
 
+export const DISSATISFIED_ATTRIBUTE_DATA_TEXT = 'Not found'
+
 export type ConnectionHistoryData = {
   [string]: { data: Array<ConnectionHistoryEvent>, newBadge: boolean },
 }

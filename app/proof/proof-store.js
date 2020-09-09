@@ -32,6 +32,7 @@ import type {
   ProofRequestedAttributes,
   ProofRequestPayload,
   DissatisfiedAttribute,
+  RequestedAttribute,
 } from '../proof-request/type-proof-request'
 import {
   UPDATE_ATTRIBUTE_CLAIM,
@@ -163,6 +164,17 @@ export function convertSelfAttestedToIndySelfAttested(
   }, {})
 }
 
+function isDissatisfiedAttribute(attribute: RequestedAttribute): boolean {
+  // cases:
+  // 1. self_attest_allowed: false
+  // 2. restrictions != {}
+  // 3. restrictions != [] and != [{}] and != [{},{},....]
+
+  return (typeof attribute.self_attest_allowed === 'boolean' && attribute.self_attest_allowed === false) ||
+    (typeof attribute.restrictions === 'object' && Object.keys(attribute.restrictions).length > 0) ||
+    (Array.isArray(attribute.restrictions) && attribute.restrictions.filter((restriction) => Object.keys(restriction).length > 0).length > 0)
+}
+
 export function convertPreparedProofToRequestedAttributes(
   preparedProof: IndyPreparedProof,
   proofRequest: ProofRequestData
@@ -178,11 +190,8 @@ export function convertPreparedProofToRequestedAttributes(
 
     if (!attributeClaimData || !attributeClaimData[0]) {
       const requestedAttribute = proofRequest.requested_attributes[attrKey]
-      if (
-        typeof requestedAttribute.self_attest_allowed === 'boolean' &&
-        requestedAttribute.self_attest_allowed === false
-      ) {
 
+      if (isDissatisfiedAttribute(requestedAttribute)) {
         if (requestedAttribute.name) {
           dissatisfiedAttributes.push({
             name: requestedAttribute.name,
@@ -290,18 +299,15 @@ export function convertIndyPreparedProofToAttributes(
       })
     }
 
-    const attrs = preparedProof.self_attested_attrs
-    const selfAttestedAttribute =
-      attrs && attrs[label.toLowerCase().trim()].data
-
     return [
       {
         label,
-        data: selfAttestedAttribute,
         key: attributeKey,
+        data: undefined,
         values: {
-          [label]: selfAttestedAttribute
+          [label]: undefined
         },
+        dissatisfied: isDissatisfiedAttribute(attribute)
       },
     ]
   })
@@ -497,10 +503,6 @@ export function* generateProofSaga(action: GenerateProofAction): any {
       // then user cannot fulfill this whole proof request
       // let user know that there are dissatisfied attributes
       yield put(dissatisfiedAttributesFound(dissatisfiedAttributes, uid))
-
-      // as user cannot proceed ahead with accepting proof request
-      // we stop this saga here
-      return
     }
 
     const requestedAttributes = convertIndyPreparedProofToAttributes(
