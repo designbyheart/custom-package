@@ -130,7 +130,7 @@ class ProofRequestAttributeList extends Component<
   // collect them into one wrapping view
   renderValues = ({ item, index }: any) => {
     if (!item.values) {
-      return <View></View>
+      return <View />
     }
 
     let logoUrl
@@ -146,12 +146,12 @@ class ProofRequestAttributeList extends Component<
         logoUrl =
           value || isDataEmptyString
             ? item.claimUuid &&
-            this.props.claimMap &&
-            this.props.claimMap[item.claimUuid] &&
-            this.props.claimMap[item.claimUuid].logoUrl
-            ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
-            : this.props.userAvatarSource ||
-            require('../../images/UserAvatar.png')
+              this.props.claimMap &&
+              this.props.claimMap[item.claimUuid] &&
+              this.props.claimMap[item.claimUuid].logoUrl
+              ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
+              : this.props.userAvatarSource ||
+                require('../../images/UserAvatar.png')
             : null
       }
 
@@ -165,56 +165,57 @@ class ProofRequestAttributeList extends Component<
         <View key={`${index}_${keyIndex}`}>
           <View>
             {showInputBox ? (
-                <View style={styles.wrapper}>
-                  <Text style={styles.title}>{label}</Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      handleCustomValuesNavigation(label, adjustedLabel)
+              <View style={styles.wrapper}>
+                <Text style={styles.title}>{label}</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    handleCustomValuesNavigation(label, adjustedLabel)
+                  }
+                >
+                  <TextInput
+                    style={styles.contentInput}
+                    defaultValue={
+                      value
+                        ? value
+                        : this.state?.[adjustedLabel]
+                        ? this.state?.[adjustedLabel]
+                        : '-'
                     }
-                  >
-                    <TextInput
-                      style={styles.contentInput}
-                      defaultValue={
-                        value
-                          ? value
-                          : this.state?.[adjustedLabel]
-                            ? this.state?.[adjustedLabel] : '-'
-                      }
-                      autoCorrect={false}
-                      blurOnSubmit={true}
-                      clearButtonMode="always"
-                      numberOfLines={3}
-                      multiline={true}
-                      maxLength={200}
-                      placeholder={`Enter ${label}`}
-                      returnKeyType="done"
-                      testID={`${testID}-input-${adjustedLabel}`}
-                      accessible={true}
-                      accessibilityLabel={`${testID}-input-${adjustedLabel}`}
-                      underlineColorAndroid="transparent"
-                      editable={false}
-                      pointerEvents="none"
-                    />
-                  </TouchableOpacity>
-                </View>
-              ) : // If data is empty string, show the BLANK text in gray instead
-              isDataEmptyString ? (
-                <View>
-                  <Text style={styles.title}>{label}</Text>
-                  <Text style={styles.contentGray}>
-                    {BLANK_ATTRIBUTE_DATA_TEXT}
-                  </Text>
-                </View>
-              ) : (
-                <View style={styles.textAvatarWrapper}>
-                  {renderAttachmentIcon(
-                    label,
-                    value,
-                    item.claimUuid || '',
-                    item.claimUuid || '',
-                  )}
-                </View>
-              )}
+                    autoCorrect={false}
+                    blurOnSubmit={true}
+                    clearButtonMode="always"
+                    numberOfLines={3}
+                    multiline={true}
+                    maxLength={200}
+                    placeholder={`Enter ${label}`}
+                    returnKeyType="done"
+                    testID={`${testID}-input-${adjustedLabel}`}
+                    accessible={true}
+                    accessibilityLabel={`${testID}-input-${adjustedLabel}`}
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    pointerEvents="none"
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : // If data is empty string, show the BLANK text in gray instead
+            isDataEmptyString ? (
+              <View>
+                <Text style={styles.title}>{label}</Text>
+                <Text style={styles.contentGray}>
+                  {BLANK_ATTRIBUTE_DATA_TEXT}
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.textAvatarWrapper}>
+                {renderAttachmentIcon(
+                  label,
+                  value,
+                  item.claimUuid || '',
+                  item.claimUuid || ''
+                )}
+              </View>
+            )}
           </View>
         </View>
       )

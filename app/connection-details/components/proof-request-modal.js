@@ -38,33 +38,38 @@ const ProofRequestModal = (props: any) => {
     }
   }, [])
 
-  return (
-    props && props.data ?
-      <View style={styles.modalWrapper}>
-        <ModalContentProof
-          content={props.data.requestedAttributes}
-          uid={props.uid}
-          invitationPayload={props.invitationPayload}
-          colorBackground={props.claimThemePrimary}
-          secondColorBackground={props.claimThemeSecondary}
-          hideModal={hideModal}
-          newConnectionSeen={props.newConnectionSeen}
-          institutionalName={props.name}
-          credentialName={props.data.name}
-          credentialText={'Requested by'}
-          imageUrl={props.logoUrl}
-          navigation={props.navigation}
-          route={props.route}
-        />
-      </View> :
-      <View/>
+  return props && props.data ? (
+    <View style={styles.modalWrapper}>
+      <ModalContentProof
+        content={props.data.requestedAttributes}
+        uid={props.uid}
+        invitationPayload={props.invitationPayload}
+        colorBackground={props.claimThemePrimary}
+        secondColorBackground={props.claimThemeSecondary}
+        hideModal={hideModal}
+        newConnectionSeen={props.newConnectionSeen}
+        institutionalName={props.name}
+        credentialName={props.data.name}
+        credentialText={'Requested by'}
+        imageUrl={props.logoUrl}
+        navigation={props.navigation}
+        route={props.route}
+      />
+    </View>
+  ) : (
+    <View />
   )
 }
 
 const mapStateToProps = (state: Store, props: ClaimProofNavigation) => {
   const { proofRequest } = state
 
-  const { uid, invitationPayload, attachedRequest, backRedirectRoute } = props.route.params
+  const {
+    uid,
+    invitationPayload,
+    attachedRequest,
+    backRedirectRoute,
+  } = props.route.params
   const proofRequestData = proofRequest[uid] || {}
   const {
     data,
@@ -110,7 +115,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       newConnectionSeen,
     },
-    dispatch,
+    dispatch
   )
 
 export const proofRequestScreen = {
@@ -119,8 +124,8 @@ export const proofRequestScreen = {
 }
 
 proofRequestScreen.screen.navigationOptions = ({
-                                                 navigation: { goBack, isFocused },
-                                               }) => ({
+  navigation: { goBack, isFocused },
+}) => ({
   safeAreaInsets: { top: isFocused() ? 85 : 100 },
   cardStyle: {
     marginLeft: '2.5%',

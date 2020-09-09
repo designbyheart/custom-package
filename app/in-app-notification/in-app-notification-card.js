@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 10,
-    backgroundColor: '#fff',
+    backgroundColor: colors.cmWhite,
     elevation: Platform.OS === 'android' ? 9 : 0,
   },
   buttonContainer: {
@@ -226,13 +226,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: color.border.primary,
+    borderColor: colors.cmGray5,
   },
   initialsText: {
     fontFamily: 'Lato',
     fontSize: 17,
     fontWeight: 'bold',
-    color: color.textColor.darkgray,
+    color: colors.cmGray1,
   },
   avatarSection: {
     height: '100%',

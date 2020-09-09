@@ -72,7 +72,7 @@ import {
 
 class ModalContentProof extends Component<
   ProofRequestAndHeaderProps,
-  ProofRequestState & { scheduledDeletion: boolean },
+  ProofRequestState & { scheduledDeletion: boolean }
 > {
   constructor(props) {
     super(props)
@@ -81,7 +81,9 @@ class ModalContentProof extends Component<
     }
 
     this.state = {
-      allMissingAttributesFilled: !hasMissingAttributes(this.props.missingAttributes),
+      allMissingAttributesFilled: !hasMissingAttributes(
+        this.props.missingAttributes
+      ),
       generateProofClicked: false,
       selfAttestedAttributes: {},
       disableUserInputs: false,
@@ -316,7 +318,7 @@ class ModalContentProof extends Component<
       })
       this.props.newConnectionSeen(this.props.remotePairwiseDID)
 
-      if (this.props.invitationPayload){
+      if (this.props.invitationPayload) {
         // if properties contains invitation it means we accepted out-of-band presentation request
         this.props.acceptOutOfBandInvitation(
           this.props.invitationPayload,
@@ -326,7 +328,7 @@ class ModalContentProof extends Component<
           this.props.uid,
           this.state.selectedClaims
         )
-      } else  {
+      } else {
         this.props.updateAttributeClaim(
           this.props.uid,
           this.props.remotePairwiseDID,

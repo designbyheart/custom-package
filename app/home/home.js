@@ -41,7 +41,6 @@ import { NewBannerCard } from './new-banner-card/new-banner-card'
 import { RecentCard } from './recent-card/recent-card'
 import { RecentCardSeparator } from './recent-card-separator'
 import { EmptyViewPlaceholder } from './empty-view-placeholder'
-import { venetianRed } from '../common/styles'
 import {
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
@@ -369,7 +368,7 @@ export class HomeScreen extends Component<HomeProps, void> {
       Snackbar.dismiss()
       Snackbar.show({
         text: this.props.snackError,
-        backgroundColor: venetianRed,
+        backgroundColor: colors.cmRed,
         duration: Snackbar.LENGTH_LONG,
       })
     }

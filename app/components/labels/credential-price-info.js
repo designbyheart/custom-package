@@ -4,12 +4,7 @@ import { View, StyleSheet } from 'react-native'
 import { BigNumber } from 'bignumber.js'
 import { scale } from 'react-native-size-matters'
 
-import {
-  orange,
-  whiteSolid,
-  cmGrey5,
-  cmGrey2,
-} from '../../common/styles/constant'
+import { colors } from '../../common/styles/constant'
 import SvgCustomIcon from '../../components/svg-setting-icons'
 import { CustomText } from '../../components'
 
@@ -35,7 +30,7 @@ const CredentialPriceInfo = ({
         }}
       >
         <SvgCustomIcon
-          fill={isPaid ? cmGrey2 : whiteSolid}
+          fill={isPaid ? colors.cmGray2 : colors.cmWhite}
           name="PaymentToken"
           height={isPaid ? '16' : '24'}
           width={isPaid ? '16' : '24'}
@@ -58,7 +53,7 @@ export default CredentialPriceInfo
 const styles = StyleSheet.create({
   priceContainer: {
     flexDirection: 'row',
-    backgroundColor: orange,
+    backgroundColor: colors.cmOrange,
     maxWidth: '100%',
     justifyContent: 'space-between',
     borderTopLeftRadius: 7,
@@ -69,20 +64,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   paidContainer: {
-    backgroundColor: cmGrey5,
+    backgroundColor: colors.cmGray5,
     justifyContent: 'flex-start',
   },
   text: {
     fontSize: scale(14),
-    color: whiteSolid,
+    color: colors.cmWhite,
   },
   text1: {
     fontSize: scale(14),
-    color: whiteSolid,
+    color: colors.cmWhite,
   },
   paidText: {
     fontSize: scale(11),
-    color: cmGrey2,
+    color: colors.cmGray2,
     paddingRight: 5,
   },
   icon: {

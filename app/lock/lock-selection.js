@@ -269,7 +269,7 @@ const style = StyleSheet.create({
   },
   title: {
     fontFamily,
-    fontSize: 26,
+    fontSize: moderateScale(26, 0.1),
     fontStyle: 'normal',
     lineHeight: moderateScale(31),
     marginTop: verticalScale(49.26),
@@ -292,7 +292,7 @@ const style = StyleSheet.create({
     paddingRight: moderateScale(10),
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: grey,
+    shadowColor: colors.cmGray2,
     shadowOffset: {
       width: 1,
       height: 2,

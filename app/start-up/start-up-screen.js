@@ -13,13 +13,7 @@ import {
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { headerOptionsWithNoBack } from '../navigation/navigation-header-config'
 import { startUpRoute, lockPinSetupRoute } from '../common'
-import {
-  OFFSET_3X,
-  isiPhone5,
-  OFFSET_1X,
-  OFFSET_2X,
-  colors,
-} from '../common/styles'
+import { OFFSET_2X, colors } from '../common/styles'
 
 const { width } = Dimensions.get('screen')
 
