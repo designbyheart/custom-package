@@ -158,7 +158,7 @@ export const styles = StyleSheet.create({
   },
   customGreenBadgeContainer: {
     ...unreadMessageContainerCommonStyle,
-    marginRight: '30%'
+    marginRight: '30%',
   },
 })
 

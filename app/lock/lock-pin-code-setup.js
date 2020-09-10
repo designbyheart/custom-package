@@ -88,6 +88,9 @@ export function LockPinSetup(props: ReactNavigation) {
       setEnteredPin(null)
       setPinSetupState(PIN_SETUP_STATE.REENTER_FAIL)
       setFailedPin(true)
+      setTimeout(() => {
+        setFailedPin(false)
+      }, 2000)
       pinCodeBox.current.clear()
       setTimeout(() => setPinSetupState(PIN_SETUP_STATE.INITIAL), 1000)
       return
@@ -173,7 +176,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: OFFSET_2X,
     textAlign: 'center',
     fontWeight: '700',
-
   },
   message: {
     height: scale(20),

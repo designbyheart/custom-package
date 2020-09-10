@@ -3445,9 +3445,7 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
                               },
                             ]
                           }
-                        >
-                          Your passcodes do not match
-                        </Text>
+                        />
                         <View
                           center={true}
                           style={
