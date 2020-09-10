@@ -144,6 +144,8 @@ export const styles = StyleSheet.create({
   },
   labelContainer: {
     flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
   },
   labelText: {
     fontFamily: fontFamily,
@@ -156,7 +158,7 @@ export const styles = StyleSheet.create({
   },
   customGreenBadgeContainer: {
     ...unreadMessageContainerCommonStyle,
-    marginLeft: verticalScale(135),
+    marginRight: '30%'
   },
 })
 

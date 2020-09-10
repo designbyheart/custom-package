@@ -276,6 +276,7 @@ const style = StyleSheet.create({
     marginBottom: verticalScale(60),
     paddingHorizontal: OFFSET_2X,
     textAlign: 'center',
+    fontWeight: '700',
   },
   message: {
     fontSize: moderateScale(17),

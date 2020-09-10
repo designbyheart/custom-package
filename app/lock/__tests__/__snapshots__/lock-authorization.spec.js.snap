@@ -283,6 +283,7 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
                 "fontFamily": "Lato",
                 "fontSize": 26,
                 "fontStyle": "normal",
+                "fontWeight": "700",
                 "letterSpacing": 0.5,
                 "lineHeight": 31,
                 "minHeight": 49.23529411764706,

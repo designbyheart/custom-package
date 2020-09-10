@@ -246,6 +246,7 @@ exports[`app lock selection page should render properly 1`] = `
             "fontFamily": "Lato",
             "fontSize": 25.777142857142856,
             "fontStyle": "normal",
+            "fontWeight": "700",
             "lineHeight": 29.67142857142857,
             "marginBottom": 47.647058823529406,
             "marginTop": 39.118235294117646,

@@ -167,11 +167,13 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(26, 0.1),
     fontStyle: 'normal',
     lineHeight: moderateScale(31, 0.1),
-    minHeight: verticalScale(62),
+    height: verticalScale(62),
     marginTop: verticalScale(40),
     marginBottom: verticalScale(40),
     paddingHorizontal: OFFSET_2X,
     textAlign: 'center',
+    fontWeight: '700',
+
   },
   message: {
     height: scale(20),
