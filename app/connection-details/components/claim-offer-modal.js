@@ -252,13 +252,12 @@ export class ClaimOfferModal extends Component<any, *> {
     } else {
       this.setState({ ...this.state, scheduledDeleteion: true })
     }
-    
+
     this.hideModal()
   }
 
   onDeny = () => {
     const { invitationPayload } = this.props.route.params
-    console.log({props: this.props})
 
     if (!invitationPayload) {
       this.props.denyClaimOffer(this.props.uid)
