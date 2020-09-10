@@ -99,6 +99,7 @@ Object {
       },
     },
     "data": "****",
+    "oneTimeConnections": "****",
   },
   "deepLink": Object {
     "error": undefined,

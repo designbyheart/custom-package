@@ -1528,4 +1528,25 @@ RCT_EXPORT_METHOD(deleteCredential:(NSInteger) credentialHandle
   }];
 }
 
+RCT_EXPORT_METHOD(credentialReject:(NSInteger)credential_handle
+                  connectionHandle:(NSInteger)connection_handle
+                           comment:(NSString *)comment
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] credentialReject:credential_handle
+                               connectionHandle:connection_handle
+                                        comment:comment
+                                     completion:^(NSError *error)
+   {
+     if (error != nil && error.code != 0) {
+       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+       reject(indyErrorCode, @"Error occurred while rejecting proof", error);
+     }
+     else {
+       resolve(@{});
+     }
+   }];
+}
+
 @end

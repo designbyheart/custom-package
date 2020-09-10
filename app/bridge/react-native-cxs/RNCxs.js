@@ -891,3 +891,11 @@ export async function connectionSendAnswer(
 export async function deleteCredential(credentialHandle: number) {
   return await RNIndy.deleteCredential(credentialHandle)
 }
+
+export async function credentialReject(
+  credentialHandle: number,
+  connectionHandle: number,
+  comment: string
+): Promise<void> {
+  return RNIndy.credentialReject(credentialHandle, connectionHandle, comment)
+}

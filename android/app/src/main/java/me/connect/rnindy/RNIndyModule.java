@@ -1709,4 +1709,25 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
             promise.reject("VCXException", e.getMessage());
         }
     }
+
+    @ReactMethod
+    public void credentialReject(int credentialHandle, int connectionHandle, String comment, Promise promise) {
+        Log.d(TAG, "credentialReject()");
+        try {
+            CredentialApi.credentialReject(credentialHandle, connectionHandle, comment).whenComplete((result, e) -> {
+                if (e != null) {
+                    VcxException ex = (VcxException) e;
+                    ex.printStackTrace();
+                    Log.e(TAG, "credentialReject - Error: ", ex);
+                    promise.reject(String.valueOf(ex.getSdkErrorCode()), ex.getSdkMessage());
+                } else {
+                    promise.resolve(0);
+                }
+            });
+        } catch (VcxException e) {
+            e.printStackTrace();
+            Log.e(TAG, "credentialReject - Error: ", e);
+            promise.reject(String.valueOf(e.getSdkErrorCode()), e.getSdkMessage());
+        }
+    }
 }

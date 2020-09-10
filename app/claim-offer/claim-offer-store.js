@@ -66,7 +66,6 @@ import type {
 import type { CustomError } from '../common/type-common'
 import {
   getClaimOffer,
-  getUserPairwiseDid,
   getClaimOffers,
   getConnection,
   getSerializedClaimOffer,
@@ -80,6 +79,7 @@ import {
   getClaimOfferState,
   sendClaimRequest as sendClaimRequestApi,
   getLedgerFees,
+  credentialReject,
 } from '../bridge/react-native-cxs/RNCxs'
 import { CLAIM_STORAGE_FAIL, CLAIM_STORAGE_SUCCESS } from '../claim/type-claim'
 import { CLAIM_STORAGE_ERROR } from '../services/error/error-code'
@@ -97,9 +97,9 @@ import type {
 import type { LedgerFeesData } from '../ledger/type-ledger-store'
 import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
-import { customLogger } from '../store/custom-logger'
 import { retrySaga } from '../api/api-utils'
 import {
+  ACTION_IS_NOT_SUPPORTED,
   CREDENTIAL_DEFINITION_NOT_FOUND,
   CREDENTIAL_DEFINITION_NOT_FOUND_MESSAGE,
   INVALID_CREDENTIAL_OFFER,
@@ -109,7 +109,6 @@ import {
 } from '../bridge/react-native-cxs/error-cxs'
 import Snackbar from 'react-native-snackbar'
 import { venetianRed, white } from '../common/styles'
-import { onfidoProcessStatus } from '../onfido/type-onfido'
 
 const claimOfferInitialState = {
   vcxSerializedClaimOffers: {},
@@ -262,22 +261,58 @@ export function* denyClaimOfferSaga(
   const { uid } = action
   const claimOffer = yield select(getClaimOffer, uid)
   const remoteDid: string = claimOffer.remotePairwiseDID
-  const userPairwiseDid: string | null = yield select(
-    getUserPairwiseDid,
-    remoteDid
-  )
 
-  if (!userPairwiseDid) {
-    customLogger.log('Connection not found while trying to deny proof request.')
+  const [connection]: Connection[] = yield select(getConnection, remoteDid)
+  if (!connection) {
+    captureError(new Error(ERROR_NO_SERIALIZED_CLAIM_OFFER(uid)))
+    yield put(
+      claimRequestFail(uid, ERROR_NO_SERIALIZED_CLAIM_OFFER(uid))
+    )
     return
   }
 
+  const vcxSerializedClaimOffer: SerializedClaimOffer | null = yield select(
+    getSerializedClaimOffer,
+    connection.identifier,
+    uid
+  )
+
+  if (!vcxSerializedClaimOffer) {
+    captureError(new Error(ERROR_NO_SERIALIZED_CLAIM_OFFER(uid)))
+    yield put(
+      claimRequestFail(uid, ERROR_NO_SERIALIZED_CLAIM_OFFER(uid))
+    )
+
+    return
+  }
+
+  const [connectionHandle, claimHandle] = yield all([
+    call(getHandleBySerializedConnection, connection.vcxSerializedConnection),
+    call(
+      getClaimHandleBySerializedClaimOffer,
+      vcxSerializedClaimOffer.serialized
+    ),
+  ])
+
   try {
-    yield call(delay, 1500)
+    yield call(credentialReject, claimHandle, connectionHandle, '')
     yield put(denyClaimOfferSuccess(uid))
   } catch (e) {
-    yield put(denyClaimOfferFail(uid))
-    customLogger.log('something went wrong trying to deny proof request.')
+    if (e.code === ACTION_IS_NOT_SUPPORTED) {
+      // proprietary protocol doesn't support credential rejection.
+      // It works for aries based connection only
+      // So we can complete with success if we received this error
+      yield put(denyClaimOfferSuccess(uid))
+    } else {
+      // else fail
+      yield put(denyClaimOfferFail(uid))
+      Snackbar.show({
+        text: 'Failed to reject Credential Offer.',
+        duration: Snackbar.LENGTH_LONG,
+        backgroundColor: venetianRed,
+        textColor: white,
+      })
+    }
   }
 }
 
