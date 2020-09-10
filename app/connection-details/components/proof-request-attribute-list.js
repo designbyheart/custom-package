@@ -404,7 +404,8 @@ const styles = StyleSheet.create({
   },
   avatarWrapper: {
     width: '15%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: moderateScale(10),
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
 })

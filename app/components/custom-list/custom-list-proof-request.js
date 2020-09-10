@@ -213,8 +213,9 @@ const styles = StyleSheet.create({
   },
   avatarWrapper: {
     width: '15%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: moderateScale(5),
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   keyboardFlatList: {
     paddingLeft: '5%',
