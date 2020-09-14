@@ -88,6 +88,7 @@ import { startUpScreen } from '../start-up/start-up-screen'
 import useBackHandler from '../hooks/use-back-handler'
 import { CustomValuesScreen } from '../connection-details/components/custom-values'
 import { AttributeValuesScreen } from '../connection-details/components/attribute-values'
+import { AttributesValuesScreen } from '../connection-details/components/attributes-values'
 
 enableScreens()
 
@@ -542,6 +543,11 @@ export function ConnectMeAppNavigator() {
         name={AttributeValuesScreen.routeName}
         component={AttributeValuesScreen.screen}
         options={AttributeValuesScreen.screen.navigationOptions}
+      />
+      <ModalStack.Screen
+        name={AttributesValuesScreen.routeName}
+        component={AttributesValuesScreen.screen}
+        options={AttributesValuesScreen.screen.navigationOptions}
       />
       <ModalStack.Screen
         name={pushNotificationPermissionScreen.routeName}

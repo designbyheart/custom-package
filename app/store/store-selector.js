@@ -331,10 +331,10 @@ export const getSerializedClaimOffers = (state: Store, userDID: string) => {
     state.claimOffer.vcxSerializedClaimOffers[userDID]
 
   if (serializedClaimOffers) {
-    return Object.values(serializedClaimOffers)
+    return serializedClaimOffers
   }
 
-  return []
+  return {}
 }
 
 export const getAllConnectionsPairwiseDid = (state: Store) => {

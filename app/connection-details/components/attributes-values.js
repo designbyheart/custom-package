@@ -6,27 +6,48 @@ import { View, Platform, StyleSheet, Text, FlatList, TouchableOpacity } from 're
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 // constants
-import { attributeValueRoute } from '../../common/route-constants'
+import { attributesValueRoute } from '../../common/route-constants'
 
 // components
 import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { ModalHeaderBar } from '../../components/modal-header-bar/modal-header-bar'
 
 // types
-import type { ReactNavigation } from '../../common/type-common'
+import type { ReactNavigation, RequestedAttrsJson } from '../../common/type-common'
 
 // styles
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 import { Avatar } from '../../components'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 import { CHECKMARK_ICON, EvaIcon } from '../../common/icons'
-import { DataRenderer, getFileExtensionName, renderAttachmentIcon } from './modal-content'
-import { isSelected, keyExtractor, prepareCredentials } from './attributes-values'
+import { renderAttachmentIcon } from './modal-content'
 
-const AttributeValues = ({
-                           navigation: { goBack },
-                           route: { params },
-                         }: ReactNavigation) => {
+export const keyExtractor = (item: Object) => item.claimUuid.toString()
+
+export const isSelected = (item: Object, selectedClaims: RequestedAttrsJson) =>
+  selectedClaims[item.key] && item.claimUuid === selectedClaims[item.key][0]
+
+export const prepareCredentials = (items: any, claimMap: any) => {
+  return items.map((item) => {
+    const claimInfo = claimMap[item.claimUuid]
+    return {
+      label: item.label,
+      claimUuid: item.claimUuid,
+      credentialName: claimInfo.name || 'Default Credential',
+      date: claimInfo.issueDate,
+      data: item.data,
+      values: item.values,
+      logoUrl: claimInfo.logoUrl,
+      cred_info: item.cred_info,
+      key: item.key,
+    }
+  })
+}
+
+const AttributesValues = ({
+                            navigation: { goBack },
+                            route: { params },
+                          }: ReactNavigation) => {
   const [selectedValueIndex, setSelectedValueIndex] = useState(params.items.findIndex(
     (item: Object) => isSelected(item, params.selectedClaims),
   ))
@@ -51,34 +72,21 @@ const AttributeValues = ({
           }
         >
           <View style={styles.itemContainer}>
-            <View style={styles.avatarSection}>
-              {typeof item.logoUrl === 'string' ? (
-                <Avatar
-                  radius={18}
-                  src={{ uri: item.logoUrl }}
-                />
-              ) : (
-                <DefaultLogo text={item.credentialName} size={32} fontSize={17}/>
-              )}
-            </View>
-            <View style={styles.infoSection}>
-              <View style={styles.infoSectionTopRow}>
-                <Text
-                  style={styles.credentialNameText}
-                  numberOfLines={1}
-                  ellipsizeMode="tail"
-                >
-                  {
-                    item.label.toLowerCase().endsWith('_link') ?
-                      `${getFileExtensionName(JSON.parse(item.data)['mime-type'])} file` :
-                      item.data
-                  }
-                </Text>
-              </View>
-              <View style={styles.infoSectionBottomRow}>
-                <View style={styles.attributesSection}>
+            <View style={styles.itemInnerContainer}>
+              <View style={styles.itemValuesContainer}>
+                <View style={styles.avatarSection}>
+                  {typeof item.logoUrl === 'string' ? (
+                    <Avatar
+                      radius={18}
+                      src={{ uri: item.logoUrl }}
+                    />
+                  ) : (
+                    <DefaultLogo text={item.credentialName} size={32} fontSize={17}/>
+                  )}
+                </View>
+                <View style={styles.infoSectionRow}>
                   <Text
-                    style={styles.attributesText}
+                    style={styles.credentialsNameText}
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
@@ -86,16 +94,22 @@ const AttributeValues = ({
                   </Text>
                 </View>
               </View>
-              {item.label.toLowerCase().endsWith('_link') &&
-              <View style={styles.attachmentWrapper}>
-                <DataRenderer {...{
-                  label: item.label,
-                  data: item.data,
-                  uid: item.claimUuid || '',
-                  remotePairwiseDID: item.claimUuid || '',
-                }} />
+              <View style={styles.itemAttributesContainer}>
+                {
+                  Object.keys(item.values).map((label, keyIndex) => (
+                    <View key={`${index}_${keyIndex}`}>
+                      {renderAttachmentIcon(
+                        label,
+                        item.values[label],
+                        item.claimUuid || '',
+                        item.claimUuid || '',
+                        styles.title,
+                        styles.content,
+                      )}
+                    </View>
+                  ))
+                }
               </View>
-              }
             </View>
             {index === selectedValueIndex && (
               <View style={styles.iconWrapper}>
@@ -115,6 +129,9 @@ const AttributeValues = ({
     <>
       <View style={styles.modalWrapper}>
         <View style={styles.descriptionWrapper}>
+          <Text style={styles.descriptionTitle}>
+            {params?.sender} requires following attributes coming from the same credential:
+          </Text>
           <Text style={styles.labelText}>{params?.label || 'Attribute'}</Text>
           <Text style={styles.descriptionTitle}>{params.items.length} sources</Text>
         </View>
@@ -142,14 +159,14 @@ const AttributeValues = ({
   )
 }
 
-export const AttributeValuesScreen = {
-  routeName: attributeValueRoute,
-  screen: AttributeValues,
+export const AttributesValuesScreen = {
+  routeName: attributesValueRoute,
+  screen: AttributesValues,
 }
 
-AttributeValuesScreen.screen.navigationOptions = ({
-                                                    navigation: { goBack, isFocused },
-                                                  }) => ({
+AttributesValuesScreen.screen.navigationOptions = ({
+                                                     navigation: { goBack, isFocused },
+                                                   }) => ({
   safeAreaInsets: { top: 85 },
   cardStyle: {
     marginLeft: '2.5%',
@@ -160,7 +177,7 @@ AttributeValuesScreen.screen.navigationOptions = ({
   },
   cardOverlay: () => (
     <ModalHeaderBar
-      headerTitle={isFocused() ? 'Select Attribute Value' : ''}
+      headerTitle={isFocused() ? 'Select Attributes Values' : ''}
       dismissIconType={isFocused() ? 'Arrow' : null}
       onPress={() => goBack(null)}
     />
@@ -216,51 +233,53 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.cmGray5,
     paddingVertical: moderateScale(12),
   },
+  itemInnerContainer: {
+    flex: 1,
+    flexDirection: 'column'
+  },
+  itemValuesContainer: {
+    width: '100%',
+    flexDirection: 'row',
+  },
+  itemAttributesContainer: {
+    width: '100%',
+    flexDirection: 'column',
+    paddingTop: verticalScale(10),
+    paddingLeft: moderateScale(10),
+  },
   avatarSection: {
     alignItems: 'flex-start',
   },
-  infoSection: {
-    flex: 1,
-  },
-  infoSectionTopRow: {
+  infoSectionRow: {
     flex: 1,
     flexDirection: 'row',
-    height: verticalScale(20),
+    alignItems: 'center',
   },
-  infoSectionBottomRow: {
-    flex: 1,
-    height: verticalScale(17),
-  },
-  attributesSection: {
-    width: '96%',
-    height: '100%',
-  },
-  credentialNameText: {
-    fontFamily: fontFamily,
-    fontSize: verticalScale(fontSizes.size4),
-    fontWeight: 'bold',
-    color: colors.cmGray1,
-  },
-  credentialNameWrapper: {
-    paddingBottom: moderateScale(0),
-  },
-  attributesText: {
+  credentialsNameText: {
     fontFamily: fontFamily,
     fontSize: verticalScale(fontSizes.size6),
-    color: colors.cmGray2,
+    fontWeight: 'bold',
+    color: colors.cmGray1,
+    lineHeight: verticalScale(17),
+  },
+  title: {
+    fontSize: verticalScale(fontSizes.size6),
+    color: colors.cmGray3,
+    width: '100%',
+    textAlign: 'left',
+    fontFamily: fontFamily,
+    lineHeight: verticalScale(17)
   },
   content: {
-    fontSize: verticalScale(fontSizes.size4),
+    fontSize: verticalScale(fontSizes.size3),
     fontWeight: '700',
     color: '#505050',
     width: '100%',
     textAlign: 'left',
     fontFamily: fontFamily,
+    lineHeight: verticalScale(23)
   },
   iconWrapper: {
     marginTop: verticalScale(8),
-  },
-  attachmentWrapper: {
-    marginTop: verticalScale(16),
   },
 })

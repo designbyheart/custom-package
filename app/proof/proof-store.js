@@ -19,7 +19,6 @@ import type {
   ProofFailAction,
   IndyPreparedProof,
   IndyRequestedAttributes,
-  UserSelfAttestedAttributesAction,
   VcxSelectedCredentials,
   RetrySendProofAction,
 } from './type-proof'
@@ -61,7 +60,6 @@ import {
   sendProof,
   updateProofHandle,
   dissatisfiedAttributesFound,
-  proofRequestApplySelfAttestedAttributes,
 } from '../proof-request/proof-request-store'
 import {
   getProofRequest,
@@ -123,12 +121,10 @@ export const userSelfAttestedAttributes = (
 export const proofRequestDataToStore = (
   uid: string,
   proofHandle: number,
-  selfAttestedAttributes: SelfAttestedAttributes
 ) => ({
   type: PROOF_REQUEST_SEND_PROOF_HANDLE,
   uid,
   proofHandle,
-  selfAttestedAttributes,
 })
 
 export const resetTempProofData = (uid: string) => ({
@@ -508,8 +504,6 @@ export function* generateProofSaga(action: GenerateProofAction): any {
       matchingCredentials,
       proofRequestData
     )
-    let selfAttestedAttributes: SelfAttestedAttributes = {}
-
     if (dissatisfiedAttributes.length > 0) {
       // if we find that there are some attributes that are not available
       // in any of the claims stored in user wallet
@@ -533,20 +527,9 @@ export function* generateProofSaga(action: GenerateProofAction): any {
       // then we ask user to fill in those attributes
       // so we need to tell proof request screen to ask user to self attest
       yield put(missingAttributesFound(missingAttributes, uid))
-
-      // once user has filled all attributes, we need to get those details here
-      // user filled details become self attested attributes
-      const selfAttestedFilledAction: UserSelfAttestedAttributesAction = yield take(
-        USER_SELF_ATTESTED_ATTRIBUTES
-      )
-      selfAttestedAttributes = selfAttestedFilledAction.selfAttestedAttributes
-
-      yield put(
-        proofRequestApplySelfAttestedAttributes(uid, selfAttestedAttributes)
-      )
     }
 
-    yield put(proofRequestDataToStore(uid, proofHandle, selfAttestedAttributes))
+    yield put(proofRequestDataToStore(uid, proofHandle))
   } catch (e) {
     // captureError(e)
     yield put(proofFail(action.uid, e))
@@ -569,8 +552,9 @@ export function* updateAttributeClaimAndSendProof(
       requestedAttrsJson
     )
     const selectedSelfAttestedAttributes = convertSelfAttestedToIndySelfAttested(
-      selfAttestedAttributes
+      selfAttestedAttributes || {}
     )
+
     yield call(
       generateProof,
       proofHandle,
@@ -704,6 +688,19 @@ export default function proofReducer(
       }
     }
 
+    case USER_SELF_ATTESTED_ATTRIBUTES: {
+      return {
+        ...state,
+        [action.uid]: {
+          ...state[action.uid],
+          proofData: {
+            ...state[action.uid].proofData,
+            selfAttestedAttributes: action.selfAttestedAttributes,
+          },
+        },
+      }
+    }
+
     case PROOF_REQUEST_SEND_PROOF_HANDLE: {
       return {
         ...state,
@@ -711,7 +708,6 @@ export default function proofReducer(
           ...state[action.uid],
           proofData: {
             proofHandle: action.proofHandle,
-            selfAttestedAttributes: action.selfAttestedAttributes,
           },
         },
       }

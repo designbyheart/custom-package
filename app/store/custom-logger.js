@@ -70,7 +70,6 @@ import {
   ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   HYDRATE_PROOF_REQUESTS,
   MISSING_ATTRIBUTES_FOUND,
-  PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES,
   PROOF_REQUEST_AUTO_FILL,
   PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND,
   PROOF_REQUEST_RECEIVED,
@@ -541,6 +540,7 @@ export function PiiHiddenActionTransformer(action: any) {
       'myPairwiseDID',
       'logoUrl',
       'issueDate',
+      'name',
     ],
     [CLAIM_RECEIVED_VCX]: ['claim'],
     [CLAIM_OFFER_RECEIVED]: ['payload', 'payloadInfo'],
@@ -590,7 +590,6 @@ export function PiiHiddenActionTransformer(action: any) {
       'updateAttributeClaimAction',
     ],
     [PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND]: ['dissatisfiedAttributes'],
-    [PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES]: ['selfAttestedAttributes'],
     [ACCEPT_OUTOFBAND_PRESENTATION_REQUEST]: ['requestedAttrsJson'],
 
     [QUESTION_RECEIVED]: ['question'],

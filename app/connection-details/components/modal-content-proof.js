@@ -26,6 +26,7 @@ import {
   PROOF_STATUS,
   MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_TITLE,
   MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_DESCRIPTION,
+  PRIMARY_ACTION_SEND,
 } from '../../proof-request/type-proof-request'
 import type { GenericStringObject } from '../../common/type-common'
 import type { Attribute } from '../../push-notification/type-push-notification'
@@ -65,15 +66,12 @@ import { colors } from '../../common/styles/constant'
 // utils
 import {
   convertUserFilledValuesToSelfAttested,
-  getPrimaryActionText,
   enablePrimaryAction,
   hasMissingAttributes,
 } from '../utils'
 
-class ModalContentProof extends Component<
-  ProofRequestAndHeaderProps,
-  ProofRequestState & { scheduledDeletion: boolean }
-> {
+class ModalContentProof extends Component<ProofRequestAndHeaderProps,
+  ProofRequestState & { scheduledDeletion: boolean }> {
   constructor(props) {
     super(props)
     if (this.props.uid) {
@@ -82,9 +80,8 @@ class ModalContentProof extends Component<
 
     this.state = {
       allMissingAttributesFilled: !hasMissingAttributes(
-        this.props.missingAttributes
+        this.props.missingAttributes,
       ),
-      generateProofClicked: false,
       selfAttestedAttributes: {},
       disableUserInputs: false,
       selectedClaims: {},
@@ -104,7 +101,7 @@ class ModalContentProof extends Component<
         MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_TITLE,
         MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_DESCRIPTION(
           this.props.dissatisfiedAttributes,
-          this.props.name
+          this.props.name,
         ),
         [
           {
@@ -126,7 +123,7 @@ class ModalContentProof extends Component<
     ) {
       Alert.alert(
         MESSAGE_MISSING_ATTRIBUTES_TITLE,
-        MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION(this.props.name)
+        MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION(this.props.name),
       )
       this.setState({
         disableSendButton: true,
@@ -154,7 +151,7 @@ class ModalContentProof extends Component<
               },
             },
           ],
-          { cancelable: false }
+          { cancelable: false },
         )
       }, 300)
     }
@@ -181,7 +178,7 @@ class ModalContentProof extends Component<
               },
             },
           ],
-          { cancelable: false }
+          { cancelable: false },
         )
       }, 300)
     }
@@ -203,7 +200,7 @@ class ModalContentProof extends Component<
           }
           return items
         },
-        {}
+        {},
       )
       this.setState({ selectedClaims })
     }
@@ -221,7 +218,7 @@ class ModalContentProof extends Component<
 
   canEnablePrimaryAction = (
     canEnable: boolean,
-    selfAttestedAttributes: GenericStringObject
+    selfAttestedAttributes: GenericStringObject,
   ) => {
     this.setState({
       allMissingAttributesFilled: canEnable,
@@ -229,6 +226,7 @@ class ModalContentProof extends Component<
       disableSendButton: false,
     })
   }
+
   updateFirstTimeClaim() {
     const selectedClaims = this.props.data.requestedAttributes.reduce(
       (acc, item) => {
@@ -244,7 +242,7 @@ class ModalContentProof extends Component<
         }
         return items
       },
-      {}
+      {},
     )
     this.setState({ selectedClaims })
   }
@@ -288,7 +286,7 @@ class ModalContentProof extends Component<
     this.props.updateAttributeClaim(
       this.props.uid,
       this.props.remotePairwiseDID,
-      this.state.selectedClaims
+      this.state.selectedClaims,
     )
   }
 
@@ -303,53 +301,42 @@ class ModalContentProof extends Component<
   }
 
   onSend = () => {
-    if (
-      this.state.generateProofClicked ||
-      !hasMissingAttributes(this.props.missingAttributes)
-    ) {
-      // if we don't find any missing attributes then
-      // user will never see generate proof button and we don't need to wait for
-      // generate proof button to be clicked after all attributes are filled
-      // this.props.getProof(this.props.uid)
-      this.setState({
-        disableSendButton: true,
-      })
-      this.props.newConnectionSeen(this.props.remotePairwiseDID)
+    // if we don't find any missing attributes then
+    // user will never see generate proof button and we don't need to wait for
+    // generate proof button to be clicked after all attributes are filled
+    // this.props.getProof(this.props.uid)
+    this.setState({
+      disableSendButton: true,
+    })
+    this.props.newConnectionSeen(this.props.remotePairwiseDID)
 
-      if (this.props.invitationPayload) {
-        // if properties contains invitation it means we accepted out-of-band presentation request
-        this.props.acceptOutOfBandInvitation(
-          this.props.invitationPayload,
-          this.props.attachedRequest
-        )
-        this.props.acceptOutofbandPresentationRequest(
-          this.props.uid,
-          this.state.selectedClaims
-        )
-      } else {
-        this.props.updateAttributeClaim(
-          this.props.uid,
-          this.props.remotePairwiseDID,
-          this.state.selectedClaims
-        )
-      }
+    this.props.userSelfAttestedAttributes(
+      convertUserFilledValuesToSelfAttested(
+        this.state.selfAttestedAttributes,
+        this.props.missingAttributes,
+      ),
+      this.props.uid,
+    )
 
-      this.props.hideModal()
+    if (this.props.invitationPayload) {
+      // if properties contains invitation it means we accepted out-of-band presentation request
+      this.props.acceptOutOfBandInvitation(
+        this.props.invitationPayload,
+        this.props.attachedRequest,
+      )
+      this.props.acceptOutofbandPresentationRequest(
+        this.props.uid,
+        this.state.selectedClaims,
+      )
     } else {
-      this.setState({
-        generateProofClicked: true,
-        disableUserInputs: true,
-        disableSendButton: false,
-      })
-
-      this.props.userSelfAttestedAttributes(
-        convertUserFilledValuesToSelfAttested(
-          this.state.selfAttestedAttributes,
-          this.props.missingAttributes
-        ),
-        this.props.uid
+      this.props.updateAttributeClaim(
+        this.props.uid,
+        this.props.remotePairwiseDID,
+        this.state.selectedClaims,
       )
     }
+
+    this.props.hideModal()
   }
 
   render() {
@@ -368,20 +355,15 @@ class ModalContentProof extends Component<
       route,
     } = this.props
 
-    const primaryActionText = getPrimaryActionText(
-      this.props.missingAttributes,
-      this.state.generateProofClicked
-    )
     const enablePrimaryActionStatus = enablePrimaryAction(
       this.props.missingAttributes,
-      this.state.generateProofClicked,
       this.state.allMissingAttributesFilled,
       proofGenerationError,
-      this.props.data.requestedAttributes
+      this.props.data.requestedAttributes,
     )
 
     if (!this.state.interactionsDone) {
-      return <Loader />
+      return <Loader/>
     }
 
     const { canEnablePrimaryAction, updateSelectedClaims } = this
@@ -406,6 +388,7 @@ class ModalContentProof extends Component<
               colorBackground,
               navigation,
               route,
+              selectedClaims: this.state.selectedClaims,
             }}
           />
         </View>
@@ -413,7 +396,7 @@ class ModalContentProof extends Component<
           onPress={this.onSend}
           onIgnore={this.onDeny}
           topBtnText={'Reject'}
-          bottomBtnText={primaryActionText}
+          bottomBtnText={PRIMARY_ACTION_SEND}
           disableAccept={
             !enablePrimaryActionStatus ||
             this.state.disableSendButton ||
@@ -483,7 +466,7 @@ const mapDispatchToProps = (dispatch) =>
       newConnectionSeen,
       denyProofRequest,
     },
-    dispatch
+    dispatch,
   )
 export default connect(mapStateToProps, mapDispatchToProps)(ModalContentProof)
 

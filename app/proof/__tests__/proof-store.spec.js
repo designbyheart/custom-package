@@ -182,7 +182,7 @@ describe('Proof Store', () => {
       ])
 
       .put(proofRequestAutoFill(uid, requestedAttributes))
-      .put(proofRequestDataToStore(uid, proofRequest.payload.proofHandle, {}))
+      .put(proofRequestDataToStore(uid, proofRequest.payload.proofHandle))
 
       .run()
   })
@@ -249,7 +249,7 @@ describe('Proof Store', () => {
       ])
 
       .put(proofRequestAutoFill(uid, requestedAttributes))
-      .put(proofRequestDataToStore(uid, proofRequest.payload.proofHandle, {}))
+      .put(proofRequestDataToStore(uid, proofRequest.payload.proofHandle))
 
       .run()
   })
