@@ -110,8 +110,8 @@ class ModalContentProof extends Component<
           {
             text: 'Ok',
             onPress: this.onIgnore,
-          }
-        ],
+          },
+        ]
       )
       this.setState({
         disableSendButton: true,
@@ -415,8 +415,10 @@ class ModalContentProof extends Component<
           topBtnText={'Reject'}
           bottomBtnText={primaryActionText}
           disableAccept={
-            !enablePrimaryActionStatus || this.state.disableSendButton ||
-            this.props.dissatisfiedAttributes && this.props.dissatisfiedAttributes.length > 0
+            !enablePrimaryActionStatus ||
+            this.state.disableSendButton ||
+            (this.props.dissatisfiedAttributes &&
+              this.props.dissatisfiedAttributes.length > 0)
           }
           svgIcon="Send"
           colorBackground={colors.cmGreen1}

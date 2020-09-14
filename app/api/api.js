@@ -15,9 +15,6 @@ export const getInvitationLink = ({
 }: GetInvitationLinkApiData) =>
   api(`${agencyUrl}/agency/url-mapper/${smsToken}`, options('GET'))
 
-export const invitationDetailsRequest = ({ url }: DownloadInvitationApiData) =>
-  api(url, options('GET'))
-
 export const getAdditionalData = ({ agencyUrl, dataBody }: MessageApiData) =>
   api(`${agencyUrl}/agency/route`, options('POST', dataBody))
 

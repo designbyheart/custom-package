@@ -37,7 +37,7 @@ export const remoteMessageParser = (message: RemoteMessage) => {
     pushNotifMsgTitle,
     senderLogoUrl,
     msg,
-  } = message
+  } = message.data
 
   return {
     forDID,
@@ -60,7 +60,6 @@ export class PushNotification extends Component<PushNotificationProps, void> {
   messageListener = null
 
   componentDidMount = async () => {
-
     if (Platform.OS === 'ios') {
       // Removes all delivered notifications from notification center
       PushNotificationIOS.removeAllDeliveredNotifications()
@@ -71,9 +70,7 @@ export class PushNotification extends Component<PushNotificationProps, void> {
 
     // When a notification is opened, the listener is invoked with the notification and the action that was invoked when it was clicked on.
     this.onNotificationOpenedListener = messaging().onNotificationOpenedApp(
-      (notificationOpen: NotificationOpen) => {
-        // Get information about the notification that was opened
-        const notification: Notification = notificationOpen.data
+      (notification: NotificationOpen) => {
         this.onPushNotificationReceived(remoteMessageParser(notification), {
           openMessageDirectly: true,
         })
@@ -86,12 +83,9 @@ export class PushNotification extends Component<PushNotificationProps, void> {
 
     try {
       // Due to the delay in the React Native bridge, the onNotification listeners will not be available at startup, so this method can be used to check to see if the application was opened by a notification.
-      const notificationOpen: NotificationOpen = await messaging().getInitialNotification()
-
+      const notification: NotificationOpen = await messaging().getInitialNotification()
       // App was opened by a notification
-      if (notificationOpen) {
-        // Get information about the notification that was opened
-        const notification: Notification = notificationOpen.data
+      if (notification) {
         this.onPushNotificationReceived(remoteMessageParser(notification), {
           openMessageDirectly: true,
         })

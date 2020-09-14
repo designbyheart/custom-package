@@ -41,7 +41,7 @@ if (Platform.Version < 29) {
   // TODO:KS Investigate why enableScreens break modals on Android
   // we can't tap anything on screen after modal is opened, but modal renders fine
   // Disable react-native-screens for android 10 and 11 (API level 29 and 30)
-  //useScreens()
+  // useScreens()
 }
 
 if (detox === 'yes') {

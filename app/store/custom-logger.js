@@ -113,7 +113,8 @@ import {
   INVITATION_REJECTED,
   INVITATION_RESPONSE_FAIL,
   INVITATION_RESPONSE_SEND,
-  INVITATION_RESPONSE_SUCCESS, OUT_OF_BAND_INVITATION_ACCEPTED,
+  INVITATION_RESPONSE_SUCCESS,
+  OUT_OF_BAND_INVITATION_ACCEPTED,
 } from '../invitation/type-invitation'
 import { CHECK_PIN, SET_PIN } from '../lock/type-lock'
 import { OPEN_ID_CONNECT_UPDATE_STATUS } from '../open-id-connect/open-id-connect-actions'
@@ -529,15 +530,9 @@ export function PiiHiddenActionTransformer(action: any) {
       'qrCodeInvitationPayload',
       'existingConnectionDetails',
     ],
-    [CONNECTION_ATTACH_REQUEST]: [
-      'identifier',
-      'request',
-    ],
+    [CONNECTION_ATTACH_REQUEST]: ['identifier', 'request'],
     [CONNECTION_DELETE_ATTACHED_REQUEST]: ['identifier'],
-    [SEND_CONNECTION_REUSE]: [
-      'invite',
-      'existingConnectionDetails'
-    ],
+    [SEND_CONNECTION_REUSE]: ['invite', 'existingConnectionDetails'],
 
     [CLAIM_RECEIVED]: ['claim'],
     [MAP_CLAIM_TO_SENDER]: [

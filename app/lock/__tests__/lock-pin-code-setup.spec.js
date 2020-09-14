@@ -40,9 +40,11 @@ describe('<LockPinCodeSetup />', () => {
   beforeEach(() => {
     props = getProps()
 
-    const intermediateComponent = () => <Provider store={mockStore}>
-      <LockPinSetup {...props} />
-    </Provider>
+    const intermediateComponent = () => (
+      <Provider store={mockStore}>
+        <LockPinSetup {...props} />
+      </Provider>
+    )
     component = renderer.create(
       <MockedNavigator component={intermediateComponent} />
     )

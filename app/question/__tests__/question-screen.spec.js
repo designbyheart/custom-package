@@ -47,7 +47,7 @@ describe('<QuestionScreen />', () => {
     expect(component.toJSON()).toMatchSnapshot()
   })
 
-/*
+  /*
   FIXME: `CloseIcon` is outside of Question component. We need to rewrite these tests
   it('should goBack if close button is tapped when in loading state', () => {
     const { component, props } = setup({

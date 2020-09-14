@@ -633,7 +633,7 @@ export default function connections(
       if (state.data && state.data[action.identifier]) {
         // eslint-disable-next-line no-unused-vars
         const { attachedRequest, ...connection } =
-        state.data?.[action.identifier] ?? {}
+          state.data?.[action.identifier] ?? {}
 
         return {
           ...state,

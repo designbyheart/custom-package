@@ -14,6 +14,7 @@ import {
   isValidAriesV1InviteData,
   isValidAriesOutOfBandInviteData,
 } from '../../../invitation/invitation'
+import { flatJsonParse } from '../../../common/flat-json-parse'
 
 export async function isAriesConnectionInviteQrCode(
   parsedUrl: Url
@@ -25,21 +26,48 @@ export async function isAriesConnectionInviteQrCode(
     return false
   }
 
-  const [decodeError, decodedInvite] = await flattenAsync(toUtf8FromBase64)(
-    query.c_i
-  )
-  if (decodeError || decodedInvite === null) {
+  const body = query.c_i
+
+  let qrData: null | AriesConnectionInvitePayload = null
+  const parsedInviteUrlSafe = await getDecodedQrData(body, 'NO_WRAP')
+  if (parsedInviteUrlSafe) {
+    qrData = parsedInviteUrlSafe
+  } else {
+    const parsedInviteNoWrap = await getDecodedQrData(body, 'URL_SAFE')
+    if (parsedInviteNoWrap) {
+      qrData = parsedInviteNoWrap
+    }
+  }
+
+  if (!qrData) {
     return false
   }
 
-  let qrData: AriesConnectionInvitePayload
-  try {
-    qrData = (JSON.parse(decodedInvite): AriesConnectionInvitePayload)
-  } catch (e) {
+  return isValidAriesV1InviteData(qrData, JSON.stringify(qrData))
+}
+
+async function getDecodedQrData(
+  encodedData: string,
+  decodeType: 'URL_SAFE' | 'NO_WRAP'
+): Promise<false | AriesConnectionInvitePayload> {
+  const [decodeInviteError, decodedInviteJson]: [
+    null | typeof Error,
+    null | string
+  ] = await flattenAsync(toUtf8FromBase64)(encodedData, decodeType)
+  if (decodeInviteError || !decodedInviteJson) {
     return false
   }
 
-  return isValidAriesV1InviteData(qrData, decodedInvite)
+  // if we get some data back after decoding, now we try to parse it and see if it is valid json or not
+  let [parseError, invite]: [
+    null | typeof Error,
+    null | AriesConnectionInvitePayload
+  ] = flatJsonParse(decodedInviteJson)
+  if (parseError || !invite) {
+    return false
+  }
+
+  return invite
 }
 
 export async function isAriesOutOfBandInviteQrCode(

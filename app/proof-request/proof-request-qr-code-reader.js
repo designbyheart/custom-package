@@ -5,7 +5,8 @@ import isUrl from 'validator/lib/isURL'
 
 import type { CustomError } from '../common/type-common'
 import type {
-  AdditionalProofDataPayload, AriesPresentationRequest,
+  AdditionalProofDataPayload,
+  AriesPresentationRequest,
   QrCodeEphemeralProofRequest,
 } from './type-proof-request'
 
@@ -120,12 +121,7 @@ export async function validateEphemeralProofQrCode(
 
 export async function validateOutofbandProofRequestQrCode(
   presentationRequest: AriesPresentationRequest
-): Promise<
-  [
-    null | string,
-    null | AdditionalProofDataPayload,
-  ]
-  > {
+): Promise<[null | string, null | AdditionalProofDataPayload]> {
   // we still need to get data from base64
   const [decodeProofRequestError, decodedProofRequest] = await flattenAsync(
     toUtf8FromBase64
@@ -158,8 +154,8 @@ export async function validateOutofbandProofRequestQrCode(
       '@type': { name: 'proof_request', version: '0.1' },
       remoteName: presentationRequest.comment || 'Unknown',
       proofHandle: 0,
-      outofbandProofRequest: JSON.stringify(presentationRequest)
-    })
+      outofbandProofRequest: JSON.stringify(presentationRequest),
+    }),
   ]
 }
 

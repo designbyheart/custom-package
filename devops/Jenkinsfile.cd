@@ -46,7 +46,7 @@ pipelineWrapper({
                	 	sh "git config --local user.email 'jenkins@ci.corp.evernym.com'"
 
                     switch (env.BRANCH_NAME) {
-                        case 'master':
+                        case ['master']:
                             hockeyapp_credentials = 'connectme-ios-hockeyapp-qa-token'
                             break
                         case ['stage', 'stable']:

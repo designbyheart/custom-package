@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import { bindActionCreators } from 'redux'
 import SplashScreen from 'react-native-splash-screen'
 import {
@@ -30,27 +30,37 @@ import {
   safeToDownloadSmsInvitation,
   convertSmsPayloadToInvitation,
   convertAriesPayloadToInvitation,
+  convertAriesOutOfBandPayloadToInvitation,
 } from '../sms-pending-invitation/sms-pending-invitation-store'
 import type { SplashScreenProps } from './type-splash-screen'
 import type { Store } from '../store/type-store'
 import { SMSPendingInvitationStatus } from '../sms-pending-invitation/type-sms-pending-invitation'
-import type { AriesConnectionInvitePayload } from '../invitation/type-invitation'
+import type {
+  AriesConnectionInvitePayload,
+  AriesOutOfBandInvite,
+  InvitationPayload,
+} from '../invitation/type-invitation'
 import type {
   SMSPendingInvitationPayload,
   SMSPendingInvitations,
-  SMSPendingInvitationStatusType,
 } from '../sms-pending-invitation/type-sms-pending-invitation'
 import { deepLinkProcessed } from '../deep-link/deep-link-store'
 import { DEEP_LINK_STATUS } from '../deep-link/type-deep-link'
 import { getAllPublicDid } from '../store/store-selector'
-import { isValidAriesV1InviteData } from '../invitation/invitation'
+import {
+  isValidAriesOutOfBandInviteData,
+  isValidAriesV1InviteData,
+} from '../invitation/invitation'
 
-const isReceived = ({ payload, status }) =>
-  payload &&
-  ((payload.senderDetail && payload.senderDetail.DID) ||
-    (payload.recipientKeys &&
-      ((payload: any): AriesConnectionInvitePayload).recipientKeys[0])) &&
-  status === SMSPendingInvitationStatus.RECEIVED
+const isReceived = ({ payload, status }) => {
+  return (
+    status === SMSPendingInvitationStatus.RECEIVED &&
+    payload &&
+    ((payload.senderDetail && payload.senderDetail.DID) ||
+      isValidAriesV1InviteData(payload, JSON.stringify(payload)) ||
+      isValidAriesOutOfBandInviteData(payload))
+  )
+}
 
 export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
   ifDeepLinkFoundGoToWaitForInvitationScreenNFetchInvitation = (
@@ -123,6 +133,7 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
 
   handleSmsPendingInvitations = (prevProps: SplashScreenProps) => {
     const nextDeepLinkTokens = this.props.deepLink.tokens
+
     // Check if the pending sms invitations have changed, or if there is unhandled sms invitations to proceed
     if (
       JSON.stringify(prevProps.smsPendingInvitation) !==
@@ -143,24 +154,50 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
           +payload: ?(
             | SMSPendingInvitationPayload
             | AriesConnectionInvitePayload
+            | AriesOutOfBandInvite
           ),
           invitationToken: string,
         }) => {
           if (payload) {
             const ariesV1Invite = isValidAriesV1InviteData(payload, '')
-            const senderDID = ariesV1Invite
-              ? ((payload: any): AriesConnectionInvitePayload).recipientKeys[0]
-              : ((payload: any): SMSPendingInvitationPayload).senderDetail.DID
+            const ariesV1OutOfBandInvite = isValidAriesOutOfBandInviteData(
+              payload
+            )
+
+            let qrCodeInvitationPayload: InvitationPayload | null
+
+            if (ariesV1Invite) {
+              qrCodeInvitationPayload = convertAriesPayloadToInvitation(
+                ariesV1Invite
+              )
+            } else if (ariesV1OutOfBandInvite) {
+              qrCodeInvitationPayload = convertAriesOutOfBandPayloadToInvitation(
+                ariesV1OutOfBandInvite
+              )
+            } else {
+              qrCodeInvitationPayload = convertSmsPayloadToInvitation(
+                ((payload: any): SMSPendingInvitationPayload)
+              )
+            }
+
+            if (!qrCodeInvitationPayload) {
+              Alert.alert(
+                'Unsupported or invalid invitation format',
+                'Failed to establish connection.'
+              )
+              return
+            }
+
             this.props.deepLinkProcessed(invitationToken)
+
+            const publicDID = qrCodeInvitationPayload.senderDetail.publicDID
+            const senderDID = qrCodeInvitationPayload.senderDID
+
             // check if invitation has public did
             // if we have public did then we have to check for duplicate connection
             // and if we already have same public did in one of our existing connection
             // then we need to redirect to that connection screen
             // instead of invitation screen
-            const publicDID = ariesV1Invite
-              ? ((payload: any): AriesConnectionInvitePayload).recipientKeys[0]
-              : ((payload: any): SMSPendingInvitationPayload).senderDetail
-                  .publicDID
             const connectionAlreadyExist =
               publicDID && publicDID in this.props.publicDIDs
 
@@ -185,13 +222,9 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
                 senderName,
                 image,
                 identifier,
-                backRedirectRoute: homeDrawerRoute,
+                backRedirectRoute: homeRoute,
                 showExistingConnectionSnack: true,
-                qrCodeInvitationPayload: ariesV1Invite
-                  ? convertAriesPayloadToInvitation(ariesV1Invite)
-                  : convertSmsPayloadToInvitation(
-                      ((payload: any): SMSPendingInvitationPayload)
-                    ),
+                qrCodeInvitationPayload,
               }
             }
 

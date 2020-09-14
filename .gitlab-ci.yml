@@ -126,7 +126,7 @@ detox-ios-test:
     - yarn pod:dev:install
     - echo "detox=yes" > .env
     - echo "detox=yes" > .env.production
-    - yarn e2e -b release -e qa -s iphone8 -u
+    # - yarn e2e -b release -e qa -s iphone8
   artifacts:
     paths:
       - e2e/screenshots
@@ -187,7 +187,7 @@ build-ios-master:
   extends: .build-ios
   # Variable expansion doesn't work in `variables` section. Do it here instead.
   variables:
-    BUILD_TYPE: 'QAConnectMe Build'
+    BUILD_TYPE: 'QA ConnectMe Build'
     DEVELOPER_DIR: '/Applications/Xcode.app/Contents/Developer/'
     # this gets passed to the anchor
     FASTLANE_COMMAND: 'bundle exec fastlane cd --disable_runner_upgrades --verbose'
