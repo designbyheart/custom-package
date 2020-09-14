@@ -178,7 +178,6 @@ export type ProofRequestProps = {
 
 export type ProofRequestState = {
   allMissingAttributesFilled: boolean,
-  generateProofClicked: boolean,
   selfAttestedAttributes: GenericStringObject,
   disableUserInputs: boolean,
   selectedClaims: RequestedAttrsJson,

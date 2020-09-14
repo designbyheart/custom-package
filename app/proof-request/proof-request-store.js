@@ -57,7 +57,6 @@ import {
   ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   DELETE_OUTOFBAND_PRESENTATION_REQUEST,
   OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
-  PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES,
 } from './type-proof-request'
 import type {
   NotificationPayloadInfo,
@@ -82,7 +81,7 @@ import {
 } from '../proof/proof-store'
 import { secureSet, getHydrationItem } from '../services/storage'
 import { retrySaga } from '../api/api-utils'
-import { PROOF_FAIL } from '../proof/type-proof'
+import { PROOF_FAIL, USER_SELF_ATTESTED_ATTRIBUTES } from '../proof/type-proof'
 
 const proofRequestInitialState = {}
 
@@ -281,20 +280,11 @@ export function* watchPersistProofRequests(): any {
 
 export const proofRequestAutoFill = (
   uid: string,
-  requestedAttributes: Array<Attribute>
+  requestedAttributes: Array<Attribute>,
 ) => ({
   type: PROOF_REQUEST_AUTO_FILL,
   uid,
   requestedAttributes,
-})
-
-export const proofRequestApplySelfAttestedAttributes = (
-  uid: string,
-  selfAttestedAttributes: SelfAttestedAttributes
-) => ({
-  type: PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES,
-  uid,
-  selfAttestedAttributes,
 })
 
 export const proofRequestReceived = (
@@ -590,9 +580,9 @@ export default function proofRequestReducer(
         },
       }
 
-    case PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES:
-      let filledAttributes = state[action.uid].data.requestedAttributes.map(
-        (attributes) => {
+    case USER_SELF_ATTESTED_ATTRIBUTES:
+      let filledAttributes = state[action.uid].data.requestedAttributes
+        .map((attributes) => {
           const attribute = attributes[0]
           if (action.selfAttestedAttributes.hasOwnProperty(attribute.key)) {
             return [
@@ -606,7 +596,7 @@ export default function proofRequestReducer(
               },
             ]
           } else {
-            return [attribute]
+            return attributes
           }
         }
       )

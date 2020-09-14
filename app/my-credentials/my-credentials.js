@@ -8,7 +8,7 @@ import {
   TouchableHighlight,
   Alert,
 } from 'react-native'
-import { scale } from 'react-native-size-matters'
+import { moderateScale, scale } from 'react-native-size-matters'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import type { Store } from '../store/type-store'
@@ -172,6 +172,7 @@ class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
           )}
 
           <SwipeListView
+            contentContainerStyle={styles.flatListInnerContainer}
             keyExtractor={this.keyExtractor}
             data={credentials}
             renderItem={this.renderItem}
@@ -220,6 +221,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: colors.cmWhite,
+    marginBottom: moderateScale(160),
+  },
+  flatListInnerContainer: {
+    paddingBottom: moderateScale(170, 0.25),
   },
   rowFront: {
     alignItems: 'center',

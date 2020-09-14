@@ -58,6 +58,7 @@ Object {
   "issueDate": "****",
   "logoUrl": "****",
   "myPairwiseDID": "****",
+  "name": "****",
   "senderDID": "****",
   "type": "MAP_CLAIM_TO_SENDER",
 }

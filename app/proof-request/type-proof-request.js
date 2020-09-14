@@ -137,6 +137,7 @@ export type ProofRequestAttributeListProp = {
   disableUserInputs: boolean,
   userAvatarSource: ?ImageSource,
   updateSelectedClaims: (item: Attribute) => void,
+  selectedClaims: RequestedAttrsJson,
 }
 
 export type ProofRequestAttributeListAndHeaderProps = ProofRequestAttributeListProp &
@@ -228,7 +229,6 @@ export type ProofRequestProps = {
 
 export type ProofRequestState = {
   allMissingAttributesFilled: boolean,
-  generateProofClicked: boolean,
   selfAttestedAttributes: GenericStringObject,
   disableUserInputs: boolean,
   selectedClaims: RequestedAttrsJson,
@@ -317,14 +317,6 @@ export type ProofRequestAutoFillAction = {
   type: typeof PROOF_REQUEST_AUTO_FILL,
   uid: string,
   requestedAttributes: Array<Attribute>,
-}
-
-export const PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES =
-  'PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES'
-export type ProofRequestApplySelfAttestedAttributesAction = {
-  type: typeof PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES,
-  uid: string,
-  selfAttestedAttributes: SelfAttestedAttributes,
 }
 
 export type MissingAttribute = {
@@ -448,7 +440,6 @@ export type ProofRequestAction =
   | DenyProofRequestFailAction
   | AcceptOutofbandPresentationRequestAction
   | DeleteOutofbandPresentationRequestAction
-  | ProofRequestApplySelfAttestedAttributesAction
 
 export type ProofRequestStore = {
   +[string]: ProofRequestPayload,
@@ -490,8 +481,6 @@ export type AriesPresentationRequest = {
 }
 
 export const PRIMARY_ACTION_SEND = 'Share Attributes'
-export const PRIMARY_ACTION_GENERATE_PROOF = 'Generate'
-export const SECONDARY_ACTION_IGNORE = 'Ignore'
 
 export const MESSAGE_MISSING_ATTRIBUTES_TITLE = 'Missing information'
 export const MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION = (

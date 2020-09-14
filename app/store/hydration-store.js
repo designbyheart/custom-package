@@ -286,11 +286,12 @@ export function* hydrate(): any {
       yield* hydrateThemes()
       yield* hydrateUserStoreSaga()
       yield* hydrateBackupSaga()
-      yield* hydrateClaimMapSaga()
-      // NOTE: order of loadHistorySaga and hydrateClaimOffersSaga is significant
+      // NOTE: order of loadHistorySaga and hydrateClaimOffersSaga and hydrateClaimMapSaga  is significant
       // as hydrateClaimOffersSaga uses connection history store to restore issue date of claim offers if required
+      // as hydrateClaimMapSaga uses connection history store to restore credential name if required
       yield* loadHistorySaga()
       yield* hydrateClaimOffersSaga()
+      yield* hydrateClaimMapSaga()
       yield* hydrateQuestionSaga()
 
       if (inRecovery === 'true') {
