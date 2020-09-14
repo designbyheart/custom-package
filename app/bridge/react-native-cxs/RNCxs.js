@@ -367,7 +367,7 @@ export async function createCredentialWithAriesOfferObject(
 ): Promise<CxsCredentialOfferResult> {
   const credential_handle = await credentialCreateWithOffer(
     sourceId,
-    JSON.stringify(credentialOffer),
+    JSON.stringify(credentialOffer)
   )
 
   return {

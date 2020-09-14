@@ -173,7 +173,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: OFFSET_2X,
     textAlign: 'center',
     fontWeight: '700',
-
   },
   message: {
     height: scale(20),

@@ -308,7 +308,7 @@ export function convertProofRequestToHistoryEvent(
     type: HISTORY_EVENT_TYPE.PROOF,
     remoteDid: action.payloadInfo.remotePairwiseDID,
     originalPayload: action,
-    showBadge: !action.payloadInfo.hidden
+    showBadge: !action.payloadInfo.hidden,
   }
 }
 
@@ -326,7 +326,7 @@ export function convertClaimOfferToHistoryEvent(
     type: HISTORY_EVENT_TYPE.CLAIM,
     remoteDid: action.payload.issuer.did,
     originalPayload: action,
-    showBadge: !action.payloadInfo.hidden
+    showBadge: !action.payloadInfo.hidden,
   }
 }
 
@@ -564,7 +564,7 @@ export function convertQuestionReceivedToHistoryEvent(
       payloadInfo: action.question,
       type: MESSAGE_TYPE.QUESTION,
     },
-    showBadge: true
+    showBadge: true,
   }
 }
 

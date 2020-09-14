@@ -4,7 +4,7 @@ import type {
   InitialTestAction,
   ResetAction,
 } from '../common/type-common'
-import type { AriesConnectionInvitePayload } from '../invitation/type-invitation'
+import type { AriesConnectionInvitePayload, AriesOutOfBandInvite } from '../invitation/type-invitation'
 
 export const SMSPendingInvitationStatus = {
   NONE: 'NONE',
@@ -52,7 +52,7 @@ export type SMSPendingInvitationPayload = {
 }
 
 export type SMSPendingInvitation = {
-  +payload: ?(SMSPendingInvitationPayload | AriesConnectionInvitePayload),
+  +payload: ?(SMSPendingInvitationPayload | AriesConnectionInvitePayload | AriesOutOfBandInvite),
   +status: SMSPendingInvitationStatusType,
   +isFetching: boolean,
   +error?: ?CustomError,
@@ -79,7 +79,7 @@ export const SMS_PENDING_INVITATION_RECEIVED: 'SMS_PENDING_INVITATION_RECEIVED' 
 
 export type SMSPendingInvitationReceivedAction = {
   type: typeof SMS_PENDING_INVITATION_RECEIVED,
-  data: SMSPendingInvitationPayload | AriesConnectionInvitePayload,
+  data: SMSPendingInvitationPayload | AriesConnectionInvitePayload | AriesOutOfBandInvite,
   smsToken: string,
 }
 

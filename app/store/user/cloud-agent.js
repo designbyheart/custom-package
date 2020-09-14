@@ -23,9 +23,7 @@ import {
   createOneTimeInfo,
   vcxShutdown,
 } from '../../bridge/react-native-cxs/RNCxs'
-import {
-  UNLOCK_APP,
-} from '../../lock/type-lock'
+import { UNLOCK_APP } from '../../lock/type-lock'
 import { safeSet, safeGet } from '../../services/storage'
 import {
   invitationRoute,
@@ -33,7 +31,10 @@ import {
   genRecoveryPhraseRoute,
   walletRoute,
   cloudRestoreRoute,
-  claimOfferRoute, proofRequestRoute, homeRoute, homeDrawerRoute,
+  claimOfferRoute,
+  proofRequestRoute,
+  homeRoute,
+  homeDrawerRoute,
 } from '../../common'
 import { ROUTE_UPDATE } from '../route-store'
 import { OFFLINE_STATUS } from '../../offline/type-offline'
@@ -299,13 +300,7 @@ function getFirebaseToken() {
   )
 }
 
-function showInitialPopUp({
-  title,
-  text,
-}: {
-  title: string,
-  text: string,
-}) {
+function showInitialPopUp({ title, text }: { title: string, text: string }) {
   return ALLOW
   // if (Platform.OS === 'android') {
   //   return ALLOW
@@ -443,22 +438,25 @@ const routeSpecificPushDialogue = {
 }
 // TODO:KS Confirm with Tyler about other screens as well
 // screens such as Onfido, Backup, Cloud Restore, Token
-const routesForSpecialMessage = Platform.OS === 'android' ? [
-  invitationRoute,
-  onfidoRoute,
-  genRecoveryPhraseRoute,
-  walletRoute,
-  cloudRestoreRoute,
-  claimOfferRoute,
-  proofRequestRoute,
-  homeDrawerRoute,
-  homeRoute,
-]: [
-  invitationRoute,
-  onfidoRoute,
-  genRecoveryPhraseRoute,
-  walletRoute,
-  cloudRestoreRoute,
-  claimOfferRoute,
-  proofRequestRoute,
-]
+const routesForSpecialMessage =
+  Platform.OS === 'android'
+    ? [
+        invitationRoute,
+        onfidoRoute,
+        genRecoveryPhraseRoute,
+        walletRoute,
+        cloudRestoreRoute,
+        claimOfferRoute,
+        proofRequestRoute,
+        homeDrawerRoute,
+        homeRoute,
+      ]
+    : [
+        invitationRoute,
+        onfidoRoute,
+        genRecoveryPhraseRoute,
+        walletRoute,
+        cloudRestoreRoute,
+        claimOfferRoute,
+        proofRequestRoute,
+      ]

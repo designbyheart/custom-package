@@ -131,9 +131,7 @@ import type {
   QuestionRequest,
 } from './../question/type-question'
 import { MESSAGE_TYPE } from '../api/api-constants'
-import {
-  saveSerializedClaimOffer,
-} from './../claim-offer/claim-offer-store'
+import { saveSerializedClaimOffer } from './../claim-offer/claim-offer-store'
 import { getPendingFetchAdditionalDataKey } from './store-selector'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
@@ -269,7 +267,7 @@ export const cloudBackupEnvironments = [
 // what settings should be in dev environment
 const isDevEnvironment = __DEV__ && process.env.NODE_ENV !== 'test'
 export const defaultEnvironment = isDevEnvironment
-  ? SERVER_ENVIRONMENT.QA
+  ? SERVER_ENVIRONMENT.DEVTEAM1
   : SERVER_ENVIRONMENT.PROD
 
 const initialState: ConfigStore = {
@@ -1286,10 +1284,7 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
     }
 
     if (payloadType.name === 'handshake-reuse-accepted') {
-      yield call(
-        processAttachedRequest,
-        forDID,
-      )
+      yield call(processAttachedRequest, forDID)
 
       yield fork(updateMessageStatus, [{ pairwiseDID: forDID, uids: [uid] }])
     }

@@ -14,10 +14,7 @@ import type {
   ReduxConnect,
 } from '../common/type-common'
 import { Container, FooterActions } from '../components'
-import {
-  eulaRoute,
-  homeRoute,
-} from '../common'
+import { eulaRoute, homeRoute } from '../common'
 import { eulaAccept } from './eula-store'
 import { EULA_URL, localEulaSource } from './type-eula'
 import { OrangeLoader } from '../components/loader-gif/loader-gif'

@@ -29,7 +29,10 @@ import {
   customValuesRoute,
   attributeValueRoute,
 } from '../../common/route-constants'
-import { BLANK_ATTRIBUTE_DATA_TEXT, DISSATISFIED_ATTRIBUTE_DATA_TEXT } from '../type-connection-details'
+import {
+  BLANK_ATTRIBUTE_DATA_TEXT,
+  DISSATISFIED_ATTRIBUTE_DATA_TEXT,
+} from '../type-connection-details'
 
 // components
 import SvgCustomIcon from '../../components/svg-setting-icons'
@@ -42,7 +45,12 @@ import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 import { generateStateForMissingAttributes, isInvalidValues } from '../utils'
 import { Avatar } from '../../components'
 import { renderAttachmentIcon } from './modal-content'
-import { ALERT_ICON, ARROW_FORWARD_ICON, EvaIcon, PHOTO_ATTACHMENT_ICON } from '../../common/icons'
+import {
+  ALERT_ICON,
+  ARROW_FORWARD_ICON,
+  EvaIcon,
+  PHOTO_ATTACHMENT_ICON,
+} from '../../common/icons'
 import Icon from '../../components/icon'
 
 const screenWidth = Dimensions.get('window').width
@@ -152,7 +160,10 @@ class ProofRequestAttributeList extends Component<
             : null
       }
 
-      const selfAttestedAttribute = adjustedLabel in this.props.missingAttributes && !value && !item.dissatisfied
+      const selfAttestedAttribute =
+        adjustedLabel in this.props.missingAttributes &&
+        !value &&
+        !item.dissatisfied
       const dissatisfiedAttribute = !value && item.dissatisfied
 
       const {
@@ -163,98 +174,84 @@ class ProofRequestAttributeList extends Component<
         <View key={`${index}_${keyIndex}`} style={styles.textAvatarWrapper}>
           <View style={styles.textInnerWrapper}>
             {selfAttestedAttribute ? ( // attribute can be self attested
-                <View style={styles.wrapper}>
-                  <Text style={styles.title}>{label}</Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      handleCustomValuesNavigation(label, adjustedLabel)
+              <View style={styles.wrapper}>
+                <Text style={styles.title}>{label}</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    handleCustomValuesNavigation(label, adjustedLabel)
+                  }
+                >
+                  <TextInput
+                    style={styles.contentInput}
+                    defaultValue={
+                      value
+                        ? value
+                        : this.state?.[adjustedLabel]
+                        ? this.state?.[adjustedLabel]
+                        : '-'
                     }
-                  >
-                    <TextInput
-                      style={styles.contentInput}
-                      defaultValue={
-                        value
-                          ? value
-                          : this.state?.[adjustedLabel]
-                          ? this.state?.[adjustedLabel] : '-'
-                      }
-                      autoCorrect={false}
-                      blurOnSubmit={true}
-                      clearButtonMode="always"
-                      numberOfLines={3}
-                      multiline={true}
-                      maxLength={200}
-                      placeholder={`Enter ${label}`}
-                      returnKeyType="done"
-                      testID={`${testID}-input-${adjustedLabel}`}
-                      accessible={true}
-                      accessibilityLabel={`${testID}-input-${adjustedLabel}`}
-                      underlineColorAndroid="transparent"
-                      editable={false}
-                      pointerEvents="none"
-                    />
-                  </TouchableOpacity>
-                </View>
-              ) :
-              dissatisfiedAttribute ? ( // attribute cannot be fulfilled
-                  <View>
-                    <Text style={styles.title}>{label}</Text>
-                    <Text style={styles.dissatisfiedAttribute}>
-                      {DISSATISFIED_ATTRIBUTE_DATA_TEXT}
-                    </Text>
+                    autoCorrect={false}
+                    blurOnSubmit={true}
+                    clearButtonMode="always"
+                    numberOfLines={3}
+                    multiline={true}
+                    maxLength={200}
+                    placeholder={`Enter ${label}`}
+                    returnKeyType="done"
+                    testID={`${testID}-input-${adjustedLabel}`}
+                    accessible={true}
+                    accessibilityLabel={`${testID}-input-${adjustedLabel}`}
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    pointerEvents="none"
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : dissatisfiedAttribute ? ( // attribute cannot be fulfilled
+              <View>
+                <Text style={styles.title}>{label}</Text>
+                <Text style={styles.dissatisfiedAttribute}>
+                  {DISSATISFIED_ATTRIBUTE_DATA_TEXT}
+                </Text>
+              </View>
+            ) : // If data is empty string, show the BLANK text in gray instead
+            isDataEmptyString ? (
+              <View>
+                <Text style={styles.title}>{label}</Text>
+                <Text style={styles.contentGray}>
+                  {BLANK_ATTRIBUTE_DATA_TEXT}
+                </Text>
+              </View>
+            ) : (
+              <View>
+                <View style={styles.textAvatarWrapper}>
+                  <View style={styles.textInnerWrapper}>
+                    {renderAttachmentIcon(
+                      label,
+                      value,
+                      item.claimUuid || '',
+                      item.claimUuid || ''
+                    )}
                   </View>
-                ):  // If data is empty string, show the BLANK text in gray instead
-              isDataEmptyString ? (
-                <View>
-                  <Text style={styles.title}>{label}</Text>
-                    <Text style={styles.contentGray}>
-                      {BLANK_ATTRIBUTE_DATA_TEXT}
-                    </Text>
-                  </View>
-                ) : (
-                  <View>
-                    <View style={styles.textAvatarWrapper}>
-                      <View style={styles.textInnerWrapper}>
-                        {renderAttachmentIcon(
-                          label,
-                          value,
-                          item.claimUuid || '',
-                          item.claimUuid || '',
-                        )}
-                      </View>
-                      {
-                        keyIndex === 0 &&
-                        <View style={styles.avatarWrapper}>
-                          <Icon
-                            medium
-                            round
-                            resizeMode="cover"
-                            src={logoUrl}
-                          />
-                        </View>
-                      }
+                  {keyIndex === 0 && (
+                    <View style={styles.avatarWrapper}>
+                      <Icon medium round resizeMode="cover" src={logoUrl} />
                     </View>
-                  </View>
-                )}
+                  )}
+                </View>
+              </View>
+            )}
           </View>
-          {
-            !dissatisfiedAttribute && keyIndex === 0 &&
+          {!dissatisfiedAttribute && keyIndex === 0 && (
             <View style={styles.iconWrapper}>
-              <EvaIcon
-                name={ARROW_FORWARD_ICON}
-                fill={colors.cmBlack}
-              />
+              <EvaIcon name={ARROW_FORWARD_ICON} fill={colors.cmBlack} />
             </View>
-          }
-          {
-            dissatisfiedAttribute && keyIndex === 0 &&
+          )}
+          {dissatisfiedAttribute && keyIndex === 0 && (
             <View style={styles.iconWrapper}>
-              <EvaIcon
-                name={ALERT_ICON}
-                color={colors.cmRed}
-              />
+              <EvaIcon name={ALERT_ICON} color={colors.cmRed} />
             </View>
-          }
+          )}
         </View>
       )
     })

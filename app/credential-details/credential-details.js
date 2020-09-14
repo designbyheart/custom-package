@@ -36,7 +36,9 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
       />
       <ScrollView>
         <View style={styles.headerWrapper}>
-          <Text style={styles.headerSubText}>{date ? "Issued by" : "Offered by"}</Text>
+          <Text style={styles.headerSubText}>
+            {date ? 'Issued by' : 'Offered by'}
+          </Text>
           <Text
             style={styles.headerText}
             ellipsizeMode="tail"

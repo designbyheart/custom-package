@@ -59,7 +59,9 @@ export async function getUrlQrCodeData(
     return [null, ariesConnectionInvite]
   }
 
-  const ariesOutofbandConnectionInvite = await isAriesOutOfBandInviteQrCode(parsedUrl)
+  const ariesOutofbandConnectionInvite = await isAriesOutOfBandInviteQrCode(
+    parsedUrl
+  )
   if (ariesOutofbandConnectionInvite) {
     return [null, ariesOutofbandConnectionInvite]
   }
@@ -90,6 +92,12 @@ export async function getUrlQrCodeData(
     if (parsedData) {
       // if we get some json data, then return it
       return [null, parsedData]
+    }
+
+    const urlInvitationData = isValidUrlQrCode(downloadedData)
+    if (urlInvitationData) {
+      // downloaded data contains url - get its data
+      return await getUrlQrCodeData(urlInvitationData, downloadedData)
     }
 
     // since we know that we got some downloadedData

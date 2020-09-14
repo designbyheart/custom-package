@@ -11,7 +11,7 @@ import { captureError } from '../services/error/error-handler'
 
 export function* retrySaga(callEffect: any): Generator<*, *, *> {
   let answerMsgId: string = '' // --> Only for structured messages.
-  let resultError;
+  let resultError
   for (let i = 0; i < 3; i++) {
     try {
       answerMsgId = yield callEffect

@@ -319,7 +319,8 @@ export type ProofRequestAutoFillAction = {
   requestedAttributes: Array<Attribute>,
 }
 
-export const PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES = 'PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES'
+export const PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES =
+  'PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES'
 export type ProofRequestApplySelfAttestedAttributesAction = {
   type: typeof PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES,
   uid: string,
@@ -411,13 +412,15 @@ export type AcceptOutofbandPresentationRequestAction = {
   requestedAttrsJson: RequestedAttrsJson,
 }
 
-export const DELETE_OUTOFBAND_PRESENTATION_REQUEST = 'DELETE_OUTOFBAND_PRESENTATION_REQUEST'
+export const DELETE_OUTOFBAND_PRESENTATION_REQUEST =
+  'DELETE_OUTOFBAND_PRESENTATION_REQUEST'
 export type DeleteOutofbandPresentationRequestAction = {
   type: typeof DELETE_OUTOFBAND_PRESENTATION_REQUEST,
   uid: string,
 }
 
-export const OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED = 'OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED'
+export const OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED =
+  'OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED'
 export type OutOfBandConnectionForPresentationEstablishedAction = {
   type: typeof OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
   uid: string,

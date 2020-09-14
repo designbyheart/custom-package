@@ -29,11 +29,7 @@ import {
   CustomText,
   CustomView,
 } from '../components'
-import {
-  homeRoute,
-  noop,
-  invitationRoute,
-} from '../common'
+import { homeRoute, noop, invitationRoute } from '../common'
 import { OFFSET_1X } from '../common/styles'
 import { ResponseType } from '../components/request/type-request'
 import { sendInvitationResponse, invitationRejected } from './invitation-store'
@@ -232,7 +228,7 @@ const ariesConnectionInviteQrSchema = {
       minItems: 0,
     },
     serviceEndpoint: { type: 'string' },
-    profileUrl: {type: ['null', 'string']},
+    profileUrl: { type: ['null', 'string'] },
   },
   required: [ID, TYPE, 'recipientKeys', 'serviceEndpoint'],
 }
@@ -319,6 +315,7 @@ const ariesOutOfBandInviteSchema = {
       },
       minItems: 1,
     },
+    public_did: { type: ['null', 'string'] },
   },
   anyOf: [
     {

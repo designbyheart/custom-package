@@ -75,7 +75,11 @@ import { RESET } from '../common/type-common'
 import { getProofRequests } from './../store/store-selector'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
-import { resetTempProofData, errorSendProofFail, updateAttributeClaim } from '../proof/proof-store'
+import {
+  resetTempProofData,
+  errorSendProofFail,
+  updateAttributeClaim,
+} from '../proof/proof-store'
 import { secureSet, getHydrationItem } from '../services/storage'
 import { retrySaga } from '../api/api-utils'
 import { PROOF_FAIL } from '../proof/type-proof'
@@ -428,7 +432,7 @@ export const proofRequestShowStart = (uid: string) => ({
 
 export const acceptOutofbandPresentationRequest = (
   uid: string,
-  requestedAttrsJson: RequestedAttrsJson,
+  requestedAttrsJson: RequestedAttrsJson
 ): AcceptOutofbandPresentationRequestAction => ({
   type: ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   uid,
@@ -436,25 +440,25 @@ export const acceptOutofbandPresentationRequest = (
 })
 
 export const deleteOutofbandPresentationRequest = (
-  uid: string,
+  uid: string
 ): DeleteOutofbandPresentationRequestAction => ({
   type: DELETE_OUTOFBAND_PRESENTATION_REQUEST,
   uid,
 })
 
 export const outOfBandConnectionForPresentationEstablished = (
-  uid: string,
+  uid: string
 ): OutOfBandConnectionForPresentationEstablishedAction => ({
   type: OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
   uid,
 })
 
 function* outOfBandConnectionForPresentationEstablishedSaga(
-  action: OutOfBandConnectionForPresentationEstablishedAction,
+  action: OutOfBandConnectionForPresentationEstablishedAction
 ): Generator<*, *, *> {
   const proofRequestPayload: ProofRequestPayload = yield select(
     getProofRequest,
-    action.uid,
+    action.uid
   )
 
   if (!proofRequestPayload.requestedAttrsJson) {
@@ -465,21 +469,21 @@ function* outOfBandConnectionForPresentationEstablishedSaga(
     updateAttributeClaim(
       proofRequestPayload.uid,
       proofRequestPayload.remotePairwiseDID,
-      proofRequestPayload.requestedAttrsJson,
-    ),
+      proofRequestPayload.requestedAttrsJson
+    )
   )
 }
 
 export function* watchOutOfBandConnectionForPresentationEstablished(): any {
   yield takeEvery(
     OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
-    outOfBandConnectionForPresentationEstablishedSaga,
+    outOfBandConnectionForPresentationEstablishedSaga
   )
 }
 
 export default function proofRequestReducer(
   state: ProofRequestStore = proofRequestInitialState,
-  action: ProofRequestAction,
+  action: ProofRequestAction
 ) {
   switch (action.type) {
     case PROOF_REQUEST_RECEIVED:
@@ -587,21 +591,25 @@ export default function proofRequestReducer(
       }
 
     case PROOF_REQUEST_APPLY_SELF_ATTESTED_ATTRIBUTES:
-      let filledAttributes = state[action.uid].data.requestedAttributes
-        .map((attributes) => {
+      let filledAttributes = state[action.uid].data.requestedAttributes.map(
+        (attributes) => {
           const attribute = attributes[0]
-          if (action.selfAttestedAttributes.hasOwnProperty(attribute.key)){
-            return [{
-              ...attribute,
-              data: action.selfAttestedAttributes[attribute.key].data,
-              values: {
-                [attribute.label]: action.selfAttestedAttributes[attribute.key].data
+          if (action.selfAttestedAttributes.hasOwnProperty(attribute.key)) {
+            return [
+              {
+                ...attribute,
+                data: action.selfAttestedAttributes[attribute.key].data,
+                values: {
+                  [attribute.label]:
+                    action.selfAttestedAttributes[attribute.key].data,
+                },
               },
-            }]
+            ]
           } else {
             return [attribute]
           }
-        })
+        }
+      )
 
       return {
         ...state,
@@ -609,7 +617,7 @@ export default function proofRequestReducer(
           ...state[action.uid],
           data: {
             ...state[action.uid].data,
-            requestedAttributes: filledAttributes
+            requestedAttributes: filledAttributes,
           },
         },
       }

@@ -26,14 +26,20 @@ export const ariesOutOfBandInvitationToInvitationPayload = (
     senderAgentKeyDelegationProof,
     senderName: invitation.label || 'Unknown',
     senderDID: serviceEntry.recipientKeys[0],
-    senderLogoUrl: invitation.profileUrl && isUrl(invitation.profileUrl) ? invitation.profileUrl: null,
+    senderLogoUrl:
+      invitation.profileUrl && isUrl(invitation.profileUrl)
+        ? invitation.profileUrl
+        : null,
     senderVerificationKey: serviceEntry.recipientKeys[0],
     targetName: invitation.label || 'Unknown',
     senderDetail: {
       name: invitation.label || 'Unknown',
       agentKeyDlgProof: senderAgentKeyDelegationProof,
       DID: serviceEntry.recipientKeys[0],
-      logoUrl: invitation.profileUrl && isUrl(invitation.profileUrl) ? invitation.profileUrl: null,
+      logoUrl:
+        invitation.profileUrl && isUrl(invitation.profileUrl)
+          ? invitation.profileUrl
+          : null,
       verKey: serviceEntry.recipientKeys[0],
       publicDID: serviceEntry.recipientKeys[0],
     },

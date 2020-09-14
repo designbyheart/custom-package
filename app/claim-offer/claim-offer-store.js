@@ -1,11 +1,5 @@
 // @flow
-import {
-  put,
-  call,
-  all,
-  select,
-  takeEvery,
-} from 'redux-saga/effects'
+import { put, call, all, select, takeEvery } from 'redux-saga/effects'
 import delay from '@redux-saga/delay-p'
 import {
   CLAIM_OFFER_STATUS,
@@ -265,9 +259,7 @@ export function* denyClaimOfferSaga(
   const [connection]: Connection[] = yield select(getConnection, remoteDid)
   if (!connection) {
     captureError(new Error(ERROR_NO_SERIALIZED_CLAIM_OFFER(uid)))
-    yield put(
-      claimRequestFail(uid, ERROR_NO_SERIALIZED_CLAIM_OFFER(uid))
-    )
+    yield put(claimRequestFail(uid, ERROR_NO_SERIALIZED_CLAIM_OFFER(uid)))
     return
   }
 
@@ -279,9 +271,7 @@ export function* denyClaimOfferSaga(
 
   if (!vcxSerializedClaimOffer) {
     captureError(new Error(ERROR_NO_SERIALIZED_CLAIM_OFFER(uid)))
-    yield put(
-      claimRequestFail(uid, ERROR_NO_SERIALIZED_CLAIM_OFFER(uid))
-    )
+    yield put(claimRequestFail(uid, ERROR_NO_SERIALIZED_CLAIM_OFFER(uid)))
 
     return
   }

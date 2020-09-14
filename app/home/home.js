@@ -137,7 +137,10 @@ export class HomeScreen extends Component<HomeProps, void> {
           this.props.route.params &&
           this.props.route.params.qrCodeInvitationPayload
 
-        if (invite.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR || invite.type === undefined) {
+        if (
+          invite.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR ||
+          invite.type === undefined
+        ) {
           this.props.sendConnectionRedirect(invite, {
             senderDID:
               this.props.route &&
