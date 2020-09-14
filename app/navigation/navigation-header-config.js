@@ -17,13 +17,13 @@ export const headerNavigationOptions = ({
   title: string,
 }) => {
   return {
-    headerShown: false,
+    headerShown: title ? true : false,
     headerTitleAlign: 'center',
     headerCenter: () => {
       return <HeaderTitle title={title} />
     },
-    headerLeft: () => {
-      return <BackButton />
+    headerStyle: {
+      borderBottomWidth: 0,
     },
     headerHideShadow: false,
     ...rest,

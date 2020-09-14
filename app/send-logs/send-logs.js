@@ -227,6 +227,9 @@ export const sendLogsScreen = {
       headerLeft: () => {
         return <BackButton onPress={SendLogs.goBack} />
       },
+      headerStyle: {
+        borderBottomWidth: 0,
+      },
     })
   },
 }
