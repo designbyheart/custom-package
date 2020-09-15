@@ -8,7 +8,6 @@ import { detox } from 'react-native-dotenv'
 
 import { convertAriesCredentialOfferToCxsClaimOffer } from '../bridge/react-native-cxs/vcx-transformers'
 import { convertClaimOfferPushPayloadToAppClaimOffer } from '../push-notification/push-notification-store'
-import { ariesOutOfBandInvitationToInvitationPayload } from '../invitation/aries-out-of-band'
 
 import { Container, QRScanner } from '../components'
 import { color } from '../common/styles/constant'
@@ -362,7 +361,7 @@ export class QRCodeScannerScreen extends Component<
     const { navigation } = this.props
     const navigationFn = navigation.push || navigation.navigate
 
-    const invitation = ariesOutOfBandInvitationToInvitationPayload(invite)
+    const invitation = convertAriesOutOfBandPayloadToInvitation(invite)
     if (!invitation) {
       this.props.navigation.goBack(null)
       Alert.alert(

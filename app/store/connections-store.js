@@ -75,6 +75,7 @@ import {
   saveNewConnectionSuccess,
 } from './new-connection-success'
 import { ensureVcxInitSuccess } from './route-store'
+import moment from "moment"
 
 const initialState: ConnectionStore = {
   data: {},
@@ -228,6 +229,7 @@ export function* loadNewConnectionSaga(
       vcxSerializedConnection,
       publicDID,
       attachedRequest,
+      timestamp: moment().format(),
     }
 
     yield put(promptBackupBanner(true))

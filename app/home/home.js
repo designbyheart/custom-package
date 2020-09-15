@@ -411,13 +411,18 @@ const mapStateToProps = (state: Store) => {
   // TODO: Replace this with flatMap when we update flow-bin
   const placeholderArray = []
   const connections = receivedConnections.map((connection, index) => {
-    placeholderArray.push(
-      (state.history.data &&
-        state.history.data.connections &&
-        state.history.data.connections[connection.senderDID] &&
-        state.history.data.connections[connection.senderDID].data) ||
-        []
-    )
+    const connectionHistory = state.history.data &&
+      state.history.data.connections &&
+      state.history.data.connections[connection.senderDID] &&
+      state.history.data.connections[connection.senderDID].data || []
+
+    const timestamp = connection.timestamp
+
+    const filteredEvents = timestamp ?
+      connectionHistory.filter((event) => new Date(event.timestamp) >= new Date(timestamp)) :
+      connectionHistory.slice()
+
+    placeholderArray.push(filteredEvents)
   })
 
   const flattenPlaceholderArray = customFlat(placeholderArray).sort((a, b) => {
