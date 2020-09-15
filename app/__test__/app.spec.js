@@ -1,20 +1,17 @@
 // @flow
 import 'react-native'
 import React from 'react'
-import { BackHandler, StatusBar, ToastAndroid, Platform } from 'react-native'
+import { BackHandler, ToastAndroid, Platform } from 'react-native'
 import renderer from 'react-test-renderer'
-import { Provider } from 'react-redux'
 import { ConnectMeApp } from './../app'
 import delay from '@redux-saga/delay-p'
 import { NativeModules } from 'react-native'
 import {
   aboutAppRoute,
   lockPinSetupHomeRoute,
-  settingsTabRoute,
   lockAuthorizationHomeRoute,
   homeRoute,
 } from '../common'
-import store from './../store'
 
 describe.skip('<App/>', () => {
   describe('in ios environment.', () => {

@@ -30,52 +30,6 @@ platform :ios do
     )
   end
 
-  lane :beta do
-
-    UI.user_error!("You can't run this lane from CI!") if Helper.is_ci?
-
-    reset_git_repo(force: true)
-    cocoapods
-
-    version_number = project_version_bump
-
-    app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
-
-    build(
-        match_type: "adhoc",
-        compile_type: "adhoc",
-        app_identifier: "#{app_identifier}",
-    )
-
-    remote_branch = git_branch
-
-    if remote_branch == "master"
-      appcenter_upload(api_token: ENV["APPCENTER_API_TOKEN"], owner_type: "user", app_name: "QA-ConnectMe")
-    elsif remote_branch == "stage"
-      build_type = "ConnectMe Stage Build"
-      appcenter_upload(api_token: ENV["APPCENTER_API_TOKEN"], owner_type: "user", app_name: "Stage-ConnectMe")
-    else
-      build_type = "ConnectMe Dev Build"
-      appcenter_upload(api_token: ENV["APPCENTER_API_TOKEN"], owner_type: "user", app_name: "ConnectMe")
-    end
-
-    if remote_branch == "master" || remote_branch == "stage" || remote_branch == "stable"
-
-      build(
-        match_type: "appstore",
-        compile_type: "appstore",
-        app_identifier: "#{app_identifier}",
-      )
-
-     deliver(force: true)
-    end
-
-    commit_and_push(
-        commit_message: "[ci skip] Build Version bump by Fastlane on GitLab. Build: #{version_number}",
-        remote_branch: "#{remote_branch}"
-    )
-  end
-
   lane :ci do
 
     UI.user_error!("You can run this lane only on CI!") unless Helper.is_ci?
@@ -148,7 +102,11 @@ platform :ios do
         app_identifier: "#{app_identifier}",
     )
 
-    deliver(force: true)
+    deliver(
+      force: true,
+      skip_metadata: true,
+      skip_screenshots: true,
+    )
   end
 
   #==============================================#

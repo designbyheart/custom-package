@@ -1,5 +1,5 @@
 // @flow
-import type { CustomError, ReactNavigation } from '../common/type-common'
+import type { ReactNavigation } from '../common/type-common'
 
 export type AboutAppProps = {
   environmentName: string,

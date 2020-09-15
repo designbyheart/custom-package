@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { AppState } from 'react-native'
 import { getUnacknowledgedMessages } from './../store/config-store'
 import { getRestoreStatus } from './../store/store-selector'
@@ -26,7 +25,7 @@ class AppStatusComponent extends Component<AppStatusProps, AppStatusState> {
     AppState.removeEventListener('change', this._handleAppStateChange)
   }
 
-  _handleAppStateChange = nextAppState => {
+  _handleAppStateChange = (nextAppState) => {
     if (
       this.state.appState &&
       this.state.appState.match(/inactive|background/) &&
