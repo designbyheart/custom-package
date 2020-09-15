@@ -76,9 +76,7 @@ export class LockEnterFingerprint extends Component<
           .then((success) => {
             TouchId.release()
             this.setState({ authenticationSuccess: true, errorMessage: null })
-            if (this.props.isFetchingInvitation === false) {
-              this.onAuthenticationSuccess(this.props.pendingRedirection)
-            }
+            this.onAuthenticationSuccess(this.props.pendingRedirection)
           })
           .catch((error) => {
             this.handleFailedAuth(error)

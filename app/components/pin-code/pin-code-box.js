@@ -56,7 +56,13 @@ export default class PinCodeBox extends PureComponent<
   }
 
   showKeyboard = () => {
-    this.inputBox && this.inputBox.focus()
+    // "Autofocus: false" in "TextInput" box was having issues with "showKeyBoard" logic. We removed "Autofocus: false" and handled
+    // onFocus manually through setting the ref in componentDidMount and having a setTimeout for setting the ref while mounting.
+    // This roundabout solution is the only way android 10 would work with a keyboard
+    // Found partial solution here: https://github.com/software-mansion/react-native-screens/issues/89#issuecomment-551143682
+    Platform.OS === 'ios'
+      ? this.inputBox && this.inputBox.focus()
+      : setTimeout(() => this.inputBox && this.inputBox.focus(), 500)
   }
 
   onPinSet = () => {
@@ -70,6 +76,11 @@ export default class PinCodeBox extends PureComponent<
       this.props.onPinComplete(this.state.pin)
     }
   }
+
+  componentDidMount() {
+    this.showKeyboard()
+  }
+
   saveCustomKeyboardRef: Function = (ref: CustomKeyboard) =>
     (this.customKeyboardRef = ref)
   customKeyboard = () => {
@@ -108,7 +119,6 @@ export default class PinCodeBox extends PureComponent<
         <TextInput
           editable={!this.props.disableKeyboard}
           autoCorrect={false}
-          autoFocus={true}
           blurOnSubmit={false}
           enablesReturnKeyAutomatically={false}
           keyboardType={keyboard}

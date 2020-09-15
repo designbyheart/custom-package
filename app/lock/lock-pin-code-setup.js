@@ -16,6 +16,7 @@ import { colors, OFFSET_2X, fontFamily } from '../common/styles'
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters'
 import { Header } from '../components'
 import { useFocusEffect } from '@react-navigation/native'
+import { headerNavigationOptions } from '../navigation/navigation-header-config'
 
 let keyboardDidHideListener
 let keyboardDidShowListener
@@ -193,4 +194,10 @@ const styles = StyleSheet.create({
 export const lockPinSetupScreen = {
   routeName: lockPinSetupRoute,
   screen: LockPinSetup,
+  options: {
+    ...headerNavigationOptions({
+      title: 'App Security',
+      backReset: true,
+    }),
+  },
 }

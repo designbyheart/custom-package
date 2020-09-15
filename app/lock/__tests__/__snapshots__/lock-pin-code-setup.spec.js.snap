@@ -922,7 +922,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
                               accessible={true}
                               allowFontScaling={true}
                               autoCorrect={false}
-                              autoFocus={true}
                               blurOnSubmit={false}
                               editable={true}
                               enablesReturnKeyAutomatically={false}
@@ -1881,7 +1880,6 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
                               accessible={true}
                               allowFontScaling={true}
                               autoCorrect={false}
-                              autoFocus={true}
                               blurOnSubmit={false}
                               editable={true}
                               enablesReturnKeyAutomatically={false}
@@ -2842,7 +2840,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
                               accessible={true}
                               allowFontScaling={true}
                               autoCorrect={false}
-                              autoFocus={true}
                               blurOnSubmit={false}
                               editable={true}
                               enablesReturnKeyAutomatically={false}
@@ -3801,7 +3798,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
                               accessible={true}
                               allowFontScaling={true}
                               autoCorrect={false}
-                              autoFocus={true}
                               blurOnSubmit={false}
                               editable={true}
                               enablesReturnKeyAutomatically={false}
@@ -4760,7 +4756,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
                               accessible={true}
                               allowFontScaling={true}
                               autoCorrect={false}
-                              autoFocus={true}
                               blurOnSubmit={false}
                               editable={true}
                               enablesReturnKeyAutomatically={false}
