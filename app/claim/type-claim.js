@@ -64,6 +64,7 @@ export type MapClaimToSenderAction = {
   logoUrl: string,
   issueDate: number,
   name: string,
+  senderName?: string,
 }
 
 export type ClaimMap = {
@@ -73,6 +74,7 @@ export type ClaimMap = {
     logoUrl: string,
     issueDate: number,
     name?: string,
+    senderName?: string,
   },
 }
 

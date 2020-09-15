@@ -55,6 +55,7 @@ import {
   getConnection,
   getClaimOffer,
   getConnectionHistory,
+  getAllConnection,
 } from '../store/store-selector'
 import { secureSet, getHydrationItem } from '../services/storage'
 import { CLAIM_MAP } from '../common/secure-storage-constants'
@@ -107,6 +108,7 @@ export const mapClaimToSender = (
   logoUrl: string,
   issueDate: number,
   name: string,
+  senderName?: string,
 ): MapClaimToSenderAction => ({
   type: MAP_CLAIM_TO_SENDER,
   claimUuid,
@@ -115,6 +117,7 @@ export const mapClaimToSender = (
   logoUrl,
   issueDate,
   name,
+  senderName,
 })
 
 export const hydrateClaimMap = (claimMap: ClaimMap) => ({
@@ -131,6 +134,7 @@ export function* hydrateClaimMapSaga(): Generator<*, *, *> {
   try {
     const fetchedClaimMap = yield call(getHydrationItem, CLAIM_MAP)
     const connectionHistory = yield select(getConnectionHistory)
+    const connections = yield select(getAllConnection)
 
     if (fetchedClaimMap) {
       const claimMap: ClaimMap = JSON.parse(fetchedClaimMap)
@@ -150,11 +154,16 @@ export function* hydrateClaimMapSaga(): Generator<*, *, *> {
         // so, here we are iterating on connectionHistory, and then adding `name` to credential
         if (claimMap.hasOwnProperty(key) && !claimMap[key].name){
           const event = connectionHistory.data.connections[claimMap[key].senderDID].data
-            .find((event) => event.originalPayload.type === CLAIM_STORAGE_SUCCESS)
+            .find((event) => event.originalPayload.type === CLAIM_STORAGE_SUCCESS &&
+              claimMap[key].issueDate === event.originalPayload.issueDate)
 
           if (event) {
-            claimMap[key].name =   event.name
+            claimMap[key].name = event.name
           }
+        }
+        if (claimMap.hasOwnProperty(key) && !claimMap[key].senderName){
+          const connection = connections[claimMap[key].myPairwiseDID]
+          claimMap[key].senderName = connection.senderName
         }
       }
 
@@ -263,7 +272,8 @@ export function* checkForClaim(
             userDID,
             connection.logoUrl,
             issueDate,
-            claimOfferPayload.data.name
+            claimOfferPayload.data.name,
+            connection.senderName,
           )
         )
         yield fork(saveClaimUuidMap)

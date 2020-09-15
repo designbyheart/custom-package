@@ -51,7 +51,8 @@ describe('fn:PiiHiddenActionTransformer', () => {
       'userDID',
       'logoUrl',
       123456789,
-      'Test Claim'
+      'Test Claim',
+      'Sender'
     )
     expect(PiiHiddenActionTransformer(action)).toMatchSnapshot()
   })

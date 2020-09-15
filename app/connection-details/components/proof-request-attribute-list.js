@@ -45,6 +45,7 @@ import { ALERT_ICON, ARROW_FORWARD_ICON, EvaIcon } from '../../common/icons'
 import Icon from '../../components/icon'
 import { attributesValueRoute } from '../../common'
 import { isSelected } from './attributes-values'
+import { DefaultLogo } from '../../components/default-logo/default-logo'
 
 class ProofRequestAttributeList extends Component<ProofRequestAttributeListAndHeaderProps & ReactNavigation,
   ProofRequestAttributeListState> {
@@ -148,16 +149,14 @@ class ProofRequestAttributeList extends Component<ProofRequestAttributeListAndHe
       const value = selectedItem.values[label]
       const isDataEmptyString = value === ''
 
+      let claim = selectedItem.claimUuid &&
+        this.props.claimMap &&
+        this.props.claimMap[selectedItem.claimUuid] || {}
+
       if (!logoUrl) {
         logoUrl =
-          value || isDataEmptyString
-            ? selectedItem.claimUuid &&
-            this.props.claimMap &&
-            this.props.claimMap[selectedItem.claimUuid] &&
-            this.props.claimMap[selectedItem.claimUuid].logoUrl
-            ? { uri: this.props.claimMap[selectedItem.claimUuid].logoUrl }
-            : this.props.userAvatarSource ||
-            require('../../images/UserAvatar.png')
+          claim.logoUrl
+            ? { uri: claim.logoUrl }
             : null
       }
 
@@ -194,12 +193,16 @@ class ProofRequestAttributeList extends Component<ProofRequestAttributeListAndHe
                       {
                         keyIndex === 0 &&
                         <View style={styles.avatarWrapper}>
-                          <Icon
-                            medium
-                            round
-                            resizeMode="cover"
-                            src={logoUrl}
-                          />
+                          {
+                            logoUrl ?
+                              <Icon
+                                medium
+                                round
+                                resizeMode="cover"
+                                src={logoUrl}
+                              /> :
+                              claim && claim.senderName && <DefaultLogo text={claim.senderName} size={30} fontSize={18}/>
+                          }
                         </View>
                       }
                     </View>
