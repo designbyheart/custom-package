@@ -9,11 +9,20 @@ import {
   ANDROID_BACK_ARROW_ICON,
   IOS_BACK_ARROW_ICON,
 } from '../../common/icons'
+import { lockSelectionRoute } from '../../common/route-constants'
+import { CommonActions } from '@react-navigation/native'
 
-export const BackButton = () => {
+export const BackButton = ({ backReset }: { backReset?: boolean }) => {
   const navigation = useNavigation()
   const onPress = useCallback(() => {
-    navigation.goBack()
+    backReset
+      ? navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: lockSelectionRoute }],
+          })
+        )
+      : navigation.goBack()
   }, [])
   const iOS = Platform.OS === 'ios'
   return (
