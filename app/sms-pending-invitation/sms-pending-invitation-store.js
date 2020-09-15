@@ -144,6 +144,7 @@ export function convertAriesPayloadToInvitation(
     },
     version: '1.0',
     original,
+    type: CONNECTION_INVITE_TYPES.ARIES_V1_QR,
   }
 
   return invitation

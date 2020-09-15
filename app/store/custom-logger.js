@@ -541,6 +541,7 @@ export function PiiHiddenActionTransformer(action: any) {
       'logoUrl',
       'issueDate',
       'name',
+      'senderName',
     ],
     [CLAIM_RECEIVED_VCX]: ['claim'],
     [CLAIM_OFFER_RECEIVED]: ['payload', 'payloadInfo'],

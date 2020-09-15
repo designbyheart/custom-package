@@ -34,6 +34,7 @@ export const prepareCredentials = (items: any, claimMap: any) => {
       label: item.label,
       claimUuid: item.claimUuid,
       credentialName: claimInfo.name || 'Default Credential',
+      senderName: claimInfo.senderName,
       date: claimInfo.issueDate,
       data: item.data,
       values: item.values,
@@ -81,7 +82,7 @@ const AttributesValues = ({
                       src={{ uri: item.logoUrl }}
                     />
                   ) : (
-                    <DefaultLogo text={item.credentialName} size={32} fontSize={17}/>
+                    <DefaultLogo text={item.senderName} size={32} fontSize={17}/>
                   )}
                 </View>
                 <View style={styles.infoSectionRow}>

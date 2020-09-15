@@ -60,6 +60,7 @@ Object {
   "myPairwiseDID": "****",
   "name": "****",
   "senderDID": "****",
+  "senderName": "****",
   "type": "MAP_CLAIM_TO_SENDER",
 }
 `;

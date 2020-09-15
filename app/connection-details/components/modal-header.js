@@ -34,8 +34,8 @@ export const ModalHeader = ({
         ) : (
           <DefaultLogo
             text={institutionalName[0]}
-            size={moderateScale(24)}
-            fontSize={12}
+            size={moderateScale(80)}
+            fontSize={56}
           />
         )}
       </View>

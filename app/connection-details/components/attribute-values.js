@@ -58,7 +58,7 @@ const AttributeValues = ({
                   src={{ uri: item.logoUrl }}
                 />
               ) : (
-                <DefaultLogo text={item.credentialName} size={32} fontSize={17}/>
+                <DefaultLogo text={item.senderName} size={32} fontSize={17}/>
               )}
             </View>
             <View style={styles.infoSection}>
