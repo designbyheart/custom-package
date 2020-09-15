@@ -2,29 +2,12 @@
 import 'react-native-gesture-handler'
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import {
-  AppRegistry,
-  BackHandler,
-  ToastAndroid,
-  Platform,
-  UIManager,
-  StatusBar,
-} from 'react-native'
+import { AppRegistry, Platform, UIManager, StatusBar } from 'react-native'
 import { detox } from 'react-native-dotenv'
 import { enableScreens } from 'react-native-screens'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { CommonActions, NavigationContainer } from '@react-navigation/native'
-import { useScreens } from 'react-native-screens'
-
-import store from './store'
-import { ROUTE_UPDATE } from './store/route-store'
-import { getStatusBarTheme } from './store/store-selector'
-import { Container } from './components'
-import { PushNotification } from './push-notification'
-import DeepLink from './deep-link'
-import { colors } from './common/styles/constant'
-import { ConnectMeAppNavigator } from './navigation/navigator'
-import { sendLogsRoute } from './common'
+import RNShake from 'react-native-shake'
 
 import type { AppProps } from './type-app'
 import type {
@@ -32,8 +15,16 @@ import type {
   NavigationParams,
   NavigationRoute,
 } from './common/type-common'
+
+import store from './store'
+import { ROUTE_UPDATE } from './store/route-store'
+import { Container } from './components'
+import { PushNotification } from './push-notification'
+import DeepLink from './deep-link'
+import { colors } from './common/styles/constant'
+import { ConnectMeAppNavigator } from './navigation/navigator'
+import { sendLogsRoute } from './common'
 import AppStatus from './app-status/app-status'
-import RNShake from 'react-native-shake'
 import Offline from './offline/offline'
 
 if (Platform.Version < 29) {

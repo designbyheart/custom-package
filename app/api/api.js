@@ -3,11 +3,9 @@ import { api, options } from './api-utils'
 import type {
   GetInvitationLinkApiData,
   MessageApiData,
-  DownloadInvitationApiData,
   SendAuthenticationResponseApiData,
   EnvironmentDetailUrlDownloaded,
 } from './type-api'
-import { PAYLOAD_TYPE, MESSAGE_TYPE, STATUS_CODE } from './api-constants'
 
 export const getInvitationLink = ({
   agencyUrl,
@@ -22,7 +20,7 @@ export const sendAuthenticationRequest = ({
   data: { identifier, dataBody },
   config: { agencyUrl },
 }: SendAuthenticationResponseApiData) =>
-  api(`${agencyUrl}/agent/${identifier}/auth`, options('PUT', dataBody), true)
+  api(`${agencyUrl}/agent/${identifier}/auth`, options('PUT', dataBody))
 
 export const downloadEnvironmentDetails = (
   url: string
