@@ -428,14 +428,15 @@ const styles = StyleSheet.create({
     lineHeight: verticalScale(17),
   },
   contentInput: {
-    fontSize: verticalScale(fontSizes.size5),
-    height: verticalScale(42),
+    padding: 0,
+    fontSize: verticalScale(fontSizes.size3),
+    height: verticalScale(32),
     fontWeight: '700',
     color: colors.cmGray1,
     width: '100%',
     textAlign: 'left',
     fontFamily: fontFamily,
-    lineHeight: verticalScale(21),
+    lineHeight: verticalScale(23),
   },
   content: {
     fontSize: verticalScale(fontSizes.size5),
@@ -457,7 +458,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily,
   },
   dissatisfiedAttribute: {
-    fontSize: verticalScale(fontSizes.size4),
+    fontSize: verticalScale(fontSizes.size3),
     marginTop: moderateScale(4),
     marginBottom: moderateScale(6),
     fontWeight: '700',
@@ -465,7 +466,7 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'left',
     fontFamily: fontFamily,
-    lineHeight: verticalScale(21),
+    lineHeight: verticalScale(23),
   },
   keyboardFlatList: {
     paddingLeft: '5%',

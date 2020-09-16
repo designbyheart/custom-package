@@ -218,6 +218,8 @@ const styles = StyleSheet.create({
   },
   avatarSection: {
     alignItems: 'flex-start',
+    marginTop: moderateScale(3),
+    marginRight: moderateScale(10),
   },
   infoSection: {
     flex: 1,

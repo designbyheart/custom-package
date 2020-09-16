@@ -250,6 +250,7 @@ const styles = StyleSheet.create({
   },
   avatarSection: {
     alignItems: 'flex-start',
+    marginRight: moderateScale(10),
   },
   infoSectionRow: {
     flex: 1,
