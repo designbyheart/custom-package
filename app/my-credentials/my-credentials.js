@@ -83,6 +83,7 @@ class MyCredentialsComponent extends Component<MyCredentialsProps, void> {
             )
           }
           credentialName={credentialName}
+          issuerName={issuerName}
           image={logoUrl}
           date={date}
           attributesCount={attributes.length}

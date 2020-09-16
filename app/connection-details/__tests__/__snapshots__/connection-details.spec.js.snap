@@ -154,6 +154,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             "alignItems": "center",
             "flexDirection": "row",
             "height": "100%",
+            "marginLeft": 9.571428571428571,
+            "marginRight": 5.742857142857143,
             "width": "35%",
           }
         }
@@ -687,6 +689,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             "alignItems": "center",
             "flexDirection": "row",
             "height": "100%",
+            "marginLeft": 9.571428571428571,
+            "marginRight": 5.742857142857143,
             "width": "35%",
           }
         }
@@ -1211,6 +1215,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
             "alignItems": "center",
             "flexDirection": "row",
             "height": "100%",
+            "marginLeft": 9.571428571428571,
+            "marginRight": 5.742857142857143,
             "width": "35%",
           }
         }
@@ -1729,6 +1735,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             "alignItems": "center",
             "flexDirection": "row",
             "height": "100%",
+            "marginLeft": 9.571428571428571,
+            "marginRight": 5.742857142857143,
             "width": "35%",
           }
         }
@@ -2262,6 +2270,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
             "alignItems": "center",
             "flexDirection": "row",
             "height": "100%",
+            "marginLeft": 9.571428571428571,
+            "marginRight": 5.742857142857143,
             "width": "35%",
           }
         }
@@ -2975,6 +2985,8 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
             "alignItems": "center",
             "flexDirection": "row",
             "height": "100%",
+            "marginLeft": 9.571428571428571,
+            "marginRight": 5.742857142857143,
             "width": "35%",
           }
         }

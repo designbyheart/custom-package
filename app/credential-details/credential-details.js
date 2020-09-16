@@ -55,7 +55,7 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
                 testID={`${credentialName}-avatar`}
               />
             ) : (
-              <DefaultLogo text={credentialName} size={96} fontSize={26} />
+              <DefaultLogo text={issuerName} size={96} fontSize={48} />
             )}
           </View>
           <View style={styles.contentWrapper}>

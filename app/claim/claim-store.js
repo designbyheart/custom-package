@@ -417,7 +417,7 @@ export default function claimReducer(
     }
 
     case MAP_CLAIM_TO_SENDER:
-      const { claimUuid, senderDID, myPairwiseDID, logoUrl, issueDate, name } = action
+      const { claimUuid, senderDID, myPairwiseDID, logoUrl, issueDate, name, senderName } = action
       return {
         ...state,
         claimMap: {
@@ -428,6 +428,7 @@ export default function claimReducer(
             logoUrl,
             issueDate,
             name,
+            senderName,
           },
         },
       }

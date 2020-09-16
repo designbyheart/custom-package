@@ -195,8 +195,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   title: {
-    fontSize: verticalScale(fontSizes.size7),
-    fontWeight: '700',
+    fontSize: verticalScale(fontSizes.size6),
+    fontWeight: '400',
     color: colors.cmGray3,
     width: '100%',
     textAlign: 'left',
@@ -204,12 +204,13 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily,
   },
   content: {
-    fontSize: verticalScale(fontSizes.size5),
+    fontSize: verticalScale(fontSizes.size3),
     fontWeight: '700',
     color: colors.cmGray1,
     width: '100%',
     textAlign: 'left',
     fontFamily: fontFamily,
+    lineHeight: verticalScale(23),
   },
   contentGray: {
     fontSize: verticalScale(fontSizes.size5),
