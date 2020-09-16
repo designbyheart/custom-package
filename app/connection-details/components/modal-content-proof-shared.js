@@ -1,6 +1,6 @@
 // @flow
 import React, { useCallback } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 
 import type { Store } from '../../store/type-store'
@@ -28,6 +28,7 @@ const ProofRequestModal = (props: any) => {
 
   return (
     <View style={styles.modalWrapper}>
+      <StatusBar backgroundColor={colors.cmBlack} barStyle={'light-content'} />
       <ModalHeader
         institutionalName={props.name}
         credentialName={props.data.name}
