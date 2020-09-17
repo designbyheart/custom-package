@@ -4,11 +4,11 @@ App to connect Sovrin with 3rd party authentication
 # Pre requisite to run
 
 - Mac machine
-- XCode 10
-- Node >8.0 & < 9. Preferred way to install node is via [nvm](https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/)
+- XCode 11
+- Node >12.13 . Preferred way to install node is via [nvm](https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/)
 - [React native setup](http://facebook.github.io/react-native/docs/getting-started.html). Use tab `Building Projects with Native Code`.
 - Ruby
-- Make sure `pod` (1.5.3) is installed or run `sudo gem install cocoapods -v 1.5.3`
+- Make sure `pod` (1.9.3) is installed or run `sudo gem install cocoapods -v 1.9.3`
 - Android Studio 3+
 
 # Steps to run
@@ -19,7 +19,7 @@ App to connect Sovrin with 3rd party authentication
 
 ## Run on ios simulator
 - `yarn pod:dev:install`
-- `yarn react-native run-ios`
+- `yarn ios`
 
 ## Run on ios device
 - DO NOT use XCode automatic code signing
@@ -35,7 +35,7 @@ App to connect Sovrin with 3rd party authentication
 ## Run on Android simulator/device
 - Make sure a simulator is already created. Otherwise create one from Android studio
 - One time command: `cd android/keystores && keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000`
-- `yarn react-native run-android`
+- `yarn android`
 
 ## Run functional automated test
 
@@ -57,7 +57,7 @@ App to connect Sovrin with 3rd party authentication
 - [Flow](http://flow.org/)
 - [Jest](https://facebook.github.io/jest/)
 - [Yarn](http://yarnpkg.com)
-- [Cocoa pods](http://cocoadocs.org)
+- [Cocoapods](http://cocoadocs.org)
 - [Detox](https://github.com/wix/Detox)
 
 ## IDE
@@ -69,11 +69,6 @@ App to connect Sovrin with 3rd party authentication
   - Better Comments (aaron-bond.better-comments)
   - Path Autocomplete (ionutvmi.path-autocomplete)
   - Flow Language Support (flowtype.flow-for-vscode)
-
-# Things to improve
-
-- [ ] Need to consider scenario if user has not allowed permission for push notification or user disable the permission
-- [ ] We need to communicate to user on why we need push notification permission
 
 # How To Upgrade to next version of React Native
 - Follow the instructions here -- https://github.com/pvinis/rn-diff-purge
@@ -104,21 +99,7 @@ App to connect Sovrin with 3rd party authentication
 
 ## iOS build issue
 
-- *Problem*: `third-party/glog-0.3.4/src/base/mutex.h 'config.h' file not found`. *Solution*: https://github.com/facebook/react-native/issues/16097. Basically from the ConnectMe toplevel source code directory do 1) cd node_modules/react-native/third-party/glog-0.3.4/ && ../../scripts/ios-configure-glog.sh
 - *Problem*: `curl: (60) SSL certificate problem`. (on Catalina) SSL certificate on repository server for downloading .vcx is self-signed, which is not secure 'enough' and CURL rejects connecting. *Solution
   *: Before installing .vcx, run this command: `echo insecure >> $HOME/.curlrc`. After commit is successfully pushed and .vcx installed, go and remove `insecure` from `~/.curlrc`.
-
-# Makefile
-- If you want to run the iOS or android emulators from a terminal without the need for
-the Xcode or Android Studio IDE then you can use the Makefile (this is how Norman runs
-the iOS and android emulator on his MacBook). The commands to setup
-your environment for the Makefile are:
-  - export PATH=$PWD/node_modules/.bin:$PATH
-  - make clean
-  - make pre-run
-  - For iOS: SIMULATOR="iPhone 7" make run-ios
-  - For Android: Start the android emulator in a separate terminal with
-  - RUST_BACKTRACE=1 /Users/norm/Library/Android/sdk/emulator/emulator -writable-system -avd Pixel_API_26 -netdelay none -netspeed full
-  - Then run the app in a separate terminal with: make run-android or VARIANT=release make run-android or VARIANT=debug make run-android
 
 trigger build 15

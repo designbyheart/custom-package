@@ -3,7 +3,6 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import { GenerateRecoveryPhrase } from '../generate-phrase'
-import { getNavigation } from '../../../__mocks__/static-data'
 import { settingsRoute } from '../../common'
 import { BACKUP_STORE_STATUS } from '../type-backup'
 

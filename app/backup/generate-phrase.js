@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { Image, Dimensions } from 'react-native'
+import { Image } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import type { Store } from '../store/type-store'
@@ -37,7 +37,6 @@ import {
   SHOW_RECOVERY_PHRASE_TEST_ID,
   SUBMIT_RECOVERY_PHRASE_TEST_ID,
   SUBMIT_RECOVERY_PHRASE_BUTTON_TITLE,
-  SUBMIT_RECOVERY_GO_BACK,
 } from './backup-constants'
 import styles, { chatBubbleTextOffset } from './styles'
 import { getBackupPassphrase, getBackupStatus } from '../store/store-selector'
@@ -138,7 +137,7 @@ export class GenerateRecoveryPhrase extends Component<
   }
   onRecoveryPhraseGoBack = () => {
     const {
-      navigation: { navigate, goBack },
+      navigation: { goBack },
     } = this.props
     goBack(null)
   }
@@ -203,9 +202,6 @@ export class GenerateRecoveryPhrase extends Component<
     // for viewRecover mode
     const viewOnlyMode = this.props.route.params.viewOnlyMode ? true : false
     const { recoveryPassphrase, recoveryStatus } = this.props
-    const {
-      navigation: { navigate },
-    } = this.props
     const disableButton =
       recoveryStatus === BACKUP_STORE_STATUS.GENERATE_PHRASE_FAILURE ||
       recoveryStatus === BACKUP_STORE_STATUS.GENERATE_PHRASE_LOADING ||

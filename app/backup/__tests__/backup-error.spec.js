@@ -3,7 +3,7 @@ import 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
 import { BackupErrorScreen } from '../backup-error'
-import { getNavigation, getStore } from '../../../__mocks__/static-data'
+import { getStore } from '../../../__mocks__/static-data'
 
 describe('Restore screen', () => {
   function getProps() {

@@ -1,5 +1,5 @@
 // @flow
-import type { Middleware, MiddlewareAPI, Dispatch } from 'redux'
+
 import {
   RECORD_HISTORY_EVENT,
   DELETE_HISTORY_EVENT,
