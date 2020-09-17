@@ -2,7 +2,15 @@
 
 // packages
 import React, { useCallback, useState } from 'react'
-import { View, Platform, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Platform,
+  StyleSheet,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  StatusBar,
+} from 'react-native'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 // constants
@@ -20,16 +28,26 @@ import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 import { Avatar } from '../../components'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 import { CHECKMARK_ICON, EvaIcon } from '../../common/icons'
-import { DataRenderer, getFileExtensionName, renderAttachmentIcon } from './modal-content'
-import { isSelected, keyExtractor, prepareCredentials } from './attributes-values'
+import {
+  DataRenderer,
+  getFileExtensionName,
+  renderAttachmentIcon,
+} from './modal-content'
+import {
+  isSelected,
+  keyExtractor,
+  prepareCredentials,
+} from './attributes-values'
 
 const AttributeValues = ({
-                           navigation: { goBack },
-                           route: { params },
-                         }: ReactNavigation) => {
-  const [selectedValueIndex, setSelectedValueIndex] = useState(params.items.findIndex(
-    (item: Object) => isSelected(item, params.selectedClaims),
-  ))
+  navigation: { goBack },
+  route: { params },
+}: ReactNavigation) => {
+  const [selectedValueIndex, setSelectedValueIndex] = useState(
+    params.items.findIndex((item: Object) =>
+      isSelected(item, params.selectedClaims)
+    )
+  )
   const [data, _] = useState(prepareCredentials(params.items, params.claimMap))
 
   const hideModal = useCallback(() => {
@@ -45,20 +63,13 @@ const AttributeValues = ({
   const renderItem = ({ item, index }: { item: Object, index: number }) => {
     return (
       <View>
-        <TouchableOpacity
-          onPress={() =>
-            setSelectedValueIndex(index)
-          }
-        >
+        <TouchableOpacity onPress={() => setSelectedValueIndex(index)}>
           <View style={styles.itemContainer}>
             <View style={styles.avatarSection}>
               {typeof item.logoUrl === 'string' ? (
-                <Avatar
-                  radius={18}
-                  src={{ uri: item.logoUrl }}
-                />
+                <Avatar radius={18} src={{ uri: item.logoUrl }} />
               ) : (
-                <DefaultLogo text={item.senderName} size={32} fontSize={17}/>
+                <DefaultLogo text={item.senderName} size={32} fontSize={17} />
               )}
             </View>
             <View style={styles.infoSection}>
@@ -68,11 +79,11 @@ const AttributeValues = ({
                   numberOfLines={1}
                   ellipsizeMode="tail"
                 >
-                  {
-                    item.label.toLowerCase().endsWith('_link') ?
-                      `${getFileExtensionName(JSON.parse(item.data)['mime-type'])} file` :
-                      item.data
-                  }
+                  {item.label.toLowerCase().endsWith('_link')
+                    ? `${getFileExtensionName(
+                        JSON.parse(item.data)['mime-type']
+                      )} file`
+                    : item.data}
                 </Text>
               </View>
               <View style={styles.infoSectionBottomRow}>
@@ -86,23 +97,22 @@ const AttributeValues = ({
                   </Text>
                 </View>
               </View>
-              {item.label.toLowerCase().endsWith('_link') &&
-              <View style={styles.attachmentWrapper}>
-                <DataRenderer {...{
-                  label: item.label,
-                  data: item.data,
-                  uid: item.claimUuid || '',
-                  remotePairwiseDID: item.claimUuid || '',
-                }} />
-              </View>
-              }
+              {item.label.toLowerCase().endsWith('_link') && (
+                <View style={styles.attachmentWrapper}>
+                  <DataRenderer
+                    {...{
+                      label: item.label,
+                      data: item.data,
+                      uid: item.claimUuid || '',
+                      remotePairwiseDID: item.claimUuid || '',
+                    }}
+                  />
+                </View>
+              )}
             </View>
             {index === selectedValueIndex && (
               <View style={styles.iconWrapper}>
-                <EvaIcon
-                  name={CHECKMARK_ICON}
-                  color={colors.cmBlack}
-                />
+                <EvaIcon name={CHECKMARK_ICON} color={colors.cmBlack} />
               </View>
             )}
           </View>
@@ -114,9 +124,15 @@ const AttributeValues = ({
   return (
     <>
       <View style={styles.modalWrapper}>
+        <StatusBar
+          backgroundColor={colors.cmBlack}
+          barStyle={'light-content'}
+        />
         <View style={styles.descriptionWrapper}>
           <Text style={styles.labelText}>{params?.label || 'Attribute'}</Text>
-          <Text style={styles.descriptionTitle}>{params.items.length} sources</Text>
+          <Text style={styles.descriptionTitle}>
+            {params.items.length} sources
+          </Text>
         </View>
         <View style={styles.customValuesWrapper}>
           <FlatList
@@ -148,8 +164,8 @@ export const AttributeValuesScreen = {
 }
 
 AttributeValuesScreen.screen.navigationOptions = ({
-                                                    navigation: { goBack, isFocused },
-                                                  }) => ({
+  navigation: { goBack, isFocused },
+}) => ({
   safeAreaInsets: { top: 85 },
   cardStyle: {
     marginLeft: '2.5%',

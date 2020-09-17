@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { claimOfferRoute } from '../../common/route-constants'
@@ -92,6 +92,10 @@ export class ClaimOfferModal extends Component<any, *> {
 
     return (
       <View style={styles.modalWrapper}>
+        <StatusBar
+          backgroundColor={colors.cmBlack}
+          barStyle={'light-content'}
+        />
         {
           // if we don't show ledger txn fees, then show credential data
           // i.e. user has not taken any action on credential modal

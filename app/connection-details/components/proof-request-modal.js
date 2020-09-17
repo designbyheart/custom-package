@@ -1,6 +1,6 @@
 // @flow
 import React, { useCallback } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -40,6 +40,7 @@ const ProofRequestModal = (props: any) => {
 
   return props && props.data ? (
     <View style={styles.modalWrapper}>
+      <StatusBar backgroundColor={colors.cmBlack} barStyle={'light-content'} />
       <ModalContentProof
         content={props.data.requestedAttributes}
         uid={props.uid}
