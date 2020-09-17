@@ -14,20 +14,13 @@ import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
 import type { Store } from '../store/type-store'
 
-import {
-  selectRecoveryMethodRoute,
-  exportBackupFileRoute,
-  cloudBackupRoute,
-  settingsRoute,
-  settingsTabRoute,
-} from '../common'
+import { cloudBackupRoute, settingsRoute } from '../common'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
 import {
   Container,
   CustomView,
   CustomText,
-  Icon,
   CustomButton,
   CustomHeader,
 } from '../components'
@@ -40,7 +33,7 @@ import { cloudBackupStart, resetCloudBackupStatus } from './backup-store'
 import { setAutoCloudBackupEnabled } from './backup-actions'
 import { color } from '../common/styles/constant'
 
-import styles, { questionStyles } from './styles'
+import { questionStyles } from './styles'
 const cmImage = require('../images/cb-ConnectMe.png')
 const downloadImage = require('../images/Group.png')
 
@@ -54,7 +47,6 @@ import type {
 
 import { QuestionScreenHeader } from '../question/components/question-screen-header'
 
-import { Loader } from '../components'
 import {
   CLOUD_BACKUP_LOADING,
   CLOUD_BACKUP_COMPLETE,
@@ -62,7 +54,7 @@ import {
   AUTO_CLOUD_BACKUP_ENABLED,
   WALLET_BACKUP_FAILURE,
 } from './type-backup'
-import { safeSet, secureSet, walletSet } from '../services/storage'
+import { safeSet, walletSet } from '../services/storage'
 
 const { height } = Dimensions.get('window')
 

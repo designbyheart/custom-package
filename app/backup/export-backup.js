@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { Image, Dimensions } from 'react-native'
+import { Image } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
@@ -56,7 +56,7 @@ export class ExportBackupFile extends Component<ExportBackupFileProps, void> {
 
   componentDidUpdate(prevProps: ExportBackupFileProps) {
     const {
-      navigation: { navigate, goBack },
+      navigation: { navigate },
       route,
       backupStatus,
     } = this.props

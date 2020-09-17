@@ -1,13 +1,9 @@
 // @flow
 
 import React, { PureComponent } from 'react'
-import { Image, Dimensions } from 'react-native'
+import { Image } from 'react-native'
 
-import type {
-  BackupCompleteProps,
-  BackupCompleteState,
-  ReactNavigationBackup,
-} from './type-backup'
+import type { BackupCompleteProps, ReactNavigationBackup } from './type-backup'
 
 import {
   Container,
@@ -39,7 +35,7 @@ const successCheck = require('../images/successCheck.png')
 export class BackupComplete extends PureComponent<BackupCompleteProps, void> {
   backupComplete = () => {
     const {
-      navigation: { navigate, goBack },
+      navigation: { navigate },
     } = this.props
 
     return navigate(settingsRoute)

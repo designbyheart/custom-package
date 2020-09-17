@@ -4,7 +4,6 @@ import type { AgencyPoolConfig } from '../../store/type-config-store'
 import type {
   VcxProvision,
   VcxProvisionResult,
-  CxsInitConfig,
   InitWithGenesisPathConfig,
   VcxInitConfig,
   CxsPushTokenConfig,

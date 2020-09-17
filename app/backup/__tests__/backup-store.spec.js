@@ -7,7 +7,6 @@ import backupReducer, {
   generateBackupFileSuccess,
   exportBackup,
   exportBackupSuccess,
-  promptBackupBanner,
   prepareBackup,
   prepareBackupSuccess,
   prepareBackupFail,
