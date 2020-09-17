@@ -58,7 +58,7 @@ platform :ios do
 
     UI.user_error!("You didn't set token for AppCenter") if ENV["APPCENTER_API_TOKEN"].empty?
     appcenter_upload(api_token: ENV["APPCENTER_API_TOKEN"], owner_type: "user", app_name: "ConnectMe")
-
+    
   end
 
   lane :cd do
@@ -106,6 +106,7 @@ platform :ios do
       force: true,
       skip_metadata: true,
       skip_screenshots: true,
+      skip_app_version_update: true
     )
   end
 
