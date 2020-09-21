@@ -186,6 +186,7 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
                 "fontFamily": "Lato",
                 "fontSize": 26,
                 "fontStyle": "normal",
+                "fontWeight": "700",
                 "letterSpacing": 0.5,
                 "lineHeight": 31,
                 "minHeight": 49.23529411764706,
@@ -552,7 +553,6 @@ exports[`<LockPinCodeEnter /> redirect to home screen is app is locked and there
             accessible={true}
             allowFontScaling={true}
             autoCorrect={false}
-            autoFocus={true}
             blurOnSubmit={false}
             editable={true}
             enablesReturnKeyAutomatically={false}
@@ -766,6 +766,7 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
                 "fontFamily": "Lato",
                 "fontSize": 26,
                 "fontStyle": "normal",
+                "fontWeight": "700",
                 "letterSpacing": 0.5,
                 "lineHeight": 31,
                 "minHeight": 49.23529411764706,
@@ -1132,7 +1133,6 @@ exports[`<LockPinCodeEnter /> should render pin code box 1`] = `
             accessible={true}
             allowFontScaling={true}
             autoCorrect={false}
-            autoFocus={true}
             blurOnSubmit={false}
             editable={true}
             enablesReturnKeyAutomatically={false}
@@ -1346,6 +1346,7 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
                 "fontFamily": "Lato",
                 "fontSize": 26,
                 "fontStyle": "normal",
+                "fontWeight": "700",
                 "letterSpacing": 0.5,
                 "lineHeight": 31,
                 "minHeight": 49.23529411764706,
@@ -1712,7 +1713,6 @@ exports[`<LockPinCodeEnter /> should show 'Enter passcode' message if there is n
             accessible={true}
             allowFontScaling={true}
             autoCorrect={false}
-            autoFocus={true}
             blurOnSubmit={false}
             editable={true}
             enablesReturnKeyAutomatically={false}
@@ -1926,6 +1926,7 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
                 "fontFamily": "Lato",
                 "fontSize": 26,
                 "fontStyle": "normal",
+                "fontWeight": "700",
                 "letterSpacing": 0.5,
                 "lineHeight": 31,
                 "minHeight": 49.23529411764706,
@@ -2292,7 +2293,6 @@ exports[`<LockPinCodeEnter /> should show UNLOCKING_APP_WAIT_MESSAGE  1`] = `
             accessible={true}
             allowFontScaling={true}
             autoCorrect={false}
-            autoFocus={true}
             blurOnSubmit={false}
             editable={true}
             enablesReturnKeyAutomatically={false}

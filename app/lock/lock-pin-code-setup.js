@@ -16,6 +16,7 @@ import { colors, OFFSET_2X, fontFamily } from '../common/styles'
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters'
 import { Header } from '../components'
 import { useFocusEffect } from '@react-navigation/native'
+import { headerNavigationOptions } from '../navigation/navigation-header-config'
 
 let keyboardDidHideListener
 let keyboardDidShowListener
@@ -37,7 +38,9 @@ export function LockPinSetup(props: ReactNavigation) {
   const [enteredPin, setEnteredPin] = useState(defaults.enteredPin)
   const [confirmedPin, setConfirmedPin] = useState(defaults.confirmedPin)
   const [keyboardHidden, setKeyboardHidden] = useState(defaults.keyboardHidden)
-  const [showCustomKeyboard, setShowCustomKeyboard] = useState(defaults.showCustomKeyboard)
+  const [showCustomKeyboard, setShowCustomKeyboard] = useState(
+    defaults.showCustomKeyboard
+  )
   const pinCodeBox = useRef<any>()
 
   useFocusEffect(
@@ -51,7 +54,7 @@ export function LockPinSetup(props: ReactNavigation) {
       pinCodeBox.current.clear()
       pinCodeBox.current.showKeyboard()
     }, [])
-  );
+  )
 
   const existingPin = route && route.params && route.params.existingPin === true
   const enterPasscodeText = existingPin
@@ -86,6 +89,9 @@ export function LockPinSetup(props: ReactNavigation) {
       setEnteredPin(null)
       setPinSetupState(PIN_SETUP_STATE.REENTER_FAIL)
       setFailedPin(true)
+      setTimeout(() => {
+        setFailedPin(false)
+      }, 2000)
       pinCodeBox.current.clear()
       setTimeout(() => setPinSetupState(PIN_SETUP_STATE.INITIAL), 1000)
       return
@@ -162,14 +168,15 @@ export function LockPinSetup(props: ReactNavigation) {
 const styles = StyleSheet.create({
   title: {
     fontFamily,
-    fontSize: 26,
+    fontSize: moderateScale(26, 0.1),
     fontStyle: 'normal',
-    lineHeight: 31,
-    minHeight: verticalScale(62),
+    lineHeight: moderateScale(31, 0.1),
+    height: verticalScale(62),
     marginTop: verticalScale(40),
     marginBottom: verticalScale(40),
     paddingHorizontal: OFFSET_2X,
     textAlign: 'center',
+    fontWeight: '700',
   },
   message: {
     height: scale(20),
@@ -177,8 +184,8 @@ const styles = StyleSheet.create({
     fontFamily,
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: 17,
-    lineHeight: 20,
+    fontSize: moderateScale(17, 0.1),
+    lineHeight: moderateScale(20, 0.1),
     justifyContent: 'center',
     color: colors.cmRed,
   },
@@ -187,4 +194,10 @@ const styles = StyleSheet.create({
 export const lockPinSetupScreen = {
   routeName: lockPinSetupRoute,
   screen: LockPinSetup,
+  options: {
+    ...headerNavigationOptions({
+      title: 'App Security',
+      backReset: true,
+    }),
+  },
 }

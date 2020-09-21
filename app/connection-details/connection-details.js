@@ -351,20 +351,10 @@ export class ConnectionDetails extends Component<
   render() {
     if (this.props.route) {
       const {
-        senderName,
-        image,
-        senderDID,
-        identifier,
-      } = this.props.route.params
-      const {
         activeConnectionThemePrimary,
-        activeConnectionThemeSecondary,
         connectionHistory,
       } = this.props
       const testID = 'connection-history'
-      const logoUri = image
-        ? { uri: image }
-        : require('../images/cb_evernym.png')
 
       return (
         <View style={styles.container}>
@@ -406,6 +396,13 @@ export class ConnectionDetails extends Component<
 }
 
 const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
+  const timestamp =
+    state.connections &&
+    state.connections.data &&
+    state.connections.data[props.route.params.identifier] &&
+    state.connections.data[props.route.params.identifier].timestamp ||
+    null
+
   let connectionHistory: ConnectionHistoryEvent[] =
     state.history &&
     state.history.data &&
@@ -413,7 +410,10 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
     props.route
       ? state.history.data.connections[props.route.params.senderDID].data
       : []
-  connectionHistory = connectionHistory.slice()
+
+  connectionHistory = timestamp ?
+    connectionHistory.filter((event) => new Date(event.timestamp) >= new Date(timestamp)) :
+    connectionHistory.slice()
 
   const themeForLogo = getConnectionTheme(
     state,

@@ -2,7 +2,6 @@
 
 import React from 'react'
 
-import { mediumGray, font, color } from '../common/styles'
 import { BackButton } from '../components/back-button/back-button'
 import {
   HeaderTitle,
@@ -12,18 +11,23 @@ import {
 // TODO: DA check if this code is still required after headers update
 export const headerNavigationOptions = ({
   title,
+  backReset,
   ...rest
 }: {
+  backReset?: boolean,
   title: string,
 }) => {
   return {
-    headerShown: false,
+    headerShown: title ? true : false,
     headerTitleAlign: 'center',
     headerCenter: () => {
-      return <HeaderTitle title={title} />
+      return <HeaderTitle {...{ title }} />
     },
     headerLeft: () => {
-      return <BackButton />
+      return <BackButton {...{ backReset }} />
+    },
+    headerStyle: {
+      borderBottomWidth: 0,
     },
     headerHideShadow: false,
     ...rest,

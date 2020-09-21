@@ -7,8 +7,6 @@ import type {
   ResetAction,
   NotificationPayload,
 } from '../common/type-common'
-import type { Connection, Connections } from '../store/type-connection-store'
-import type { ClaimOfferStore } from '../claim-offer/type-claim-offer'
 
 export type Claim = {
   messageId: string,
@@ -65,6 +63,8 @@ export type MapClaimToSenderAction = {
   myPairwiseDID: string,
   logoUrl: string,
   issueDate: number,
+  name: string,
+  senderName?: string,
 }
 
 export type ClaimMap = {
@@ -73,6 +73,8 @@ export type ClaimMap = {
     myPairwiseDID: string,
     logoUrl: string,
     issueDate: number,
+    name?: string,
+    senderName?: string,
   },
 }
 

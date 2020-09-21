@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { Dimensions, Keyboard } from 'react-native'
+import { Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -23,13 +23,10 @@ import { colors } from '../common/styles/constant'
 import styles from './styles'
 import {
   VERIFY_BACK_TEST_ID,
-  VERIFY_CLOSE_TEST_ID,
   VERIFY_CONTAINER_TEST_ID,
   VERIFY_INPUT_PLACEHOLDER,
 } from './backup-constants'
-import { PASSPHRASE_SALT_STORAGE_KEY } from '../common/secure-storage-constants'
 import { pinHash as generateKey } from '../lock/pin-hash'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import VerifyPhrase from '../components/backup-restore-passphrase/backup-restore-passphrase'
 import { getBackupPassphrase } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
@@ -39,9 +36,7 @@ import {
 } from '../backup/backup-store'
 import { safeSet, walletSet } from '../services/storage'
 
-const transparentBands = require('../images/transparentBands2.png')
 const backImage = require('../images/icon_backArrow_white.png')
-const closeImage = require('../images/iconClose.png')
 
 export class VerifyRecoveryPhrase extends Component<
   VerifyRecoveryPhraseProps,
@@ -52,7 +47,7 @@ export class VerifyRecoveryPhrase extends Component<
   }
 
   static navigationOptions = ({
-    navigation: { goBack, navigate },
+    navigation: { goBack },
   }: ReactNavigationBackup) => ({
     header: () => (
       <CustomHeader backgroundColor={colors.cmGreen1} largeHeader flatHeader>
@@ -147,6 +142,6 @@ const mapDispatchToProps = (dispatch) =>
 export const verifyRecoveryPhraseScreen = {
   routeName: verifyRecoveryPhraseRoute,
   screen: withStatusBar({ color: colors.cmGreen1 })(
-    connect(mapStateToProps)(VerifyRecoveryPhrase)
+    connect(mapStateToProps, mapDispatchToProps)(VerifyRecoveryPhrase)
   ),
 }

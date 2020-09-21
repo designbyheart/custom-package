@@ -73,6 +73,8 @@ await proof.request_proof(connection)
 
 - In above attribute data type, we have a key `self_attest_allowed`. If we set this key to `false`, then prover would know that this attribute can only be fulfilled via credentials
 
+- If there is a restriction set for an above attribute data type, it means that this attribute can only be fulfilled via credentials.
+
 ### How to fulfill proof
 
 ```python
@@ -284,7 +286,7 @@ async def main():
     send_proof = "yes"
     while send_proof != "no":
         proof_attrs = [
-            {'name': 'name', 'self_attest_allowed': False},
+            {'name': 'name', 'restrictions': [{'issuer_did': config['institution_did']}]},
             {'name': 'date'},
             {'name': 'degree'}
         ]

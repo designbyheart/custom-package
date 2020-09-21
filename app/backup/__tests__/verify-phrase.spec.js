@@ -4,7 +4,7 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import { VerifyRecoveryPhrase } from '../verify-phrase'
-import { getNavigation, getStore } from '../../../__mocks__/static-data'
+import { getStore } from '../../../__mocks__/static-data'
 import { settingsRoute } from '../../common'
 
 describe('<VerifyRecoveryPhrase />', () => {

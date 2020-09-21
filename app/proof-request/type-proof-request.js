@@ -9,6 +9,7 @@ import type {
   ResetAction,
   ImageSource,
   RequestedAttrsJson,
+  GenericObject,
 } from '../common/type-common'
 import type {
   Attribute,
@@ -21,6 +22,7 @@ export type RequestedAttribute = {|
   name?: string,
   names?: Array<string>,
   self_attest_allowed?: boolean,
+  restrictions?: GenericObject,
 |}
 
 export type RequestedPredicates = {
@@ -135,6 +137,7 @@ export type ProofRequestAttributeListProp = {
   disableUserInputs: boolean,
   userAvatarSource: ?ImageSource,
   updateSelectedClaims: (item: Attribute) => void,
+  selectedClaims: RequestedAttrsJson,
 }
 
 export type ProofRequestAttributeListAndHeaderProps = ProofRequestAttributeListProp &
@@ -226,7 +229,6 @@ export type ProofRequestProps = {
 
 export type ProofRequestState = {
   allMissingAttributesFilled: boolean,
-  generateProofClicked: boolean,
   selfAttestedAttributes: GenericStringObject,
   disableUserInputs: boolean,
   selectedClaims: RequestedAttrsJson,
@@ -402,13 +404,15 @@ export type AcceptOutofbandPresentationRequestAction = {
   requestedAttrsJson: RequestedAttrsJson,
 }
 
-export const DELETE_OUTOFBAND_PRESENTATION_REQUEST = 'DELETE_OUTOFBAND_PRESENTATION_REQUEST'
+export const DELETE_OUTOFBAND_PRESENTATION_REQUEST =
+  'DELETE_OUTOFBAND_PRESENTATION_REQUEST'
 export type DeleteOutofbandPresentationRequestAction = {
   type: typeof DELETE_OUTOFBAND_PRESENTATION_REQUEST,
   uid: string,
 }
 
-export const OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED = 'OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED'
+export const OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED =
+  'OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED'
 export type OutOfBandConnectionForPresentationEstablishedAction = {
   type: typeof OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
   uid: string,
@@ -477,14 +481,12 @@ export type AriesPresentationRequest = {
 }
 
 export const PRIMARY_ACTION_SEND = 'Share Attributes'
-export const PRIMARY_ACTION_GENERATE_PROOF = 'Generate'
-export const SECONDARY_ACTION_IGNORE = 'Ignore'
 
 export const MESSAGE_MISSING_ATTRIBUTES_TITLE = 'Missing information'
 export const MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION = (
   connectionName: string
 ) =>
-  `You don't have all the attributes ${connectionName} is asking you to share with them. Manually fill in the missing attributes and tap Generate.`
+  `You don't have all the attributes ${connectionName} is asking you to share with them. Manually fill in the missing attributes and tap Share Attributes.`
 
 export const MESSAGE_ERROR_PROOF_GENERATION_TITLE = 'Error generating proof'
 export const MESSAGE_ERROR_PROOF_GENERATION_DESCRIPTION = 'Please try again.'
@@ -509,6 +511,6 @@ Specifically, you are missing credentials with the following attributes:
 
 Contact ${connectionName} for more information.
 
-Pressing IGNORE will dismiss the request, and allow you to find and fulfill it later when you are able to fulfill this request, and will send no response notification back to ${connectionName}.
+Closing the dialog will dismiss the request, and allow you to find and fulfill it later when you are able to fulfill this request, and will send no response notification back to ${connectionName}.
 
 Pressing REJECT will notify ${connectionName}. They will not know you are unable to fulfill the request, only that you have rejected it.`

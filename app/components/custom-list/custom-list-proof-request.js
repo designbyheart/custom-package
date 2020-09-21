@@ -11,6 +11,7 @@ import { getUserAvatarSource } from '../../store/store-selector'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 import { renderAttachmentIcon } from '../../connection-details/components/modal-content'
+import { DefaultLogo } from '../default-logo/default-logo'
 
 export class CustomListProofRequest extends Component<CustomListProps, void> {
   keyExtractor = ({ label, values }: Item, index: number) => {
@@ -34,15 +35,22 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
     // If the item has data, even if it is just a blank string, it exists. If it has no data it will be null and not show the icon.
     const isDataEmptyString = item.data === ''
 
-    const logoUrl =
-      item.data || isDataEmptyString
-        ? item.claimUuid &&
-          this.props.claimMap &&
-          this.props.claimMap[item.claimUuid] &&
-          this.props.claimMap[item.claimUuid].logoUrl
-          ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
-          : this.props.avatarSource || require('../../images/UserAvatar.png')
-        : null
+    let claim = item.claimUuid &&
+      this.props.claimMap &&
+      this.props.claimMap[item.claimUuid]
+
+    let logoUrl
+
+    if (!logoUrl && claim) {
+      logoUrl =
+        claim.logoUrl
+          ? { uri: claim.logoUrl }
+          : null
+    }
+
+    if (!claim) {
+      logoUrl = this.props.avatarSource || require('../../images/UserAvatar.png')
+    }
 
     return (
       <View key={index} style={styles.wrapper}>
@@ -65,13 +73,17 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
             }
           </View>
           <View style={styles.avatarWrapper}>
-            <Icon
-              medium
-              round
-              resizeMode="cover"
-              src={logoUrl}
-              testID={`proof-requester-logo-${index}`}
-            />
+            {
+              logoUrl ?
+                <Icon
+                  medium
+                  round
+                  resizeMode="cover"
+                  src={logoUrl}
+                  testID={`proof-requester-logo-${index}`}
+                /> :
+                claim && claim.senderName && <DefaultLogo text={claim.senderName} size={30} fontSize={18}/>
+            }
           </View>
         </View>
       </View>
@@ -80,6 +92,7 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
 
   renderMultipleValues = ({ item, index }: { item: Item, index: number }) => {
     let logoUrl
+    let claim
     if (!item.values) {
       return <View></View>
     }
@@ -92,16 +105,16 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
 
       const isDataEmptyString = value === ''
 
-      if (!logoUrl) {
+      if (!claim){
+        claim = item.claimUuid &&
+          this.props.claimMap &&
+          this.props.claimMap[item.claimUuid]
+      }
+
+      if (!logoUrl && claim) {
         logoUrl =
-          value || isDataEmptyString
-            ? item.claimUuid &&
-              this.props.claimMap &&
-              this.props.claimMap[item.claimUuid] &&
-              this.props.claimMap[item.claimUuid].logoUrl
-              ? { uri: this.props.claimMap[item.claimUuid].logoUrl }
-              : this.props.avatarSource ||
-                require('../../images/UserAvatar.png')
+          claim.logoUrl
+            ? { uri: claim.logoUrl }
             : null
       }
 
@@ -122,18 +135,26 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
       )
     })
 
+    if (!claim) {
+      logoUrl = this.props.avatarSource || require('../../images/UserAvatar.png')
+    }
+
     return (
       <View key={index} style={styles.wrapper}>
         <View style={styles.textAvatarWrapper}>
           <View style={styles.textInnerWrapper}>{views}</View>
           <View style={styles.avatarWrapper}>
-            <Icon
-              medium
-              round
-              resizeMode="cover"
-              src={logoUrl}
-              testID={`proof-requester-logo-${index}`}
-            />
+            {
+              logoUrl ?
+                <Icon
+                  medium
+                  round
+                  resizeMode="cover"
+                  src={logoUrl}
+                  testID={`proof-requester-logo-${index}`}
+                /> :
+                claim && claim.senderName && <DefaultLogo text={claim.senderName} size={30} fontSize={18}/>
+            }
           </View>
         </View>
       </View>
@@ -174,8 +195,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   title: {
-    fontSize: verticalScale(fontSizes.size7),
-    fontWeight: '700',
+    fontSize: verticalScale(fontSizes.size6),
+    fontWeight: '400',
     color: colors.cmGray3,
     width: '100%',
     textAlign: 'left',
@@ -183,12 +204,13 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily,
   },
   content: {
-    fontSize: verticalScale(fontSizes.size5),
-    fontWeight: '400',
+    fontSize: verticalScale(fontSizes.size3),
+    fontWeight: '700',
     color: colors.cmGray1,
     width: '100%',
     textAlign: 'left',
     fontFamily: fontFamily,
+    lineHeight: verticalScale(23),
   },
   contentGray: {
     fontSize: verticalScale(fontSizes.size5),
@@ -213,8 +235,9 @@ const styles = StyleSheet.create({
   },
   avatarWrapper: {
     width: '15%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: moderateScale(5),
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   keyboardFlatList: {
     paddingLeft: '5%',

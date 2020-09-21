@@ -94,6 +94,8 @@ Array [
   Array [
     Object {
       "data": undefined,
+      "dissatisfied": false,
+      "key": "attr3_uuid",
       "label": "Address 3",
       "values": Object {
         "Address 3": undefined,
@@ -103,6 +105,8 @@ Array [
   Array [
     Object {
       "data": undefined,
+      "dissatisfied": false,
+      "key": "attr4_uuid",
       "label": "Address 4",
       "values": Object {
         "Address 4": undefined,
@@ -112,6 +116,8 @@ Array [
   Array [
     Object {
       "data": undefined,
+      "dissatisfied": false,
+      "key": "attr5_uuid",
       "label": "Address 5",
       "values": Object {
         "Address 5": undefined,
@@ -121,6 +127,8 @@ Array [
   Array [
     Object {
       "data": undefined,
+      "dissatisfied": false,
+      "key": "attr6_uuid",
       "label": "Address 6",
       "values": Object {
         "Address 6": undefined,
@@ -130,6 +138,8 @@ Array [
   Array [
     Object {
       "data": undefined,
+      "dissatisfied": false,
+      "key": "attr7_uuid",
       "label": "Address 7",
       "values": Object {
         "Address 7": undefined,
@@ -139,6 +149,8 @@ Array [
   Array [
     Object {
       "data": undefined,
+      "dissatisfied": false,
+      "key": "attr8_uuid",
       "label": "Address 8",
       "values": Object {
         "Address 8": undefined,
@@ -148,6 +160,8 @@ Array [
   Array [
     Object {
       "data": undefined,
+      "dissatisfied": false,
+      "key": "attr9_uuid",
       "label": "Address 9",
       "values": Object {
         "Address 9": undefined,
@@ -157,6 +171,8 @@ Array [
   Array [
     Object {
       "data": undefined,
+      "dissatisfied": false,
+      "key": "attr10_uuid",
       "label": "Address 10",
       "values": Object {
         "Address 10": undefined,

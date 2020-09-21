@@ -18,7 +18,6 @@ import {
   getTestInvitationPayload,
   vcxClaimOffer,
 } from '../../../../__mocks__/static-data'
-import type { InvitationPayload } from '../../../invitation/type-invitation'
 
 const agencyPoolConfig = {
   agencyUrl,

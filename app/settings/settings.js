@@ -106,6 +106,7 @@ const hideTokenScreen = true
 const style = StyleSheet.create({
   secondaryContainer: {
     backgroundColor: colors.cmGray5,
+    flex: 1,
   },
   listContainer: {
     borderBottomWidth: 0,

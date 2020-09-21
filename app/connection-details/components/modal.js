@@ -1,6 +1,6 @@
 // @flow
 import React, { useCallback } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
@@ -38,6 +38,7 @@ const Modal = (props: CredentialReceivedProps) => {
 
   return (
     <View style={styles.modalWrapper}>
+      <StatusBar backgroundColor={colors.cmBlack} barStyle={'light-content'} />
       <ModalContent
         content={data.data}
         imageUrl={imageUrl}

@@ -1,9 +1,7 @@
 // @flow
 import type { ReactNavigation } from '../common/type-common'
 import type { CustomError } from '../common/type-common'
-import type { IsValid } from '../components/input-control/type-input-control'
 import type { RestoreStore, SaveToAppDirectory } from '../restore/type-restore'
-import type { RestoreCloudSubmitPassphraseAction } from '../cloud-restore/cloud-restore-type'
 
 export type ReactNavigationBackup = {
   navigation: {

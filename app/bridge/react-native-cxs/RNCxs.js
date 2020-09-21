@@ -2,29 +2,18 @@
 import { NativeModules, Platform } from 'react-native'
 import memoize from 'lodash.memoize'
 import type {
-  Metadata,
-  IndyClaimOffer,
-  ConnectAgencyResponse,
-  RegisterAgencyResponse,
-  CreateOneTimeAgentResponse,
-  CreatePairwiseAgentResponse,
-  AcceptInvitationResponse,
   CxsCredentialOfferResult,
-  InitWithGenesisPathConfig,
   VcxProvisionResult,
   VcxProvision,
   CxsInitConfig,
   VcxInitConfig,
   CxsPushTokenConfig,
-  VcxCredentialOfferResult,
   VcxCredentialOffer,
   VcxClaimInfo,
   VcxConnectionConnectResult,
-  VcxProofRequest,
   WalletTokenInfo,
   PaymentAddress,
   SignDataResponse,
-  VcxConnectionConnectV2Result,
 } from './type-cxs'
 import type {
   AriesOutOfBandInvite,
@@ -41,17 +30,14 @@ import {
   convertVcxConnectionToCxsConnection,
   convertVcxCredentialOfferToCxsClaimOffer,
   paymentHandle,
-  convertVcxConnectionV2ToCMConnection,
 } from './vcx-transformers'
 import type { UserOneTimeInfo } from '../../store/user/type-user-store'
 import type {
   AgencyPoolConfig,
-  ProvisionToken,
   MessagePaymentDetails,
 } from '../../store/type-config-store'
 import type { MyPairwiseInfo } from '../../store/type-connection-store'
 import type {
-  ClaimOfferPushPayload,
   ClaimPushPayload,
   GetClaimVcxResult,
 } from '../../push-notification/type-push-notification'
@@ -84,7 +70,7 @@ export async function acceptInvitationVcx(
   // with existing invitation. So, for now for any invitation type QR or SMS
   // we are hard coding connection option to QR
   const connectionOptions = { connection_type: 'QR', phone: '' }
-  const result: string = await RNIndy.vcxAcceptInvitation(
+  await RNIndy.vcxAcceptInvitation(
     connectionHandle,
     JSON.stringify(connectionOptions)
   )
@@ -123,7 +109,7 @@ export async function deleteConnection(connectionHandle: number) {
   return await RNIndy.deleteConnection(connectionHandle)
 }
 
-export async function resetVcx(removeData: boolean): Promise<boolean> {
+export async function resetVcx(): Promise<boolean> {
   // we would remove above reset method and rename this method to reset
   // once we have integration available with vcx
   const result: boolean = await RNIndy.reset(true)
@@ -132,7 +118,7 @@ export async function resetVcx(removeData: boolean): Promise<boolean> {
 }
 
 export async function vcxShutdown(deletePool: boolean): Promise<boolean> {
-  const result: Number = await RNIndy.shutdownVcx(deletePool)
+  await RNIndy.shutdownVcx(deletePool)
 
   return true
 }
@@ -367,7 +353,7 @@ export async function createCredentialWithAriesOfferObject(
 ): Promise<CxsCredentialOfferResult> {
   const credential_handle = await credentialCreateWithOffer(
     sourceId,
-    JSON.stringify(credentialOffer),
+    JSON.stringify(credentialOffer)
   )
 
   return {
@@ -890,4 +876,12 @@ export async function connectionSendAnswer(
 
 export async function deleteCredential(credentialHandle: number) {
   return await RNIndy.deleteCredential(credentialHandle)
+}
+
+export async function credentialReject(
+  credentialHandle: number,
+  connectionHandle: number,
+  comment: string
+): Promise<void> {
+  return RNIndy.credentialReject(credentialHandle, connectionHandle, comment)
 }

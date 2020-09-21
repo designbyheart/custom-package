@@ -1,5 +1,12 @@
 // @flow
-import { put, takeEvery, takeLatest, call, all, select } from 'redux-saga/effects'
+import {
+  put,
+  takeEvery,
+  takeLatest,
+  call,
+  all,
+  select,
+} from 'redux-saga/effects'
 import {
   CONNECTION_INVITE_TYPES,
   INVITATION_RECEIVED,
@@ -66,16 +73,13 @@ import {
   sendConnectionReuse,
   connectionAttachRequest,
 } from '../store/connections-store'
-import {
-  getConnection,
-  getConnectionExists,
-} from '../store/store-selector'
+import { getConnection, getConnectionExists } from '../store/store-selector'
 import {
   acceptClaimOffer,
   saveSerializedClaimOffer,
 } from '../claim-offer/claim-offer-store'
 import { CONNECTION_ALREADY_EXISTS } from '../bridge/react-native-cxs/error-cxs'
-import { outOfBandConnectionForPresentationEstablished, } from '../proof-request/proof-request-store'
+import { outOfBandConnectionForPresentationEstablished } from '../proof-request/proof-request-store'
 
 export const invitationInitialState = {}
 
@@ -153,13 +157,8 @@ export async function getAttachedRequest(
   return null
 }
 
-export function* processAttachedRequest(
-  did: string
-): Generator<*, *, *> {
-  const connection = yield select(
-    getConnectionByUserDid,
-    did
-  )
+export function* processAttachedRequest(did: string): Generator<*, *, *> {
+  const connection = yield select(getConnectionByUserDid, did)
   const attachedRequest = connection.attachedRequest
   if (!attachedRequest) {
     return
@@ -178,7 +177,12 @@ export function* processAttachedRequest(
       attachedRequest
     )
 
-    yield call(saveSerializedClaimOffer, claimHandle, connection.identifier, uid)
+    yield call(
+      saveSerializedClaimOffer,
+      claimHandle,
+      connection.identifier,
+      uid
+    )
     yield put(acceptClaimOffer(uid, connection.senderDID))
   } else if (attachedRequest[TYPE].endsWith('request-presentation')) {
     yield put(outOfBandConnectionForPresentationEstablished(uid))
@@ -207,24 +211,24 @@ export function* sendResponse(
     )
 
     if (payload.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR) {
-      yield call(
-        sendResponseOnAriesConnectionInvitation,
-        payload
-      )
+      yield call(sendResponseOnAriesConnectionInvitation, payload)
       return
     }
 
     if (payload.type === CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND) {
-      yield call(
-        sendResponseOnAriesOutOfBandInvitation,
-        payload
-      )
+      yield call(sendResponseOnAriesOutOfBandInvitation, payload)
       return
     }
 
     // proprietary connection
-    const connectionHandle: number = yield call(createConnectionWithInvite, payload)
-    let pairwiseInfo: MyPairwiseInfo = yield call(acceptInvitationVcx, connectionHandle)
+    const connectionHandle: number = yield call(
+      createConnectionWithInvite,
+      payload
+    )
+    let pairwiseInfo: MyPairwiseInfo = yield call(
+      acceptInvitationVcx,
+      connectionHandle
+    )
     yield put(invitationSuccess(senderDID))
 
     // once the connection is successful, we need to save serialized connection
@@ -265,12 +269,18 @@ export function* sendResponse(
 }
 
 export function* sendResponseOnAriesConnectionInvitation(
-  payload: InvitationPayload,
+  payload: InvitationPayload
 ): Generator<*, *, *> {
   try {
-    const connectionHandle: number = yield call(createConnectionWithAriesInvite, payload)
+    const connectionHandle: number = yield call(
+      createConnectionWithAriesInvite,
+      payload
+    )
 
-    let pairwiseInfo: MyPairwiseInfo = yield call(acceptInvitationVcx, connectionHandle)
+    let pairwiseInfo: MyPairwiseInfo = yield call(
+      acceptInvitationVcx,
+      connectionHandle
+    )
     yield put(invitationSuccess(payload.senderDID))
 
     // once the connection is successful, we need to save serialized connection
@@ -302,19 +312,27 @@ export function* sendResponseOnAriesConnectionInvitation(
     captureError(e)
     if (e.code === CONNECTION_ALREADY_EXISTS) {
       yield put(
-        invitationFail(ERROR_INVITATION_ALREADY_ACCEPTED(e.message), payload.senderDID)
+        invitationFail(
+          ERROR_INVITATION_ALREADY_ACCEPTED(e.message),
+          payload.senderDID
+        )
       )
     } else {
-      yield put(invitationFail(ERROR_INVITATION_CONNECT(e.message), payload.senderDID))
+      yield put(
+        invitationFail(ERROR_INVITATION_CONNECT(e.message), payload.senderDID)
+      )
     }
   }
 }
 
 export function* sendResponseOnAriesOutOfBandInvitation(
-  payload: InvitationPayload,
+  payload: InvitationPayload
 ): Generator<*, *, *> {
   try {
-    const connectionHandle: number = yield call(createConnectionWithAriesOutOfBandInvite, payload)
+    const connectionHandle: number = yield call(
+      createConnectionWithAriesOutOfBandInvite,
+      payload
+    )
 
     const [getStateError, connectionState]: [Error, number] = yield call(
       flattenAsync(connectionGetState),
@@ -323,7 +341,10 @@ export function* sendResponseOnAriesOutOfBandInvitation(
 
     if (getStateError) {
       yield put(
-        connectionFail(ERROR_CONNECTION(getStateError.message), payload.senderDID)
+        connectionFail(
+          ERROR_CONNECTION(getStateError.message),
+          payload.senderDID
+        )
       )
       return
     }
@@ -335,7 +356,10 @@ export function* sendResponseOnAriesOutOfBandInvitation(
 
     if (connectionState !== 4) {
       // we need to setup regular connection
-      let pairwiseInfo: MyPairwiseInfo = yield call(acceptInvitationVcx, connectionHandle)
+      let pairwiseInfo: MyPairwiseInfo = yield call(
+        acceptInvitationVcx,
+        connectionHandle
+      )
 
       yield put(invitationSuccess(payload.senderDID))
 
@@ -398,10 +422,15 @@ export function* sendResponseOnAriesOutOfBandInvitation(
     captureError(e)
     if (e.code === CONNECTION_ALREADY_EXISTS) {
       yield put(
-        invitationFail(ERROR_INVITATION_ALREADY_ACCEPTED(e.message), payload.senderDID)
+        invitationFail(
+          ERROR_INVITATION_ALREADY_ACCEPTED(e.message),
+          payload.senderDID
+        )
       )
     } else {
-      yield put(invitationFail(ERROR_INVITATION_CONNECT(e.message), payload.senderDID))
+      yield put(
+        invitationFail(ERROR_INVITATION_CONNECT(e.message), payload.senderDID)
+      )
     }
   }
 }
@@ -485,9 +514,7 @@ export function* updateAriesConnectionState(
   yield* persistConnections()
 
   if (isCompleted) {
-    yield* processAttachedRequest(
-      identifier
-    )
+    yield* processAttachedRequest(identifier)
   }
 }
 
@@ -496,7 +523,10 @@ function* outOfBandInvitationAccepted(
 ): Generator<*, *, *> {
   const { invitationPayload, attachedRequest } = action
 
-  const connectionExists = yield select(getConnectionExists, action.invitationPayload.senderDID)
+  const connectionExists = yield select(
+    getConnectionExists,
+    action.invitationPayload.senderDID
+  )
   if (!connectionExists) {
     yield put(
       invitationReceived({
@@ -518,7 +548,7 @@ function* outOfBandInvitationAccepted(
 
     yield put(connectionAttachRequest(connection.identifier, attachedRequest))
 
-    if (!invitationPayload.originalObject){
+    if (!invitationPayload.originalObject) {
       return
     }
 
@@ -541,10 +571,7 @@ function* watchSendInvitationResponse(): any {
 }
 
 export function* watchInvitation(): any {
-  yield all([
-    watchOutOfBandInvitationAccepted(),
-    watchSendInvitationResponse(),
-  ])
+  yield all([watchOutOfBandInvitationAccepted(), watchSendInvitationResponse()])
 }
 
 export default function invitationReducer(

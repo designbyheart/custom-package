@@ -86,5 +86,7 @@ export const styles = StyleSheet.create({
     width: '35%',
     alignItems: 'center',
     flexDirection: 'row',
+    marginLeft: moderateScale(10),
+    marginRight: moderateScale(6),
   },
 })

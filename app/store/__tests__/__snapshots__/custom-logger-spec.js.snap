@@ -58,7 +58,9 @@ Object {
   "issueDate": "****",
   "logoUrl": "****",
   "myPairwiseDID": "****",
+  "name": "****",
   "senderDID": "****",
+  "senderName": "****",
   "type": "MAP_CLAIM_TO_SENDER",
 }
 `;
@@ -99,6 +101,7 @@ Object {
       },
     },
     "data": "****",
+    "oneTimeConnections": "****",
   },
   "deepLink": Object {
     "error": undefined,

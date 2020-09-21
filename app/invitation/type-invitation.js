@@ -58,7 +58,7 @@ export type AriesAttachedRequest = {
   data: {| json: string |} | {| base64: string |},
 }
 
-export type AriesOutOfBandInvite = {|
+export type AriesOutOfBandInvite = {
   '@type': AriesOutOfBandInviteType,
   '@id': string,
   label?: string,
@@ -68,7 +68,8 @@ export type AriesOutOfBandInvite = {|
   handshake_protocols?: Array<string>,
   'request~attach': Array<AriesAttachedRequest>,
   service: Array<string | AriesServiceEntry>,
-|}
+  public_did?: string,
+}
 
 export type AriesConnectionInvite = {|
   payload: AriesConnectionInvitePayload,
@@ -165,8 +166,7 @@ export type InvitationAction =
   | InitialTestAction
   | ResetAction
 
-export const OUT_OF_BAND_INVITATION_ACCEPTED =
-  'OUT_OF_BAND_INVITATION_ACCEPTED'
+export const OUT_OF_BAND_INVITATION_ACCEPTED = 'OUT_OF_BAND_INVITATION_ACCEPTED'
 
 export type OutOfBandInvitationAcceptedAction = {
   type: typeof OUT_OF_BAND_INVITATION_ACCEPTED,

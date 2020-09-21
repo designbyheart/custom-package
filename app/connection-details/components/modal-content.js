@@ -64,7 +64,9 @@ export const renderAttachmentIcon = (
   label: string,
   data: any,
   remotePairwiseDID: string,
-  uid: string
+  uid: string,
+  titleStyles?: any,
+  contentStyles?: any,
 ) => {
   let attachment: $PropertyType<AttachmentPropType, 'attachment'> | null = null
 
@@ -92,7 +94,7 @@ export const renderAttachmentIcon = (
           width={24}
         />
         <View style={styles.textWrapper}>
-          <Text style={styles.title}>{label.slice(0, -5)}</Text>
+          <Text style={[styles.title, titleStyles]}>{label.slice(0, -5)}</Text>
           <Text style={styles.extensionNameStyle}>
             {`${getFileExtensionName(attachment['mime-type'])} file`}
           </Text>
@@ -104,8 +106,8 @@ export const renderAttachmentIcon = (
 
   return (
     <View style={styles.textWrapper}>
-      <Text style={styles.title}>{label}</Text>
-      <DataRenderer {...{ label, data, uid, remotePairwiseDID }} />
+      <Text style={[styles.title, titleStyles]}>{label}</Text>
+      <DataRenderer {...{ label, data, uid, remotePairwiseDID, contentStyles }} />
     </View>
   )
 }
@@ -176,13 +178,14 @@ export const ModalContent = ({
   )
 }
 
-function DataRenderer(props: {
+export function DataRenderer(props: {
   label: string,
   data: ?string,
   uid: string,
   remotePairwiseDID: string,
+  contentStyles?: any
 }) {
-  const { label, data, uid, remotePairwiseDID } = props
+  const { label, data, uid, remotePairwiseDID, contentStyles } = props
 
   if (!data) {
     return (
@@ -226,7 +229,7 @@ function DataRenderer(props: {
       />
     )
   }
-  return <Text style={styles.content}>{data}</Text>
+  return <Text style={[styles.content, contentStyles]}>{data}</Text>
 }
 
 function PhotoAttachment(props: { base64: string }) {
@@ -402,20 +405,22 @@ const styles = StyleSheet.create({
     }),
   },
   title: {
-    fontSize: verticalScale(fontSizes.size8),
+    fontSize: verticalScale(fontSizes.size6),
     color: colors.cmGray3,
     width: '100%',
     textAlign: 'left',
     marginBottom: moderateScale(2),
     fontFamily: fontFamily,
+    lineHeight: verticalScale(17),
   },
   content: {
-    fontSize: verticalScale(fontSizes.size5),
+    fontSize: verticalScale(fontSizes.size3),
     fontWeight: '700',
     color: '#505050',
     width: '100%',
     textAlign: 'left',
     fontFamily: fontFamily,
+    lineHeight: verticalScale(23),
   },
   contentGray: {
     fontSize: verticalScale(fontSizes.size5),

@@ -19,7 +19,6 @@ import type {
   ProofFailAction,
   IndyPreparedProof,
   IndyRequestedAttributes,
-  UserSelfAttestedAttributesAction,
   VcxSelectedCredentials,
   RetrySendProofAction,
 } from './type-proof'
@@ -32,6 +31,7 @@ import type {
   ProofRequestedAttributes,
   ProofRequestPayload,
   DissatisfiedAttribute,
+  RequestedAttribute,
 } from '../proof-request/type-proof-request'
 import {
   UPDATE_ATTRIBUTE_CLAIM,
@@ -121,12 +121,10 @@ export const userSelfAttestedAttributes = (
 export const proofRequestDataToStore = (
   uid: string,
   proofHandle: number,
-  selfAttestedAttributes: SelfAttestedAttributes
 ) => ({
   type: PROOF_REQUEST_SEND_PROOF_HANDLE,
   uid,
   proofHandle,
-  selfAttestedAttributes,
 })
 
 export const resetTempProofData = (uid: string) => ({
@@ -162,6 +160,24 @@ export function convertSelfAttestedToIndySelfAttested(
   }, {})
 }
 
+function isDissatisfiedAttribute(attribute: RequestedAttribute): boolean {
+  // cases:
+  // 1. self_attest_allowed: false
+  // 2. restrictions != {}
+  // 3. restrictions != [] and != [{}] and != [{},{},....]
+
+  return (
+    (typeof attribute.self_attest_allowed === 'boolean' &&
+      attribute.self_attest_allowed === false) ||
+    (typeof attribute.restrictions === 'object' &&
+      Object.keys(attribute.restrictions).length > 0) ||
+    (Array.isArray(attribute.restrictions) &&
+      attribute.restrictions.filter(
+        (restriction) => Object.keys(restriction).length > 0
+      ).length > 0)
+  )
+}
+
 export function convertPreparedProofToRequestedAttributes(
   preparedProof: IndyPreparedProof,
   proofRequest: ProofRequestData
@@ -177,18 +193,15 @@ export function convertPreparedProofToRequestedAttributes(
 
     if (!attributeClaimData || !attributeClaimData[0]) {
       const requestedAttribute = proofRequest.requested_attributes[attrKey]
-      if (
-        typeof requestedAttribute.self_attest_allowed === 'boolean' &&
-        requestedAttribute.self_attest_allowed === false
-      ) {
 
+      if (isDissatisfiedAttribute(requestedAttribute)) {
         if (requestedAttribute.name) {
           dissatisfiedAttributes.push({
             name: requestedAttribute.name,
             reason: NO_SELF_ATTEST,
           })
         } else if (requestedAttribute.names) {
-          requestedAttribute.names.forEach(attributeName =>
+          requestedAttribute.names.forEach((attributeName) =>
             dissatisfiedAttributes.push({
               name: attributeName,
               reason: NO_SELF_ATTEST,
@@ -204,7 +217,7 @@ export function convertPreparedProofToRequestedAttributes(
         } else if (requestedAttribute.names) {
           // all missed attributes from group cannot be self-attested
           // so they should be treated as dissatisfied
-          requestedAttribute.names.forEach(attributeName =>
+          requestedAttribute.names.forEach((attributeName) =>
             dissatisfiedAttributes.push({
               name: attributeName,
               reason: NO_SELF_ATTEST,
@@ -256,18 +269,18 @@ export function convertIndyPreparedProofToAttributes(
             {}
           )
 
-          values = labels.reduce(
-            (acc, attributeLabel) => {
-              if (caseInsensitiveMap) {
-                const key = caseInsensitiveMap[attributeLabel.toLowerCase().replace(/ /g, '')]
-                return {
-                  ...acc,
-                  [attributeLabel]: revealedAttribute.cred_info.attrs[key],
-                }
+          values = labels.reduce((acc, attributeLabel) => {
+            if (caseInsensitiveMap) {
+              const key =
+                caseInsensitiveMap[
+                  attributeLabel.toLowerCase().replace(/ /g, '')
+                ]
+              return {
+                ...acc,
+                [attributeLabel]: revealedAttribute.cred_info.attrs[key],
               }
-            },
-            {}
-          )
+            }
+          }, {})
         }
         //TODO:DA seems that `data` field is not required in Attribute anymore and can be deleted, so it can be removed, but refactoring is needed
         return {
@@ -277,7 +290,7 @@ export function convertIndyPreparedProofToAttributes(
             revealedAttribute &&
             caseInsensitiveMap &&
             revealedAttribute.cred_info.attrs[
-            caseInsensitiveMap[label.toLowerCase().replace(/ /g, '')]
+              caseInsensitiveMap[label.toLowerCase().replace(/ /g, '')]
             ],
           values: values,
           claimUuid: revealedAttribute && revealedAttribute.cred_info.referent,
@@ -289,17 +302,15 @@ export function convertIndyPreparedProofToAttributes(
       })
     }
 
-    const attrs = preparedProof.self_attested_attrs
-    const selfAttestedAttribute =
-      attrs && attrs[label.toLowerCase().trim()].data
-
     return [
       {
         label,
-        data: selfAttestedAttribute,
+        key: attributeKey,
+        data: undefined,
         values: {
-          [label]: selfAttestedAttribute
+          [label]: undefined,
         },
+        dissatisfied: isDissatisfiedAttribute(attribute),
       },
     ]
   })
@@ -343,7 +354,9 @@ export function convertSelectedCredentialAttributesToIndyProof(
     const selectedAttribute = userSelectedCredentials[attributeKey]
     if (selectedAttribute) {
       const selectedCredentialAttributes = selectedAttribute[2].cred_info.attrs
-      const caseInsensitiveMap = Object.keys(selectedCredentialAttributes).reduce(
+      const caseInsensitiveMap = Object.keys(
+        selectedCredentialAttributes
+      ).reduce(
         (acc, attributeName) => ({
           ...acc,
           [attributeName.toLowerCase().replace(/ /g, '')]: attributeName,
@@ -356,21 +369,26 @@ export function convertSelectedCredentialAttributesToIndyProof(
         revealedAttributes[attributeKey] = [
           selectedAttribute[0],
           selectedCredentialAttributes[
-          caseInsensitiveMap[attribute.name.toLowerCase().replace(/ /g, '')]]
+            caseInsensitiveMap[attribute.name.toLowerCase().replace(/ /g, '')]
+          ],
         ]
       }
 
       // in case of multiple attributes we fill revealed_group_attrs structure
       if (attribute.names) {
-        const values = attribute.names.reduce((acc, name) => ({
-          ...acc,
-          [name]: selectedCredentialAttributes[
-            caseInsensitiveMap[name.toLowerCase().replace(/ /g, '')]
-          ]
-        }), {})
+        const values = attribute.names.reduce(
+          (acc, name) => ({
+            ...acc,
+            [name]:
+              selectedCredentialAttributes[
+                caseInsensitiveMap[name.toLowerCase().replace(/ /g, '')]
+              ],
+          }),
+          {}
+        )
         revealedGroupAttributes[attributeKey] = {
           claimUuid: selectedAttribute[0],
-          values: values
+          values: values,
         }
       }
     }
@@ -378,7 +396,7 @@ export function convertSelectedCredentialAttributesToIndyProof(
 
   return {
     revealedAttributes,
-    revealedGroupAttributes
+    revealedGroupAttributes,
   }
 }
 
@@ -391,18 +409,18 @@ export function* generateProofSaga(action: GenerateProofAction): any {
     )
 
     const proofRequestData = proofRequestPayload.originalProofRequestData
-    let { proofHandle, ephemeralProofRequest, outofbandProofRequest } = proofRequestPayload
+    let {
+      proofHandle,
+      ephemeralProofRequest,
+      outofbandProofRequest,
+    } = proofRequestPayload
     let matchingCredentialsJson: ?string = undefined
 
     // we can have proofHandle as 0 as well
     // if we have proofHandle as 0, that means we need to get proofHandle again
     let proofRequest = ephemeralProofRequest || outofbandProofRequest
     if (proofHandle === 0 && proofRequest) {
-      proofHandle = yield call(
-        proofCreateWithRequest,
-        uid,
-        proofRequest
-      )
+      proofHandle = yield call(proofCreateWithRequest, uid, proofRequest)
       // update proof handle in store, because it would be used by proof-request store
       yield put(updateProofHandle(proofHandle, uid))
     }
@@ -486,8 +504,6 @@ export function* generateProofSaga(action: GenerateProofAction): any {
       matchingCredentials,
       proofRequestData
     )
-    let selfAttestedAttributes: SelfAttestedAttributes = {}
-
     if (dissatisfiedAttributes.length > 0) {
       // if we find that there are some attributes that are not available
       // in any of the claims stored in user wallet
@@ -495,11 +511,15 @@ export function* generateProofSaga(action: GenerateProofAction): any {
       // then user cannot fulfill this whole proof request
       // let user know that there are dissatisfied attributes
       yield put(dissatisfiedAttributesFound(dissatisfiedAttributes, uid))
-
-      // as user cannot proceed ahead with accepting proof request
-      // we stop this saga here
-      return
     }
+
+    const requestedAttributes = convertIndyPreparedProofToAttributes(
+      {
+        ...matchingCredentials,
+      },
+      proofRequestData.requested_attributes
+    )
+    yield put(proofRequestAutoFill(uid, requestedAttributes))
 
     if (missingAttributes.length > 0) {
       // if we find that there are some attributes that are not available
@@ -507,26 +527,9 @@ export function* generateProofSaga(action: GenerateProofAction): any {
       // then we ask user to fill in those attributes
       // so we need to tell proof request screen to ask user to self attest
       yield put(missingAttributesFound(missingAttributes, uid))
-
-      // once user has filled all attributes, we need to get those details here
-      // user filled details become self attested attributes
-      const selfAttestedFilledAction: UserSelfAttestedAttributesAction = yield take(
-        USER_SELF_ATTESTED_ATTRIBUTES
-      )
-      selfAttestedAttributes = selfAttestedFilledAction.selfAttestedAttributes
     }
 
-    // auto-fill proof request
-    const requestedAttributes = convertIndyPreparedProofToAttributes(
-      {
-        ...matchingCredentials,
-        self_attested_attrs: { ...selfAttestedAttributes },
-      },
-      proofRequestData.requested_attributes
-    )
-    yield put(proofRequestAutoFill(uid, requestedAttributes))
-
-    yield put(proofRequestDataToStore(uid, proofHandle, selfAttestedAttributes))
+    yield put(proofRequestDataToStore(uid, proofHandle))
   } catch (e) {
     // captureError(e)
     yield put(proofFail(action.uid, e))
@@ -549,8 +552,9 @@ export function* updateAttributeClaimAndSendProof(
       requestedAttrsJson
     )
     const selectedSelfAttestedAttributes = convertSelfAttestedToIndySelfAttested(
-      selfAttestedAttributes
+      selfAttestedAttributes || {}
     )
+
     yield call(
       generateProof,
       proofHandle,
@@ -564,8 +568,12 @@ export function* updateAttributeClaimAndSendProof(
       action.uid
     )
     const proofRequest = proofRequestPayload.originalProofRequestData
-    const { revealedAttributes, revealedGroupAttributes } = convertSelectedCredentialAttributesToIndyProof(
-      requestedAttrsJson, proofRequest
+    const {
+      revealedAttributes,
+      revealedGroupAttributes,
+    } = convertSelectedCredentialAttributesToIndyProof(
+      requestedAttrsJson,
+      proofRequest
     )
     // create a proof object so that history store and others that depend on proof
     // can use this proof object, previously proof object was generated with libIndy
@@ -680,6 +688,19 @@ export default function proofReducer(
       }
     }
 
+    case USER_SELF_ATTESTED_ATTRIBUTES: {
+      return {
+        ...state,
+        [action.uid]: {
+          ...state[action.uid],
+          proofData: {
+            ...state[action.uid].proofData,
+            selfAttestedAttributes: action.selfAttestedAttributes,
+          },
+        },
+      }
+    }
+
     case PROOF_REQUEST_SEND_PROOF_HANDLE: {
       return {
         ...state,
@@ -687,7 +708,6 @@ export default function proofReducer(
           ...state[action.uid],
           proofData: {
             proofHandle: action.proofHandle,
-            selfAttestedAttributes: action.selfAttestedAttributes,
           },
         },
       }

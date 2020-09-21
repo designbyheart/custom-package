@@ -134,6 +134,7 @@ exports[`<LockEnter /> should match snapshot 1`] = `
               "fontFamily": "Lato",
               "fontSize": 26,
               "fontStyle": "normal",
+              "fontWeight": "700",
               "letterSpacing": 0.5,
               "lineHeight": 31,
               "minHeight": 49.23529411764706,
@@ -522,7 +523,6 @@ exports[`<LockEnter /> should match snapshot 1`] = `
           accessible={true}
           allowFontScaling={true}
           autoCorrect={false}
-          autoFocus={true}
           blurOnSubmit={false}
           editable={true}
           enablesReturnKeyAutomatically={false}
@@ -1135,7 +1135,6 @@ exports[`<LockEnter /> should match snapshot for recovery flow 1`] = `
           accessible={true}
           allowFontScaling={true}
           autoCorrect={false}
-          autoFocus={true}
           blurOnSubmit={false}
           editable={true}
           enablesReturnKeyAutomatically={false}

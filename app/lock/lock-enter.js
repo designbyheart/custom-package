@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     lineHeight: 31,
     minHeight: verticalScale(62),
+    fontWeight: '700',
   },
 })
 

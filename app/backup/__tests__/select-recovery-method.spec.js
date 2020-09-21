@@ -2,7 +2,6 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import { SelectRecoveryMethod } from '../select-recovery-method'
-import { getNavigation } from '../../../__mocks__/static-data'
 import { selectRecoveryMethodRoute } from '../../common'
 
 describe('<SelectRecoveryMethod />', () => {

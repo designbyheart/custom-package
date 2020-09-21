@@ -36,7 +36,9 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
       />
       <ScrollView>
         <View style={styles.headerWrapper}>
-          <Text style={styles.headerSubText}>{date ? "Issued by" : "Offered by"}</Text>
+          <Text style={styles.headerSubText}>
+            {date ? 'Issued by' : 'Offered by'}
+          </Text>
           <Text
             style={styles.headerText}
             ellipsizeMode="tail"
@@ -53,7 +55,7 @@ const CredentialDetails = (props: CredentialDetailsProps) => {
                 testID={`${credentialName}-avatar`}
               />
             ) : (
-              <DefaultLogo text={credentialName} size={96} fontSize={26} />
+              <DefaultLogo text={issuerName} size={96} fontSize={48} />
             )}
           </View>
           <View style={styles.contentWrapper}>

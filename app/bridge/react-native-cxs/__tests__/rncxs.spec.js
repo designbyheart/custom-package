@@ -32,7 +32,7 @@ describe('RNCxs', () => {
 
   it('fn:deserializeConnection, one call for same string, multiple calls', async () => {
     const serializedConnection = '{serializedConnectionForThisTestOnly}'
-    const { connectionHandle, mockGetHandleBySerializedConnection } = setup()
+    const { mockGetHandleBySerializedConnection } = setup()
     await getHandleBySerializedConnection(serializedConnection)
     await getHandleBySerializedConnection(serializedConnection)
     expect(mockGetHandleBySerializedConnection.mock.calls.length).toBe(1)

@@ -35,10 +35,7 @@ export const LockAuthorization = ({
     LoaderGif
   ) : (
     <View style={styles.container}>
-      <Header
-        transparent={true}
-        navigation={navigation}
-        route={route} />
+      <Header transparent={true} navigation={navigation} route={route} />
       <LockEnter onSuccess={onSuccess} />
     </View>
   )

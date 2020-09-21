@@ -101,7 +101,6 @@ export type proofRequestDataToStoreAction = {
   type: typeof PROOF_REQUEST_SEND_PROOF_HANDLE,
   uid: string,
   proofHandle: number,
-  selfAttestedAttributes: SelfAttestedAttributes,
 }
 
 export const RESET_TEMP_PROOF_DATA = 'RESET_TEMP_PROOF_DATA'

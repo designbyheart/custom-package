@@ -511,12 +511,13 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
                               null,
                               Object {
                                 "fontFamily": "Lato",
-                                "fontSize": 26,
+                                "fontSize": 25.777142857142856,
                                 "fontStyle": "normal",
-                                "lineHeight": 31,
+                                "fontWeight": "700",
+                                "height": 49.23529411764706,
+                                "lineHeight": 30.734285714285715,
                                 "marginBottom": 31.76470588235294,
                                 "marginTop": 31.76470588235294,
-                                "minHeight": 49.23529411764706,
                                 "paddingHorizontal": 20,
                                 "textAlign": "center",
                               },
@@ -555,12 +556,12 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
                               Object {
                                 "color": "#CE0B24",
                                 "fontFamily": "Lato",
-                                "fontSize": 17,
+                                "fontSize": 16.854285714285716,
                                 "fontStyle": "normal",
                                 "fontWeight": "500",
                                 "height": 18.285714285714285,
                                 "justifyContent": "center",
-                                "lineHeight": 20,
+                                "lineHeight": 19.82857142857143,
                                 "marginBottom": 10.971428571428572,
                               },
                             ]
@@ -921,7 +922,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
                               accessible={true}
                               allowFontScaling={true}
                               autoCorrect={false}
-                              autoFocus={true}
                               blurOnSubmit={false}
                               editable={true}
                               enablesReturnKeyAutomatically={false}
@@ -1469,12 +1469,13 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
                               null,
                               Object {
                                 "fontFamily": "Lato",
-                                "fontSize": 26,
+                                "fontSize": 25.777142857142856,
                                 "fontStyle": "normal",
-                                "lineHeight": 31,
+                                "fontWeight": "700",
+                                "height": 49.23529411764706,
+                                "lineHeight": 30.734285714285715,
                                 "marginBottom": 31.76470588235294,
                                 "marginTop": 31.76470588235294,
-                                "minHeight": 49.23529411764706,
                                 "paddingHorizontal": 20,
                                 "textAlign": "center",
                               },
@@ -1513,12 +1514,12 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
                               Object {
                                 "color": "#CE0B24",
                                 "fontFamily": "Lato",
-                                "fontSize": 17,
+                                "fontSize": 16.854285714285716,
                                 "fontStyle": "normal",
                                 "fontWeight": "500",
                                 "height": 18.285714285714285,
                                 "justifyContent": "center",
-                                "lineHeight": 20,
+                                "lineHeight": 19.82857142857143,
                                 "marginBottom": 10.971428571428572,
                               },
                             ]
@@ -1879,7 +1880,6 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
                               accessible={true}
                               allowFontScaling={true}
                               autoCorrect={false}
-                              autoFocus={true}
                               blurOnSubmit={false}
                               editable={true}
                               enablesReturnKeyAutomatically={false}
@@ -2427,12 +2427,13 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
                               null,
                               Object {
                                 "fontFamily": "Lato",
-                                "fontSize": 26,
+                                "fontSize": 25.777142857142856,
                                 "fontStyle": "normal",
-                                "lineHeight": 31,
+                                "fontWeight": "700",
+                                "height": 49.23529411764706,
+                                "lineHeight": 30.734285714285715,
                                 "marginBottom": 31.76470588235294,
                                 "marginTop": 31.76470588235294,
-                                "minHeight": 49.23529411764706,
                                 "paddingHorizontal": 20,
                                 "textAlign": "center",
                               },
@@ -2471,12 +2472,12 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
                               Object {
                                 "color": "#CE0B24",
                                 "fontFamily": "Lato",
-                                "fontSize": 17,
+                                "fontSize": 16.854285714285716,
                                 "fontStyle": "normal",
                                 "fontWeight": "500",
                                 "height": 18.285714285714285,
                                 "justifyContent": "center",
-                                "lineHeight": 20,
+                                "lineHeight": 19.82857142857143,
                                 "marginBottom": 10.971428571428572,
                               },
                             ]
@@ -2839,7 +2840,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
                               accessible={true}
                               allowFontScaling={true}
                               autoCorrect={false}
-                              autoFocus={true}
                               blurOnSubmit={false}
                               editable={true}
                               enablesReturnKeyAutomatically={false}
@@ -3387,12 +3387,13 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
                               null,
                               Object {
                                 "fontFamily": "Lato",
-                                "fontSize": 26,
+                                "fontSize": 25.777142857142856,
                                 "fontStyle": "normal",
-                                "lineHeight": 31,
+                                "fontWeight": "700",
+                                "height": 49.23529411764706,
+                                "lineHeight": 30.734285714285715,
                                 "marginBottom": 31.76470588235294,
                                 "marginTop": 31.76470588235294,
-                                "minHeight": 49.23529411764706,
                                 "paddingHorizontal": 20,
                                 "textAlign": "center",
                               },
@@ -3431,19 +3432,17 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
                               Object {
                                 "color": "#CE0B24",
                                 "fontFamily": "Lato",
-                                "fontSize": 17,
+                                "fontSize": 16.854285714285716,
                                 "fontStyle": "normal",
                                 "fontWeight": "500",
                                 "height": 18.285714285714285,
                                 "justifyContent": "center",
-                                "lineHeight": 20,
+                                "lineHeight": 19.82857142857143,
                                 "marginBottom": 10.971428571428572,
                               },
                             ]
                           }
-                        >
-                          Your passcodes do not match
-                        </Text>
+                        />
                         <View
                           center={true}
                           style={
@@ -3799,7 +3798,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
                               accessible={true}
                               allowFontScaling={true}
                               autoCorrect={false}
-                              autoFocus={true}
                               blurOnSubmit={false}
                               editable={true}
                               enablesReturnKeyAutomatically={false}
@@ -4347,12 +4345,13 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
                               null,
                               Object {
                                 "fontFamily": "Lato",
-                                "fontSize": 26,
+                                "fontSize": 25.777142857142856,
                                 "fontStyle": "normal",
-                                "lineHeight": 31,
+                                "fontWeight": "700",
+                                "height": 49.23529411764706,
+                                "lineHeight": 30.734285714285715,
                                 "marginBottom": 31.76470588235294,
                                 "marginTop": 31.76470588235294,
-                                "minHeight": 49.23529411764706,
                                 "paddingHorizontal": 20,
                                 "textAlign": "center",
                               },
@@ -4391,12 +4390,12 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
                               Object {
                                 "color": "#CE0B24",
                                 "fontFamily": "Lato",
-                                "fontSize": 17,
+                                "fontSize": 16.854285714285716,
                                 "fontStyle": "normal",
                                 "fontWeight": "500",
                                 "height": 18.285714285714285,
                                 "justifyContent": "center",
-                                "lineHeight": 20,
+                                "lineHeight": 19.82857142857143,
                                 "marginBottom": 10.971428571428572,
                               },
                             ]
@@ -4757,7 +4756,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
                               accessible={true}
                               allowFontScaling={true}
                               autoCorrect={false}
-                              autoFocus={true}
                               blurOnSubmit={false}
                               editable={true}
                               enablesReturnKeyAutomatically={false}

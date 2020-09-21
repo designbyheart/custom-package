@@ -2,7 +2,6 @@
 export { generateStateForMissingAttributes } from './generateStateForMissingAttributes'
 export { isInvalidValues } from './isInvalidValues'
 export { convertUserFilledValuesToSelfAttested } from './convertUserFilledValuesToSelfAttested'
-export { getPrimaryActionText } from './getPrimaryActionText'
 export { isPropEmpty, missingData } from './isPropEmpty'
 export { enablePrimaryAction } from './enablePrimaryAction'
 export { hasMissingAttributes } from './hasMissingAttributes'

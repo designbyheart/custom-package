@@ -7,30 +7,22 @@ import {
   color,
   grey,
   atlantis,
-  isBiggerThanVeryShortDevice,
   cmRed,
   isBiggerThanMediumDevice,
 } from '../common/styles/constant'
-
 import {
   blackTransparent,
-  OFFSET_2X,
   cmGrey5,
   OFFSET_3X,
   OFFSET_1X,
   cmGrey4,
   font,
   cmGrey1,
-  white,
-  cmGrey2,
-  caribbeanGreen,
   darkGray2,
 } from '../common/styles'
 
-const { width, height } = Dimensions.get('window')
 const SPACE_FILLER = 50
 const amountSpacing = isBiggerThanShortDevice ? PADDING_VERTICAL * 2 : 0
-const submitButtonHeight = isBiggerThanShortDevice ? 63 : 43
 const showRecoveryButtonHeight = isBiggerThanShortDevice ? 150 : 100
 const inputBoxHeight =
   isBiggerThanShortDevice || Platform.OS === 'ios' ? 137 : 40

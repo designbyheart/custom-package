@@ -23,7 +23,7 @@ import memoize from 'lodash.memoize'
 import { CLAIM_OFFER_STATUS } from './../claim-offer/type-claim-offer'
 import { PROOF_REQUEST_STATUS } from './../proof-request/type-proof-request'
 import { QUESTION_STATUS } from '../question/type-question'
-import { select } from "redux-saga/effects"
+import { select } from 'redux-saga/effects'
 
 export const getConfig = (state: Store) => state.config
 
@@ -42,7 +42,8 @@ export const getPushToken = (state: Store) => state.pushNotification.pushToken
 
 export const getAllConnection = (state: Store) => state.connections.data
 
-export const getAllOneTimeConnection = (state: Store) => state.connections.oneTimeConnections
+export const getAllOneTimeConnection = (state: Store) =>
+  state.connections.oneTimeConnections
 
 export const getConnectionTheme = (state: Store, logoUrl: string) =>
   state.connections.connectionThemes[logoUrl] ||
@@ -147,7 +148,9 @@ export const getHistoryEvent = (
   type: string
 ) => {
   const historyItems =
-    state.history && state.history.data && state.history.data.connections &&
+    state.history &&
+    state.history.data &&
+    state.history.data.connections &&
     state.history.data.connections[remoteDid]
       ? state.history.data.connections[remoteDid].data
       : []
@@ -328,10 +331,10 @@ export const getSerializedClaimOffers = (state: Store, userDID: string) => {
     state.claimOffer.vcxSerializedClaimOffers[userDID]
 
   if (serializedClaimOffers) {
-    return Object.values(serializedClaimOffers)
+    return serializedClaimOffers
   }
 
-  return []
+  return {}
 }
 
 export const getAllConnectionsPairwiseDid = (state: Store) => {
@@ -350,7 +353,7 @@ export const getConnectionByUserDid = (state: Store, userDID: string) => {
 
   if (connections) {
     const connection = connections[userDID]
-    if (connection){
+    if (connection) {
       return connection
     }
   }
@@ -359,7 +362,7 @@ export const getConnectionByUserDid = (state: Store, userDID: string) => {
 
   if (oneTimeConnections) {
     const connection = oneTimeConnections[userDID]
-    if (connection){
+    if (connection) {
       return connection
     }
   }

@@ -20,7 +20,7 @@ import { ModalButtons } from '../../components/buttons/modal-buttons'
 import SvgCustomIcon from '../../components/svg-setting-icons'
 import { mediumGray } from '../../common/styles'
 import { CustomText } from '../../components'
-import { atlantis, cmRed, cardBorder } from '../../common/styles/constant'
+import { colors } from '../../common/styles/constant'
 import Loader from '../../components/loader/loader'
 import { Error } from '../../components/error/error'
 import { Container } from '../../components'
@@ -231,14 +231,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: '5%',
     paddingTop: 20,
-    backgroundColor: cardBorder,
+    backgroundColor: colors.cmGray5,
   },
   statusText: {
-    color: mediumGray,
+    color: colors.cmGray3,
     textAlign: 'center',
     marginTop: 40,
     fontSize: scale(15),
-    backgroundColor: 'red',
+    backgroundColor: colors.cmRed,
   },
   errorContainer: {
     flex: 1,

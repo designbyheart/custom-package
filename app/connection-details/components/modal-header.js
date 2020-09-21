@@ -30,12 +30,12 @@ export const ModalHeader = ({
       </View>
       <View style={styles.imageContainer}>
         {source && source.uri ? (
-          <Image style={styles.image} source={source} resizeMode="cover"/>
+          <Image style={styles.image} source={source} resizeMode="cover" />
         ) : (
           <DefaultLogo
             text={institutionalName[0]}
-            size={moderateScale(24)}
-            fontSize={12}
+            size={moderateScale(80)}
+            fontSize={48}
           />
         )}
       </View>

@@ -6,9 +6,7 @@ import _merge from 'lodash.merge'
 import { NativeModules } from 'react-native'
 import { detox } from 'react-native-dotenv'
 
-import type { Dispatch } from 'redux'
 import type { Store } from '../store/type-store'
-import { UPDATE_LOG_ISENCRYPTED } from '../send-logs/type-send-logs'
 import {
   CLAIM_RECEIVED,
   CLAIM_RECEIVED_VCX,
@@ -24,6 +22,9 @@ import {
   UPDATE_SERIALIZE_CONNECTION_FAIL,
   UPDATE_CONNECTION_SERIALIZED_STATE,
   SEND_CONNECTION_REDIRECT,
+  CONNECTION_ATTACH_REQUEST,
+  CONNECTION_DELETE_ATTACHED_REQUEST,
+  SEND_CONNECTION_REUSE,
 } from './type-connection-store'
 import { NEW_CONNECTION_SUCCESS } from './new-connection-success'
 import { HYDRATE_CONNECTIONS } from './type-connection-store'
@@ -38,6 +39,9 @@ import {
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
   NEW_CONNECTION_SEEN,
+  OUTOFBAND_CLAIM_OFFER_ACCEPTED,
+  DELETE_CLAIM_OFFER,
+  CLAIM_OFFER_DELETED,
 } from '../claim-offer/type-claim-offer'
 import {
   DEEP_LINK_DATA,
@@ -63,6 +67,7 @@ import {
   RETRY_SEND_PROOF,
 } from '../proof/type-proof'
 import {
+  ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   HYDRATE_PROOF_REQUESTS,
   MISSING_ATTRIBUTES_FOUND,
   PROOF_REQUEST_AUTO_FILL,
@@ -108,6 +113,7 @@ import {
   INVITATION_RESPONSE_FAIL,
   INVITATION_RESPONSE_SEND,
   INVITATION_RESPONSE_SUCCESS,
+  OUT_OF_BAND_INVITATION_ACCEPTED,
 } from '../invitation/type-invitation'
 import { CHECK_PIN, SET_PIN } from '../lock/type-lock'
 import { OPEN_ID_CONNECT_UPDATE_STATUS } from '../open-id-connect/open-id-connect-actions'
@@ -410,6 +416,7 @@ export function PiiHiddenTransformer(state: Store) {
     connections: {
       ...state.connections,
       data: hiddenInfoReplacement,
+      oneTimeConnections: hiddenInfoReplacement,
     },
     claim: hiddenInfoReplacement,
     claimOffer: hiddenInfoReplacement,
@@ -501,6 +508,7 @@ export function PiiHiddenActionTransformer(action: any) {
     [RESTORE_SUBMIT_PASSPHRASE]: ['passphrase'],
 
     [INVITATION_RECEIVED]: ['data'],
+    [OUT_OF_BAND_INVITATION_ACCEPTED]: ['invitationPayload', 'attachedRequest'],
     [INVITATION_RESPONSE_SEND]: ['data'],
     [INVITATION_RESPONSE_SUCCESS]: ['senderDID'],
     [INVITATION_RESPONSE_FAIL]: ['senderDID'],
@@ -521,6 +529,9 @@ export function PiiHiddenActionTransformer(action: any) {
       'qrCodeInvitationPayload',
       'existingConnectionDetails',
     ],
+    [CONNECTION_ATTACH_REQUEST]: ['identifier', 'request'],
+    [CONNECTION_DELETE_ATTACHED_REQUEST]: ['identifier'],
+    [SEND_CONNECTION_REUSE]: ['invite', 'existingConnectionDetails'],
 
     [CLAIM_RECEIVED]: ['claim'],
     [MAP_CLAIM_TO_SENDER]: [
@@ -529,6 +540,8 @@ export function PiiHiddenActionTransformer(action: any) {
       'myPairwiseDID',
       'logoUrl',
       'issueDate',
+      'name',
+      'senderName',
     ],
     [CLAIM_RECEIVED_VCX]: ['claim'],
     [CLAIM_OFFER_RECEIVED]: ['payload', 'payloadInfo'],
@@ -543,9 +556,12 @@ export function PiiHiddenActionTransformer(action: any) {
       'claimOfferVcxState',
     ],
     [CLAIM_OFFER_ACCEPTED]: ['remoteDid'],
+    [OUTOFBAND_CLAIM_OFFER_ACCEPTED]: ['remoteDid'],
     [HYDRATE_CLAIM_MAP]: ['claimMap'],
     [HYDRATE_CLAIM_OFFERS_SUCCESS]: ['claimOffers'],
     [HYDRATE_CLAIM_MAP_FAIL]: ['claim'],
+    [DELETE_CLAIM_OFFER]: ['userDID'],
+    [CLAIM_OFFER_DELETED]: ['vcxSerializedClaimOffers'],
 
     [DEEP_LINK_DATA]: ['data'],
     [DEEP_LINK_PROCESSED]: ['data'],
@@ -575,6 +591,7 @@ export function PiiHiddenActionTransformer(action: any) {
       'updateAttributeClaimAction',
     ],
     [PROOF_REQUEST_DISSATISFIED_ATTRIBUTES_FOUND]: ['dissatisfiedAttributes'],
+    [ACCEPT_OUTOFBAND_PRESENTATION_REQUEST]: ['requestedAttrsJson'],
 
     [QUESTION_RECEIVED]: ['question'],
     [HYDRATE_QUESTION_STORE]: ['data'],

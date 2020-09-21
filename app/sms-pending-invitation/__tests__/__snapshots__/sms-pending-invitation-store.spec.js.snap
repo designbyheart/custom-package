@@ -94,7 +94,3 @@ Object {
 exports[`SMS Connection Request store sms invitation download error should raise fail action 1`] = `"TabQRCodeScanner"`;
 
 exports[`SMS Connection Request store sms invitation download error should raise fail action 2`] = `false`;
-
-exports[`SMS Connection Request store sms invitation download workflow should work fine if api returns success 1`] = `"TabQRCodeScanner"`;
-
-exports[`SMS Connection Request store sms invitation download workflow should work fine if api returns success 2`] = `false`;

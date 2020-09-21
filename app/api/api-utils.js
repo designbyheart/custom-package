@@ -2,16 +2,14 @@
 import delay from '@redux-saga/delay-p'
 import { call } from 'redux-saga/effects'
 
-import type { CallEffect } from 'redux-saga'
 import type { CustomError } from '../common/type-common'
 import type { ApiData, BackendError } from './type-api'
 
 import { SERVER_ERROR_CODE, SERVER_API_CALL_ERROR } from './api-constants'
-import { captureError } from '../services/error/error-handler'
 
 export function* retrySaga(callEffect: any): Generator<*, *, *> {
   let answerMsgId: string = '' // --> Only for structured messages.
-  let resultError;
+  let resultError
   for (let i = 0; i < 3; i++) {
     try {
       answerMsgId = yield callEffect
@@ -46,11 +44,7 @@ export const options = (
   return data
 }
 
-export const api = (
-  url: string,
-  apiOptions: ApiData,
-  showAlert: boolean = false
-) =>
+export const api = (url: string, apiOptions: ApiData) =>
   fetch(url, apiOptions)
     .then((res) => {
       // TODO:KS create common method to return successful
@@ -61,7 +55,7 @@ export const api = (
           .then((response) => ({
             payload: response,
           }))
-          .catch((error: Error) => ({
+          .catch(() => ({
             // our api call was successful,
             // however server did not return any json response
             // Ideally server should send such response with status code 204

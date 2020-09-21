@@ -120,15 +120,16 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     public void getProvisionToken(String agencyConfig, Promise promise) {
         Log.d(TAG, "getProvisionToken()");
         try {
-            UtilsApi.vcxGetProvisionToken(agencyConfig).exceptionally((t) -> {
-                VcxException ex = (VcxException) t;
-                ex.printStackTrace();
-                Log.e(TAG, "vcxGetProvisionToken - Error: ", ex);
-                promise.reject(String.valueOf(ex.getSdkErrorCode()), ex.getSdkMessage());
-                return null;
-            }).thenAccept(result -> {
-                Log.d(TAG, "vcxGetProvisionToken: Success");
-                BridgeUtils.resolveIfValid(promise, result);
+            UtilsApi.vcxGetProvisionToken(agencyConfig).whenComplete((result, t) -> {
+                if (t != null) {
+                    VcxException ex = (VcxException) t;
+                    ex.printStackTrace();
+                    Log.e(TAG, "vcxGetProvisionToken - Error: ", ex);
+                    promise.reject(String.valueOf(ex.getSdkErrorCode()), ex.getSdkMessage());
+                } else {
+                    Log.d(TAG, "vcxGetProvisionToken: Success");
+                    promise.resolve(0);
+                }
             });
         } catch (VcxException e) {
             e.printStackTrace();
@@ -1707,6 +1708,27 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
             });
         } catch (VcxException e) {
             promise.reject("VCXException", e.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void credentialReject(int credentialHandle, int connectionHandle, String comment, Promise promise) {
+        Log.d(TAG, "credentialReject()");
+        try {
+            CredentialApi.credentialReject(credentialHandle, connectionHandle, comment).whenComplete((result, e) -> {
+                if (e != null) {
+                    VcxException ex = (VcxException) e;
+                    ex.printStackTrace();
+                    Log.e(TAG, "credentialReject - Error: ", ex);
+                    promise.reject(String.valueOf(ex.getSdkErrorCode()), ex.getSdkMessage());
+                } else {
+                    promise.resolve(0);
+                }
+            });
+        } catch (VcxException e) {
+            e.printStackTrace();
+            Log.e(TAG, "credentialReject - Error: ", e);
+            promise.reject(String.valueOf(e.getSdkErrorCode()), e.getSdkMessage());
         }
     }
 }

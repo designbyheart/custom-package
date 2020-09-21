@@ -347,7 +347,6 @@ exports[`<PinCodeBox /> should match snapshot 1`] = `
     accessible={true}
     allowFontScaling={true}
     autoCorrect={false}
-    autoFocus={true}
     blurOnSubmit={false}
     editable={true}
     enablesReturnKeyAutomatically={false}
@@ -720,7 +719,6 @@ exports[`<PinCodeBox /> should show two sovrin symbol if two digits are entered 
     accessible={true}
     allowFontScaling={true}
     autoCorrect={false}
-    autoFocus={true}
     blurOnSubmit={false}
     editable={true}
     enablesReturnKeyAutomatically={false}

@@ -12,6 +12,7 @@ import {
 } from 'redux-saga/effects'
 import delay from '@redux-saga/delay-p'
 import { zip } from 'react-native-zip-archive'
+import messaging from '@react-native-firebase/messaging'
 import {
   GENERATE_RECOVERY_PHRASE_SUCCESS,
   GENERATE_BACKUP_FILE_SUCCESS,
@@ -46,7 +47,6 @@ import {
   CLOUD_BACKUP_LOADING,
   SET_CLOUD_BACKUP_PENDING,
   CLOUD_BACKUP_WAITING,
-  CLOUD_BACKUP_COMPLETE,
   CLOUD_BACKUP_SUCCESS,
   CLOUD_BACKUP_FAILURE,
   SET_AUTO_CLOUD_BACKUP_ENABLED,
@@ -57,13 +57,11 @@ import {
   HYDRATE_HAS_VERIFIED_RECOVERY_PHRASE,
   RESET_BACKUP_PATH,
   WALLET_BACKUP_FAILURE,
-  WALLET_BACKUP_FAILURE_VIEWED,
   VIEWED_WALLET_ERROR,
 } from './type-backup'
 import type {
   PromptBackupBannerAction,
   BackupStore,
-  BackupStoreStatus,
   BackupStoreAction,
   Passphrase,
   PrepareBackupLoadingAction,
@@ -75,7 +73,6 @@ import type {
 import RNFetchBlob from 'rn-fetch-blob'
 import { Platform } from 'react-native'
 import Share from 'react-native-share'
-import type { Saga } from 'redux-saga'
 import {
   secureSet,
   secureGet,
@@ -85,10 +82,8 @@ import {
   safeGet,
   walletSet,
   walletGet,
-  getHydrationItem,
   getHydrationSafeItem,
 } from '../services/storage'
-import type { AgencyPoolConfig } from '../store/type-config-store'
 import type { CustomError } from '../common/type-common'
 import { PUSH_COM_METHOD } from '../common'
 import {
@@ -99,26 +94,15 @@ import {
   WALLET_KEY,
 } from '../common/secure-storage-constants'
 import {
-  deserializeBackupWallet,
   encryptWallet,
   createWalletBackup,
-  backupWalletBackup,
-  updateWalletBackupState,
-  updateWalletBackupStateWithMessage,
-  updatePushTokenVcx,
 } from '../bridge/react-native-cxs/RNCxs'
 import {
   getSalt,
-  getConfig,
   getBackupPassphrase,
   getBackupWalletPath,
-  getVcxInitializationState,
   getPrepareBackupStatus,
-  getLastCloudBackup,
-  getCloudBackupStatus,
   getCloudBackupPending,
-  getLastBackup,
-  getPushNotifactionNotification,
 } from '../store/store-selector'
 import { STORAGE_KEY_SHOW_BANNER } from '../components/banner/banner-constants'
 import { getWords } from './secure-passphrase'
@@ -128,8 +112,6 @@ import { pinHash as generateKey, generateSalt } from '../lock/pin-hash'
 import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
 import { pushNotificationPermissionAction } from '../push-notification/push-notification-store'
-import messaging from '@react-native-firebase/messaging'
-import { PUSH_NOTIFICATION_RECEIVED } from '../push-notification/type-push-notification'
 import { connectionHistoryBackedUp } from '../connection-history/connection-history-store'
 import { cloudBackupFailure } from './backup-actions'
 
@@ -151,9 +133,6 @@ const initialState = {
   hasVerifiedRecoveryPhrase: false,
   hasViewedWalletError: false,
 }
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
 
 export function* cloudBackupSaga(
   action: GenerateBackupFileLoadingAction
@@ -161,7 +140,7 @@ export function* cloudBackupSaga(
   try {
     yield put(cloudBackupLoading())
 
-    // NOTE: Enable push notifactions
+    // NOTE: Enable push notification
     // NOTE: Only do these two lines if we do not already have a push token
     const pushToken = yield call(safeGet, PUSH_COM_METHOD)
     if (!pushToken) {
@@ -199,7 +178,7 @@ export function* cloudBackupSaga(
 
       // we will wait for 1 minutes for data to go into wallet
       // and then we will timeout
-      const { prepareBackupSuccess, timeout } = yield race({
+      const { timeout } = yield race({
         prepareBackupSuccess: take(PREPARE_BACKUP_SUCCESS),
         timeout: call(delay, 60000),
       })
@@ -222,8 +201,8 @@ export function* cloudBackupSaga(
     }
     yield put(setWalletHandle(walletHandle))
 
-    // NOTE: wait/timer for steps in pushNotifaction to complete
-    const { cloudBackupSuccess, cloudBackupError, timeout } = yield race({
+    // NOTE: wait/timer for steps in pushNotification to complete
+    const { timeout } = yield race({
       cloudBackupSuccess: take(CLOUD_BACKUP_SUCCESS),
       cloudBackupError: take(CLOUD_BACKUP_FAILURE),
       timeout: call(delay, 60000),
@@ -281,12 +260,7 @@ export function* generateBackupSaga(
     const saltFileContents = JSON.stringify({ salt: saltValue })
     const saltFileName = `${zipupDirectory}/salt.json`
 
-    const saltFile = yield call(
-      fs.createFile,
-      saltFileName,
-      saltFileContents,
-      'utf8'
-    )
+    yield call(fs.createFile, saltFileName, saltFileContents, 'utf8')
 
     // check status for prepare backup, with status of prepare backup
     // we would know whether we have moved all of data inside wallet or not
@@ -305,7 +279,7 @@ export function* generateBackupSaga(
 
       // we will wait for 2 minutes for data to go into wallet
       // and then we will timeout
-      const { prepareBackupSuccess, timeout } = yield race({
+      const { timeout } = yield race({
         prepareBackupSuccess: take(PREPARE_BACKUP_SUCCESS),
         timeout: call(delay, 120000),
       })
@@ -462,7 +436,6 @@ export function* generateRecoveryPhraseSaga(
 
   // If it failed then we'll retry it a few times
   let retryCount = 0
-  let lastInitException = new Error('')
   // QUESTION: Is the below line better to have here now that we know it is not causing the cloud restore to hang?
   //yield put(resetBackupPath())
   while (retryCount < 4) {
@@ -492,7 +465,6 @@ export function* generateRecoveryPhraseSaga(
       yield put(generateBackupFile())
       break
     } catch (e) {
-      lastInitException = e
       retryCount++
     }
   }

@@ -75,6 +75,7 @@ import {
   saveNewConnectionSuccess,
 } from './new-connection-success'
 import { ensureVcxInitSuccess } from './route-store'
+import moment from "moment"
 
 const initialState: ConnectionStore = {
   data: {},
@@ -228,6 +229,7 @@ export function* loadNewConnectionSaga(
       vcxSerializedConnection,
       publicDID,
       attachedRequest,
+      timestamp: moment().format(),
     }
 
     yield put(promptBackupBanner(true))
@@ -633,7 +635,7 @@ export default function connections(
       if (state.data && state.data[action.identifier]) {
         // eslint-disable-next-line no-unused-vars
         const { attachedRequest, ...connection } =
-        state.data?.[action.identifier] ?? {}
+          state.data?.[action.identifier] ?? {}
 
         return {
           ...state,

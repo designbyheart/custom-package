@@ -8,7 +8,6 @@ import { detox } from 'react-native-dotenv'
 
 import { convertAriesCredentialOfferToCxsClaimOffer } from '../bridge/react-native-cxs/vcx-transformers'
 import { convertClaimOfferPushPayloadToAppClaimOffer } from '../push-notification/push-notification-store'
-import { ariesOutOfBandInvitationToInvitationPayload } from '../invitation/aries-out-of-band'
 
 import { Container, QRScanner } from '../components'
 import { color } from '../common/styles/constant'
@@ -77,6 +76,7 @@ import { ID, TYPE } from '../common/type-common'
 import { CLAIM_OFFER_STATUS } from '../claim-offer/type-claim-offer'
 import { proofRequestReceived } from '../proof-request/proof-request-store'
 import isUrl from 'validator/lib/isURL'
+import { convertAriesOutOfBandPayloadToInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { getAttachedRequest } from '../invitation/invitation-store'
 import { claimOfferReceived } from '../claim-offer/claim-offer-store'
 import { validateOutofbandProofRequestQrCode } from '../proof-request/proof-request-qr-code-reader'
@@ -361,7 +361,7 @@ export class QRCodeScannerScreen extends Component<
     const { navigation } = this.props
     const navigationFn = navigation.push || navigation.navigate
 
-    const invitation = ariesOutOfBandInvitationToInvitationPayload(invite)
+    const invitation = convertAriesOutOfBandPayloadToInvitation(invite)
     if (!invitation) {
       this.props.navigation.goBack(null)
       Alert.alert(

@@ -6,7 +6,6 @@ import { missingData } from './isPropEmpty'
 
 export function enablePrimaryAction(
   missingAttributes: MissingAttributes | {},
-  generateProofClicked: boolean,
   allMissingAttributesFilled: boolean,
   error: ?CustomError,
   requestedAttributes: Attribute[]
@@ -21,10 +20,6 @@ export function enablePrimaryAction(
   if (missingCount > 0) {
     if (allMissingAttributesFilled === false) {
       return false
-    }
-
-    if (generateProofClicked === false) {
-      return true
     }
   }
 

@@ -41,7 +41,6 @@ import { NewBannerCard } from './new-banner-card/new-banner-card'
 import { RecentCard } from './recent-card/recent-card'
 import { RecentCardSeparator } from './recent-card-separator'
 import { EmptyViewPlaceholder } from './empty-view-placeholder'
-import { venetianRed } from '../common/styles'
 import {
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
@@ -62,8 +61,6 @@ export class HomeScreen extends Component<HomeProps, void> {
   })
 
   showSnackBar = () => {
-    // NOTE: This logic is moved here from Connection Details screen.
-    // this.navigateToModal()
     const showExistingConnectionSnack =
       (this.props.route &&
         this.props.route.params &&
@@ -78,8 +75,6 @@ export class HomeScreen extends Component<HomeProps, void> {
   }
 
   navigateToModal = () => {
-    // NOTE: This logic is moved here from Connection Details screen.
-    // this.navigateToModal()
     const notificationOpenOptions =
       this.props.route &&
       this.props.route.params &&
@@ -120,8 +115,6 @@ export class HomeScreen extends Component<HomeProps, void> {
   }
 
   componentDidMount() {
-    // NOTE: This logic is moved here from Connection Details screen.
-    // this.navigateToModal()
     this.unsubscribe = this.props.navigation.addListener('focus', () => {
       // Since this screen in Drawer Navigator only mounts once, we need to add a listener
       // here to listen when the Home screen is in focus and run logic for snackbar
@@ -138,7 +131,10 @@ export class HomeScreen extends Component<HomeProps, void> {
           this.props.route.params &&
           this.props.route.params.qrCodeInvitationPayload
 
-        if (invite.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR) {
+        if (
+          invite.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR ||
+          invite.type === undefined
+        ) {
           this.props.sendConnectionRedirect(invite, {
             senderDID:
               this.props.route &&
@@ -369,9 +365,12 @@ export class HomeScreen extends Component<HomeProps, void> {
       Snackbar.dismiss()
       Snackbar.show({
         text: this.props.snackError,
-        backgroundColor: venetianRed,
+        backgroundColor: colors.cmRed,
         duration: Snackbar.LENGTH_LONG,
       })
+    }
+    if (prevProps.route.params !== this.props.route.params) {
+      this.navigateToModal()
     }
   }
 }
@@ -409,13 +408,22 @@ const mapStateToProps = (state: Store) => {
   // TODO: Replace this with flatMap when we update flow-bin
   const placeholderArray = []
   const connections = receivedConnections.map((connection, index) => {
-    placeholderArray.push(
+    const connectionHistory =
       (state.history.data &&
         state.history.data.connections &&
         state.history.data.connections[connection.senderDID] &&
         state.history.data.connections[connection.senderDID].data) ||
-        []
-    )
+      []
+
+    const timestamp = connection.timestamp
+
+    const filteredEvents = timestamp
+      ? connectionHistory.filter(
+          (event) => new Date(event.timestamp) >= new Date(timestamp)
+        )
+      : connectionHistory.slice()
+
+    placeholderArray.push(filteredEvents)
   })
 
   const flattenPlaceholderArray = customFlat(placeholderArray).sort((a, b) => {
