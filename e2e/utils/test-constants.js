@@ -167,6 +167,8 @@ export const CLOSE_BUTTON = 'Close'
 export const CONNECTION_SUBMENU_BUTTON = 'three-dots'
 export const CONNECTION_SUBMENU_CLOSE_BUTTON = 'delete-connection-close'
 export const CONNECTION_DELETE_BUTTON = 'delete-connection'
+export const PROOF_REQUEST_SCROLL_VIEW = 'RCTScrollContentView'
+export const PROOF_REQUEST_ATTRIBUTE_INPUT = 'RCTUITextView'
 
 // my credentials
 export const MY_CREDENTIALS_HEADER = 'My Credentials'
