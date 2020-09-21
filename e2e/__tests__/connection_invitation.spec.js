@@ -52,6 +52,8 @@ import {
   CONNECTION_SUBMENU_BUTTON,
   CONNECTION_SUBMENU_CLOSE_BUTTON,
   CONNECTION_DELETE_BUTTON,
+  PROOF_REQUEST_SCROLL_VIEW,
+  PROOF_REQUEST_ATTRIBUTE_INPUT,
 } from '../utils/test-constants'
 import { waitForElementAndTap } from '../utils/detox-selectors'
 import { element, by, waitFor, expect, device } from 'detox'
@@ -323,96 +325,108 @@ describe('Connection via QR code and SMS link', () => {
 
     await waitForElementAndTap('text', OK_TEXT_ALERT, TIMEOUT)
 
-    await element(by.type('RCTScrollContentView')).atIndex(0).swipe('down')
+    await element(by.type(PROOF_REQUEST_SCROLL_VIEW)).atIndex(0).swipe('down')
 
     try {
       await element(
         by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('1'))
       ).tap()
-      await element(by.type('RCTSinglelineTextInputView')).typeText(
-        'test attribute 1'
-      )
+      await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+        .atIndex(0)
+        .typeText('test attribute 1')
     } catch (e) {
       try {
-        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('down')
+        await element(by.type(PROOF_REQUEST_SCROLL_VIEW))
+          .atIndex(0)
+          .swipe('down')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('1'))
         ).tap()
-        await element(by.type('RCTSinglelineTextInputView')).typeText(
-          'test attribute 1'
-        )
+        await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+          .atIndex(0)
+          .typeText('test attribute 1')
       } catch (e) {
-        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('up')
+        await element(by.type(PROOF_REQUEST_SCROLL_VIEW)).atIndex(0).swipe('up')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('1'))
         ).tap()
-        await element(by.type('RCTSinglelineTextInputView')).typeText(
-          'test attribute 1'
-        )
+        await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+          .atIndex(0)
+          .typeText('test attribute 1')
       }
     }
-    await element(by.type('RCTSinglelineTextInputView')).tapReturnKey()
+    await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+      .atIndex(0)
+      .tapReturnKey()
     await element(by.text('Done')).tap()
 
     try {
       await element(
         by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
       ).tap()
-      await element(by.type('RCTSinglelineTextInputView')).typeText(
-        'test attribute 2'
-      )
+      await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+        .atIndex(0)
+        .typeText('test attribute 2')
     } catch (e) {
       try {
-        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('down')
+        await element(by.type(PROOF_REQUEST_SCROLL_VIEW))
+          .atIndex(0)
+          .swipe('down')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
         ).tap()
-        await element(by.type('RCTSinglelineTextInputView')).typeText(
-          'test attribute 2'
-        )
+        await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+          .atIndex(0)
+          .typeText('test attribute 2')
       } catch (e) {
-        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('up')
+        await element(by.type(PROOF_REQUEST_SCROLL_VIEW)).atIndex(0).swipe('up')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('2'))
         ).tap()
-        await element(by.type('RCTSinglelineTextInputView')).typeText(
-          'test attribute 2'
-        )
+        await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+          .atIndex(0)
+          .typeText('test attribute 2')
       }
     }
-    await element(by.type('RCTSinglelineTextInputView')).tapReturnKey()
+    await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+      .atIndex(0)
+      .tapReturnKey()
     await element(by.text('Done')).tap()
 
     try {
       await element(
         by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
       ).tap()
-      await element(by.type('RCTSinglelineTextInputView')).typeText(
-        'test attribute 3'
-      )
+      await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+        .atIndex(0)
+        .typeText('test attribute 3')
     } catch (e) {
       try {
-        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('down')
+        await element(by.type(PROOF_REQUEST_SCROLL_VIEW))
+          .atIndex(0)
+          .swipe('down')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
         ).tap()
-        await element(by.type('RCTSinglelineTextInputView')).typeText(
-          'test attribute 3'
-        )
+        await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+          .atIndex(0)
+          .typeText('test attribute 3')
       } catch (e) {
-        await element(by.type('RCTScrollContentView')).atIndex(0).swipe('up')
+        await element(by.type(PROOF_REQUEST_SCROLL_VIEW)).atIndex(0).swipe('up')
         await element(
           by.id(PROOF_REQUEST_MISSING_ATTRIBUTE_BASE.concat('3'))
         ).tap()
-        await element(by.type('RCTSinglelineTextInputView')).typeText(
-          'test attribute 3'
-        )
+        await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+          .atIndex(0)
+          .typeText('test attribute 3')
       }
     }
-    await element(by.type('RCTSinglelineTextInputView')).tapReturnKey()
+    await element(by.type(PROOF_REQUEST_ATTRIBUTE_INPUT))
+      .atIndex(0)
+      .tapReturnKey()
     await element(by.text('Done')).tap()
 
-    await waitForElementAndTap('text', PROOF_REQUEST_GENERATE, TIMEOUT)
+    // await waitForElementAndTap('text', PROOF_REQUEST_GENERATE, TIMEOUT)
 
     await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
   })

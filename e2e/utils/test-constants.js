@@ -167,6 +167,8 @@ export const CLOSE_BUTTON = 'Close'
 export const CONNECTION_SUBMENU_BUTTON = 'three-dots'
 export const CONNECTION_SUBMENU_CLOSE_BUTTON = 'delete-connection-close'
 export const CONNECTION_DELETE_BUTTON = 'delete-connection'
+export const PROOF_REQUEST_SCROLL_VIEW = 'RCTScrollContentView'
+export const PROOF_REQUEST_ATTRIBUTE_INPUT = 'RCTUITextView'
 
 // my credentials
 export const MY_CREDENTIALS_HEADER = 'My Credentials'
@@ -190,3 +192,8 @@ export const ABOUT_PP_BUTTON_HEADER = 'Privacy Policy'
 export const ONFIDO_BACK_ARROW = 'left-icon'
 export const ONFIDO_CUSTOM_BACK_ARROW = 'back'
 export const ONFIDO_ACCEPT_BUTTON = 'I accept'
+
+// from api
+export const CLAIM_OFFER_PROFILE_INFO = 'Profile Info'
+export const PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED =
+  'Automated Single claim fulfilled'
