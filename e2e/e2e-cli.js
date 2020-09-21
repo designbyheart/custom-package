@@ -221,7 +221,7 @@ async function runTests(args) {
     if (!args.skip) {
       const connectionTestRun = spawn(
         'detox',
-        [...initialTestArgs, 'e2e/__tests__/connection_invitation.spec.js'], // path to initial test is absolute - we must use it for any test folder
+        [...initialTestArgs, 'e2e/__tests__/connection_invitation.spec.js'], // path to connection invitation test is absolute - we must use it for any test folder
         { stdio: 'inherit' }
       )
       // wait for initial test run to finish
