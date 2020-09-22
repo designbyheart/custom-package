@@ -120,10 +120,8 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
     return statusMsg[status]
   }
   renderButtonSection = () => {
-    const { newBadge, date } = this.props
+    const { newBadge } = this.props
     const {
-      dateSection,
-      dateText,
       buttonSection,
       dateButtonSection,
       newButtonSection,
@@ -134,9 +132,6 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
     if (!newBadge) {
       return (
         <View style={dateButtonSection}>
-          <View style={dateSection}>
-            <Text style={dateText}>{this.getCorrectDateLabel(date)}</Text>
-          </View>
           <View style={buttonSection}>
             <SvgCustomIcon name="ChevronRight" fill={colors.cmGray3} />
           </View>
@@ -163,40 +158,14 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
   }
 
   render() {
-    const {
-      image,
-      senderName,
-      credentialName,
-      type,
-      status,
-      onPress,
-      question,
-      onNewConnectionSeen,
-      senderDID,
-      newBadge,
-    } = this.props
-    const {
-      container,
-      newCardContainer,
-      avatarSection,
-      infoSection,
-      companyNameSection,
-      descriptionSection,
-      companyNameText,
-      descriptionText,
-      infoSectionTopRow,
-      infoSectionBottomRow,
-    } = styles
-
+    const { image, senderName, senderDID } = this.props
+    const { itemContainer, avatarSection, companyNameText } = styles
     return (
-      <TouchableOpacity
-        style={[container, newBadge ? newCardContainer : null]}
-        onPress={this.onButtonPress}
-      >
+      <TouchableOpacity style={itemContainer} onPress={this.onButtonPress}>
         <View style={avatarSection}>
           {typeof image === 'string' ? (
             <Avatar
-              radius={16}
+              radius={40}
               src={{ uri: image }}
               testID={`${senderDID}-avatar`}
             />
@@ -204,36 +173,9 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
             <DefaultLogo text={senderName} size={32} fontSize={17} />
           )}
         </View>
-        <View style={infoSection}>
-          <View style={infoSectionTopRow}>
-            <View style={companyNameSection}>
-              <Text
-                style={companyNameText}
-                numberOfLines={1}
-                ellipsizeMode="tail"
-              >
-                {senderName}
-              </Text>
-            </View>
-            {this.renderButtonSection()}
-          </View>
-          <View style={infoSectionBottomRow}>
-            <View style={descriptionSection}>
-              <Text
-                style={descriptionText}
-                numberOfLines={1}
-                ellipsizeMode="tail"
-              >
-                {this.getInfoMessage(
-                  status,
-                  senderName,
-                  credentialName,
-                  question
-                )}
-              </Text>
-            </View>
-          </View>
-        </View>
+        <Text style={companyNameText} numberOfLines={3} ellipsizeMode="tail">
+          {senderName}
+        </Text>
       </TouchableOpacity>
     )
   }

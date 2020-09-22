@@ -679,6 +679,10 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
                           <RCTScrollView
                             contentContainerStyle={
                               Object {
+                                "flex": 1,
+                                "margin": 15,
+                                "marginBottom": 40,
+                                "padding": 10,
                                 "paddingBottom": 166.35714285714286,
                               }
                             }
@@ -690,7 +694,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
                             initialNumToRender={10}
                             keyExtractor={[Function]}
                             maxToRenderPerBatch={10}
-                            numColumns={1}
+                            numColumns={2}
                             onContentSizeChange={[Function]}
                             onEndReachedThreshold={2}
                             onLayout={[Function]}
@@ -1531,6 +1535,10 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
                           <RCTScrollView
                             contentContainerStyle={
                               Object {
+                                "flex": 1,
+                                "margin": 15,
+                                "marginBottom": 40,
+                                "padding": 10,
                                 "paddingBottom": 166.35714285714286,
                               }
                             }
@@ -1542,7 +1550,7 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
                             initialNumToRender={10}
                             keyExtractor={[Function]}
                             maxToRenderPerBatch={10}
-                            numColumns={1}
+                            numColumns={2}
                             onContentSizeChange={[Function]}
                             onEndReachedThreshold={2}
                             onLayout={[Function]}

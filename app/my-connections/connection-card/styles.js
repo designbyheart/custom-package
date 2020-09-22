@@ -1,7 +1,7 @@
 // @flow
 import { StyleSheet, Platform } from 'react-native'
 import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 const styles = StyleSheet.create({
   animatedContainer: {
@@ -12,12 +12,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  container: {
-    width: '100%',
-    height: moderateScale(80, 0.25),
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: colors.cmGray5,
+  itemContainer: {
+    width: '46%',
+    height:
+      Platform.OS === 'android'
+        ? moderateScale(100, 4)
+        : moderateScale(100, 10),
+    marginRight: 20,
+    marginBottom: 35,
+    borderRadius: 20,
+    shadowOffset: { width: 0, height: 2.5 },
+    shadowColor: 'black',
+    shadowOpacity: Platform.OS === 'android' ? 0.05 : 0.1,
+    elevation: Platform.OS === 'android' ? 10 : 20,
+    backgroundColor: colors.cmWhite,
   },
   initialsContainer: {
     width: 32,
@@ -34,37 +42,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.cmGray1,
   },
-  newCardContainer: {
-    backgroundColor: colors.cmGreen3,
-  },
   avatarSection: {
-    height: '100%',
-    width: 64,
     paddingTop: 16,
     alignItems: 'center',
-  },
-  infoSection: {
-    flex: 1,
-  },
-  infoSectionTopRow: {
-    flex: 1,
-    flexDirection: 'row',
-    height: '50%',
-  },
-  infoSectionBottomRow: {
-    flex: 1,
-    height: '50%',
-  },
-  companyNameSection: {
-    width: '68%',
-    height: '100%',
-    justifyContent: 'flex-end',
-    paddingBottom: verticalScale(2),
-  },
-  descriptionSection: {
-    width: '96%',
-    height: '100%',
-    paddingTop: verticalScale(2),
+    marginTop: 10,
   },
   dateButtonSection: {
     width: '32%',
@@ -72,34 +53,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
   },
-  dateSection: {
-    width: '70%',
-    height: '100%',
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-  },
   buttonSection: {
     height: '50%',
     width: '30%',
     justifyContent: 'flex-end',
   },
   companyNameText: {
+    paddingLeft: '5%',
+    paddingRight: '5%',
+    marginTop: 5,
     fontFamily: fontFamily,
     fontSize: verticalScale(fontSizes.size5),
     fontWeight: 'bold',
     color: colors.cmGray1,
-  },
-  descriptionText: {
-    fontFamily: fontFamily,
-    fontSize: verticalScale(fontSizes.size8),
-    color: colors.cmGray2,
-  },
-  dateText: {
-    fontFamily: fontFamily,
-    fontSize: verticalScale(fontSizes.size9),
-    color: colors.cmGray3,
-    marginBottom: 5,
+    textAlign: 'center',
   },
   newButtonSection: {
     height: '100%',
