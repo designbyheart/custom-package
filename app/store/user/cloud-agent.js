@@ -379,6 +379,10 @@ function* askForProvisionToken(
       value: `FCM:${notificationToken}`,
     })
     if (provisionTokenError) {
+      // remove any wallet that might have been created
+      // because we want to proceed with fallback option
+      yield call(flattenAsync(vcxShutdown), true)
+
       // if we get an error while calling getProvisionToken API call
       // stop processing further, and raise error
       return [
@@ -390,12 +394,10 @@ function* askForProvisionToken(
 
     // Now, we wait for agency to send push notification to this device
     // or stop waiting after 1 minute
-    const [
-      {
-        notificationPayload: { msg: provisionToken },
-      },
-      timeout,
-    ] = yield race([take('FETCH_ADDITIONAL_DATA'), call(delay, 60000)])
+    const [notification, timeout] = yield race([
+      take('FETCH_ADDITIONAL_DATA'),
+      call(delay, 60000),
+    ])
 
     const offline: boolean = yield select(getOfflineStatus)
     if (offline) {
@@ -410,8 +412,18 @@ function* askForProvisionToken(
       continue
     }
 
+    const {
+      notificationPayload: { msg: provisionToken },
+    } = notification
+
     return [null, provisionToken]
   }
+
+  // we need to delete wallet or vcx data if vcx already created
+  // wallet or other objects, because we need to fallback
+  // to old provisioning protocol. Connectme needs to ensure that
+  // there is no wallet or config inside vcx, so we delete existing stuff
+  yield call(flattenAsync(vcxShutdown), true)
 
   return [
     'CS-014::Tried 2 times to get provision token and still did not receive token',
