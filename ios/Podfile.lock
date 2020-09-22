@@ -307,7 +307,7 @@ PODS:
     - React
   - react-native-image-resizer (1.2.3):
     - React
-  - react-native-mail (5.0.1):
+  - react-native-mail (4.1.0):
     - React
   - react-native-netinfo (5.9.2):
     - React
@@ -683,7 +683,7 @@ SPEC CHECKSUMS:
   react-native-document-picker: d694111879537cec2c258a1dcd2243d9df746824
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-image-resizer: 2f1577efa3bc762597681f530c8e8d05ce0ceeb3
-  react-native-mail: 685104c633d50ea3e15595acc89ab0eb9ee9cfd2
+  react-native-mail: a864fb211feaa5845c6c478a3266de725afdce89
   react-native-netinfo: cb74e17062b2af5a16a4b137f32495f241df1a8e
   react-native-pbkdf2: 5ab65b8c48aca9d49ae5899653e757c2f291f213
   react-native-randombytes: 3638d24759d67c68f6ccba60c52a7a8a8faa6a23

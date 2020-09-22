@@ -124,7 +124,7 @@ detox-ios-test:
     - nvm use
     - yarn
     - yarn pod:update
-    - yarn pod:install
+    - yarn pod:dev:install
     - echo "detox=yes" > .env
     - echo "detox=yes" > .env.production
     - yarn e2e -b release -e qa -s iphone8
