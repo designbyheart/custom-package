@@ -1,8 +1,7 @@
 // @flow
 import { StyleSheet } from 'react-native'
-import { measurements } from '../common/styles/measurements'
 import { colors } from '../common/styles/constant'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 const externalStyles = StyleSheet.create({
   outerContainer: {
@@ -20,6 +19,10 @@ const externalStyles = StyleSheet.create({
   },
   flatListInnerContainer: {
     paddingBottom: moderateScale(170, 0.25),
+    margin: 15,
+    flex: 1,
+    padding: 10,
+    marginBottom: 40,
   },
   blurContainer: {
     position: 'absolute',

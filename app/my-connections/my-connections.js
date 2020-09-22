@@ -90,23 +90,27 @@ export class MyConnections extends Component<
       date,
       newBadge,
       identifier,
+      isOddItem,
     } = item
-
+    const { onNewConnectionSeen } = this.props
     return (
       <ConnectionCard
         onPress={() => {
           this.onCardPress(senderName, logoUrl, senderDID, identifier)
         }}
-        onNewConnectionSeen={this.props.onNewConnectionSeen}
         image={logoUrl}
-        status={status}
-        senderName={senderName}
-        type={type}
-        credentialName={credentialName}
-        date={date}
         question={questionTitle}
-        newBadge={newBadge}
-        senderDID={senderDID}
+        {...{
+          isOddItem,
+          senderDID,
+          newBadge,
+          date,
+          credentialName,
+          type,
+          senderName,
+          status,
+          onNewConnectionSeen,
+        }}
       />
     )
   }
@@ -119,6 +123,7 @@ export class MyConnections extends Component<
       outerContainer,
     } = externalStyles
 
+    const numColumns = 2
     return (
       <View style={outerContainer}>
         <HomeHeader
@@ -157,6 +162,7 @@ export class MyConnections extends Component<
             refreshing={
               this.props.messageDownloadStatus === GET_MESSAGES_LOADING
             }
+            {...{ numColumns }}
           />
         </View>
         <CameraButton
