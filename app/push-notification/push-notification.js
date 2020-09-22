@@ -25,6 +25,7 @@ import {
 import PushNotificationNavigator from './push-notification-navigator'
 import { customLogger } from '../store/custom-logger'
 import { getUnacknowledgedMessages } from '../store/config-store'
+import { getNewMessagesCount } from '../store/store-selector'
 
 export const remoteMessageParser = (message: RemoteMessage) => {
   const {
@@ -142,11 +143,17 @@ export class PushNotification extends Component<PushNotificationProps, void> {
   }
 
   componentDidUpdate(prevProps: PushNotificationProps) {
-    if (
-      this.props.isAllowed !== prevProps.isAllowed &&
-      this.props.isAllowed === true
-    ) {
+    const { newMessagesCount, isAllowed } = this.props
+
+    if (isAllowed !== prevProps.isAllowed && isAllowed === true) {
       this.getToken()
+    }
+
+    if (
+      Platform.OS === 'ios' &&
+      newMessagesCount !== prevProps.newMessagesCount
+    ) {
+      PushNotificationIOS.setApplicationIconBadgeNumber(newMessagesCount || 0)
     }
   }
 
@@ -188,9 +195,11 @@ const mapDispatchToProps = (dispatch) =>
   )
 
 const mapStateToProps = (state: Store) => {
+  const newMessagesCount = getNewMessagesCount(state)
   return {
     isAllowed: state.pushNotification.isAllowed,
     pushToken: state.pushNotification.pushToken,
+    newMessagesCount,
   }
 }
 
