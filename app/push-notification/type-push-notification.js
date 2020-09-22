@@ -242,6 +242,7 @@ export type PushNotificationProps = {
   isAllowed: boolean,
   pushToken?: string,
   getUnacknowledgedMessages: () => void,
+  newMessagesCount?: number,
 }
 
 export const HYDRATE_PUSH_TOKEN = 'HYDRATE_PUSH_TOKEN'

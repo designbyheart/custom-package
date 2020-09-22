@@ -24,6 +24,7 @@ import {
   userAvatarImagePath,
   userAvatarImageName,
   defaultUUID,
+  defaultUUID as mockDefaultUUID,
 } from '../../../../__mocks__/static-data'
 import {
   ERROR_PARSE_USER_INFO_FAIL,
@@ -45,7 +46,9 @@ import { uuid } from '../../../services/uuid'
 import ImagePicker from 'react-native-image-crop-picker'
 import { VCX_INIT_SUCCESS } from '../../type-config-store'
 
-jest.mock('../../../services/uuid')
+jest.mock('../../../services/uuid', () => {
+  return { uuid: () => mockDefaultUUID }
+})
 
 describe('store: user-store: ', () => {
   let initialState
@@ -202,9 +205,7 @@ describe('store: user-store: ', () => {
     const gen = saveUserSelectedAvatarSaga(
       saveUserSelectedAvatar(userAvatarImagePath)
     )
-    const userAvatarAppPath = `${
-      RNFetchBlob.fs.dirs.DocumentDir
-    }/${userAvatarImageName}`
+    const userAvatarAppPath = `${RNFetchBlob.fs.dirs.DocumentDir}/${userAvatarImageName}`
     expect(gen.next().value).toEqual(select(getUserAvatarName))
     expect(gen.next(userAvatarImageName).value).toEqual(
       call(RNFetchBlob.fs.exists, userAvatarAppPath)
@@ -230,9 +231,7 @@ describe('store: user-store: ', () => {
     const gen = saveUserSelectedAvatarSaga(
       saveUserSelectedAvatar(userAvatarImagePath)
     )
-    const userAvatarAppPath = `${
-      RNFetchBlob.fs.dirs.DocumentDir
-    }/${userAvatarImageName}`
+    const userAvatarAppPath = `${RNFetchBlob.fs.dirs.DocumentDir}/${userAvatarImageName}`
     expect(gen.next().value).toEqual(select(getUserAvatarName))
     expect(gen.next(userAvatarImageName).value).toEqual(
       call(RNFetchBlob.fs.exists, userAvatarAppPath)

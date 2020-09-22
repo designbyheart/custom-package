@@ -33,6 +33,7 @@ import {
   proofRequestAutofill,
   proof,
   uid,
+  defaultUUID as mockDefaultUUID,
 } from '../../../__mocks__/static-data'
 import { saveNewConnection } from '../../store/connections-store'
 import { sendClaimRequestSuccess } from '../../claim-offer/claim-offer-store'
@@ -60,7 +61,9 @@ import {
 import { RESET } from '../../common/type-common'
 import { PROOF_REQUEST_RECEIVED } from '../../proof-request/type-proof-request'
 
-jest.mock('../../services/uuid')
+jest.mock('../../services/uuid', () => {
+  return { uuid: () => mockDefaultUUID }
+})
 
 function getHistoryData() {
   // generate history data from static data that we have

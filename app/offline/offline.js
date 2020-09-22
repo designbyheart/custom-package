@@ -27,7 +27,10 @@ export class Offline extends Component<OfflineProps> {
   }
 
   handleConnectivityChange = (state: NetInfoState) => {
-    this.props.offline(!state.isInternetReachable)
+    // isInternetReachable starts as null and then changes to true/false
+    if (state.isInternetReachable !== null) {
+      this.props.offline(!state.isInternetReachable)
+    }
   }
 
   render() {
@@ -57,7 +60,8 @@ const mapStateToProps = (state: Store) => ({
   isOffline: getOfflineStatus(state),
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({ offline }, dispatch)
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ offline }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Offline)
 

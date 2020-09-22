@@ -9,8 +9,8 @@ import type {
   ClaimOfferPayload,
   SerializedClaimOffersPerDid,
 } from '../claim-offer/type-claim-offer'
-import type { Connections, Connection } from './type-connection-store'
-import type { ConnectionHistoryEvent } from '../connection-history/type-connection-history'
+import type { Connection } from './type-connection-store'
+import { HISTORY_EVENT_STATUS } from '../connection-history/type-connection-history'
 import type {
   QuestionStoreData,
   QuestionStoreMessage,
@@ -23,7 +23,7 @@ import memoize from 'lodash.memoize'
 import { CLAIM_OFFER_STATUS } from './../claim-offer/type-claim-offer'
 import { PROOF_REQUEST_STATUS } from './../proof-request/type-proof-request'
 import { QUESTION_STATUS } from '../question/type-question'
-import { select } from 'redux-saga/effects'
+import { getConnections } from './connections-store'
 
 export const getConfig = (state: Store) => state.config
 
@@ -548,3 +548,37 @@ export const getDIDFromFullyQualifiedDID = (did: string) =>
   did.split(':').slice(-1)[0]
 
 export const getPushNotificationStore = (state: Store) => state.pushNotification
+
+export const getNewMessagesCount = (state: Store) => {
+  const receivedConnections: Connection[] = (getConnections(
+    state.connections.data
+  ): any)
+
+  const customFlat = (array: Array<Array<Object>>) => [].concat(...array)
+
+  const isNewConnection = (status: string, show?: boolean) => {
+    if (
+      (status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
+        status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
+        status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED) &&
+      show
+    ) {
+      return true
+    } else return false
+  }
+
+  const placeholderArray = receivedConnections.map((connection) => {
+    return state.history.data?.connections?.[connection.senderDID]?.data || []
+  })
+
+  const flattenPlaceholderArray = customFlat(placeholderArray)
+
+  let numberOfNewMessages = 0
+  flattenPlaceholderArray.map((message) => {
+    if (isNewConnection(message.status, message.showBadge)) {
+      numberOfNewMessages++
+    }
+  })
+
+  return numberOfNewMessages
+}
