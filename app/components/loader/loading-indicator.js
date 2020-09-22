@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Image, View, StyleSheet, ActivityIndicator } from 'react-native'
+import { ActivityIndicator } from 'react-native'
 import type { LoadingIndicatorProps } from './type-loader'
 import { DARK } from './type-loader'
 import { color } from '../../common/styles/constant'

@@ -1,6 +1,5 @@
 // @flow
-import { put, call, select } from 'redux-saga/effects'
-import delay from '@redux-saga/delay-p'
+
 import proofRequestStore, {
   proofRequestReceived,
   ignoreProofRequest,
@@ -10,29 +9,14 @@ import proofRequestStore, {
   sendProof,
   sendProofSuccess,
   sendProofFail,
-  proofAccepted,
   convertMissingAttributeListToObject,
   missingAttributesFound,
   proofRequestAutoFill,
   proofRequestShowStart,
 } from '../proof-request-store'
-import { INITIAL_TEST_ACTION } from '../../common/type-common'
-import {
-  getProofRequestPairwiseDid,
-  getUserPairwiseDid,
-  getAgencyUrl,
-  getProof,
-  getUserOneTimeInfo,
-  getAgencyVerificationKey,
-  getRemotePairwiseDidAndName,
-  getPoolConfig,
-} from '../../store/store-selector'
-
-import { MESSAGE_TYPE } from '../../api/api-constants'
 import {
   proofRequest,
   proofRequestId as uid,
-  poolConfig,
   missingAttributes,
   missingAttributes1,
   fulfilledRequestedAttributes,
@@ -139,7 +123,7 @@ describe('proof request store', () => {
       missingAttributesFound(missingAttributes, uid)
     )
     expect(
-      proofRequestStore(newState, proofRequestShowStart(uid))
+      proofRequestStore(afterMissingAttributesState, proofRequestShowStart(uid))
     ).toMatchSnapshot()
   })
 })

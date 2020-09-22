@@ -13,11 +13,10 @@
 // when and if we would new features, we would add those later
 
 import React, { PureComponent } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { CustomView } from '../layout/custom-view'
-import { CustomList } from '../custom-list/custom-list'
 import { TextInput } from 'react-native'
-import { CustomText, Container, Icon } from '../index'
+import { CustomText, Icon } from '../index'
 import throttle from 'lodash.throttle'
 import { color } from '../../common/styles/constant'
 import type { InputControlProps } from './type-input-control'
@@ -117,7 +116,7 @@ export default class ControlInput extends PureComponent<
   }
 }
 
-const ErrorCustomInput = props => {
+const ErrorCustomInput = (props) => {
   return (
     <CustomView column style={[{ paddingVertical: 5 }, styles.invalidBgColor]}>
       <CustomText

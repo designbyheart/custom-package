@@ -4,8 +4,6 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import LottieView from 'lottie-react-native'
 
-import type { Styles } from '../../../common/type-common'
-
 import { CustomView } from '../../layout/custom-view'
 import { BottomUpSliderText } from './bottom-up-slider-screen-text'
 

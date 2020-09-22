@@ -1,22 +1,7 @@
 // @flow
 
-import React from 'react'
-import { StyleSheet, Platform, Dimensions } from 'react-native'
-import {
-  blackTransparent,
-  OFFSET_2X,
-  cmGrey5,
-  OFFSET_3X,
-  OFFSET_1X,
-  cmGrey4,
-  font,
-  cmGrey1,
-  white,
-  cmGrey2,
-  caribbeanGreen,
-  darkGray2,
-  color,
-} from '../../common/styles'
+import { StyleSheet } from 'react-native'
+import { blackTransparent, cmGrey5, color } from '../../common/styles'
 
 export const styles = StyleSheet.create({
   container: {

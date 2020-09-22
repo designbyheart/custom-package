@@ -2,13 +2,11 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, Image, View } from 'react-native'
 
-import { View as AnimatedView } from 'react-native-animatable'
 import { CustomView, UserAvatar, Avatar } from '../../components'
 import type { RequestDetailAvatarProps } from './type-request'
 import type { ImageSource } from '../../common/type-common'
 import { DefaultLogo } from '../default-logo/default-logo'
 
-import { Container } from '../layout/container'
 import { getConnectionLogo } from '../../store/connections-store'
 import { OFFSET_4X, OFFSET_1X } from '../../common/styles'
 

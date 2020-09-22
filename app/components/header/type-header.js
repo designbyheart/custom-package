@@ -1,6 +1,5 @@
 // @flow
 
-import type { ReactNavigation } from '../../common/type-common'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { StyleSheet, Platform } from 'react-native'
 import { colors, fontFamily } from '../../common/styles/constant'

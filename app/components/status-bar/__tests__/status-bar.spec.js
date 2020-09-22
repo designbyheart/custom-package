@@ -40,7 +40,6 @@ describe('withStatusBar() HOC', () => {
     }
 
     const WrappedTestComponent = withStatusBar()(TestComponent)
-    const classComponent = renderer.create(<WrappedTestComponent />)
     // $FlowFixMe need to update typedef with HOC
     const staticProp = WrappedTestComponent.NAME
     expect(staticProp).toMatchSnapshot()

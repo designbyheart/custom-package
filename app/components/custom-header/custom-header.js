@@ -29,8 +29,6 @@ class CustomHeader extends PureComponent<CustomHeaderProps, void> {
     ])
     const ToggleLargeHeader = largeHeader ? { top: 'always' } : { top: 'never' }
 
-    const animated = true
-
     return (
       <SafeAreaView style={{ backgroundColor }} forceInset={ToggleLargeHeader}>
         <Header

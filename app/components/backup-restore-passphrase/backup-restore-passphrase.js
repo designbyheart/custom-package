@@ -2,27 +2,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  Image,
-  Keyboard,
-  StyleSheet,
-  TextInput,
-  Dimensions,
-  Platform,
-} from 'react-native'
+import { Image, Keyboard, StyleSheet, TextInput, Platform } from 'react-native'
 import { Container, CustomView, CustomText } from '../index'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { color } from '../../common/styles/constant'
 import {
   isBiggerThanShortDevice,
-  errorBoxVerifyPassphraseContainer,
   inputBoxVerifyPassphraseHeight,
   dangerBannerHeight,
 } from '../../common/styles/constant'
 import type { BackupRestorePassphraseProps } from './type-backup-restore-passphrase'
 import ErrorBanner from '../banner/banner-danger'
 import { baseUrls, changeEnvironment } from '../../store/config-store'
-import type { Store } from '../../store/type-store'
 
 export class BackupRestorePassphrase extends Component<
   BackupRestorePassphraseProps,

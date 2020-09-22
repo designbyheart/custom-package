@@ -18,7 +18,6 @@ import type { Store } from '../store/type-store'
 import { Container, CustomText, CustomView } from '../components'
 import { SvgCustomIcon } from '../components/svg-custom-icon'
 import {
-  lockPinSetupRoute,
   lockTouchIdSetupRoute,
   switchEnvironmentRoute,
   lockSelectionRoute,
@@ -29,17 +28,12 @@ import {
   OFFSET_1X,
   OFFSET_2X,
   OFFSET_3X,
-  OFFSET_5X,
-  OFFSET_7X,
-  color,
   isiPhone5,
-  PIN_CODE_BORDER_BOTTOM,
   mantis,
   lightWhite,
   white,
   colors,
   fontFamily,
-  grey,
 } from '../common/styles/constant'
 import {
   switchErrorAlerts,
@@ -55,8 +49,6 @@ import {
 import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
 import { Header } from '../components'
-import { headerOptionsWithNoBack } from '../navigation/navigation-header-config'
-import { OFFSET_9X } from '../common/styles'
 
 const { width } = Dimensions.get('screen')
 
@@ -77,9 +69,9 @@ export class LockSelection extends Component<LockSelectionProps, *> {
     }
   }
 
-  goPinCodeSetup = () => {
-    this.props.navigation.navigate(lockPinSetupRoute)
+  onNoThanks = () => {
     this.props.safeToDownloadSmsInvitation()
+    this.props.navigation.navigate(eulaRoute)
   }
 
   _onLongPressButton = () => {
@@ -143,7 +135,7 @@ export class LockSelection extends Component<LockSelectionProps, *> {
               onLongPress={this._onLongPressButton}
               debounceAction={false}
             >
-              <Image source={require('../images/biometricsGroup.png')}/>
+              <Image source={require('../images/biometricsGroup.png')} />
             </CustomView>
             <CustomText bg="tertiary" tertiary style={[style.message]}>
               You can use your face or finger to unlock this app. Your passcode
@@ -164,7 +156,7 @@ export class LockSelection extends Component<LockSelectionProps, *> {
               tertiary
               h5
               bold
-              onPress={() => this.props.navigation.navigate(eulaRoute)}
+              onPress={this.onNoThanks}
             >
               No thanks
             </CustomText>

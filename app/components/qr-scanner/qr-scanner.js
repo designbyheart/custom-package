@@ -214,10 +214,7 @@ export default class QRScanner extends PureComponent<
     }
 
     // check if ephemeral proof request
-    const [
-      ephemeralProofError,
-      ephemeralProofRequest,
-    ] = await validateEphemeralProofQrCode(
+    const [, ephemeralProofRequest] = await validateEphemeralProofQrCode(
       qrData.type === QR_CODE_TYPES.URL_NON_JSON_RESPONSE
         ? (qrData: GenericObject).data
         : JSON.stringify(qrData)

@@ -3,7 +3,6 @@ import React from 'react'
 import { View } from 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
-import ImagePicker from 'react-native-image-crop-picker'
 import {
   getStore,
   userAvatarImagePath,
@@ -48,16 +47,14 @@ describe('<ConnectedUserAvatar />', () => {
 
   it('should call children function if children is passed', () => {
     const functionAsChild = jest.fn()
-    const child = avatarSource => {
+    const child = (avatarSource) => {
       functionAsChild(avatarSource)
       return <View />
     }
     const props = getProps({
       avatarName: getUserAvatarSource(userAvatarImageName),
     })
-    const component = renderer.create(
-      <UserAvatar {...props}>{child}</UserAvatar>
-    )
+    renderer.create(<UserAvatar {...props}>{child}</UserAvatar>)
     expect(functionAsChild).toHaveBeenCalled()
     expect(functionAsChild).toHaveBeenCalledWith({
       uri: userAvatarImagePath,

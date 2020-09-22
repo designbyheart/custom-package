@@ -1,5 +1,5 @@
 // @flow
-import type { ReactNavigation, CustomError } from '../../common/type-common'
+import type { CustomError } from '../../common/type-common'
 
 export type noop = () => any
 

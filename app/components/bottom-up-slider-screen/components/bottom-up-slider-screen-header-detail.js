@@ -40,7 +40,6 @@ export function BottomUpSliderContentHeaderDetail(props: {
             {props.headerInfo}
           </Text>
         </Container>
-        {/* need room for cred/certificate icon here */}
       </CustomView>
       <Text
         style={[
@@ -60,24 +59,11 @@ export function BottomUpSliderContentHeaderDetail(props: {
 }
 
 const infoSize = (wordLength: number): number => {
-  // return isBiggerThanShortDevice ? scale(14),
   switch (true) {
     case wordLength < 25:
       return scale(14)
     default:
       return scale(10)
-  }
-}
-const headerTitleSize = (wordLength: number): number => {
-  switch (true) {
-    case wordLength < 20:
-      return scale(22)
-    case wordLength < 25:
-      return scale(18)
-    case wordLength < 30:
-      return scale(16)
-    default:
-      return scale(14)
   }
 }
 

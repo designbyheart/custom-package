@@ -11,7 +11,6 @@ import {
   yellowSea,
   whiteSolid,
   darkGray,
-  isBiggerThanShortDevice,
   isBiggerThanMediumDevice,
 } from '../../common/styles'
 import { ModalButtons } from '../../components/buttons/modal-buttons'

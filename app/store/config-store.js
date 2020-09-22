@@ -78,11 +78,6 @@ import type {
   DownloadedConnectionsWithMessages,
   AcknowledgeServerData,
   DownloadedConnectionMessages,
-  ParsedDecryptedPayloadMessage,
-  ParsedDecryptedPayload,
-  MessageClaimOfferDetails,
-  MessagePaymentDetails,
-  SerializedClaimOfferData,
   GetUnacknowledgedMessagesAction,
   GetMessagesLoadingAction,
   GetMessagesSuccessAction,
@@ -120,11 +115,7 @@ import type {
   ClaimOfferMessagePayload,
   ClaimPushPayload,
 } from './../push-notification/type-push-notification'
-import type {
-  ProofRequestPushPayload,
-  StringifiableProofRequest,
-  ProofRequest,
-} from '../proof-request/type-proof-request'
+import type { ProofRequestPushPayload } from '../proof-request/type-proof-request'
 import type { ClaimPushPayloadVcx } from './../claim/type-claim'
 import type {
   QuestionPayload,
@@ -136,7 +127,6 @@ import { getPendingFetchAdditionalDataKey } from './store-selector'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import { ensureVcxInitSuccess } from './route-store'
-import { convertSovrinAtomsToSovrinTokens } from '../sovrin-token/sovrin-token-converter'
 import {
   registerCloudAgentWithToken,
   registerCloudAgentWithoutToken,
@@ -597,7 +587,7 @@ export function* initVcx(findingWallet?: any): Generator<*, *, *> {
         // and hence it might get stuck waiting for event to happen
         // so we timeout and check route again, and we do this in a loop
         // and break when we are on safe route
-        const { onSafeRoute, timeout } = yield race({
+        const { onSafeRoute } = yield race({
           onSafeRoute: take(SAFE_TO_DOWNLOAD_SMS_INVITATION),
           timeout: call(delay, 5000),
         })
@@ -657,7 +647,7 @@ export function* initVcx(findingWallet?: any): Generator<*, *, *> {
         // if agency does not yet support creating cloud agent with token
         // then we try second option to try creating cloud agent without token
         const [
-          registerWithoutTokenError,
+          ,
           userOneTimeInfoWithoutToken,
         ] = yield* registerCloudAgentWithoutToken(agencyConfig)
         userOneTimeInfo = userOneTimeInfoWithoutToken
@@ -843,102 +833,6 @@ export function* processMessages(
   }
 }
 
-const convertSerializedCredentialOfferToAditionalData = (
-  convertedSerializedClaimOffer,
-  senderName,
-  senderDID
-): ClaimOfferMessagePayload => {
-  const vcxCredential = JSON.parse(convertedSerializedClaimOffer).data
-  const {
-    credential_offer: credentialOffer,
-    payment_info: paymentInfo,
-  } = vcxCredential
-
-  const {
-    msg_type,
-    version,
-    to_did,
-    from_did,
-    cred_def_id,
-    credential_attrs: claim,
-    claim_name,
-    schema_seq_no,
-  } = credentialOffer
-
-  return {
-    msg_type,
-    version,
-    to_did,
-    from_did,
-    cred_def_id,
-    claim,
-    claim_name,
-    schema_seq_no,
-    issuer_did: senderDID,
-    issuer_name: senderName,
-    remoteName: senderName,
-    price:
-      paymentInfo && paymentInfo.price
-        ? convertSovrinAtomsToSovrinTokens(paymentInfo.price)
-        : null,
-  }
-}
-
-const convertToSerializedClaimOffer = (
-  decryptedPayload: string,
-  uid: string
-) => {
-  let claimOffer: SerializedClaimOfferData = {
-    agent_did: null,
-    agent_vk: null,
-    cred_id: null,
-    credential: null,
-    credential_name: null,
-    credential_offer: null,
-    credential_request: null,
-    msg_uid: null,
-    my_did: null,
-    my_vk: null,
-    payment_info: null,
-    payment_txn: null,
-    source_id: uid,
-    state: 3,
-    their_did: null,
-    their_vk: null,
-  }
-  const payload: ParsedDecryptedPayload = JSON.parse(decryptedPayload)
-  const message: ParsedDecryptedPayloadMessage = JSON.parse(payload['@msg'])
-  const msg0: MessageClaimOfferDetails | MessagePaymentDetails = message[0]
-  const msg1: MessageClaimOfferDetails | MessagePaymentDetails = message[1]
-
-  let credentialOffer: MessageClaimOfferDetails | null = null
-  let paymentInfo: MessagePaymentDetails | null = null
-
-  if (msg0 && msg0.claim_id) {
-    credentialOffer = msg0
-  } else if (msg1 && msg1.claim_id) {
-    credentialOffer = msg1
-  }
-
-  if (msg0 && msg0.payment_addr) {
-    paymentInfo = msg0
-  } else if (msg1 && msg1.payment_addr) {
-    paymentInfo = msg1
-  }
-
-  if (credentialOffer) {
-    claimOffer.credential_offer = credentialOffer
-    claimOffer.credential_offer.msg_ref_id = uid
-    claimOffer.payment_info = paymentInfo
-    return JSON.stringify({
-      data: claimOffer,
-      version: credentialOffer.version,
-    })
-  }
-
-  return ''
-}
-
 export const convertDecryptedPayloadToQuestion = (
   connectionHandle: number,
   decryptedPayload: string,
@@ -1004,61 +898,6 @@ export const convertDecryptedPayloadToAriesQuestion = (
     externalLinks: [],
     originalQuestion: parsedPayload['@msg'],
   }
-}
-
-const convertDecryptedPayloadToAdditionalPayload = (
-  decryptedPayload: string,
-  uid: string,
-  senderName: string = '',
-  proofHandle: number
-): ProofRequestPushPayload => {
-  const parsedPayload = JSON.parse(decryptedPayload)
-  const parsedMsg: ProofRequest = JSON.parse(parsedPayload['@msg'])
-
-  return {
-    '@type': parsedMsg['@type'],
-    '@topic': parsedMsg['@topic'],
-    proof_request_data: parsedMsg.proof_request_data,
-    remoteName: senderName,
-    proofHandle,
-  }
-}
-
-const convertDecryptedPayloadToSerializedProofRequest = (
-  decryptedPayload: string,
-  uid: string
-) => {
-  let stringifiableProofRequest: StringifiableProofRequest = {
-    data: {
-      agent_did: null,
-      agent_vk: null,
-      link_secret_alias: 'main',
-      my_did: null,
-      my_vk: null,
-      proof: null,
-      proof_request: null,
-      source_id: uid,
-      state: 3,
-      their_did: null,
-      their_vk: null,
-    },
-    version: '1.0',
-  }
-
-  const parsedPayload = JSON.parse(decryptedPayload)
-  const parsedMsg: ProofRequest = JSON.parse(parsedPayload['@msg'])
-  const parsedType: {
-    fmt: string,
-    name: string,
-    ver: string,
-  } = parsedPayload['@type']
-  stringifiableProofRequest.data.proof_request = {
-    ...parsedMsg,
-    msg_ref_id: uid,
-  }
-  stringifiableProofRequest.version = parsedType.ver
-
-  return JSON.stringify(stringifiableProofRequest)
 }
 
 function* handleProprietaryMessage(

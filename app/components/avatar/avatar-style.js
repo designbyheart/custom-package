@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+
 import { StyleSheet } from 'react-native'
 const size = {
   small: 50,

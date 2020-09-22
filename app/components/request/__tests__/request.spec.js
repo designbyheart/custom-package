@@ -3,21 +3,15 @@ import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
-import TouchId from 'react-native-fingerprint-scanner'
 
 import { Request } from '../request'
-import type { RequestProps, ResponseTypes } from '../type-request'
-import { color } from '../../../common/styles/constant'
-import { lockAuthorizationHomeRoute } from '../../../common/route-constants'
 import { getNavigation, getStore } from '../../../../__mocks__/static-data'
 
 describe('<Request />', () => {
   let store
   let request
-  let requestComponent
   let tree
-  const accepted = 'accepted'
-  const rejected = 'rejected'
+
   const defaultProps = {
     title: 'Hi Test User',
     message: 'Enterprise A agent wants to connect with you',

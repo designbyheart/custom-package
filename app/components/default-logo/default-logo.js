@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react'
 import { Text, View } from 'react-native'
 import type { DefaultLogoProps } from './type-default-logo'
-import { grey, white, fontFamily, colors } from '../../common/styles'
+import { fontFamily, colors } from '../../common/styles'
 
 export class DefaultLogo extends PureComponent<DefaultLogoProps, void> {
   render() {

@@ -1,5 +1,4 @@
 // @flow
-import type { CustomError } from '../../common/type-common'
 
 export type BackupRestorePassphraseProps = {
   testID: string,

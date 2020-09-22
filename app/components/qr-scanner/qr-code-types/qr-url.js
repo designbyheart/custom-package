@@ -3,7 +3,6 @@ import urlParse, { type Url } from 'url-parse'
 
 import type {
   AriesConnectionInvite,
-  AriesConnectionInvitePayload,
   AriesOutOfBandInvite,
 } from '../../../invitation/type-invitation'
 import type {
@@ -82,12 +81,12 @@ export async function getUrlQrCodeData(
   // from the passed url and check if we get data from url
 
   // 4. download data and get a valid json object
-  const [downloadError, downloadedData] = await flatFetch(url)
+  const [, downloadedData] = await flatFetch(url)
   if (downloadedData) {
     // we are able to get data from url
 
     // now we need to verify that data is a valid json
-    const [parseError, parsedData] = flatJsonParse(downloadedData)
+    const [, parsedData] = flatJsonParse(downloadedData)
 
     if (parsedData) {
       // if we get some json data, then return it

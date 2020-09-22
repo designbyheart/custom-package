@@ -18,7 +18,7 @@
   "rules": {
     "flowtype/require-valid-file-annotation": [2, "always"],
     "flowtype/define-flow-type": 1,
-    "no-unused-vars": "warn",
+    "no-unused-vars": ["warn", { "ignoreRestSiblings": true, "argsIgnorePattern": "^action", "caughtErrors": "none" }],
     "react/display-name": 0,
     "react/prop-types": 0,
     "react/jsx-no-duplicate-props": 0,

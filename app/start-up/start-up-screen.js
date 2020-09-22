@@ -1,16 +1,14 @@
 // @flow
 import React, { useEffect, useRef, useCallback } from 'react'
-import { Container, CustomText, Header } from '../components'
+import { Container, CustomText } from '../components'
 import {
-  View,
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
   Dimensions,
-  Button,
   Animated,
 } from 'react-native'
-import { verticalScale, moderateScale } from 'react-native-size-matters'
+import { moderateScale } from 'react-native-size-matters'
 import { headerOptionsWithNoBack } from '../navigation/navigation-header-config'
 import { startUpRoute, lockPinSetupRoute } from '../common'
 import { OFFSET_2X, colors } from '../common/styles'

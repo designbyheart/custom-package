@@ -7,8 +7,6 @@ import {
   SafeAreaView,
   Platform,
 } from 'react-native'
-import { color } from '../../common/styles/constant'
-import empty from '../../common/empty'
 import style from './layout-style'
 import debounce from 'lodash.debounce'
 import type { GenericObject } from '../../common/type-common'
@@ -127,7 +125,7 @@ export const CustomView = (props: GenericObject) => {
     if (typeof onPress !== 'undefined') {
       if (debounceAction) {
         touchProps.onPress = debounce(
-          event => {
+          (event) => {
             onPress(event)
           },
           900,

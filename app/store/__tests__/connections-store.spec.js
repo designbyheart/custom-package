@@ -1,8 +1,6 @@
 // @flow
-import renderer from 'react-test-renderer'
 import * as matchers from 'redux-saga-test-plan/matchers'
 import { expectSaga } from 'redux-saga-test-plan'
-import { throwError } from 'redux-saga-test-plan/providers'
 
 import connectionReducer, {
   saveNewConnection,
@@ -26,7 +24,7 @@ import {
   getStore,
   connectionThemes,
 } from '../../../__mocks__/static-data'
-import { safeGet, safeSet, secureSet, secureGet } from '../../services/storage'
+import { secureSet, secureGet } from '../../services/storage'
 import { CONNECTIONS } from '../../common'
 import { deleteConnection } from '../../bridge/react-native-cxs/RNCxs'
 import { STORAGE_KEY_THEMES } from '../type-connection-store'

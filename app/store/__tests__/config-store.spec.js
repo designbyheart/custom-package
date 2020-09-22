@@ -1,7 +1,6 @@
 // @flow
 import 'react-native'
 import { Alert } from 'react-native'
-import renderer from 'react-test-renderer'
 import { put, take, call, select } from 'redux-saga/effects'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
@@ -11,8 +10,6 @@ import configReducer, {
   changeServerEnvironment,
   toggleErrorAlerts,
   baseUrls,
-  alreadyInstalledAction,
-  hydrated,
   onEnvironmentSwitch,
   hydrateSwitchedEnvironmentDetails,
   changeEnvironment,
@@ -40,7 +37,6 @@ import configReducer, {
 } from '../config-store'
 import { vcxInitStart, ensureVcxInitSuccess } from '../route-store'
 import {
-  SERVER_ENVIRONMENT_CHANGED,
   SERVER_ENVIRONMENT,
   SWITCH_ERROR_ALERTS,
   STORAGE_KEY_SWITCHED_ENVIRONMENT_DETAIL,
@@ -66,10 +62,6 @@ import {
 } from '../../../__mocks__/static-data'
 import { downloadEnvironmentDetails } from '../../api/api'
 import {
-  RESET,
-  REMOVE_SERIALIZED_CLAIM_OFFERS_SUCCESS,
-} from '../../common/type-common'
-import {
   resetVcx as resetNative,
   createOneTimeInfo,
   vcxShutdown,
@@ -88,17 +80,10 @@ import { updatePushToken } from '../../push-notification/push-notification-store
 import { getPushToken, getAgencyUrl } from '../../store/store-selector'
 import { connectRegisterCreateAgentDone } from '../user/user-store'
 import {
-  homeRoute,
   splashScreenRoute,
   invitationRoute,
 } from '../../common/route-constants'
-import {
-  walletGet,
-  walletSet,
-  secureSet,
-  secureGet,
-  getHydrationItem,
-} from '../../services/storage'
+import { secureSet, getHydrationItem } from '../../services/storage'
 import * as errorHandler from './../../services/error/error-handler'
 import { addSerializedClaimOffer } from './../../claim-offer/claim-offer-store'
 import { claimReceivedVcx } from './../../claim/claim-store'
@@ -265,13 +250,6 @@ describe('server environment should change', () => {
     expect(gen.next().value).toEqual(
       call(getHydrationItem, STORAGE_KEY_SWITCHED_ENVIRONMENT_DETAIL)
     )
-    let switchedEnvironmentDetails = {
-      poolConfig,
-      agencyDID,
-      agencyVerificationKey,
-      agencyUrl,
-      paymentMethod,
-    }
     expect(gen.next(serializedEnvironmentDetail).value).toEqual(
       select(getAgencyUrl)
     )
@@ -630,7 +608,6 @@ describe('config-store:saga', () => {
   })
 
   it('getMessagesSaga when no data', () => {
-    const errorMessage = 'test init fail error'
     return expectSaga(getMessagesSaga)
       .withState({
         ...notHydratedNoOneTimeInfoState,
@@ -749,8 +726,6 @@ describe('config-store:saga', () => {
   })
 
   it('getMessagesSaga: should call download messages success if we get empty array', () => {
-    const errorMessage = 'test init fail error'
-    const failInitError = new Error(errorMessage)
     expectSaga(getMessagesSaga)
       .withState({
         ...notHydratedNoOneTimeInfoState,
@@ -785,9 +760,7 @@ describe('config-store:saga', () => {
       .run()
   })
 
-  it('getMessagesSaga: should capture error if the data downloaded is not an parsable strigified json', () => {
-    const errorMessage = 'test init fail error'
-    const failInitError = new Error(errorMessage)
+  it('getMessagesSaga: should capture error if the data downloaded is not an parsable stringified json', () => {
     const captureErrorSpy = jest.spyOn(errorHandler, 'captureError')
     expectSaga(getMessagesSaga)
       .withState({
@@ -1061,16 +1034,7 @@ describe('config-store:saga', () => {
         ],
       },
     ]
-    const proofHandle = 13,
-      connectionHandle = 10
-    const testConnectionDetails = {
-      identifier: 'LnKZwUaST94Bj5YzRRDsVqz',
-      vcxSerializedConnection: 'vcxSerializedConnection',
-      logoUrl: 'senderLogoUrl',
-      senderName: 'senderName',
-      myPairwiseDid: 'EaH2Dc1tSgqiBHohivzz2y',
-      senderDID: 'LnKZwUaST94Bj5YzRRDsVqz',
-    }
+
     expectSaga(acknowledgeServer, messagesData)
       .call(updateMessages, 'MS-106', 'acknowledgeServerData')
       .run()
@@ -1078,7 +1042,6 @@ describe('config-store:saga', () => {
   it('updateMessageStatus: should throw error', () => {
     const { RNIndy } = NativeModules
     const errorMessage = 'update message status fail'
-    const failInitError = new Error(errorMessage)
     const updateMessagesSpy = jest.spyOn(RNIndy, 'updateMessages')
     updateMessagesSpy.mockImplementation(() =>
       Promise.reject({ message: errorMessage })

@@ -8,7 +8,6 @@ import type {
 import type {
   CustomError,
   ResetAction,
-  NotificationPayload,
   GenericObject,
 } from '../common/type-common'
 import type {
@@ -17,10 +16,7 @@ import type {
   NotificationPayloadInfo,
 } from '../push-notification/type-push-notification'
 import type { LedgerFeesStateEnum } from '../ledger/components/ledger-fees/ledger-fees-type'
-import type {
-  AriesOutOfBandInvite,
-  InvitationPayload,
-} from '../invitation/type-invitation'
+import type { InvitationPayload } from '../invitation/type-invitation'
 
 export const CLAIM_OFFER_STATUS = {
   IDLE: 'IDLE',

@@ -1,5 +1,5 @@
 // @flow
-import type { GenericObject, ReactChildren } from '../../common/type-common'
+import type { GenericObject } from '../../common/type-common'
 
 export type CustomTextProps = {
   h4: string,

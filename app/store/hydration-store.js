@@ -1,20 +1,16 @@
 // @flow
-import { call, put, fork, all } from 'redux-saga/effects'
+import { call, put, all } from 'redux-saga/effects'
 import {
-  safeDelete,
   safeGet,
   safeSet,
   safeMultiRemove,
   secureDelete,
   secureGet,
-  walletGet,
 } from '../services/storage'
 import { hydratePushTokenSaga } from '../push-notification/push-notification-store'
 import { hydrateEulaAccept } from '../eula/eula-store'
 import {
-  hydrateConnections,
   hydrateThemes,
-  removePersistedThemes,
   hydrateConnectionSaga,
 } from '../store/connections-store'
 import { hydrateClaimMapSaga } from '../claim/claim-store'
@@ -34,10 +30,7 @@ import {
   WALLET_KEY,
 } from '../common'
 import { STORAGE_KEY_USER_ONE_TIME_INFO } from '../store/user/type-user-store'
-import {
-  CLAIM_OFFERS,
-  CLAIM_OFFER_ACCEPTED,
-} from '../claim-offer/type-claim-offer'
+import { CLAIM_OFFERS } from '../claim-offer/type-claim-offer'
 import { STORAGE_KEY_THEMES } from '../store/type-connection-store'
 import { HISTORY_EVENT_STORAGE_KEY } from '../connection-history/type-connection-history'
 import {
@@ -47,13 +40,9 @@ import {
   PIN_HASH,
   SALT,
 } from '../lock/type-lock'
-import {
-  hydrateUserStoreSaga,
-  removePersistedUserSelectedAvatarImage,
-} from './user/user-store'
+import { hydrateUserStoreSaga } from './user/user-store'
 import { hydrateWalletStoreSaga } from '../wallet/wallet-store'
 import {
-  promptBackupBanner,
   deletePersistedPassphrase,
   hydratePassphraseFromWallet,
 } from '../backup/backup-store'
@@ -73,7 +62,6 @@ import {
   hydrated,
   hydrateSwitchedEnvironmentDetails,
   initialized,
-  vcxInitReset,
 } from './config-store'
 import { ensureVcxInitSuccess } from './route-store'
 import {
@@ -83,16 +71,11 @@ import {
   setInRecovery,
 } from '../lock/lock-store'
 import { captureError } from '../services/error/error-handler'
-import {
-  simpleInit,
-  vcxShutdown,
-  getWalletPoolName,
-} from '../bridge/react-native-cxs/RNCxs'
+import { simpleInit, vcxShutdown } from '../bridge/react-native-cxs/RNCxs'
 import { STORAGE_KEY_USER_AVATAR_NAME } from './user/type-user-store'
 import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { hydrateProofRequestsSaga } from './../proof-request/proof-request-store'
 import RNFetchBlob from 'rn-fetch-blob'
-import { Platform } from 'react-native'
 import { customLogger } from '../store/custom-logger'
 import {
   removePersistedOnfidoApplicantIdSaga,
@@ -104,7 +87,6 @@ import {
   AUTO_CLOUD_BACKUP_ENABLED,
   HAS_VERIFIED_RECOVERY_PHRASE,
 } from '../backup/type-backup'
-import { hydrateTxnAuthorAgreementSaga } from '../txn-author-agreement/txn-author-agreement-store'
 
 export function* deleteDeviceSpecificData(): Generator<*, *, *> {
   try {

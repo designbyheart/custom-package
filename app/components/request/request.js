@@ -5,15 +5,11 @@ import type { RequestProps } from './type-request'
 
 import { Container } from '../layout/container'
 import RequestDetail from './request-detail'
-import FooterActions from '../footer-actions/footer-actions'
-import { CustomView } from '../layout'
 import { ModalButtons } from '../buttons/modal-buttons'
-import { colors, fontFamily, fontSizes } from '../../common/styles'
-import ImageColorPicker from '../image-color-picker/image-color-picker'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { colors } from '../../common/styles'
 import { CONNECT, DENY } from '../../common'
 import { StyleSheet } from 'react-native'
-import { moderateScale, verticalScale } from 'react-native-size-matters'
+import { moderateScale } from 'react-native-size-matters'
 
 export const Request = ({
   title,

@@ -5,7 +5,6 @@ import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import { ClaimRequestStatusModal } from '../claim-request-modal'
 import { CLAIM_REQUEST_STATUS } from '../type-claim-offer'
-import type { ClaimRequestStatusModalProps } from '../type-claim-offer'
 import {
   claimOfferPayload,
   senderLogoUrl,

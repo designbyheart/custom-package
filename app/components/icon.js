@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { StyleSheet, Image, TouchableWithoutFeedback, View } from 'react-native'
+import { StyleSheet, Image, View } from 'react-native'
 import { CustomView } from './layout/custom-view'
 import type { GenericObject } from '../common/type-common'
 import { white } from '../common/styles'
@@ -14,7 +14,6 @@ const Icon = (props: GenericObject) => {
     small,
     medium,
     mediumLarge,
-    large,
     extraLarge,
     xxLarge,
     iconStyle = empty,
@@ -23,8 +22,6 @@ const Icon = (props: GenericObject) => {
     halo,
     round,
     haloStyle = empty,
-    onPress,
-    onLongPress,
     backgroundRoundWhite,
   } = props
   const size = small

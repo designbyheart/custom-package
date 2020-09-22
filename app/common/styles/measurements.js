@@ -1,12 +1,9 @@
 // @flow
-import DeviceInfo from 'react-native-device-info'
-import { Dimensions, Platform } from 'react-native'
+import { Dimensions } from 'react-native'
 import { isIphoneX, isIphoneXR } from './constant'
 
 const windowSize = Dimensions.get('screen')
 const WINDOW_HEIGHT = windowSize.height
-
-const deviceModel = DeviceInfo.getModel()
 
 let bottomNavBarHeight
 let bottomBlurNavBarHeight

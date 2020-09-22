@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import { Text, Animated, StyleSheet } from 'react-native'
-import empty from '../common/empty'
 import { color, font } from '../common/styles/constant'
 import debounce from 'lodash.debounce'
 import type { GenericObject } from '../common/type-common'
@@ -21,11 +20,8 @@ class CustomText extends React.Component<GenericObject, void> {
     const {
       h3,
       h3a,
-      h3b,
       h4,
       h4a,
-      h4b,
-      h5,
       h6,
       h7,
       bold,

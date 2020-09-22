@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { Dimensions, Keyboard } from 'react-native'
+import { Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -15,8 +15,6 @@ import type { Store } from '../store/type-store'
 import { CustomView, Icon, CustomHeader } from '../components'
 import {
   cloudRestoreModalRoute,
-  exportBackupFileRoute,
-  selectRecoveryMethodRoute,
   cloudRestoreRoute,
   selectRestoreMethodRoute,
 } from '../common'
@@ -28,9 +26,6 @@ import {
   VERIFY_CONTAINER_TEST_ID,
   VERIFY_INPUT_PLACEHOLDER,
 } from '../backup/backup-constants'
-import { PASSPHRASE_SALT_STORAGE_KEY } from '../common/secure-storage-constants'
-import { pinHash as generateKey } from '../lock/pin-hash'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import EnterPassphrase from '../components/backup-restore-passphrase/backup-restore-passphrase'
 import { getBackupPassphrase, getRestoreStatus } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
@@ -38,7 +33,6 @@ import { submitPassphrase, resetError } from './cloud-restore-store'
 import { RestoreStatus } from '../restore/type-restore'
 import { restoreStatus } from '../restore/restore-store'
 
-const transparentBands = require('../images/transparentBands2.png')
 const backImage = require('../images/icon_backArrow_white.png')
 const closeImage = require('../images/iconClose.png')
 

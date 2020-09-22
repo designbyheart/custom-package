@@ -1,6 +1,5 @@
 // @flow
 import messaging from '@react-native-firebase/messaging'
-import { Platform } from 'react-native'
 import {
   call,
   all,
@@ -9,28 +8,15 @@ import {
   take,
   select,
   put,
-  fork,
 } from 'redux-saga/effects'
 import { MESSAGE_TYPE } from '../api/api-constants'
 import { captureError } from '../services/error/error-handler'
 import {
-  getAgencyUrl,
-  getAllConnection,
   getRemotePairwiseDidAndName,
-  getUserOneTimeInfo,
-  getAgencyVerificationKey,
-  getHydrationState,
-  getPoolConfig,
-  getInvitations,
-  getDeepLinkTokens,
   getPendingFetchAdditionalDataKey,
   getIsAppLocked,
-  getSerializedClaimOffer,
   getCurrentScreen,
   getBackupWalletHandle,
-  getAllConnectionsPairwiseDid,
-  getBackupWalletPath,
-  getEncryptedFileLocation,
 } from '../store/store-selector'
 import {
   ALLOW_PUSH_NOTIFICATIONS,
@@ -52,11 +38,8 @@ import type {
 } from '../common/type-common'
 import type {
   AdditionalDataPayload,
-  PushNotificationPermissionAction,
   PushNotificationUpdateTokenAction,
-  PushNotificationReceivedAction,
   FetchAdditionalDataAction,
-  AdditionalDataResponse,
   PushNotificationAction,
   PushNotificationStore,
   DownloadedNotification,
@@ -66,21 +49,16 @@ import type {
   updatePayloadToRelevantStoreAndRedirectAction,
   RedirectToRelevantScreen,
   NotificationOpenOptions,
-  AllowPushNotificationsAction,
 } from './type-push-notification'
-import type { Connections } from '../connection/type-connection'
-import type { UserOneTimeInfo } from '../store/user/type-user-store'
 import {
   updatePushTokenVcx,
   getHandleBySerializedConnection,
-  serializeClaimOffer,
   downloadMessages,
   vcxGetAgentMessages,
   updateWalletBackupStateWithMessage,
   backupWalletBackup,
 } from '../bridge/react-native-cxs/RNCxs'
 import {
-  HYDRATED,
   VCX_INIT_SUCCESS,
   MESSAGE_RESPONSE_CODE,
   GET_UN_ACKNOWLEDGED_MESSAGES,
@@ -89,12 +67,10 @@ import type {
   DownloadedConnectionsWithMessages,
   DownloadedMessage,
 } from '../store/type-config-store'
-import { CONNECT_REGISTER_CREATE_AGENT_DONE } from '../store/user/type-user-store'
 import uniqueId from 'react-native-unique-id'
 import { RESET } from '../common/type-common'
 import { ensureVcxInitSuccess } from '../store/route-store'
 import type { Connection } from '../store/type-connection-store'
-import type { CxsCredentialOfferResult } from '../bridge/react-native-cxs/type-cxs'
 import type {
   ProofRequestPushPayload,
   AdditionalProofDataPayload,
@@ -102,14 +78,8 @@ import type {
 import type { ClaimPushPayloadVcx } from '../claim/type-claim'
 import type { Claim } from '../claim/type-claim'
 import type { QuestionPayload } from './../question/type-question'
-import { safeGet, safeSet, secureGet, walletSet } from '../services/storage'
-import {
-  PUSH_COM_METHOD,
-  PASSPHRASE_STORAGE_KEY,
-  PASSPHRASE_SALT_STORAGE_KEY,
-  LAST_SUCCESSFUL_CLOUD_BACKUP,
-  connectionHistRoute,
-} from '../common'
+import { safeGet, safeSet, walletSet } from '../services/storage'
+import { PUSH_COM_METHOD, LAST_SUCCESSFUL_CLOUD_BACKUP } from '../common'
 import type { NavigationParams, GenericObject } from '../common/type-common'
 
 import { addPendingRedirection } from '../lock/lock-store'
@@ -118,7 +88,6 @@ import { claimOfferReceived } from '../claim-offer/claim-offer-store'
 import { proofRequestReceived } from '../proof-request/proof-request-store'
 import {
   updateMessageStatus,
-  processMessages,
   traverseAndGetAllMessages,
   convertDecryptedPayloadToQuestion,
   getMessagesLoading,
@@ -129,7 +98,6 @@ import {
   claimOfferRoute,
   invitationRoute,
   proofRequestRoute,
-  qrCodeScannerTabRoute,
   homeDrawerRoute,
   lockPinSetupRoute,
   lockTouchIdSetupRoute,
@@ -141,15 +109,12 @@ import {
 } from '../common'
 import { claimReceivedVcx } from '../claim/claim-store'
 import { questionReceived } from '../question/question-store'
-import type { SerializedClaimOffer } from './../claim-offer/type-claim-offer'
 import { customLogger } from '../store/custom-logger'
 import {
-  SET_WALLET_HANDLE,
   WALLET_FILE_NAME,
   AUTO_CLOUD_BACKUP_ENABLED,
   WALLET_BACKUP_FAILURE,
 } from '../backup/type-backup'
-import { getWords } from '../backup/secure-passphrase'
 import moment from 'moment'
 import {
   cloudBackupSuccess,
@@ -468,11 +433,7 @@ export function* fetchAdditionalDataSaga(
 
       // CLOUD-BACKUP-STEP-3
       const walletHandle = yield select(getBackupWalletHandle)
-      const walletBackupState = yield call(
-        updateWalletBackupStateWithMessage,
-        walletHandle,
-        message
-      )
+      yield call(updateWalletBackupStateWithMessage, walletHandle, message)
 
       const { fs } = RNFetchBlob
       const documentDirectory: string = fs.dirs.DocumentDir
@@ -540,11 +501,7 @@ export function* fetchAdditionalDataSaga(
 
       // NOTE: CLOUD-BACKUP-STEP-6
       const walletHandle = yield select(getBackupWalletHandle)
-      const walletBackupState = yield call(
-        updateWalletBackupStateWithMessage,
-        walletHandle,
-        message
-      )
+      yield call(updateWalletBackupStateWithMessage, walletHandle, message)
 
       // NOTE: CLOUD-BACKUP-STEP-7 serialization(NOT IMPLEMENTED)
 

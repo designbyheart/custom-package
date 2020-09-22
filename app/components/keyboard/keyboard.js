@@ -26,7 +26,6 @@ import {
   NINE,
 } from './keyboard-constants'
 import { styles, INPUT_RANGE, OUTPUT_RANGE } from './styles'
-import { WALLET_BALANCE } from '../../common'
 import { BigNumber } from 'bignumber.js'
 
 export default class Keyboard extends Component<KeyboardProps, void> {
@@ -51,7 +50,7 @@ export default class Keyboard extends Component<KeyboardProps, void> {
       ZERO,
       BACK_SPACE_SYMBOL,
     ]
-    this._animation = this.originalOptions.map(i => new Animated.Value(0))
+    this._animation = this.originalOptions.map(() => new Animated.Value(0))
   }
 
   static defaultProps = {
@@ -107,7 +106,7 @@ export default class Keyboard extends Component<KeyboardProps, void> {
 
   Row(numbersArray: Array<string>) {
     const rowStyle = numbersArray.includes(ONE) ? styles.firstRow : styles.row
-    let cells = numbersArray.map(val => this.Cell(val))
+    let cells = numbersArray.map((val) => this.Cell(val))
 
     return (
       <CustomView row style={[rowStyle]}>

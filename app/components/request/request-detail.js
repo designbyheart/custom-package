@@ -4,8 +4,6 @@ import React, { PureComponent } from 'react'
 import type { RequestDetailProps } from './type-request'
 
 import { Container } from '../layout/container'
-import { CustomView } from '../layout/custom-view'
-import CustomText from '../text'
 import { RequestDetailText } from './request-detail-text'
 import RequestDetailAvatars from './request-detail-avatars'
 

@@ -1,6 +1,6 @@
 // @flow
 import messaging from '@react-native-firebase/messaging'
-import React, { Component, useCallback } from 'react'
+import React, { Component } from 'react'
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import {
   pushNotificationPermissionRoute,
   invitationRoute,
 } from '../../common/route-constants'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 import { allowPushNotifications } from '../push-notification-store'
 import { connect } from 'react-redux'

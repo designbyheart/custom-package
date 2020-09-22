@@ -1,13 +1,10 @@
 // @flow
 
-import React from 'react'
 import 'react-native'
-import renderer from 'react-test-renderer'
 
 import * as vcx from '../../bridge/react-native-cxs/RNCxs'
 import { validateEphemeralProofQrCode } from '../proof-request-qr-code-reader'
 import { mockEphemeralProofRequestQrCode } from '../../../__mocks__/data/mock-qr-data'
-import { savePushTokenSaga } from '../../push-notification/push-notification-store'
 import { originalProofRequestData } from '../../../__mocks__/static-data'
 
 describe('ephemeral-proof-request-qr-code-reader', () => {
@@ -31,7 +28,7 @@ describe('ephemeral-proof-request-qr-code-reader', () => {
       )
     )
 
-    const [error, _] = await validateEphemeralProofQrCode(
+    const [error] = await validateEphemeralProofQrCode(
       '{"key":"this json should not be used, and decode response should be used"}'
     )
 
@@ -49,7 +46,7 @@ describe('ephemeral-proof-request-qr-code-reader', () => {
         Promise.reject('some error for decoding proof request data')
       )
 
-    const [error, _] = await validateEphemeralProofQrCode(
+    const [error] = await validateEphemeralProofQrCode(
       JSON.stringify(mockEphemeralProofRequestQrCode)
     )
 
@@ -67,7 +64,7 @@ describe('ephemeral-proof-request-qr-code-reader', () => {
         Promise.resolve('invalid data which is not json format')
       )
 
-    const [error, _] = await validateEphemeralProofQrCode(
+    const [error] = await validateEphemeralProofQrCode(
       JSON.stringify(mockEphemeralProofRequestQrCode)
     )
 
@@ -95,7 +92,7 @@ describe('ephemeral-proof-request-qr-code-reader', () => {
         )
       )
 
-    const [error, _] = await validateEphemeralProofQrCode(
+    const [error] = await validateEphemeralProofQrCode(
       JSON.stringify(mockEphemeralProofRequestQrCode)
     )
 
@@ -117,7 +114,7 @@ describe('ephemeral-proof-request-qr-code-reader', () => {
         )
       )
 
-    const [_, ephemeralProofRequest] = await validateEphemeralProofQrCode(
+    const [, ephemeralProofRequest] = await validateEphemeralProofQrCode(
       JSON.stringify(mockEphemeralProofRequestQrCode)
     )
 
@@ -139,7 +136,7 @@ describe('ephemeral-proof-request-qr-code-reader', () => {
         )
       )
 
-    const [_, ephemeralProofRequest] = await validateEphemeralProofQrCode(
+    const [, ephemeralProofRequest] = await validateEphemeralProofQrCode(
       JSON.stringify({
         ...mockEphemeralProofRequestQrCode,
         comment: null,

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { View, StatusBar, Alert } from 'react-native'
+import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import isUrl from 'validator/lib/isURL'
@@ -20,22 +20,13 @@ import {
   CONNECTION_INVITE_TYPES,
   ERROR_INVITATION_ALREADY_ACCEPTED_CODE,
 } from './type-invitation'
-import { captureError } from '../services/error/error-handler'
 import { schemaValidator } from '../services/schema-validator'
-import {
-  Container,
-  CustomModal,
-  Loader,
-  CustomText,
-  CustomView,
-} from '../components'
+import { Container, Loader } from '../components'
 import { homeRoute, noop, invitationRoute } from '../common'
-import { OFFSET_1X } from '../common/styles'
 import { ResponseType } from '../components/request/type-request'
 import { sendInvitationResponse, invitationRejected } from './invitation-store'
 import { smsPendingInvitationSeen } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { SMSPendingInvitationStatus } from '../sms-pending-invitation/type-sms-pending-invitation'
-import { barStyleDark, color } from '../common/styles/constant'
 import {
   ERROR_ALREADY_EXIST,
   ERROR_INVITATION_RESPONSE_FAILED,
@@ -47,7 +38,7 @@ import { Request } from '../components/request/request'
 
 export class Invitation extends Component<InvitationProps, void> {
   render() {
-    const { invitation, showErrorAlerts, navigation } = this.props
+    const { invitation } = this.props
 
     const {
       isValid,

@@ -4,8 +4,9 @@ import {
   splashScreenRoute,
   lockSelectionRoute,
   switchEnvironmentRoute,
-  eulaRoute,
   restoreRoute,
+  lockPinSetupRoute,
+  startUpRoute,
 } from '../common/route-constants'
 
 export const SERVER_ENVIRONMENT = {
@@ -250,8 +251,9 @@ export const UNSAFE_SCREENS_TO_DOWNLOAD_SMS = [
   splashScreenRoute,
   lockSelectionRoute,
   switchEnvironmentRoute,
-  eulaRoute,
   restoreRoute,
+  lockPinSetupRoute,
+  startUpRoute,
 ]
 
 export type DownloadedMessage = {

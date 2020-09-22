@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import { View, StyleSheet, Platform } from 'react-native'
 import { HAIRLINE_WIDTH, maroonRed, white } from '../common/styles/constant'
 

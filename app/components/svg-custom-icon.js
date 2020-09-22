@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import SvgIcon from 'react-native-svg-icon'
-import { Path, G, Use, ClipPath, Defs, Svg, Rect, Mask } from 'react-native-svg'
+import { Path, G, Use, ClipPath, Defs, Rect, Mask } from 'react-native-svg'
 
 import { atlantis } from '../common/styles/constant'
 

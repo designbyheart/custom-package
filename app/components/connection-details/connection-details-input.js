@@ -1,6 +1,5 @@
 // @flow
 import React, { PureComponent } from 'react'
-import SvgCustomIcon from '../../components/svg-custom-icon'
 import {
   View,
   Image,
@@ -10,8 +9,6 @@ import {
 } from 'react-native'
 
 class ConnectionDetailsInput extends PureComponent<void, void> {
-  //state = { textMsg: "Enter Message" }
-
   render() {
     return (
       <View style={styles.container}>
@@ -23,14 +20,9 @@ class ConnectionDetailsInput extends PureComponent<void, void> {
             />
           </TouchableOpacity>
           <View style={styles.inputWrapper}>
-            <TextInput
-              style={styles.textInput}
-              // onChangeText={text => this.setState({ textMsg })}
-              // value={this.state.textMsg}
-            />
+            <TextInput style={styles.textInput} />
             <TouchableOpacity style={styles.sendMessage}>
               <Image
-                style={styles.sendArrow}
                 source={require('../../images/componentsDetails/sendArrow.png')}
               />
             </TouchableOpacity>
@@ -106,5 +98,4 @@ const styles = StyleSheet.create({
     height: 28,
     right: 10,
   },
-  sendArrow: {},
 })
