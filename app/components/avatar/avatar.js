@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Image, TouchableWithoutFeedback, View, StyleSheet } from 'react-native'
+import { Image, TouchableWithoutFeedback } from 'react-native'
 import debounce from 'lodash.debounce'
 import { CustomView } from '../layout/custom-view'
 import avatarStyle from './avatar-style'
@@ -24,14 +24,12 @@ export class Avatar extends PureComponent<AvatarProps, void> {
     const {
       small,
       medium,
-      large,
       square,
       shadow,
       style = empty,
       imageStyle = empty,
       src,
       extraNode,
-      onPress,
       onLongPress,
       testID,
       onLoad,

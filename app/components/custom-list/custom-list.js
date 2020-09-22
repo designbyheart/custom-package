@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, FlatList } from 'react-native'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
 import type { CustomListProps, Item } from './type-custom-list'
 import type { Store } from '../../store/type-store'
@@ -12,7 +11,7 @@ import { CustomView } from '../layout/custom-view'
 import CustomText from '../text'
 import Icon from '../icon'
 import Separator from '../separator'
-import { OFFSET_1X, OFFSET_3X } from '../../common/styles'
+import { OFFSET_3X } from '../../common/styles'
 import { getUserAvatarSource } from '../../store/store-selector'
 
 export class CustomList extends Component<CustomListProps, void> {
@@ -21,7 +20,7 @@ export class CustomList extends Component<CustomListProps, void> {
       return `${label}${index}`
     }
     if (values) {
-      return `${Object.keys(values).join("-")}${index}`
+      return `${Object.keys(values).join('-')}${index}`
     }
 
     return `${index}`

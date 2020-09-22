@@ -61,9 +61,4 @@ describe('app lock selection page should', () => {
     componentInstance.goTouchIdSetup()
     expect(props.safeToDownloadSmsInvitation).toHaveBeenCalled()
   })
-
-  it('call safeToDownloadSmsInvitation if setup pass code', () => {
-    componentInstance.goPinCodeSetup()
-    expect(props.safeToDownloadSmsInvitation).toHaveBeenCalled()
-  })
 })

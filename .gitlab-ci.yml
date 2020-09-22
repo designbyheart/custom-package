@@ -107,6 +107,7 @@ detox-ios-test:
     - xcversion select --verbose --symlink 11.3
     - xcversion selected
     - sudo xcodebuild -license accept
+    - curl https://cdn.cocoapods.org/all_pods_versions_c_9_3.txt
     - cd ios
     - gem uninstall bundler
     - gem install bundler
@@ -123,7 +124,7 @@ detox-ios-test:
     - nvm use
     - yarn
     - yarn pod:update
-    - yarn pod:dev:install
+    - yarn pod:install
     - echo "detox=yes" > .env
     - echo "detox=yes" > .env.production
     - yarn e2e -b release -e qa -s iphone8

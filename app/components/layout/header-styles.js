@@ -1,14 +1,10 @@
 // @flow
-import React from 'react'
+
 import { StyleSheet, Platform } from 'react-native'
 
 import {
-  PADDING_HORIZONTAL,
-  PADDING_VERTICAL,
   color,
   font,
-  whisper,
-  whiteSmokeSecondary,
   OFFSET_1X,
   OFFSET_3X,
   OFFSET_2X,

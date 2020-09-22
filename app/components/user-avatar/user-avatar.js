@@ -1,10 +1,9 @@
 // @flow
 import React, { Component } from 'react'
-import { Image, TouchableWithoutFeedback, View, Platform } from 'react-native'
+import { TouchableWithoutFeedback, View } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import type { ImageSource } from '../../common/type-common'
 import type { UserAvatarProps } from './type-user-avatar'
 import type { Store } from '../../store/type-store'
 

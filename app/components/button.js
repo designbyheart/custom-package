@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet } from 'react-native'
 import { Button } from 'react-native-elements'
-import { color, font } from '../common/styles/constant'
+import { color } from '../common/styles/constant'
 import debounce from 'lodash.debounce'
 
 const empty = []
@@ -35,7 +35,6 @@ export default class CustomButton extends PureComponent<*, void> {
       dangerous,
       medium,
       customColor = {},
-      disabled,
       ninth,
       eleventh,
       twelfth,

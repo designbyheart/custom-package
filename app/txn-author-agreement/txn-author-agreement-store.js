@@ -1,5 +1,5 @@
 // @flow
-import { takeLatest, put, all, take, call, select } from 'redux-saga/effects'
+import { takeLatest, put, all, call, select } from 'redux-saga/effects'
 import {
   CHECK_TXN_AUTHOR_AGREEMENT,
   TAA_ACCEPTED,
@@ -21,27 +21,16 @@ import type {
   TAAResponse,
   TAAPayload,
 } from './type-txn-author-agreement'
-import { questionReceived } from '../question/question-store'
-import { navigateToRoutePN } from '../push-notification/push-notification-store'
-import {
-  txnAuthorAgreementRoute,
-  questionRoute,
-} from '../common/route-constants'
-import { UPDATE_QUESTION_STORAGE_STATUS } from '../question/type-question'
-import { STORAGE_STATUS } from '../common/type-common'
 import type { CustomError } from '../common/type-common'
 
 import {
   getTxnAuthorAgreement,
-  getAcceptanceMechanisms,
   setActiveTxnAuthorAgreementMeta,
-  appendTxnAuthorAgreement,
 } from '../bridge/react-native-cxs/RNCxs'
-import { TAA_HASH, TAA_ACCEPTED_VERSION } from '../common'
-import { secureSet, getHydrationItem, safeGet } from '../services/storage'
+import { TAA_ACCEPTED_VERSION } from '../common'
+import { secureSet, getHydrationItem } from '../services/storage'
 import {
   getTaaAcceptedVersion,
-  getUserOneTimeInfo,
   getAllTxnAuthorAgreement,
 } from '../store/store-selector'
 import {
@@ -50,7 +39,6 @@ import {
 } from './txn-author-agreement-validator'
 import { flattenAsync } from '../common/flatten-async'
 import { captureError } from '../services/error/error-handler'
-import { IN_RECOVERY } from '../lock/type-lock'
 
 const initialState = {
   haveAlreadySignedAgreement: false,
@@ -159,7 +147,7 @@ export function* checkTxnAuthorAgreementSaga(
     //  let taaResponse:string = yield call(getTxnAuthorAgreement)
     const [getTxnAuthorAgreementError, taaResponse]: [
       typeof Error,
-      string,
+      string
     ] = yield call(flattenAsync(getTxnAuthorAgreement))
     if (getTxnAuthorAgreementError) {
       yield put(updateStatus(TAA_STATUS.GET_TAA_ERROR))
@@ -205,11 +193,9 @@ export function* submitTxnAuthorAgreementSaga(
   try {
     // NOTE: not dividing by 1000 was causing this to silently fail
     const timeAccepted = Math.floor(Date.now() / 1000)
-    const userOneTimeInfo = yield select(getUserOneTimeInfo)
-    const userDID = userOneTimeInfo.myOneTimeDid
 
     const txnAuthorAgreement = yield select(getAllTxnAuthorAgreement)
-    const { version, aml, text } = txnAuthorAgreement
+    const { version, text } = txnAuthorAgreement
 
     yield call(
       setActiveTxnAuthorAgreementMeta,

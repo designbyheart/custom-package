@@ -1,9 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { View, StyleSheet, Image, Platform } from 'react-native'
-import Modal from 'react-native-modal'
+import { StyleSheet, Platform } from 'react-native'
 import {
-  CustomModal,
   CustomView,
   AvatarsPair,
   CustomText,
@@ -11,20 +9,18 @@ import {
   Container,
   CustomButton,
 } from '../components'
-import { colors, fontFamily, fontSizes } from '../common/styles/constant'
+import { colors } from '../common/styles/constant'
 import {
   CLAIM_REQUEST_STATUS,
   ACCEPTING_TEXT,
   PAYING_TEXT,
 } from './type-claim-offer'
-import type { GenericObject } from '../common/type-common'
 import type {
   ClaimRequestStatusModalProps,
   ClaimRequestStatusModalState,
-  ClaimRequestStatus,
 } from './type-claim-offer'
 import { formatNumbers } from '../components/text'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { moderateScale } from 'react-native-size-matters'
 
 const ClaimRequestModalText = (props: { children: string, bold?: boolean }) => (
   <CustomText
@@ -88,10 +84,7 @@ export class ClaimRequestStatusModal extends PureComponent<
     }
   }
 
-  componentDidUpdate(
-    prevProps: ClaimRequestStatusModalProps,
-    prevState: ClaimRequestStatusModalState
-  ) {
+  componentDidUpdate(prevProps: ClaimRequestStatusModalProps) {
     if (
       prevProps.claimRequestStatus !== this.props.claimRequestStatus &&
       this.visibleStates.indexOf(this.props.claimRequestStatus) < 0
@@ -153,15 +146,6 @@ export class ClaimRequestStatusModal extends PureComponent<
     const conditionalMessage =
       message6 !== undefined ? (payTokenValue ? message6 : null) : message5
 
-    const modalProps =
-      isPending && !isSending
-        ? {
-            onPress: this.onContinue,
-            buttonText: 'Continue',
-          }
-        : {
-            fullScreen: true,
-          }
     return (
       <Container center={!(isPending && !fromConnectionHistory)}>
         {isPending && !fromConnectionHistory ? (

@@ -10,7 +10,6 @@ import { getConnectionTheme } from '../../store/store-selector'
 export class ConnectionTheme extends Component<ConnectionThemeProps, void> {
   render() {
     const {
-      logoUrl,
       secondary,
       connectionTheme,
       children,
@@ -32,7 +31,7 @@ export class ConnectionTheme extends Component<ConnectionThemeProps, void> {
       themeType = colorsWithoutOpacity.join(',')
     }
 
-    let childrenWithProps = React.Children.map(children, child =>
+    let childrenWithProps = React.Children.map(children, (child) =>
       React.cloneElement(child, {
         customColor: {
           backgroundColor: themeType,

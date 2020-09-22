@@ -1,6 +1,6 @@
 // @flow
 
-import urlParse, { type Url } from 'url-parse'
+import { type Url } from 'url-parse'
 import isUrl from 'validator/lib/isURL'
 import { stringify } from 'query-string'
 
@@ -8,7 +8,6 @@ import type { QrCodeOIDC, JWTAuthenticationRequest } from '../type-qr-scanner'
 
 import { QR_CODE_TYPES, SCAN_STATUS } from '../type-qr-scanner'
 import { flatFetch } from '../../../common/flat-fetch'
-import { STORE_STATUS } from '../../../common/type-common'
 import { schemaValidator } from '../../../services/schema-validator'
 import { toUtf8FromBase64 } from '../../../bridge/react-native-cxs/RNCxs'
 import { addBase64Padding } from '../../../common/base64-padding'
@@ -90,7 +89,7 @@ export async function fetchValidateJWT(
     return [null, SCAN_STATUS.AUTH_REQUEST_INVALID_BODY_DECODE_ERROR]
   }
   if (!schemaValidator.validate(jwtBodySchema, body)) {
-    const [fail, success] = await sendValidationErrorToClient(
+    const [fail] = await sendValidationErrorToClient(
       oidcAuthenticationCode.clientId,
       JSON.stringify(schemaValidator.errors),
       body
@@ -158,9 +157,6 @@ async function sendValidationErrorToClient(
 
 // only trust if scheme is https, http is not allowed
 const validInvitationUrlScheme = ['https:']
-
-// maximum length allowed for whole url-qr-code
-const validInvitationUrlLength = 4096
 
 // only trust urls that has origin of connectme.app.link
 const trustedDomains = ['connectme.app.link']

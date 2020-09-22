@@ -1,5 +1,4 @@
 // @flow
-import { put, call, select, race, take } from 'redux-saga/effects'
 import claimOfferStore, {
   claimOfferReceived,
   claimOfferShown,
@@ -21,25 +20,13 @@ import claimOfferStore, {
   resetClaimRequestStatus,
 } from '../claim-offer-store'
 import {
-  CLAIM_OFFER_ACCEPTED,
   CLAIM_OFFERS,
   SAVE_CLAIM_OFFERS_SUCCESS,
   SAVE_CLAIM_OFFERS_FAIL,
   ERROR_SAVE_CLAIM_OFFERS,
   REMOVE_SERIALIZED_CLAIM_OFFERS_SUCCESS,
 } from '../type-claim-offer'
-import { INITIAL_TEST_ACTION } from '../../common/type-common'
-import type { ClaimOfferAcceptedAction } from '../type-claim-offer'
-import {
-  getClaimOffer,
-  getUserPairwiseDid,
-  getAgencyUrl,
-  getUserOneTimeInfo,
-  getAgencyVerificationKey,
-  getRemotePairwiseDidAndName,
-  getPoolConfig,
-  getConnectionHistory,
-} from '../../store/store-selector'
+import { getConnectionHistory } from '../../store/store-selector'
 import {
   serializeClaimOffer,
   getHandleBySerializedConnection,
@@ -47,19 +34,13 @@ import {
   getClaimOfferState,
   sendClaimRequest as sendClaimRequestApi,
 } from '../../bridge/react-native-cxs/RNCxs'
-import {
-  CLAIM_STORAGE_FAIL,
-  CLAIM_STORAGE_SUCCESS,
-} from '../../claim/type-claim'
-import { MESSAGE_TYPE } from '../../api/api-constants'
+import { CLAIM_STORAGE_SUCCESS } from '../../claim/type-claim'
 import {
   claimOffer,
   claimOfferId as uid,
   claimOfferIssueDate as issueDate,
   pairwiseConnection,
-  claimRequest,
   claimOfferPayload,
-  poolConfig,
   serializedClaimOffers,
   serializedClaimOffer,
   vcxSerializedConnection,

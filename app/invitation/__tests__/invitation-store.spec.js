@@ -1,7 +1,5 @@
 // @flow
-import React from 'react'
-import renderer from 'react-test-renderer'
-import { put, call, select } from 'redux-saga/effects'
+
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
 import invitationReducer, {
@@ -13,7 +11,6 @@ import invitationReducer, {
   sendResponse,
 } from '../invitation-store'
 import { initialTestAction } from '../../common/type-common'
-import type { InvitationStore } from '../type-invitation'
 import { ResponseType } from '../../components/request/type-request'
 import { saveNewConnection } from '../../store/connections-store'
 import {
@@ -22,31 +19,12 @@ import {
   serializeConnection,
 } from '../../bridge/react-native-cxs/RNCxs'
 import {
-  ERROR_ALREADY_EXIST,
-  ERROR_INVITATION_RESPONSE_PARSE_CODE,
-  ERROR_INVITATION_RESPONSE_PARSE,
-} from '../../api/api-constants'
-import {
   getTestInvitationPayload,
   successConnectionData,
-  pairwiseConnection,
   myPairWiseConnectionDetails,
   vcxSerializedConnection,
 } from '../../../__mocks__/static-data'
-import { connectRegisterCreateAgentDone } from '../../store/user/user-store'
 import { VCX_INIT_SUCCESS } from '../../store/type-config-store'
-import { safeGet, safeSet } from '../../services/storage'
-
-// TODO:KS These should be moved to a separate file that handles
-// all of the static data of whole app, so that if we change
-// one type of data, we will immediately know which other part of app it breaks
-const agencyDid = '5qiK8KZQ86XjcnLmy5S2Tn'
-const agencyVerificationKey = '3dzsPMyBeJiGtsxWoyrfXZL6mqj3iXxdJ75vewJ1jSwn'
-const poolConfig = 'sandboxPool'
-const agencyUrl = 'https://test-agency.com'
-const pushToken = 'jadkfjhaofuoet93tnklvansdvlq92'
-const identifier = '3akhf906816kahfadhfas85'
-const verificationKey = '3akhf906816kahfadhfas853akhf906816kahfadhfas85'
 
 describe('Invitation Store', () => {
   let initialState
@@ -147,7 +125,7 @@ describe('Invitation Store', () => {
   it('saga:sendResponseVcx', () => {
     if (firstInvitation) {
       const { payload } = firstInvitation
-      const { senderDID, senderVerificationKey } = payload
+      const { senderDID } = payload
       const data = {
         senderDID,
         response: ResponseType.accepted,

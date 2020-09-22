@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react'
 import { StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import Modal from 'react-native-modal'
 import { BigNumber } from 'bignumber.js'
 import type { Store } from '../../store/type-store'
 import { getLedgerFees, resetLedgerFees } from '../../ledger/type-ledger-store'
@@ -27,11 +26,8 @@ import {
   OFFSET_1X,
   OFFSET_2X,
   OFFSET_3X,
-  OFFSET_6X,
-  OFFSET_7X,
   color,
   HAIRLINE_WIDTH,
-  whiteSmoke,
 } from '../../common/styles/constant'
 
 export type LedgerFeesModalProps = {
@@ -86,7 +82,7 @@ export class LedgerFeesModalComponent extends PureComponent<
       walletBalance,
       renderFeesText,
     } = this.props
-    const { data, error, status } = ledgerFees
+    const { data, status } = ledgerFees
     const feesModalStatus = getLedgerFeesModalStatus(
       data.transfer,
       status,
@@ -163,12 +159,13 @@ const mapStateToProps = (state: Store) => ({
   walletBalance: state.wallet.walletBalance.data,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ getLedgerFees, resetLedgerFees }, dispatch)
 
-export const LedgerFeesModal = connect(mapStateToProps, mapDispatchToProps)(
-  LedgerFeesModalComponent
-)
+export const LedgerFeesModal = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LedgerFeesModalComponent)
 
 export const LedgerFeesDescriptionText = (props: {
   children: any,
@@ -383,7 +380,7 @@ const LedgerFeesModalActionButton = ({ onPress, title }: *) => (
   </Container>
 )
 
-const ActionButtons = ({ status, fees, onYes, onNo, onRetry }: *) => {
+const ActionButtons = ({ status, onYes, onNo, onRetry }: *) => {
   switch (status) {
     case LedgerFeesModalStatus.IN_PROGRESS:
     case LedgerFeesModalStatus.ZERO_FEES:

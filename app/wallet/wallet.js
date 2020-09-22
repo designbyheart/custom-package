@@ -1,7 +1,7 @@
 // @flow
 
 import React, { PureComponent } from 'react'
-import { Image, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { scale } from 'react-native-size-matters'
 
 import type { WalletProps } from './type-wallet'

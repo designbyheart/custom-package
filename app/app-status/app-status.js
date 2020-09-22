@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { AppState } from 'react-native'
 import { getUnacknowledgedMessages } from './../store/config-store'
@@ -12,7 +12,10 @@ import type {
   ConnectProps,
 } from './type-app-status'
 
-class AppStatusComponent extends Component<AppStatusProps, AppStatusState> {
+class AppStatusComponent extends React.Component<
+  AppStatusProps,
+  AppStatusState
+> {
   state = {
     appState: AppState.currentState,
   }

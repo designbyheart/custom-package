@@ -1,7 +1,4 @@
 // @flow
-import React from 'react'
-import { View } from 'react-native'
-import { color } from '../../common/styles/constant'
 
 export { Container } from './container'
 export { CustomView } from './custom-view'

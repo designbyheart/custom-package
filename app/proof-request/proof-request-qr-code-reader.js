@@ -1,9 +1,5 @@
 // @flow
 
-import urlParse from 'url-parse'
-import isUrl from 'validator/lib/isURL'
-
-import type { CustomError } from '../common/type-common'
 import type {
   AdditionalProofDataPayload,
   AriesPresentationRequest,
@@ -11,7 +7,6 @@ import type {
 } from './type-proof-request'
 
 import { flattenAsync } from '../common/flatten-async'
-import { flatFetch } from '../common/flat-fetch'
 import { toUtf8FromBase64 } from '../bridge/react-native-cxs/RNCxs'
 import { schemaValidator } from '../services/schema-validator'
 import { QR_CODE_TYPES } from '../components/qr-scanner/type-qr-scanner'
@@ -38,7 +33,7 @@ export async function validateEphemeralProofQrCode(
   // So, we need to check if qr code is either base64 encoded, or json formatted
 
   // check if response is properly encode in base64
-  const [_, decodedResponse] = await flattenAsync(toUtf8FromBase64)(qrCode)
+  const [, decodedResponse] = await flattenAsync(toUtf8FromBase64)(qrCode)
   // we are ignoring error in decoding
   // because we might get json data right from start, and hence decode might fail
   // if decode fails, then we just try json parsing
@@ -158,9 +153,6 @@ export async function validateOutofbandProofRequestQrCode(
     }),
   ]
 }
-
-const validProofRequestUrlLength = 4096
-const trustedDomains = ['http', 'https']
 
 const ariesProofRequestSchema = {
   type: 'object',

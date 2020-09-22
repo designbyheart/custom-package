@@ -1,6 +1,5 @@
 // @flow
 
-import React from 'react'
 import { LayoutAnimation } from 'react-native'
 import { checkIfAnimationToUse } from '../bridge/react-native-cxs/RNCxs'
 

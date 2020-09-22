@@ -4,11 +4,8 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import LottieView from 'lottie-react-native'
 
-import type { Styles } from '../../common/type-common'
-
 import { CustomView } from '../layout/custom-view'
 import CustomText from '../text'
-import { color } from '../../common/styles'
 
 export function Error(props: {
   afterErrorShown?: () => void,

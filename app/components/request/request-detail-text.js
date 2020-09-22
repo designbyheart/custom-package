@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import type { RequestDetailTextProps } from './type-request'
@@ -7,7 +7,6 @@ import type { RequestDetailTextProps } from './type-request'
 import { CustomView } from '../layout/custom-view'
 import CustomText from '../text'
 import { OFFSET_1X, OFFSET_3X } from '../../common/styles'
-import { noop } from '../../common'
 
 export const RequestDetailText = (props: RequestDetailTextProps) => {
   const { testID } = props

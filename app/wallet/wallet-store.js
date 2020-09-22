@@ -2,7 +2,6 @@
 
 import {
   put,
-  takeLatest,
   call,
   all,
   select,
@@ -25,7 +24,6 @@ import {
   HYDRATE_WALLET_HISTORY_FAIL,
   REFRESH_WALLET_ADDRESSES,
   REFRESH_WALLET_HISTORY,
-  PROMPT_WALLET_BACKUP_BANNER,
   REFRESH_WALLET_BALANCE_FAIL,
   REFRESH_WALLET_ADDRESSES_FAIL,
   REFRESH_WALLET_HISTORY_FAIL,
@@ -49,7 +47,6 @@ import {
   BACKUP_WALLET_PATH,
   SHARE_WALLET_BACKUP,
   GET_WALLET_ENCRYPTION_KEY,
-  ERROR_BACKUP_WALLET,
   ERROR_BACKUP_WALLET_SHARE,
   SEND_TOKENS,
   SEND_TOKENS_FAIL,
@@ -59,8 +56,6 @@ import {
   WALLET_ADDRESSES_FETCH_START,
   ERROR_SENDING_TOKENS_WITH_FEES,
 } from './type-wallet'
-import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
-import type { AgencyPoolConfig } from '../store/type-config-store'
 import { VCX_INIT_SUCCESS } from '../store/type-config-store'
 import type {
   WalletStore,
@@ -68,16 +63,8 @@ import type {
   HydrateWalletBalanceData,
   HydrateWalletAddressesData,
   HydrateWalletHistoryTransactions,
-  RefreshWalletHistoryAction,
-  RefreshWalletAddressesAction,
-  RefreshWalletBalanceAction,
-  BackupWalletAction,
-  WalletHistory,
-  WalletBalance,
-  WalletAddresses,
   SendTokensAction,
   ShareBackupAction,
-  PromptBackupBannerAction,
 } from './type-wallet'
 import type { CustomError } from '../common/type-common'
 import { RESET } from '../common/type-common'
@@ -95,10 +82,7 @@ import {
   getLedgerFees,
 } from '../bridge/react-native-cxs/RNCxs'
 import { promptBackupBanner } from '../backup/backup-store'
-import {
-  getConfig,
-  getWalletBalance as getWalletBalanceSelector,
-} from '../store/store-selector'
+import { getWalletBalance as getWalletBalanceSelector } from '../store/store-selector'
 import { WALLET_ENCRYPTION_KEY } from '../common/secure-storage-constants'
 import { ensureVcxInitSuccess } from '../store/route-store'
 import type { LedgerFeesData } from '../ledger/type-ledger-store'

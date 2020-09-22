@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { View, Image, StyleSheet, Platform } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import Modal from 'react-native-modal'
 import {
   color,
@@ -21,7 +21,6 @@ type CustomModalProps = {
   buttonText?: string,
   testID: string,
   isVisible: boolean,
-  accessibilityLabel?: string,
   backdropOpacity?: number,
   animationIn: string,
   animationOut: string,
@@ -55,7 +54,6 @@ export default class CustomModal extends PureComponent<CustomModalProps, void> {
       buttonText,
       testID,
       isVisible,
-      accessibilityLabel = 'Continue to see your new connection',
       backdropOpacity,
       animationIn,
       animationOut,

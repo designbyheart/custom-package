@@ -1,13 +1,12 @@
 // @flow
 import React, { Component } from 'react'
-import { View, Platform } from 'react-native'
+import { Platform } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import messaging from '@react-native-firebase/messaging'
 import PushNotificationIOS from '@react-native-community/push-notification-ios'
 
 import type {
-  Notification,
   NotificationOpen,
   RemoteMessage,
 } from '@react-native-firebase/app'
@@ -131,7 +130,7 @@ export class PushNotification extends Component<PushNotificationProps, void> {
           // user doesn't have a device token
         }
       })
-      .catch((e) => {
+      .catch(() => {
         // we didn't get a token
         // for now we can just ignore it
         // but we might need to add a feature which will remind user to give

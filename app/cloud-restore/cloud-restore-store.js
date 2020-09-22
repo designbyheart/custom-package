@@ -1,6 +1,5 @@
 // @flow
 import {
-  SOME_CLOUD_RESTORE_START_ACTION,
   CloudRestoreStatus,
   initialState,
   RESTORE_CLOUD_SUBMIT_PASSPHRASE,
@@ -9,47 +8,20 @@ import {
 } from './cloud-restore-type'
 import type { RestoreCloudSubmitPassphraseAction } from './cloud-restore-type'
 import { pinHash as generateKey, generateSalt } from '../lock/pin-hash'
-import type { RestoreSubmitPassphrase } from '../restore/type-restore'
 import { WALLET_FILE_NAME } from '../backup/type-backup'
-import {
-  takeLatest,
-  all,
-  put,
-  call,
-  take,
-  select,
-  fork,
-} from 'redux-saga/effects'
-import {
-  ERROR_RESTORE,
-  DECRYPT_FAILED_MESSAGE,
-  RestoreStatus,
-} from '../restore/type-restore'
-import {
-  restoreWallet,
-  simpleInit,
-  vcxShutdown,
-} from '../bridge/react-native-cxs/RNCxs'
-import { getRestoreFileName, getConfig } from '../store/store-selector'
+import { takeLatest, all, put, call, select, fork } from 'redux-saga/effects'
+import { ERROR_RESTORE, RestoreStatus } from '../restore/type-restore'
+import { restoreWallet, vcxShutdown } from '../bridge/react-native-cxs/RNCxs'
+import { getConfig } from '../store/store-selector'
 import RNFetchBlob from 'rn-fetch-blob'
-import {
-  getWalletItem,
-  walletGet,
-  safeSet,
-  secureSet,
-} from '../services/storage'
-import { PASSPHRASE_SALT_STORAGE_KEY, PASSPHRASE_STORAGE_KEY } from '../common'
+import { safeSet } from '../services/storage'
 import { PIN_ENABLED_KEY, IN_RECOVERY } from '../lock/type-lock'
 import { hydrate, hydrateNonReduxData } from '../store/hydration-store'
 import messaging from '@react-native-firebase/messaging'
 import { pushNotificationPermissionAction } from '../push-notification/push-notification-store'
 import { customLogger } from '../store/custom-logger'
 import { restoreStatus } from '../restore/restore-store'
-import { captureError } from '../services/error/error-handler'
-import { ensureVcxInitSuccess } from '../store/route-store'
-import { generateRecoveryPhraseSuccess } from '../backup/backup-store'
 import {
-  vcxInitReset,
   baseUrls,
   changeEnvironment,
   cloudBackupEnvironments,
@@ -103,7 +75,7 @@ export function* cloudRestore(
   action: RestoreCloudSubmitPassphraseAction
 ): Generator<*, *, *> {
   try {
-    // try to loacte the cloud backup...
+    // try to locate the cloud backup...
     const { passphrase } = action
     const salt = yield call(generateSalt, false)
     const hashedPassphrase = yield call(
@@ -187,7 +159,7 @@ export function* cloudRestore(
   } catch (e) {
     yield put(
       errorRestore(
-        'Error locating backup, plese try enter recover phrase again'
+        'Error locating backup, please try enter recover phrase again'
       )
     )
   }

@@ -55,7 +55,7 @@ const mapStateToProps = (state: Store) => {
   }
 
   const placeholderArray = []
-  const connections = receivedConnections.map((connection, index) => {
+  receivedConnections.map((connection) => {
     placeholderArray.push(
       (state.history.data &&
         state.history.data.connections &&

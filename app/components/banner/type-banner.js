@@ -1,5 +1,5 @@
 // @flow
-import type { ReactNavigation, Styles } from '../../common/type-common'
+import type { Styles } from '../../common/type-common'
 
 export type DangerBannerProps = {
   testID: string,

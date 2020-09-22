@@ -1,5 +1,5 @@
 // @flow
-import { StyleSheet, Dimensions, Platform } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import {
   PADDING_HORIZONTAL,
   PADDING_VERTICAL,

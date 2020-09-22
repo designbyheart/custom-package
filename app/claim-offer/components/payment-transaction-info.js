@@ -1,13 +1,7 @@
 // @flow
 import * as React from 'react'
 import { PureComponent } from 'react'
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  Image,
-  ScrollView,
-} from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import { scale } from 'react-native-size-matters'
 
 import type {
@@ -17,8 +11,6 @@ import type {
 
 import CredentialCostInfo from './credential-cost-info'
 import { ModalButtons } from '../../components/buttons/modal-buttons'
-import SvgCustomIcon from '../../components/svg-setting-icons'
-import { mediumGray } from '../../common/styles'
 import { CustomText } from '../../components'
 import { colors } from '../../common/styles/constant'
 import Loader from '../../components/loader/loader'
@@ -61,7 +53,6 @@ class PaymentTransactionInfo extends PureComponent<
       txnFeesStatus,
       claimRequestStatus,
       onRetry,
-      children,
       feesData = {
         fees: '0',
         total: '',

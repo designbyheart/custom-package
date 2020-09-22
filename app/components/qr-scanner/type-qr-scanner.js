@@ -54,8 +54,6 @@ export type QrCodeShortInvite = {
   version?: string,
 }
 
-type ValuesType = <V>(v: V) => V
-
 export type QR_SCAN_STATUS =
   | typeof SCAN_STATUS.SCANNING
   | typeof SCAN_STATUS.FAIL

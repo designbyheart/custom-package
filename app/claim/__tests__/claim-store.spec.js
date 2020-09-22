@@ -1,33 +1,13 @@
 // @flow
-import renderer from 'react-test-renderer'
-import { put, call, select } from 'redux-saga/effects'
+
 import { initialTestAction } from '../../common/type-common'
 import claimReducer, {
   claimReceived,
   claimStorageFail,
   claimStorageSuccess,
-  mapClaimToSender,
 } from '../claim-store'
 import { CLAIM_STORAGE_ERROR } from '../../services/error/error-code'
-import {
-  getConnectionLogoUrl,
-  getPoolConfig,
-  getClaimMap,
-} from '../../store/store-selector'
-import {
-  claim,
-  claimWithUuid,
-  senderDid1,
-  claimDefinitionSchemaSequenceNumber,
-  getClaimFormat,
-  senderLogoUrl1,
-  myPairWiseConnectionDetails,
-  poolConfig,
-  claimMap,
-  claimOfferIssueDate,
-} from '../../../__mocks__/static-data'
-import type { ClaimWithUuid } from '../../claim/type-claim'
-import { promptBackupBanner } from '../../backup/backup-store'
+import { claim, claimOfferIssueDate } from '../../../__mocks__/static-data'
 
 describe('Claim Store', () => {
   let initialState = { claimMap: {} }

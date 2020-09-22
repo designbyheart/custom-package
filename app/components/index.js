@@ -1,5 +1,4 @@
 // @flow
-import React from 'react'
 
 export { default as Badge } from './badge'
 export { default as InfoSectionList } from './info-section-list'

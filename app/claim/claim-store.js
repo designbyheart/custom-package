@@ -1,5 +1,4 @@
 // @flow
-import { Platform } from 'react-native'
 import {
   put,
   call,
@@ -66,9 +65,7 @@ import type {
   ClaimOfferPayload,
   SerializedClaimOffer,
 } from '../claim-offer/type-claim-offer'
-import {
-  VCX_CLAIM_OFFER_STATE,
-} from '../claim-offer/type-claim-offer'
+import { VCX_CLAIM_OFFER_STATE } from '../claim-offer/type-claim-offer'
 import {
   deleteClaimOffer,
   saveSerializedClaimOffer,
@@ -108,7 +105,7 @@ export const mapClaimToSender = (
   logoUrl: string,
   issueDate: number,
   name: string,
-  senderName?: string,
+  senderName?: string
 ): MapClaimToSenderAction => ({
   type: MAP_CLAIM_TO_SENDER,
   claimUuid,
@@ -152,16 +149,20 @@ export function* hydrateClaimMapSaga(): Generator<*, *, *> {
         // might not have this field populated, so when app is upgraded
         // new code will find it undefined
         // so, here we are iterating on connectionHistory, and then adding `name` to credential
-        if (claimMap.hasOwnProperty(key) && !claimMap[key].name){
-          const event = connectionHistory.data.connections[claimMap[key].senderDID].data
-            .find((event) => event.originalPayload.type === CLAIM_STORAGE_SUCCESS &&
-              claimMap[key].issueDate === event.originalPayload.issueDate)
+        if (claimMap.hasOwnProperty(key) && !claimMap[key].name) {
+          const event = connectionHistory.data.connections[
+            claimMap[key].senderDID
+          ].data.find(
+            (event) =>
+              event.originalPayload.type === CLAIM_STORAGE_SUCCESS &&
+              claimMap[key].issueDate === event.originalPayload.issueDate
+          )
 
           if (event) {
             claimMap[key].name = event.name
           }
         }
-        if (claimMap.hasOwnProperty(key) && !claimMap[key].senderName){
+        if (claimMap.hasOwnProperty(key) && !claimMap[key].senderName) {
           const connection = connections[claimMap[key].myPairwiseDID]
           claimMap[key].senderName = connection.senderName
         }
@@ -188,7 +189,7 @@ export const claimReceivedVcx = (claim: ClaimVcx): ClaimReceivedVcxAction => ({
 export function* claimReceivedVcxSaga(
   action: ClaimReceivedAction
 ): Generator<*, *, *> {
-  const { forDID, remotePairwiseDID, connectionHandle, uid } = action.claim
+  const { forDID, connectionHandle, uid } = action.claim
   const vcxResult = yield* ensureVcxInitSuccess()
   if (vcxResult && vcxResult.fail) {
     return
@@ -200,20 +201,16 @@ export function* claimReceivedVcxSaga(
   // so, we take out all the claim offers for the connection
   // and then check each claim offer for update and download latest message
   // for each claim offer and see which claim offer received claim
-  const serializedClaimOffers: {string: SerializedClaimOffer[]} = yield select(
-    getSerializedClaimOffers,
-    forDID
-  )
+  const serializedClaimOffers: {
+    string: SerializedClaimOffer[],
+  } = yield select(getSerializedClaimOffers, forDID)
 
   if (connectionHandle != null) {
     for (const offerId of Object.keys(serializedClaimOffers)) {
       // run each claim offer check in parallel and wait for all of them to finish
       const serializedClaimOffer = serializedClaimOffers[offerId]
 
-      const claimOfferPayload = yield select(
-        getClaimOffer,
-        offerId
-      )
+      const claimOfferPayload = yield select(getClaimOffer, offerId)
 
       if (claimOfferPayload) {
         yield call(
@@ -234,7 +231,7 @@ export function* checkForClaim(
   connectionHandle: number,
   userDID: string,
   uid: string,
-  claimOfferPayload: ClaimOfferPayload,
+  claimOfferPayload: ClaimOfferPayload
 ): Generator<*, *, *> {
   if (serializedClaimOffer.state === VCX_CLAIM_OFFER_STATE.ACCEPTED) {
     // if claim offer is already in accepted state, then we don't want to update state
@@ -273,7 +270,7 @@ export function* checkForClaim(
             connection.logoUrl,
             issueDate,
             claimOfferPayload.data.name,
-            connection.senderName,
+            connection.senderName
           )
         )
         yield fork(saveClaimUuidMap)
@@ -417,7 +414,15 @@ export default function claimReducer(
     }
 
     case MAP_CLAIM_TO_SENDER:
-      const { claimUuid, senderDID, myPairwiseDID, logoUrl, issueDate, name, senderName } = action
+      const {
+        claimUuid,
+        senderDID,
+        myPairwiseDID,
+        logoUrl,
+        issueDate,
+        name,
+        senderName,
+      } = action
       return {
         ...state,
         claimMap: {

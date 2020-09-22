@@ -3,11 +3,6 @@
 import { isValidUrlQrCode } from '../qr-code-types/qr-url'
 
 describe('fn:isValidUrlQrCode', () => {
-  // creating variables in test, so that our tests break if someone changes
-  // scheme and hostname
-
-  const validUrlQrCodeScheme = ['https', 'http']
-
   it('should return true, if protocol is http', () => {
     const urlQrCode = `http://xya.com/dev`
     expect(isValidUrlQrCode(urlQrCode)).toMatchSnapshot()

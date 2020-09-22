@@ -2,23 +2,12 @@
 
 import * as React from 'react'
 import { Component } from 'react'
-import {
-  Platform,
-  ScrollView,
-  Image,
-  UIManager,
-  Animated,
-  Dimensions,
-} from 'react-native'
+import { Animated, Dimensions } from 'react-native'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
-import type {
-  ComponentStatus,
-  ReactNavigation,
-  CustomError,
-} from '../../common/type-common'
+import type { ReactNavigation } from '../../common/type-common'
 
-import { Container, CustomView, CustomText, CustomButton } from '../index'
+import { Container } from '../index'
 import { colors } from '../../common/styles'
 import { withStatusBar } from '../status-bar/status-bar'
 import { styles } from './bottom-up-slider-screen-styles'

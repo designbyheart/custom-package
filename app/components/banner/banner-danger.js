@@ -2,13 +2,8 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet } from 'react-native'
 import { CustomView, Icon, CustomText } from '../index'
-import {
-  IMAGE_WIDTH,
-  IMAGE_HEIGHT,
-  BACKUP_BANNER_TEST_ID,
-  BANNER_HEIGHT,
-} from './banner-constants'
-import { color, dangerBannerHeight } from '../../common/styles'
+import { IMAGE_WIDTH, IMAGE_HEIGHT } from './banner-constants'
+import { color } from '../../common/styles'
 import type { DangerBannerProps } from './type-banner'
 
 export default class DangerBanner extends PureComponent<

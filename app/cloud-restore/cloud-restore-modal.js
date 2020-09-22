@@ -30,20 +30,18 @@ import { setAutoCloudBackupEnabled } from '../backup/backup-actions'
 import { color } from '../common/styles/constant'
 //TODO: jy-copy and pasted questionStyles from the question modal, should put these in on place once generic modal is made
 import { questionStyles } from '../backup/styles'
-const cmImage = require('../images/cb-ConnectMe.png')
 
 import type { CloudBackupScreenProps } from '../backup/type-backup'
-import type { RestoreProps } from '../restore/type-restore'
 
 import { QuestionScreenHeader } from '../question/components/question-screen-header'
-
 import { RestoreStatus } from '../restore/type-restore'
 
+const cmImage = require('../images/cb-ConnectMe.png')
 const { height } = Dimensions.get('window')
 export class CloudRestoreModal extends Component<CloudBackupScreenProps, void> {
   _translateY = new Animated.Value(0)
 
-  componentDidUpdate(prevProps: RestoreProps) {
+  componentDidUpdate() {
     if (
       !this.props.restore.error &&
       this.props.restore.status === RestoreStatus.RESTORE_DATA_STORE_SUCCESS

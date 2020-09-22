@@ -1,12 +1,5 @@
 // @flow
-import {
-  all,
-  takeLatest,
-  takeEvery,
-  put,
-  call,
-  select,
-} from 'redux-saga/effects'
+import { put, call, select } from 'redux-saga/effects'
 import connectionHistoryReducer, {
   loadHistory,
   loadHistorySuccess,
@@ -27,40 +20,24 @@ import { initialTestAction } from '../../common/type-common'
 import {
   getTestInvitationPayload,
   successConnectionData,
-  claimOffer,
-  claimRequest,
-  claim,
   claimOfferPayload,
   pendingClaimHistory,
   proofRequest,
   senderDid1,
-  fulfilledRequestedAttributes,
   invitationReceivedEvent,
   newConnectionSuccessEvent,
   sendClaimRequestSuccessEvent,
-  claimReceivedEvent,
   claimReceivedSuccessEvent,
   proofRequestReceivedEvent,
-  proofRequestAutofillEvent,
   proofSharedEvent,
   proofRequestAutofill,
   proof,
   uid,
 } from '../../../__mocks__/static-data'
-import { invitationRejected } from '../../invitation/invitation-store'
 import { saveNewConnection } from '../../store/connections-store'
-import {
-  claimOfferReceived,
-  sendClaimRequestSuccess,
-} from '../../claim-offer/claim-offer-store'
-import { claimReceived, claimStorageSuccess } from '../../claim/claim-store'
+import { sendClaimRequestSuccess } from '../../claim-offer/claim-offer-store'
 import { CLAIM_STORAGE_SUCCESS } from '../../claim/type-claim'
-import {
-  proofRequestReceived,
-  sendProof,
-  proofRequestAutoFill,
-  sendProofSuccess,
-} from '../../proof-request/proof-request-store'
+import { proofRequestReceived } from '../../proof-request/proof-request-store'
 import {
   HISTORY_EVENT_STORAGE_KEY,
   ERROR_LOADING_HISTORY,
@@ -77,7 +54,6 @@ import {
 } from '../../store/store-selector'
 import { getHydrationItem } from '../../services/storage'
 import {
-  CLAIM_OFFER_RECEIVED,
   SEND_CLAIM_REQUEST_SUCCESS,
   CLAIM_OFFER_ACCEPTED,
 } from './../../claim-offer/type-claim-offer'
@@ -282,7 +258,6 @@ describe('Store: ConnectionHistory', () => {
   })
 
   it('historyEventOccurredSaga should raise success for proof shared', () => {
-    let historyEvent
     const gen = historyEventOccurredSaga(historyEventOccurred(proofSharedEvent))
     expect(gen.next().value).toEqual(
       select(getProofRequest, proofSharedEvent.uid)
@@ -290,7 +265,7 @@ describe('Store: ConnectionHistory', () => {
     expect(gen.next(proofRequestAutofill).value).toEqual(
       select(getProof, proofSharedEvent.uid)
     )
-    historyEvent = convertProofSendToHistoryEvent(
+    convertProofSendToHistoryEvent(
       proofSharedEvent,
       proofRequestAutofill,
       proof

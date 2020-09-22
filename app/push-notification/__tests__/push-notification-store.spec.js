@@ -1,14 +1,5 @@
 // @flow
-import { call, select, take } from 'redux-saga/effects'
 import { expectSaga } from 'redux-saga-test-plan'
-import * as matchers from 'redux-saga-test-plan/matchers'
-import {
-  getAgencyUrl,
-  getAgencyVerificationKey,
-  getHydrationState,
-  getUserOneTimeInfo,
-  getPoolConfig,
-} from '../../store/store-selector'
 import pushNotificationReducer, {
   pushNotificationPermissionAction,
   pushNotificationReceived,
@@ -16,13 +7,7 @@ import pushNotificationReducer, {
   onPushTokenUpdate,
 } from '../push-notification-store'
 import { updatePushTokenVcx } from '../../bridge/react-native-cxs/RNCxs'
-import { PAYLOAD_TYPE } from '../../api/api-constants'
-import {
-  userOneTimeInfo,
-  poolConfig,
-  claimOfferPushNotification,
-} from '../../../__mocks__/static-data'
-import { CONNECT_REGISTER_CREATE_AGENT_DONE } from '../../store/user/type-user-store'
+import { claimOfferPushNotification } from '../../../__mocks__/static-data'
 import { initialTestAction } from '../../common/type-common'
 import uniqueId from 'react-native-unique-id'
 import { VCX_INIT_SUCCESS } from '../../store/type-config-store'

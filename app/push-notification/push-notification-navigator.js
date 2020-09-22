@@ -1,29 +1,13 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { Platform } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import type {
-  PushNotificationNavigatorProps,
-  NextPropsPushNotificationNavigator,
-  ClaimOfferPushPayload,
-  AdditionalDataPayload,
-  ClaimPushPayload,
-} from './type-push-notification'
+import type { PushNotificationNavigatorProps } from './type-push-notification'
 import {
   updatePayloadToRelevantStoreAndRedirect,
   clearNavigateToRoutePN,
 } from './push-notification-store'
-import type {
-  NavigationParams,
-  NotificationPayload,
-} from '../common/type-common'
-import type { Claim } from '../claim/type-claim'
-import type {
-  ProofRequestPushPayload,
-  AdditionalProofDataPayload,
-} from '../proof-request/type-proof-request'
 
 export class PushNotificationNavigator extends PureComponent<
   PushNotificationNavigatorProps,
@@ -55,11 +39,11 @@ export class PushNotificationNavigator extends PureComponent<
   }
 }
 
-const mapStateToProps = ({ pushNotification, route, lock }) => ({
+const mapStateToProps = ({ pushNotification }) => ({
   pushNotification,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updatePayloadToRelevantStoreAndRedirect,

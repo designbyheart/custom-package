@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet } from 'react-native'
 import { Container } from './layout/container'
-import { color, MARGIN_BOTTOM } from '../common/styles/constant'
+import { MARGIN_BOTTOM } from '../common/styles/constant'
 import type { GenericObject } from '../common/type-common'
 
 // TODO:KS Change GenericObject to specific props by combining CustomView props

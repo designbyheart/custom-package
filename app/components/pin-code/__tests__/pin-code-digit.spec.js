@@ -3,7 +3,6 @@ import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
 import PinCodeDigit from '../pin-code-digit'
-import type { PinCodeDigitProps } from '../type-pin-code-box'
 
 describe('<PinCodeDigit />', () => {
   let onPress

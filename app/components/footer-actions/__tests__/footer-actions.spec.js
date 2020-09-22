@@ -5,7 +5,6 @@ import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import FooterActions from '../footer-actions'
 import { getStore } from '../../../../__mocks__/static-data'
-import type { FooterActionsProps } from '../type-footer-actions'
 
 describe('<FooterActions />', () => {
   function getProps(props?: * = {}) {
