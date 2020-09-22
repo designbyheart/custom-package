@@ -82,7 +82,7 @@ let credDef
 let credential
 let proof
 let URL
-const TIMEOUT = 30000
+const TIMEOUT = 45000
 
 describe('Connection via QR code and SMS link', () => {
   it('Case 1.1: user should be able to establish connection via scanning QR code', async () => {
@@ -503,6 +503,8 @@ describe('Connection via QR code and SMS link', () => {
     await waitForElementAndTap('id', CONNECTION_SUBMENU_BUTTON, TIMEOUT) // open menu again
 
     await waitForElementAndTap('id', CONNECTION_DELETE_BUTTON, TIMEOUT) // delete connection
+
+    await expect(element(by.text(MY_CONNECTIONS_CONNECTION))).toNotExist()
   })
 
   it('Case 8: establish new connection using new SMS link', async () => {

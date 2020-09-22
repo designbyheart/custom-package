@@ -146,6 +146,10 @@ export const SCREENSHOT_ONFIDO_RPC = 'onfido_rpc.png'
 export const SCREENSHOT_ABOUT_MAIN = 'about_main.png'
 export const SCREENSHOT_ABOUT_TAC = 'about_tac.png'
 export const SCREENSHOT_ABOUT_PP = 'about_pp.png'
+export const SCREENSHOT_MY_CREDENTIALS_LIST = 'my_credentials_list.png'
+export const SCREENSHOT_MY_CREDENTIALS_ENTRY = 'my_credentials_entry.png'
+export const SCREENSHOT_MY_CREDENTIALS_LIST_ONE_DELETED =
+  'my_credentials_list_one_deleted.png'
 
 // menu
 export const MENU_CONTAINER = 'menu-container'
@@ -172,6 +176,10 @@ export const PROOF_REQUEST_ATTRIBUTE_INPUT = 'RCTUITextView'
 
 // my credentials
 export const MY_CREDENTIALS_HEADER = 'My Credentials'
+export const MY_CREDENTIALS_DETAILS_HEADER = 'Credential Details'
+export const MY_CREDENTIALS_DETAILS_ISSUED_BY = 'Issued by'
+export const MY_CREDENTIALS_BACK_ARROW = 'left-icon'
+export const MY_CREDENTIALS_DELETE = 'Delete'
 
 // chat
 export const CHAT_CANCEL = 'Cancel'
@@ -195,5 +203,6 @@ export const ONFIDO_ACCEPT_BUTTON = 'I accept'
 
 // from api
 export const CLAIM_OFFER_PROFILE_INFO = 'Profile Info'
+export const CLAIM_OFFER_ADDRESS = 'Address'
 export const PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED =
   'Automated Single claim fulfilled'
