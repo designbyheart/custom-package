@@ -217,7 +217,7 @@ export type ProofRequestProps = {
   dissatisfiedAttributes: DissatisfiedAttribute[],
   denyProofRequest: (uid: string) => void,
   acceptOutOfBandInvitation: any,
-  acceptOutofbandPresentationRequest: (
+  applyAttributesForPresentationRequest: (
     uid: string,
     requestedAttrsJson: RequestedAttrsJson
   ) => void,
@@ -396,12 +396,20 @@ export type DenyProofRequestSuccessAction = {
   uid: string,
 }
 
+export const APPLY_ATTRIBUTES_FOR_PRESENTATION_REQUEST =
+  'APPLY_ATTRIBUTES_FOR_PRESENTATION_REQUEST'
+export type ApplyAttributesForPresentationRequestAction = {
+  type: typeof APPLY_ATTRIBUTES_FOR_PRESENTATION_REQUEST,
+  uid: string,
+  requestedAttrsJson: RequestedAttrsJson,
+}
+
 export const ACCEPT_OUTOFBAND_PRESENTATION_REQUEST =
   'ACCEPT_OUTOFBAND_PRESENTATION_REQUEST'
 export type AcceptOutofbandPresentationRequestAction = {
   type: typeof ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   uid: string,
-  requestedAttrsJson: RequestedAttrsJson,
+  senderDid: string,
 }
 
 export const DELETE_OUTOFBAND_PRESENTATION_REQUEST =
@@ -438,6 +446,7 @@ export type ProofRequestAction =
   | DenyProofRequestAction
   | DenyProofRequestSuccessAction
   | DenyProofRequestFailAction
+  | ApplyAttributesForPresentationRequestAction
   | AcceptOutofbandPresentationRequestAction
   | DeleteOutofbandPresentationRequestAction
 

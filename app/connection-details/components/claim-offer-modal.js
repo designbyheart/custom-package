@@ -33,7 +33,6 @@ import {
   claimOfferShowStart,
   resetClaimRequestStatus,
   denyClaimOffer,
-  acceptOutofbandClaimOffer,
   deleteOutOfBandClaimOffer,
 } from '../../claim-offer/claim-offer-store'
 import { txnAuthorAgreementRoute } from '../../common'
@@ -45,8 +44,6 @@ import { animateLayout } from '../../common/layout-animation'
 import { colors } from '../../common/styles/constant'
 import {
   acceptOutOfBandInvitation,
-  sendInvitationResponse,
-  invitationRejected,
 } from '../../invitation/invitation-store'
 
 export class ClaimOfferModal extends Component<any, *> {
@@ -326,10 +323,9 @@ export class ClaimOfferModal extends Component<any, *> {
       // accept invite
       // then we have real info for new claim offer
       // anyway send action out of band accepted
-      this.props.acceptOutOfBandInvitation(invitationPayload, attachedRequest)
-      this.props.acceptOutofbandClaimOffer(
-        this.props.uid,
-        this.props.claimOfferData.issuer.did
+      this.props.acceptOutOfBandInvitation(
+        invitationPayload,
+        attachedRequest
       )
     } else {
       this.props.acceptClaimOffer(
@@ -389,15 +385,12 @@ const mapDispatchToProps = (dispatch) =>
     {
       acceptClaimOffer,
       acceptOutOfBandInvitation,
-      acceptOutofbandClaimOffer,
       claimOfferIgnored,
       claimOfferShowStart,
       resetClaimRequestStatus,
       newConnectionSeen,
       denyClaimOffer,
       deleteOutOfBandClaimOffer,
-      sendInvitationResponse,
-      invitationRejected,
     },
     dispatch
   )

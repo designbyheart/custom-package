@@ -73,4 +73,4 @@ export const ERROR_INVITATION_ALREADY_ACCEPTED_TITLE =
 
 export const ERROR_INVITATION_ALREADY_ACCEPTED_MESSAGE =
   'The connection invitation has already been accepted. ' +
-  'Please, request a new invitation to establish a connection.'
+  'Please, request a new invitation.'

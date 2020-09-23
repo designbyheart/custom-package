@@ -7,7 +7,7 @@ export const ACTION_IS_NOT_SUPPORTED = '1103'
 
 export const CONNECTION_ALREADY_EXISTS_MESSAGE =
   'The connection invitation has already been accepted. ' +
-  'Please, request a new invitation to establish a connection.'
+  'Please, request a new invitation.'
 
 export const CREDENTIAL_DEFINITION_NOT_FOUND_MESSAGE =
   'Definition for offered Credential not found on the network application is connected to.'

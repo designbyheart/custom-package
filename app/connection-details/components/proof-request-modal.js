@@ -45,6 +45,7 @@ const ProofRequestModal = (props: any) => {
         content={props.data.requestedAttributes}
         uid={props.uid}
         invitationPayload={props.invitationPayload}
+        attachedRequest={props.attachedRequest}
         colorBackground={props.claimThemePrimary}
         secondColorBackground={props.claimThemeSecondary}
         hideModal={hideModal}

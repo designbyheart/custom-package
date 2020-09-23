@@ -43,7 +43,7 @@ import {
   proofRequestShown,
   proofRequestShowStart,
   denyProofRequest,
-  acceptOutofbandPresentationRequest,
+  applyAttributesForPresentationRequest,
   deleteOutofbandPresentationRequest,
 } from '../../proof-request/proof-request-store'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
@@ -326,7 +326,7 @@ class ModalContentProof extends Component<
         this.props.invitationPayload,
         this.props.attachedRequest
       )
-      this.props.acceptOutofbandPresentationRequest(
+      this.props.applyAttributesForPresentationRequest(
         this.props.uid,
         this.state.selectedClaims
       )
@@ -460,7 +460,7 @@ const mapDispatchToProps = (dispatch) =>
       rejectProofRequest,
       updateAttributeClaim,
       acceptOutOfBandInvitation,
-      acceptOutofbandPresentationRequest,
+      applyAttributesForPresentationRequest,
       deleteOutofbandPresentationRequest,
       getProof,
       userSelfAttestedAttributes,

@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
     width: '46%',
     height:
       Platform.OS === 'android'
-        ? moderateScale(100, 4)
-        : moderateScale(100, 10),
+        ? moderateScale(120, 4)
+        : moderateScale(120, 10),
     marginRight: 20,
     marginBottom: 35,
     borderRadius: 20,
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     shadowOpacity: Platform.OS === 'android' ? 0.05 : 0.1,
     elevation: Platform.OS === 'android' ? 10 : 20,
     backgroundColor: colors.cmWhite,
+    paddingVertical: verticalScale(16),
   },
   initialsContainer: {
     width: 32,
@@ -43,9 +44,7 @@ const styles = StyleSheet.create({
     color: colors.cmGray1,
   },
   avatarSection: {
-    paddingTop: 16,
     alignItems: 'center',
-    marginTop: 10,
   },
   dateButtonSection: {
     width: '32%',
@@ -63,8 +62,8 @@ const styles = StyleSheet.create({
     paddingRight: '5%',
     marginTop: 5,
     fontFamily: fontFamily,
-    fontSize: verticalScale(fontSizes.size5),
-    fontWeight: 'bold',
+    fontSize: verticalScale(fontSizes.size4),
+    fontWeight: '400',
     color: colors.cmGray1,
     textAlign: 'center',
   },

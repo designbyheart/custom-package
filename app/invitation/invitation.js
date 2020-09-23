@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react'
-import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import isUrl from 'validator/lib/isURL'
@@ -16,24 +15,16 @@ import type {
   InvitationNavigation,
 } from './type-invitation'
 
-import {
-  CONNECTION_INVITE_TYPES,
-  ERROR_INVITATION_ALREADY_ACCEPTED_CODE,
-} from './type-invitation'
+import { CONNECTION_INVITE_TYPES, } from './type-invitation'
 import { schemaValidator } from '../services/schema-validator'
-import { Container, Loader } from '../components'
-import { homeRoute, noop, invitationRoute } from '../common'
+import {
+  Container,
+} from '../components'
+import { homeRoute, invitationRoute } from '../common'
 import { ResponseType } from '../components/request/type-request'
 import { sendInvitationResponse, invitationRejected } from './invitation-store'
 import { smsPendingInvitationSeen } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { SMSPendingInvitationStatus } from '../sms-pending-invitation/type-sms-pending-invitation'
-import {
-  ERROR_ALREADY_EXIST,
-  ERROR_INVITATION_RESPONSE_FAILED,
-  ERROR_ALREADY_EXIST_TITLE,
-  ERROR_INVITATION_ALREADY_ACCEPTED_TITLE,
-  ERROR_INVITATION_ALREADY_ACCEPTED_MESSAGE,
-} from '../api/api-constants'
 import { Request } from '../components/request/request'
 
 export class Invitation extends Component<InvitationProps, void> {
@@ -50,14 +41,6 @@ export class Invitation extends Component<InvitationProps, void> {
 
     if (!isValid) {
       return <Container />
-    }
-
-    if (isLoading(this.props)) {
-      return (
-        <Container center fifth>
-          <Loader type="dark" showMessage={true} message={'Connecting...'} />
-        </Container>
-      )
     }
 
     return (
@@ -81,51 +64,6 @@ export class Invitation extends Component<InvitationProps, void> {
     }
   }
 
-  componentDidUpdate(prevProps: InvitationProps) {
-    if (isError(prevProps, this.props)) {
-      this.handleError(this.props)
-    } else if (isSuccess(prevProps, this.props)) {
-      this.navigate()
-    }
-  }
-
-  handleError(currentProps: InvitationProps) {
-    if (!currentProps.invitation) {
-      return false
-    }
-
-    const { error, payload } = currentProps.invitation
-
-    let errorTitle
-    let errorMessage
-    let okAction
-
-    if (error && error.code === ERROR_INVITATION_ALREADY_ACCEPTED_CODE) {
-      errorTitle = ERROR_INVITATION_ALREADY_ACCEPTED_TITLE
-      errorMessage = ERROR_INVITATION_ALREADY_ACCEPTED_MESSAGE
-      okAction = this.navigate
-    } else {
-      const isDuplicateConnection = error
-        ? error.code === ERROR_ALREADY_EXIST.code
-        : false
-
-      errorMessage =
-        isDuplicateConnection && error && payload
-          ? `${error.message}${payload.senderName}`
-          : ERROR_INVITATION_RESPONSE_FAILED
-      okAction = isDuplicateConnection ? this.onDuplicateConnectionError : noop
-      errorTitle = isDuplicateConnection ? ERROR_ALREADY_EXIST_TITLE : null
-    }
-
-    Alert.alert(errorTitle, errorMessage, [{ text: 'Ok', onPress: okAction }], {
-      cancelable: false,
-    })
-  }
-
-  onDuplicateConnectionError = () => {
-    this.onAction(ResponseType.rejected)
-  }
-
   navigate = () => {
     this.props.navigation.navigate(homeRoute)
   }
@@ -140,6 +78,7 @@ export class Invitation extends Component<InvitationProps, void> {
             response,
             senderDID: payload.senderDID,
           })
+          this.navigate()
         } else if (response === ResponseType.rejected) {
           this.props.invitationRejected(payload.senderDID)
           this.navigate()
@@ -149,37 +88,6 @@ export class Invitation extends Component<InvitationProps, void> {
       }
     }
   }
-}
-
-function isError(prevProps: InvitationProps, currentProps: InvitationProps) {
-  // invitation could be null
-  if (prevProps.invitation && currentProps.invitation) {
-    // we are assuming that invitation will have error
-    // only after user has taken some action
-    // so prevProps and currentProps would be used to decide if error occurs
-    // after user has taken action
-    return (
-      currentProps.invitation.isFetching === false &&
-      currentProps.invitation.error &&
-      currentProps.invitation.error !== prevProps.invitation.error
-    )
-  }
-
-  return false
-}
-
-function isSuccess(prevProps: InvitationProps, currentProps: InvitationProps) {
-  if (prevProps.invitation && currentProps.invitation) {
-    return (
-      currentProps.invitation.isFetching === false &&
-      currentProps.invitation.isFetching !== prevProps.invitation.isFetching &&
-      currentProps.invitation.status === ResponseType.accepted
-    )
-  }
-}
-
-function isLoading(currentProps: InvitationProps) {
-  return currentProps.invitation && currentProps.invitation.isFetching
 }
 
 export function isValidAriesV1InviteData(
@@ -362,7 +270,6 @@ const mapStateToProps = (
 
   return {
     invitation: state.invitation[senderDID],
-    showErrorAlerts: state.config.showErrorAlerts,
     smsToken,
     isSmsInvitationNotSeen,
   }

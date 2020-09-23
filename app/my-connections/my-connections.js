@@ -18,7 +18,7 @@ import { HomeHeader, CameraButton } from '../components'
 import { ConnectionCard } from './connection-card/connection-card'
 import { qrCodeScannerTabRoute } from '../common'
 import { getConnections } from '../store/connections-store'
-import { connectionHistRoute } from '../common/route-constants'
+import { connectionHistRoute } from '../common'
 import { getUnseenMessages } from '../store/store-selector'
 import { externalStyles } from './styles'
 import { HomeInstructions } from '../home/home-instructions/home-instructions'
@@ -32,7 +32,7 @@ import {
 } from '../store/type-config-store'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import { NotificationCard } from '../in-app-notification/in-app-notification-card'
-import { colors } from '../common/styles/constant'
+import { colors } from '../common/styles'
 
 export class MyConnections extends Component<
   MyConnectionsProps,
@@ -90,7 +90,6 @@ export class MyConnections extends Component<
       date,
       newBadge,
       identifier,
-      isOddItem,
     } = item
     const { onNewConnectionSeen } = this.props
     return (
@@ -101,7 +100,6 @@ export class MyConnections extends Component<
         image={logoUrl}
         question={questionTitle}
         {...{
-          isOddItem,
           senderDID,
           newBadge,
           date,

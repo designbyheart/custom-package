@@ -1,5 +1,5 @@
 // @flow
-
+import React from 'react'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
 import invitationReducer, {
@@ -9,10 +9,11 @@ import invitationReducer, {
   invitationRejected,
   invitationFail,
   sendResponse,
+  invitationAccepted,
 } from '../invitation-store'
 import { initialTestAction } from '../../common/type-common'
 import { ResponseType } from '../../components/request/type-request'
-import { saveNewConnection } from '../../store/connections-store'
+import { saveNewConnection, saveNewPendingConnection } from '../../store/connections-store'
 import {
   createConnectionWithInvite,
   acceptInvitationVcx,
@@ -22,9 +23,10 @@ import {
   getTestInvitationPayload,
   successConnectionData,
   myPairWiseConnectionDetails,
-  vcxSerializedConnection,
+  vcxSerializedConnection, pendingConnectionData,
 } from '../../../__mocks__/static-data'
 import { VCX_INIT_SUCCESS } from '../../store/type-config-store'
+import { connectionSuccess } from '../../store/type-connection-store'
 
 describe('Invitation Store', () => {
   let initialState
@@ -88,7 +90,7 @@ describe('Invitation Store', () => {
         afterOneInvitationState,
         invitationSuccess(firstInvitation.payload.senderDID)
       )
-      expect(state).toMatchSnapshot()
+      expect(!Object.keys(state).includes(firstInvitation.payload.senderDID))
     }
   })
 
@@ -112,7 +114,7 @@ describe('Invitation Store', () => {
         afterOneInvitationState,
         invitationRejected(firstInvitation.payload.senderDID)
       )
-      expect(state).toMatchSnapshot()
+      expect(!Object.keys(state).includes(firstInvitation.payload.senderDID))
     }
   })
 
@@ -145,6 +147,10 @@ describe('Invitation Store', () => {
 
       return expectSaga(sendResponse, sendInvitationResponse(data))
         .withState(vcxInitSuccessWithInvitationState)
+        .put(invitationAccepted(senderDID, payload))
+        .put(
+          saveNewPendingConnection(pendingConnectionData)
+        )
         .provide([
           [
             matchers.call.fn(createConnectionWithInvite, payload),
@@ -161,14 +167,7 @@ describe('Invitation Store', () => {
         ])
         .put(invitationSuccess(senderDID))
         .put(
-          saveNewConnection({
-            newConnection: {
-              ...successConnectionData.newConnection,
-              vcxSerializedConnection,
-              publicDID: undefined,
-              isCompleted: true,
-            },
-          })
+          connectionSuccess(successConnectionData.newConnection.identifier, senderDID)
         )
         .run()
     }

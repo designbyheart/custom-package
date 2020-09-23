@@ -3,6 +3,7 @@
 export const PUSH_COM_METHOD = 'pushComMethod'
 export const CONNECT_ME_STORAGE_KEY = '@connectmeDefaults'
 export const IS_ALREADY_INSTALLED = `${CONNECT_ME_STORAGE_KEY}:IS_ALREADY_INSTALLED`
+export const INVITATIONS = 'INVITATIONS'
 export const CONNECTIONS = 'CONNECTIONS'
 export const CLAIM_MAP = `CLAIM_MAP`
 export const WALLET_ENCRYPTION_KEY = 'walletEncryptionKey'

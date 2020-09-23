@@ -43,9 +43,15 @@ import { safeGet, safeSet } from '../../services/storage'
 import {
   DENY_PROOF_REQUEST_FAIL,
   DENY_PROOF_REQUEST,
+  PROOF_REQUEST_ACCEPTED,
 } from '../../proof-request/type-proof-request'
 import { denyProofRequest } from '../../proof-request/proof-request-store'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
+import { INVITATION_ACCEPTED } from '../../invitation/type-invitation'
+import { CONNECTION_FAIL } from '../../store/type-connection-store'
+import { sendInvitationResponse } from '../../invitation/invitation-store'
+import { ResponseType } from '../../components/request/type-request'
+import { deleteConnectionAction } from '../../store/connections-store'
 
 class RecentCardComponent extends React.Component<RecentCardProps, void> {
   render() {
@@ -102,8 +108,12 @@ class RecentCardComponent extends React.Component<RecentCardProps, void> {
 
     if (isRetryCard) {
       const onRetry = getRetryFunction(props)
+      const onDeleteExtra = getDeleteFunction(props)
       return (
-        <SwipeableRetry onDelete={this.onDelete} onRetry={onRetry}>
+        <SwipeableRetry
+          onDelete={() => this.onDelete(onDeleteExtra)}
+          onRetry={onRetry}
+        >
           {cardContent}
         </SwipeableRetry>
       )
@@ -112,9 +122,10 @@ class RecentCardComponent extends React.Component<RecentCardProps, void> {
     return cardContent
   }
 
-  onDelete = () => {
+  onDelete = (onDeleteExtraFunc: function) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
     this.props.deleteHistoryEvent(this.props.item)
+    onDeleteExtraFunc()
   }
 }
 
@@ -187,6 +198,7 @@ class SwipeableRetry extends React.PureComponent<
 }
 
 export const reTryActions = [
+  CONNECTION_FAIL,
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
   ERROR_SEND_PROOF,
@@ -200,7 +212,9 @@ function getRetryStatus(event: *): boolean {
 
 const loadingActions = [
   'PENDING',
+  INVITATION_ACCEPTED,
   CLAIM_OFFER_ACCEPTED,
+  PROOF_REQUEST_ACCEPTED,
   UPDATE_ATTRIBUTE_CLAIM,
   DENY_PROOF_REQUEST,
   DENY_CLAIM_OFFER,
@@ -212,11 +226,23 @@ function getLoadingStatus(status: string) {
 // TODO:KS Memoize this function
 function getRetryFunction({
   item: event,
+  sendInvitationResponse,
   acceptClaimOffer,
   reTrySendProof,
   denyProofRequest,
   denyClaimOffer,
 }: *): () => void {
+  if (
+    event.action === CONNECTION_FAIL
+  ) {
+    return () => {
+      sendInvitationResponse({
+        response: ResponseType.accepted,
+        senderDID: event.remoteDid,
+      })
+    }
+  }
+
   if (
     event.action === SEND_CLAIM_REQUEST_FAIL ||
     event.action === PAID_CREDENTIAL_REQUEST_FAIL
@@ -253,9 +279,26 @@ function getRetryFunction({
   return () => {}
 }
 
+function getDeleteFunction({
+  item: event,
+  deleteConnectionAction,
+}: *): () => void {
+  if (
+    event.action === CONNECTION_FAIL
+  ) {
+    return () => {
+      deleteConnectionAction(event.remoteDid)
+    }
+  }
+
+  return () => {}
+}
+
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      sendInvitationResponse,
+      deleteConnectionAction,
       acceptClaimOffer,
       reTrySendProof,
       deleteHistoryEvent,

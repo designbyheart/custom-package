@@ -232,18 +232,4 @@ describe('<Invitation />', () => {
     const instance = wrapper.root
     expect(instance.findByType(Container).children.length).toBe(1)
   })
-  it('should show "Connecting..." while sending invitation response', () => {
-    const whileSendingInvitation = {
-      ...invitation,
-      error: null,
-      isFetching: true,
-      status: ResponseType.accepted,
-    }
-    component.update(
-      <Provider store={store}>
-        <Invitation {...props} invitation={whileSendingInvitation} />
-      </Provider>
-    )
-    expect(component.toJSON()).toMatchSnapshot()
-  })
 })

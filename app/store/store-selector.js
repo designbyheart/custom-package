@@ -40,6 +40,8 @@ export const getAgencyVerificationKey = (state: Store) =>
 
 export const getPushToken = (state: Store) => state.pushNotification.pushToken
 
+export const getAllInvitations = (state: Store) => state.invitation
+
 export const getAllConnection = (state: Store) => state.connections.data
 
 export const getAllOneTimeConnection = (state: Store) =>
@@ -113,9 +115,8 @@ export const getConnectionsCount = (state: Store) =>
   Object.keys(state.connections.data || {}).length
 
 export const isDuplicateConnection = (state: Store, senderDID: string) => {
-  const connections = getConnection(state, senderDID)
-
-  return connections.length > 0
+  const [connection] = getConnection(state, senderDID)
+  return connection && (connection.isFetching || connection.isCompleted)
 }
 
 export const getHydrationState = (state: Store) => state.config.isHydrated
@@ -181,6 +182,19 @@ export const getPendingHistory = (
       item.originalPayload.uid === uid
     )
   })[0]
+}
+
+export const getUniqueHistoryItem = (
+  state: Store,
+  remoteDid: string,
+  type: string
+) => {
+  const historyItems =
+    state && state.history && state.history.data && state.history.data.connections &&
+    state.history.data.connections[remoteDid]
+      ? state.history.data.connections[remoteDid].data
+      : []
+  return historyItems.filter((item) => item.action === type)[0]
 }
 
 export const getClaimReceivedHistory = (
@@ -506,7 +520,7 @@ export const getAllPublicDid = (connections: ConnectionStore) => {
   const pairwiseConnections = connections.data || {}
   return Object.keys(pairwiseConnections).reduce((acc, senderDID) => {
     const connection = pairwiseConnections[senderDID]
-    if (connection.publicDID) {
+    if (connection.publicDID && connection.isCompleted) {
       return {
         ...acc,
         [connection.publicDID]: connection,

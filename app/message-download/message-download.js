@@ -10,7 +10,6 @@ import {
   all,
 } from 'redux-saga/effects'
 import delay from '@redux-saga/delay-p'
-import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import {
   SEND_CLAIM_REQUEST_SUCCESS,
   SEND_PAID_CREDENTIAL_REQUEST,
@@ -29,6 +28,7 @@ import {
 import { PROOF_REQUEST_RECEIVED } from '../proof-request/type-proof-request'
 import { QUESTION_RECEIVED } from '../question/type-question'
 import {
+  NEW_CONNECTION_SUCCESS,
   SEND_REDIRECT_SUCCESS,
   SEND_REUSE_SUCCESS,
 } from '../store/type-connection-store'

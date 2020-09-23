@@ -31,6 +31,7 @@ import {
   DENY_PROOF_REQUEST_SUCCESS,
   DENY_PROOF_REQUEST_FAIL,
   DENY_PROOF_REQUEST,
+  PROOF_REQUEST_ACCEPTED,
 } from '../proof-request/type-proof-request'
 import { connectionHistRoute } from '../common'
 import {
@@ -42,6 +43,8 @@ import {
   DENY_CLAIM_OFFER_SUCCESS,
 } from '../claim-offer/type-claim-offer'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
+import { INVITATION_ACCEPTED } from '../invitation/type-invitation'
+import { CONNECTION_FAIL } from '../store/type-connection-store'
 
 let ScreenWidth = Dimensions.get('window').width
 
@@ -261,6 +264,18 @@ export class ConnectionDetails extends Component<
         />
       )
     } else if (
+      item.action === 'PROOF ACCEPTED' ||
+      item.action === PROOF_REQUEST_ACCEPTED
+    ) {
+      return (
+        <ConnectionPending
+          date={formattedTime}
+          title={item.name}
+          content={'PREPARING PROOF - PLEASE WAIT'}
+        />
+      )
+    }
+    else if (
       item.action === DENY_PROOF_REQUEST_SUCCESS ||
       item.action === DENY_CLAIM_OFFER_SUCCESS
     ) {
@@ -313,6 +328,34 @@ export class ConnectionDetails extends Component<
           messageTitle={'Deleted Credential'}
           messageContent={'You deleted the credential "' + item.name + '"'}
           showButtons={false}
+        />
+      )
+    } else if (
+      item.action === INVITATION_ACCEPTED
+    ) {
+      return (
+        <ConnectionPending
+          date={formattedTime}
+          title={item.name}
+          content={'CONNECTING - PLEASE WAIT'}
+        />
+      )
+    } else if (
+      item.action === CONNECTION_FAIL
+    ) {
+      return (
+        <ConnectionCard
+          messageDate={formattedTime}
+          headerText={item.name}
+          infoType={'FAILED TO CONNECT'}
+          infoDate={formattedDate}
+          buttonText={'RETRY'}
+          showBadge={false}
+          colorBackground={colors.cmRed}
+          received={true}
+          data={item}
+          repeatable={true}
+          navigation={this.props.navigation}
         />
       )
     }
@@ -393,12 +436,12 @@ export class ConnectionDetails extends Component<
 }
 
 const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
-  const timestamp =
-    (state.connections &&
-      state.connections.data &&
-      state.connections.data[props.route.params.identifier] &&
-      state.connections.data[props.route.params.identifier].timestamp) ||
-    null
+  const connection: any = state.connections && state.connections.data ?
+    Object.values(state.connections.data)
+      .find(((connection: any) => connection.senderDID === props.route.params.senderDID)) :
+    undefined
+
+  const timestamp = connection ? connection.timestamp : null
 
   let connectionHistory: ConnectionHistoryEvent[] =
     state.history &&
