@@ -92,6 +92,7 @@ import type { LedgerFeesData } from '../ledger/type-ledger-store'
 import moment from 'moment'
 import { captureError } from '../services/error/error-handler'
 import { retrySaga } from '../api/api-utils'
+import { ensureVcxInitAndPoolConnectSuccess } from '../store/route-store'
 import {
   ACTION_IS_NOT_SUPPORTED,
   CREDENTIAL_DEFINITION_NOT_FOUND,
@@ -306,6 +307,9 @@ export function* denyClaimOfferSaga(
   }
 }
 
+export const ERROR_ACCEPT_CLAIM_OFFER_FAIL =
+  'Unable to accept credential. Check your internet connection or try to restart app.'
+
 export function* claimOfferAccepted(
   action: ClaimOfferAcceptedAction
 ): Generator<*, *, *> {
@@ -339,6 +343,12 @@ export function* claimOfferAccepted(
       claimRequestFail(messageId, ERROR_NO_SERIALIZED_CLAIM_OFFER(messageId))
     )
 
+    return
+  }
+
+  const vcxResult = yield* ensureVcxInitAndPoolConnectSuccess()
+  if (vcxResult && vcxResult.fail) {
+    yield put(sendClaimRequestFail(messageId, remoteDid))
     return
   }
 

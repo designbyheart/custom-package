@@ -1528,6 +1528,20 @@ RCT_EXPORT_METHOD(deleteCredential:(NSInteger) credentialHandle
   }];
 }
 
+ RCT_EXPORT_METHOD(vcxInitPool: (NSString *)config
+                   resolver: (RCTPromiseResolveBlock) resolve
+                   rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [[[ConnectMeVcx alloc] init] initPool:config completion:^(NSError *error) {
+    if (error != nil && error.code !=0) {
+      NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+      reject(indyErrorCode, @"Error occurred while updating message status", error);
+    } else {
+      resolve(@{});
+    }
+  }];
+}
+
 RCT_EXPORT_METHOD(credentialReject:(NSInteger)credential_handle
                   connectionHandle:(NSInteger)connection_handle
                            comment:(NSString *)comment

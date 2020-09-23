@@ -14,6 +14,8 @@ import type {
   WalletTokenInfo,
   PaymentAddress,
   SignDataResponse,
+  CxsPoolConfig,
+  VcxPoolInitConfig,
 } from './type-cxs'
 import type {
   AriesOutOfBandInvite,
@@ -30,6 +32,7 @@ import {
   convertVcxConnectionToCxsConnection,
   convertVcxCredentialOfferToCxsClaimOffer,
   paymentHandle,
+  convertCxsPoolInitToVcxPoolInit,
 } from './vcx-transformers'
 import type { UserOneTimeInfo } from '../../store/user/type-user-store'
 import type {
@@ -200,8 +203,19 @@ export async function createOneTimeInfoWithToken(
   }
 }
 
-export async function init(
-  config: CxsInitConfig,
+export async function init(config: CxsInitConfig): Promise<boolean> {
+  const walletPoolName = await getWalletPoolName()
+  const vcxInitConfig: VcxInitConfig = await convertCxsInitToVcxInit(
+    config,
+    walletPoolName
+  )
+  const initResult: boolean = await RNIndy.init(JSON.stringify(vcxInitConfig))
+
+  return initResult
+}
+
+export async function initPool(
+  config: CxsPoolConfig,
   fileName: string
 ): Promise<boolean> {
   const genesis_path: string = await RNIndy.getGenesisPathWithConfig(
@@ -213,14 +227,13 @@ export async function init(
     ...config,
     genesis_path,
   }
+
   const walletPoolName = await getWalletPoolName()
-  const vcxInitConfig: VcxInitConfig = await convertCxsInitToVcxInit(
+  const vcxInitPoolConfig: VcxPoolInitConfig = await convertCxsPoolInitToVcxPoolInit(
     initConfig,
     walletPoolName
   )
-  const initResult: boolean = await RNIndy.init(JSON.stringify(vcxInitConfig))
-
-  return initResult
+  return await RNIndy.vcxInitPool(JSON.stringify(vcxInitPoolConfig))
 }
 
 // TODO:KS Need to rename this to something like walletInit

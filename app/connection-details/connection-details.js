@@ -350,10 +350,7 @@ export class ConnectionDetails extends Component<
 
   render() {
     if (this.props.route) {
-      const {
-        activeConnectionThemePrimary,
-        connectionHistory,
-      } = this.props
+      const { activeConnectionThemePrimary, connectionHistory } = this.props
       const testID = 'connection-history'
 
       return (
@@ -397,10 +394,10 @@ export class ConnectionDetails extends Component<
 
 const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
   const timestamp =
-    state.connections &&
-    state.connections.data &&
-    state.connections.data[props.route.params.identifier] &&
-    state.connections.data[props.route.params.identifier].timestamp ||
+    (state.connections &&
+      state.connections.data &&
+      state.connections.data[props.route.params.identifier] &&
+      state.connections.data[props.route.params.identifier].timestamp) ||
     null
 
   let connectionHistory: ConnectionHistoryEvent[] =
@@ -411,9 +408,11 @@ const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
       ? state.history.data.connections[props.route.params.senderDID].data
       : []
 
-  connectionHistory = timestamp ?
-    connectionHistory.filter((event) => new Date(event.timestamp) >= new Date(timestamp)) :
-    connectionHistory.slice()
+  connectionHistory = timestamp
+    ? connectionHistory.filter(
+        (event) => new Date(event.timestamp) >= new Date(timestamp)
+      )
+    : connectionHistory.slice()
 
   const themeForLogo = getConnectionTheme(
     state,

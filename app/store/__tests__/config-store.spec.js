@@ -34,8 +34,14 @@ import configReducer, {
   acknowledgeServer,
   acknowledgeMessagesFail,
   updateMessageStatus,
+  vcxInitPoolFail,
+  vcxInitPoolSuccess,
 } from '../config-store'
-import { vcxInitStart, ensureVcxInitSuccess } from '../route-store'
+import {
+  vcxInitStart,
+  ensureVcxInitSuccess,
+  vcxInitPoolStart,
+} from '../route-store'
 import {
   SERVER_ENVIRONMENT,
   SWITCH_ERROR_ALERTS,
@@ -49,6 +55,9 @@ import {
   MESSAGE_RESPONSE_CODE,
   ERROR_HYDRATE_SWITCH_ENVIRONMENT,
   ERROR_SAVE_SWITCH_ENVIRONMENT,
+  VCX_INIT_POOL_NOT_STARTED,
+  VCX_INIT_POOL_SUCCESS,
+  VCX_INIT_POOL_START,
 } from '../type-config-store'
 import {
   agencyDID,
@@ -425,6 +434,24 @@ describe('reducer:config', () => {
     const error = ERROR_VCX_INIT_FAIL('error from test')
     expect(configReducer(initialState, vcxInitFail(error))).toMatchSnapshot()
   })
+
+  it('action:VCX_INIT_POOL_START', () => {
+    const initialState = getConfigStoreInitialState()
+    expect(configReducer(initialState, vcxInitPoolStart())).toMatchSnapshot()
+  })
+
+  it('action:VCX_INIT_POOL_SUCCESS', () => {
+    const initialState = getConfigStoreInitialState()
+    expect(configReducer(initialState, vcxInitPoolSuccess())).toMatchSnapshot()
+  })
+
+  it('action:VCX_INIT_POOL_FAIL', () => {
+    const initialState = getConfigStoreInitialState()
+    const error = ERROR_VCX_INIT_FAIL('error from test')
+    expect(
+      configReducer(initialState, vcxInitPoolFail(error))
+    ).toMatchSnapshot()
+  })
 })
 
 describe('config-store:saga', () => {
@@ -622,6 +649,7 @@ describe('config-store:saga', () => {
         },
         config: {
           vcxInitializationState: VCX_INIT_SUCCESS,
+          vcxPoolInitializationState: VCX_INIT_POOL_SUCCESS,
         },
       })
       .provide([
@@ -636,6 +664,7 @@ describe('config-store:saga', () => {
         ],
       ])
       .dispatch({ type: VCX_INIT_SUCCESS })
+      .dispatch({ type: VCX_INIT_POOL_SUCCESS })
       .dispatch({ type: HYDRATED })
 
       .put(getMessagesLoading())
@@ -660,6 +689,7 @@ describe('config-store:saga', () => {
         },
         config: {
           vcxInitializationState: VCX_INIT_START,
+          vcxPoolInitializationState: VCX_INIT_POOL_START,
         },
       })
       .provide([
@@ -680,6 +710,7 @@ describe('config-store:saga', () => {
 
       .dispatch({ type: HYDRATED })
       .dispatch({ type: VCX_INIT_SUCCESS })
+      .dispatch({ type: VCX_INIT_POOL_SUCCESS })
 
       .put(getMessagesLoading())
       .put(getMessagesSuccess())
@@ -703,6 +734,7 @@ describe('config-store:saga', () => {
         },
         config: {
           vcxInitializationState: VCX_INIT_START,
+          vcxPoolInitializationState: VCX_INIT_POOL_START,
         },
       })
       .provide([
@@ -719,6 +751,7 @@ describe('config-store:saga', () => {
 
       .dispatch({ type: HYDRATED })
       .dispatch({ type: VCX_INIT_SUCCESS })
+      .dispatch({ type: VCX_INIT_POOL_SUCCESS })
 
       .put(getMessagesLoading())
       .put(getMessagesFail())
@@ -738,6 +771,7 @@ describe('config-store:saga', () => {
         },
         config: {
           vcxInitializationState: VCX_INIT_SUCCESS,
+          vcxPoolInitializationState: VCX_INIT_POOL_SUCCESS,
         },
         pushNotification: { pendingFetchAdditionalDataKey: null },
       })
@@ -774,6 +808,7 @@ describe('config-store:saga', () => {
         },
         config: {
           vcxInitializationState: VCX_INIT_SUCCESS,
+          vcxPoolInitializationState: VCX_INIT_POOL_SUCCESS,
         },
         pushNotification: { pendingFetchAdditionalDataKey: null },
       })
@@ -840,6 +875,7 @@ describe('config-store:saga', () => {
         },
         config: {
           vcxInitializationState: VCX_INIT_SUCCESS,
+          vcxPoolInitializationState: VCX_INIT_POOL_SUCCESS,
         },
         claimOffer: {
           vcxSerializedClaimOffers: [],
@@ -919,6 +955,7 @@ describe('config-store:saga', () => {
         },
         config: {
           vcxInitializationState: VCX_INIT_SUCCESS,
+          vcxPoolInitializationState: VCX_INIT_POOL_SUCCESS,
         },
         claimOffer: {
           vcxSerializedClaimOffers: [],
@@ -987,6 +1024,7 @@ describe('config-store:saga', () => {
         },
         config: {
           vcxInitializationState: VCX_INIT_SUCCESS,
+          vcxPoolInitializationState: VCX_INIT_POOL_SUCCESS,
         },
         claimOffer: {
           vcxSerializedClaimOffers: [],

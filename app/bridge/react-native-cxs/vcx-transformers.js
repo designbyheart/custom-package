@@ -4,7 +4,7 @@ import type { AgencyPoolConfig } from '../../store/type-config-store'
 import type {
   VcxProvision,
   VcxProvisionResult,
-  InitWithGenesisPathConfig,
+  CxsInitConfig,
   VcxInitConfig,
   CxsPushTokenConfig,
   VcxPushTokenConfig,
@@ -13,6 +13,8 @@ import type {
   VcxCredentialOffer,
   WalletPoolName,
   VcxConnectionConnectV2Result,
+  VcxPoolInitConfig,
+  CxsPoolConfigWithGenesisPath,
 } from './type-cxs'
 import type { UserOneTimeInfo } from '../../store/user/type-user-store'
 import type { InvitationPayload } from '../../invitation/type-invitation'
@@ -59,7 +61,7 @@ export function convertVcxProvisionResultToUserOneTimeInfo(
 }
 
 export async function convertCxsInitToVcxInit(
-  init: InitWithGenesisPathConfig,
+  init: CxsInitConfig,
   walletPoolName: WalletPoolName
 ): Promise<VcxInitConfig> {
   const wallet_key = await getWalletKey()
@@ -67,11 +69,8 @@ export async function convertCxsInitToVcxInit(
     agency_endpoint: init.agencyUrl,
     agency_did: init.agencyDID,
     agency_verkey: init.agencyVerificationKey,
-    config: init.poolConfig,
-    pool_name: walletPoolName.poolName,
     wallet_name: walletPoolName.walletName,
     wallet_key,
-    genesis_path: init.genesis_path,
     remote_to_sdk_did: init.myOneTimeAgentDid,
     remote_to_sdk_verkey: init.myOneTimeAgentVerificationKey,
     sdk_to_remote_did: init.myOneTimeDid,
@@ -83,6 +82,16 @@ export async function convertCxsInitToVcxInit(
     institution_verkey: init.oneTimeAgencyVerificationKey,
     payment_method: init.paymentMethod,
     ...commonConfigParams,
+  }
+}
+
+export async function convertCxsPoolInitToVcxPoolInit(
+  init: CxsPoolConfigWithGenesisPath,
+  walletPoolName: WalletPoolName
+): Promise<VcxPoolInitConfig> {
+  return {
+    genesis_path: init.genesis_path,
+    pool_name: walletPoolName.poolName,
   }
 }
 

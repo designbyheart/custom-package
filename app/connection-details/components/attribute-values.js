@@ -28,11 +28,7 @@ import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
 import { Avatar } from '../../components'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 import { CHECKMARK_ICON, EvaIcon } from '../../common/icons'
-import {
-  DataRenderer,
-  getFileExtensionName,
-  renderAttachmentIcon,
-} from './modal-content'
+import { DataRenderer, getFileExtensionName } from './modal-content'
 import {
   isSelected,
   keyExtractor,
