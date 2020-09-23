@@ -8,7 +8,7 @@ import type {
   ResetAction,
   RequestedAttrsJson,
   MatchingCredential,
-  AttributeNames
+  AttributeNames,
 } from '../common/type-common'
 import type {
   SelfAttestedAttributes,
@@ -36,8 +36,8 @@ export type IndyRequestedProof = {
   revealed_group_attrs?: {
     [string]: {
       claimUuid: string,
-      values: AttributeNames
-    }
+      values: AttributeNames,
+    },
   },
   revealed_attrs?: {
     [string]: Array<string>,

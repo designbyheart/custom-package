@@ -69,7 +69,10 @@ import type {
 } from '../store/type-config-store'
 import uniqueId from 'react-native-unique-id'
 import { RESET } from '../common/type-common'
-import { ensureVcxInitSuccess } from '../store/route-store'
+import {
+  ensureVcxInitAndPoolConnectSuccess,
+  ensureVcxInitSuccess,
+} from '../store/route-store'
 import type { Connection } from '../store/type-connection-store'
 import type {
   ProofRequestPushPayload,
@@ -393,7 +396,7 @@ export function* fetchAdditionalDataSaga(
     yield put(setFetchAdditionalDataPendingKeys(uid, forDID))
   }
 
-  const vcxResult = yield* ensureVcxInitSuccess()
+  const vcxResult = yield* ensureVcxInitAndPoolConnectSuccess()
   if (vcxResult && vcxResult.fail) {
     yield take(VCX_INIT_SUCCESS)
   }

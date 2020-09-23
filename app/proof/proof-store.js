@@ -118,10 +118,7 @@ export const userSelfAttestedAttributes = (
   uid,
 })
 
-export const proofRequestDataToStore = (
-  uid: string,
-  proofHandle: number,
-) => ({
+export const proofRequestDataToStore = (uid: string, proofHandle: number) => ({
   type: PROOF_REQUEST_SEND_PROOF_HANDLE,
   uid,
   proofHandle,

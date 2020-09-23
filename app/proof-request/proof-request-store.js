@@ -81,6 +81,7 @@ import {
 } from '../proof/proof-store'
 import { secureSet, getHydrationItem } from '../services/storage'
 import { retrySaga } from '../api/api-utils'
+import { ensureVcxInitAndPoolConnectSuccess } from '../store/route-store'
 import { PROOF_FAIL, USER_SELF_ATTESTED_ATTRIBUTES } from '../proof/type-proof'
 
 const proofRequestInitialState = {}
@@ -200,6 +201,9 @@ export function* hydrateProofRequestsSaga(): Generator<*, *, *> {
   }
 }
 
+export const ERROR_ACCEPT_PROOF_REQUEST_FAIL =
+  'Unable to generate proof. Check your internet connection or try to restart app.'
+
 export function* proofAccepted(
   action: ProofRequestAcceptedAction
 ): Generator<*, *, *> {
@@ -224,6 +228,16 @@ export function* proofAccepted(
   if (typeof connectionHandle === 'undefined') {
     // connection handle was returned as undefined by getConnectionHandle
     // so we stop processing further
+    return
+  }
+
+  const vcxResult = yield* ensureVcxInitAndPoolConnectSuccess()
+  if (vcxResult && vcxResult.fail) {
+    errorSendProofFail(
+      uid,
+      remotePairwiseDID,
+      ERROR_SEND_PROOF(ERROR_ACCEPT_PROOF_REQUEST_FAIL)
+    )
     return
   }
 
@@ -280,7 +294,7 @@ export function* watchPersistProofRequests(): any {
 
 export const proofRequestAutoFill = (
   uid: string,
-  requestedAttributes: Array<Attribute>,
+  requestedAttributes: Array<Attribute>
 ) => ({
   type: PROOF_REQUEST_AUTO_FILL,
   uid,
@@ -581,8 +595,8 @@ export default function proofRequestReducer(
       }
 
     case USER_SELF_ATTESTED_ATTRIBUTES:
-      let filledAttributes = state[action.uid].data.requestedAttributes
-        .map((attributes) => {
+      let filledAttributes = state[action.uid].data.requestedAttributes.map(
+        (attributes) => {
           const attribute = attributes[0]
           if (action.selfAttestedAttributes.hasOwnProperty(attribute.key)) {
             return [

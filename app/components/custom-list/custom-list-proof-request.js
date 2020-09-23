@@ -35,21 +35,20 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
     // If the item has data, even if it is just a blank string, it exists. If it has no data it will be null and not show the icon.
     const isDataEmptyString = item.data === ''
 
-    let claim = item.claimUuid &&
+    let claim =
+      item.claimUuid &&
       this.props.claimMap &&
       this.props.claimMap[item.claimUuid]
 
     let logoUrl
 
     if (!logoUrl && claim) {
-      logoUrl =
-        claim.logoUrl
-          ? { uri: claim.logoUrl }
-          : null
+      logoUrl = claim.logoUrl ? { uri: claim.logoUrl } : null
     }
 
     if (!claim) {
-      logoUrl = this.props.avatarSource || require('../../images/UserAvatar.png')
+      logoUrl =
+        this.props.avatarSource || require('../../images/UserAvatar.png')
     }
 
     return (
@@ -73,17 +72,20 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
             }
           </View>
           <View style={styles.avatarWrapper}>
-            {
-              logoUrl ?
-                <Icon
-                  medium
-                  round
-                  resizeMode="cover"
-                  src={logoUrl}
-                  testID={`proof-requester-logo-${index}`}
-                /> :
-                claim && claim.senderName && <DefaultLogo text={claim.senderName} size={30} fontSize={18}/>
-            }
+            {logoUrl ? (
+              <Icon
+                medium
+                round
+                resizeMode="cover"
+                src={logoUrl}
+                testID={`proof-requester-logo-${index}`}
+              />
+            ) : (
+              claim &&
+              claim.senderName && (
+                <DefaultLogo text={claim.senderName} size={30} fontSize={18} />
+              )
+            )}
           </View>
         </View>
       </View>
@@ -105,17 +107,15 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
 
       const isDataEmptyString = value === ''
 
-      if (!claim){
-        claim = item.claimUuid &&
+      if (!claim) {
+        claim =
+          item.claimUuid &&
           this.props.claimMap &&
           this.props.claimMap[item.claimUuid]
       }
 
       if (!logoUrl && claim) {
-        logoUrl =
-          claim.logoUrl
-            ? { uri: claim.logoUrl }
-            : null
+        logoUrl = claim.logoUrl ? { uri: claim.logoUrl } : null
       }
 
       return (
@@ -136,7 +136,8 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
     })
 
     if (!claim) {
-      logoUrl = this.props.avatarSource || require('../../images/UserAvatar.png')
+      logoUrl =
+        this.props.avatarSource || require('../../images/UserAvatar.png')
     }
 
     return (
@@ -144,17 +145,20 @@ export class CustomListProofRequest extends Component<CustomListProps, void> {
         <View style={styles.textAvatarWrapper}>
           <View style={styles.textInnerWrapper}>{views}</View>
           <View style={styles.avatarWrapper}>
-            {
-              logoUrl ?
-                <Icon
-                  medium
-                  round
-                  resizeMode="cover"
-                  src={logoUrl}
-                  testID={`proof-requester-logo-${index}`}
-                /> :
-                claim && claim.senderName && <DefaultLogo text={claim.senderName} size={30} fontSize={18}/>
-            }
+            {logoUrl ? (
+              <Icon
+                medium
+                round
+                resizeMode="cover"
+                src={logoUrl}
+                testID={`proof-requester-logo-${index}`}
+              />
+            ) : (
+              claim &&
+              claim.senderName && (
+                <DefaultLogo text={claim.senderName} size={30} fontSize={18} />
+              )
+            )}
           </View>
         </View>
       </View>

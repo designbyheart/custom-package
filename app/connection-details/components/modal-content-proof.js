@@ -70,8 +70,10 @@ import {
   hasMissingAttributes,
 } from '../utils'
 
-class ModalContentProof extends Component<ProofRequestAndHeaderProps,
-  ProofRequestState & { scheduledDeletion: boolean }> {
+class ModalContentProof extends Component<
+  ProofRequestAndHeaderProps,
+  ProofRequestState & { scheduledDeletion: boolean }
+> {
   constructor(props) {
     super(props)
     if (this.props.uid) {
@@ -80,7 +82,7 @@ class ModalContentProof extends Component<ProofRequestAndHeaderProps,
 
     this.state = {
       allMissingAttributesFilled: !hasMissingAttributes(
-        this.props.missingAttributes,
+        this.props.missingAttributes
       ),
       selfAttestedAttributes: {},
       disableUserInputs: false,
@@ -101,7 +103,7 @@ class ModalContentProof extends Component<ProofRequestAndHeaderProps,
         MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_TITLE,
         MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_DESCRIPTION(
           this.props.dissatisfiedAttributes,
-          this.props.name,
+          this.props.name
         ),
         [
           {
@@ -123,7 +125,7 @@ class ModalContentProof extends Component<ProofRequestAndHeaderProps,
     ) {
       Alert.alert(
         MESSAGE_MISSING_ATTRIBUTES_TITLE,
-        MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION(this.props.name),
+        MESSAGE_MISSING_ATTRIBUTES_DESCRIPTION(this.props.name)
       )
       this.setState({
         disableSendButton: true,
@@ -151,7 +153,7 @@ class ModalContentProof extends Component<ProofRequestAndHeaderProps,
               },
             },
           ],
-          { cancelable: false },
+          { cancelable: false }
         )
       }, 300)
     }
@@ -178,7 +180,7 @@ class ModalContentProof extends Component<ProofRequestAndHeaderProps,
               },
             },
           ],
-          { cancelable: false },
+          { cancelable: false }
         )
       }, 300)
     }
@@ -200,7 +202,7 @@ class ModalContentProof extends Component<ProofRequestAndHeaderProps,
           }
           return items
         },
-        {},
+        {}
       )
       this.setState({ selectedClaims })
     }
@@ -218,7 +220,7 @@ class ModalContentProof extends Component<ProofRequestAndHeaderProps,
 
   canEnablePrimaryAction = (
     canEnable: boolean,
-    selfAttestedAttributes: GenericStringObject,
+    selfAttestedAttributes: GenericStringObject
   ) => {
     this.setState({
       allMissingAttributesFilled: canEnable,
@@ -242,7 +244,7 @@ class ModalContentProof extends Component<ProofRequestAndHeaderProps,
         }
         return items
       },
-      {},
+      {}
     )
     this.setState({ selectedClaims })
   }
@@ -286,7 +288,7 @@ class ModalContentProof extends Component<ProofRequestAndHeaderProps,
     this.props.updateAttributeClaim(
       this.props.uid,
       this.props.remotePairwiseDID,
-      this.state.selectedClaims,
+      this.state.selectedClaims
     )
   }
 
@@ -313,26 +315,26 @@ class ModalContentProof extends Component<ProofRequestAndHeaderProps,
     this.props.userSelfAttestedAttributes(
       convertUserFilledValuesToSelfAttested(
         this.state.selfAttestedAttributes,
-        this.props.missingAttributes,
+        this.props.missingAttributes
       ),
-      this.props.uid,
+      this.props.uid
     )
 
     if (this.props.invitationPayload) {
       // if properties contains invitation it means we accepted out-of-band presentation request
       this.props.acceptOutOfBandInvitation(
         this.props.invitationPayload,
-        this.props.attachedRequest,
+        this.props.attachedRequest
       )
       this.props.acceptOutofbandPresentationRequest(
         this.props.uid,
-        this.state.selectedClaims,
+        this.state.selectedClaims
       )
     } else {
       this.props.updateAttributeClaim(
         this.props.uid,
         this.props.remotePairwiseDID,
-        this.state.selectedClaims,
+        this.state.selectedClaims
       )
     }
 
@@ -359,11 +361,11 @@ class ModalContentProof extends Component<ProofRequestAndHeaderProps,
       this.props.missingAttributes,
       this.state.allMissingAttributesFilled,
       proofGenerationError,
-      this.props.data.requestedAttributes,
+      this.props.data.requestedAttributes
     )
 
     if (!this.state.interactionsDone) {
-      return <Loader/>
+      return <Loader />
     }
 
     const { canEnablePrimaryAction, updateSelectedClaims } = this
@@ -466,7 +468,7 @@ const mapDispatchToProps = (dispatch) =>
       newConnectionSeen,
       denyProofRequest,
     },
-    dispatch,
+    dispatch
   )
 export default connect(mapStateToProps, mapDispatchToProps)(ModalContentProof)
 

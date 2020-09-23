@@ -75,7 +75,7 @@ import {
   saveNewConnectionSuccess,
 } from './new-connection-success'
 import { ensureVcxInitSuccess } from './route-store'
-import moment from "moment"
+import moment from 'moment'
 
 const initialState: ConnectionStore = {
   data: {},

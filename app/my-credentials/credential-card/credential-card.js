@@ -87,7 +87,13 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
   onButtonPress = () => this.props.onPress()
 
   render() {
-    const { image, date, credentialName, attributesCount, issuerName } = this.props
+    const {
+      image,
+      date,
+      credentialName,
+      attributesCount,
+      issuerName,
+    } = this.props
 
     const attributesLabel = attributesCount == 1 ? 'attribute' : `attributes`
 
@@ -101,7 +107,9 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
               testID={`${credentialName}-avatar`}
             />
           ) : (
-            issuerName && <DefaultLogo text={issuerName} size={32} fontSize={17} />
+            issuerName && (
+              <DefaultLogo text={issuerName} size={32} fontSize={17} />
+            )
           )}
         </View>
         <View style={styles.infoSection}>

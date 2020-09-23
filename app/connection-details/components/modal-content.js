@@ -66,7 +66,7 @@ export const renderAttachmentIcon = (
   remotePairwiseDID: string,
   uid: string,
   titleStyles?: any,
-  contentStyles?: any,
+  contentStyles?: any
 ) => {
   let attachment: $PropertyType<AttachmentPropType, 'attachment'> | null = null
 
@@ -107,7 +107,9 @@ export const renderAttachmentIcon = (
   return (
     <View style={styles.textWrapper}>
       <Text style={[styles.title, titleStyles]}>{label}</Text>
-      <DataRenderer {...{ label, data, uid, remotePairwiseDID, contentStyles }} />
+      <DataRenderer
+        {...{ label, data, uid, remotePairwiseDID, contentStyles }}
+      />
     </View>
   )
 }
@@ -183,7 +185,7 @@ export function DataRenderer(props: {
   data: ?string,
   uid: string,
   remotePairwiseDID: string,
-  contentStyles?: any
+  contentStyles?: any,
 }) {
   const { label, data, uid, remotePairwiseDID, contentStyles } = props
 

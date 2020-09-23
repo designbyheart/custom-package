@@ -6,6 +6,7 @@ import {
   convertCxsInitToVcxInit,
   convertInvitationToVcxConnectionCreate,
   convertVcxCredentialOfferToCxsClaimOffer,
+  convertCxsPoolInitToVcxPoolInit,
 } from '../vcx-transformers'
 import {
   vcxProvisionResult,
@@ -30,6 +31,11 @@ const agencyPoolConfig = {
 const initWithGenesisPathConfig = {
   ...userOneTimeInfo,
   ...agencyPoolConfig,
+  genesis_path: 'genesis_path',
+}
+
+const initPoolConfig = {
+  poolConfig,
   genesis_path: 'genesis_path',
 }
 
@@ -59,6 +65,14 @@ describe('transformer:VCX', () => {
       walletPoolName
     )
     expect(vcxInitConfig).toMatchSnapshot()
+  })
+
+  it('convertCxsPoolInitToVcxPoolInit', async () => {
+    const vcxInitPoolConfig = await convertCxsPoolInitToVcxPoolInit(
+      initPoolConfig,
+      walletPoolName
+    )
+    expect(vcxInitPoolConfig).toMatchSnapshot()
   })
 
   it('convertInvitationToVcxConnectionCreate', () => {

@@ -67,9 +67,7 @@ import {
   getHydrationItem,
 } from '../services/storage'
 import { pinHash, generateSalt } from './pin-hash'
-import { Platform } from 'react-native'
-import { getVcxInitializationState } from '../store/store-selector'
-import { ensureVcxInitSuccess } from '../store/route-store'
+import { ensureVcxInitAndPoolConnectSuccess } from '../store/route-store'
 import { captureError } from '../services/error/error-handler'
 
 const initialState: LockStore = {
@@ -309,7 +307,7 @@ export function* checkPin(action: CheckPinAction): Generator<*, *, *> {
   const inRecovery: string | null = yield call(safeGet, IN_RECOVERY)
 
   if (inRecovery === 'true') {
-    const vcxResult = yield* ensureVcxInitSuccess()
+    const vcxResult = yield* ensureVcxInitAndPoolConnectSuccess()
     if (vcxResult && vcxResult.fail) {
       return
     }

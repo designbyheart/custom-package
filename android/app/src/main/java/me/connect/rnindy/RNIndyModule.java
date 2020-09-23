@@ -1712,6 +1712,26 @@ public class RNIndyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void vcxInitPool(String config, Promise promise) {
+        Log.d(TAG, "vcxInitPool() called");
+        try {
+            VcxApi.vcxInitPool(config).whenComplete((result, e) -> {
+                if (e != null) {
+                    VcxException ex = (VcxException) e;
+                    ex.printStackTrace();
+                    Log.e(TAG, "vcxInitPool - Error: ", ex);
+                    promise.reject(String.valueOf(ex.getSdkErrorCode()), ex.getSdkMessage());
+                } else {
+                    promise.resolve(0);
+                }
+            });
+        } catch (VcxException e) {
+            e.printStackTrace();
+            Log.e(TAG, "vcxInitPool - Error: ", e);
+        }
+    }
+
+    @ReactMethod
     public void credentialReject(int credentialHandle, int connectionHandle, String comment, Promise promise) {
         Log.d(TAG, "credentialReject()");
         try {

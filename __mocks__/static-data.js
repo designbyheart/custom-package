@@ -41,6 +41,8 @@ import {
   paymentMethod,
   vcxInitializationState,
   vcxInitializationError,
+  vcxPoolInitializationState,
+  vcxPoolInitializationError,
   configStoreNotHydratedInstalledVcxInit,
 } from './data/config-store-mock-data'
 import { userOneTimeInfo } from './data/user-store-mock-data'

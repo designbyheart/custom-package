@@ -2,7 +2,14 @@
 
 // packages
 import React, { useCallback, useState } from 'react'
-import { View, Platform, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Platform,
+  StyleSheet,
+  Text,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 // constants
@@ -13,7 +20,10 @@ import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { ModalHeaderBar } from '../../components/modal-header-bar/modal-header-bar'
 
 // types
-import type { ReactNavigation, RequestedAttrsJson } from '../../common/type-common'
+import type {
+  ReactNavigation,
+  RequestedAttrsJson,
+} from '../../common/type-common'
 
 // styles
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
@@ -46,12 +56,14 @@ export const prepareCredentials = (items: any, claimMap: any) => {
 }
 
 const AttributesValues = ({
-                            navigation: { goBack },
-                            route: { params },
-                          }: ReactNavigation) => {
-  const [selectedValueIndex, setSelectedValueIndex] = useState(params.items.findIndex(
-    (item: Object) => isSelected(item, params.selectedClaims),
-  ))
+  navigation: { goBack },
+  route: { params },
+}: ReactNavigation) => {
+  const [selectedValueIndex, setSelectedValueIndex] = useState(
+    params.items.findIndex((item: Object) =>
+      isSelected(item, params.selectedClaims)
+    )
+  )
   const [data, _] = useState(prepareCredentials(params.items, params.claimMap))
 
   const hideModal = useCallback(() => {
@@ -67,22 +79,19 @@ const AttributesValues = ({
   const renderItem = ({ item, index }: { item: Object, index: number }) => {
     return (
       <View>
-        <TouchableOpacity
-          onPress={() =>
-            setSelectedValueIndex(index)
-          }
-        >
+        <TouchableOpacity onPress={() => setSelectedValueIndex(index)}>
           <View style={styles.itemContainer}>
             <View style={styles.itemInnerContainer}>
               <View style={styles.itemValuesContainer}>
                 <View style={styles.avatarSection}>
                   {typeof item.logoUrl === 'string' ? (
-                    <Avatar
-                      radius={18}
-                      src={{ uri: item.logoUrl }}
-                    />
+                    <Avatar radius={18} src={{ uri: item.logoUrl }} />
                   ) : (
-                    <DefaultLogo text={item.senderName} size={32} fontSize={17}/>
+                    <DefaultLogo
+                      text={item.senderName}
+                      size={32}
+                      fontSize={17}
+                    />
                   )}
                 </View>
                 <View style={styles.infoSectionRow}>
@@ -96,28 +105,23 @@ const AttributesValues = ({
                 </View>
               </View>
               <View style={styles.itemAttributesContainer}>
-                {
-                  Object.keys(item.values).map((label, keyIndex) => (
-                    <View key={`${index}_${keyIndex}`}>
-                      {renderAttachmentIcon(
-                        label,
-                        item.values[label],
-                        item.claimUuid || '',
-                        item.claimUuid || '',
-                        styles.title,
-                        styles.content,
-                      )}
-                    </View>
-                  ))
-                }
+                {Object.keys(item.values).map((label, keyIndex) => (
+                  <View key={`${index}_${keyIndex}`}>
+                    {renderAttachmentIcon(
+                      label,
+                      item.values[label],
+                      item.claimUuid || '',
+                      item.claimUuid || '',
+                      styles.title,
+                      styles.content
+                    )}
+                  </View>
+                ))}
               </View>
             </View>
             {index === selectedValueIndex && (
               <View style={styles.iconWrapper}>
-                <EvaIcon
-                  name={CHECKMARK_ICON}
-                  color={colors.cmBlack}
-                />
+                <EvaIcon name={CHECKMARK_ICON} color={colors.cmBlack} />
               </View>
             )}
           </View>
@@ -131,10 +135,13 @@ const AttributesValues = ({
       <View style={styles.modalWrapper}>
         <View style={styles.descriptionWrapper}>
           <Text style={styles.descriptionTitle}>
-            {params?.sender} requires following attributes coming from the same credential:
+            {params?.sender} requires following attributes coming from the same
+            credential:
           </Text>
           <Text style={styles.labelText}>{params?.label || 'Attribute'}</Text>
-          <Text style={styles.descriptionTitle}>{params.items.length} sources</Text>
+          <Text style={styles.descriptionTitle}>
+            {params.items.length} sources
+          </Text>
         </View>
         <View style={styles.customValuesWrapper}>
           <FlatList
@@ -166,8 +173,8 @@ export const AttributesValuesScreen = {
 }
 
 AttributesValuesScreen.screen.navigationOptions = ({
-                                                     navigation: { goBack, isFocused },
-                                                   }) => ({
+  navigation: { goBack, isFocused },
+}) => ({
   safeAreaInsets: { top: 85 },
   cardStyle: {
     marginLeft: '2.5%',
@@ -236,7 +243,7 @@ const styles = StyleSheet.create({
   },
   itemInnerContainer: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   itemValuesContainer: {
     width: '100%',
@@ -270,7 +277,7 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'left',
     fontFamily: fontFamily,
-    lineHeight: verticalScale(17)
+    lineHeight: verticalScale(17),
   },
   content: {
     fontSize: verticalScale(fontSizes.size3),
@@ -279,7 +286,7 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'left',
     fontFamily: fontFamily,
-    lineHeight: verticalScale(23)
+    lineHeight: verticalScale(23),
   },
   iconWrapper: {
     marginTop: verticalScale(8),

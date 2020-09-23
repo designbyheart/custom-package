@@ -28,15 +28,18 @@ import {
 } from '../../../__mocks__/static-data'
 import { HYDRATED } from '../../store/type-config-store'
 import { lockSelectionRoute } from '../../common/route-constants'
-import { getUrlQrCodeData, isValidUrlQrCode } from '../../components/qr-scanner/qr-code-types/qr-url'
-import urlParse from "url-parse"
+import {
+  getUrlQrCodeData,
+  isValidUrlQrCode,
+} from '../../components/qr-scanner/qr-code-types/qr-url'
+import urlParse from 'url-parse'
 
 describe('SMS Connection Request store', () => {
   const initialState = {}
   const smsToken = 'gm76ku'
   const store = getStore()
 
-  const getPendingInvitationState = state =>
+  const getPendingInvitationState = (state) =>
     smsPendingInvitationReducer(state, getSmsPendingInvitation(smsToken))
 
   it('should be correct initial state', () => {
