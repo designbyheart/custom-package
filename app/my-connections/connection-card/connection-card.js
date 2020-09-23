@@ -1,11 +1,11 @@
 // @flow
 import React, { PureComponent } from 'react'
 import SvgCustomIcon from '../../components/svg-custom-icon'
-import { Avatar } from '../../components/avatar/avatar'
+import { Avatar } from '../../components'
 import { View, Text, TouchableOpacity } from 'react-native'
 import type { ConnectionCardProps } from './type-connection-card'
 import { styles } from './styles'
-import { colors } from '../../common/styles/constant'
+import { colors } from '../../common/styles'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
 
 class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
@@ -97,6 +97,8 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
         '. They will issue it to you shortly.',
       CLAIM_OFFER_ACCEPTED: `Accepting ${credentialName} ...`,
       CONNECTED: 'You connected with ' + senderName + '.',
+      INVITATION_ACCEPTED: 'Making secure connection...',
+      CONNECTION_FAIL: 'Failed to make secure connection',
       RECEIVED: senderName + ' issued you ' + credentialName + '.',
       'ACCEPTED & SAVED': 'Accepted on',
       DELETED: `You deleted the credential "${credentialName}"`,
@@ -105,6 +107,7 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
       'CLAIM OFFER RECEIVED': 'Offering ' + credentialName,
       QUESTION_RECEIVED: question,
       UPDATE_QUESTION_ANSWER: question,
+      PROOF_REQUEST_ACCEPTED: `Sending "${credentialName}" ...`,
       DENY_PROOF_REQUEST_SUCCESS: `You rejected ${credentialName}`,
       DENY_PROOF_REQUEST: `Rejecting "${credentialName}"`,
       DENY_PROOF_REQUEST_FAIL: `Failed to reject "${credentialName}"`,
@@ -133,7 +136,7 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
       return (
         <View style={dateButtonSection}>
           <View style={buttonSection}>
-            <SvgCustomIcon name="ChevronRight" fill={colors.cmGray3} />
+            <SvgCustomIcon name="ChevronRight" fill={colors.cmGray3}/>
           </View>
         </View>
       )
@@ -152,7 +155,7 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
     this.props.onPress(
       this.props.senderName,
       this.props.image,
-      this.props.senderDID
+      this.props.senderDID,
     )
     this.props.onNewConnectionSeen(this.props.senderDID)
   }
@@ -170,7 +173,7 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
               testID={`${senderDID}-avatar`}
             />
           ) : (
-            <DefaultLogo text={senderName} size={32} fontSize={17} />
+            <DefaultLogo text={senderName} size={32} fontSize={17}/>
           )}
         </View>
         <Text style={companyNameText} numberOfLines={3} ellipsizeMode="tail">
@@ -180,4 +183,5 @@ class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
     )
   }
 }
+
 export { ConnectionCard }

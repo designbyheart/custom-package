@@ -10,13 +10,12 @@ import {
   PROOF_REQUEST_AUTO_FILL,
 } from '../app/proof-request/type-proof-request'
 import { INVITATION_RECEIVED } from '../app/invitation/type-invitation'
-import { saveNewConnectionSuccess } from '../app/store/new-connection-success'
 import {
   CLAIM_OFFER_ACCEPTED,
   CLAIM_OFFER_STATUS,
   CLAIM_REQUEST_STATUS,
 } from '../app/claim-offer/type-claim-offer'
-import { invitationReceived } from '../app/invitation/invitation-store'
+import { invitationAccepted, invitationReceived } from '../app/invitation/invitation-store'
 import {
   claimOfferReceived,
   sendClaimRequestSuccess,
@@ -59,6 +58,7 @@ import {
   PROOF_STATUS,
 } from '../app/proof-request/type-proof-request'
 import { inAppNotificationMockData } from './data/in-app-notification-mock-data'
+import { connectionSuccess } from '../app/store/type-connection-store'
 
 // sadly, we can't export all variables in one line and use them in file as well
 // to use them in this file, we have to import them first
@@ -172,6 +172,22 @@ export const myPairWiseConnectionDetails = {
 
 export const vcxSerializedConnection = '{someVcxSerializedFormat}'
 
+export const pendingConnectionData = {
+  identifier: firstInvitationPayload
+    ? firstInvitationPayload.payload.senderDID
+    : '',
+  logoUrl: firstInvitationPayload
+    ? firstInvitationPayload.payload.senderLogoUrl
+    : '',
+  ...(firstInvitationPayload ? firstInvitationPayload.payload : {}),
+  myPairwiseDid: '',
+  myPairwiseVerKey: '',
+  myPairwiseAgentDid: '',
+  myPairwiseAgentVerKey: '',
+  myPairwisePeerVerKey: '',
+  publicDID: undefined,
+}
+
 export const successConnectionData = {
   newConnection: {
     identifier: pairwiseConnection.identifier,
@@ -180,10 +196,15 @@ export const successConnectionData = {
       : '',
     ...(firstInvitationPayload ? firstInvitationPayload.payload : {}),
     ...myPairWiseConnectionDetails,
-    // TODO Add vcxSerializedConnection key once vcx is integrated
-    // vcxSerializedConnection
+    vcxSerializedConnection
   },
 }
+
+export const invitationAcceptedData = firstInvitationPayload ?
+  {
+    senderDID: firstInvitationPayload.payload.senderDID,
+    payload: firstInvitationPayload.payload,
+  } : {}
 
 export const claimOfferId = 'usd123'
 export const claimOfferIssueDate = 123456789
@@ -1239,7 +1260,7 @@ export function getStore(store?: Object = {}) {
           },
           inAppNotification: inAppNotificationMockData,
         },
-        store
+        store,
       )
     },
     // $FlowFixMe Don't why this is failing, may be we upgrade to flow 0.63
@@ -1254,35 +1275,41 @@ export const invitationReceivedEvent = {
   data: { ...firstInvitationPayload },
 }
 
-export const newConnectionSuccessEvent = saveNewConnectionSuccess(
-  successConnectionData ? successConnectionData.newConnection : {}
+export const newConnectionSuccessEvent = connectionSuccess(
+  successConnectionData.newConnection.senderDID,
+  successConnectionData.newConnection.identifier,
+)
+
+export const invitationAcceptedEvent = invitationAccepted(
+  invitationAcceptedData.senderDID,
+  invitationAcceptedData.payload,
 )
 
 export const claimOfferReceivedEvent = claimOfferReceived(
   claimOffer.payload,
-  claimOffer.payloadInfo
+  claimOffer.payloadInfo,
 )
 
 export const claimReceivedEvent = claimReceived(claim)
 
 export const sendClaimRequestSuccessEvent = sendClaimRequestSuccess(
   uid,
-  claimOfferPayload
+  claimOfferPayload,
 )
 
 export const claimReceivedSuccessEvent = claimStorageSuccess(
   uid,
-  claimOfferIssueDate
+  claimOfferIssueDate,
 )
 
 export const proofRequestReceivedEvent = proofRequestReceived(
   proofRequest.payload,
-  proofRequest.payloadInfo
+  proofRequest.payloadInfo,
 )
 
 export const proofRequestAutofillEvent = proofRequestAutoFill(
   proofRequestId,
-  requestedAttributes
+  requestedAttributes,
 )
 
 export const proofSharedEvent = sendProofSuccess(proofRequestId)

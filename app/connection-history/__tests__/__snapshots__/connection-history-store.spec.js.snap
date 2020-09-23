@@ -1,25 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Store: ConnectionHistory convertConnectionSuccessToHistoryEvent should raise success 1`] = `
+exports[`Store: ConnectionHistory convertInvitationAcceptedToHistoryEvent should raise success 1`] = `
 Object {
-  "action": "CONNECTED",
+  "action": "INVITATION_ACCEPTED",
   "data": Array [
     Object {
       "data": "2018-01-10T04:32:43+05:30",
-      "label": "Established on",
+      "label": "Will be established on",
     },
   ],
   "id": "a4f35623-b50c-40ea-a2b0-f7cd06e03142",
   "name": "sender1",
   "originalPayload": Object {
-    "connection": Object {
-      "identifier": "pairwiseIdentifier1",
-      "logoUrl": "lu",
-      "myPairwiseAgentDid": "myPairwiseAgentDID",
-      "myPairwiseAgentVerKey": "myPairwiseAgentVerKey",
-      "myPairwiseDid": "pairwiseIdentifier1",
-      "myPairwisePeerVerKey": "senderVerificationKey1",
-      "myPairwiseVerKey": "pairwiseVerificationKey1",
+    "payload": Object {
       "requestId": "requestId1",
       "senderAgencyDetail": Object {
         "DID": "senderDID1",
@@ -49,10 +42,11 @@ Object {
       "senderVerificationKey": "sVk",
       "targetName": "target name",
     },
-    "type": "NEW_CONNECTION_SUCCESS",
+    "senderDID": "senderDID1",
+    "type": "INVITATION_ACCEPTED",
   },
   "remoteDid": "senderDID1",
-  "status": "CONNECTED",
+  "status": "INVITATION_ACCEPTED",
   "timestamp": "2018-01-10T04:32:43+05:30",
   "type": "INVITATION",
 }
@@ -324,6 +318,55 @@ Object {
             "type": "INVITATION",
           },
           Object {
+            "action": "INVITATION_ACCEPTED",
+            "data": Array [
+              Object {
+                "data": "2018-01-10T04:32:43+05:30",
+                "label": "Will be established on",
+              },
+            ],
+            "id": "a4f35623-b50c-40ea-a2b0-f7cd06e03142",
+            "name": "sender1",
+            "originalPayload": Object {
+              "payload": Object {
+                "requestId": "requestId1",
+                "senderAgencyDetail": Object {
+                  "DID": "senderDID1",
+                  "endpoint": "endpoint",
+                  "verKey": "senderVerificationKey1",
+                },
+                "senderAgentKeyDelegationProof": Object {
+                  "agentDID": "senderAgentDID1",
+                  "agentDelegatedKey": "agentDelegatedKey",
+                  "signature": "signature",
+                },
+                "senderDID": "senderDID1",
+                "senderDetail": Object {
+                  "DID": "senderDID1",
+                  "agentKeyDlgProof": Object {
+                    "agentDID": "senderAgentDID1",
+                    "agentDelegatedKey": "agentDelegatedKey",
+                    "signature": "signature",
+                  },
+                  "logoUrl": "http://testissuer.com/logoUrl.png",
+                  "name": "sender1",
+                  "verKey": "senderVerificationKey1",
+                },
+                "senderEndpoint": "endpoint",
+                "senderLogoUrl": "lu",
+                "senderName": "sender1",
+                "senderVerificationKey": "sVk",
+                "targetName": "target name",
+              },
+              "senderDID": "senderDID1",
+              "type": "INVITATION_ACCEPTED",
+            },
+            "remoteDid": "senderDID1",
+            "status": "INVITATION_ACCEPTED",
+            "timestamp": "2018-01-10T04:32:43+05:30",
+            "type": "INVITATION",
+          },
+          Object {
             "action": "CONNECTED",
             "data": Array [
               Object {
@@ -332,50 +375,42 @@ Object {
               },
             ],
             "id": "a4f35623-b50c-40ea-a2b0-f7cd06e03142",
-            "name": undefined,
+            "name": "sender1",
             "originalPayload": Object {
-              "connection": Object {
-                "newConnection": Object {
-                  "identifier": "pairwiseIdentifier1",
-                  "logoUrl": "lu",
-                  "myPairwiseAgentDid": "myPairwiseAgentDID",
-                  "myPairwiseAgentVerKey": "myPairwiseAgentVerKey",
-                  "myPairwiseDid": "pairwiseIdentifier1",
-                  "myPairwisePeerVerKey": "senderVerificationKey1",
-                  "myPairwiseVerKey": "pairwiseVerificationKey1",
-                  "requestId": "requestId1",
-                  "senderAgencyDetail": Object {
-                    "DID": "senderDID1",
-                    "endpoint": "endpoint",
-                    "verKey": "senderVerificationKey1",
-                  },
-                  "senderAgentKeyDelegationProof": Object {
+              "payload": Object {
+                "requestId": "requestId1",
+                "senderAgencyDetail": Object {
+                  "DID": "senderDID1",
+                  "endpoint": "endpoint",
+                  "verKey": "senderVerificationKey1",
+                },
+                "senderAgentKeyDelegationProof": Object {
+                  "agentDID": "senderAgentDID1",
+                  "agentDelegatedKey": "agentDelegatedKey",
+                  "signature": "signature",
+                },
+                "senderDID": "senderDID1",
+                "senderDetail": Object {
+                  "DID": "senderDID1",
+                  "agentKeyDlgProof": Object {
                     "agentDID": "senderAgentDID1",
                     "agentDelegatedKey": "agentDelegatedKey",
                     "signature": "signature",
                   },
-                  "senderDID": "senderDID1",
-                  "senderDetail": Object {
-                    "DID": "senderDID1",
-                    "agentKeyDlgProof": Object {
-                      "agentDID": "senderAgentDID1",
-                      "agentDelegatedKey": "agentDelegatedKey",
-                      "signature": "signature",
-                    },
-                    "logoUrl": "http://testissuer.com/logoUrl.png",
-                    "name": "sender1",
-                    "verKey": "senderVerificationKey1",
-                  },
-                  "senderEndpoint": "endpoint",
-                  "senderLogoUrl": "lu",
-                  "senderName": "sender1",
-                  "senderVerificationKey": "sVk",
-                  "targetName": "target name",
+                  "logoUrl": "http://testissuer.com/logoUrl.png",
+                  "name": "sender1",
+                  "verKey": "senderVerificationKey1",
                 },
+                "senderEndpoint": "endpoint",
+                "senderLogoUrl": "lu",
+                "senderName": "sender1",
+                "senderVerificationKey": "sVk",
+                "targetName": "target name",
               },
-              "type": "NEW_CONNECTION",
+              "senderDID": "senderDID1",
+              "type": "INVITATION_ACCEPTED",
             },
-            "remoteDid": undefined,
+            "remoteDid": "senderDID1",
             "status": "CONNECTED",
             "timestamp": "2018-01-10T04:32:43+05:30",
             "type": "INVITATION",

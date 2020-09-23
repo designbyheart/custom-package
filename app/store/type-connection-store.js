@@ -8,10 +8,7 @@ import type { CustomError, GenericObject } from '../common/type-common'
 
 export const UPDATE_CONNECTION_THEME = 'UPDATE_CONNECTION_THEME'
 export const UPDATE_STATUS_BAR_THEME = 'UPDATE_STATUS_BAR_THEME'
-export const NEW_CONNECTION_FAIL = 'NEW_CONNECTION_FAIL'
 export const HYDRATE_CONNECTIONS = 'HYDRATE_CONNECTIONS'
-export const UPDATE_SERIALIZE_CONNECTION_FAIL =
-  'UPDATE_SERIALIZE_CONNECTION_FAIL'
 export const UPDATE_CONNECTION_SERIALIZED_STATE =
   'UPDATE_CONNECTION_SERIALIZED_STATE'
 
@@ -34,6 +31,8 @@ export type Connection = {
   publicDID: ?string,
   timestamp?: string,
   attachedRequest?: AriesAttachedRequest,
+  isFetching?: boolean,
+  isCompleted?: boolean,
 } & MyPairwiseInfo
 
 export const DELETE_CONNECTION = 'DELETE_CONNECTION'
@@ -69,20 +68,28 @@ export type DeleteConnectionFailureEventAction = {
 
 export const NEW_CONNECTION = 'NEW_CONNECTION'
 
+export const NEW_PENDING_CONNECTION = 'NEW_PENDING_CONNECTION'
+
 export const NEW_ONE_TIME_CONNECTION = 'NEW_ONE_TIME_CONNECTION'
+
+export const UPDATE_CONNECTION = 'UPDATE_CONNECTION'
 
 export type NewConnectionAction = {
   type: typeof NEW_CONNECTION,
-  connection: {
-    identifier: string,
-    logoUrl?: ?string,
-  } & InvitationPayload,
-}
-
-export type UpdateSerializeConnectionFailAction = {
-  type: typeof UPDATE_SERIALIZE_CONNECTION_FAIL,
-  error: CustomError,
   identifier: string,
+  logoUrl?: ?string,
+} & InvitationPayload
+
+export type UpdateConnectionAction = {
+  type: typeof UPDATE_CONNECTION,
+  identifier: string,
+  logoUrl?: ?string,
+} & InvitationPayload
+
+export type NewConnectionSuccessAction = {
+  type: typeof NEW_CONNECTION_SUCCESS,
+  identifier: string,
+  senderDid: string,
 }
 
 export type UpdateConnectionSerializedStateAction = {
@@ -127,14 +134,20 @@ export type SendConnectionReuseAction = {
 
 export const SEND_REUSE_SUCCESS = 'SEND_REUSE_SUCCESS'
 
-export const UPDATE_CONNECTION_FAIL: 'UPDATE_CONNECTION_FAIL' =
-  'UPDATE_CONNECTION_FAIL'
+export const CONNECTION_FAIL: 'CONNECTION_FAIL' =
+  'CONNECTION_FAIL'
 
-export const connectionFail = (error: CustomError, senderDID: string) => ({
-  type: UPDATE_CONNECTION_FAIL,
+export const connectionFail = (error: CustomError, senderDid: string) => ({
+  type: CONNECTION_FAIL,
   error,
-  senderDID,
+  senderDid,
 })
+
+export type ConnectionFailAction = {
+  type: typeof CONNECTION_FAIL,
+  error: string,
+  senderDid: string,
+}
 
 export const ERROR_CONNECTION = (message: string) => ({
   code: 'CONNECTION-001',
@@ -155,3 +168,11 @@ export type ConnectionDeleteAttachedRequestAction = {
   type: typeof CONNECTION_DELETE_ATTACHED_REQUEST,
   identifier: string,
 }
+
+export const NEW_CONNECTION_SUCCESS = 'NEW_CONNECTION_SUCCESS'
+
+export const connectionSuccess = (identifier: string, senderDid: string) => ({
+  type: NEW_CONNECTION_SUCCESS,
+  identifier,
+  senderDid,
+})

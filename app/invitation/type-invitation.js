@@ -157,6 +157,21 @@ export type InvitationRejectedAction = {
   senderDID: string,
 }
 
+export const INVITATION_ACCEPTED: 'INVITATION_ACCEPTED' = 'INVITATION_ACCEPTED'
+
+export type InvitationAcceptedAction = {
+  type: typeof INVITATION_ACCEPTED,
+  senderDID: string,
+  payload: InvitationPayload,
+}
+
+export const HYDRATE_INVITATIONS: 'HYDRATE_INVITATIONS' = 'HYDRATE_INVITATIONS'
+
+export type HydrateInvitationsAction = {
+  type: typeof HYDRATE_INVITATIONS,
+  invitations: { +[string]: Invitation },
+}
+
 export type InvitationAction =
   | InvitationReceivedAction
   | InvitationResponseSendAction
@@ -165,6 +180,8 @@ export type InvitationAction =
   | InvitationRejectedAction
   | InitialTestAction
   | ResetAction
+  | InvitationAcceptedAction
+  | HydrateInvitationsAction
 
 export const OUT_OF_BAND_INVITATION_ACCEPTED = 'OUT_OF_BAND_INVITATION_ACCEPTED'
 

@@ -19,14 +19,16 @@ import {
   NEW_CONNECTION,
   DELETE_CONNECTION_FAILURE,
   DELETE_CONNECTION,
-  UPDATE_SERIALIZE_CONNECTION_FAIL,
   UPDATE_CONNECTION_SERIALIZED_STATE,
   SEND_CONNECTION_REDIRECT,
   CONNECTION_ATTACH_REQUEST,
   CONNECTION_DELETE_ATTACHED_REQUEST,
   SEND_CONNECTION_REUSE,
+  NEW_CONNECTION_SUCCESS,
+  NEW_PENDING_CONNECTION,
+  UPDATE_CONNECTION,
+  NEW_ONE_TIME_CONNECTION,
 } from './type-connection-store'
-import { NEW_CONNECTION_SUCCESS } from './new-connection-success'
 import { HYDRATE_CONNECTIONS } from './type-connection-store'
 import {
   CLAIM_OFFER_RECEIVED,
@@ -108,6 +110,8 @@ import { RESTORE_CLOUD_SUBMIT_PASSPHRASE } from '../cloud-restore/cloud-restore-
 import { HYDRATE_CLAIM_MAP_FAIL } from '../connection-details/components/types/type-details-claim'
 import { ERROR_SEND_PROOF } from '../connection-details/components/types/type-details-proof'
 import {
+  HYDRATE_INVITATIONS,
+  INVITATION_ACCEPTED,
   INVITATION_RECEIVED,
   INVITATION_REJECTED,
   INVITATION_RESPONSE_FAIL,
@@ -508,19 +512,23 @@ export function PiiHiddenActionTransformer(action: any) {
     [RESTORE_SUBMIT_PASSPHRASE]: ['passphrase'],
 
     [INVITATION_RECEIVED]: ['data'],
+    [INVITATION_ACCEPTED]: ['senderDid', 'payload'],
     [OUT_OF_BAND_INVITATION_ACCEPTED]: ['invitationPayload', 'attachedRequest'],
     [INVITATION_RESPONSE_SEND]: ['data'],
     [INVITATION_RESPONSE_SUCCESS]: ['senderDID'],
     [INVITATION_RESPONSE_FAIL]: ['senderDID'],
     [INVITATION_REJECTED]: ['senderDID'],
+    [HYDRATE_INVITATIONS]: ['invitations'],
+    [NEW_PENDING_CONNECTION]: ['connection'],
     [NEW_CONNECTION]: ['connection'],
-    [NEW_CONNECTION_SUCCESS]: ['connection'],
+    [UPDATE_CONNECTION]: ['connection'],
+    [NEW_ONE_TIME_CONNECTION]: ['connection'],
+    [NEW_CONNECTION_SUCCESS]: ['identifier', 'senderDid'],
     [DELETE_CONNECTION]: ['senderDID'],
     [DELETE_CONNECTION_SUCCESS]: ['filteredConnections'],
     [DELETE_CONNECTION_FAILURE]: ['connection'],
     [HYDRATE_CONNECTIONS]: ['connections'],
     [NEW_CONNECTION_SEEN]: ['senderDid'],
-    [UPDATE_SERIALIZE_CONNECTION_FAIL]: ['identifier'],
     [UPDATE_CONNECTION_SERIALIZED_STATE]: [
       'identifier',
       'vcxSerializedConnection',

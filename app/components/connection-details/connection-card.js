@@ -13,7 +13,7 @@ import { bindActionCreators } from 'redux'
 
 import SvgCustomIcon from '../../components/svg-custom-icon'
 import CredentialPriceInfo from '../../components/labels/credential-price-info'
-import { modalContentProofShared, modalScreenRoute } from '../../common'
+import { connectionsDrawerRoute, modalContentProofShared, modalScreenRoute } from '../../common'
 import {
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
@@ -27,6 +27,10 @@ import { DENY_PROOF_REQUEST_FAIL } from '../../proof-request/type-proof-request'
 import { denyProofRequest } from '../../proof-request/proof-request-store'
 import { moderateScale } from 'react-native-size-matters'
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
+import { CONNECTION_FAIL } from '../../store/type-connection-store'
+import { ResponseType } from '../request/type-request'
+import { sendInvitationResponse } from '../../invitation/invitation-store'
+import { deleteConnectionAction } from '../../store/connections-store'
 
 // TODO: Fix the <any, {}> to be the correct types for props and state
 class ConnectionCardComponent extends PureComponent<
@@ -59,6 +63,14 @@ class ConnectionCardComponent extends PureComponent<
 
     if (event.action === DENY_PROOF_REQUEST_FAIL) {
       this.props.denyProofRequest(event.originalPayload.uid)
+      return
+    }
+
+    if (event.action === CONNECTION_FAIL) {
+      this.props.sendInvitationResponse({
+        response: ResponseType.accepted,
+        senderDID: event.remoteDid,
+      })
       return
     }
 
@@ -130,7 +142,7 @@ class ConnectionCardComponent extends PureComponent<
                 </View>
               )}
               <View style={styles.button}>
-                {!!this.props.noOfAttributes && (
+                {(!!this.props.noOfAttributes || this.props.repeatable) && (
                   <TouchableOpacity onPress={this.updateAndShowModal}>
                     <Text
                       style={[
@@ -163,6 +175,13 @@ class ConnectionCardComponent extends PureComponent<
   }
 
   onDelete = () => {
+    const { data: event } = this.props
+    if (event.action === CONNECTION_FAIL) {
+      this.props.deleteConnectionAction(event.remoteDid)
+      this.props.navigation.navigate(connectionsDrawerRoute)
+      return
+    }
+
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
     this.props.deleteHistoryEvent(this.props.data)
   }
@@ -175,6 +194,8 @@ const mapDispatchToProps = (dispatch) =>
       reTrySendProof,
       deleteHistoryEvent,
       denyProofRequest,
+      sendInvitationResponse,
+      deleteConnectionAction,
     },
     dispatch
   )

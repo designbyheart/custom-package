@@ -1,6 +1,4 @@
 // @flow
-import type { Middleware, MiddlewareAPI, Dispatch } from 'redux'
-import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import {
   SEND_CLAIM_REQUEST_SUCCESS,
   CLAIM_OFFER_RECEIVED,
@@ -23,14 +21,16 @@ import {
   DENY_PROOF_REQUEST_SUCCESS,
   DENY_PROOF_REQUEST,
   DENY_PROOF_REQUEST_FAIL,
+  ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
 } from '../proof-request/type-proof-request'
-import { RECORD_HISTORY_EVENT } from './type-connection-history'
 import { historyEventOccurred } from './connection-history-store'
 import {
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
 } from '../question/type-question'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
+import { INVITATION_ACCEPTED } from '../invitation/type-invitation'
+import { CONNECTION_FAIL, NEW_CONNECTION_SUCCESS } from '../store/type-connection-store'
 
 const actionToRecord = [
   // removing invitation received from record array
@@ -39,6 +39,7 @@ const actionToRecord = [
   // and we don't want to trigger vxc_init just because invitation
   // is downloaded
   // INVITATION_RECEIVED,
+  INVITATION_ACCEPTED,
   NEW_CONNECTION_SUCCESS,
   PROOF_REQUEST_RECEIVED,
   CLAIM_OFFER_RECEIVED,
@@ -61,6 +62,8 @@ const actionToRecord = [
   DENY_CLAIM_OFFER_FAIL,
   DENY_CLAIM_OFFER_SUCCESS,
   DELETE_CLAIM_SUCCESS,
+  CONNECTION_FAIL,
+  ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
 ]
 
 // TODO:KS Fix any type using `redux` provided Generic Types

@@ -56,12 +56,11 @@ import {
 import { convertQrCodeToInvitation } from '../qr-code/qr-code'
 import { ResponseType } from '../components/request/type-request'
 import { QR_CODE_SENDER_DETAIL, QR_CODE_SENDER_DID } from '../api/api-constants'
-import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import { ensureAppHydrated, getEnvironmentName } from '../store/config-store'
 import { getUserPairwiseDid } from '../store/store-selector'
 import { INVITATION_RESPONSE_FAIL } from '../invitation/type-invitation'
-import { pushNotificationPermissionAction } from '../push-notification/push-notification-store'
 import { SERVER_ENVIRONMENT } from '../store/type-config-store'
+import { NEW_CONNECTION_SUCCESS } from '../store/type-connection-store'
 
 const initialState = {
   status: onfidoProcessStatus.IDLE,

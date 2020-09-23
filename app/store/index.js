@@ -17,7 +17,6 @@ import pushNotification, {
 } from '../push-notification/push-notification-store'
 import connections, {
   watchConnection,
-  watchSendConnectionRedirect,
 } from './connections-store'
 import config, { watchConfig, watchGetMessagesSaga } from './config-store'
 import deepLink from '../deep-link/deep-link-store'

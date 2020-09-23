@@ -4,7 +4,6 @@ import { expectSaga } from 'redux-saga-test-plan'
 
 import connectionReducer, {
   saveNewConnection,
-  saveNewConnectionFailed,
   connectionMapper,
   deleteConnectionSuccess,
   deleteConnectionOccurredSaga,
@@ -12,9 +11,8 @@ import connectionReducer, {
   persistThemes,
   hydrateThemes,
   removePersistedThemes,
-  hydrateConnectionThemes,
+  hydrateConnectionThemes, saveNewPendingConnection,
 } from '../connections-store'
-import { saveNewConnectionSuccess } from '../new-connection-success'
 import { bubbleSize } from '../../common/styles'
 import {
   successConnectionData,
@@ -27,7 +25,7 @@ import {
 import { secureSet, secureGet } from '../../services/storage'
 import { CONNECTIONS } from '../../common'
 import { deleteConnection } from '../../bridge/react-native-cxs/RNCxs'
-import { STORAGE_KEY_THEMES } from '../type-connection-store'
+import { connectionFail, connectionSuccess, STORAGE_KEY_THEMES } from '../type-connection-store'
 
 describe('Mapper', () => {
   it('connectionMapper should return proper object', () => {
@@ -52,6 +50,12 @@ describe('connections should update correctly', () => {
   const newConnection = {
     identifier: '6789012345678906789012',
     name: 'test',
+    senderDID: '2345454326654392659265',
+  }
+  const newPendingConnection = {
+    identifier: '2345454326654392659265',
+    name: 'test',
+    senderDID: '2345454326654392659265',
   }
 
   beforeAll(() => {
@@ -62,12 +66,17 @@ describe('connections should update correctly', () => {
   it('should receive new connection request', () => {
     const expectedState = {
       ...initialState,
-      isFetching: true,
-      isPristine: false,
+      data: {
+        [newPendingConnection.identifier]: {
+          ...newPendingConnection,
+          isFetching: true,
+          isCompleted: false,
+        },
+      },
     }
     const actualState = connectionReducer(
       initialState,
-      saveNewConnection(newConnection)
+      saveNewPendingConnection(newPendingConnection)
     )
     expect(actualState).toMatchObject(expectedState)
   })
@@ -101,8 +110,8 @@ describe('connections should update correctly', () => {
         [matchers.call.like({ fn: deleteConnection }), true],
         [matchers.call.fn(secureSet, CONNECTIONS, '{}'), true],
       ])
-      .call.like({ fn: deleteConnection })
       .call(secureSet, CONNECTIONS, '{}')
+      .call.like({ fn: deleteConnection })
       .put(deleteConnectionSuccess({}))
       .run()
   })
@@ -113,12 +122,14 @@ describe('connections should update correctly', () => {
       isFetching: false,
       data: {
         ...initialState.data,
-        [newConnection.identifier]: newConnection,
+        [newConnection.identifier]: {
+          isCompleted: true,
+        },
       },
     }
     const actualState = connectionReducer(
       initialState,
-      saveNewConnectionSuccess(newConnection)
+      connectionSuccess(newConnection.identifier, newConnection.senderDID)
     )
     expect(actualState).toMatchObject(expectedState)
   })
@@ -127,12 +138,22 @@ describe('connections should update correctly', () => {
     const error = { code: '1234', message: 'new connection failed' },
       expectedState = {
         ...initialState,
-        isFetching: false,
-        error,
+        data: {
+          [newPendingConnection.identifier]: {
+            ...newPendingConnection,
+            isFetching: false,
+            isCompleted: false,
+            error
+          },
+        },
       }
-    const actualState = connectionReducer(
+    const state = connectionReducer(
       initialState,
-      saveNewConnectionFailed(error)
+      saveNewPendingConnection(newPendingConnection)
+    )
+    const actualState = connectionReducer(
+      state,
+      connectionFail(error, newPendingConnection.senderDID)
     )
     expect(actualState).toMatchObject(expectedState)
   })

@@ -29,7 +29,6 @@ import type {
   DeleteConnectionEventAction,
   SendConnectionRedirectAction,
   SendConnectionReuseAction,
-  UpdateSerializeConnectionFailAction,
   UpdateConnectionSerializedStateAction,
 } from './type-connection-store'
 import type {
@@ -47,16 +46,18 @@ import {
   HYDRATE_CONNECTION_THEMES,
   UPDATE_CONNECTION_THEME,
   UPDATE_STATUS_BAR_THEME,
-  NEW_CONNECTION_FAIL,
   HYDRATE_CONNECTIONS,
   SEND_CONNECTION_REDIRECT,
   SEND_CONNECTION_REUSE,
-  UPDATE_SERIALIZE_CONNECTION_FAIL,
   UPDATE_CONNECTION_SERIALIZED_STATE,
   SEND_REDIRECT_SUCCESS,
   SEND_REUSE_SUCCESS,
-  UPDATE_CONNECTION_FAIL,
+  CONNECTION_FAIL,
   NEW_ONE_TIME_CONNECTION,
+  NEW_CONNECTION_SUCCESS,
+  NEW_PENDING_CONNECTION,
+  UPDATE_CONNECTION,
+  connectionFail,
 } from './type-connection-store'
 import {
   deleteConnection,
@@ -70,10 +71,6 @@ import { promptBackupBanner } from '../backup/backup-store'
 import { HYDRATED } from './type-config-store'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
-import {
-  NEW_CONNECTION_SUCCESS,
-  saveNewConnectionSuccess,
-} from './new-connection-success'
 import { ensureVcxInitSuccess } from './route-store'
 import moment from 'moment'
 
@@ -99,11 +96,11 @@ const initialState: ConnectionStore = {
 // but we need to fix all any types. I will do that once claims are done
 
 export const connectionMapper = ({
-  logoUrl,
-  size = bubbleSize.XL,
-  senderName = 'Unknown',
-  ...otherArgs
-}: GenericObject) => ({
+                                   logoUrl,
+                                   size = bubbleSize.XL,
+                                   senderName = 'Unknown',
+                                   ...otherArgs
+                                 }: GenericObject) => ({
   logoUrl,
   size,
   senderName,
@@ -126,6 +123,16 @@ export const saveNewConnection = (connection: GenericObject) => ({
   connection,
 })
 
+export const saveNewPendingConnection = (connection: GenericObject) => ({
+  type: NEW_PENDING_CONNECTION,
+  connection,
+})
+
+export const updateConnection = (connection: GenericObject) => ({
+  type: UPDATE_CONNECTION,
+  connection,
+})
+
 export const saveNewOneTimeConnection = (connection: GenericObject) => ({
   type: NEW_ONE_TIME_CONNECTION,
   connection,
@@ -135,11 +142,6 @@ export const saveNewOneTimeConnection = (connection: GenericObject) => ({
 export const updateStatusBarTheme = (statusColor?: string) => ({
   type: UPDATE_STATUS_BAR_THEME,
   color: statusColor || color.bg.tertiary.color,
-})
-
-export const saveNewConnectionFailed = (error: CustomError) => ({
-  type: NEW_CONNECTION_FAIL,
-  error,
 })
 
 export const deleteConnectionAction = (
@@ -174,17 +176,23 @@ export function* deleteConnectionOccurredSaga(
     getConnectionBySenderDid,
     action.senderDID
   )
-  const { [connection.myPairwiseDid]: deleted, ...rest } = connections
 
-  const connectionHandle = yield call(
-    getHandleBySerializedConnection,
-    connection.vcxSerializedConnection
-  )
+  const {
+    [connection.identifier]: deleted,
+    ...rest
+  } = connections
 
   try {
     yield call(secureSet, CONNECTIONS, JSON.stringify(rest))
     yield put(deleteConnectionSuccess(rest))
-    yield call(deleteConnection, connectionHandle)
+
+    if (connection.vcxSerializedConnection){
+      const connectionHandle = yield call(
+        getHandleBySerializedConnection,
+        connection.vcxSerializedConnection
+      )
+      yield call(deleteConnection, connectionHandle)
+    }
   } catch (e) {
     captureError(e)
     yield put(deleteConnectionFailure(connection, e))
@@ -196,52 +204,28 @@ export function* watchDeleteConnectionOccurred(): any {
 }
 
 export function* loadNewConnectionSaga(
-  action: GenericObject
+  _: GenericObject,
 ): Generator<*, *, *> {
-  const {
-    identifier,
-    logoUrl,
-    senderDID,
-    senderEndpoint,
-    senderName,
-    myPairwiseDid,
-    myPairwiseVerKey,
-    myPairwiseAgentDid,
-    myPairwiseAgentVerKey,
-    myPairwisePeerVerKey,
-    vcxSerializedConnection,
-    publicDID,
-    attachedRequest,
-  }: Connection = action.connection.newConnection
-
   try {
-    const connection: Connection = {
-      identifier,
-      logoUrl,
-      senderDID,
-      senderEndpoint,
-      senderName,
-      myPairwiseDid,
-      myPairwiseVerKey,
-      myPairwiseAgentDid,
-      myPairwiseAgentVerKey,
-      myPairwisePeerVerKey,
-      vcxSerializedConnection,
-      publicDID,
-      attachedRequest,
-      timestamp: moment().format(),
-    }
-
     yield put(promptBackupBanner(true))
-    yield put(saveNewConnectionSuccess(connection))
     yield* persistConnections()
   } catch (e) {
-    yield put(saveNewConnectionFailed(e))
+    captureError(e)
   }
 }
 
-export function* watchNewConnection(): any {
-  yield takeEvery(NEW_CONNECTION, loadNewConnectionSaga)
+export function* watchConnectionsChanged(): any {
+  yield takeEvery([
+    NEW_CONNECTION,
+    NEW_PENDING_CONNECTION,
+    UPDATE_CONNECTION,
+    NEW_CONNECTION_SUCCESS,
+    CONNECTION_FAIL,
+    DELETE_CONNECTION_SUCCESS,
+    CONNECTION_ATTACH_REQUEST,
+    CONNECTION_DELETE_ATTACHED_REQUEST,
+    UPDATE_CONNECTION_SERIALIZED_STATE,
+  ], loadNewConnectionSaga)
 }
 
 export function* persistConnections(): Generator<*, *, *> {
@@ -274,14 +258,6 @@ export function* hydrateConnectionSaga(): Generator<*, *, *> {
 
 export const getConnections = (connectionsData: ?Connections) =>
   connectionsData ? Object.values(connectionsData) : []
-
-export const getConnection = (
-  remoteConnectionId: string,
-  connections: Connections
-): Array<any> =>
-  Object.values(connections).filter(function (c: any) {
-    return c.remoteConnectionId === remoteConnectionId
-  })
 
 export const getConnectionLogo = (logoUrl: ?string) =>
   logoUrl ? { uri: logoUrl } : require('../images/cb_evernym.png')
@@ -340,21 +316,11 @@ export function* removePersistedThemes(): Generator<*, *, *> {
     customLogger.error(`removePersistedThemes: ${e}`)
   }
 }
-export function updateSerializedConnectionFail({
-  identifier,
-  error,
-}: *): UpdateSerializeConnectionFailAction {
-  return {
-    type: UPDATE_SERIALIZE_CONNECTION_FAIL,
-    error,
-    identifier,
-  }
-}
 
 export function updateConnectionSerializedState({
-  identifier,
-  vcxSerializedConnection,
-}: *): UpdateConnectionSerializedStateAction {
+                                                  identifier,
+                                                  vcxSerializedConnection,
+                                                }: *): UpdateConnectionSerializedStateAction {
   return {
     type: UPDATE_CONNECTION_SERIALIZED_STATE,
     identifier,
@@ -511,7 +477,7 @@ export function* watchUpdateConnectionTheme(): any {
 export function* watchConnection(): any {
   yield all([
     watchDeleteConnectionOccurred(),
-    watchNewConnection(),
+    watchConnectionsChanged(),
     watchUpdateConnectionTheme(),
     watchSendConnectionRedirect(),
     watchSendConnectionReuse(),
@@ -546,40 +512,71 @@ export default function connections(
           ...action.themes,
         },
       }
-    case NEW_CONNECTION:
-      return {
-        ...state,
-        isFetching: true,
-        isPristine: false,
-        error: initialState.error,
-      }
-    case NEW_ONE_TIME_CONNECTION:
-      return {
-        ...state,
-        isFetching: false,
-        oneTimeConnections: {
-          ...state.oneTimeConnections,
-          [action.connection.identifier]: action.connection,
-        },
-      }
-    case NEW_CONNECTION_SUCCESS:
+    case NEW_PENDING_CONNECTION: {
       const {
         connection,
         connection: { identifier },
       } = action
       return {
         ...state,
-        isFetching: false,
         data: {
           ...state.data,
-          [identifier]: connectionMapper(connection),
+          [identifier]: {
+            ...connectionMapper(connection),
+            isFetching: true,
+            isCompleted: false,
+            timestamp: moment().format(),
+          },
         },
       }
-    case NEW_CONNECTION_FAIL:
+    }
+    case UPDATE_CONNECTION: {
+      const {
+        connection,
+        connection: { identifier, senderDID },
+      } = action
+
+      const { [senderDID]: pendingConnection, ... connections} = state.data || {}
+
       return {
         ...state,
-        isFetching: false,
-        error: action.error,
+        data: {
+          ...connections,
+          [identifier]: {
+            ...connectionMapper(connection),
+            isFetching: true,
+            isCompleted: false,
+            timestamp: pendingConnection.timestamp,
+          },
+        },
+      }
+    }
+    case NEW_ONE_TIME_CONNECTION:
+      return {
+        ...state,
+        oneTimeConnections: {
+          ...state.oneTimeConnections,
+          [action.connection.identifier]: {
+            ...action.connection,
+            isCompleted: true,
+            isFetching: false,
+            timestamp: moment().format(),
+          },
+        },
+      }
+    case NEW_CONNECTION_SUCCESS:
+      const { identifier } = action
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          [identifier]: {
+            ...state.data && state.data[identifier] ? state.data[identifier] : {},
+            isCompleted: true,
+            isFetching: false,
+            timestamp: moment().format(),
+          }
+        },
       }
     case DELETE_CONNECTION_SUCCESS:
       const filteredData = { ...action.filteredConnections }
@@ -613,11 +610,30 @@ export default function connections(
           },
         },
       }
-    case UPDATE_CONNECTION_FAIL:
+    case CONNECTION_FAIL:
+      if (!state.data){
+        return state
+      }
+
+      const connection: any =
+        Object.values(state.data).find(
+        (connection: any) => connection.senderDID === action.senderDid
+        )
+
+      if (!connection){
+        return state
+      }
+
       return {
         ...state,
-        isFetching: false,
-        error: action.error,
+        data: {
+          ...state.data,
+          [connection.identifier]: {
+            ...(state.data ? state.data[connection.identifier] || {} : {}),
+            isFetching: false,
+            error: action.error,
+          },
+        },
       }
     case CONNECTION_ATTACH_REQUEST: {
       return {
@@ -635,7 +651,7 @@ export default function connections(
       if (state.data && state.data[action.identifier]) {
         // eslint-disable-next-line no-unused-vars
         const { attachedRequest, ...connection } =
-          state.data?.[action.identifier] ?? {}
+        state.data?.[action.identifier] ?? {}
 
         return {
           ...state,

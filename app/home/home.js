@@ -45,13 +45,13 @@ import {
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
 } from '../claim-offer/type-claim-offer'
-import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
+import { CONNECTION_INVITE_TYPES, INVITATION_ACCEPTED } from '../invitation/type-invitation'
 import type { AriesOutOfBandInvite } from '../invitation/type-invitation'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 import { MESSAGE_TYPE } from '../api/api-constants'
 import { CONNECTION_ALREADY_EXIST } from '../connection-details/type-connection-details'
-import { DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
-import { PROOF_REQUEST_RECEIVED } from '../proof-request/type-proof-request'
+import { CONNECTION_FAIL } from '../store/type-connection-store'
+import { PROOF_REQUEST_ACCEPTED } from '../proof-request/type-proof-request'
 
 export class HomeScreen extends Component<HomeProps, void> {
   unsubscribe = null
@@ -240,6 +240,11 @@ export class HomeScreen extends Component<HomeProps, void> {
     let statusMessage = ''
     if (status === HISTORY_EVENT_STATUS.NEW_CONNECTION_SUCCESS)
       statusMessage = `You connected with "${issuerName}".`
+    else if (status === HISTORY_EVENT_STATUS.INVITATION_ACCEPTED) {
+      statusMessage = `Making secure connection...`
+    }
+    else if (status === HISTORY_EVENT_STATUS.CONNECTION_FAIL)
+      statusMessage = `Failed to make secure connection`
     else if (status === HISTORY_EVENT_STATUS.CLAIM_STORAGE_SUCCESS)
       statusMessage = `You have been issued a "${action}".`
     else if (status === HISTORY_EVENT_STATUS.SEND_PROOF_SUCCESS)
@@ -271,6 +276,10 @@ export class HomeScreen extends Component<HomeProps, void> {
       status === PAID_CREDENTIAL_REQUEST_FAIL
     )
       statusMessage = `Failed to accept "${action}"`
+    else if (
+      status === HISTORY_EVENT_STATUS.PROOF_REQUEST_ACCEPTED
+    )
+      statusMessage = `Sending...`
     else if (status === UPDATE_ATTRIBUTE_CLAIM) statusMessage = `Sending...`
     else if (status === ERROR_SEND_PROOF)
       statusMessage = `Failed to send "${action}"`
@@ -395,10 +404,16 @@ const mapStateToProps = (state: Store) => {
     state.connections.data
   ): any)
 
+  const receivedOneTimeConnections: Connection[] = (getConnections(
+    state.connections.oneTimeConnections
+  ): any)
+
+  const allConnections = [...receivedConnections, ...receivedOneTimeConnections]
+
   // Once the credential is accepted or proof is shared, that object does not contain logoUrl and issuerName
   // so we need to store them here.
   const mappedDidToLogoAndName = {}
-  receivedConnections.map((connection) => {
+  allConnections.map((connection) => {
     mappedDidToLogoAndName[connection.senderDID] = {
       logoUrl: connection.logoUrl,
       issuerName: connection.senderName,
@@ -407,7 +422,7 @@ const mapStateToProps = (state: Store) => {
 
   // TODO: Replace this with flatMap when we update flow-bin
   const placeholderArray = []
-  const connections = receivedConnections.map((connection, index) => {
+  const connections = allConnections.map((connection, index) => {
     const connectionHistory =
       (state.history.data &&
         state.history.data.connections &&
@@ -418,7 +433,7 @@ const mapStateToProps = (state: Store) => {
     const timestamp = connection.timestamp
 
     const filteredEvents = timestamp
-      ? connectionHistory.filter(
+        ? connectionHistory.filter(
           (event) => new Date(event.timestamp) >= new Date(timestamp)
         )
       : connectionHistory.slice()

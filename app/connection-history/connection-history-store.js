@@ -33,12 +33,16 @@ import type {
   UpdateHistoryEventAction,
 } from './type-connection-history'
 import type { CustomError } from '../common/type-common'
-import type { InvitationPayload } from '../invitation/type-invitation'
+import type {
+  InvitationAcceptedAction,
+  InvitationPayload
+} from '../invitation/type-invitation'
 import { uuid } from '../services/uuid'
-import { INVITATION_RECEIVED } from '../invitation/type-invitation'
+import {
+  INVITATION_ACCEPTED,
+  INVITATION_RECEIVED
+} from '../invitation/type-invitation'
 import moment from 'moment'
-import type { NewConnectionAction } from '../store/type-connection-store'
-import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import type {
   SendClaimRequestSuccessAction,
   ClaimOfferPayload,
@@ -92,6 +96,8 @@ import {
   DENY_PROOF_REQUEST_SUCCESS,
   DENY_PROOF_REQUEST,
   DENY_PROOF_REQUEST_FAIL,
+  ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
+  PROOF_REQUEST_ACCEPTED,
 } from '../proof-request/type-proof-request'
 import { secureSet, getHydrationItem } from '../services/storage'
 import {
@@ -103,6 +109,7 @@ import {
   getPendingHistory,
   getHistoryEvent,
   getClaimReceivedHistory,
+  getUniqueHistoryItem,
 } from '../store/store-selector'
 import {
   CLAIM_STORAGE_SUCCESS,
@@ -122,6 +129,8 @@ import {
 } from '../question/type-question'
 import { MESSAGE_TYPE } from '../api/api-constants'
 import { selectQuestion } from '../question/question-store'
+import { CONNECTION_FAIL, NEW_CONNECTION_SUCCESS } from '../store/type-connection-store'
+import type { ConnectionFailAction } from '../store/type-connection-store'
 
 const initialState = {
   error: null,
@@ -231,11 +240,33 @@ export function convertInvitationToHistoryEvent(
 }
 
 // accept invitation
-export function convertConnectionSuccessToHistoryEvent(
-  action: NewConnectionAction
+export function convertInvitationAcceptedToHistoryEvent(
+  action: InvitationAcceptedAction
 ): ConnectionHistoryEvent {
-  const { senderName, senderDID } = action.connection
+  const { senderName, senderDID } = action.payload
 
+  return {
+    action: HISTORY_EVENT_STATUS[INVITATION_ACCEPTED],
+    data: [
+      {
+        label: 'Will be established on',
+        data: moment().format(),
+      },
+    ],
+    id: uuid(),
+    name: senderName,
+    status: HISTORY_EVENT_STATUS[INVITATION_ACCEPTED],
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.INVITATION,
+    remoteDid: senderDID,
+    originalPayload: action,
+  }
+}
+
+// connection established
+export function convertConnectionSuccessToHistoryEvent(
+  event: ConnectionHistoryEvent
+): ConnectionHistoryEvent {
   return {
     action: HISTORY_EVENT_STATUS[NEW_CONNECTION_SUCCESS],
     data: [
@@ -245,12 +276,35 @@ export function convertConnectionSuccessToHistoryEvent(
       },
     ],
     id: uuid(),
-    name: senderName,
+    name: event.name,
     status: HISTORY_EVENT_STATUS[NEW_CONNECTION_SUCCESS],
     timestamp: moment().format(),
     type: HISTORY_EVENT_TYPE.INVITATION,
-    remoteDid: senderDID,
-    originalPayload: action,
+    remoteDid: event.remoteDid,
+    originalPayload: event.originalPayload,
+  }
+}
+
+// connection failed
+export function convertConnectionFailToHistoryEvent(
+  action: ConnectionFailAction,
+  event: ConnectionHistoryEvent
+): ConnectionHistoryEvent {
+  return {
+    action: HISTORY_EVENT_STATUS.CONNECTION_FAIL,
+    data: [
+      {
+        label: 'Failed to make secure connection with',
+        data: moment().format(),
+      },
+    ],
+    id: uuid(),
+    name: event.name,
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.INVITATION,
+    remoteDid: event.remoteDid,
+    originalPayload: event.originalPayload,
+    status: HISTORY_EVENT_STATUS.CONNECTION_FAIL,
   }
 }
 
@@ -378,6 +432,23 @@ export function convertCredentialRequestFailToHistoryEvent(
     remoteDid: credentialOfferAcceptedHistoryEvent.remoteDid,
     originalPayload: action,
     status: HISTORY_EVENT_STATUS[action.type],
+  }
+}
+
+function convertOutofbandProofRequestAcceptedToHistoryEvent(
+  action: OutofbandClaimOfferAcceptedAction,
+  proofReceivedEvent: ConnectionHistoryEvent,
+): ConnectionHistoryEvent {
+  return {
+    action: HISTORY_EVENT_STATUS.PROOF_REQUEST_ACCEPTED,
+    data: proofReceivedEvent.data,
+    id: uuid(),
+    name: proofReceivedEvent.name,
+    timestamp: moment().format(),
+    type: HISTORY_EVENT_TYPE.PROOF,
+    remoteDid: proofReceivedEvent.remoteDid,
+    originalPayload: proofReceivedEvent.originalPayload,
+    status: HISTORY_EVENT_STATUS.PROOF_REQUEST_ACCEPTED,
   }
 }
 
@@ -624,14 +695,52 @@ export function* historyEventOccurredSaga(
 ): Generator<*, *, *> {
   const { event, type } = action
   let historyEvent: ?ConnectionHistoryEvent = null
-
   try {
     if (event.type === INVITATION_RECEIVED) {
       historyEvent = convertInvitationToHistoryEvent(event.data.payload)
     }
 
+    if (event.type === INVITATION_ACCEPTED) {
+      const existingConnectionFailEvent: ConnectionHistoryEvent = yield select(
+        getUniqueHistoryItem,
+        event.senderDID,
+        CONNECTION_FAIL
+      )
+
+      if (existingConnectionFailEvent) {
+        yield put(deleteHistoryEvent(existingConnectionFailEvent))
+      }
+      historyEvent = convertInvitationAcceptedToHistoryEvent(event)
+    }
+
     if (event.type === NEW_CONNECTION_SUCCESS) {
-      historyEvent = convertConnectionSuccessToHistoryEvent(event)
+      const invitationAcceptedEvent = yield select(
+        getUniqueHistoryItem,
+        event.senderDid,
+        INVITATION_ACCEPTED
+      )
+      // convert invitation accepted into connection success event
+      historyEvent = convertConnectionSuccessToHistoryEvent(invitationAcceptedEvent)
+      if (invitationAcceptedEvent) {
+        yield put(deleteHistoryEvent(invitationAcceptedEvent))
+      }
+    }
+
+    if (event.type === CONNECTION_FAIL) {
+      const existingInvitationAcceptedEvent = yield select(
+        getUniqueHistoryItem,
+        event.senderDid,
+        INVITATION_ACCEPTED
+      )
+      const credentialRequestFailEvent = convertConnectionFailToHistoryEvent(
+        event,
+        existingInvitationAcceptedEvent
+      )
+
+      if (existingInvitationAcceptedEvent) {
+        yield put(deleteHistoryEvent(existingInvitationAcceptedEvent))
+      }
+      historyEvent = credentialRequestFailEvent
     }
 
     if (event.type === CLAIM_OFFER_RECEIVED) {
@@ -859,6 +968,23 @@ export function* historyEventOccurredSaga(
       if (existingEvent) historyEvent = null
     }
 
+    if (event.type === ACCEPT_OUTOFBAND_PRESENTATION_REQUEST) {
+      const storedProofReceivedEvent = yield select(
+        getHistoryEvent,
+        event.uid,
+        event.senderDid,
+        PROOF_REQUEST_RECEIVED
+      )
+      if (storedProofReceivedEvent) {
+        yield put(deleteHistoryEvent(storedProofReceivedEvent))
+      }
+      const proofRequestAcceptedEvent = convertOutofbandProofRequestAcceptedToHistoryEvent(
+        event,
+        storedProofReceivedEvent
+      )
+      historyEvent = proofRequestAcceptedEvent
+    }
+
     if (event.type === UPDATE_ATTRIBUTE_CLAIM) {
       // get proof request received event
       const storedProofReceivedEvent = yield select(
@@ -873,6 +999,12 @@ export function* historyEventOccurredSaga(
         event.remoteDid,
         ERROR_SEND_PROOF
       )
+      const storedOutofbandProofRequestAcceptedEvent: ConnectionHistoryEvent = yield select(
+        getPendingHistory,
+        event.uid,
+        event.remoteDid,
+        PROOF_REQUEST_ACCEPTED
+      )
       const selfAttestedAttributes: SelfAttestedAttributes = yield select(
         (store: Store, uid: string) =>
           store.proof[uid].proofData
@@ -881,7 +1013,7 @@ export function* historyEventOccurredSaga(
         event.uid
       )
       const existingEvent =
-        storedProofReceivedEvent || storedErrorSendProofEvent
+        storedProofReceivedEvent || storedErrorSendProofEvent || storedOutofbandProofRequestAcceptedEvent
       const updateAttributeClaimEvent = convertUpdateAttributeToHistoryEvent(
         event,
         existingEvent,

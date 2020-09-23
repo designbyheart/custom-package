@@ -7,6 +7,8 @@ import {
 import { reTrySendProof } from '../../proof/proof-store'
 import { deleteHistoryEvent } from '../../connection-history/connection-history-store'
 import { denyProofRequest } from '../../proof-request/proof-request-store'
+import { sendInvitationResponse } from '../../invitation/invitation-store'
+import { deleteConnectionAction } from '../../store/connections-store'
 
 export type RecentCardProps = {
   timestamp: string,
@@ -20,4 +22,6 @@ export type RecentCardProps = {
   deleteHistoryEvent: typeof deleteHistoryEvent,
   denyProofRequest: typeof denyProofRequest,
   denyClaimOffer: typeof denyClaimOffer,
+  sendInvitationResponse: typeof sendInvitationResponse,
+  deleteConnectionAction: typeof deleteConnectionAction,
 }

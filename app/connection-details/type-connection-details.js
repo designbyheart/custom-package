@@ -32,6 +32,7 @@ import type {
 import type { ClaimMap } from './components/types/type-details-claim'
 
 import {
+  INVITATION_ACCEPTED,
   INVITATION_RECEIVED,
   INVITATION_REJECTED,
 } from '../invitation/type-invitation'
@@ -51,7 +52,6 @@ import {
   PROOF_REQUEST_REJECTED,
   SEND_PROOF_SUCCESS,
 } from './components/types/type-details-proof-request'
-import { NEW_CONNECTION_SUCCESS } from '../store/new-connection-success'
 import {
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
@@ -59,11 +59,14 @@ import {
 import { sendConnectionRedirect } from '../store/connections-store'
 import { DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
 import { sendConnectionReuse } from '../store/connections-store'
+import { CONNECTION_FAIL, NEW_CONNECTION_SUCCESS } from '../store/type-connection-store'
 
 export const HISTORY_EVENT_STATUS = {
   [INVITATION_RECEIVED]: 'CONNECTION REQUEST',
   [NEW_CONNECTION_SUCCESS]: 'CONNECTED',
+  [INVITATION_ACCEPTED]: 'CONNECTION ACCEPTED',
   [INVITATION_REJECTED]: 'CONNECTION REJECTED',
+  [CONNECTION_FAIL]: 'CONNECTION FAILED',
   [SEND_CLAIM_REQUEST_SUCCESS]: 'PENDING',
   [CLAIM_OFFER_RECEIVED]: 'CLAIM OFFER RECEIVED',
   [CLAIM_OFFER_ACCEPTED]: 'ACCEPTED OFFER',
@@ -71,6 +74,7 @@ export const HISTORY_EVENT_STATUS = {
   [CLAIM_OFFER_REJECTED]: 'REJECTED OFFER',
   [CLAIM_STORAGE_SUCCESS]: 'RECEIVED',
   [PROOF_REQUEST_RECEIVED]: 'PROOF RECEIVED',
+  [PROOF_REQUEST_ACCEPTED]: 'PROOF ACCEPTED',
   [PROOF_REQUEST_IGNORED]: 'IGNORED',
   [PROOF_REQUEST_REJECTED]: 'REJECTED',
   [SEND_PROOF_SUCCESS]: 'SHARED',
@@ -94,8 +98,10 @@ export type HistoryEventType = $Keys<typeof HISTORY_EVENT_TYPE>
 export const EventTypeToEventStatusMap = {
   INVITATION: [
     INVITATION_RECEIVED,
+    INVITATION_ACCEPTED,
     NEW_CONNECTION_SUCCESS,
     INVITATION_REJECTED,
+    CONNECTION_FAIL,
   ],
   CLAIM: [
     CLAIM_OFFER_RECEIVED,

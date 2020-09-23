@@ -22,7 +22,7 @@ import type {
   AcceptOutofbandPresentationRequestAction,
   DeleteOutofbandPresentationRequestAction,
   OutOfBandConnectionForPresentationEstablishedAction,
-  SelfAttestedAttributes,
+  ApplyAttributesForPresentationRequestAction,
 } from './type-proof-request'
 import {
   getUserPairwiseDid,
@@ -57,6 +57,7 @@ import {
   ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   DELETE_OUTOFBAND_PRESENTATION_REQUEST,
   OUT_OF_BAND_CONNECTION_FOR_PRESENTATION_ESTABLISHED,
+  APPLY_ATTRIBUTES_FOR_PRESENTATION_REQUEST,
 } from './type-proof-request'
 import type {
   NotificationPayloadInfo,
@@ -434,13 +435,22 @@ export const proofRequestShowStart = (uid: string) => ({
   uid,
 })
 
-export const acceptOutofbandPresentationRequest = (
+export const applyAttributesForPresentationRequest = (
   uid: string,
   requestedAttrsJson: RequestedAttrsJson
+): ApplyAttributesForPresentationRequestAction => ({
+  type: APPLY_ATTRIBUTES_FOR_PRESENTATION_REQUEST,
+  uid,
+  requestedAttrsJson,
+})
+
+export const acceptOutofbandPresentationRequest = (
+  uid: string,
+  senderDid: string,
 ): AcceptOutofbandPresentationRequestAction => ({
   type: ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   uid,
-  requestedAttrsJson,
+  senderDid,
 })
 
 export const deleteOutofbandPresentationRequest = (
@@ -533,7 +543,7 @@ export default function proofRequestReducer(
       }
     }
 
-    case ACCEPT_OUTOFBAND_PRESENTATION_REQUEST:
+    case APPLY_ATTRIBUTES_FOR_PRESENTATION_REQUEST:
       return {
         ...state,
         [action.uid]: {
