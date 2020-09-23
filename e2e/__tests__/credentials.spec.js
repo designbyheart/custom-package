@@ -71,7 +71,8 @@ describe('My credentials screen', () => {
     await expect(element(by.text(CLAIM_OFFER_ADDRESS))).toNotExist()
   })
 
-  it('Case 4: delete credential from existing connection', async () => {
+  xit('Case 4: delete credential from existing connection', async () => {
+    // it affects another test
     await element(by.text(CLAIM_OFFER_PROFILE_INFO)).atIndex(0).swipe('left')
 
     await waitForElementAndTap('text', MY_CREDENTIALS_DELETE, TIMEOUT)
