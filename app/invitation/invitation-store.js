@@ -107,7 +107,10 @@ export const sendInvitationResponse = (data: InvitationResponseSendData) => ({
   data,
 })
 
-export const invitationAccepted = (senderDID: string, payload: InvitationPayload) => ({
+export const invitationAccepted = (
+  senderDID: string,
+  payload: InvitationPayload
+) => ({
   type: INVITATION_ACCEPTED,
   senderDID,
   payload,
@@ -131,7 +134,7 @@ export const invitationRejected = (senderDID: string) => ({
 
 export const acceptOutOfBandInvitation = (
   invitationPayload: InvitationPayload,
-  attachedRequest: GenericObject,
+  attachedRequest: GenericObject
 ): OutOfBandInvitationAcceptedAction => ({
   type: OUT_OF_BAND_INVITATION_ACCEPTED,
   invitationPayload,
@@ -144,13 +147,13 @@ export const hydrateInvitations = (invitations: { +[string]: Invitation }) => ({
 })
 
 export function* sendResponse(
-  action: InvitationResponseSendAction,
+  action: InvitationResponseSendAction
 ): Generator<*, *, *> {
   const { senderDID } = action.data
 
   const payload: InvitationPayload = yield select(
     getInvitationPayload,
-    senderDID,
+    senderDID
   )
 
   try {
@@ -174,7 +177,7 @@ export function* sendResponse(
 }
 
 export function* savePendingConnection(
-  payload: InvitationPayload,
+  payload: InvitationPayload
 ): Generator<*, *, *> {
   try {
     yield put(invitationAccepted(payload.senderDID, payload))
@@ -201,7 +204,7 @@ export function* savePendingConnection(
 }
 
 export function* sendResponseOnProprietaryConnectionInvitation(
-  payload: InvitationPayload,
+  payload: InvitationPayload
 ): Generator<*, *, *> {
   try {
     yield call(savePendingConnection, payload)
@@ -213,11 +216,11 @@ export function* sendResponseOnProprietaryConnectionInvitation(
 
     const connectionHandle: number = yield call(
       createConnectionWithInvite,
-      payload,
+      payload
     )
     let pairwiseInfo: MyPairwiseInfo = yield call(
       acceptInvitationVcx,
-      connectionHandle,
+      connectionHandle
     )
 
     // once the connection is successful, we need to save serialized connection
@@ -226,7 +229,7 @@ export function* sendResponseOnProprietaryConnectionInvitation(
     // if we need anything from that connection
     const vcxSerializedConnection: string = yield call(
       serializeConnection,
-      connectionHandle,
+      connectionHandle
     )
 
     const connection = {
@@ -255,10 +258,13 @@ export function* sendResponseOnProprietaryConnectionInvitation(
 }
 
 export function* sendResponseOnAriesConnectionInvitation(
-  payload: InvitationPayload,
+  payload: InvitationPayload
 ): Generator<*, *, *> {
   try {
-    const alreadyExist: boolean = yield select(isDuplicateConnection, payload.senderDID)
+    const alreadyExist: boolean = yield select(
+      isDuplicateConnection,
+      payload.senderDID
+    )
     if (alreadyExist) {
       return
     }
@@ -272,12 +278,12 @@ export function* sendResponseOnAriesConnectionInvitation(
 
     const connectionHandle: number = yield call(
       createConnectionWithAriesInvite,
-      payload,
+      payload
     )
 
     let pairwiseInfo: MyPairwiseInfo = yield call(
       acceptInvitationVcx,
-      connectionHandle,
+      connectionHandle
     )
 
     // once the connection is successful, we need to save serialized connection
@@ -286,7 +292,7 @@ export function* sendResponseOnAriesConnectionInvitation(
     // if we need anything from that connection
     const vcxSerializedConnection: string = yield call(
       serializeConnection,
-      connectionHandle,
+      connectionHandle
     )
 
     const connection = {
@@ -309,13 +315,16 @@ export function* sendResponseOnAriesConnectionInvitation(
 }
 
 export function* sendResponseOnAriesOutOfBandInvitation(
-  payload: InvitationPayload,
+  payload: InvitationPayload
 ): Generator<*, *, *> {
-  if (!payload.originalObject){
+  if (!payload.originalObject) {
     return
   }
 
-  if (payload.originalObject.handshake_protocols && payload.originalObject.handshake_protocols.length > 0) {
+  if (
+    payload.originalObject.handshake_protocols &&
+    payload.originalObject.handshake_protocols.length > 0
+  ) {
     yield call(sendResponseOnAriesOutOfBandInvitationWithHandshake, payload)
   } else {
     yield call(sendResponseOnAriesOutOfBandInvitationWithoutHandshake, payload)
@@ -323,10 +332,13 @@ export function* sendResponseOnAriesOutOfBandInvitation(
 }
 
 export function* sendResponseOnAriesOutOfBandInvitationWithHandshake(
-  payload: InvitationPayload,
+  payload: InvitationPayload
 ): Generator<*, *, *> {
   try {
-    const alreadyExist: boolean = yield select(isDuplicateConnection, payload.senderDID)
+    const alreadyExist: boolean = yield select(
+      isDuplicateConnection,
+      payload.senderDID
+    )
     if (alreadyExist) {
       return
     }
@@ -340,18 +352,18 @@ export function* sendResponseOnAriesOutOfBandInvitationWithHandshake(
 
     const attachedRequest = yield call(
       getAttachedRequest,
-      ((payload.originalObject: any): AriesOutOfBandInvite),
+      ((payload.originalObject: any): AriesOutOfBandInvite)
     )
 
     const connectionHandle: number = yield call(
       createConnectionWithAriesOutOfBandInvite,
-      payload,
+      payload
     )
 
     // we need to setup regular connection
     let pairwiseInfo: MyPairwiseInfo = yield call(
       acceptInvitationVcx,
-      connectionHandle,
+      connectionHandle
     )
 
     //  we need to save serialized connection
@@ -360,7 +372,7 @@ export function* sendResponseOnAriesOutOfBandInvitationWithHandshake(
     // if we need anything from that connection
     const vcxSerializedConnection: string = yield call(
       serializeConnection,
-      connectionHandle,
+      connectionHandle
     )
 
     const connection = {
@@ -384,12 +396,12 @@ export function* sendResponseOnAriesOutOfBandInvitationWithHandshake(
 }
 
 export function* sendResponseOnAriesOutOfBandInvitationWithoutHandshake(
-  payload: InvitationPayload,
+  payload: InvitationPayload
 ): Generator<*, *, *> {
   try {
     const attachedRequest = yield call(
       getAttachedRequest,
-      ((payload.originalObject: any): AriesOutOfBandInvite),
+      ((payload.originalObject: any): AriesOutOfBandInvite)
     )
 
     const vcxResult = yield* ensureVcxInitSuccess()
@@ -399,7 +411,7 @@ export function* sendResponseOnAriesOutOfBandInvitationWithoutHandshake(
 
     const connectionHandle: number = yield call(
       createConnectionWithAriesOutOfBandInvite,
-      payload,
+      payload
     )
 
     yield put(invitationSuccess(payload.senderDID))
@@ -407,7 +419,7 @@ export function* sendResponseOnAriesOutOfBandInvitationWithoutHandshake(
     // we received an invitation reflecting one-time channel
     const vcxSerializedConnection: string = yield call(
       serializeConnection,
-      connectionHandle,
+      connectionHandle
     )
 
     const connection = {
@@ -436,29 +448,38 @@ export function* sendResponseOnAriesOutOfBandInvitationWithoutHandshake(
 export function* updateAriesConnectionState(
   identifier: string,
   vcxSerializedConnection: string,
-  message: string, // TODO: must be used since we replace connectionUpdateState
+  message: string // TODO: must be used since we replace connectionUpdateState
 ): Generator<*, *, *> {
   const connection = yield select(getConnectionByUserDid, identifier)
 
   try {
     const connectionHandle = yield call(
       getHandleBySerializedConnection,
-      vcxSerializedConnection,
+      vcxSerializedConnection
     )
 
     // TODO: use connectionUpdateStateWithMessage function instead
     // TODO: connectionUpdateStateWithMessage is missed in VCX Objective-C wrapper
-    yield call(connectionUpdateState, connectionHandle)
-    const connectionState: number = yield call(connectionGetState, connectionHandle)
+    const connectionState: number = yield call(
+      connectionUpdateState,
+      connectionHandle
+    )
 
     // we need to take serialized connection state again
     // and update serialized state on connectme side
-    const updateVcxSerializedConnection = yield call(serializeConnection, connectionHandle)
+    const updateVcxSerializedConnection = yield call(
+      serializeConnection,
+      connectionHandle
+    )
 
     if (connectionState === 1) {
       // if connection object moved into state = 1 it means connection failed
       // TODO: update VCX Null state to contain details about connection failure reason
-      yield call(handleConnectionError, Error(ERROR_INVITATION_RESPONSE_FAILED), connection.senderDID)
+      yield call(
+        handleConnectionError,
+        Error(ERROR_INVITATION_RESPONSE_FAILED),
+        connection.senderDID
+      )
       return
     }
 
@@ -469,7 +490,7 @@ export function* updateAriesConnectionState(
         identifier: identifier,
         vcxSerializedConnection: updateVcxSerializedConnection,
         isCompleted: isCompleted,
-      }),
+      })
     )
 
     if (isCompleted) {
@@ -477,7 +498,6 @@ export function* updateAriesConnectionState(
       yield put(connectionSuccess(connection.identifier, connection.senderDID))
       yield* processAttachedRequest(identifier)
     }
-
   } catch (e) {
     yield call(handleConnectionError, e, connection.senderDID)
   }
@@ -485,22 +505,17 @@ export function* updateAriesConnectionState(
 
 export function* handleConnectionError(
   e: CustomError,
-  senderDID: string,
+  senderDID: string
 ): Generator<*, *, *> {
   captureError(new Error(e.message))
   let message
   if (e.code === CONNECTION_ALREADY_EXISTS) {
     yield put(
-      invitationFail(
-        ERROR_INVITATION_ALREADY_ACCEPTED(e.message),
-        senderDID,
-      ),
+      invitationFail(ERROR_INVITATION_ALREADY_ACCEPTED(e.message), senderDID)
     )
     message = ERROR_INVITATION_ALREADY_ACCEPTED_MESSAGE
   } else {
-    yield put(
-      invitationFail(ERROR_INVITATION_CONNECT(e.message), senderDID),
-    )
+    yield put(invitationFail(ERROR_INVITATION_CONNECT(e.message), senderDID))
     message = ERROR_INVITATION_RESPONSE_FAILED
   }
   yield put(connectionFail(e, senderDID))
@@ -513,46 +528,46 @@ export function* handleConnectionError(
 }
 
 function* outOfBandInvitationAccepted(
-  action: OutOfBandInvitationAcceptedAction,
+  action: OutOfBandInvitationAcceptedAction
 ): Generator<*, *, *> {
   const { invitationPayload, attachedRequest } = action
 
   const connectionExists = yield select(
     getConnectionExists,
-    action.invitationPayload.senderDID,
+    action.invitationPayload.senderDID
   )
   if (!connectionExists) {
     yield put(
       invitationReceived({
         payload: invitationPayload,
-      }),
+      })
     )
 
     yield put(
       sendInvitationResponse({
         response: ResponseType.accepted,
         senderDID: invitationPayload.senderDID,
-      }),
+      })
     )
   } else {
     const [connection]: Connection[] = yield select(
       getConnection,
-      action.invitationPayload.senderDID,
+      action.invitationPayload.senderDID
     )
 
     if (attachedRequest[TYPE].endsWith('offer-credential')) {
       yield put(
         acceptOutofbandClaimOffer(
           action.attachedRequest[ID],
-          action.invitationPayload.senderDID,
-        ),
+          action.invitationPayload.senderDID
+        )
       )
     } else if (attachedRequest[TYPE].endsWith('request-presentation')) {
       yield put(
         acceptOutofbandPresentationRequest(
           action.attachedRequest[ID],
-          action.invitationPayload.senderDID,
-        ),
+          action.invitationPayload.senderDID
+        )
       )
     }
 
@@ -567,13 +582,13 @@ function* outOfBandInvitationAccepted(
     yield put(
       sendConnectionReuse(invitation, {
         senderDID: action.invitationPayload.senderDID,
-      }),
+      })
     )
   }
 }
 
 export async function getAttachedRequest(
-  invite: AriesOutOfBandInvite,
+  invite: AriesOutOfBandInvite
 ): GenericObject {
   const requests = invite['request~attach']
   if (!requests || !requests.length) {
@@ -594,7 +609,7 @@ export async function getAttachedRequest(
     return reqData
   } else if (req.base64) {
     const [decodeError, decodedRequest] = await flattenAsync(toUtf8FromBase64)(
-      req.base64,
+      req.base64
     )
     if (decodeError || decodedRequest === null) {
       return null
@@ -626,14 +641,14 @@ export function* processAttachedRequest(did: string): Generator<*, *, *> {
     const { claimHandle } = yield call(
       createCredentialWithAriesOfferObject,
       uid,
-      attachedRequest,
+      attachedRequest
     )
 
     yield call(
       saveSerializedClaimOffer,
       claimHandle,
       connection.identifier,
-      uid,
+      uid
     )
     yield put(acceptClaimOffer(uid, connection.senderDID))
   } else if (attachedRequest[TYPE].endsWith('request-presentation')) {
@@ -665,12 +680,15 @@ export function* hydrateInvitationsSaga(): Generator<*, *, *> {
 }
 
 function* watchInvitationReceived(): any {
-  yield takeEvery([
-    INVITATION_ACCEPTED,
-    INVITATION_RESPONSE_SUCCESS,
-    INVITATION_RESPONSE_FAIL,
-    INVITATION_REJECTED,
-  ], persistInvitations)
+  yield takeEvery(
+    [
+      INVITATION_ACCEPTED,
+      INVITATION_RESPONSE_SUCCESS,
+      INVITATION_RESPONSE_FAIL,
+      INVITATION_REJECTED,
+    ],
+    persistInvitations
+  )
 }
 
 function* watchOutOfBandInvitationAccepted(): any {
@@ -691,7 +709,7 @@ export function* watchInvitation(): any {
 
 export default function invitationReducer(
   state: InvitationStore = invitationInitialState,
-  action: InvitationAction,
+  action: InvitationAction
 ) {
   switch (action.type) {
     case INVITATION_RECEIVED:
@@ -717,10 +735,7 @@ export default function invitationReducer(
       }
 
     case INVITATION_RESPONSE_SUCCESS: {
-      const {
-        [action.senderDID]: deleted,
-        ...invitations
-      } = state
+      const { [action.senderDID]: deleted, ...invitations } = state
       return invitations
     }
 
@@ -736,10 +751,7 @@ export default function invitationReducer(
       }
 
     case INVITATION_REJECTED: {
-      const {
-        [action.senderDID]: deleted,
-        ...invitations
-      } = state
+      const { [action.senderDID]: deleted, ...invitations } = state
       return invitations
     }
 
