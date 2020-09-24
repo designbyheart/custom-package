@@ -17,7 +17,7 @@ import {
   VIEW_PROOF,
   PROOF_HEADER,
   BACK_ARROW,
-  CLAIM_OFFER_PROFILE_INFO,
+  CLAIM_OFFER_ADDRESS,
   PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
 } from '../utils/test-constants'
 import { waitForElementAndTap } from '../utils/detox-selectors'
@@ -63,13 +63,15 @@ describe('My connections screen', () => {
 
     await expect(element(by.text(CONNECTION_ENTRY_HEADER))).toBeVisible()
 
-    await element(by.text(VIEW_CREDENTIAL)).tap()
-
+    try {
+      await element(by.text(VIEW_CREDENTIAL)).tap()
+    } catch (e) {
+      // profile info is not deleted
+      await element(by.text(VIEW_CREDENTIAL)).atIndex(0).tap()
+    }
     await expect(element(by.text(CREDENTIAL_HEADER))).toBeVisible()
 
-    await expect(
-      element(by.text(CLAIM_OFFER_PROFILE_INFO)).atIndex(0)
-    ).toBeVisible()
+    await expect(element(by.text(CLAIM_OFFER_ADDRESS)).atIndex(0)).toBeVisible()
 
     await waitForElementAndTap('text', CLOSE_BUTTON, TIMEOUT)
 

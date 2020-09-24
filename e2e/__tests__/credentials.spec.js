@@ -45,7 +45,7 @@ describe('My credentials screen', () => {
   })
 
   it('Case 2: check credential details', async () => {
-    await element(by.text(CLAIM_OFFER_ADDRESS)).tap()
+    await element(by.text(CLAIM_OFFER_ADDRESS)).atIndex(1).tap()
 
     await expect(element(by.text(MY_CREDENTIALS_DETAILS_HEADER))).toBeVisible()
 
@@ -62,16 +62,16 @@ describe('My credentials screen', () => {
 
   xit('Case 3: delete credential from deleted connection', async () => {
     // CM-2745
-    await element(by.text(CLAIM_OFFER_ADDRESS)).swipe('left')
+    await element(by.text(CLAIM_OFFER_ADDRESS)).atIndex(1).swipe('left')
 
     await waitForElementAndTap('text', MY_CREDENTIALS_DELETE, TIMEOUT)
 
     await element(by.text(MY_CREDENTIALS_DELETE)).atIndex(0).tap()
 
-    await expect(element(by.text(CLAIM_OFFER_ADDRESS))).toNotExist()
+    // TODO screenshot check
   })
 
-  xit('Case 4: delete credential from existing connection', async () => {
+  it('Case 4: delete credential from existing connection', async () => {
     // it affects another test
     await element(by.text(CLAIM_OFFER_PROFILE_INFO)).atIndex(0).swipe('left')
 

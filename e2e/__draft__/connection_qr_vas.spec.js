@@ -82,7 +82,7 @@ describe('Connection via SMS link as QR code', () => {
 
     await waitForElementAndTap('text', ALLOW_BUTTON, TIMEOUT)
 
-    await waitForElementAndTap('id', INVITATION_ACCEPT, TIMEOUT)
+    await waitForElementAndTap('text', 'Connect', TIMEOUT)
 
     await new Promise((r) => setTimeout(r, 30000)) // sync
 
@@ -105,7 +105,7 @@ describe('Connection via SMS link as QR code', () => {
     console.warn(result5)
 
     await new Promise((r) => setTimeout(r, 10000)) // wait for new message
-    await element(by.id(HOME_CONTAINER)).swipe('down')
+    await element(by.text('No new notifications.')).swipe('down')
     await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
     await new Promise((r) => setTimeout(r, 10000))
@@ -126,7 +126,7 @@ describe('Connection via SMS link as QR code', () => {
     console.warn(result7)
 
     await new Promise((r) => setTimeout(r, 10000)) // wait for new message
-    await element(by.id(HOME_CONTAINER)).swipe('down')
+    await element(by.text('No new notifications.')).swipe('down')
     await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
 
