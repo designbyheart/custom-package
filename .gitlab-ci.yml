@@ -127,7 +127,7 @@ detox-ios-test:
     - yarn pod:dev:install
     - echo "detox=yes" > .env
     - echo "detox=yes" > .env.production
-    - yarn e2e -b release -e qa -s iphone8 -u
+    - yarn e2e -b release -e qa -s iphone8
   artifacts:
     paths:
       - e2e/screenshots
