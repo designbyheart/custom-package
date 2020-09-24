@@ -358,8 +358,8 @@ RCT_EXPORT_METHOD(connectionGetState: (NSInteger) connectionHandle
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
   [[[ConnectMeVcx alloc] init] connectionGetState:connectionHandle
-                                   withCompletion:^(NSError *error, NSInteger state) {
-    if (error != nil) {
+                                   completion:^(NSError *error, NSInteger state) {
+    if (error != nil && error.code != 0) {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
       reject(indyErrorCode, @"Error occurred while getting connection state", error);
     } else {
@@ -375,7 +375,7 @@ RCT_EXPORT_METHOD(connectionUpdateState: (NSInteger) connectionHandle
   [[[ConnectMeVcx alloc] init] connectionUpdateState:connectionHandle
                                       withCompletion:^(NSError *error, NSInteger state)
   {
-    if (error != nil) {
+    if (error != nil && error.code != 0) {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
       reject(indyErrorCode, @"Error occurred while updating connection state", error);
     } else {
