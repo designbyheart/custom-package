@@ -138,7 +138,7 @@ describe('Connection via QR code and SMS link', () => {
     //   .replaceText(TEST_PASS_CODE)
   })
 
-  it('Case 1.2: open connection using SMS link from the same invitation right after establishing connection', async () => {
+  xit('Case 1.2: open connection using SMS link from the same invitation right after establishing connection', async () => {
     await exec(`xcrun simctl openurl booted ${URL}`)
 
     await new Promise((r) => setTimeout(r, 10000)) // sync issue
@@ -587,6 +587,26 @@ describe('Connection via QR code and SMS link', () => {
     }
 
     await matchScreenshot(SCREENSHOT_CLAIM_OFFER_PROFILE_INFO) // screenshot
+
+    await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
+  })
+
+  it('Case 9.3: create and accept address credential using new connection id', async () => {
+    credential = await sendClaimOffer(CLAIM_OFFER_ADDRESS, connectionId).catch(
+      console.error
+    )
+
+    // catch intermittnet failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      // await element(by.id(HOME_CONTAINER)).swipe('down')
+      await element(by.text('No new notifications.')).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
+
+    await matchScreenshot(SCREENSHOT_CLAIM_OFFER_ADDRESS) // screenshot
 
     await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
   })
