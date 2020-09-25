@@ -1,187 +1,67 @@
 // @flow
-import React, { PureComponent } from 'react'
-import SvgCustomIcon from '../../components/svg-custom-icon'
-import { Avatar } from '../../components'
-import { View, Text, TouchableOpacity } from 'react-native'
+import React, { useCallback } from 'react'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import type { ConnectionCardProps } from './type-connection-card'
 import { styles } from './styles'
-import { colors } from '../../common/styles'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
+import { isNewConnection } from '../../store/store-selector'
+import { UnreadMessagesBadge } from '../../components'
 
-class ConnectionCard extends PureComponent<ConnectionCardProps, void> {
-  pad = (dateOrMonth: number) => {
-    return dateOrMonth < 10 ? '0' + dateOrMonth : dateOrMonth
-  }
-  getCorrectDateLabel = (timestamp: string) => {
-    const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ]
-    const dayNames = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday',
-    ]
-    const currentDateTime = new Date()
-    const dateTimeCreated = new Date(timestamp)
-    const dateCreated = dateTimeCreated.getDate()
-    const monthCreated = dateTimeCreated.getMonth()
-    const yearCreated = dateTimeCreated.getFullYear()
-    const hourCreated = dateTimeCreated.getHours()
-    const minuteCreated = dateTimeCreated.getMinutes()
-    const dayCreated = dateTimeCreated.getDay()
-    const mmddyyyy =
-      this.pad(monthCreated + 1) +
-      '/' +
-      this.pad(dateCreated) +
-      '/' +
-      yearCreated
-
-    let hmm = ''
-    if (hourCreated > 0 && hourCreated <= 12) {
-      hmm += hourCreated
-    } else if (hourCreated > 12) {
-      hmm += hourCreated - 12
-    } else if (hourCreated === 0) {
-      hmm = '12'
+const ConnectionCard = (props: ConnectionCardProps) => {
+  const onButtonPress = useCallback(() => {
+    {
+      props.onPress(
+        props.senderName,
+        props.image,
+        props.senderDID,
+      )
+      props.onNewConnectionSeen(props.senderDID)
     }
+  }, [props])
 
-    hmm += minuteCreated < 10 ? ':0' + minuteCreated : ':' + minuteCreated
-    hmm += hourCreated >= 12 ? ' PM' : ' AM'
+  const renderUnreadMessagesBadge = () => {
+    let numberOfNewMessages = 0
+    props.events.forEach((message) => {
+      if (isNewConnection(message.status, message.showBadge)) {
+        numberOfNewMessages++
+      }
+    })
 
-    const dayOfWeek = dayNames[dayCreated]
-    const fullTimeCreated = dateTimeCreated.getTime()
-    const currentTime = currentDateTime.getTime()
-    const oneDay = 24 * 60 * 60 * 1000
-    const oneWeek = oneDay * 7
-    if (currentTime - fullTimeCreated < oneDay) {
-      return hmm
-    } else if (
-      currentTime - fullTimeCreated >= oneDay &&
-      currentTime - fullTimeCreated < oneDay * 2
-    ) {
-      return 'Yesterday'
-    } else if (
-      currentTime - fullTimeCreated >= oneDay * 2 &&
-      currentTime - fullTimeCreated <= oneWeek
-    ) {
-      return dayOfWeek
-    } else if (currentTime - fullTimeCreated > oneWeek) {
-      return mmddyyyy
-    }
-  }
-  getInfoMessage = (
-    status: string,
-    senderName: string,
-    credentialName: string,
-    question: string
-  ) => {
-    const statusMsg = {
-      PENDING:
-        'You accepted ' +
-        credentialName +
-        '. They will issue it to you shortly.',
-      CLAIM_OFFER_ACCEPTED: `Accepting ${credentialName} ...`,
-      CONNECTED: 'You connected with ' + senderName + '.',
-      INVITATION_ACCEPTED: 'Making secure connection...',
-      CONNECTION_FAIL: 'Failed to make secure connection',
-      RECEIVED: senderName + ' issued you ' + credentialName + '.',
-      'ACCEPTED & SAVED': 'Accepted on',
-      DELETED: `You deleted the credential "${credentialName}"`,
-      SHARED: 'You shared ' + credentialName + ' with ' + senderName,
-      'PROOF RECEIVED': senderName + ' wants you to share some information',
-      'CLAIM OFFER RECEIVED': 'Offering ' + credentialName,
-      QUESTION_RECEIVED: question,
-      UPDATE_QUESTION_ANSWER: question,
-      PROOF_REQUEST_ACCEPTED: `Sending "${credentialName}" ...`,
-      DENY_PROOF_REQUEST_SUCCESS: `You rejected ${credentialName}`,
-      DENY_PROOF_REQUEST: `Rejecting "${credentialName}"`,
-      DENY_PROOF_REQUEST_FAIL: `Failed to reject "${credentialName}"`,
-      SEND_CLAIM_REQUEST_FAIL: `Failed to accept ${credentialName}`,
-      PAID_CREDENTIAL_REQUEST_FAIL: `Failed to accept "${credentialName}"`,
-      ERROR_SEND_PROOF: `Failed to send "${credentialName}"`,
-      UPDATE_ATTRIBUTE_CLAIM: `Sending "${credentialName}" ...`,
-      DENY_CLAIM_OFFER: `Rejecting "${credentialName}"`,
-      DENY_CLAIM_OFFER_SUCCESS: `You rejected ${credentialName}`,
-      DENY_CLAIM_OFFER_FAIL: `Failed to reject "${credentialName}"`,
-    }
-
-    return statusMsg[status]
-  }
-  renderButtonSection = () => {
-    const { newBadge } = this.props
-    const {
-      buttonSection,
-      dateButtonSection,
-      newButtonSection,
-      newLabel,
-      newLabelText,
-    } = styles
-
-    if (!newBadge) {
+    if (numberOfNewMessages > 0) {
       return (
-        <View style={dateButtonSection}>
-          <View style={buttonSection}>
-            <SvgCustomIcon name="ChevronRight" fill={colors.cmGray3}/>
-          </View>
-        </View>
+        <UnreadMessagesBadge
+          customContainerStyle={styles.customGreenBadgeContainer}
+          numberOfNewMessages={numberOfNewMessages}
+        />
       )
     } else {
-      return (
-        <View style={newButtonSection}>
-          <View style={newLabel}>
-            <Text style={newLabelText}>NEW</Text>
-          </View>
-        </View>
-      )
+      return <View/>
     }
   }
 
-  onButtonPress = () => {
-    this.props.onPress(
-      this.props.senderName,
-      this.props.image,
-      this.props.senderDID,
-    )
-    this.props.onNewConnectionSeen(this.props.senderDID)
-  }
-
-  render() {
-    const { image, senderName, senderDID } = this.props
-    const { itemContainer, avatarSection, companyNameText } = styles
-    return (
-      <TouchableOpacity style={itemContainer} onPress={this.onButtonPress}>
-        <View style={avatarSection}>
-          {typeof image === 'string' ? (
-            <Avatar
-              radius={40}
-              src={{ uri: image }}
-              testID={`${senderDID}-avatar`}
-            />
-          ) : (
-            <DefaultLogo text={senderName} size={32} fontSize={17}/>
-          )}
-        </View>
-        <Text style={companyNameText} numberOfLines={3} ellipsizeMode="tail">
-          {senderName}
-        </Text>
-      </TouchableOpacity>
-    )
-  }
+  return (
+    <TouchableOpacity style={styles.itemContainer} onPress={onButtonPress}>
+      {/*{*/}
+      {/*  renderUnreadMessagesBadge()*/}
+      {/*}*/}
+      <View style={styles.avatarSection}>
+        {typeof props.image === 'string' ? (
+          <Image
+            source={{ uri: props.image }}
+            style={styles.avatarStyle}
+            testID={`${props.senderDID}-avatar`}
+            accessible={true}
+            accessibilityLabel={`${props.senderDID}-image`}
+          />
+        ) : (
+          <DefaultLogo text={props.senderName} size={72} fontSize={40}/>
+        )}
+      </View>
+      <Text style={styles.companyNameText} numberOfLines={3} ellipsizeMode="tail">
+        {props.senderName}
+      </Text>
+    </TouchableOpacity>
+  )
 }
 
 export { ConnectionCard }

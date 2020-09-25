@@ -20,7 +20,6 @@ const externalStyles = StyleSheet.create({
   flatListInnerContainer: {
     paddingBottom: moderateScale(170, 0.25),
     margin: 15,
-    flex: 1,
     padding: 10,
     marginBottom: 40,
   },

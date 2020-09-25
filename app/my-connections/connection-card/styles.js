@@ -14,10 +14,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     width: '46%',
-    height:
-      Platform.OS === 'android'
-        ? moderateScale(120, 4)
-        : moderateScale(120, 10),
+    minHeight: moderateScale(120, 4),
     marginRight: 20,
     marginBottom: 35,
     borderRadius: 20,
@@ -94,6 +91,27 @@ const styles = StyleSheet.create({
     height: moderateScale(90, 0.25),
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  avatarStyle: {
+    width: 80,
+    height: 80,
+  },
+  customGreenBadgeContainer: {
+    position: 'absolute',
+    top: verticalScale(10),
+    right: verticalScale(10),
+    width: moderateScale(22),
+    height: moderateScale(22),
+    borderRadius: moderateScale(22) / 2,
+    backgroundColor: colors.cmGreen1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  numberText: {
+    fontFamily: fontFamily,
+    fontSize: moderateScale(14),
+    fontWeight: '500',
+    color: colors.cmWhite,
   },
 })
 
