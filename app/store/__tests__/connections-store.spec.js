@@ -112,14 +112,10 @@ describe('connections should update correctly', () => {
     )
       .withState(stateWithConnection)
       .provide([
-        [matchers.call.like({ fn: deleteConnection }), true],
         [matchers.call.fn(secureSet, CONNECTIONS, '{}'), true],
-        [matchers.call.fn(secureGet, 'DELETED_CONNECTIONS'), true],
-        [matchers.call.fn(secureSet, 'DELETED_CONNECTIONS', '{}'), true],
+        [matchers.call.like({ fn: deleteConnection }), true],
       ])
       .call(secureSet, CONNECTIONS, '{}')
-      .call(secureGet, 'DELETED_CONNECTIONS')
-      .call(secureSet, 'DELETED_CONNECTIONS', '{}')
       .call.like({ fn: deleteConnection })
       .put(deleteConnectionSuccess({}))
       .run()
