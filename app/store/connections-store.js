@@ -192,9 +192,14 @@ export function* deleteConnectionOccurredSaga(
     const retrieveDeletedConnectionsJSON = yield call(
       secureGet,
       'DELETED_CONNECTIONS'
-    ) || {}
-    const retrieveDeletedConnectionsParsed =
-      JSON.parse(retrieveDeletedConnectionsJSON) || {}
+    )
+    let retrieveDeletedConnectionsParsed = {}
+
+    if (retrieveDeletedConnectionsJSON) {
+      retrieveDeletedConnectionsParsed = JSON.parse(
+        retrieveDeletedConnectionsJSON
+      )
+    }
 
     if (!(action.senderDID in retrieveDeletedConnectionsParsed)) {
       retrieveDeletedConnectionsParsed[action.senderDID] = connection.identifier
