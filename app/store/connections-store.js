@@ -7,7 +7,12 @@ import {
   select,
   all,
 } from 'redux-saga/effects'
-import { secureSet, secureDelete, getHydrationItem } from '../services/storage'
+import {
+  secureSet,
+  secureDelete,
+  getHydrationItem,
+  secureGet,
+} from '../services/storage'
 import { CONNECTIONS } from '../common'
 import {
   getAllConnection,
@@ -96,11 +101,11 @@ const initialState: ConnectionStore = {
 // but we need to fix all any types. I will do that once claims are done
 
 export const connectionMapper = ({
-                                   logoUrl,
-                                   size = bubbleSize.XL,
-                                   senderName = 'Unknown',
-                                   ...otherArgs
-                                 }: GenericObject) => ({
+  logoUrl,
+  size = bubbleSize.XL,
+  senderName = 'Unknown',
+  ...otherArgs
+}: GenericObject) => ({
   logoUrl,
   size,
   senderName,
@@ -177,16 +182,33 @@ export function* deleteConnectionOccurredSaga(
     action.senderDID
   )
 
-  const {
-    [connection.identifier]: deleted,
-    ...rest
-  } = connections
+  const { [connection.identifier]: deleted, ...rest } = connections
 
   try {
     yield call(secureSet, CONNECTIONS, JSON.stringify(rest))
+
+    // We need to save connection identifier mapped to its corresponding senderDID before we delete a connection,
+    // because the getConnection method won't return a valid connection since it has been deleted.
+    const retrieveDeletedConnectionsJSON = yield call(
+      secureGet,
+      'DELETED_CONNECTIONS'
+    ) || {}
+    const retrieveDeletedConnectionsParsed =
+      JSON.parse(retrieveDeletedConnectionsJSON) || {}
+
+    if (!(action.senderDID in retrieveDeletedConnectionsParsed)) {
+      retrieveDeletedConnectionsParsed[action.senderDID] = connection.identifier
+    }
+
+    yield call(
+      secureSet,
+      'DELETED_CONNECTIONS',
+      JSON.stringify(retrieveDeletedConnectionsParsed)
+    )
+
     yield put(deleteConnectionSuccess(rest))
 
-    if (connection.vcxSerializedConnection){
+    if (connection.vcxSerializedConnection) {
       const connectionHandle = yield call(
         getHandleBySerializedConnection,
         connection.vcxSerializedConnection
@@ -203,9 +225,7 @@ export function* watchDeleteConnectionOccurred(): any {
   yield takeLatest(DELETE_CONNECTION, deleteConnectionOccurredSaga)
 }
 
-export function* loadNewConnectionSaga(
-  _: GenericObject,
-): Generator<*, *, *> {
+export function* loadNewConnectionSaga(_: GenericObject): Generator<*, *, *> {
   try {
     yield put(promptBackupBanner(true))
     yield* persistConnections()
@@ -215,17 +235,20 @@ export function* loadNewConnectionSaga(
 }
 
 export function* watchConnectionsChanged(): any {
-  yield takeEvery([
-    NEW_CONNECTION,
-    NEW_PENDING_CONNECTION,
-    UPDATE_CONNECTION,
-    NEW_CONNECTION_SUCCESS,
-    CONNECTION_FAIL,
-    DELETE_CONNECTION_SUCCESS,
-    CONNECTION_ATTACH_REQUEST,
-    CONNECTION_DELETE_ATTACHED_REQUEST,
-    UPDATE_CONNECTION_SERIALIZED_STATE,
-  ], loadNewConnectionSaga)
+  yield takeEvery(
+    [
+      NEW_CONNECTION,
+      NEW_PENDING_CONNECTION,
+      UPDATE_CONNECTION,
+      NEW_CONNECTION_SUCCESS,
+      CONNECTION_FAIL,
+      DELETE_CONNECTION_SUCCESS,
+      CONNECTION_ATTACH_REQUEST,
+      CONNECTION_DELETE_ATTACHED_REQUEST,
+      UPDATE_CONNECTION_SERIALIZED_STATE,
+    ],
+    loadNewConnectionSaga
+  )
 }
 
 export function* persistConnections(): Generator<*, *, *> {
@@ -318,9 +341,9 @@ export function* removePersistedThemes(): Generator<*, *, *> {
 }
 
 export function updateConnectionSerializedState({
-                                                  identifier,
-                                                  vcxSerializedConnection,
-                                                }: *): UpdateConnectionSerializedStateAction {
+  identifier,
+  vcxSerializedConnection,
+}: *): UpdateConnectionSerializedStateAction {
   return {
     type: UPDATE_CONNECTION_SERIALIZED_STATE,
     identifier,
@@ -536,7 +559,8 @@ export default function connections(
         connection: { identifier, senderDID },
       } = action
 
-      const { [senderDID]: pendingConnection, ... connections} = state.data || {}
+      const { [senderDID]: pendingConnection, ...connections } =
+        state.data || {}
 
       return {
         ...state,
@@ -571,11 +595,13 @@ export default function connections(
         data: {
           ...state.data,
           [identifier]: {
-            ...state.data && state.data[identifier] ? state.data[identifier] : {},
+            ...(state.data && state.data[identifier]
+              ? state.data[identifier]
+              : {}),
             isCompleted: true,
             isFetching: false,
             timestamp: moment().format(),
-          }
+          },
         },
       }
     case DELETE_CONNECTION_SUCCESS:
@@ -611,16 +637,15 @@ export default function connections(
         },
       }
     case CONNECTION_FAIL:
-      if (!state.data){
+      if (!state.data) {
         return state
       }
 
-      const connection: any =
-        Object.values(state.data).find(
+      const connection: any = Object.values(state.data).find(
         (connection: any) => connection.senderDID === action.senderDid
-        )
+      )
 
-      if (!connection){
+      if (!connection) {
         return state
       }
 
@@ -651,7 +676,7 @@ export default function connections(
       if (state.data && state.data[action.identifier]) {
         // eslint-disable-next-line no-unused-vars
         const { attachedRequest, ...connection } =
-        state.data?.[action.identifier] ?? {}
+          state.data?.[action.identifier] ?? {}
 
         return {
           ...state,

@@ -11,7 +11,8 @@ import connectionReducer, {
   persistThemes,
   hydrateThemes,
   removePersistedThemes,
-  hydrateConnectionThemes, saveNewPendingConnection,
+  hydrateConnectionThemes,
+  saveNewPendingConnection,
 } from '../connections-store'
 import { bubbleSize } from '../../common/styles'
 import {
@@ -25,7 +26,11 @@ import {
 import { secureSet, secureGet } from '../../services/storage'
 import { CONNECTIONS } from '../../common'
 import { deleteConnection } from '../../bridge/react-native-cxs/RNCxs'
-import { connectionFail, connectionSuccess, STORAGE_KEY_THEMES } from '../type-connection-store'
+import {
+  connectionFail,
+  connectionSuccess,
+  STORAGE_KEY_THEMES,
+} from '../type-connection-store'
 
 describe('Mapper', () => {
   it('connectionMapper should return proper object', () => {
@@ -109,8 +114,12 @@ describe('connections should update correctly', () => {
       .provide([
         [matchers.call.like({ fn: deleteConnection }), true],
         [matchers.call.fn(secureSet, CONNECTIONS, '{}'), true],
+        [matchers.call.fn(secureGet, 'DELETED_CONNECTIONS'), true],
+        [matchers.call.fn(secureSet, 'DELETED_CONNECTIONS', '{}'), true],
       ])
       .call(secureSet, CONNECTIONS, '{}')
+      .call(secureGet, 'DELETED_CONNECTIONS')
+      .call(secureSet, 'DELETED_CONNECTIONS', '{}')
       .call.like({ fn: deleteConnection })
       .put(deleteConnectionSuccess({}))
       .run()
@@ -143,7 +152,7 @@ describe('connections should update correctly', () => {
             ...newPendingConnection,
             isFetching: false,
             isCompleted: false,
-            error
+            error,
           },
         },
       }

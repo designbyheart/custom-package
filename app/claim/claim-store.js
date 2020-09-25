@@ -56,7 +56,7 @@ import {
   getConnectionHistory,
   getAllConnection,
 } from '../store/store-selector'
-import { secureSet, getHydrationItem } from '../services/storage'
+import { secureSet, getHydrationItem, secureGet } from '../services/storage'
 import { CLAIM_MAP } from '../common/secure-storage-constants'
 import { RESET } from '../common/type-common'
 import { updateMessageStatus } from '../store/config-store'
@@ -347,11 +347,23 @@ export function* deleteClaimSaga(
     const claimOfferPayload: ClaimOfferPayload = claimOffers[action.uuid]
 
     const remoteDid = claimOfferPayload.remotePairwiseDID
-    const [connection]: Connection[] = yield select(getConnection, remoteDid)
+
+    const deletedConnectionsJSON = yield call(secureGet, 'DELETED_CONNECTIONS')
+    const deletedConnectionsParsed = JSON.parse(deletedConnectionsJSON)
+
+    let connectionIdentifier = null
+    if (remoteDid in deletedConnectionsParsed) {
+      connectionIdentifier = deletedConnectionsParsed[remoteDid]
+    }
+
+    if (connectionIdentifier === null) {
+      const [connection]: Connection[] = yield select(getConnection, remoteDid)
+      connectionIdentifier = connection.identifier
+    }
 
     const vcxSerializedClaimOffer: SerializedClaimOffer = yield select(
       getSerializedClaimOffer,
-      connection.identifier,
+      connectionIdentifier,
       action.uuid
     )
 
@@ -360,7 +372,7 @@ export function* deleteClaimSaga(
       vcxSerializedClaimOffer.serialized
     )
     yield call(deleteCredential, claimHandle)
-    yield put(deleteClaimOffer(action.uuid, connection.identifier))
+    yield put(deleteClaimOffer(action.uuid, connectionIdentifier))
 
     // ideally we need to delete Claim from Claim Store as well but we don't have an claimUuid
     // investigate if we can get claimUuid during hydration
