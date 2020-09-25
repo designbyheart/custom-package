@@ -1,6 +1,6 @@
 // @flow
 
-import { OPEN_ID_CONNECT_STATE } from '../../app/open-id-connect/open-id-connect-actions'
+import { OPEN_ID_CONNECT_STATE } from '../../src/open-id-connect/open-id-connect-actions'
 
 export const mockOpenIdConnectRequest1Id =
   'a35dc33c-b88f-4c55-a4b1-1a9451b54cf7'

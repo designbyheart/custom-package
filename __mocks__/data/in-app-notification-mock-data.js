@@ -1,6 +1,6 @@
 // @flow
 
-import { MESSAGE_TYPE } from '../../app/api/api-constants'
+import { MESSAGE_TYPE } from '../../src/api/api-constants'
 
 export const inAppNotificationMockData = {
   notification: {

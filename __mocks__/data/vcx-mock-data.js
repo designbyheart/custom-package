@@ -6,7 +6,7 @@ import {
   agencyVerificationKey,
 } from './config-store-mock-data'
 import { userOneTimeInfo } from './user-store-mock-data'
-import { WALLET_FILE_NAME } from '../../app/backup/type-backup'
+import { WALLET_FILE_NAME } from '../../src/backup/type-backup'
 
 // I believe now is the time when we should start splitting static-data.js
 // we are starting to see that we shy away from utilizing existing data,

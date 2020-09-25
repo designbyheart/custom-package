@@ -3,8 +3,8 @@
 import {
   COMMITEDANSWER_QUESTION_PROTOCOL,
   QUESTION_STATUS,
-} from '../../app/question/type-question'
-import { STORAGE_STATUS } from '../../app/common/type-common'
+} from '../../src/question/type-question'
+import { STORAGE_STATUS } from '../../src/common/type-common'
 
 export const mockExternalLink = {
   text: 'An external link',
