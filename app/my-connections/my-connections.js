@@ -88,7 +88,7 @@ export class MyConnections extends Component<
       type,
       credentialName,
       date,
-      newBadge,
+      events,
       identifier,
     } = item
     const { onNewConnectionSeen } = this.props
@@ -101,7 +101,7 @@ export class MyConnections extends Component<
         question={questionTitle}
         {...{
           senderDID,
-          newBadge,
+          events,
           date,
           credentialName,
           type,
@@ -243,11 +243,12 @@ const mapStateToProps = (state: Store) => {
           state.history.data.connections[connection.senderDID].data[
             state.history.data.connections[connection.senderDID].data.length - 1
           ].type,
-        newBadge:
+        events:
           state.history.data &&
           state.history.data.connections &&
           state.history.data.connections[connection.senderDID] &&
-          state.history.data.connections[connection.senderDID].newBadge,
+          state.history.data.connections[connection.senderDID].data ?
+            state.history.data.connections[connection.senderDID].data : [],
         senderDID: connection.senderDID,
       }
     })

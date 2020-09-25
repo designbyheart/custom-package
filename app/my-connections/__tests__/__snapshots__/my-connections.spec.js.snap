@@ -679,7 +679,6 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
                           <RCTScrollView
                             contentContainerStyle={
                               Object {
-                                "flex": 1,
                                 "margin": 15,
                                 "marginBottom": 40,
                                 "padding": 10,
@@ -1535,7 +1534,6 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
                           <RCTScrollView
                             contentContainerStyle={
                               Object {
-                                "flex": 1,
                                 "margin": 15,
                                 "marginBottom": 40,
                                 "padding": 10,

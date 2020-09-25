@@ -1,4 +1,6 @@
 // @flow
+import type { ConnectionHistoryEvent } from '../../connection-history/type-connection-history'
+
 export type ConnectionCardProps = {
   onPress: Function,
   image: string,
@@ -8,7 +10,7 @@ export type ConnectionCardProps = {
   type: string,
   credentialName: string,
   question: string,
-  newBadge: boolean,
   onNewConnectionSeen: Function,
   senderDID: string,
+  events: ConnectionHistoryEvent[],
 }

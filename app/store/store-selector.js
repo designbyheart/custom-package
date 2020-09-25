@@ -357,12 +357,16 @@ export const getSerializedClaimOffers = (state: Store, userDID: string) => {
 export const getAllConnectionsPairwiseDid = (state: Store) => {
   const connections = getAllConnection(state)
 
+  let myPairwiseDIDs = []
+
   if (connections) {
-    return Object.keys(connections).map<string>(
-      (userDID) => connections[userDID].myPairwiseDid
-    )
+      Object.keys(connections).forEach((userDID) => {
+        if (connections[userDID] && connections[userDID].myPairwiseDid){
+          myPairwiseDIDs.push(userDID)
+        }
+      })
   }
-  return null
+  return myPairwiseDIDs
 }
 
 export const getConnectionByUserDid = (state: Store, userDID: string) => {
@@ -566,23 +570,23 @@ export const getDIDFromFullyQualifiedDID = (did: string) =>
 
 export const getPushNotificationStore = (state: Store) => state.pushNotification
 
+export const isNewConnection = (status: string, show?: boolean) => {
+  if (
+    (status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
+      status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
+      status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED) &&
+    show
+  ) {
+    return true
+  } else return false
+}
+
 export const getNewMessagesCount = (state: Store) => {
   const receivedConnections: Connection[] = (getConnections(
-    state.connections.data
+    state.connections.data,
   ): any)
 
   const customFlat = (array: Array<Array<Object>>) => [].concat(...array)
-
-  const isNewConnection = (status: string, show?: boolean) => {
-    if (
-      (status === HISTORY_EVENT_STATUS.CLAIM_OFFER_RECEIVED ||
-        status === HISTORY_EVENT_STATUS.PROOF_REQUEST_RECEIVED ||
-        status === HISTORY_EVENT_STATUS.QUESTION_RECEIVED) &&
-      show
-    ) {
-      return true
-    } else return false
-  }
 
   const placeholderArray = receivedConnections.map((connection) => {
     return state.history.data?.connections?.[connection.senderDID]?.data || []

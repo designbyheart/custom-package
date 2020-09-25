@@ -34,15 +34,17 @@ export const UnreadMessagesBadge = ({
   )
 }
 
-const mapStateToProps = (state: Store) => {
-  const numberOfNewMessages = getNewMessagesCount(state)
+const mapStateToProps = (state: Store, props: UnreadMessagesBadgeProps) => {
+  const numberOfNewMessages = props.numberOfNewMessages ?
+    props.numberOfNewMessages :
+    getNewMessagesCount(state)
 
   return {
     numberOfNewMessages,
   }
 }
 
-export default connect(mapStateToProps, null)(UnreadMessagesBadge)
+export default connect(mapStateToProps)(UnreadMessagesBadge)
 
 export const unreadMessageContainerCommonStyle = {
   width: moderateScale(22),
