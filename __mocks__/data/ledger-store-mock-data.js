@@ -1,7 +1,7 @@
 // @flow
 
 import moment from 'moment'
-import { STORE_STATUS } from '../../app/common/type-common'
+import { STORE_STATUS } from '../../src/common/type-common'
 
 export const transferFees = {
   transfer: '0.00001',

@@ -2,39 +2,39 @@
 
 import merge from 'lodash.merge'
 
-import type { NavigationParams } from '../app/common/type-common'
-import type { Store } from '../app/store/type-store'
-import { CHECK_PIN_IDLE } from '../app/lock/type-lock'
+import type { NavigationParams } from '../src/common/type-common'
+import type { Store } from '../src/store/type-store'
+import { CHECK_PIN_IDLE } from '../src/lock/type-lock'
 import {
   PROOF_REQUEST_RECEIVED,
   PROOF_REQUEST_AUTO_FILL,
-} from '../app/proof-request/type-proof-request'
-import { INVITATION_RECEIVED } from '../app/invitation/type-invitation'
+} from '../src/proof-request/type-proof-request'
+import { INVITATION_RECEIVED } from '../src/invitation/type-invitation'
 import {
   CLAIM_OFFER_ACCEPTED,
   CLAIM_OFFER_STATUS,
   CLAIM_REQUEST_STATUS,
-} from '../app/claim-offer/type-claim-offer'
+} from '../src/claim-offer/type-claim-offer'
 import {
   invitationAccepted,
   invitationReceived,
-} from '../app/invitation/invitation-store'
+} from '../src/invitation/invitation-store'
 import {
   claimOfferReceived,
   sendClaimRequestSuccess,
-} from '../app/claim-offer/claim-offer-store'
-import { claimReceived, claimStorageSuccess } from '../app/claim/claim-store'
+} from '../src/claim-offer/claim-offer-store'
+import { claimReceived, claimStorageSuccess } from '../src/claim/claim-store'
 import {
   proofRequestReceived,
   proofRequestAutoFill,
   sendProofSuccess,
-} from '../app/proof-request/proof-request-store'
-import { color } from '../app/common/styles/constant'
+} from '../src/proof-request/proof-request-store'
+import { color } from '../src/common/styles/constant'
 import {
   qrCodeScannerTabRoute,
   homeRoute,
   claimOfferRoute,
-} from '../app/common/route-constants'
+} from '../src/common/route-constants'
 import {
   agencyUrl,
   agencyDID,
@@ -48,20 +48,20 @@ import {
   configStoreNotHydratedInstalledVcxInit,
 } from './data/config-store-mock-data'
 import { userOneTimeInfo } from './data/user-store-mock-data'
-import { STORE_STATUS } from '../app/wallet/type-wallet'
+import { STORE_STATUS } from '../src/wallet/type-wallet'
 import { ledgerStoreWithTransferFees } from './data/ledger-store-mock-data'
-import { PREPARE_BACKUP_SUCCESS } from '../app/backup/type-backup'
+import { PREPARE_BACKUP_SUCCESS } from '../src/backup/type-backup'
 import {
   onfidoProcessStatus,
   onfidoConnectionStatus,
-} from '../app/onfido/type-onfido'
-import { STORAGE_STATUS } from '../app/common/type-common'
+} from '../src/onfido/type-onfido'
+import { STORAGE_STATUS } from '../src/common/type-common'
 import {
   PROOF_REQUEST_STATUS,
   PROOF_STATUS,
-} from '../app/proof-request/type-proof-request'
+} from '../src/proof-request/type-proof-request'
 import { inAppNotificationMockData } from './data/in-app-notification-mock-data'
-import { connectionSuccess } from '../app/store/type-connection-store'
+import { connectionSuccess } from '../src/store/type-connection-store'
 
 // sadly, we can't export all variables in one line and use them in file as well
 // to use them in this file, we have to import them first
@@ -1394,7 +1394,7 @@ export const connectionHistory = {
       {
         id: '1',
         type: 'INVITATION',
-        icon: require('../app/images/linked.png'),
+        icon: require('../src/images/linked.png'),
         action: 'CONNECTED',
         timestamp: '2017-09-06T00:00:00+05:30',
         data: [
@@ -1416,7 +1416,7 @@ export const connectionHistory = {
       {
         id: '1',
         type: 'INVITATION',
-        icon: require('../app/images/linked.png'),
+        icon: require('../src/images/linked.png'),
         action: 'SHARED',
         timestamp: '2017-09-06T00:00:00+05:30',
         data: [
@@ -1438,7 +1438,7 @@ export const connectionHistory = {
       {
         id: '1',
         type: 'INVITATION',
-        icon: require('../app/images/linked.png'),
+        icon: require('../src/images/linked.png'),
         action: 'PENDING',
         timestamp: '2017-09-06T00:00:00+05:30',
         data: [
@@ -1460,7 +1460,7 @@ export const connectionHistory = {
       {
         id: '1',
         type: 'INVITATION',
-        icon: require('../app/images/linked.png'),
+        icon: require('../src/images/linked.png'),
         action: 'PROOF RECEIVED',
         timestamp: '2017-09-06T00:00:00+05:30',
         data: [
@@ -1491,7 +1491,7 @@ export const connectionHistory = {
       {
         id: '1',
         type: 'INVITATION',
-        icon: require('../app/images/linked.png'),
+        icon: require('../src/images/linked.png'),
         action: 'RECEIVED',
         timestamp: '2017-09-06T00:00:00+05:30',
         data: [
@@ -1522,7 +1522,7 @@ export const connectionHistory = {
       {
         id: '1',
         type: 'INVITATION',
-        icon: require('../app/images/linked.png'),
+        icon: require('../src/images/linked.png'),
         action: 'CLAIM OFFER RECEIVED',
         timestamp: '2017-09-06T00:00:00+05:30',
         data: [

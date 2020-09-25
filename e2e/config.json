@@ -1,4 +1,0 @@
-{
-  "setupFilesAfterEnv": ["./config/init.js"],
-  "notify": true
-}
