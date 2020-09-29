@@ -19,6 +19,7 @@ import { colors, fontFamily, fontSizes } from '../../common/styles/constant'
 import { allowPushNotifications } from '../push-notification-store'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { ModalHeaderBar } from '../../components/modal-header-bar/modal-header-bar'
 
 import type { Store } from '../../store/type-store'
 import type {
@@ -201,7 +202,9 @@ const styles = StyleSheet.create({
   },
   image: {
     position: 'absolute',
-    bottom: -verticalScale(50),
+    bottom: -verticalScale(100),
+    width: moderateScale(320, 0.1),
+    height: moderateScale(640, 0.1),
   },
   headline: {
     fontFamily: fontFamily,
@@ -240,7 +243,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     height: '40%',
-    bottom: 0,
+    bottom: -30,
     paddingLeft: 15,
     paddingRight: 15,
     backgroundColor: colors.cmWhite,
@@ -277,3 +280,23 @@ export const pushNotificationPermissionScreen = {
     mapDispatchToProps
   )(PushNotificationPermission),
 }
+
+pushNotificationPermissionScreen.screen.navigationOptions = ({
+  navigation: { goBack, isFocused },
+}) => ({
+  safeAreaInsets: { top: 85 },
+  cardStyle: {
+    marginLeft: '2.5%',
+    marginRight: '2.5%',
+    marginBottom: '4%',
+    borderRadius: 10,
+    backgroundColor: colors.cmWhite,
+  },
+  cardOverlay: () => (
+    <ModalHeaderBar
+      headerTitle={''}
+      dismissIconType={null}
+      onPress={() => goBack(null)}
+    />
+  ),
+})

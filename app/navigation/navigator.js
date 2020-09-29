@@ -552,7 +552,7 @@ export function ConnectMeAppNavigator() {
       <ModalStack.Screen
         name={pushNotificationPermissionScreen.routeName}
         component={pushNotificationPermissionScreen.screen}
-        options={{ safeAreaInsets: { top: 0 } }}
+        options={pushNotificationPermissionScreen.screen.navigationOptions}
       />
     </ModalStack.Navigator>
   )
