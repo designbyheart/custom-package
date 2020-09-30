@@ -275,9 +275,11 @@ function Attachment(props: AttachmentPropType) {
     }
     if (!exists) {
       // if file does not exist writeFile
-      const [writeError, writeResult] = await flattenAsync(
-        RNFetchBlob.fs.writeFile
-      )(attachmentPath, base64, 'base64')
+      const [writeError] = await flattenAsync(RNFetchBlob.fs.writeFile)(
+        attachmentPath,
+        base64,
+        'base64'
+      )
 
       if (writeError) {
         Alert.alert('CO002: Error opening file.')
@@ -285,14 +287,11 @@ function Attachment(props: AttachmentPropType) {
     }
 
     // Use file viewer to open file
-    const [openError, openSuccess] = await flattenAsync(FileViewer.open)(
-      attachmentPath,
-      {
-        displayName: `${label}.${extension}`,
-        showOpenWithDialog: true,
-        showAppsSuggestions: true,
-      }
-    )
+    const [openError] = await flattenAsync(FileViewer.open)(attachmentPath, {
+      displayName: `${label}.${extension}`,
+      showOpenWithDialog: true,
+      showAppsSuggestions: true,
+    })
     if (openError) {
       Alert.alert(
         'CO003: Error opening file.',

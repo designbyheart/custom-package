@@ -45,7 +45,6 @@ import {
   createConnectionWithAriesOutOfBandInvite,
   connectionUpdateState,
   getHandleBySerializedConnection,
-  connectionGetState,
   createCredentialWithAriesOfferObject,
 } from '../bridge/react-native-cxs/RNCxs'
 import type {
@@ -448,6 +447,7 @@ export function* sendResponseOnAriesOutOfBandInvitationWithoutHandshake(
 export function* updateAriesConnectionState(
   identifier: string,
   vcxSerializedConnection: string,
+  // eslint-disable-next-line no-unused-vars
   message: string // TODO: must be used since we replace connectionUpdateState
 ): Generator<*, *, *> {
   const connection = yield select(getConnectionByUserDid, identifier)

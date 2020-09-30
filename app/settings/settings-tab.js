@@ -7,7 +7,6 @@ import { color } from '../common/styles'
 
 import type { Store } from '../store/type-store'
 import { styles } from '../navigation/navigator'
-import { WALLET_BACKUP_FAILURE } from '../backup/type-backup'
 
 class SettingsTab extends Component<any> {
   render() {

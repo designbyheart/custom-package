@@ -55,9 +55,9 @@ exports[`<OpenIdConnectScreen /> should match in fail state 1`] = `
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,
@@ -621,9 +621,9 @@ exports[`<OpenIdConnectScreen /> should match in progress state 1`] = `
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,
@@ -989,9 +989,9 @@ exports[`<OpenIdConnectScreen /> should match in received state 1`] = `
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,
@@ -1589,9 +1589,9 @@ exports[`<OpenIdConnectScreen /> should match in signature verification failed 1
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,
@@ -2225,9 +2225,9 @@ exports[`<OpenIdConnectScreen /> should match in success state 1`] = `
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,

@@ -4,14 +4,7 @@ import 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import { connectionHistoryScreen } from '../connection-details'
-import {
-  getStore,
-  senderLogoUrl,
-  claimMap,
-  activeConnectionThemePrimary,
-  getNavigation,
-} from '../../../__mocks__/static-data'
-import { connectionHistRoute } from '../../common'
+import { getStore } from '../../../__mocks__/static-data'
 
 describe('<ConnectionDetails />', () => {
   const ConnectionDetails = connectionHistoryScreen.screen

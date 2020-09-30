@@ -13,15 +13,13 @@ import {
   cmRed,
   deviceHeight,
   primaryGreen,
-  grey,
 } from '../common/styles'
 
 const QUESTION_SENDER_LOGO_DIMENSION = 100
 const questionScreenSpacing = '5%'
 
 export const getQuestionStylesObject = (
-  questionSenderLogoBorderRadius: number,
-  questionSenderLogoBorderWidth: number
+  questionSenderLogoBorderRadius: number
 ) => ({
   container: {
     flex: 1,
@@ -192,7 +190,7 @@ export const getQuestionStylesObject = (
 })
 
 export const questionStyles = StyleSheet.create(
-  getQuestionStylesObject(QUESTION_SENDER_LOGO_DIMENSION / 2, 1)
+  getQuestionStylesObject(QUESTION_SENDER_LOGO_DIMENSION / 2)
 )
 
 export const questionActionButtonDefaultProps = {

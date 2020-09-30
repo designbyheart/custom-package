@@ -282,7 +282,7 @@ export const pushNotificationPermissionScreen = {
 }
 
 pushNotificationPermissionScreen.screen.navigationOptions = ({
-  navigation: { goBack, isFocused },
+  navigation: { goBack },
 }) => ({
   safeAreaInsets: { top: 85 },
   cardStyle: {

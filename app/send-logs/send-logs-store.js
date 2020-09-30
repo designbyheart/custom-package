@@ -16,9 +16,7 @@ const initialState = {
 export function* encryptLogSaga(
   action: LogIsEncryptedAction
 ): Generator<*, *, *> {
-  let encryptedRotatingLog = yield call(
-    customLogger.encryptLogFile.bind(customLogger)
-  )
+  yield call(customLogger.encryptLogFile.bind(customLogger))
 
   yield put({
     type: UPDATE_LOG_ISENCRYPTED,

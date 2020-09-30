@@ -1,23 +1,13 @@
 //@flow
 import React, { Component } from 'react'
-import { TouchableHighlight, Image, StyleSheet, TextInput } from 'react-native'
+import { StyleSheet, TextInput } from 'react-native'
 import { Container, CustomView, CustomText, CustomButton } from '../components'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import type { Store } from '../store/type-store'
 import { FooterActions } from '../components'
-import {
-  color,
-  OFFSET_1X,
-  OFFSET_2X,
-  OFFSET_6X,
-  OFFSET_7X,
-} from '../common/styles'
-import {
-  selectRestoreMethodRoute,
-  switchEnvironmentRoute,
-  lockSelectionRoute,
-} from '../common'
+import { OFFSET_1X, OFFSET_2X } from '../common/styles'
+import { selectRestoreMethodRoute, switchEnvironmentRoute } from '../common'
 import { changeEnvironment } from '../store/config-store'
 import { disableDevMode } from '../lock/lock-store'
 import type {

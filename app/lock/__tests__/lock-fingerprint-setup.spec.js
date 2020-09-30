@@ -3,12 +3,10 @@ import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
 import {
-  PIN_SETUP_STATE,
   LAErrorTouchIDUnknownError,
   LAErrorTouchIDTooManyAttempts,
   LAErrorAuthenticationFailed,
   touchIDAlerts,
-  touchIDNotSupportAlertAndroid,
 } from '../type-lock'
 import { LockFingerprintSetup } from '../lock-fingerprint-setup'
 import {
@@ -19,7 +17,7 @@ import {
 import { getNavigation } from '../../../__mocks__/static-data'
 import { TouchId } from '../../components/touch-id/touch-id'
 import * as RNCxs from '../../bridge/react-native-cxs/RNCxs'
-import { Alert, Platform } from 'react-native'
+import { Alert } from 'react-native'
 import delay from '@redux-saga/delay-p'
 
 describe('<LockFingerprintSetup />', () => {
@@ -34,9 +32,10 @@ describe('<LockFingerprintSetup />', () => {
   })
 
   const options = {
-    createNodeMock: (element) => {
+    createNodeMock: () => {
       return {
         clear: () => {
+          // eslint-disable-next-line no-unused-vars
           cleared = true
         },
       }
@@ -251,6 +250,7 @@ describe('<LockFingerprintSetup />', () => {
     getBiometricErrorSpy.mockReset()
     getBiometricErrorSpy.mockRestore()
   })
+
   it('should test touchId handler is called', () => {
     let tree = component.toJSON()
     let instance = component.getInstance()
@@ -259,6 +259,7 @@ describe('<LockFingerprintSetup />', () => {
     tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })
+
   // need to fix this test
   // giving TypeError: Cannot read property 'showAlert' of undefined error
   xit('should show enable biometrics alert in android', async () => {
@@ -266,7 +267,7 @@ describe('<LockFingerprintSetup />', () => {
       Promise.reject({ name: LAErrorTouchIDUnknownError, code: '' })
     )
 
-    const platform = jest.mock('Platform', () => {
+    jest.mock('Platform', () => {
       const Platform = jest.requireActual('Platform')
       Platform.OS = 'android'
       return Platform

@@ -101,7 +101,7 @@ function* triggerDownloadSaga(action: { type: string }): Generator<*, *, *> {
   // in this 15 seconds window.
 
   // We need to race "timeout" and push notification's "fetch additional data"
-  const { waitOver, pushNotificationArrived } = yield race({
+  const { pushNotificationArrived } = yield race({
     waitOver: call(delay, 15000),
     pushNotificationArrived: take(FETCH_ADDITIONAL_DATA),
   })
@@ -132,7 +132,7 @@ export function* infiniteDownloadSaga(action: {
     // once we queue action to download messages
     // then we wait for message download to either be success or error
     // before scheduling another action to download new messages
-    const { success, fail } = yield race({
+    const { fail } = yield race({
       success: take(GET_MESSAGES_SUCCESS),
       fail: take(GET_MESSAGES_FAIL),
       receivedMessage: take([

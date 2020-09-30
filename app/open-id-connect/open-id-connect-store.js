@@ -1,11 +1,10 @@
 // @flow
 
-import { put, takeLatest, call, all, select, take } from 'redux-saga/effects'
+import { put, takeLatest, call, all, select } from 'redux-saga/effects'
 import delay from '@redux-saga/delay-p'
 import moment from 'moment'
 import { stringify } from 'query-string'
 
-import type { OIDCAuthenticationRequest } from '../components/qr-scanner/type-qr-scanner'
 import type {
   OpenIdConnectUpdateStatusAction,
   OpenIdConnectStore,
@@ -209,10 +208,7 @@ export function* openIdConnectYesSaga(
     iss: 'https://self-issued.me',
     aud: oidcAuthenticationQrCode.clientId,
     nonce: jwtAuthenticationRequest.body.nonce,
-    exp: moment
-      .utc()
-      .add(6, 'minutes')
-      .format(),
+    exp: moment.utc().add(6, 'minutes').format(),
     iat: moment.utc().format(),
     sub_jwk,
     sub: removeBase64Padding(thumbprint.trim()),
@@ -262,7 +258,7 @@ export function* openIdConnectYesSaga(
     id_token: jwtResponse,
     state: jwtAuthenticationRequest.body.state,
   }
-  const [sendError, status] = yield call(
+  const [sendError] = yield call(
     flatFetch,
     oidcAuthenticationQrCode.clientId,
     stringify(response),
@@ -326,7 +322,7 @@ function* sendErrorResponse(
     openIdConnectUpdateStatus(action.oidcAuthenticationRequest, states.PROGRESS)
   )
 
-  const [sendError, status] = yield call(
+  const [sendError] = yield call(
     flatFetch,
     action.oidcAuthenticationRequest.oidcAuthenticationQrCode.clientId,
     stringify(response),

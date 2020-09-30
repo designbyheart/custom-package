@@ -1,7 +1,7 @@
 // @flow
 import React, { Fragment } from 'react'
 import SvgIcon from 'react-native-svg-icon'
-import { Path, Svg, Ellipse } from 'react-native-svg'
+import { Path, Ellipse } from 'react-native-svg'
 
 export const svgIcons = {
   UserAvatar: {

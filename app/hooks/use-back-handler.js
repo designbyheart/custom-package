@@ -1,5 +1,5 @@
 // @flow
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   useFocusEffect,
   useNavigationState,
@@ -26,13 +26,13 @@ import {
   restoreRoute,
   restoreWaitRoute,
   expiredTokenRoute,
+  startUpRoute,
 } from '../common'
 import { useDispatch } from 'react-redux'
 
 const backButtonDisableRoutes = [
   lockEnterPinRoute,
   homeRoute,
-  splashScreenRoute,
   settingsRoute,
   qrCodeScannerTabRoute,
   invitationRoute,
@@ -46,6 +46,8 @@ const backButtonDisableRoutes = [
   restoreRoute,
   restoreWaitRoute,
   expiredTokenRoute,
+  splashScreenRoute,
+  startUpRoute,
 ]
 
 const backButtonExitRoutes = [
@@ -76,11 +78,9 @@ export default function useBackHandler() {
   const { key, name, params } = useNavigationState(getCurrentRoute)
   const dispatch = useDispatch()
   const [exitTimeout, setExitTimeout] = useState()
-  const onBack = useCallback(() => {
+
+  const onBack = () => {
     if (key !== '' && name !== '') {
-      if (!backButtonDisableRoutes.includes(name)) {
-        return false
-      }
       if (backButtonConditionalRoutes.includes(name)) {
         let navigateAction = CommonActions.navigate({
           name: lockSelectionRoute,
@@ -107,6 +107,7 @@ export default function useBackHandler() {
             return false
         }
       }
+
       if (backButtonExitRoutes.includes(name)) {
         if (exitTimeout && exitTimeout + 2000 >= Date.now()) {
           exitAppAndroid()
@@ -115,9 +116,14 @@ export default function useBackHandler() {
         setExitTimeout(Date.now())
         ToastAndroid.show('Press again to exit!', ToastAndroid.SHORT)
       }
+
+      if (!backButtonDisableRoutes.includes(name)) {
+        return false
+      }
     }
     return true
-  }, [exitTimeout])
+  }
+
   const focusEffectCallback = useCallback(() => {
     if (Platform.OS !== 'android') {
       return

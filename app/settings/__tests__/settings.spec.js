@@ -2,7 +2,7 @@
 /*global spyOn*/
 import 'react-native'
 import { Platform } from 'react-native'
-import React, { PureComponent } from 'react'
+import React from 'react'
 import renderer, { act } from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import * as RNLocalize from 'react-native-localize'
@@ -13,9 +13,7 @@ import { getStore, getNavigation } from '../../../__mocks__/static-data'
 import {
   settingsRoute,
   lockTouchIdSetupRoute,
-  lockEnterPinRoute,
   genRecoveryPhraseRoute,
-  exportBackupFileRoute,
   aboutAppRoute,
   onfidoRoute,
   lockAuthorizationHomeRoute,
@@ -205,9 +203,7 @@ describe('user settings screen', () => {
     // have NativeModules.SettingsManager.settings.AppleLocale(ios) set to 'en_XX'
     // in setup.js which is NOT a valid location and onfido should NOT navigate
     Platform.OS = 'ios'
-    const localizeSpy = spyOn(RNLocalize, 'getLocales').and.returnValue([
-      { countryCode: 'IN' },
-    ])
+    spyOn(RNLocalize, 'getLocales').and.returnValue([{ countryCode: 'IN' }])
     const { props } = setup()
     const { navigation } = props
     const { wrapper } = render(props)

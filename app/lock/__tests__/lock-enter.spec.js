@@ -27,9 +27,10 @@ describe('<LockEnter />', () => {
   let cleared
 
   const options = {
-    createNodeMock: (element) => {
+    createNodeMock: () => {
       return {
         clear: () => {
+          // eslint-disable-next-line no-unused-vars
           cleared = true
         },
         blur: () => {},

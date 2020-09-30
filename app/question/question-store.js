@@ -21,7 +21,6 @@ import type {
   ComponentStatus,
 } from '../common/type-common'
 import type { SignDataResponse } from '../bridge/react-native-cxs/type-cxs'
-import delay from '@redux-saga/delay-p'
 import {
   QUESTION_RECEIVED,
   SEND_ANSWER_TO_QUESTION,
@@ -29,7 +28,6 @@ import {
   UPDATE_QUESTION_STATUS,
   UPDATE_QUESTION_ANSWER,
   ERROR_GET_CONNECTION_HANDLE,
-  ERROR_SIGN_DATA,
   COMMITEDANSWER_QUESTION_PROTOCOL,
   ERROR_QUESTION_ANSWER_SEND,
   MESSAGE_TYPE_ANSWER,

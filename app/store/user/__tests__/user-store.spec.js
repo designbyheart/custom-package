@@ -42,7 +42,6 @@ import {
   getHydrationItem,
 } from '../../../services/storage'
 import { getUserAvatarName } from '../../store-selector'
-import { uuid } from '../../../services/uuid'
 import ImagePicker from 'react-native-image-crop-picker'
 import { VCX_INIT_SUCCESS } from '../../type-config-store'
 

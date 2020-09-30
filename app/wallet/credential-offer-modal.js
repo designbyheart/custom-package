@@ -1,16 +1,9 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { StyleSheet, Platform } from 'react-native'
-import {
-  CustomView,
-  Icon,
-  CustomText,
-  CustomButton,
-  Container,
-  CustomModal,
-} from '../components'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
-import { colors, fontFamily, fontSizes } from '../common/styles/constant'
+import { CustomView, Icon, CustomText, CustomButton } from '../components'
+import { moderateScale } from 'react-native-size-matters'
+import { colors } from '../common/styles/constant'
 import Modal from 'react-native-modal'
 import PaymentFailureModal from './payment-failure-modal'
 import {
@@ -20,8 +13,6 @@ import {
 import type {
   CredentialOfferModalProps,
   CredentialOfferModalState,
-  ClaimRequestStatusModalProps,
-  ClaimRequestStatus,
 } from '../claim-offer/type-claim-offer'
 import { ClaimRequestStatusModal } from '../claim-offer/claim-request-modal'
 import { LedgerFeesModal } from '../components/ledger-fees-modal/ledger-fees-modal'
@@ -37,9 +28,7 @@ export default class CredentialOfferModal extends PureComponent<
   render() {
     const {
       testID,
-      onClose,
       claimRequestStatus,
-      onRetry,
       claimOfferData,
       isValid,
       logoUrl,

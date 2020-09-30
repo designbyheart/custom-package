@@ -37,7 +37,6 @@ import {
 export const OpenIdConnectScreen = ({
   request,
   dispatch,
-  route,
   connection,
 }: OpenIdConnectScreenProps) => {
   const navigation = useNavigation()

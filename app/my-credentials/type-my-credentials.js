@@ -1,6 +1,5 @@
 // @flow
-import type { ReactNavigation, GenericObject } from '../common/type-common'
-import type { ClaimMap, DeleteClaimAction } from '../claim/type-claim'
+import type { ReactNavigation } from '../common/type-common'
 import type { ClaimOfferPayload } from '../claim-offer/type-claim-offer'
 import type { Attribute } from '../push-notification/type-push-notification'
 import { deleteClaim } from '../claim/claim-store'

@@ -1,7 +1,7 @@
 // @flow
 import moment from 'moment'
 import delay from '@redux-saga/delay-p'
-import { put, takeLatest, take, select, call, all } from 'redux-saga/effects'
+import { put, takeLatest, take, call, all } from 'redux-saga/effects'
 import type { CustomError } from '../common/type-common'
 import {
   PENDING_REDIRECT,
@@ -16,7 +16,6 @@ import {
   UNLOCK_APP,
   LONG_PRESSED_IN_LOCK_SELECTION_SCREEN,
   PRESSED_ON_OR_IN_LOCK_SELECTION_SCREEN,
-  RESET_TOUCH_EVENT_VARIABLES,
   SHOW_DEV_MODE,
   HIDE_DEV_MODE,
   ENABLE_TOUCHID,
@@ -49,7 +48,6 @@ import type {
   CheckPinIdleAction,
   LongPressedInLockSelectionScreen,
   PressedOnOrInLockSelectionScreen,
-  ResetTouchEventVariables,
   EnableDevMode,
   DisableDevMode,
   CheckTouchIdAction,
@@ -58,10 +56,7 @@ import type {
   PutPinFailDataAction,
 } from './type-lock'
 import {
-  walletGet,
-  walletSet,
   secureSet,
-  secureGet,
   safeGet,
   safeSet,
   getHydrationItem,

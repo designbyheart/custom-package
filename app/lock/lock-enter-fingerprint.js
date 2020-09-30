@@ -5,7 +5,6 @@ import { TouchId } from '../components/touch-id/touch-id'
 import { Container, CustomText, CustomButton } from '../components'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { captureError } from '../services/error/error-handler'
 import {
   homeRoute,
   lockEnterPinRoute,
@@ -66,14 +65,14 @@ export class LockEnterFingerprint extends Component<
 
   touchIdHandler = () => {
     TouchId.isSupported()
-      .then((success) => {
+      .then(() => {
         TouchId.authenticate(
           {
             title: 'Authentication Required',
           },
           this.touchIdHandler
         )
-          .then((success) => {
+          .then(() => {
             TouchId.release()
             this.setState({ authenticationSuccess: true, errorMessage: null })
             this.onAuthenticationSuccess(this.props.pendingRedirection)

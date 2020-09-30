@@ -1,9 +1,8 @@
 // @flow
-import renderer from 'react-test-renderer'
-import { put, call, select, take } from 'redux-saga/effects'
+
+import { put, select, take } from 'redux-saga/effects'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
-import { throwError } from 'redux-saga-test-plan/providers'
 
 import { initialTestAction } from '../../common/type-common'
 import proofReducer, {

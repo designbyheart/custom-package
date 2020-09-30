@@ -1,8 +1,8 @@
 // @flow
-import React, { PureComponent } from 'react'
-import { View, Image, StyleSheet } from 'react-native'
-import { Container, CustomView, CustomText, Loader } from '../components'
-import { OFFSET_3X, OFFSET_4X } from '../common/styles'
+import React from 'react'
+import { StyleSheet } from 'react-native'
+import { Container, Loader } from '../components'
+import { OFFSET_3X } from '../common/styles'
 import { waitForInvitationRoute } from '../common'
 
 const WaitForInvitation = () => {

@@ -3,15 +3,11 @@ import React from 'react'
 import 'react-native'
 import renderer, { act } from 'react-test-renderer'
 import { Provider } from 'react-redux'
-import { PIN_SETUP_STATE } from '../type-lock'
 import { LockPinSetup } from '../lock-pin-code-setup'
-import { lockSetupSuccessRoute } from '../../common'
 import { getNavigation } from '../../../__mocks__/static-data'
-import { pinHash } from '../pin-hash'
 import { createStore } from 'redux'
 import { PinCodeBox } from '../../components'
 import { MockedNavigator } from '../../../__mocks__/mock-navigator'
-import { OpenIdConnectScreen } from '../../open-id-connect/open-id-connect-screen'
 
 describe('<LockPinCodeSetup />', () => {
   const getProps = () => ({
@@ -21,20 +17,10 @@ describe('<LockPinCodeSetup />', () => {
     route: {},
     lockEnable: jest.fn(),
   })
-  const options = {
-    createNodeMock: (element) => {
-      return {
-        clear: () => {
-          cleared = true
-        },
-        blur: () => {},
-      }
-    },
-  }
 
   let component
   let props
-  let cleared
+
   const mockStore = createStore(() => ({}), {})
 
   beforeEach(() => {
@@ -56,7 +42,6 @@ describe('<LockPinCodeSetup />', () => {
 
   it('should show re enter pass code after first entry', () => {
     let tree = component.toJSON()
-    let instance = component.getInstance()
     const pinCodeBox = component.root.findByType(PinCodeBox)
     //manually trigger onComplete method by passing "pass code"
     act(() => pinCodeBox.instance.props.onPinComplete('123456'))
@@ -85,7 +70,6 @@ describe('<LockPinCodeSetup />', () => {
     expect(firstSnap).toMatchSnapshot()
     act(() => jest.runAllTimers())
 
-    const secondSnap = component.toJSON()
     expect(component.toJSON()).toMatchSnapshot()
   })
 })

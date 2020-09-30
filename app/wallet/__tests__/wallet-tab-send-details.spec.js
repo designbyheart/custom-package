@@ -5,7 +5,7 @@ import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import { WalletTabSendDetails } from '../wallet-tab-send-details'
 import { getStore } from '../../../__mocks__/static-data'
-import { getNavigation, smsToken } from '../../../__mocks__/static-data'
+import { getNavigation } from '../../../__mocks__/static-data'
 import { STORE_STATUS } from '../type-wallet'
 
 describe('<WalletTabSendDetails />', () => {

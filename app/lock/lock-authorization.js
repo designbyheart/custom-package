@@ -6,18 +6,13 @@
  */
 import React, { useCallback } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { HeaderBackButton } from '@react-navigation/stack'
 
-import type { StackHeaderLeftButtonProps } from '@react-navigation/stack'
 import type { LockAuthorizationProps } from './type-lock'
-import type { ReactNavigation } from '../common/type-common'
 
 import LockEnter from './lock-enter'
 import { lockAuthorizationHomeRoute } from '../common'
-import { BackButton } from '../components/back-button/back-button'
-import { headerTitleStyle } from '../components/header-title/header-title'
 import { useInteractionDone } from '../hooks/use-interactions-done'
-import { OrangeLoader, LoaderGif } from '../components/loader-gif/loader-gif'
+import { LoaderGif } from '../components/loader-gif/loader-gif'
 import { Header } from '../components'
 import { colors } from '../common/styles/constant'
 

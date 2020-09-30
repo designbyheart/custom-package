@@ -7,16 +7,16 @@ import type {
   CustomError,
   ResetAction,
 } from '../common/type-common'
-import type { InvitationAcceptedAction, InvitationReceivedAction } from '../invitation/type-invitation'
+import type {
+  InvitationAcceptedAction,
+  InvitationReceivedAction,
+} from '../invitation/type-invitation'
 import type {
   ConnectionFailAction,
   NewConnectionAction,
   NewConnectionSuccessAction,
 } from '../store/type-connection-store'
-import type {
-  ClaimReceivedAction,
-  ClaimStorageSuccessAction,
-} from '../claim/type-claim'
+import type { ClaimStorageSuccessAction } from '../claim/type-claim'
 import type {
   ClaimOfferReceivedAction,
   ClaimOfferAcceptedAction,
@@ -46,14 +46,12 @@ import {
   CLAIM_OFFER_ACCEPTED,
   CLAIM_OFFER_IGNORED,
   CLAIM_OFFER_REJECTED,
-  SEND_CLAIM_REQUEST,
   SEND_CLAIM_REQUEST_SUCCESS,
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
   DENY_CLAIM_OFFER,
   DENY_CLAIM_OFFER_SUCCESS,
   DENY_CLAIM_OFFER_FAIL,
-  CLAIM_OFFER_DELETED,
 } from '../claim-offer/type-claim-offer'
 import {
   CLAIM_STORAGE_SUCCESS,
@@ -69,16 +67,15 @@ import {
   DENY_PROOF_REQUEST_FAIL,
   DENY_PROOF_REQUEST,
 } from '../proof-request/type-proof-request'
-import {
-  PROOF_SUCCESS,
-  UPDATE_ATTRIBUTE_CLAIM,
-  ERROR_SEND_PROOF,
-} from '../proof/type-proof'
+import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 import {
   QUESTION_RECEIVED,
   UPDATE_QUESTION_ANSWER,
 } from '../question/type-question'
-import { CONNECTION_FAIL, NEW_CONNECTION_SUCCESS } from '../store/type-connection-store'
+import {
+  CONNECTION_FAIL,
+  NEW_CONNECTION_SUCCESS,
+} from '../store/type-connection-store'
 
 export const HISTORY_EVENT_STATUS = {
   [INVITATION_RECEIVED]: 'CONNECTION REQUEST',

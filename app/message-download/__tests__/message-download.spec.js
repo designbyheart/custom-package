@@ -3,7 +3,6 @@
 import { take } from 'redux-saga/effects'
 import delay from '@redux-saga/delay-p'
 import { testSaga } from 'redux-saga-test-plan'
-import * as matchers from 'redux-saga-test-plan/matchers'
 
 import { infiniteDownloadSaga } from '../message-download'
 import { getUnacknowledgedMessages } from '../../store/config-store'

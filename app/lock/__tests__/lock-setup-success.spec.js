@@ -3,7 +3,6 @@ import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
 import { LockSetupSuccess } from '../lock-setup-success'
-import { lockSetupSuccessRoute } from '../../common'
 import {
   getNavigation,
   pendingRedirection,
@@ -19,9 +18,10 @@ describe('<LockSetupSuccess />', () => {
     clearPendingRedirect: jest.fn(),
   })
   const options = {
-    createNodeMock: (element) => {
+    createNodeMock: () => {
       return {
         clear: () => {
+          // eslint-disable-next-line no-unused-vars
           cleared = true
         },
       }

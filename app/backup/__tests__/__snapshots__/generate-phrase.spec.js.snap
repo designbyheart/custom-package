@@ -807,15 +807,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
           <Text
             style={
               Object {
-                "color": Object {
-                  "color": Array [
-                    208,
-                    8,
-                    63,
-                  ],
-                  "model": "hsl",
-                  "valpha": 1,
-                },
+                "color": "hsl(208, 8%, 63%)",
                 "fontSize": 18,
                 "paddingBottom": 1,
                 "paddingTop": 2,
@@ -1185,15 +1177,7 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
           <Text
             style={
               Object {
-                "color": Object {
-                  "color": Array [
-                    208,
-                    8,
-                    63,
-                  ],
-                  "model": "hsl",
-                  "valpha": 1,
-                },
+                "color": "hsl(208, 8%, 63%)",
                 "fontSize": 18,
                 "paddingBottom": 1,
                 "paddingTop": 2,

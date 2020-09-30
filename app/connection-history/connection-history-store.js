@@ -35,12 +35,12 @@ import type {
 import type { CustomError } from '../common/type-common'
 import type {
   InvitationAcceptedAction,
-  InvitationPayload
+  InvitationPayload,
 } from '../invitation/type-invitation'
 import { uuid } from '../services/uuid'
 import {
   INVITATION_ACCEPTED,
-  INVITATION_RECEIVED
+  INVITATION_RECEIVED,
 } from '../invitation/type-invitation'
 import moment from 'moment'
 import type {
@@ -129,7 +129,10 @@ import {
 } from '../question/type-question'
 import { MESSAGE_TYPE } from '../api/api-constants'
 import { selectQuestion } from '../question/question-store'
-import { CONNECTION_FAIL, NEW_CONNECTION_SUCCESS } from '../store/type-connection-store'
+import {
+  CONNECTION_FAIL,
+  NEW_CONNECTION_SUCCESS,
+} from '../store/type-connection-store'
 import type { ConnectionFailAction } from '../store/type-connection-store'
 
 const initialState = {
@@ -437,7 +440,7 @@ export function convertCredentialRequestFailToHistoryEvent(
 
 function convertOutofbandProofRequestAcceptedToHistoryEvent(
   action: OutofbandClaimOfferAcceptedAction,
-  proofReceivedEvent: ConnectionHistoryEvent,
+  proofReceivedEvent: ConnectionHistoryEvent
 ): ConnectionHistoryEvent {
   return {
     action: HISTORY_EVENT_STATUS.PROOF_REQUEST_ACCEPTED,
@@ -693,7 +696,7 @@ export const historyEventOccurred = (event: HistoryEventOccurredEventType) => ({
 export function* historyEventOccurredSaga(
   action: HistoryEventOccurredAction
 ): Generator<*, *, *> {
-  const { event, type } = action
+  const { event } = action
   let historyEvent: ?ConnectionHistoryEvent = null
   try {
     if (event.type === INVITATION_RECEIVED) {
@@ -720,7 +723,9 @@ export function* historyEventOccurredSaga(
         INVITATION_ACCEPTED
       )
       // convert invitation accepted into connection success event
-      historyEvent = convertConnectionSuccessToHistoryEvent(invitationAcceptedEvent)
+      historyEvent = convertConnectionSuccessToHistoryEvent(
+        invitationAcceptedEvent
+      )
       if (invitationAcceptedEvent) {
         yield put(deleteHistoryEvent(invitationAcceptedEvent))
       }
@@ -1013,7 +1018,9 @@ export function* historyEventOccurredSaga(
         event.uid
       )
       const existingEvent =
-        storedProofReceivedEvent || storedErrorSendProofEvent || storedOutofbandProofRequestAcceptedEvent
+        storedProofReceivedEvent ||
+        storedErrorSendProofEvent ||
+        storedOutofbandProofRequestAcceptedEvent
       const updateAttributeClaimEvent = convertUpdateAttributeToHistoryEvent(
         event,
         existingEvent,

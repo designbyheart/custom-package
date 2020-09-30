@@ -17,13 +17,7 @@ import type { Store } from '../store/type-store'
 import { cloudBackupRoute, settingsRoute } from '../common'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
-import {
-  Container,
-  CustomView,
-  CustomText,
-  CustomButton,
-  CustomHeader,
-} from '../components'
+import { Container, CustomView, CustomText, CustomButton } from '../components'
 import {
   getCloudBackupStatus,
   getAutoCloudBackupEnabled,

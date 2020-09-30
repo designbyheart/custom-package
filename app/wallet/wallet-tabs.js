@@ -1,26 +1,24 @@
 // @flow
-import React, { PureComponent } from 'react'
-import { Dimensions } from 'react-native'
+import { PureComponent } from 'react'
+// import { Dimensions } from 'react-native'
 // import { createMaterialTopTabNavigator } from '@react-navigation/'
 
 import type { WalletTabsProps } from './type-wallet'
 
-import { CustomView } from '../components'
-import { color, font } from '../common/styles/constant'
-import { receiveTabRoute, sendTabRoute, historyTabRoute } from '../common'
-import WalletSendAmount from './wallet-send-amount'
-import styles from './styles'
-import WalletTabReceive from './wallet-tab-receive'
-import WalletTabHistory from './wallet-tab-history'
-import { HISTORY_TAB, HISTORY_TAB_TEST_ID } from './wallet-constants'
-
-const { width } = Dimensions.get('window')
+// import { CustomView } from '../components'
+// import { color, font } from '../common/styles/constant'
+// import { receiveTabRoute, sendTabRoute, historyTabRoute } from '../common'
+// import WalletSendAmount from './wallet-send-amount'
+// import styles from './styles'
+// import WalletTabReceive from './wallet-tab-receive'
+// import WalletTabHistory from './wallet-tab-history'
+// import { HISTORY_TAB, HISTORY_TAB_TEST_ID } from './wallet-constants'
 
 export default class WalletTabs extends PureComponent<WalletTabsProps, void> {
   render() {
-    const outerNavigation = {
-      navigation: this.props.navigation,
-    }
+    // const outerNavigation = {
+    //   navigation: this.props.navigation,
+    // }
     // return <Tabs screenProps={outerNavigation} />
     return null
   }

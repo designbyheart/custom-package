@@ -20,7 +20,6 @@ import {
   ERROR_PARSE_USER_INFO_FAIL,
   PARSE_USER_ONE_TIME_INFO_FAIL,
   SAVE_USER_SELECTED_AVATAR,
-  USER_AVATAR_IMAGE_NAME,
   ERROR_SAVE_USER_SELECTED_IMAGE,
   SAVE_USER_SELECTED_AVATAR_FAIL,
   SAVE_USER_SELECTED_AVATAR_SUCCESS,
@@ -162,7 +161,7 @@ export function* saveUserSelectedAvatarSaga(
   action: SaveUserSelectedAvatarAction
 ): Generator<*, *, *> {
   const { imagePath } = action
-  const { name, extension } = getImageInfo(imagePath)
+  const { extension } = getImageInfo(imagePath)
   try {
     const appDirectory = RNFetchBlob.fs.dirs.DocumentDir
     const existingAvatarName: ?string = yield select(getUserAvatarName)

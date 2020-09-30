@@ -6,7 +6,7 @@ import renderer, { act } from 'react-test-renderer'
 import merge from 'lodash.merge'
 
 import { OpenIdConnectScreen } from '../open-id-connect-screen'
-import { getNavigation, mockConnection1 } from '../../../__mocks__/static-data'
+import { mockConnection1 } from '../../../__mocks__/static-data'
 import { mockOpenIdConnectRequest1 } from '../../../__mocks__/data/open-id-connect-mock-data'
 import { OPEN_ID_CONNECT_STATE } from '../open-id-connect-actions'
 import { MockedNavigator } from '../../../__mocks__/mock-navigator'

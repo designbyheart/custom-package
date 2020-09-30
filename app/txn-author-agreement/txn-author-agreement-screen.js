@@ -24,7 +24,6 @@ import {
   taaAcceptSubmit,
 } from './txn-author-agreement-store'
 import { TAA_STATUS } from './type-txn-author-agreement'
-import type { TxnAuthorAgreementScreenNavigation } from './type-txn-author-agreement'
 
 import { measurements } from '../common/styles/measurements'
 import { ModalButtons } from '../components/buttons/modal-buttons'
@@ -150,10 +149,7 @@ export class TxnAuthorAgreement extends Component<
   }
 }
 
-const mapStateToProps = (
-  state: Store,
-  props: TxnAuthorAgreementScreenNavigation
-) => {
+const mapStateToProps = (state: Store) => {
   return {
     status: state.txnAuthorAgreement.status,
     text: state.txnAuthorAgreement.text,

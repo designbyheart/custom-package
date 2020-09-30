@@ -11,7 +11,6 @@ import type { Store } from '../store/type-store'
 import {
   lockPinSetupRoute,
   lockSelectionRoute,
-  settingsTabRoute,
   settingsRoute,
   lockTouchIdSetupRoute,
   eulaRoute,
@@ -27,13 +26,10 @@ import { disableTouchIdAction, enableTouchIdAction } from '../lock/lock-store'
 import {
   AllowedFallbackToucheIDErrors,
   LAErrorTouchIDTooManyAttempts,
-  LAErrorTouchIDNotSupported,
   touchIDAlerts,
   touchIDNotSupportAlertAndroid,
 } from './type-lock'
 import type { LockFingerprintSetupProps } from './type-lock'
-import AsyncStorage from '@react-native-community/async-storage'
-import { safeSet } from '../services/storage'
 import { getBiometricError } from '../bridge/react-native-cxs/RNCxs'
 
 export class LockFingerprintSetup extends PureComponent<
@@ -95,7 +91,7 @@ export class LockFingerprintSetup extends PureComponent<
       this.props.fromSettings && this.props.currentScreen === settingsRoute
     if (!this.props.fromSettings || currentScreenIsSettings) {
       return TouchId.isSupported()
-        .then((success) => {
+        .then(() => {
           return TouchId.authenticate(
             {
               title: 'Authentication Required',

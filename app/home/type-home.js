@@ -1,10 +1,5 @@
 // @flow
 import type { ReactNavigation } from '../common/type-common'
-import type {
-  ConnectionStore,
-  Connection,
-} from '../store/type-connection-store'
-import type { ConnectionHistoryStore } from '../connection-history/type-connection-history'
 import type { MessageDownloadStatus } from '../store/type-config-store'
 
 export type HomeProps = {

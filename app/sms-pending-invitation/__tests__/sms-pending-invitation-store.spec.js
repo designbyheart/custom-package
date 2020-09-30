@@ -7,32 +7,20 @@ import {
 } from '../../store/store-selector'
 import smsPendingInvitationReducer, {
   callSmsPendingInvitationRequest,
-  convertSmsPayloadToInvitation,
   smsPendingInvitationFail,
   smsPendingInvitationReceived,
   getSmsPendingInvitation,
   smsPendingInvitationSeen,
 } from '../sms-pending-invitation-store'
-import {
-  SMSPendingInvitationStatus,
-  SAFE_TO_DOWNLOAD_SMS_INVITATION,
-} from '../type-sms-pending-invitation'
+import { SAFE_TO_DOWNLOAD_SMS_INVITATION } from '../type-sms-pending-invitation'
 import { getInvitationLink } from '../../api/api'
-import { PENDING_CONNECTION_REQUEST_CODE } from '../../api/api-constants'
 import { initialTestAction } from '../../common/type-common'
-import { invitationReceived } from '../../invitation/invitation-store'
 import {
   smsDownloadedPayload as payload,
-  smsToken,
   getStore,
 } from '../../../__mocks__/static-data'
 import { HYDRATED } from '../../store/type-config-store'
 import { lockSelectionRoute } from '../../common/route-constants'
-import {
-  getUrlQrCodeData,
-  isValidUrlQrCode,
-} from '../../components/qr-scanner/qr-code-types/qr-url'
-import urlParse from 'url-parse'
 
 describe('SMS Connection Request store', () => {
   const initialState = {}

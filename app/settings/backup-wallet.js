@@ -11,7 +11,7 @@ import { genRecoveryPhraseRoute, settingsRoute } from '../common'
 class BackupWallet extends Component<BackupWalletProps, void> {
   backupWallet = () => {
     const {
-      navigation: { navigate, state, goBack },
+      navigation: { navigate, state },
     } = this.props
     // If no there is no route, then default to Settings
     const initialRoute = get(state, 'routeName', settingsRoute)

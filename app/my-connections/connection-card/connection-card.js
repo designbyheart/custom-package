@@ -10,15 +10,12 @@ import { UnreadMessagesBadge } from '../../components'
 const ConnectionCard = (props: ConnectionCardProps) => {
   const onButtonPress = useCallback(() => {
     {
-      props.onPress(
-        props.senderName,
-        props.image,
-        props.senderDID,
-      )
+      props.onPress(props.senderName, props.image, props.senderDID)
       props.onNewConnectionSeen(props.senderDID)
     }
   }, [props])
 
+  // eslint-disable-next-line no-unused-vars
   const renderUnreadMessagesBadge = () => {
     let numberOfNewMessages = 0
     props.events.forEach((message) => {
@@ -35,7 +32,7 @@ const ConnectionCard = (props: ConnectionCardProps) => {
         />
       )
     } else {
-      return <View/>
+      return <View />
     }
   }
 
@@ -54,10 +51,14 @@ const ConnectionCard = (props: ConnectionCardProps) => {
             accessibilityLabel={`${props.senderDID}-image`}
           />
         ) : (
-          <DefaultLogo text={props.senderName} size={72} fontSize={40}/>
+          <DefaultLogo text={props.senderName} size={72} fontSize={40} />
         )}
       </View>
-      <Text style={styles.companyNameText} numberOfLines={3} ellipsizeMode="tail">
+      <Text
+        style={styles.companyNameText}
+        numberOfLines={3}
+        ellipsizeMode="tail"
+      >
         {props.senderName}
       </Text>
     </TouchableOpacity>

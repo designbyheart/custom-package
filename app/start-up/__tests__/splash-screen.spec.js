@@ -2,20 +2,13 @@
 import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
-import { Provider } from 'react-redux'
-
-import type { Store } from '../../store/type-store'
 
 import {
-  splashScreenRoute,
   homeRoute,
   waitForInvitationRoute,
   invitationRoute,
 } from '../../common/'
-import { PUSH_NOTIFICATION_SENT_CODE } from '../../api/api-constants'
-import { splashScreenScreen, SplashScreenView } from '../splash-screen'
-import { color } from '../../common/styles'
-import SplashScreen from 'react-native-splash-screen'
+import { SplashScreenView } from '../splash-screen'
 import {
   getNavigation,
   getStore,
@@ -25,7 +18,6 @@ import {
 import { DEEP_LINK_STATUS } from '../../deep-link/type-deep-link'
 
 describe('<SplashScreen />', () => {
-  const connectedSplashScreen = splashScreenScreen.screen
   function getProps(overrideProps = {}) {
     const getLock = () => {
       const { lock } = getStore().getState()
@@ -95,7 +87,7 @@ describe('<SplashScreen />', () => {
 
   it('should go To homeRoute if deepLink is empty and app was unlocked', () => {
     const { component, props } = setup()
-    const { deepLink, navigation, addPendingRedirection, lock } = props
+    const { deepLink, navigation, lock } = props
     component.update(
       <SplashScreenView
         {...props}
@@ -205,13 +197,7 @@ describe('<SplashScreen />', () => {
 
   it(`should add invitation route to pending redirection if invitation is fetched and app is locked`, () => {
     const { component, props } = setup()
-    const {
-      deepLink,
-      deepLinkProcessed,
-      addPendingRedirection,
-      lock,
-      navigation,
-    } = props
+    const { deepLink, deepLinkProcessed, addPendingRedirection, lock } = props
     const updatedDeepLink = {
       ...deepLink,
       isLoading: false,

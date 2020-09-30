@@ -56,9 +56,6 @@ target 'ConnectMe' do
 	pod 'Onfido', '16.0.0'
 	pod 'apptentive-ios', '5.2.2'
 
-	# override GoogleUtilities pod because 6.7.0 version has some errors
-	pod 'GoogleUtilities', '6.6.0'
-
 	target 'ConnectMeTests' do
         inherit! :search_paths
 	end

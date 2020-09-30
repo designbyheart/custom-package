@@ -1,5 +1,5 @@
 // @flow
-import React, { PureComponent } from 'react'
+import { PureComponent } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 

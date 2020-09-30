@@ -2,7 +2,6 @@
 import { NativeModules } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import memoize from 'lodash.memoize'
-import { call, select } from 'redux-saga/effects'
 import RNSensitiveInfo from 'react-native-sensitive-info'
 import { captureError } from './error/error-handler'
 import { customLogger } from '../store/custom-logger'
@@ -105,9 +104,7 @@ export const getHydrationItem = async (key: string) => {
     if (walletItem) {
       // put items inside secure storage in background
       // not using await syntax, because we want this in background
-      secureSet(key, walletItem)
-        .then(noop)
-        .catch(noop)
+      secureSet(key, walletItem).then(noop).catch(noop)
     }
 
     return walletItem
@@ -127,9 +124,7 @@ export const getHydrationSafeItem = async (key: string) => {
     if (walletItem) {
       // put items inside secure storage in background
       // not using await syntax, because we want this in background
-      safeSet(key, walletItem)
-        .then(noop)
-        .catch(noop)
+      safeSet(key, walletItem).then(noop).catch(noop)
     }
 
     return walletItem
@@ -174,7 +169,7 @@ export async function updateWalletItem(
   return await RNIndy.updateWalletItem(key, data)
 }
 
-export const getWalletKey = memoize(async function(): Promise<string> {
+export const getWalletKey = memoize(async function (): Promise<string> {
   try {
     let walletKey: string | null = await secureGet(WALLET_KEY)
     if (walletKey) {

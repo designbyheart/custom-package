@@ -10,7 +10,6 @@ import type {
   MatchingCredential,
 } from '../../../common/type-common'
 import type {
-  ProofRequestData,
   SelfAttestedAttributes,
   IndySelfAttested,
   ProofRequestShowStartAction,

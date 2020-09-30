@@ -1,7 +1,6 @@
 // @flow
-import { put, call, select, all } from 'redux-saga/effects'
+import { call, all } from 'redux-saga/effects'
 import walletReducer, {
-  refreshWalletHistory,
   hydrateWalletStoreSaga,
   hydrateWalletBalanceSaga,
   hydrateWalletAddressesSaga,
@@ -27,27 +26,23 @@ import walletReducer, {
   sendTokensSaga,
   tokenSentSuccess,
 } from '../wallet-store'
-import { initialTestAction } from '../../common/type-common'
 import {
   walletBalance,
   walletAddresses,
   walletHistory,
 } from '../../../__mocks__/static-data'
 import {
-  ERROR_LOADING_WALLET,
   ERROR_REFRESHING_WALLET_BALANCE,
-  STORE_STATUS,
   ERROR_BACKUP_WALLET,
   ERROR_BACKUP_WALLET_SHARE,
   ERROR_LOADING_WALLET_BALANCE,
   ERROR_LOADING_WALLET_ADDRESSES,
   ERROR_LOADING_WALLET_HISTORY,
   ERROR_REFRESHING_WALLET_ADDRESSES,
-  ERROR_REFRESHING_WALLET_HISTORY,
   ERROR_SENDING_TOKENS,
   ERROR_SENDING_TOKENS_WITH_FEES,
 } from '../type-wallet'
-import { WALLET_BALANCE, WALLET_ADDRESSES, WALLET_HISTORY } from '../../common'
+import { WALLET_BALANCE } from '../../common'
 import { getHydrationItem } from '../../services/storage'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
@@ -55,8 +50,10 @@ import {
   getLedgerFees,
   sendTokenAmount,
 } from '../../bridge/react-native-cxs/RNCxs'
-import BigNumber from 'bignumber.js'
-import { VCX_INIT_POOL_SUCCESS, VCX_INIT_SUCCESS } from '../../store/type-config-store'
+import {
+  VCX_INIT_POOL_SUCCESS,
+  VCX_INIT_SUCCESS,
+} from '../../store/type-config-store'
 
 describe('store: wallet-store: ', () => {
   let initialState

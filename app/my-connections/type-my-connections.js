@@ -1,10 +1,5 @@
 // @flow
 import type { ReactNavigation } from '../common/type-common'
-import type {
-  ConnectionStore,
-  Connection,
-} from '../store/type-connection-store'
-import type { ConnectionHistoryStore } from '../connection-history/type-connection-history'
 import type { MessageDownloadStatus } from '../store/type-config-store'
 
 export type Item = {
@@ -24,7 +19,7 @@ export type MyConnectionsState = {
   appState: ?string,
 }
 
-// TODO: Remove this afterwrds, the lint is failing for some reason.
+// TODO: Remove this afterwards, the lint is failing for some reason.
 export type HomeState = {
   appState: ?string,
 }
@@ -40,7 +35,7 @@ export type MyConnectionsProps = {
   snackError: ?string,
 } & ReactNavigation
 
-// TODO: Remove this afterwrds, the lint is failing for some reason.
+// TODO: Remove this afterwards, the lint is failing for some reason.
 export type HomeProps = {
   unSeenMessagesCount: number,
   environmentName: string,

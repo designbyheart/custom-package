@@ -1,11 +1,11 @@
 // @flow
 import React, { PureComponent } from 'react'
-import { View, Image, StyleSheet } from 'react-native'
+import { Image, StyleSheet } from 'react-native'
 
 import type { ReactNavigation } from '../common/type-common'
 
 import { Container, CustomView, CustomText, CustomButton } from '../components'
-import { isBiggerThanShortDevice, grey, color } from '../common/styles'
+import { isBiggerThanShortDevice } from '../common/styles'
 import { homeRoute, expiredTokenRoute } from '../common'
 
 class ExpiredToken extends PureComponent<ReactNavigation, void> {
