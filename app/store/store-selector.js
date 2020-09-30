@@ -190,7 +190,10 @@ export const getUniqueHistoryItem = (
   type: string
 ) => {
   const historyItems =
-    state && state.history && state.history.data && state.history.data.connections &&
+    state &&
+    state.history &&
+    state.history.data &&
+    state.history.data.connections &&
     state.history.data.connections[remoteDid]
       ? state.history.data.connections[remoteDid].data
       : []
@@ -360,11 +363,11 @@ export const getAllConnectionsPairwiseDid = (state: Store) => {
   let myPairwiseDIDs = []
 
   if (connections) {
-      Object.keys(connections).forEach((userDID) => {
-        if (connections[userDID] && connections[userDID].myPairwiseDid){
-          myPairwiseDIDs.push(userDID)
-        }
-      })
+    Object.keys(connections).forEach((userDID) => {
+      if (connections[userDID] && connections[userDID].myPairwiseDid) {
+        myPairwiseDIDs.push(userDID)
+      }
+    })
   }
   return myPairwiseDIDs
 }
@@ -583,7 +586,7 @@ export const isNewConnection = (status: string, show?: boolean) => {
 
 export const getNewMessagesCount = (state: Store) => {
   const receivedConnections: Connection[] = (getConnections(
-    state.connections.data,
+    state.connections.data
   ): any)
 
   const customFlat = (array: Array<Array<Object>>) => [].concat(...array)

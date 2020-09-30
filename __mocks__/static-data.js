@@ -15,7 +15,10 @@ import {
   CLAIM_OFFER_STATUS,
   CLAIM_REQUEST_STATUS,
 } from '../app/claim-offer/type-claim-offer'
-import { invitationAccepted, invitationReceived } from '../app/invitation/invitation-store'
+import {
+  invitationAccepted,
+  invitationReceived,
+} from '../app/invitation/invitation-store'
 import {
   claimOfferReceived,
   sendClaimRequestSuccess,
@@ -196,15 +199,16 @@ export const successConnectionData = {
       : '',
     ...(firstInvitationPayload ? firstInvitationPayload.payload : {}),
     ...myPairWiseConnectionDetails,
-    vcxSerializedConnection
+    vcxSerializedConnection,
   },
 }
 
-export const invitationAcceptedData = firstInvitationPayload ?
-  {
-    senderDID: firstInvitationPayload.payload.senderDID,
-    payload: firstInvitationPayload.payload,
-  } : {}
+export const invitationAcceptedData = firstInvitationPayload
+  ? {
+      senderDID: firstInvitationPayload.payload.senderDID,
+      payload: firstInvitationPayload.payload,
+    }
+  : {}
 
 export const claimOfferId = 'usd123'
 export const claimOfferIssueDate = 123456789
@@ -1260,7 +1264,7 @@ export function getStore(store?: Object = {}) {
           },
           inAppNotification: inAppNotificationMockData,
         },
-        store,
+        store
       )
     },
     // $FlowFixMe Don't why this is failing, may be we upgrade to flow 0.63
@@ -1277,39 +1281,39 @@ export const invitationReceivedEvent = {
 
 export const newConnectionSuccessEvent = connectionSuccess(
   successConnectionData.newConnection.senderDID,
-  successConnectionData.newConnection.identifier,
+  successConnectionData.newConnection.identifier
 )
 
 export const invitationAcceptedEvent = invitationAccepted(
   invitationAcceptedData.senderDID,
-  invitationAcceptedData.payload,
+  invitationAcceptedData.payload
 )
 
 export const claimOfferReceivedEvent = claimOfferReceived(
   claimOffer.payload,
-  claimOffer.payloadInfo,
+  claimOffer.payloadInfo
 )
 
 export const claimReceivedEvent = claimReceived(claim)
 
 export const sendClaimRequestSuccessEvent = sendClaimRequestSuccess(
   uid,
-  claimOfferPayload,
+  claimOfferPayload
 )
 
 export const claimReceivedSuccessEvent = claimStorageSuccess(
   uid,
-  claimOfferIssueDate,
+  claimOfferIssueDate
 )
 
 export const proofRequestReceivedEvent = proofRequestReceived(
   proofRequest.payload,
-  proofRequest.payloadInfo,
+  proofRequest.payloadInfo
 )
 
 export const proofRequestAutofillEvent = proofRequestAutoFill(
   proofRequestId,
-  requestedAttributes,
+  requestedAttributes
 )
 
 export const proofSharedEvent = sendProofSuccess(proofRequestId)

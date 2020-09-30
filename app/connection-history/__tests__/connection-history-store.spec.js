@@ -1,9 +1,5 @@
 // @flow
-import {
-  put,
-  call,
-  select,
-} from 'redux-saga/effects'
+import { put, call, select } from 'redux-saga/effects'
 import connectionHistoryReducer, {
   loadHistory,
   loadHistorySuccess,
@@ -18,7 +14,8 @@ import connectionHistoryReducer, {
   convertProofRequestToHistoryEvent,
   convertProofSendToHistoryEvent,
   convertSendClaimRequestSuccessToHistoryEvent,
-  deleteHistoryEvent, convertInvitationAcceptedToHistoryEvent,
+  deleteHistoryEvent,
+  convertInvitationAcceptedToHistoryEvent,
 } from '../connection-history-store'
 import { initialTestAction } from '../../common/type-common'
 import {
@@ -38,9 +35,7 @@ import {
   invitationAcceptedEvent,
 } from '../../../__mocks__/static-data'
 import { invitationAccepted } from '../../invitation/invitation-store'
-import {
-  sendClaimRequestSuccess,
-} from '../../claim-offer/claim-offer-store'
+import { sendClaimRequestSuccess } from '../../claim-offer/claim-offer-store'
 import { CLAIM_STORAGE_SUCCESS } from '../../claim/type-claim'
 import { proofRequestReceived } from '../../proof-request/proof-request-store'
 import {
@@ -55,7 +50,8 @@ import {
   getPendingHistoryEvent,
   getHistoryEvent,
   getPendingHistory,
-  getClaimReceivedHistory, getUniqueHistoryItem,
+  getClaimReceivedHistory,
+  getUniqueHistoryItem,
 } from '../../store/store-selector'
 import { getHydrationItem } from '../../services/storage'
 import {
@@ -65,9 +61,7 @@ import {
 import { RESET } from '../../common/type-common'
 import { PROOF_REQUEST_RECEIVED } from '../../proof-request/type-proof-request'
 import { CONNECTION_FAIL } from '../../store/type-connection-store'
-import {
-  defaultUUID as mockDefaultUUID,
-} from '../../../__mocks__/static-data'
+import { defaultUUID as mockDefaultUUID } from '../../../__mocks__/static-data'
 
 jest.mock('../../services/uuid', () => {
   return { uuid: () => mockDefaultUUID }
@@ -87,16 +81,17 @@ function getHistoryData() {
 
     // add history for connection accepted
     const acceptInviteEvent = convertInvitationAcceptedToHistoryEvent(
-      invitationAccepted(invitationPayload.payload.senderDID, invitationPayload.payload)
+      invitationAccepted(
+        invitationPayload.payload.senderDID,
+        invitationPayload.payload
+      )
     )
 
     sender1History.push(acceptInviteEvent)
 
     // add history for connection success
     sender1History.push(
-      convertConnectionSuccessToHistoryEvent(
-        acceptInviteEvent
-      )
+      convertConnectionSuccessToHistoryEvent(acceptInviteEvent)
     )
   }
 
@@ -198,15 +193,9 @@ describe('Store: ConnectionHistory', () => {
     )
 
     expect(gen.next().value).toEqual(
-      select(
-        getUniqueHistoryItem,
-        historyEvent.remoteDid,
-        CONNECTION_FAIL
-      )
+      select(getUniqueHistoryItem, historyEvent.remoteDid, CONNECTION_FAIL)
     )
-    expect(gen.next().value).toEqual(
-      put(recordHistoryEvent(historyEvent))
-    )
+    expect(gen.next().value).toEqual(put(recordHistoryEvent(historyEvent)))
   })
 
   it('historyEventOccurredSaga should raise success for sending claim request ', () => {

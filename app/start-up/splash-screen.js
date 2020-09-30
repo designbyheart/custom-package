@@ -232,9 +232,19 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
               }
             }
 
-            return {
-              routeName,
-              params,
+            if (routeName === homeRoute) {
+              return {
+                routeName,
+                params: {
+                  screen: homeDrawerRoute,
+                  params: params,
+                },
+              }
+            } else {
+              return {
+                routeName,
+                params,
+              }
             }
           }
         }

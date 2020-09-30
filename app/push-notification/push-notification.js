@@ -66,6 +66,8 @@ export class PushNotification extends Component<PushNotificationProps, void> {
 
       // Sets the current badge number on the app icon to zero. iOS only for now.
       PushNotificationIOS.setApplicationIconBadgeNumber(0)
+      // Removes all delivered notifications from notification center
+      PushNotificationIOS.removeAllDeliveredNotifications()
     }
 
     // When a notification is opened, the listener is invoked with the notification and the action that was invoked when it was clicked on.

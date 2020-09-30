@@ -446,7 +446,7 @@ export const applyAttributesForPresentationRequest = (
 
 export const acceptOutofbandPresentationRequest = (
   uid: string,
-  senderDid: string,
+  senderDid: string
 ): AcceptOutofbandPresentationRequestAction => ({
   type: ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   uid,
