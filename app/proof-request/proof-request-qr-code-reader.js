@@ -154,40 +154,6 @@ export async function validateOutofbandProofRequestQrCode(
   ]
 }
 
-const ariesProofRequestSchema = {
-  type: 'object',
-  properties: {
-    '@id': { type: 'string', minLength: 4, maxLength: 1024 },
-    '@type': { type: 'string', minLength: 3, maxLength: 500 },
-    'request_presentations~attach': {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          '@id': { type: 'string', minLength: 4, maxLength: 1024 },
-          'mime-type': {
-            type: 'string',
-            minLength: 3,
-            maxLength: 100,
-            enum: ['application/json'],
-          },
-          data: {
-            type: 'object',
-            properties: {
-              base64: { type: 'string', minLength: 10 },
-            },
-            required: ['base64'],
-          },
-        },
-        required: ['@id', 'data'],
-      },
-      minLength: 1,
-    },
-    comment: { type: ['null', 'string'] },
-  },
-  required: ['request_presentations~attach', '@id', '@type'],
-}
-
 const ephemeralProofRequestSchema = {
   type: 'object',
   properties: {

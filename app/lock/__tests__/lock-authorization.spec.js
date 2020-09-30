@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 import { LockAuthorization } from '../lock-authorization'
 import { getNavigation, getStore } from '../../../__mocks__/static-data'
 import { LockEnter } from '../lock-enter'
-import { BackButton } from '../../components/back-button/back-button'
 
 jest.useFakeTimers()
 

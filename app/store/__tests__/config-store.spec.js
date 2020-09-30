@@ -55,7 +55,6 @@ import {
   MESSAGE_RESPONSE_CODE,
   ERROR_HYDRATE_SWITCH_ENVIRONMENT,
   ERROR_SAVE_SWITCH_ENVIRONMENT,
-  VCX_INIT_POOL_NOT_STARTED,
   VCX_INIT_POOL_SUCCESS,
   VCX_INIT_POOL_START,
 } from '../type-config-store'
@@ -933,8 +932,7 @@ describe('config-store:saga', () => {
         ],
       },
     ]
-    const claimHandle = 12,
-      connectionHandle = 10
+    const connectionHandle = 10
     const testConnectionDetails = {
       identifier: 'WJrmbqhrKvNSK62Kxvwise',
       vcxSerializedConnection: 'vcxSerializedConnection',

@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { Image, StyleSheet, Dimensions } from 'react-native'
+import { Image, StyleSheet } from 'react-native'
 import { Container, CustomView, CustomText, Icon } from '../components'
 import { darkGray } from '../common/styles/constant'
 import { connect } from 'react-redux'

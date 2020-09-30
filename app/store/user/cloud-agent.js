@@ -94,7 +94,7 @@ export function* registerCloudAgentWithToken(
 
   let userCurrentChoice = null
   // check if we have already shown user the choice to allow push permission
-  const [_, userPreviousChoice] = yield call(
+  const [, userPreviousChoice] = yield call(
     flattenAsync(safeGet),
     previousChoiceStorageKey
   )
@@ -215,7 +215,7 @@ export function* registerCloudAgentWithToken(
   if (!notificationToken && !refreshedNotificationToken) {
     // if we don't get either notification token
     // to notification token from onRefresh, then we raise error
-    const permissionChoice = yield call(
+    yield call(
       AlertAsync,
       'Notification Error',
       'Failed to get push notification permission. Please shake you device and send logs to our customer support.',
@@ -300,6 +300,7 @@ function getFirebaseToken() {
   )
 }
 
+// eslint-disable-next-line no-unused-vars
 function showInitialPopUp({ title, text }: { title: string, text: string }) {
   return ALLOW
   // if (Platform.OS === 'android') {

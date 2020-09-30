@@ -1,11 +1,6 @@
 // @flow
 import type { ReactNavigation } from '../common/type-common'
-import type {
-  ConnectionStore,
-  Connection,
-} from '../store/type-connection-store'
 import type { PendingRedirection } from '../lock/type-lock'
-import type { ConnectionHistoryStore } from '../connection-history/type-connection-history'
 
 export type SettingsProps = {
   touchIdActive: boolean,

@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { Image, StyleSheet, Dimensions, Platform } from 'react-native'
+import { Image, StyleSheet } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Container, CustomView, CustomText, CustomButton } from '../components'
@@ -24,7 +24,6 @@ import type { RestoreProps } from './type-restore'
 import { saveFileToAppDirectory } from './restore-store'
 import type { Store } from '../store/type-store'
 import { RestoreStatus } from './type-restore'
-import { customLogger } from '../store/custom-logger'
 
 export class RestoreStartScreen extends Component<RestoreProps, void> {
   restoreBackup = () => {

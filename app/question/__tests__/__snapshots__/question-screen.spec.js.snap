@@ -1053,15 +1053,7 @@ exports[`<QuestionScreen /> should match idle state snapshot 1`] = `
             <Text
               style={
                 Object {
-                  "color": Object {
-                    "color": Array [
-                      208,
-                      8,
-                      63,
-                    ],
-                    "model": "hsl",
-                    "valpha": 1,
-                  },
+                  "color": "hsl(208, 8%, 63%)",
                   "fontSize": 18,
                   "paddingBottom": 1,
                   "paddingTop": 2,

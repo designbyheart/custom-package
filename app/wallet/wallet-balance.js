@@ -3,11 +3,10 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { View, Image } from 'react-native'
-import styles from './styles'
+import { View } from 'react-native'
 import type { WalletBalanceProps } from './type-wallet'
-import { getWalletBalance } from '../store/store-selector'
 import type { Store } from '../store/type-store'
+import { getWalletBalance } from '../store/store-selector'
 import { refreshWalletBalance } from './wallet-store'
 
 export class WalletBalance extends PureComponent<WalletBalanceProps, void> {
@@ -27,7 +26,7 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ refreshWalletBalance }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletBalance)

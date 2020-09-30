@@ -3,11 +3,9 @@ import React from 'react'
 import 'react-native'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
-import { CHECK_PIN_IDLE, CHECK_PIN_FAIL, CHECK_PIN_SUCCESS } from '../type-lock'
 import { LockEnterPin } from '../lock-enter-pin-code'
 import {
   homeRoute,
-  claimOfferRoute,
   lockPinSetupRoute,
   lockEnterPinRoute,
   lockSelectionRoute,
@@ -19,7 +17,7 @@ import {
 } from '../../../__mocks__/static-data'
 
 describe('<LockPinCodeEnter />', () => {
-  const getProps = (pinStatus = CHECK_PIN_IDLE) => ({
+  const getProps = () => ({
     existingPin: true,
     pendingRedirection,
     navigation: {
@@ -41,9 +39,10 @@ describe('<LockPinCodeEnter />', () => {
   let componentInstance
 
   const options = {
-    createNodeMock: (element) => {
+    createNodeMock: () => {
       return {
         clear: () => {
+          // eslint-disable-next-line no-unused-vars
           cleared = true
         },
       }

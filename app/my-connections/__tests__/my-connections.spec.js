@@ -10,12 +10,7 @@ import {
   GET_MESSAGES_SUCCESS,
 } from '../../store/type-config-store'
 
-import {
-  getNavigation,
-  getStore,
-  myPairWiseConnectionDetails,
-  vcxSerializedConnection,
-} from '../../../__mocks__/static-data'
+import { getNavigation, getStore } from '../../../__mocks__/static-data'
 import { MockedNavigator } from '../../../__mocks__/mock-navigator'
 
 describe('<MyConnectionsScreen />', () => {
@@ -55,20 +50,6 @@ describe('<MyConnectionsScreen />', () => {
   }
 
   function getProps() {
-    let connectionsData = {
-      '3nj819kkjywdppuje79': {
-        identifier: '3nj819kkjywdppuje79',
-        name: 'Test Connection',
-        senderDID: '70075yyojywdppuje79',
-        senderEndpoint: '34.216.340.155:3000',
-        size: 100,
-        logoUrl: 'https://logourl.com/logo.png',
-        vcxSerializedConnection,
-        publicDID: null,
-        ...myPairWiseConnectionDetails,
-      },
-    }
-
     return {
       navigation: getNavigation(),
       unSeenMessagesCount: 0,

@@ -12,20 +12,6 @@ class CredentialCard extends PureComponent<CredentialCardProps, void> {
     return dateOrMonth < 10 ? '0' + dateOrMonth : dateOrMonth
   }
   getCorrectDateLabel = (time: number) => {
-    const monthNames = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ]
     const dayNames = [
       'Monday',
       'Tuesday',

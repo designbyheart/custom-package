@@ -102,10 +102,7 @@ import {
   REFRESH_WALLET_BALANCE,
 } from '../wallet/type-wallet'
 import { SHOW_IN_APP_NOTIFICATION } from '../in-app-notification/in-app-notification-type'
-import {
-  RESTORE_SUBMIT_PASSPHRASE,
-  SAVE_FILE_TO_APP_DIRECTORY,
-} from '../restore/type-restore'
+import { RESTORE_SUBMIT_PASSPHRASE } from '../restore/type-restore'
 import { RESTORE_CLOUD_SUBMIT_PASSPHRASE } from '../cloud-restore/cloud-restore-type'
 import { HYDRATE_CLAIM_MAP_FAIL } from '../connection-details/components/types/type-details-claim'
 import { ERROR_SEND_PROOF } from '../connection-details/components/types/type-details-proof'
@@ -378,7 +375,7 @@ export const customLogger = {
         .then(() => {
           //console.log('Wrote log message ' + recordAsString + ' to log file: ', rotatingLog)
         })
-        .catch((error) => {
+        .catch(() => {
           console.error(
             'Error writing log message ' + recordAsString + ' to log file: ',
             rotatingLog

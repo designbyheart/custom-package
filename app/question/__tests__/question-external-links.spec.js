@@ -77,7 +77,7 @@ describe('fn:getExternalLinkValidity', () => {
 
     // $FlowFixMe
     const emptyObjectLinkValidation = getExternalLinkValidity([{}])
-    expect(arrayLinkValidation).toMatchSnapshot()
+    expect(emptyObjectLinkValidation).toMatchSnapshot()
 
     // $FlowFixMe
     const otherPropObjectLinkValidation = getExternalLinkValidity([{ text: 1 }])
@@ -129,10 +129,7 @@ describe('<QuestionExternalLinks />', () => {
 
   it('should render MAX_EXTERNAL_LINKS_TO_SHOW links if more than limit is passed', () => {
     const { snapshot, instance } = setup({
-      externalLinks: Array.from(
-        { length: 40 },
-        (value, index: number) => mockExternalLink
-      ),
+      externalLinks: Array.from({ length: 40 }, () => mockExternalLink),
     })
     expect(snapshot).toMatchSnapshot()
 

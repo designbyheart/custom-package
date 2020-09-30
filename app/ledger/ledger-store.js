@@ -1,6 +1,6 @@
 // @flow
 
-import { put, take, all, call, select, takeLeading } from 'redux-saga/effects'
+import { put, all, call, takeLeading } from 'redux-saga/effects'
 import moment from 'moment'
 
 import type {

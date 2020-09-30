@@ -23,9 +23,6 @@ import { colors } from '../common/styles/constant'
 import { UNLOCKING_APP_WAIT_MESSAGE } from '../common/message-constants'
 import { unlockApp } from './lock-store'
 import { View, Keyboard, Platform, StyleSheet } from 'react-native'
-import { Container, CustomView } from '../components/layout'
-import SvgCustomIcon from '../components/svg-custom-icon'
-import { moderateScale } from 'react-native-size-matters'
 import { Header } from '../components'
 
 export class LockEnterPin extends PureComponent<
@@ -158,7 +155,7 @@ export class LockEnterPin extends PureComponent<
   }
 
   render() {
-    const { isFetchingInvitation, route, navigation, inRecovery } = this.props
+    const { isFetchingInvitation, route, inRecovery } = this.props
     let fromRecovery = false
     if (route) {
       fromRecovery =
@@ -202,10 +199,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (
-  state: Store,
-  { navigation, route }: ReactNavigation
-) => ({
+const mapStateToProps = (state: Store, { route }: ReactNavigation) => ({
   pendingRedirection: state.lock.pendingRedirection,
   isFetchingInvitation: Object.keys(state.smsPendingInvitation).some(
     (smsToken) =>

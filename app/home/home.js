@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import moment from 'moment'
-import { StyleSheet, View, FlatList, Dimensions } from 'react-native'
+import { StyleSheet, View, FlatList } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { moderateScale } from 'react-native-size-matters'
 import { connect } from 'react-redux'
@@ -10,7 +10,6 @@ import Snackbar from 'react-native-snackbar'
 import type { Store } from '../store/type-store'
 import type { HomeProps } from './type-home'
 import type { Connection } from '../store/type-connection-store'
-import type { ReactNavigation } from '../common/type-common'
 
 import { HISTORY_EVENT_STATUS } from '../connection-history/type-connection-history'
 import { HomeHeader, CameraButton } from '../components'
@@ -20,7 +19,6 @@ import {
   proofRequestRoute,
   claimOfferRoute,
   questionRoute,
-  pushNotificationPermissionRoute,
 } from '../common'
 import {
   getConnections,
@@ -36,7 +34,7 @@ import {
   SERVER_ENVIRONMENT,
   GET_MESSAGES_LOADING,
 } from '../store/type-config-store'
-import { colors, fontFamily } from '../common/styles/constant'
+import { colors } from '../common/styles/constant'
 import { NewBannerCard } from './new-banner-card/new-banner-card'
 import { RecentCard } from './recent-card/recent-card'
 import { RecentCardSeparator } from './recent-card-separator'
@@ -45,20 +43,14 @@ import {
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,
 } from '../claim-offer/type-claim-offer'
-import { CONNECTION_INVITE_TYPES, INVITATION_ACCEPTED } from '../invitation/type-invitation'
+import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
 import type { AriesOutOfBandInvite } from '../invitation/type-invitation'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 import { MESSAGE_TYPE } from '../api/api-constants'
 import { CONNECTION_ALREADY_EXIST } from '../connection-details/type-connection-details'
-import { CONNECTION_FAIL } from '../store/type-connection-store'
-import { PROOF_REQUEST_ACCEPTED } from '../proof-request/type-proof-request'
 
 export class HomeScreen extends Component<HomeProps, void> {
   unsubscribe = null
-
-  static navigationOptions = ({ navigation }: ReactNavigation) => ({
-    header: null,
-  })
 
   showSnackBar = () => {
     const showExistingConnectionSnack =
@@ -242,8 +234,7 @@ export class HomeScreen extends Component<HomeProps, void> {
       statusMessage = `You connected with "${issuerName}".`
     else if (status === HISTORY_EVENT_STATUS.INVITATION_ACCEPTED) {
       statusMessage = `Making secure connection...`
-    }
-    else if (status === HISTORY_EVENT_STATUS.CONNECTION_FAIL)
+    } else if (status === HISTORY_EVENT_STATUS.CONNECTION_FAIL)
       statusMessage = `Failed to make secure connection`
     else if (status === HISTORY_EVENT_STATUS.CLAIM_STORAGE_SUCCESS)
       statusMessage = `You have been issued a "${action}".`
@@ -276,9 +267,7 @@ export class HomeScreen extends Component<HomeProps, void> {
       status === PAID_CREDENTIAL_REQUEST_FAIL
     )
       statusMessage = `Failed to accept "${action}"`
-    else if (
-      status === HISTORY_EVENT_STATUS.PROOF_REQUEST_ACCEPTED
-    )
+    else if (status === HISTORY_EVENT_STATUS.PROOF_REQUEST_ACCEPTED)
       statusMessage = `Sending...`
     else if (status === UPDATE_ATTRIBUTE_CLAIM) statusMessage = `Sending...`
     else if (status === ERROR_SEND_PROOF)
@@ -422,7 +411,7 @@ const mapStateToProps = (state: Store) => {
 
   // TODO: Replace this with flatMap when we update flow-bin
   const placeholderArray = []
-  const connections = allConnections.map((connection, index) => {
+  const connections = allConnections.map((connection) => {
     const connectionHistory =
       (state.history.data &&
         state.history.data.connections &&
@@ -433,7 +422,7 @@ const mapStateToProps = (state: Store) => {
     const timestamp = connection.timestamp
 
     const filteredEvents = timestamp
-        ? connectionHistory.filter(
+      ? connectionHistory.filter(
           (event) => new Date(event.timestamp) >= new Date(timestamp)
         )
       : connectionHistory.slice()
@@ -490,8 +479,6 @@ export const homeScreen = {
   routeName: homeDrawerRoute, // --> This route name needs to be homeDrawerRoute, because homeRoute is the name of the entire DrawerNavigator.
   screen: connect(mapStateToProps, mapDispatchToProps)(HomeScreen),
 }
-
-const { height } = Dimensions.get('screen')
 
 const styles = StyleSheet.create({
   outerContainer: {

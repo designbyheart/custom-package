@@ -248,15 +248,7 @@ exports[`<LockSetupSuccess /> should display Loading while fetching the invitati
           <Text
             style={
               Object {
-                "color": Object {
-                  "color": Array [
-                    208,
-                    8,
-                    63,
-                  ],
-                  "model": "hsl",
-                  "valpha": 1,
-                },
+                "color": "hsl(208, 8%, 63%)",
                 "fontSize": 18,
                 "paddingBottom": 1,
                 "paddingTop": 2,
@@ -471,7 +463,7 @@ exports[`<LockSetupSuccess /> should render Lock setup success Screen 1`] = `
           "borderRadius": 3,
           "marginLeft": 0,
           "marginRight": 0,
-          "overflow": "hidden",
+          "overflow": "visible",
           "shadowColor": "rgba(0,0,0, .4)",
           "shadowOffset": Object {
             "height": 1,

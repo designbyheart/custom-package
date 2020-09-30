@@ -55,9 +55,9 @@ exports[`<MyConnectionsScreen /> should render MyConnections and redirect user t
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,
@@ -910,9 +910,9 @@ exports[`<MyConnectionsScreen /> should render MyConnections and show introducto
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,

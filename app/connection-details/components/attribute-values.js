@@ -44,7 +44,7 @@ const AttributeValues = ({
       isSelected(item, params.selectedClaims)
     )
   )
-  const [data, _] = useState(prepareCredentials(params.items, params.claimMap))
+  const [data] = useState(prepareCredentials(params.items, params.claimMap))
 
   const hideModal = useCallback(() => {
     goBack(null)

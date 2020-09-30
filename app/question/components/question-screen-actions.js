@@ -1,17 +1,11 @@
 // @flow
 
-import React, { Component, useCallback } from 'react'
+import React, { useCallback } from 'react'
 
 import type { QuestionResponse, QuestionStoreMessage } from '../type-question'
 
 import { CustomView, CustomButton } from '../../components'
-import {
-  TEXT_IGNORE,
-  TEXT_SUBMIT,
-  TEXT_CANCEL,
-  TEXT_TRY_AGAIN,
-  TEXT_OK,
-} from '../type-question'
+import { TEXT_SUBMIT, TEXT_TRY_AGAIN, TEXT_OK } from '../type-question'
 import { getScreenStatus } from '../question-store'
 import {
   questionActionButtonDefaultProps,
@@ -19,7 +13,7 @@ import {
   disabledStyle,
 } from '../question-screen-style'
 
-import { isSmallWidthDevice, cmRed } from '../../common/styles'
+import { isSmallWidthDevice } from '../../common/styles'
 
 export const QuestionActions = ({
   question,
@@ -34,14 +28,12 @@ export const QuestionActions = ({
   }
   const { valid_responses: responses } = question.payload
 
-  let cancelButtonTitle = TEXT_IGNORE
   let submitButtonTitle = TEXT_SUBMIT
 
   const { error, success, idle } = getScreenStatus(
     question ? question.status : undefined
   )
   if (error) {
-    cancelButtonTitle = TEXT_CANCEL
     submitButtonTitle = TEXT_TRY_AGAIN
   }
 

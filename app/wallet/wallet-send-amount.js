@@ -193,7 +193,7 @@ class WalletSendAmount extends Component<
     })
   }
 
-  handleTabPress = (onPressEvent, navEvent) => {
+  handleTabPress = () => {
     if (!this.props.alreadySignedAgreement || this.props.thereIsANewAgreement) {
       this.props.screenProps.navigation.navigate(txnAuthorAgreementRoute)
     }

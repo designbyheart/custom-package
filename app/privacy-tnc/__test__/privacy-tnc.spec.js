@@ -2,7 +2,6 @@
 import 'react-native'
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { Provider } from 'react-redux'
 import { PrivacyTNC } from '../privacy-tnc-screen'
 import { getNavigation } from '../../../__mocks__/static-data'
 

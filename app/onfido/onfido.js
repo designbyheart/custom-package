@@ -10,7 +10,6 @@ import type {
   OnfidoProps,
   OnfidoProcessStatus,
   OnfidoConnectionStatus,
-  OnfidoNavigation,
 } from './type-onfido'
 import type { ReactNavigation } from '../common/type-common'
 
@@ -22,14 +21,13 @@ import {
   Loader,
 } from '../components'
 import { launchOnfidoSDK, resetOnfidoStatues } from './onfido-store'
-import { white, color, toryBlue, barStyleDark } from '../common/styles'
+import { white, toryBlue } from '../common/styles'
 import {
   onfidoProcessStatus,
   onfidoConnectionStatus,
   TEXT_ONFIDO_SUCCESS_FIRST_PARAGRAPH,
   TEXT_ONFIDO_SUCCESS_TITLE,
   TEXT_ONFIDO_SUCCESS_SECOND_PARAGRAPH,
-  TEXT_ONFIDO_DEFAULT,
   TEXT_ONFIDO_YES,
   TEXT_ONFIDO_OK,
   TEXT_ONFIDO_I_ACCEPT,

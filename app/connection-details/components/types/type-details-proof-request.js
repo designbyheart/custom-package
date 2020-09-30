@@ -2,14 +2,12 @@
 import { INITIAL_TEST_ACTION } from '../../../common/type-common'
 import type {
   CustomError,
-  GenericObject,
   MessageAnnotation,
   TopicAnnotation,
   ReactNavigation,
   GenericStringObject,
   ResetAction,
   ImageSource,
-  NotificationPayload,
   RequestedAttrsJson,
 } from '../../../common/type-common'
 import type {

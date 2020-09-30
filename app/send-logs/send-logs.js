@@ -1,13 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  Platform,
-  Alert,
-  Dimensions,
-  PermissionsAndroid,
-} from 'react-native'
+import { StyleSheet, Platform, Alert, PermissionsAndroid } from 'react-native'
 import { connect } from 'react-redux'
 
 import type { SendLogsProps } from './type-send-logs'
@@ -28,9 +22,6 @@ import {
 import store from '../store'
 import { BackButton } from '../components/back-button/back-button'
 import { headerNavigationOptions } from '../navigation/navigation-header-config'
-
-const width = Dimensions.get('window').width //full width
-const height = Dimensions.get('window').height //full height
 
 export class SendLogs extends Component<SendLogsProps, any> {
   constructor(props: SendLogsProps) {
@@ -221,7 +212,7 @@ const buttonColor = {
 export const sendLogsScreen = {
   routeName: sendLogsRoute,
   screen: connect(mapStateToProps)(SendLogs),
-  options({ navigation }: *) {
+  options() {
     return headerNavigationOptions({
       title: 'Send logs',
       headerLeft: () => {

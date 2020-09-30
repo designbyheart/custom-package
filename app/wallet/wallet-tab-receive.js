@@ -23,13 +23,12 @@ import { promptBackupBanner } from '../backup/backup-store'
 import { STORE_STATUS } from './type-wallet'
 import { walletRoute } from '../common'
 import { RECEIVE_TAB, RECEIVE_TAB_TEST_ID } from './wallet-constants'
-import { convertClaimOfferToHistoryEvent } from '../connection-history/connection-history-store'
 
 export class WalletTabReceive extends PureComponent<
   WalletTabReceiveProps,
   WalletTabReceiveState
 > {
-  static navigationOptions = (navEvent: any) => ({
+  static navigationOptions = () => ({
     tabBarLabel: RECEIVE_TAB,
     tabBarTestIDProps: {
       testID: RECEIVE_TAB_TEST_ID,
@@ -196,7 +195,7 @@ const mapStateToProps = (state: Store) => {
   }
 }
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ promptBackupBanner, refreshWalletAddresses }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletTabReceive)

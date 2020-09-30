@@ -3,13 +3,11 @@ import React, { Component } from 'react'
 import { StyleSheet, Keyboard, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createStackNavigator } from '@react-navigation/stack'
 import { scale } from 'react-native-size-matters'
 import {
   Container,
   CustomText,
   CustomView,
-  CustomButton,
   CustomHeader,
   Icon,
   Loader,
@@ -36,17 +34,13 @@ import { formatNumbers } from '../components/text'
 import { receiveTabRoute } from '../common'
 import {
   SEND_TOKENS_TO_PAYMENT_ADDRESS,
-  FOR_SEND_DETAILS_TEST_ID,
-  TO_SEND_DETAILS_TEST_ID,
   FONT_SIZE_MAPPING,
 } from './wallet-constants'
 import { sendTokens } from '../wallet/wallet-store'
-import { getWalletAddresses, getTokenAmount } from '../store/store-selector'
+import { getTokenAmount } from '../store/store-selector'
 import type { Store } from '../store/type-store'
 import { STORE_STATUS } from './type-wallet'
 import { CREDENTIAL_OFFER_MODAL_STATUS } from '../claim-offer/type-claim-offer'
-import Modal from 'react-native-modal'
-import PaymentFailureModal from './payment-failure-modal'
 import CredentialOfferModal from './credential-offer-modal'
 import { withStatusBar } from '../components/status-bar/status-bar'
 
@@ -389,8 +383,6 @@ const mapStateToProps = (state: Store) => ({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({ sendTokens }, dispatch)
 
-// TODO:KS Remove this createStackNavigator
-// to remove all nested stack navigators
 export const walletTabsScreen = {
   routeName: 'WalletTabSendDetails',
   screen: withStatusBar({ color: whiteSmokeSecondary })(

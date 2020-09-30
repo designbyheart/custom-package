@@ -7,7 +7,6 @@ import type {
   ResetAction,
   NotificationPayload,
 } from '../../../common/type-common'
-import type { ClaimPushPayload } from '../../../push-notification/type-push-notification'
 
 export type Claim = {
   messageId: string,

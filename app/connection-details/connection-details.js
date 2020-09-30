@@ -274,8 +274,7 @@ export class ConnectionDetails extends Component<
           content={'PREPARING PROOF - PLEASE WAIT'}
         />
       )
-    }
-    else if (
+    } else if (
       item.action === DENY_PROOF_REQUEST_SUCCESS ||
       item.action === DENY_CLAIM_OFFER_SUCCESS
     ) {
@@ -330,9 +329,7 @@ export class ConnectionDetails extends Component<
           showButtons={false}
         />
       )
-    } else if (
-      item.action === INVITATION_ACCEPTED
-    ) {
+    } else if (item.action === INVITATION_ACCEPTED) {
       return (
         <ConnectionPending
           date={formattedTime}
@@ -340,9 +337,7 @@ export class ConnectionDetails extends Component<
           content={'CONNECTING - PLEASE WAIT'}
         />
       )
-    } else if (
-      item.action === CONNECTION_FAIL
-    ) {
+    } else if (item.action === CONNECTION_FAIL) {
       return (
         <ConnectionCard
           messageDate={formattedTime}
@@ -394,7 +389,6 @@ export class ConnectionDetails extends Component<
   render() {
     if (this.props.route) {
       const { activeConnectionThemePrimary, connectionHistory } = this.props
-      const testID = 'connection-history'
 
       return (
         <View style={styles.container}>
@@ -436,10 +430,13 @@ export class ConnectionDetails extends Component<
 }
 
 const mapStateToProps = (state: Store, props: ConnectionHistoryNavigation) => {
-  const connection: any = state.connections && state.connections.data ?
-    Object.values(state.connections.data)
-      .find(((connection: any) => connection.senderDID === props.route.params.senderDID)) :
-    undefined
+  const connection: any =
+    state.connections && state.connections.data
+      ? Object.values(state.connections.data).find(
+          (connection: any) =>
+            connection.senderDID === props.route.params.senderDID
+        )
+      : undefined
 
   const timestamp = connection ? connection.timestamp : null
 

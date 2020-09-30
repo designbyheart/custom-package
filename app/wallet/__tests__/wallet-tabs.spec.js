@@ -2,7 +2,6 @@
 
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { walletRoute } from '../../common'
 import { getNavigation } from '../../../__mocks__/static-data'
 import WalletTabs from '../wallet-tabs'
 

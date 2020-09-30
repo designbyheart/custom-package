@@ -25,7 +25,6 @@ import { vcxInitStart } from '../store/route-store'
 export const EulaScreen = ({
   dispatch,
   navigation,
-  route,
 }: ReactNavigation & ReduxConnect) => {
   const [error, setError] = useState<CustomError | null>(null)
   const onReject = useCallback(() => {

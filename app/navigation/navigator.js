@@ -68,8 +68,6 @@ import {
   credentialsDrawerRoute,
   homeDrawerRoute,
   settingsDrawerRoute,
-  pushNotificationPermissionRoute,
-  lockPinSetupHomeRoute,
 } from '../common'
 import { walletTabsScreen } from '../wallet/wallet-tab-send-details'
 import { checkIfAnimationToUse } from '../bridge/react-native-cxs/RNCxs'
@@ -83,7 +81,7 @@ import {
 import { colors, fontFamily } from '../common/styles/constant'
 import { UserAvatar, Avatar, UnreadMessagesBadge } from '../components'
 import { unreadMessageContainerCommonStyle } from '../components/unread-messages-badge/unread-messages-badge'
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 import { startUpScreen } from '../start-up/start-up-screen'
 import useBackHandler from '../hooks/use-back-handler'
 import { CustomValuesScreen } from '../connection-details/components/custom-values'

@@ -17,7 +17,6 @@ import type {
   LaunchOnfidoSDKAction,
   OnfidoProcessStatus,
   OnfidoConnectionStatus,
-  UpdateOnfidoProcessStatusAction,
 } from './type-onfido'
 import type { CustomError, GenericObject } from '../common/type-common'
 import type { Store } from '../store/type-store'
@@ -333,7 +332,7 @@ export function* makeConnectionWithOnfidoSaga(
         onfidoConnectionStatus.CONNECTION_IN_PROGRESS
       )
     )
-    const { success, fail } = yield race({
+    const { fail } = yield race({
       success: take(NEW_CONNECTION_SUCCESS),
       fail: take(INVITATION_RESPONSE_FAIL),
     })

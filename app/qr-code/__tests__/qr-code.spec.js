@@ -3,13 +3,12 @@ import React from 'react'
 import 'react-native'
 import { Alert } from 'react-native'
 import renderer from 'react-test-renderer'
-import { RNCamera } from 'react-native-camera'
+
 import { qrCodeScannerTabRoute, invitationRoute } from '../../common/'
 import { QRCodeScannerScreen, convertQrCodeToInvitation } from '../qr-code'
 import {
   getNavigation,
   qrData,
-  environmentSwitchQrCodeData,
   validQrCodeEnvironmentSwitchUrl,
 } from '../../../__mocks__/static-data'
 
@@ -60,7 +59,6 @@ describe('<QRScannerScreen />', () => {
   it('should redirect user to invitation screen on success read', () => {
     const {
       instance,
-      component,
       props: { invitationReceived, navigation },
     } = setup()
 
@@ -76,22 +74,9 @@ describe('<QRScannerScreen />', () => {
   })
 
   it('should navigate back to home if qr code scanner is closed', () => {
-    const { instance, component, props } = setup()
+    const { instance, props } = setup()
     instance.onClose()
     expect(props.navigation.goBack).toHaveBeenCalledWith(null)
-  })
-
-  it('check camera permission screen is updated', () => {
-    const { instance, props, component } = setup()
-
-    const updatedComponent = (
-      <QRCodeScannerScreen
-        {...props}
-        {...{ currentScreen: qrCodeScannerTabRoute }}
-      />
-    )
-
-    // component.update(updatedComponent)
   })
 
   // skipping this test because as of now this code is commented and not used
@@ -99,11 +84,9 @@ describe('<QRScannerScreen />', () => {
       trigger action when Switch is clicked,
       and redirect to home tab`, () => {
     const {
-      instance,
-      component,
       props: {
         changeEnvironmentUrl,
-        navigation: { navigate, goBack },
+        navigation: { goBack },
       },
     } = setup()
     const alertSpy = jest.spyOn(Alert, 'alert')

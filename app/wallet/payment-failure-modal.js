@@ -12,13 +12,9 @@ import {
   OFFSET_1X,
   OFFSET_2X,
   OFFSET_3X,
-  OFFSET_6X,
-  OFFSET_7X,
   color,
   HAIRLINE_WIDTH,
-  whiteSmoke,
 } from '../common/styles/constant'
-import Modal from 'react-native-modal'
 
 type PaymentFailureModalProps = {
   testID: string,
@@ -66,9 +62,7 @@ export default class PaymentFailureModal extends PureComponent<
             demiBold
             testID={`${testID}-modal-content`}
           >
-            {`Something went wrong trying to pay ${
-              this.props.connectionName
-            }. Please try again.`}
+            {`Something went wrong trying to pay ${this.props.connectionName}. Please try again.`}
           </CustomText>
         </CustomView>
         <CustomView row>

@@ -4,7 +4,6 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import { LockEnterFingerprint } from '../lock-enter-fingerprint'
-import { homeRoute, claimOfferRoute } from '../../common'
 import {
   getNavigation,
   pendingRedirection,
@@ -23,18 +22,6 @@ function props() {
     },
     route: {},
   }
-}
-
-const store = {
-  getState() {
-    return jest.fn()
-  },
-  subscribe() {
-    return jest.fn()
-  },
-  dispatch() {
-    return jest.fn()
-  },
 }
 
 describe('app lock selection page should', () => {

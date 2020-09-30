@@ -1,11 +1,8 @@
 // @flow
-import { put, call } from 'redux-saga/effects'
+import { call } from 'redux-saga/effects'
 import type { LockStore } from '../type-lock'
 import {
-  SET_PIN,
-  CHECK_PIN,
   CHECK_PIN_IDLE,
-  LOCK_ENABLE,
   PIN_ENABLED_KEY,
   IN_RECOVERY,
   PIN_HASH,
@@ -26,16 +23,13 @@ import lockReducer, {
 } from '../lock-store'
 import {
   secureSet,
-  secureGet,
   safeSet,
   safeGet,
   getHydrationItem,
 } from '../../services/storage'
 import { generateSalt, pinHash } from '../pin-hash'
-import { VCX_INIT_SUCCESS } from '../../store/type-config-store'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
-import { throwError } from 'redux-saga-test-plan/providers'
 import { configStoreHydratedInstalledVcxInitSuccess } from '../../../__mocks__/data/config-store-mock-data'
 
 const initialState: LockStore = {

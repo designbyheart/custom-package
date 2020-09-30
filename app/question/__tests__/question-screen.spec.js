@@ -89,7 +89,7 @@ describe('<QuestionScreen />', () => {
   })
 
   it('success button should be disabled if no answer is selected', () => {
-    const { component, props } = setup({
+    const { component } = setup({
       status: QUESTION_STATUS.SEEN,
     })
     const submitButton = component.root.findByProps({ title: TEXT_SUBMIT })

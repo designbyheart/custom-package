@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, PureComponent } from 'react'
+import React, { Component } from 'react'
 import EnterPassphrase from '../components/backup-restore-passphrase/backup-restore-passphrase'
 import { color } from '../common/styles/constant'
 import { restorePassphraseRoute, restoreWaitRoute } from '../common'

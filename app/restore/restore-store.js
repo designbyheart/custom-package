@@ -13,7 +13,6 @@ import {
 } from 'redux-saga/effects'
 import RNFetchBlob from 'rn-fetch-blob'
 
-import type { Store } from '../store/type-store.js'
 import type { CustomError } from '../common/type-common'
 import type {
   SaveToAppDirectory,
@@ -35,23 +34,15 @@ import {
   FILE_SAVE_ERROR_MESSAGE,
   DECRYPT_FAILED_MESSAGE,
   RESTORE_RESET,
-  RESTORE_DATA_FAILED_MESSAGE,
 } from './type-restore'
 import { WALLET_FILE_NAME } from '../backup/type-backup'
-import {
-  LAST_SUCCESSFUL_BACKUP,
-  LAST_SUCCESSFUL_CLOUD_BACKUP,
-  PASSPHRASE_SALT_STORAGE_KEY,
-  PASSPHRASE_STORAGE_KEY,
-  WALLET_KEY,
-} from '../common/secure-storage-constants'
+import { PASSPHRASE_SALT_STORAGE_KEY } from '../common/secure-storage-constants'
 import { getRestoreStatus, getRestoreFileName } from '../store/store-selector'
 import { pinHash as generateKey, generateSalt } from '../lock/pin-hash'
-import { safeToDownloadSmsInvitation } from '../sms-pending-invitation/sms-pending-invitation-store'
 import { Platform } from 'react-native'
 import { hydrate, hydrateNonReduxData } from '../store/hydration-store'
 import { pushNotificationPermissionAction } from '../push-notification/push-notification-store'
-import { safeGet, safeSet, walletSet } from '../services/storage'
+import { safeSet, walletSet } from '../services/storage'
 import { PIN_ENABLED_KEY, IN_RECOVERY } from '../lock/type-lock'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'

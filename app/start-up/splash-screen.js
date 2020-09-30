@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { Alert, View } from 'react-native'
+import { Alert } from 'react-native'
 import { bindActionCreators } from 'redux'
 import SplashScreen from 'react-native-splash-screen'
 import {
@@ -13,17 +13,11 @@ import {
   lockEnterFingerprintRoute,
   invitationRoute,
   waitForInvitationRoute,
-  eulaRoute,
-  restoreRoute,
   homeDrawerRoute,
-  connectionHistRoute,
   startUpRoute,
 } from '../common/route-constants'
 import { Container, Loader } from '../components'
-import {
-  TOKEN_EXPIRED_CODE,
-  PENDING_CONNECTION_REQUEST_CODE,
-} from '../api/api-constants'
+import { TOKEN_EXPIRED_CODE } from '../api/api-constants'
 import { addPendingRedirection } from '../lock/lock-store'
 import {
   getSmsPendingInvitation,
@@ -132,8 +126,6 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
   }
 
   handleSmsPendingInvitations = (prevProps: SplashScreenProps) => {
-    const nextDeepLinkTokens = this.props.deepLink.tokens
-
     // Check if the pending sms invitations have changed, or if there is unhandled sms invitations to proceed
     if (
       JSON.stringify(prevProps.smsPendingInvitation) !==
@@ -274,7 +266,6 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
       // we did not get any token and deepLink data loading is done
       this.redirect(this.props, homeRoute)
     }
-
     this.ifDeepLinkFoundGoToWaitForInvitationScreenNFetchInvitation(prevProps)
     this.handleSmsPendingInvitations(prevProps)
   }

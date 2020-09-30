@@ -41,7 +41,6 @@ import {
   CLAIM_OFFER_ACCEPTED,
   CLAIM_OFFER_IGNORED,
   CLAIM_OFFER_REJECTED,
-  SEND_CLAIM_REQUEST,
   SEND_CLAIM_REQUEST_SUCCESS,
 } from './components/types/type-details-claim-offer'
 import { CLAIM_STORAGE_SUCCESS } from './components/types/type-details-claim'
@@ -59,7 +58,10 @@ import {
 import { sendConnectionRedirect } from '../store/connections-store'
 import { DELETE_CLAIM_SUCCESS } from '../claim/type-claim'
 import { sendConnectionReuse } from '../store/connections-store'
-import { CONNECTION_FAIL, NEW_CONNECTION_SUCCESS } from '../store/type-connection-store'
+import {
+  CONNECTION_FAIL,
+  NEW_CONNECTION_SUCCESS,
+} from '../store/type-connection-store'
 
 export const HISTORY_EVENT_STATUS = {
   [INVITATION_RECEIVED]: 'CONNECTION REQUEST',

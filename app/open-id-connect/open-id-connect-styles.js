@@ -1,10 +1,10 @@
 // @flow
 
-import { StyleSheet, Dimensions, Platform } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import { font, color, cmRed } from '../common/styles'
 
 const { height } = Dimensions.get('window')
-const CONTENT_CONTAINER_HEIGHT = height * 30 / 100 // keep content height at 30%
+const CONTENT_CONTAINER_HEIGHT = (height * 30) / 100 // keep content height at 30%
 
 export const openIdStyles = StyleSheet.create({
   screenContainer: {

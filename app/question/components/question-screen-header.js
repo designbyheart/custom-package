@@ -1,8 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react'
 
-import type { ReactNavigation } from '../../common/type-common'
-
 import { Container, CustomView } from '../../components'
 import { questionStyles } from '../question-screen-style'
 

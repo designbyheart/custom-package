@@ -15,9 +15,7 @@ import user, { watchUserStore } from './user/user-store'
 import pushNotification, {
   watchPushNotification,
 } from '../push-notification/push-notification-store'
-import connections, {
-  watchConnection,
-} from './connections-store'
+import connections, { watchConnection } from './connections-store'
 import config, { watchConfig, watchGetMessagesSaga } from './config-store'
 import deepLink from '../deep-link/deep-link-store'
 import route from './route-store'
@@ -114,6 +112,7 @@ let middlewares = [historyRecorder, automaticCloudBackup]
 
 // "Error", "Warning", "Info", "Debug", "Trace"
 customLogger.init('debug')
+// eslint-disable-next-line no-unused-vars
 let reduxLogger = createLogger({
   logger: customLogger,
   stateTransformer: PiiHiddenTransformer,

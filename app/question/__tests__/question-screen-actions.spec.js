@@ -77,7 +77,6 @@ describe('<QuestionActions />', () => {
 
     it('should call onPress with response for each button that is clicked', () => {
       const { component, props } = setup()
-      const { question }: QuestionActionProps = props
       if (props.question) {
         props.question.payload.valid_responses.map(
           (response: QuestionResponse) => {

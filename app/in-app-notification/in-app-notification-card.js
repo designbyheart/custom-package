@@ -14,7 +14,7 @@ import type { NotificationCardProps } from './in-app-notification-type'
 import type { Store } from '../store/type-store'
 
 import { Avatar } from '../components/avatar/avatar'
-import { color, colors, fontFamily, fontSizes } from '../common/styles/constant'
+import { colors, fontFamily, fontSizes } from '../common/styles/constant'
 import { scheduleClearInAppNotification } from './in-app-notification-actions'
 import { connectionHistRoute } from '../common'
 import { verticalScale, moderateScale } from 'react-native-size-matters'

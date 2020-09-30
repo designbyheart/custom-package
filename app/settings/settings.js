@@ -9,7 +9,6 @@ import {
   ScrollView,
   Image,
   View,
-  Dimensions,
 } from 'react-native'
 import * as RNLocalize from 'react-native-localize'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
@@ -18,14 +17,7 @@ import moment from 'moment'
 import { ListItem } from 'react-native-elements'
 import get from 'lodash.get'
 
-import {
-  UserAvatar,
-  CustomText,
-  Icon,
-  Avatar,
-  HomeHeader,
-  CameraButton,
-} from '../components'
+import { CustomText, HomeHeader, CameraButton } from '../components'
 import { CustomView, Container } from '../components/layout'
 import {
   cloudBackupRoute,
@@ -87,10 +79,6 @@ import {
   SAVE_ICON,
   BACKUP_ICON,
 } from '../common/icons'
-
-// Use this variable to show/hide token amount
-// if we just comment out code, then we need to adjust other styles as well
-const hideTokenScreen = true
 
 // Hate to put below logic for height and padding calculations here.
 // Ideally, these things should automatically adjusted by flex

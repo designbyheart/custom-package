@@ -62,7 +62,6 @@ import {
   NEW_CONNECTION_SUCCESS,
   NEW_PENDING_CONNECTION,
   UPDATE_CONNECTION,
-  connectionFail,
 } from './type-connection-store'
 import {
   deleteConnection,
@@ -230,7 +229,7 @@ export function* watchDeleteConnectionOccurred(): any {
   yield takeLatest(DELETE_CONNECTION, deleteConnectionOccurredSaga)
 }
 
-export function* loadNewConnectionSaga(_: GenericObject): Generator<*, *, *> {
+export function* loadNewConnectionSaga(): Generator<*, *, *> {
   try {
     yield put(promptBackupBanner(true))
     yield* persistConnections()

@@ -42,9 +42,7 @@ import {
 } from '../../claim-offer/type-claim-offer'
 import { animateLayout } from '../../common/layout-animation'
 import { colors } from '../../common/styles/constant'
-import {
-  acceptOutOfBandInvitation,
-} from '../../invitation/invitation-store'
+import { acceptOutOfBandInvitation } from '../../invitation/invitation-store'
 
 export class ClaimOfferModal extends Component<any, *> {
   constructor(props: any) {
@@ -304,7 +302,7 @@ export class ClaimOfferModal extends Component<any, *> {
     }
   }
 
-  updateState = (status: string, feesData?: TokenFeesData) => {
+  updateState = (status: string) => {
     const claimOfferStatus =
       this.props.claimOfferData && this.props.claimOfferData.status
     const claimRequestStatus = this.props.claimOfferData.claimRequestStatus
@@ -323,10 +321,7 @@ export class ClaimOfferModal extends Component<any, *> {
       // accept invite
       // then we have real info for new claim offer
       // anyway send action out of band accepted
-      this.props.acceptOutOfBandInvitation(
-        invitationPayload,
-        attachedRequest
-      )
+      this.props.acceptOutOfBandInvitation(invitationPayload, attachedRequest)
     } else {
       this.props.acceptClaimOffer(
         this.props.uid,

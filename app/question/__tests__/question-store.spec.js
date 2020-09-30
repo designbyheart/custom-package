@@ -1,6 +1,5 @@
 // @flow
 
-import { put, call, select } from 'redux-saga/effects'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
 
@@ -18,7 +17,6 @@ import questionReducer, {
 import { initialTestAction, STORAGE_STATUS } from '../../common/type-common'
 import {
   mockQuestionPayload,
-  mockQuestionPayload3,
   mockQuestionReceivedState,
 } from '../../../__mocks__/data/question-store-mock-data'
 import {
@@ -37,7 +35,6 @@ import {
   connectionSignData,
   connectionSendMessage,
 } from '../../bridge/react-native-cxs/RNCxs'
-import { retrySaga } from '../../api/api-utils'
 
 describe('Question Store', () => {
   const { uid, valid_responses, messageId } = mockQuestionPayload

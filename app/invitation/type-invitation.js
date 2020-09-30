@@ -1,13 +1,8 @@
 // @flow
-import type {
-  ResponseTypes,
-  RequestDetailTextPropsText,
-  RequestDetailAvatarProps,
-} from '../components/request/type-request'
+import type { ResponseTypes } from '../components/request/type-request'
 import type {
   CustomError,
   GenericObject,
-  ReactNavigation,
   InitialTestAction,
   ResetAction,
 } from '../common/type-common'

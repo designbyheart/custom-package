@@ -55,9 +55,9 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,
@@ -1013,9 +1013,9 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,
@@ -1971,9 +1971,9 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,
@@ -2931,9 +2931,9 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,
@@ -3889,9 +3889,9 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,

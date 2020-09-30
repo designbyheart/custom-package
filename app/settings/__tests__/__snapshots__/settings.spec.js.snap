@@ -55,9 +55,9 @@ exports[`user settings screen should render properly and snapshot should match i
             style={
               Object {
                 "backgroundColor": "rgb(255, 255, 255)",
-                "borderBottomColor": "rgb(224, 224, 224)",
+                "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
-                "shadowColor": "rgb(224, 224, 224)",
+                "shadowColor": "rgb(216, 216, 216)",
                 "shadowOffset": Object {
                   "height": 0.5,
                   "width": 0,
@@ -721,6 +721,7 @@ exports[`user settings screen should render properly and snapshot should match i
                                         "paddingTop": 0,
                                       }
                                     }
+                                    testID="padView"
                                   >
                                     <RNSVGSvgView
                                       align="xMidYMid"
@@ -764,13 +765,60 @@ exports[`user settings screen should render properly and snapshot should match i
                                       </RNSVGGroup>
                                     </RNSVGSvgView>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <View
                                       style={
                                         Object {
+                                          "alignItems": "flex-start",
                                           "flex": 1,
                                           "justifyContent": "center",
+                                        }
+                                      }
+                                      theme={
+                                        Object {
+                                          "colors": Object {
+                                            "black": "#242424",
+                                            "disabled": "hsl(208, 8%, 90%)",
+                                            "divider": "#bcbbc1",
+                                            "error": "#ff190c",
+                                            "grey0": "#393e42",
+                                            "grey1": "#43484d",
+                                            "grey2": "#5e6977",
+                                            "grey3": "#86939e",
+                                            "grey4": "#bdc6cf",
+                                            "grey5": "#e1e8ee",
+                                            "greyOutline": "#bbb",
+                                            "platform": Object {
+                                              "android": Object {
+                                                "error": "#f44336",
+                                                "grey": "rgba(0, 0, 0, 0.54)",
+                                                "primary": "#2196f3",
+                                                "secondary": "#9C27B0",
+                                                "success": "#4caf50",
+                                                "warning": "#ffeb3b",
+                                              },
+                                              "ios": Object {
+                                                "error": "#ff3b30",
+                                                "grey": "#7d7d7d",
+                                                "primary": "#007aff",
+                                                "searchBg": "#dcdce1",
+                                                "secondary": "#5856d6",
+                                                "success": "#4cd964",
+                                                "warning": "#ffcc00",
+                                              },
+                                            },
+                                            "primary": "#2089dc",
+                                            "searchBg": "#303337",
+                                            "secondary": "#ca71eb",
+                                            "success": "#52c41a",
+                                            "warning": "#faad14",
+                                            "white": "#ffffff",
+                                          },
                                         }
                                       }
                                     >
@@ -785,43 +833,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                           }
                                         }
                                         testID="listItemTitle"
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
                                       >
                                         Biometrics
                                       </Text>
@@ -834,49 +845,17 @@ exports[`user settings screen should render properly and snapshot should match i
                                             "fontSize": 8.735294117647058,
                                           }
                                         }
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
+                                        testID="listItemTitle"
                                       >
                                         Use your finger or face to secure app
                                       </Text>
                                     </View>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <RCTSwitch
                                       accessibilityRole="button"
@@ -926,6 +905,7 @@ exports[`user settings screen should render properly and snapshot should match i
                                         "paddingTop": 0,
                                       }
                                     }
+                                    testID="padView"
                                   >
                                     <View
                                       style={
@@ -978,13 +958,60 @@ exports[`user settings screen should render properly and snapshot should match i
                                       </RNSVGSvgView>
                                     </View>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <View
                                       style={
                                         Object {
+                                          "alignItems": "flex-start",
                                           "flex": 1,
                                           "justifyContent": "center",
+                                        }
+                                      }
+                                      theme={
+                                        Object {
+                                          "colors": Object {
+                                            "black": "#242424",
+                                            "disabled": "hsl(208, 8%, 90%)",
+                                            "divider": "#bcbbc1",
+                                            "error": "#ff190c",
+                                            "grey0": "#393e42",
+                                            "grey1": "#43484d",
+                                            "grey2": "#5e6977",
+                                            "grey3": "#86939e",
+                                            "grey4": "#bdc6cf",
+                                            "grey5": "#e1e8ee",
+                                            "greyOutline": "#bbb",
+                                            "platform": Object {
+                                              "android": Object {
+                                                "error": "#f44336",
+                                                "grey": "rgba(0, 0, 0, 0.54)",
+                                                "primary": "#2196f3",
+                                                "secondary": "#9C27B0",
+                                                "success": "#4caf50",
+                                                "warning": "#ffeb3b",
+                                              },
+                                              "ios": Object {
+                                                "error": "#ff3b30",
+                                                "grey": "#7d7d7d",
+                                                "primary": "#007aff",
+                                                "searchBg": "#dcdce1",
+                                                "secondary": "#5856d6",
+                                                "success": "#4cd964",
+                                                "warning": "#ffcc00",
+                                              },
+                                            },
+                                            "primary": "#2089dc",
+                                            "searchBg": "#303337",
+                                            "secondary": "#ca71eb",
+                                            "success": "#52c41a",
+                                            "warning": "#faad14",
+                                            "white": "#ffffff",
+                                          },
                                         }
                                       }
                                     >
@@ -999,43 +1026,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                           }
                                         }
                                         testID="listItemTitle"
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
                                       >
                                         Passcode
                                       </Text>
@@ -1048,49 +1038,17 @@ exports[`user settings screen should render properly and snapshot should match i
                                             "fontSize": 8.735294117647058,
                                           }
                                         }
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
+                                        testID="listItemTitle"
                                       >
                                         View/Change your Connect.Me passcode
                                       </Text>
                                     </View>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <View
                                       style={
@@ -1200,6 +1158,7 @@ exports[`user settings screen should render properly and snapshot should match i
                                         "paddingTop": 0,
                                       }
                                     }
+                                    testID="padView"
                                   >
                                     <View
                                       style={
@@ -1289,13 +1248,60 @@ exports[`user settings screen should render properly and snapshot should match i
                                       </View>
                                     </View>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <View
                                       style={
                                         Object {
+                                          "alignItems": "flex-start",
                                           "flex": 1,
                                           "justifyContent": "center",
+                                        }
+                                      }
+                                      theme={
+                                        Object {
+                                          "colors": Object {
+                                            "black": "#242424",
+                                            "disabled": "hsl(208, 8%, 90%)",
+                                            "divider": "#bcbbc1",
+                                            "error": "#ff190c",
+                                            "grey0": "#393e42",
+                                            "grey1": "#43484d",
+                                            "grey2": "#5e6977",
+                                            "grey3": "#86939e",
+                                            "grey4": "#bdc6cf",
+                                            "grey5": "#e1e8ee",
+                                            "greyOutline": "#bbb",
+                                            "platform": Object {
+                                              "android": Object {
+                                                "error": "#f44336",
+                                                "grey": "rgba(0, 0, 0, 0.54)",
+                                                "primary": "#2196f3",
+                                                "secondary": "#9C27B0",
+                                                "success": "#4caf50",
+                                                "warning": "#ffeb3b",
+                                              },
+                                              "ios": Object {
+                                                "error": "#ff3b30",
+                                                "grey": "#7d7d7d",
+                                                "primary": "#007aff",
+                                                "searchBg": "#dcdce1",
+                                                "secondary": "#5856d6",
+                                                "success": "#4cd964",
+                                                "warning": "#ffcc00",
+                                              },
+                                            },
+                                            "primary": "#2089dc",
+                                            "searchBg": "#303337",
+                                            "secondary": "#ca71eb",
+                                            "success": "#52c41a",
+                                            "warning": "#faad14",
+                                            "white": "#ffffff",
+                                          },
                                         }
                                       }
                                     >
@@ -1310,43 +1316,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                           }
                                         }
                                         testID="listItemTitle"
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
                                       >
                                         Give app feedback
                                       </Text>
@@ -1359,49 +1328,17 @@ exports[`user settings screen should render properly and snapshot should match i
                                             "fontSize": 8.735294117647058,
                                           }
                                         }
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
+                                        testID="listItemTitle"
                                       >
                                         Tell us what you think of Connect.Me
                                       </Text>
                                     </View>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <View
                                       style={
@@ -1511,6 +1448,7 @@ exports[`user settings screen should render properly and snapshot should match i
                                         "paddingTop": 0,
                                       }
                                     }
+                                    testID="padView"
                                   >
                                     <View
                                       style={
@@ -1603,13 +1541,60 @@ exports[`user settings screen should render properly and snapshot should match i
                                       </View>
                                     </View>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <View
                                       style={
                                         Object {
+                                          "alignItems": "flex-start",
                                           "flex": 1,
                                           "justifyContent": "center",
+                                        }
+                                      }
+                                      theme={
+                                        Object {
+                                          "colors": Object {
+                                            "black": "#242424",
+                                            "disabled": "hsl(208, 8%, 90%)",
+                                            "divider": "#bcbbc1",
+                                            "error": "#ff190c",
+                                            "grey0": "#393e42",
+                                            "grey1": "#43484d",
+                                            "grey2": "#5e6977",
+                                            "grey3": "#86939e",
+                                            "grey4": "#bdc6cf",
+                                            "grey5": "#e1e8ee",
+                                            "greyOutline": "#bbb",
+                                            "platform": Object {
+                                              "android": Object {
+                                                "error": "#f44336",
+                                                "grey": "rgba(0, 0, 0, 0.54)",
+                                                "primary": "#2196f3",
+                                                "secondary": "#9C27B0",
+                                                "success": "#4caf50",
+                                                "warning": "#ffeb3b",
+                                              },
+                                              "ios": Object {
+                                                "error": "#ff3b30",
+                                                "grey": "#7d7d7d",
+                                                "primary": "#007aff",
+                                                "searchBg": "#dcdce1",
+                                                "secondary": "#5856d6",
+                                                "success": "#4cd964",
+                                                "warning": "#ffcc00",
+                                              },
+                                            },
+                                            "primary": "#2089dc",
+                                            "searchBg": "#303337",
+                                            "secondary": "#ca71eb",
+                                            "success": "#52c41a",
+                                            "warning": "#faad14",
+                                            "white": "#ffffff",
+                                          },
                                         }
                                       }
                                     >
@@ -1624,43 +1609,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                           }
                                         }
                                         testID="listItemTitle"
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
                                       >
                                         About
                                       </Text>
@@ -1673,49 +1621,17 @@ exports[`user settings screen should render properly and snapshot should match i
                                             "fontSize": 8.735294117647058,
                                           }
                                         }
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
+                                        testID="listItemTitle"
                                       >
                                         Legal, Version, and Network Information
                                       </Text>
                                     </View>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <View
                                       style={
@@ -1825,6 +1741,7 @@ exports[`user settings screen should render properly and snapshot should match i
                                         "paddingTop": 0,
                                       }
                                     }
+                                    testID="padView"
                                   >
                                     <View
                                       style={
@@ -1849,13 +1766,60 @@ exports[`user settings screen should render properly and snapshot should match i
                                       />
                                     </View>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <View
                                       style={
                                         Object {
+                                          "alignItems": "flex-start",
                                           "flex": 1,
                                           "justifyContent": "center",
+                                        }
+                                      }
+                                      theme={
+                                        Object {
+                                          "colors": Object {
+                                            "black": "#242424",
+                                            "disabled": "hsl(208, 8%, 90%)",
+                                            "divider": "#bcbbc1",
+                                            "error": "#ff190c",
+                                            "grey0": "#393e42",
+                                            "grey1": "#43484d",
+                                            "grey2": "#5e6977",
+                                            "grey3": "#86939e",
+                                            "grey4": "#bdc6cf",
+                                            "grey5": "#e1e8ee",
+                                            "greyOutline": "#bbb",
+                                            "platform": Object {
+                                              "android": Object {
+                                                "error": "#f44336",
+                                                "grey": "rgba(0, 0, 0, 0.54)",
+                                                "primary": "#2196f3",
+                                                "secondary": "#9C27B0",
+                                                "success": "#4caf50",
+                                                "warning": "#ffeb3b",
+                                              },
+                                              "ios": Object {
+                                                "error": "#ff3b30",
+                                                "grey": "#7d7d7d",
+                                                "primary": "#007aff",
+                                                "searchBg": "#dcdce1",
+                                                "secondary": "#5856d6",
+                                                "success": "#4cd964",
+                                                "warning": "#ffcc00",
+                                              },
+                                            },
+                                            "primary": "#2089dc",
+                                            "searchBg": "#303337",
+                                            "secondary": "#ca71eb",
+                                            "success": "#52c41a",
+                                            "warning": "#faad14",
+                                            "white": "#ffffff",
+                                          },
                                         }
                                       }
                                     >
@@ -1870,43 +1834,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                           }
                                         }
                                         testID="listItemTitle"
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
                                       >
                                         Get your ID verified by Onfido
                                       </Text>
@@ -1919,49 +1846,17 @@ exports[`user settings screen should render properly and snapshot should match i
                                             "fontSize": 8.735294117647058,
                                           }
                                         }
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
+                                        testID="listItemTitle"
                                       >
                                         ONFIDO
                                       </Text>
                                     </View>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <View
                                       style={
@@ -2071,6 +1966,7 @@ exports[`user settings screen should render properly and snapshot should match i
                                         "paddingTop": 0,
                                       }
                                     }
+                                    testID="padView"
                                   >
                                     <View
                                       style={
@@ -2163,13 +2059,60 @@ exports[`user settings screen should render properly and snapshot should match i
                                       </View>
                                     </View>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <View
                                       style={
                                         Object {
+                                          "alignItems": "flex-start",
                                           "flex": 1,
                                           "justifyContent": "center",
+                                        }
+                                      }
+                                      theme={
+                                        Object {
+                                          "colors": Object {
+                                            "black": "#242424",
+                                            "disabled": "hsl(208, 8%, 90%)",
+                                            "divider": "#bcbbc1",
+                                            "error": "#ff190c",
+                                            "grey0": "#393e42",
+                                            "grey1": "#43484d",
+                                            "grey2": "#5e6977",
+                                            "grey3": "#86939e",
+                                            "grey4": "#bdc6cf",
+                                            "grey5": "#e1e8ee",
+                                            "greyOutline": "#bbb",
+                                            "platform": Object {
+                                              "android": Object {
+                                                "error": "#f44336",
+                                                "grey": "rgba(0, 0, 0, 0.54)",
+                                                "primary": "#2196f3",
+                                                "secondary": "#9C27B0",
+                                                "success": "#4caf50",
+                                                "warning": "#ffeb3b",
+                                              },
+                                              "ios": Object {
+                                                "error": "#ff3b30",
+                                                "grey": "#7d7d7d",
+                                                "primary": "#007aff",
+                                                "searchBg": "#dcdce1",
+                                                "secondary": "#5856d6",
+                                                "success": "#4cd964",
+                                                "warning": "#ffcc00",
+                                              },
+                                            },
+                                            "primary": "#2089dc",
+                                            "searchBg": "#303337",
+                                            "secondary": "#ca71eb",
+                                            "success": "#52c41a",
+                                            "warning": "#faad14",
+                                            "white": "#ffffff",
+                                          },
                                         }
                                       }
                                     >
@@ -2184,43 +2127,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                           }
                                         }
                                         testID="listItemTitle"
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
                                       >
                                         Design styleguide
                                       </Text>
@@ -2233,49 +2139,17 @@ exports[`user settings screen should render properly and snapshot should match i
                                             "fontSize": 8.735294117647058,
                                           }
                                         }
-                                        theme={
-                                          Object {
-                                            "colors": Object {
-                                              "disabled": "hsl(208, 8%, 90%)",
-                                              "divider": "#bcbbc1",
-                                              "error": "#ff190c",
-                                              "grey0": "#393e42",
-                                              "grey1": "#43484d",
-                                              "grey2": "#5e6977",
-                                              "grey3": "#86939e",
-                                              "grey4": "#bdc6cf",
-                                              "grey5": "#e1e8ee",
-                                              "greyOutline": "#bbb",
-                                              "platform": Object {
-                                                "android": Object {
-                                                  "error": "#f44336",
-                                                  "primary": "#2196f3",
-                                                  "secondary": "#9C27B0",
-                                                  "success": "#4caf50",
-                                                  "warning": "#ffeb3b",
-                                                },
-                                                "ios": Object {
-                                                  "error": "#ff3b30",
-                                                  "primary": "#007aff",
-                                                  "secondary": "#5856d6",
-                                                  "success": "#4cd964",
-                                                  "warning": "#ffcc00",
-                                                },
-                                              },
-                                              "primary": "#2089dc",
-                                              "searchBg": "#303337",
-                                              "secondary": "#8F0CE8",
-                                              "success": "#52c41a",
-                                              "warning": "#faad14",
-                                            },
-                                          }
-                                        }
+                                        testID="listItemTitle"
                                       >
                                         Development only
                                       </Text>
                                     </View>
                                     <View
-                                      width={16}
+                                      style={
+                                        Object {
+                                          "paddingLeft": 16,
+                                        }
+                                      }
                                     />
                                     <View
                                       style={

@@ -1,9 +1,5 @@
 // @flow
-import type {
-  CustomError,
-  ResetAction,
-  NotificationPayload,
-} from '../../../common/type-common'
+import type { CustomError, ResetAction } from '../../../common/type-common'
 import type {
   AdditionalDataPayload,
   Attribute,
@@ -288,7 +284,7 @@ export type ClaimOfferResponse = {
       typ: string,
       statusMsg: string,
       uid: string,
-    },
+    }
   ],
 }
 

@@ -87,7 +87,6 @@ import {
   AUTO_CLOUD_BACKUP_ENABLED,
   HAS_VERIFIED_RECOVERY_PHRASE,
 } from '../backup/type-backup'
-import { hydrateTxnAuthorAgreementSaga } from '../txn-author-agreement/txn-author-agreement-store'
 import { hydrateInvitationsSaga } from '../invitation/invitation-store'
 
 export function* deleteDeviceSpecificData(): Generator<*, *, *> {

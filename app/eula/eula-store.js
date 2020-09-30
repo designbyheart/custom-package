@@ -1,5 +1,5 @@
 // @flow
-import { takeLatest, call, put, all } from 'redux-saga/effects'
+import { takeLatest, call, all } from 'redux-saga/effects'
 import { safeSet } from '../services/storage'
 import {
   EULA_ACCEPT,

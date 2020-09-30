@@ -343,7 +343,6 @@ export function convertSelectedCredentialAttributesToIndyProof(
   userSelectedCredentials: IndyRequestedAttributes,
   proofRequest: ProofRequestData
 ) {
-  const credentialFilledAttributes = Object.keys(userSelectedCredentials)
   let revealedAttributes = {}
   let revealedGroupAttributes = {}
   Object.keys(proofRequest.requested_attributes).forEach((attributeKey) => {
@@ -494,6 +493,7 @@ export function* generateProofSaga(action: GenerateProofAction): any {
     }
 
     const [
+      // eslint-disable-next-line no-unused-vars
       requestedAttrsJson,
       missingAttributes,
       dissatisfiedAttributes,
@@ -618,7 +618,7 @@ function* reTrySendProofSaga(action: RetrySendProofAction): Generator<*, *, *> {
   } = action.updateAttributeClaimAction
   // start proof generation
   yield put(getProof(uid))
-  const [missingAttributeFound, proofRequestAutofill] = yield race([
+  const [missingAttributeFound] = yield race([
     take(
       (missingAttributeAction) =>
         missingAttributeAction.type === MISSING_ATTRIBUTES_FOUND &&

@@ -12,7 +12,7 @@ describe('ephemeral-proof-request-qr-code-reader', () => {
     const decodeSpy = jest.spyOn(vcx, 'toUtf8FromBase64')
     decodeSpy.mockImplementation(() => Promise.reject('some error'))
 
-    const [error, _] = await validateEphemeralProofQrCode('no json data')
+    const [error] = await validateEphemeralProofQrCode('no json data')
 
     expect(error).toBe('EPR-001:: Invalid format.')
 

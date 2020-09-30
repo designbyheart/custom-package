@@ -4,7 +4,7 @@ import deepLinkReducer, {
   deepLinkEmpty,
   deepLinkError,
 } from '../deep-link-store'
-import { RESET, initialTestAction } from '../../common/type-common'
+import { initialTestAction } from '../../common/type-common'
 
 describe('Deep link store', () => {
   let initialState

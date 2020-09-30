@@ -42,7 +42,6 @@ export const CustomView = (props: GenericObject) => {
     shadow,
     imageShadow,
     absolute,
-    absoluteFill,
     spaceAround,
     small,
     safeArea,
