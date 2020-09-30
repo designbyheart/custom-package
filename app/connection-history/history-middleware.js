@@ -30,7 +30,10 @@ import {
 } from '../question/type-question'
 import { UPDATE_ATTRIBUTE_CLAIM, ERROR_SEND_PROOF } from '../proof/type-proof'
 import { INVITATION_ACCEPTED } from '../invitation/type-invitation'
-import { CONNECTION_FAIL, NEW_CONNECTION_SUCCESS } from '../store/type-connection-store'
+import {
+  CONNECTION_FAIL,
+  NEW_CONNECTION_SUCCESS,
+} from '../store/type-connection-store'
 
 const actionToRecord = [
   // removing invitation received from record array

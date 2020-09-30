@@ -65,9 +65,11 @@ export const api = (url: string, apiOptions: ApiData) =>
           }))
       } else {
         // Fail with error code if status code is above 300
-        return res.text().then((response: string) => ({
-          error: response,
-        }))
+        return res.text().then((response: string) => {
+          return {
+            error: response,
+          }
+        })
       }
     })
     .then((response) => {

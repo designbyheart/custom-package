@@ -232,9 +232,7 @@ function getRetryFunction({
   denyProofRequest,
   denyClaimOffer,
 }: *): () => void {
-  if (
-    event.action === CONNECTION_FAIL
-  ) {
+  if (event.action === CONNECTION_FAIL) {
     return () => {
       sendInvitationResponse({
         response: ResponseType.accepted,
@@ -283,9 +281,7 @@ function getDeleteFunction({
   item: event,
   deleteConnectionAction,
 }: *): () => void {
-  if (
-    event.action === CONNECTION_FAIL
-  ) {
+  if (event.action === CONNECTION_FAIL) {
     return () => {
       deleteConnectionAction(event.remoteDid)
     }

@@ -12,7 +12,10 @@ import {
   VCX_INIT_POOL_NOT_STARTED,
   VCX_INIT_POOL_START,
 } from './type-config-store'
-import { getVcxInitializationState, getVcxPoolInitializationState } from './store-selector'
+import {
+  getVcxInitializationState,
+  getVcxPoolInitializationState,
+} from './store-selector'
 import { put, take, race, select } from 'redux-saga/effects'
 
 export type RouteStoreAction = typeof handleRouteUpdate | InitialTestAction
@@ -97,7 +100,11 @@ export function* ensureVcxInitAndPoolConnectSuccess(): Generator<*, *, *> {
     return
   }
 
-  if ([VCX_INIT_POOL_NOT_STARTED, VCX_INIT_POOL_FAIL].includes(vcxPoolInitializationState)) {
+  if (
+    [VCX_INIT_POOL_NOT_STARTED, VCX_INIT_POOL_FAIL].includes(
+      vcxPoolInitializationState
+    )
+  ) {
     // if init pool not started or failed and we want to try again
     yield put(vcxInitPoolStart())
   }

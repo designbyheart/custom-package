@@ -35,9 +35,9 @@ export const UnreadMessagesBadge = ({
 }
 
 const mapStateToProps = (state: Store, props: UnreadMessagesBadgeProps) => {
-  const numberOfNewMessages = props.numberOfNewMessages ?
-    props.numberOfNewMessages :
-    getNewMessagesCount(state)
+  const numberOfNewMessages = props.numberOfNewMessages
+    ? props.numberOfNewMessages
+    : getNewMessagesCount(state)
 
   return {
     numberOfNewMessages,

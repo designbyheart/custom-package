@@ -134,8 +134,7 @@ export type SendConnectionReuseAction = {
 
 export const SEND_REUSE_SUCCESS = 'SEND_REUSE_SUCCESS'
 
-export const CONNECTION_FAIL: 'CONNECTION_FAIL' =
-  'CONNECTION_FAIL'
+export const CONNECTION_FAIL: 'CONNECTION_FAIL' = 'CONNECTION_FAIL'
 
 export const connectionFail = (error: CustomError, senderDid: string) => ({
   type: CONNECTION_FAIL,

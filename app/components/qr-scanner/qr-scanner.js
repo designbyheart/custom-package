@@ -180,7 +180,10 @@ export default class QRScanner extends PureComponent<
 
     // aries invitation can be directly copied as json string as well
     // above case handles when aries invite comes from url encoded
-    const ariesV1Invite = isValidAriesV1InviteData(qrData, event.data)
+    const ariesV1Invite = isValidAriesV1InviteData(
+      qrData,
+      JSON.stringify(qrData)
+    )
     if (ariesV1Invite) {
       this.setState({ scanStatus: SCAN_STATUS.SCANNING })
       return this.props.onAriesConnectionInviteRead(ariesV1Invite)

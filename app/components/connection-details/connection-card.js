@@ -13,7 +13,11 @@ import { bindActionCreators } from 'redux'
 
 import SvgCustomIcon from '../../components/svg-custom-icon'
 import CredentialPriceInfo from '../../components/labels/credential-price-info'
-import { connectionsDrawerRoute, modalContentProofShared, modalScreenRoute } from '../../common'
+import {
+  connectionsDrawerRoute,
+  modalContentProofShared,
+  modalScreenRoute,
+} from '../../common'
 import {
   SEND_CLAIM_REQUEST_FAIL,
   PAID_CREDENTIAL_REQUEST_FAIL,

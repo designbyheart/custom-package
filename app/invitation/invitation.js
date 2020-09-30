@@ -15,11 +15,9 @@ import type {
   InvitationNavigation,
 } from './type-invitation'
 
-import { CONNECTION_INVITE_TYPES, } from './type-invitation'
+import { CONNECTION_INVITE_TYPES } from './type-invitation'
 import { schemaValidator } from '../services/schema-validator'
-import {
-  Container,
-} from '../components'
+import { Container } from '../components'
 import { homeRoute, invitationRoute } from '../common'
 import { ResponseType } from '../components/request/type-request'
 import { sendInvitationResponse, invitationRejected } from './invitation-store'

@@ -185,7 +185,7 @@ export const baseUrls = {
     paymentMethod: 'sov',
   },
   [SERVER_ENVIRONMENT.DEMO]: {
-    agencyUrl: 'http://agency.pps.evernym.com',
+    agencyUrl: 'https://agency.pps.evernym.com',
     agencyDID: '3mbwr7i85JNSL3LoNQecaW',
     agencyVerificationKey: '2WXxo6y1FJvXWgZnoYUP5BJej2mceFrqBDNPE3p6HDPf',
     poolConfig: sharedPoolConfig,

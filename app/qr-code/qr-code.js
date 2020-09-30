@@ -351,6 +351,7 @@ export class QRCodeScannerScreen extends Component<
       },
       type: CONNECTION_INVITE_TYPES.ARIES_V1_QR,
       version: '1.0',
+      type: CONNECTION_INVITE_TYPES.ARIES_V1_QR,
       original,
     }
 

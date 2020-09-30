@@ -247,8 +247,9 @@ const mapStateToProps = (state: Store) => {
           state.history.data &&
           state.history.data.connections &&
           state.history.data.connections[connection.senderDID] &&
-          state.history.data.connections[connection.senderDID].data ?
-            state.history.data.connections[connection.senderDID].data : [],
+          state.history.data.connections[connection.senderDID].data
+            ? state.history.data.connections[connection.senderDID].data
+            : [],
         senderDID: connection.senderDID,
       }
     })
