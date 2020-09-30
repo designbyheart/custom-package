@@ -4,7 +4,7 @@
 - [ ] Feature/Change request
 
 ## Link for jira ticket
-[CM-](http://evernym.atlassian.net/browse/CM-)
+[MSDK-](http://evernym.atlassian.net/browse/MSDK-)
 
 ## In case of Bug
 
