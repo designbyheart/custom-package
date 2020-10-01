@@ -29,7 +29,7 @@ const CustomValues = ({
   }, [])
 
   const onDone = useCallback(() => {
-    params.onTextChange(value, adjustedLabel)
+    params.onTextChange(value, adjustedLabel, params.key)
     goBack(null)
   }, [value])
 

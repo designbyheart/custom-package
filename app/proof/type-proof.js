@@ -74,6 +74,7 @@ export type UpdateAttributeClaimAction = {
   uid: string,
   remoteDid: string,
   requestedAttrsJson: RequestedAttrsJson,
+  selfAttestedAttrs: SelfAttestedAttributes,
 }
 
 export const GENERATE_PROOF = 'GENERATE_PROOF'
@@ -132,17 +133,6 @@ export const ERROR_MISSING_ATTRIBUTE_IN_CLAIMS = (
   message,
 })
 
-export type IndySelfAttestedAttributes = {
-  [attributeKey: string]: string,
-}
-
-export const USER_SELF_ATTESTED_ATTRIBUTES = 'USER_SELF_ATTESTED_ATTRIBUTES'
-export type UserSelfAttestedAttributesAction = {
-  type: typeof USER_SELF_ATTESTED_ATTRIBUTES,
-  selfAttestedAttributes: SelfAttestedAttributes,
-  uid: string,
-}
-
 export const RETRY_SEND_PROOF = 'RETRY_SEND_PROOF'
 export type RetrySendProofAction = {
   type: typeof RETRY_SEND_PROOF,
@@ -175,7 +165,6 @@ export type ProofAction =
   | GenerateProofAction
   | ProofSuccessAction
   | ProofFailAction
-  | UserSelfAttestedAttributesAction
   | ProofRequestShowStartAction
   | InitialTestAction
   | ResetAction

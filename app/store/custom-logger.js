@@ -64,7 +64,6 @@ import {
 import {
   UPDATE_ATTRIBUTE_CLAIM,
   PROOF_SUCCESS,
-  USER_SELF_ATTESTED_ATTRIBUTES,
   PROOF_REQUEST_SEND_PROOF_HANDLE,
   RETRY_SEND_PROOF,
 } from '../proof/type-proof'
@@ -583,7 +582,6 @@ export function PiiHiddenActionTransformer(action: any) {
 
     [UPDATE_ATTRIBUTE_CLAIM]: ['requestedAttrsJson', 'remoteDid'],
     [PROOF_SUCCESS]: ['proof'],
-    [USER_SELF_ATTESTED_ATTRIBUTES]: ['selfAttestedAttributes'],
     [PROOF_REQUEST_SEND_PROOF_HANDLE]: ['selfAttestedAttributes'],
     [HYDRATE_PROOF_REQUESTS]: ['proofRequests'],
     [PROOF_REQUEST_AUTO_FILL]: ['requestedAttributes'],

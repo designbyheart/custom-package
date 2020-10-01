@@ -217,10 +217,10 @@ const proofRequestDataSchema = {
         '.*': {
           type: 'object',
           properties: {
-            name: { type: 'string' },
+            name: { type: ['null', 'string'] },
+            names: { type: ['null', 'array'] },
             restrictions: { type: ['array', 'object'] },
           },
-          required: ['name'],
         },
       },
     },

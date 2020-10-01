@@ -18,6 +18,8 @@ Array [
       "data": "Address 1",
       "key": "attr1_uuid",
       "label": "Address 1",
+      "self_attest_allowed": true,
+      "type": "FILLED",
       "values": Object {
         "Address 1": "Address 1",
       },
@@ -39,6 +41,8 @@ Array [
       "data": "Address 2",
       "key": "attr2_uuid",
       "label": "Address 2",
+      "self_attest_allowed": true,
+      "type": "FILLED",
       "values": Object {
         "Address 2": "Address 2",
       },
@@ -65,6 +69,8 @@ Array [
       "data": "Address 1",
       "key": "attr1_uuid",
       "label": "Address 1",
+      "self_attest_allowed": true,
+      "type": "FILLED",
       "values": Object {
         "Address 1": "Address 1",
       },
@@ -86,6 +92,8 @@ Array [
       "data": "Address 2",
       "key": "attr2_uuid",
       "label": "Address 2",
+      "self_attest_allowed": true,
+      "type": "FILLED",
       "values": Object {
         "Address 2": "Address 2",
       },
@@ -94,9 +102,10 @@ Array [
   Array [
     Object {
       "data": undefined,
-      "dissatisfied": false,
       "key": "attr3_uuid",
       "label": "Address 3",
+      "self_attest_allowed": true,
+      "type": "SELF_ATTESTED",
       "values": Object {
         "Address 3": undefined,
       },
@@ -105,9 +114,10 @@ Array [
   Array [
     Object {
       "data": undefined,
-      "dissatisfied": false,
       "key": "attr4_uuid",
       "label": "Address 4",
+      "self_attest_allowed": true,
+      "type": "SELF_ATTESTED",
       "values": Object {
         "Address 4": undefined,
       },
@@ -116,9 +126,10 @@ Array [
   Array [
     Object {
       "data": undefined,
-      "dissatisfied": false,
       "key": "attr5_uuid",
       "label": "Address 5",
+      "self_attest_allowed": true,
+      "type": "SELF_ATTESTED",
       "values": Object {
         "Address 5": undefined,
       },
@@ -127,9 +138,10 @@ Array [
   Array [
     Object {
       "data": undefined,
-      "dissatisfied": false,
       "key": "attr6_uuid",
       "label": "Address 6",
+      "self_attest_allowed": true,
+      "type": "SELF_ATTESTED",
       "values": Object {
         "Address 6": undefined,
       },
@@ -138,9 +150,10 @@ Array [
   Array [
     Object {
       "data": undefined,
-      "dissatisfied": false,
       "key": "attr7_uuid",
       "label": "Address 7",
+      "self_attest_allowed": true,
+      "type": "SELF_ATTESTED",
       "values": Object {
         "Address 7": undefined,
       },
@@ -149,9 +162,10 @@ Array [
   Array [
     Object {
       "data": undefined,
-      "dissatisfied": false,
       "key": "attr8_uuid",
       "label": "Address 8",
+      "self_attest_allowed": true,
+      "type": "SELF_ATTESTED",
       "values": Object {
         "Address 8": undefined,
       },
@@ -160,9 +174,10 @@ Array [
   Array [
     Object {
       "data": undefined,
-      "dissatisfied": false,
       "key": "attr9_uuid",
       "label": "Address 9",
+      "self_attest_allowed": true,
+      "type": "SELF_ATTESTED",
       "values": Object {
         "Address 9": undefined,
       },
@@ -171,9 +186,10 @@ Array [
   Array [
     Object {
       "data": undefined,
-      "dissatisfied": false,
       "key": "attr10_uuid",
       "label": "Address 10",
+      "self_attest_allowed": true,
+      "type": "SELF_ATTESTED",
       "values": Object {
         "Address 10": undefined,
       },
@@ -200,6 +216,8 @@ Array [
       "data": "Address 1",
       "key": "attr1_uuid",
       "label": "A d d r e s s    1",
+      "self_attest_allowed": true,
+      "type": "FILLED",
       "values": Object {
         "A d d r e s s    1": "Address 1",
       },
@@ -221,6 +239,8 @@ Array [
       "data": "Address 2",
       "key": "attr2_uuid",
       "label": "  Ad  dress 2 ",
+      "self_attest_allowed": true,
+      "type": "FILLED",
       "values": Object {
         "  Ad  dress 2 ": "Address 2",
       },

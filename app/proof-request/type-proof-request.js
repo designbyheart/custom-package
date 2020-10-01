@@ -13,7 +13,7 @@ import type {
 } from '../common/type-common'
 import type {
   Attribute,
-  NotificationPayloadInfo,
+  NotificationPayloadInfo, SelectedAttribute,
 } from '../push-notification/type-push-notification'
 import type { ClaimMap } from '../claim/type-claim'
 import { updateAttributeClaim } from '../proof/proof-store'
@@ -132,12 +132,13 @@ export type ProofRequestAttributeListProp = {
   missingAttributes: MissingAttributes | {},
   canEnablePrimaryAction: (
     canEnable: boolean,
-    selfAttestedAttributes: GenericStringObject
   ) => void,
   disableUserInputs: boolean,
   userAvatarSource: ?ImageSource,
-  updateSelectedClaims: (item: Attribute) => void,
-  selectedClaims: RequestedAttrsJson,
+  updateAttributesFilledFromCredentials: (item: SelectedAttribute) => void,
+  updateAttributesFilledByUser: (item: SelectedAttribute) => void,
+  attributesFilledFromCredential: RequestedAttrsJson,
+  attributesFilledByUser: SelfAttestedAttributes,
 }
 
 export type ProofRequestAttributeListAndHeaderProps = ProofRequestAttributeListProp &
@@ -183,6 +184,7 @@ export type ProofRequestPayload = AdditionalProofDataPayload & {
   // value inside this key will tell reason that cannot fulfill each attribute
   dissatisfiedAttributes?: DissatisfiedAttribute[],
   requestedAttrsJson?: RequestedAttrsJson,
+  selfAttestedAttributes?: any,
 }
 
 export type ProofRequestProps = {
@@ -219,7 +221,8 @@ export type ProofRequestProps = {
   acceptOutOfBandInvitation: any,
   applyAttributesForPresentationRequest: (
     uid: string,
-    requestedAttrsJson: RequestedAttrsJson
+    requestedAttrsJson: RequestedAttrsJson,
+    selfAttestedAttributes: SelfAttestedAttributes,
   ) => void,
   deleteOutofbandPresentationRequest: (uid: string) => void,
   invitation?: any,
@@ -229,11 +232,12 @@ export type ProofRequestProps = {
 
 export type ProofRequestState = {
   allMissingAttributesFilled: boolean,
-  selfAttestedAttributes: GenericStringObject,
   disableUserInputs: boolean,
-  selectedClaims: RequestedAttrsJson,
   disableSendButton: boolean,
   interactionsDone: boolean,
+  scheduledDeletion: boolean,
+  attributesFilledFromCredential: RequestedAttrsJson,
+  attributesFilledByUser: SelfAttestedAttributes,
 }
 
 export const PROOF_REQUESTS = 'PROOF_REQUESTS'
@@ -402,6 +406,7 @@ export type ApplyAttributesForPresentationRequestAction = {
   type: typeof APPLY_ATTRIBUTES_FOR_PRESENTATION_REQUEST,
   uid: string,
   requestedAttrsJson: RequestedAttrsJson,
+  selfAttestedAttributes: SelfAttestedAttributes,
 }
 
 export const ACCEPT_OUTOFBAND_PRESENTATION_REQUEST =
@@ -409,7 +414,7 @@ export const ACCEPT_OUTOFBAND_PRESENTATION_REQUEST =
 export type AcceptOutofbandPresentationRequestAction = {
   type: typeof ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   uid: string,
-  senderDid: string,
+  senderDID: string,
 }
 
 export const DELETE_OUTOFBAND_PRESENTATION_REQUEST =
@@ -523,3 +528,9 @@ Contact ${connectionName} for more information.
 Closing the dialog will dismiss the request, and allow you to find and fulfill it later when you are able to fulfill this request, and will send no response notification back to ${connectionName}.
 
 Pressing REJECT will notify ${connectionName}. They will not know you are unable to fulfill the request, only that you have rejected it.`
+
+export const REQUESTED_ATTRIBUTE_TYPE = {
+  FILLED: 'FILLED',
+  SELF_ATTESTED: 'SELF_ATTESTED',
+  DISSATISFIED: 'DISSATISFIED',
+}

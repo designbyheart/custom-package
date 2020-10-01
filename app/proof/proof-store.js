@@ -38,7 +38,6 @@ import {
   GENERATE_PROOF,
   PROOF_SUCCESS,
   PROOF_FAIL,
-  USER_SELF_ATTESTED_ATTRIBUTES,
   PROOF_REQUEST_SEND_PROOF_HANDLE,
   RESET_TEMP_PROOF_DATA,
   ERROR_SEND_PROOF,
@@ -73,17 +72,20 @@ import {
   NO_SELF_ATTEST,
   MISSING_ATTRIBUTES_FOUND,
   PROOF_REQUEST_AUTO_FILL,
+  REQUESTED_ATTRIBUTE_TYPE,
 } from '../proof-request/type-proof-request'
 
 export const updateAttributeClaim = (
   uid: string,
   remoteDid: string,
-  requestedAttrsJson: RequestedAttrsJson
+  requestedAttrsJson: RequestedAttrsJson,
+  selfAttestedAttrs: SelfAttestedAttributes
 ): UpdateAttributeClaimAction => ({
   type: UPDATE_ATTRIBUTE_CLAIM,
   uid,
   remoteDid,
   requestedAttrsJson,
+  selfAttestedAttrs,
 })
 
 export const getProof = (uid: string) => ({
@@ -107,15 +109,6 @@ export const proofFail = (
   type: PROOF_FAIL,
   uid,
   error,
-})
-
-export const userSelfAttestedAttributes = (
-  selfAttestedAttributes: SelfAttestedAttributes,
-  uid: string
-) => ({
-  type: USER_SELF_ATTESTED_ATTRIBUTES,
-  selfAttestedAttributes,
-  uid,
 })
 
 export const proofRequestDataToStore = (uid: string, proofHandle: number) => ({
@@ -295,9 +288,13 @@ export function convertIndyPreparedProofToAttributes(
           // We are putting cred_info here because we don't want to iterate
           // later to find whole credential
           cred_info: revealedAttribute ? revealedAttribute : null,
+          self_attest_allowed: !isDissatisfiedAttribute(attribute),
+          type: REQUESTED_ATTRIBUTE_TYPE.FILLED,
         }
       })
     }
+
+    const dissatisfied = isDissatisfiedAttribute(attribute)
 
     return [
       {
@@ -307,7 +304,10 @@ export function convertIndyPreparedProofToAttributes(
         values: {
           [label]: undefined,
         },
-        dissatisfied: isDissatisfiedAttribute(attribute),
+        self_attest_allowed: !dissatisfied,
+        type: dissatisfied
+          ? REQUESTED_ATTRIBUTE_TYPE.DISSATISFIED
+          : REQUESTED_ATTRIBUTE_TYPE.SELF_ATTESTED,
       },
     ]
   })
@@ -538,25 +538,20 @@ export function* updateAttributeClaimAndSendProof(
 ): Generator<*, *, *> {
   try {
     yield put(clearSendProofFail(action.uid))
-    const { proofHandle, selfAttestedAttributes } = yield select(
-      getProofData,
-      action.uid
-    )
+    const { proofHandle } = yield select(getProofData, action.uid)
     const requestedAttrsJson = action.requestedAttrsJson
+    const selfAttestedAttributes = action.selfAttestedAttrs
     yield put(sendProof(action.uid))
 
     const selectedCredentials = convertUserSelectedCredentialToVcxSelectedCredentials(
       requestedAttrsJson
-    )
-    const selectedSelfAttestedAttributes = convertSelfAttestedToIndySelfAttested(
-      selfAttestedAttributes || {}
     )
 
     yield call(
       generateProof,
       proofHandle,
       JSON.stringify(selectedCredentials),
-      JSON.stringify(selectedSelfAttestedAttributes)
+      JSON.stringify(selfAttestedAttributes)
     )
 
     yield put(acceptProofRequest(action.uid))
@@ -587,7 +582,7 @@ export function* updateAttributeClaimAndSendProof(
         revealed_attrs: revealedAttributes,
         revealed_group_attrs: revealedGroupAttributes,
         unrevealed_attrs: {},
-        self_attested_attrs: selectedSelfAttestedAttributes,
+        self_attested_attrs: selfAttestedAttributes,
         predicates: {},
       },
     }
@@ -615,10 +610,11 @@ function* reTrySendProofSaga(action: RetrySendProofAction): Generator<*, *, *> {
     uid,
     remoteDid,
     requestedAttrsJson,
+    selfAttestedAttrs,
   } = action.updateAttributeClaimAction
   // start proof generation
   yield put(getProof(uid))
-  const [missingAttributeFound] = yield race([
+  yield race([
     take(
       (missingAttributeAction) =>
         missingAttributeAction.type === MISSING_ATTRIBUTES_FOUND &&
@@ -631,15 +627,14 @@ function* reTrySendProofSaga(action: RetrySendProofAction): Generator<*, *, *> {
     ),
   ])
 
-  if (missingAttributeFound) {
-    yield put(userSelfAttestedAttributes(action.selfAttestedAttributes, uid))
-  }
   yield take(
     (proofRequestDataStoreAction) =>
       proofRequestDataStoreAction.type === PROOF_REQUEST_SEND_PROOF_HANDLE &&
       proofRequestDataStoreAction.uid === uid
   )
-  yield put(updateAttributeClaim(uid, remoteDid, requestedAttrsJson))
+  yield put(
+    updateAttributeClaim(uid, remoteDid, requestedAttrsJson, selfAttestedAttrs)
+  )
 }
 
 export function* watchGenerateProof(): any {
@@ -682,19 +677,6 @@ export default function proofReducer(
       return {
         ...state,
         [action.uid]: undefined,
-      }
-    }
-
-    case USER_SELF_ATTESTED_ATTRIBUTES: {
-      return {
-        ...state,
-        [action.uid]: {
-          ...state[action.uid],
-          proofData: {
-            ...state[action.uid].proofData,
-            selfAttestedAttributes: action.selfAttestedAttributes,
-          },
-        },
       }
     }
 
