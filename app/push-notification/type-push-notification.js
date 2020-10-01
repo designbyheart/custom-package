@@ -10,6 +10,7 @@ import type {
   MatchingCredential,
   AttributeNames,
 } from '../common/type-common'
+import { REQUESTED_ATTRIBUTE_TYPE } from '../proof-request/type-proof-request'
 
 export const ALLOW_PUSH_NOTIFICATIONS = 'ALLOW_PUSH_NOTIFICATIONS'
 export type AllowPushNotificationsAction = {
@@ -113,7 +114,15 @@ export type Attribute = {
   claimUuid?: string,
   cred_info?: MatchingCredential,
   self_attest_allowed?: boolean,
-  dissatisfied?: boolean,
+  type?: typeof REQUESTED_ATTRIBUTE_TYPE,
+}
+
+export type SelectedAttribute = {
+  label: string,
+  key: string,
+  value?: string,
+  claimUuid?: string,
+  cred_info?: MatchingCredential,
 }
 
 export type AdditionalData = {

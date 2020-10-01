@@ -49,6 +49,7 @@ import Icon from '../../components/icon'
 import { attributesValueRoute } from '../../common'
 import { isSelected } from './attributes-values'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
+import { REQUESTED_ATTRIBUTE_TYPE } from '../../proof-request/type-proof-request'
 
 class ProofRequestAttributeList extends Component<
   ProofRequestAttributeListAndHeaderProps & ReactNavigation,
@@ -74,7 +75,7 @@ class ProofRequestAttributeList extends Component<
       // that user fills in them, also we need to enable generate proof button
       // once all the missing attributes are filled in by user
       this.setState(
-        generateStateForMissingAttributes(nextProps.missingAttributes)
+        generateStateForMissingAttributes(nextProps.missingAttributes),
       )
     }
   }
@@ -82,12 +83,18 @@ class ProofRequestAttributeList extends Component<
   // this form is needed to fix flow error
   // because methods of a class are by default covariant
   // so we need an invariance to tell method signature
-  canEnableGenerateProof = function () {
+  canEnableGenerateProof = function() {
     const isInvalid = isInvalidValues(this.props.missingAttributes, this.state)
-    this.props.canEnablePrimaryAction(!isInvalid, this.state)
+    this.props.canEnablePrimaryAction(!isInvalid)
   }
 
-  onTextChange = (text: string, name: string) => {
+  onTextChange = (text: string, name: string, key: string) => {
+    this.props.updateAttributesFilledByUser({
+      label: name,
+      value: text,
+      key: key,
+    })
+
     this.setState(
       {
         [name]: text,
@@ -98,7 +105,7 @@ class ProofRequestAttributeList extends Component<
 
   keyExtractor = (_: Attribute, index: number) => `${index}`
 
-  handleCustomValuesNavigation = (label: string, adjustedLabel: string) => {
+  handleCustomValuesNavigation = (label: string, adjustedLabel: string, key: string) => {
     const {
       navigation: { navigate },
     } = this.props
@@ -108,14 +115,12 @@ class ProofRequestAttributeList extends Component<
       label,
       onTextChange,
       labelValue: this.state?.[adjustedLabel],
+      key,
+      navigate,
     })
   }
 
-  handleAttributeValuesNavigation = (
-    label: string,
-    items: any,
-    selectedClaims: RequestedAttrsJson
-  ) => {
+  handleAttributeValuesNavigation = (label: string, items: any, attributesFilledFromCredential: RequestedAttrsJson) => {
     const {
       navigation: { navigate },
     } = this.props
@@ -131,9 +136,10 @@ class ProofRequestAttributeList extends Component<
         label: keys.join(),
         onTextChange,
         items,
-        selectedClaims,
+        attributesFilledFromCredential,
         claimMap: this.props.claimMap,
-        updateSelectedClaims: this.props.updateSelectedClaims,
+        updateAttributesFilledFromCredentials: this.props.updateAttributesFilledFromCredentials,
+        onCustomValueSet: this.onTextChange,
       })
     } else {
       return navigate(attributesValueRoute, {
@@ -141,104 +147,130 @@ class ProofRequestAttributeList extends Component<
         sender: this.props.institutionalName,
         onTextChange,
         items,
-        selectedClaims,
+        attributesFilledFromCredential,
         claimMap: this.props.claimMap,
-        updateSelectedClaims: this.props.updateSelectedClaims,
+        updateAttributesFilledFromCredentials: this.props.updateAttributesFilledFromCredentials,
       })
     }
   }
 
-  renderFilledAttribute = (
-    { item, index }: any,
-    selectedClaims: RequestedAttrsJson
-  ) => {
+  renderFilledAttribute = ({ item, index }: any, attributesFilledFromCredential: RequestedAttrsJson, attributesFilledByUser: any) => {
     let logoUrl
 
     const items = item
-    const selectedItem = items.find((item) => isSelected(item, selectedClaims))
+    const attribute = items[0]
 
-    const views = Object.keys(selectedItem.values).map((label, keyIndex) => {
-      const value = selectedItem.values[label]
-      const isDataEmptyString = value === ''
+    let views
 
-      let claim =
-        (selectedItem.claimUuid &&
+    const {
+      handleAttributeValuesNavigation,
+    } = this
+
+    if (attributesFilledFromCredential[attribute.key]) {
+      const selectedItem = items.find((item) => isSelected(item, attributesFilledFromCredential))
+
+      views = Object.keys(selectedItem.values).map((label, keyIndex) => {
+        const value = selectedItem.values[label]
+        const isDataEmptyString = value === ''
+
+        let claim = selectedItem.claimUuid &&
           this.props.claimMap &&
-          this.props.claimMap[selectedItem.claimUuid]) ||
-        {}
+          this.props.claimMap[selectedItem.claimUuid] || {}
 
-      if (!logoUrl) {
-        logoUrl = claim.logoUrl ? { uri: claim.logoUrl } : null
-      }
+        if (!logoUrl) {
+          logoUrl =
+            claim.logoUrl
+              ? { uri: claim.logoUrl }
+              : null
+        }
 
-      const { handleAttributeValuesNavigation } = this
-      return (
-        <View key={`${index}_${keyIndex}`} style={styles.textAvatarWrapper}>
-          <View style={styles.textInnerWrapper}>
-            {
-              // If data is empty string, show the BLANK text in gray instead
-              isDataEmptyString ? (
-                <View>
-                  <Text style={styles.title}>{label}</Text>
-                  <Text style={styles.contentGray}>
-                    {BLANK_ATTRIBUTE_DATA_TEXT}
-                  </Text>
-                </View>
-              ) : (
-                <View>
-                  <TouchableOpacity
-                    onPress={() =>
-                      handleAttributeValuesNavigation(
-                        label,
-                        items,
-                        selectedClaims
-                      )
-                    }
-                  >
-                    <View style={styles.textAvatarWrapper}>
-                      <View style={styles.textInnerWrapper}>
-                        {renderAttachmentIcon(
-                          label,
-                          value,
-                          selectedItem.claimUuid || '',
-                          selectedItem.claimUuid || ''
-                        )}
-                      </View>
-                      {keyIndex === 0 && (
-                        <View style={styles.avatarWrapper}>
-                          {logoUrl ? (
-                            <Icon
-                              medium
-                              round
-                              resizeMode="cover"
-                              src={logoUrl}
-                            />
-                          ) : (
-                            claim &&
-                            claim.senderName && (
-                              <DefaultLogo
-                                text={claim.senderName}
-                                size={30}
-                                fontSize={18}
-                              />
-                            )
+        return (
+          <View key={`${index}_${keyIndex}`} style={styles.textAvatarWrapper}>
+            <View style={styles.textInnerWrapper}>
+              {// If data is empty string, show the BLANK text in gray instead
+                isDataEmptyString ? (
+                  <View>
+                    <Text style={styles.title}>{label}</Text>
+                    <Text style={styles.contentGray}>
+                      {BLANK_ATTRIBUTE_DATA_TEXT}
+                    </Text>
+                  </View>
+                ) : (
+                  <View>
+                    <TouchableOpacity
+                      onPress={() =>
+                        handleAttributeValuesNavigation(label, items, attributesFilledFromCredential)
+                      }
+                    >
+                      <View style={styles.textAvatarWrapper}>
+                        <View style={styles.textInnerWrapper}>
+                          {renderAttachmentIcon(
+                            label,
+                            value,
+                            selectedItem.claimUuid || '',
+                            selectedItem.claimUuid || '',
                           )}
                         </View>
-                      )}
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              )
+                        {
+                          keyIndex === 0 &&
+                          <View style={styles.avatarWrapper}>
+                            {
+                              logoUrl ?
+                                <Icon
+                                  medium
+                                  round
+                                  resizeMode="cover"
+                                  src={logoUrl}
+                                /> :
+                                claim && claim.senderName &&
+                                <DefaultLogo text={claim.senderName} size={30} fontSize={18}/>
+                            }
+                          </View>
+                        }
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                )}
+            </View>
+            {
+              keyIndex === 0 &&
+              <View style={styles.iconWrapper}>
+                <EvaIcon name={ARROW_FORWARD_ICON} fill={colors.cmBlack}/>
+              </View>
             }
           </View>
-          {keyIndex === 0 && (
-            <View style={styles.iconWrapper}>
-              <EvaIcon name={ARROW_FORWARD_ICON} fill={colors.cmBlack} />
+        )
+      })
+    } else {
+      const value = attributesFilledByUser[attribute.key]
+      views = (
+        <View style={styles.textAvatarWrapper}>
+          <View style={styles.textInnerWrapper}>
+            <View>
+              <TouchableOpacity
+                onPress={() =>
+                  handleAttributeValuesNavigation(attribute.label, items, attributesFilledFromCredential)
+                }
+              >
+                <View style={styles.textAvatarWrapper}>
+                  <View style={styles.textInnerWrapper}>
+                    {renderAttachmentIcon(
+                      attribute.label,
+                      value,
+                      attribute.claimUuid || '',
+                      attribute.claimUuid || '',
+                    )}
+                  </View>
+                </View>
+              </TouchableOpacity>
             </View>
-          )}
+          </View>
+          <View style={styles.iconWrapper}>
+            <EvaIcon name={ARROW_FORWARD_ICON} fill={colors.cmBlack}/>
+          </View>
         </View>
       )
-    })
+    }
 
     return (
       <View key={index} style={styles.wrapper}>
@@ -261,7 +293,7 @@ class ProofRequestAttributeList extends Component<
               <Text style={styles.title}>{label}</Text>
               <TouchableOpacity
                 onPress={() =>
-                  handleCustomValuesNavigation(label, adjustedLabel)
+                  handleCustomValuesNavigation(label, adjustedLabel, attribute.key)
                 }
               >
                 <TextInput
@@ -338,13 +370,8 @@ class ProofRequestAttributeList extends Component<
   // once we are going to render multiple values
   // then we have to render view for each pair in values and
   // collect them into one wrapping view
-  renderValues = ({ item, index }: any, selectedClaims: RequestedAttrsJson) => {
+  renderValues = ({ item, index }: any, attributesFilledFromCredential: RequestedAttrsJson, attributesFilledByUser: any) => {
     const items = item
-    const selectedItem = items.find((item) => isSelected(item, selectedClaims))
-
-    if (selectedItem) {
-      return this.renderFilledAttribute({ item, index }, selectedClaims)
-    }
 
     if (!items[0]) {
       return <View />
@@ -352,10 +379,14 @@ class ProofRequestAttributeList extends Component<
 
     const attribute = items[0]
 
-    if (attribute.dissatisfied) {
+    if (attribute.type === REQUESTED_ATTRIBUTE_TYPE.FILLED) {
+      return this.renderFilledAttribute({ item, index }, attributesFilledFromCredential, attributesFilledByUser)
+    } else if (attribute.type === REQUESTED_ATTRIBUTE_TYPE.SELF_ATTESTED) {
+      return this.renderSelfAttestedAttribute({ attribute, index })
+    } else if (attribute.type === REQUESTED_ATTRIBUTE_TYPE.DISSATISFIED) {
       return this.renderDissatisfiedAttribute({ attribute, index })
     } else {
-      return this.renderSelfAttestedAttribute({ attribute, index })
+      return <View/>
     }
   }
 
@@ -368,7 +399,8 @@ class ProofRequestAttributeList extends Component<
       credentialText,
       imageUrl,
       colorBackground,
-      selectedClaims,
+      attributesFilledFromCredential,
+      attributesFilledByUser,
     } = this.props
 
     return (
@@ -379,7 +411,7 @@ class ProofRequestAttributeList extends Component<
         style={styles.keyboardFlatList}
         data={attributes}
         keyExtractor={this.keyExtractor}
-        renderItem={(item) => this.renderValues(item, selectedClaims)}
+        renderItem={(item) => this.renderValues(item, attributesFilledFromCredential, attributesFilledByUser)}
         extraData={this.props}
         extraScrollHeight={Platform.OS === 'ios' ? 170 : null}
         ListHeaderComponent={() => (

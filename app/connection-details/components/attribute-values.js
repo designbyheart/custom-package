@@ -10,24 +10,28 @@ import {
   FlatList,
   TouchableOpacity,
   StatusBar,
+  TextInput,
 } from 'react-native'
 import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 // constants
-import { attributeValueRoute } from '../../common/route-constants'
+import {
+  attributeValueRoute,
+  customValuesRoute,
+} from '../../common/route-constants'
 
 // components
 import { ModalButtons } from '../../components/buttons/modal-buttons'
 import { ModalHeaderBar } from '../../components/modal-header-bar/modal-header-bar'
 
 // types
-import type { ReactNavigation } from '../../common/type-common'
+import type { ImageSource, ReactNavigation } from '../../common/type-common'
 
 // styles
 import { colors, fontSizes, fontFamily } from '../../common/styles/constant'
-import { Avatar } from '../../components'
+import { Avatar, UserAvatar } from '../../components'
 import { DefaultLogo } from '../../components/default-logo/default-logo'
-import { CHECKMARK_ICON, EvaIcon } from '../../common/icons'
+import { ALERT_ICON, CHECKMARK_ICON, EvaIcon } from '../../common/icons'
 import { DataRenderer, getFileExtensionName } from './modal-content'
 import {
   isSelected,
@@ -35,31 +39,60 @@ import {
   prepareCredentials,
 } from './attributes-values'
 
+export const renderAvatarWithSource = (avatarSource: number | ImageSource) => {
+  return <Avatar radius={18} src={avatarSource} />
+}
+
 const AttributeValues = ({
-  navigation: { goBack },
+  navigation: { goBack, navigate },
   route: { params },
 }: ReactNavigation) => {
   const [selectedValueIndex, setSelectedValueIndex] = useState(
     params.items.findIndex((item: Object) =>
-      isSelected(item, params.selectedClaims)
+      isSelected(item, params.attributesFilledFromCredential)
     )
   )
   const [data] = useState(prepareCredentials(params.items, params.claimMap))
+  const [customValue, setCustomValue] = useState('Default')
+
+  const { key, self_attest_allowed } = params.items[0]
 
   const hideModal = useCallback(() => {
     goBack(null)
   }, [])
 
   const onDone = useCallback(() => {
-    const selectedValue = params.items[selectedValueIndex]
-    params.updateSelectedClaims(selectedValue)
+    if (selectedValueIndex !== -1) {
+      const selectedValue = params.items[selectedValueIndex]
+      params.updateAttributesFilledFromCredentials(selectedValue)
+    } else {
+      params.onCustomValueSet(customValue, params?.label, key)
+    }
     goBack(null)
   }, [selectedValueIndex])
+
+  const onCustomValueChange = (value) => {
+    setCustomValue(value)
+    setSelectedValueIndex(-1)
+  }
+
+  const handleCustomValuesNavigation = () => {
+    return navigate(customValuesRoute, {
+      label: params.label,
+      labelValue: params.labelValue,
+      key: key,
+      onTextChange: onCustomValueChange,
+    })
+  }
 
   const renderItem = ({ item, index }: { item: Object, index: number }) => {
     return (
       <View>
-        <TouchableOpacity onPress={() => setSelectedValueIndex(index)}>
+        <TouchableOpacity
+          onPress={() => {
+            setSelectedValueIndex(index)
+          }}
+        >
           <View style={styles.itemContainer}>
             <View style={styles.avatarSection}>
               {typeof item.logoUrl === 'string' ? (
@@ -130,6 +163,55 @@ const AttributeValues = ({
             {params.items.length} sources
           </Text>
         </View>
+        {self_attest_allowed && (
+          <TouchableOpacity
+            onPress={() => {
+              handleCustomValuesNavigation()
+            }}
+          >
+            <View style={styles.itemContainer}>
+              <View style={styles.inputContainer}>
+                <View style={styles.inputAvatarSection}>
+                  <UserAvatar>{renderAvatarWithSource}</UserAvatar>
+                </View>
+                <View style={styles.infoSection}>
+                  <TextInput
+                    style={styles.contentInput}
+                    autoCorrect={false}
+                    blurOnSubmit={true}
+                    clearButtonMode="always"
+                    numberOfLines={3}
+                    multiline={true}
+                    maxLength={200}
+                    defaultValue={customValue}
+                    placeholder={`Enter`}
+                    returnKeyType="done"
+                    accessible={true}
+                    underlineColorAndroid="transparent"
+                    editable={false}
+                    pointerEvents="none"
+                  />
+                  <Text style={styles.attributesText}>Manual input value</Text>
+                </View>
+                {selectedValueIndex === -1 && (
+                  <View style={styles.iconWrapper}>
+                    <EvaIcon name={CHECKMARK_ICON} color={colors.cmBlack} />
+                  </View>
+                )}
+              </View>
+            </View>
+          </TouchableOpacity>
+        )}
+        {!self_attest_allowed && (
+          <View style={[styles.itemContainer]}>
+            <View style={styles.inputAvatarSection}>
+              <EvaIcon name={ALERT_ICON} color={colors.cmRed} />
+            </View>
+            <Text style={styles.descriptionTitle}>
+              Manual input is disabled for this attribute.
+            </Text>
+          </View>
+        )}
         <View style={styles.customValuesWrapper}>
           <FlatList
             keyExtractor={keyExtractor}
@@ -180,6 +262,26 @@ AttributeValuesScreen.screen.navigationOptions = ({
 })
 
 const styles = StyleSheet.create({
+  textInnerWrapper: {
+    width: '90%',
+  },
+  wrapper: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: colors.cmWhite,
+  },
+  contentInput: {
+    padding: 0,
+    height: verticalScale(23),
+    lineHeight: verticalScale(23),
+    fontSize: verticalScale(fontSizes.size4),
+    fontWeight: '700',
+    color: '#505050',
+    width: '100%',
+    textAlign: 'left',
+    fontFamily: fontFamily,
+  },
   customValuesWrapper: {
     flex: 1,
   },
@@ -221,9 +323,16 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: colors.cmWhite,
   },
+  inputContainer: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: colors.cmWhite,
+    flexDirection: 'row',
+  },
   itemContainer: {
     width: '100%',
     flexDirection: 'row',
+    alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: colors.cmGray5,
     paddingVertical: moderateScale(12),
@@ -232,6 +341,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     marginTop: moderateScale(3),
     marginRight: moderateScale(10),
+  },
+  inputAvatarSection: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: moderateScale(3),
+    marginRight: moderateScale(10),
+    width: moderateScale(34),
   },
   infoSection: {
     flex: 1,

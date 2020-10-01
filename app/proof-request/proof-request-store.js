@@ -22,7 +22,7 @@ import type {
   AcceptOutofbandPresentationRequestAction,
   DeleteOutofbandPresentationRequestAction,
   OutOfBandConnectionForPresentationEstablishedAction,
-  ApplyAttributesForPresentationRequestAction,
+  ApplyAttributesForPresentationRequestAction, SelfAttestedAttributes,
 } from './type-proof-request'
 import {
   getUserPairwiseDid,
@@ -72,7 +72,7 @@ import {
 } from '../bridge/react-native-cxs/RNCxs'
 import type { Connection } from '../store/type-connection-store'
 import { RESET } from '../common/type-common'
-import { getProofRequests } from './../store/store-selector'
+import { getProofRequests } from '../store/store-selector'
 import { captureError } from '../services/error/error-handler'
 import { customLogger } from '../store/custom-logger'
 import {
@@ -83,7 +83,7 @@ import {
 import { secureSet, getHydrationItem } from '../services/storage'
 import { retrySaga } from '../api/api-utils'
 import { ensureVcxInitAndPoolConnectSuccess } from '../store/route-store'
-import { PROOF_FAIL, USER_SELF_ATTESTED_ATTRIBUTES } from '../proof/type-proof'
+import { PROOF_FAIL } from '../proof/type-proof'
 
 const proofRequestInitialState = {}
 
@@ -122,10 +122,12 @@ export const proofRequestShown = (uid: string): ProofRequestShownAction => ({
   type: PROOF_REQUEST_SHOWN,
   uid,
 })
+
 export const sendProof = (uid: string): SendProofAction => ({
   type: SEND_PROOF,
   uid,
 })
+
 export const sendProofSuccess = (uid: string): SendProofSuccessAction => ({
   type: SEND_PROOF_SUCCESS,
   uid,
@@ -437,20 +439,22 @@ export const proofRequestShowStart = (uid: string) => ({
 
 export const applyAttributesForPresentationRequest = (
   uid: string,
-  requestedAttrsJson: RequestedAttrsJson
+  requestedAttrsJson: RequestedAttrsJson,
+  selfAttestedAttributes: SelfAttestedAttributes,
 ): ApplyAttributesForPresentationRequestAction => ({
   type: APPLY_ATTRIBUTES_FOR_PRESENTATION_REQUEST,
   uid,
   requestedAttrsJson,
+  selfAttestedAttributes,
 })
 
 export const acceptOutofbandPresentationRequest = (
   uid: string,
-  senderDid: string
+  senderDID: string,
 ): AcceptOutofbandPresentationRequestAction => ({
   type: ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   uid,
-  senderDid,
+  senderDID,
 })
 
 export const deleteOutofbandPresentationRequest = (
@@ -479,11 +483,16 @@ function* outOfBandConnectionForPresentationEstablishedSaga(
     throw Error('Cannot get requestedAttrsJson')
   }
 
+  if (!proofRequestPayload.selfAttestedAttributes) {
+    throw Error('Cannot get selfAttestedAttributes')
+  }
+
   yield put(
     updateAttributeClaim(
       proofRequestPayload.uid,
       proofRequestPayload.remotePairwiseDID,
-      proofRequestPayload.requestedAttrsJson
+      proofRequestPayload.requestedAttrsJson,
+      proofRequestPayload.selfAttestedAttributes,
     )
   )
 }
@@ -501,9 +510,6 @@ export default function proofRequestReducer(
 ) {
   switch (action.type) {
     case PROOF_REQUEST_RECEIVED:
-      // if (state[action.payloadInfo.uid]) {
-      //   return state
-      // }
       return {
         ...state,
         [action.payloadInfo.uid]: {
@@ -549,6 +555,7 @@ export default function proofRequestReducer(
         [action.uid]: {
           ...state[action.uid],
           requestedAttrsJson: action.requestedAttrsJson,
+          selfAttestedAttributes: action.selfAttestedAttributes,
         },
       }
 
@@ -600,38 +607,6 @@ export default function proofRequestReducer(
           data: {
             ...state[action.uid].data,
             requestedAttributes: [...action.requestedAttributes],
-          },
-        },
-      }
-
-    case USER_SELF_ATTESTED_ATTRIBUTES:
-      let filledAttributes = state[action.uid].data.requestedAttributes.map(
-        (attributes) => {
-          const attribute = attributes[0]
-          if (action.selfAttestedAttributes.hasOwnProperty(attribute.key)) {
-            return [
-              {
-                ...attribute,
-                data: action.selfAttestedAttributes[attribute.key].data,
-                values: {
-                  [attribute.label]:
-                    action.selfAttestedAttributes[attribute.key].data,
-                },
-              },
-            ]
-          } else {
-            return attributes
-          }
-        }
-      )
-
-      return {
-        ...state,
-        [action.uid]: {
-          ...state[action.uid],
-          data: {
-            ...state[action.uid].data,
-            requestedAttributes: filledAttributes,
           },
         },
       }

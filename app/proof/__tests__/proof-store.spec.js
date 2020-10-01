@@ -42,10 +42,7 @@ import {
   getProofRequestPairwiseDid,
   getPoolConfig,
 } from '../../store/store-selector'
-import {
-  USER_SELF_ATTESTED_ATTRIBUTES,
-  UPDATE_ATTRIBUTE_CLAIM,
-} from '../type-proof'
+import { UPDATE_ATTRIBUTE_CLAIM } from '../type-proof'
 import { getMatchingCredentials } from '../../bridge/react-native-cxs/RNCxs'
 
 describe('Proof Store', () => {
@@ -304,7 +301,6 @@ describe('Proof Store', () => {
     expect(gen.next().done).toBe(true)
   })
 
-  // TODO:KS Fix this tests before July 25 and remove the exclusion from .flowconfig
   xit('generate proof saga should work fine with missing attributes', () => {
     const gen = generateProofSaga(getProof(uid))
     expect(gen.next().value).toEqual(select(getOriginalProofRequestData, uid))
@@ -328,10 +324,6 @@ describe('Proof Store', () => {
       put(missingAttributesFound(missingAttributes, uid))
     )
 
-    expect(gen.next(preparedProofJson).value).toEqual(
-      take(USER_SELF_ATTESTED_ATTRIBUTES)
-    )
-
     const requestedClaimsJson = {
       self_attested_attributes: convertSelfAttestedToIndySelfAttested(
         selfAttestedAttributes
@@ -340,6 +332,7 @@ describe('Proof Store', () => {
       requested_predicates: {},
     }
 
+    // eslint-disable-next-line no-unused-vars
     const requestedAttributes = convertIndyPreparedProofToAttributes(
       {
         ...homeAddressPreparedProofWithMissingAttribute,
@@ -347,14 +340,6 @@ describe('Proof Store', () => {
       },
       originalProofRequestDataMissingAttribute.requested_attributes
     )
-
-    expect(
-      gen.next({
-        type: USER_SELF_ATTESTED_ATTRIBUTES,
-        selfAttestedAttributes,
-        uid,
-      }).value
-    ).toEqual(put(proofRequestAutoFill(uid, requestedAttributes)))
 
     expect(gen.next().value).toEqual(select(getProofRequestPairwiseDid, uid))
 

@@ -51,6 +51,7 @@ export const prepareCredentials = (items: any, claimMap: any) => {
       logoUrl: claimInfo.logoUrl,
       cred_info: item.cred_info,
       key: item.key,
+      self_attest_allowed: item.self_attest_allowed,
     }
   })
 }
@@ -61,7 +62,7 @@ const AttributesValues = ({
 }: ReactNavigation) => {
   const [selectedValueIndex, setSelectedValueIndex] = useState(
     params.items.findIndex((item: Object) =>
-      isSelected(item, params.selectedClaims)
+      isSelected(item, params.attributesFilledFromCredential)
     )
   )
   const [data] = useState(prepareCredentials(params.items, params.claimMap))
@@ -72,7 +73,7 @@ const AttributesValues = ({
 
   const onDone = useCallback(() => {
     const selectedValue = params.items[selectedValueIndex]
-    params.updateSelectedClaims(selectedValue)
+    params.updateAttributesFilledFromCredentials(selectedValue)
     goBack(null)
   }, [selectedValueIndex])
 

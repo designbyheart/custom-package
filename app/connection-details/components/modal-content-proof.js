@@ -28,8 +28,7 @@ import {
   MESSAGE_ERROR_DISSATISFIED_ATTRIBUTES_DESCRIPTION,
   PRIMARY_ACTION_SEND,
 } from '../../proof-request/type-proof-request'
-import type { GenericStringObject } from '../../common/type-common'
-import type { Attribute } from '../../push-notification/type-push-notification'
+import type { SelectedAttribute } from '../../push-notification/type-push-notification'
 
 // store
 import {
@@ -48,7 +47,6 @@ import {
 } from '../../proof-request/proof-request-store'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
 import {
-  userSelfAttestedAttributes,
   updateAttributeClaim,
   getProof,
 } from '../../proof/proof-store'
@@ -65,7 +63,6 @@ import { colors } from '../../common/styles/constant'
 
 // utils
 import {
-  convertUserFilledValuesToSelfAttested,
   enablePrimaryAction,
   hasMissingAttributes,
 } from '../utils'
@@ -84,12 +81,12 @@ class ModalContentProof extends Component<
       allMissingAttributesFilled: !hasMissingAttributes(
         this.props.missingAttributes
       ),
-      selfAttestedAttributes: {},
       disableUserInputs: false,
-      selectedClaims: {},
       disableSendButton: false,
       interactionsDone: false,
       scheduledDeletion: false,
+      attributesFilledFromCredential: {},
+      attributesFilledByUser: {},
     }
     this.onSend = this.onSend.bind(this)
   }
@@ -188,7 +185,7 @@ class ModalContentProof extends Component<
       this.props.data &&
       this.props.data.requestedAttributes !== nextProps.data.requestedAttributes
     ) {
-      const selectedClaims = nextProps.data.requestedAttributes.reduce(
+      const attributesFilledFromCredential = nextProps.data.requestedAttributes.reduce(
         (acc, item) => {
           const items = { ...acc }
           if (Array.isArray(item)) {
@@ -204,49 +201,45 @@ class ModalContentProof extends Component<
         },
         {}
       )
-      this.setState({ selectedClaims })
+      this.setState({ attributesFilledFromCredential })
     }
   }
 
-  updateSelectedClaims = (item: Attribute) => {
-    if (this.state.selectedClaims && item && item.key) {
-      const selectedClaims = {
-        ...this.state.selectedClaims,
-        [`${item.key}`]: [item.claimUuid, true, item.cred_info],
-      }
-      this.setState({ selectedClaims })
+  updateAttributesFilledFromCredentials = (item: SelectedAttribute) => {
+    const attributesFilledFromCredential = {
+      ...this.state.attributesFilledFromCredential,
+      [`${item.key}`]: [item.claimUuid, true, item.cred_info],
+    }
+    this.setState({ attributesFilledFromCredential })
+
+    // attribute is not self attested anymore
+    if (this.state.attributesFilledByUser[item.key] !== undefined) {
+      const {[item.key]: deleted, ...attributesFilledByUser} = this.state.attributesFilledByUser
+      this.setState({ attributesFilledByUser })
+    }
+  }
+
+  updateAttributesFilledByUser = (item: SelectedAttribute) => {
+    const attributesFilledByUser = {
+      ...this.state.attributesFilledByUser,
+      [item.key]: item.value,
+    }
+    this.setState({ attributesFilledByUser })
+
+    // attribute is not filled from credential anymore
+    if (this.state.attributesFilledFromCredential[item.key] !== undefined) {
+      const {[item.key]: deleted, ...attributesFilledFromCredential} = this.state.attributesFilledFromCredential
+      this.setState({ attributesFilledFromCredential })
     }
   }
 
   canEnablePrimaryAction = (
     canEnable: boolean,
-    selfAttestedAttributes: GenericStringObject
   ) => {
     this.setState({
       allMissingAttributesFilled: canEnable,
-      selfAttestedAttributes,
       disableSendButton: false,
     })
-  }
-
-  updateFirstTimeClaim() {
-    const selectedClaims = this.props.data.requestedAttributes.reduce(
-      (acc, item) => {
-        const items = { ...acc }
-        if (Array.isArray(item)) {
-          if (item[0].claimUuid) {
-            items[`${item[0].key}`] = [
-              item[0].claimUuid,
-              true,
-              item[0].cred_info,
-            ]
-          }
-        }
-        return items
-      },
-      {}
-    )
-    this.setState({ selectedClaims })
   }
 
   componentDidMount() {
@@ -288,7 +281,8 @@ class ModalContentProof extends Component<
     this.props.updateAttributeClaim(
       this.props.uid,
       this.props.remotePairwiseDID,
-      this.state.selectedClaims
+      this.state.attributesFilledFromCredential,
+      this.state.attributesFilledByUser,
     )
   }
 
@@ -312,14 +306,6 @@ class ModalContentProof extends Component<
     })
     this.props.newConnectionSeen(this.props.remotePairwiseDID)
 
-    this.props.userSelfAttestedAttributes(
-      convertUserFilledValuesToSelfAttested(
-        this.state.selfAttestedAttributes,
-        this.props.missingAttributes
-      ),
-      this.props.uid
-    )
-
     if (this.props.invitationPayload) {
       // if properties contains invitation it means we accepted out-of-band presentation request
       this.props.acceptOutOfBandInvitation(
@@ -328,13 +314,15 @@ class ModalContentProof extends Component<
       )
       this.props.applyAttributesForPresentationRequest(
         this.props.uid,
-        this.state.selectedClaims
+        this.state.attributesFilledFromCredential,
+        this.state.attributesFilledByUser,
       )
     } else {
       this.props.updateAttributeClaim(
         this.props.uid,
         this.props.remotePairwiseDID,
-        this.state.selectedClaims
+        this.state.attributesFilledFromCredential,
+        this.state.attributesFilledByUser,
       )
     }
 
@@ -368,7 +356,11 @@ class ModalContentProof extends Component<
       return <Loader />
     }
 
-    const { canEnablePrimaryAction, updateSelectedClaims } = this
+    const {
+      canEnablePrimaryAction,
+      updateAttributesFilledFromCredentials,
+      updateAttributesFilledByUser
+    } = this
     const { disableUserInputs } = this.state
 
     return (
@@ -382,7 +374,8 @@ class ModalContentProof extends Component<
               canEnablePrimaryAction,
               disableUserInputs,
               userAvatarSource,
-              updateSelectedClaims,
+              updateAttributesFilledFromCredentials,
+              updateAttributesFilledByUser,
               institutionalName,
               credentialName,
               credentialText,
@@ -390,7 +383,8 @@ class ModalContentProof extends Component<
               colorBackground,
               navigation,
               route,
-              selectedClaims: this.state.selectedClaims,
+              attributesFilledFromCredential: this.state.attributesFilledFromCredential,
+              attributesFilledByUser: this.state.attributesFilledByUser,
             }}
           />
         </View>
@@ -463,7 +457,6 @@ const mapDispatchToProps = (dispatch) =>
       applyAttributesForPresentationRequest,
       deleteOutofbandPresentationRequest,
       getProof,
-      userSelfAttestedAttributes,
       proofRequestShowStart,
       newConnectionSeen,
       denyProofRequest,

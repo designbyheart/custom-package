@@ -125,17 +125,6 @@ export const ERROR_MISSING_ATTRIBUTE_IN_CLAIMS = (
   message,
 })
 
-export type IndySelfAttestedAttributes = {
-  [attributeKey: string]: string,
-}
-
-export const USER_SELF_ATTESTED_ATTRIBUTES = 'USER_SELF_ATTESTED_ATTRIBUTES'
-export type UserSelfAttestedAttributesAction = {
-  type: typeof USER_SELF_ATTESTED_ATTRIBUTES,
-  selfAttestedAttributes: SelfAttestedAttributes,
-  uid: string,
-}
-
 export type IndyPreparedProof = {
   attrs: {
     [attributeName: string]: ?Array<MatchingCredential | null>,
@@ -161,7 +150,6 @@ export type ProofAction =
   | GenerateProofAction
   | ProofSuccessAction
   | ProofFailAction
-  | UserSelfAttestedAttributesAction
   | ProofRequestShowStartAction
   | InitialTestAction
   | ResetAction
