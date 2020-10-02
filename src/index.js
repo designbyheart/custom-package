@@ -1,3 +1,3 @@
 // @flow
 
-export { ConnectMeApp } from './app'
+export { createApp } from './app'

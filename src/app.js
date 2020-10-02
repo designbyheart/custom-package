@@ -138,4 +138,6 @@ export class ConnectMeApp extends Component<AppProps, void> {
   }
 }
 
-AppRegistry.registerComponent('ConnectMe', () => ConnectMeApp)
+export function createApp(appName: string) {
+  return AppRegistry.registerComponent(appName, () => ConnectMeApp)
+}
