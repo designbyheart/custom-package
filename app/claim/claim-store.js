@@ -352,7 +352,7 @@ export function* deleteClaimSaga(
     const deletedConnectionsParsed = JSON.parse(deletedConnectionsJSON)
 
     let connectionIdentifier = null
-    if (remoteDid in deletedConnectionsParsed) {
+    if (deletedConnectionsParsed && remoteDid in deletedConnectionsParsed) {
       connectionIdentifier = deletedConnectionsParsed[remoteDid]
     }
 
