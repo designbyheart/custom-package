@@ -131,7 +131,7 @@ detox-ios-test:
   artifacts:
     paths:
       - e2e/screenshots
-    expire_in: 52 week
+    expire_in: 1 week
 
 ### - iOS - ###
 .build-ios:

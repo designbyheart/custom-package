@@ -1,10 +1,19 @@
+/**
+ * @jest-environment node
+ */
+
 // @flow
 
-import { element, by, waitFor } from 'detox'
+import http from 'http'
+import chalk from 'chalk'
+import { element, by, waitFor, expect } from 'detox'
+import { waitForElementAndTap } from '../utils/detox-selectors'
+import { matchScreenshot } from '../utils/screenshot'
 import {
   BURGER_MENU,
   SCAN_BUTTON,
   MENU_MY_CONNECTIONS,
+  MENU_MY_CREDENTIALS,
   MY_CONNECTIONS_CONTAINER,
   MY_CONNECTIONS_HEADER,
   SCREENSHOT_TEST_CONNECTION,
@@ -17,16 +26,173 @@ import {
   VIEW_PROOF,
   PROOF_HEADER,
   BACK_ARROW,
-  CLAIM_OFFER_ADDRESS,
-  PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
+  ALLOW_BUTTON,
+  CONNECT_BUTTON,
+  HOME_NEW_MESSAGE,
+  CLAIM_OFFER_ACCEPT,
+  CLAIM_OFFER_REJECT,
+  PROOF_REQUEST_SEND,
+  PROOF_REQUEST_REJECT,
+  CONNECTION_SUBMENU_BUTTON,
+  CONNECTION_DELETE_BUTTON,
+  MY_CREDENTIALS_DELETE,
 } from '../utils/test-constants'
-import { waitForElementAndTap } from '../utils/detox-selectors'
-import { matchScreenshot } from '../utils/screenshot'
+import {
+  VAS,
+  VASconfig,
+  getDeferred,
+  CLAIM_OFFER_PROFILE_INFO,
+  PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
+} from '../utils/api_new'
 
-const TIMEOUT = 15000
+//$FlowFixMe
+require('tls').DEFAULT_ECDH_CURVE = 'auto'
+
+const TIMEOUT = 30000
+
+// // Start server to listen VAS responses
+const instance = new VAS(VASconfig)
 
 describe('My connections screen', () => {
-  it('Case 1: go to my connections, find all necessary elements', async () => {
+  it('Case 1.1: create new connection, credential and proof', async () => {
+    // Configure ngrok
+    let url = await instance.setupNgrok()
+
+    // // Register server endpoint in VAS - run it once
+    let result1 = await instance.registerEndpoint(
+      url // it changes
+    )
+    console.warn(result1)
+
+    // // CreateRelationship request :: VAS returns RelationshipCreated
+    let [
+      relationshipThreadID,
+      DID,
+      result2,
+    ] = await instance.createRelationship('Evernym QA-RC')
+    console.warn([relationshipThreadID, DID, result2])
+
+    global.DID = DID // put this into global variable to use in next cases
+
+    let jsonData = await instance.relationshipInvitation(
+      relationshipThreadID,
+      DID,
+      'connection-invitation',
+      'ARIES_V1_QR'
+    )
+    console.warn(jsonData)
+
+    const { resolve, promise: invitationPushed } = getDeferred()
+    const server = http
+      .createServer(function (request, response) {
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        response.write(jsonData.trim())
+        response.end()
+        resolve && resolve()
+      })
+      .listen(1337)
+    console.log(
+      chalk.greenBright('Invitation server is listening on port 1337...')
+    )
+
+    await waitForElementAndTap('text', SCAN_BUTTON, TIMEOUT)
+
+    await invitationPushed
+
+    server.close()
+    console.log(chalk.redBright('Invitation server has been stopped.'))
+
+    try {
+      await waitForElementAndTap('text', ALLOW_BUTTON, TIMEOUT)
+    } catch (e) {
+      console.log('Permissions have already been granted!')
+    }
+
+    await waitForElementAndTap('text', CONNECT_BUTTON, TIMEOUT)
+
+    await new Promise((r) => setTimeout(r, TIMEOUT)) // sync
+
+    // // CLAIM_OFFER_PROFILE_INFO
+
+    //$FlowFixMe
+    global.CLAIM_OFFER_PROFILE_INFO_SCHEMA_ID = await instance
+      .createSchema(CLAIM_OFFER_PROFILE_INFO, ['name', 'gender', 'height'])
+      .then((res) => res[0])
+
+    //$FlowFixMe
+    global.CLAIM_OFFER_PROFILE_INFO_CRED_DEF_ID = await instance
+      .createCredentialDef(
+        CLAIM_OFFER_PROFILE_INFO,
+        global.CLAIM_OFFER_PROFILE_INFO_SCHEMA_ID
+      )
+      .then((res) => res[0])
+
+    await instance.sendCredentialOffer(
+      global.DID,
+      global.CLAIM_OFFER_PROFILE_INFO_CRED_DEF_ID,
+      {
+        name: 'Bob',
+        gender: 'male',
+        height: '170',
+      },
+      CLAIM_OFFER_PROFILE_INFO
+    )
+
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      await element(by.text('No new notifications.')).swipe('down')
+      try {
+        await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+      } catch (e) {
+        await instance.sendCredentialOffer(
+          global.DID,
+          global.CLAIM_OFFER_PROFILE_INFO_CRED_DEF_ID,
+          {
+            name: 'Bob',
+            gender: 'male',
+            height: '170',
+          },
+          CLAIM_OFFER_PROFILE_INFO
+        )
+        try {
+          await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+        } catch (e) {
+          console.warn(e)
+          await element(by.text('No new notifications.')).swipe('down')
+          await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+        }
+      }
+    }
+
+    await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
+
+    await instance.issueCredential(global.DID)
+
+    await instance.presentProof(
+      global.DID,
+      PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
+      ['name', 'gender'],
+      true
+    )
+
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      await element(by.text('No new notifications.')).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
+
+    await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
+
+    await instance.endpointServer.close()
+    console.log(chalk.redBright('VAS server has been stopped.'))
+    await instance.shutdownNgrok()
+  })
+
+  it('Case 1.2: go to my connections, find all necessary elements', async () => {
     await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
     await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
@@ -63,15 +229,13 @@ describe('My connections screen', () => {
 
     await expect(element(by.text(CONNECTION_ENTRY_HEADER))).toBeVisible()
 
-    try {
-      await element(by.text(VIEW_CREDENTIAL)).tap()
-    } catch (e) {
-      // profile info is not deleted
-      await element(by.text(VIEW_CREDENTIAL)).atIndex(0).tap()
-    }
+    await element(by.text(VIEW_CREDENTIAL)).tap()
+
     await expect(element(by.text(CREDENTIAL_HEADER))).toBeVisible()
 
-    await expect(element(by.text(CLAIM_OFFER_ADDRESS)).atIndex(0)).toBeVisible()
+    await expect(
+      element(by.text(CLAIM_OFFER_PROFILE_INFO)).atIndex(0)
+    ).toBeVisible()
 
     await waitForElementAndTap('text', CLOSE_BUTTON, TIMEOUT)
 
@@ -90,5 +254,42 @@ describe('My connections screen', () => {
     await waitForElementAndTap('text', CLOSE_BUTTON, TIMEOUT)
 
     await element(by.id(BACK_ARROW)).tap()
+  })
+
+  it('Case 3: delete existing connection and credential', async () => {
+    // // skip first part due to bug with deletion
+    // await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+
+    // await waitForElementAndTap('text', MENU_MY_CREDENTIALS, TIMEOUT)
+
+    // await element(by.text(CLAIM_OFFER_PROFILE_INFO)).swipe('left') // open credential menu
+
+    // try {
+    //   await waitForElementAndTap('text', MY_CREDENTIALS_DELETE, TIMEOUT)
+
+    //   await element(by.text(MY_CREDENTIALS_DELETE)).atIndex(0).longPress()
+
+    //   await expect(element(by.text(CLAIM_OFFER_PROFILE_INFO))).toNotExist()
+    // } catch (e) {
+    //   console.warn(e)
+
+    //   await waitForElementAndTap('text', MY_CREDENTIALS_DELETE, TIMEOUT)
+
+    //   await element(by.text(MY_CREDENTIALS_DELETE)).atIndex(0).longPress()
+
+    //   await expect(element(by.text(CLAIM_OFFER_PROFILE_INFO))).toNotExist()
+    // }
+
+    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+
+    await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
+
+    await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
+
+    await waitForElementAndTap('id', CONNECTION_SUBMENU_BUTTON, TIMEOUT) // open connection menu
+
+    await waitForElementAndTap('id', CONNECTION_DELETE_BUTTON, TIMEOUT) // delete connection
+
+    await expect(element(by.text(MY_CONNECTIONS_CONNECTION))).toNotExist()
   })
 })
