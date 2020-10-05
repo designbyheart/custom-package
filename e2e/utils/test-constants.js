@@ -27,6 +27,7 @@ export const BACK_ARROW = 'back-arrow-touchable'
 export const BURGER_MENU = 'burger-menu'
 export const SCAN_BUTTON = 'Scan'
 export const ALLOW_BUTTON = 'Allow Push Notifications'
+export const CONNECT_BUTTON = 'Connect'
 export const NEW_BACK_ARROW = 'left-icon'
 
 // home

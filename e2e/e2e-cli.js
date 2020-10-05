@@ -218,19 +218,19 @@ async function runTests(args) {
       }
     }
 
-    if (!args.skip) {
-      const connectionTestRun = spawn(
-        'detox',
-        [...initialTestArgs, 'e2e/__tests__/connection_invitation.spec.js'], // path to connection invitation test is absolute - we must use it for any test folder
-        { stdio: 'inherit' }
-      )
-      // wait for initial test run to finish
-      const { stdout, stderr, exitCode } = await connectionTestRun
+    // if (!args.skip) {
+    //   const connectionTestRun = spawn(
+    //     'detox',
+    //     [...initialTestArgs, 'e2e/__tests__/connection_invitation.spec.js'], // path to connection invitation test is absolute - we must use it for any test folder
+    //     { stdio: 'inherit' }
+    //   )
+    //   // wait for initial test run to finish
+    //   const { stdout, stderr, exitCode } = await connectionTestRun
 
-      if (exitCode) {
-        return exitCode
-      }
-    }
+    //   if (exitCode) {
+    //     return exitCode
+    //   }
+    // }
 
     const extraArgs = []
     // is there single test that user wants to run

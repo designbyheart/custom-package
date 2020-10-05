@@ -650,6 +650,20 @@ describe('Connection via QR code and SMS link', () => {
 
     await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
   })
+
+  it('Case 11: delete connection again', async () => {
+    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+
+    await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
+
+    await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
+
+    await waitForElementAndTap('id', CONNECTION_SUBMENU_BUTTON, TIMEOUT) // open connection menu
+
+    await waitForElementAndTap('id', CONNECTION_DELETE_BUTTON, TIMEOUT) // delete connection
+
+    await expect(element(by.text(MY_CONNECTIONS_CONNECTION))).toNotExist()
+  })
 })
 
 function getDeferred() {
