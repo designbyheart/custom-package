@@ -17,7 +17,7 @@ const { width } = Dimensions.get('screen')
 
 function StartUpScreen(props: { navigation: Function }) {
   const { navigation } = props
-  const image = require('../images/setup.png')
+  const image = require('../../../../app/evernym-sdk/images/setup.png')
   const animation = useRef(new Animated.Value(width * 2)).current
   const handlePress = useCallback(() => {
     navigation.navigate(lockPinSetupRoute)
