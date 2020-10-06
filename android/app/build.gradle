@@ -147,7 +147,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 70088
+        versionCode 70089
         versionName "1.4.0"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
