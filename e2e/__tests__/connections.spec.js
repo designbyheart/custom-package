@@ -259,18 +259,6 @@ describe('My connections screen', () => {
   it('Case 3: delete existing connection and credential', async () => {
     await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
-    await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
-
-    await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
-
-    await waitForElementAndTap('id', CONNECTION_SUBMENU_BUTTON, TIMEOUT) // open connection menu
-
-    await waitForElementAndTap('id', CONNECTION_DELETE_BUTTON, TIMEOUT) // delete connection
-
-    await expect(element(by.text(MY_CONNECTIONS_CONNECTION))).toNotExist()
-
-    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
-
     await waitForElementAndTap('text', MENU_MY_CREDENTIALS, TIMEOUT)
 
     await element(by.text(CLAIM_OFFER_PROFILE_INFO)).swipe('left') // open credential menu
@@ -282,5 +270,17 @@ describe('My connections screen', () => {
     await new Promise((r) => setTimeout(r, 1000)) // sync
 
     await expect(element(by.text(CLAIM_OFFER_PROFILE_INFO))).toNotExist()
+
+    await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
+
+    await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
+
+    await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
+
+    await waitForElementAndTap('id', CONNECTION_SUBMENU_BUTTON, TIMEOUT) // open connection menu
+
+    await waitForElementAndTap('id', CONNECTION_DELETE_BUTTON, TIMEOUT) // delete connection
+
+    await expect(element(by.text(MY_CONNECTIONS_CONNECTION))).toNotExist()
   })
 })
