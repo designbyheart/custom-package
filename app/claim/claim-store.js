@@ -349,7 +349,10 @@ export function* deleteClaimSaga(
     const remoteDid = claimOfferPayload.remotePairwiseDID
 
     const deletedConnectionsJSON = yield call(secureGet, 'DELETED_CONNECTIONS')
-    const deletedConnectionsParsed = JSON.parse(deletedConnectionsJSON)
+    let deletedConnectionsParsed = null
+    if (deletedConnectionsJSON) {
+      deletedConnectionsParsed = JSON.parse(deletedConnectionsJSON)
+    }
 
     let connectionIdentifier = null
     if (deletedConnectionsParsed && remoteDid in deletedConnectionsParsed) {
