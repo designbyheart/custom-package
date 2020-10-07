@@ -22,6 +22,7 @@ DerivedData
 node_modules/
 npm-debug.log
 yarn-error.log
+yarn.lock
 
 ### OSX ###
 .DS_Store
@@ -81,11 +82,12 @@ coverage/
 
 # npm lock file, we are not using npm command to install packages
 package-lock.json
-android/app/src/main/assets/index.android.bundle
-android/app/src/main/assets/index.android.bundle.meta
 
 # Bitrise secret ignore
 .bitrise.secrets.yml
 
 ios/ConnectMe/RNbundle
 ios/react-native-xcode.sh.log
+
+*~
+\#*\#
