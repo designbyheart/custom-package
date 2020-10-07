@@ -280,6 +280,9 @@ export const getClaimMap = (state: Store) => state.claim.claimMap
 
 export const getCurrentScreen = (state: Store) => state.route.currentScreen
 
+export const getNotificationOpenOptions = (state: Store) =>
+  state.pushNotification.notificationOpenOptions
+
 export const getWalletBalance = (state: Store) =>
   state.wallet.walletBalance.data
 

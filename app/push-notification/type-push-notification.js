@@ -29,6 +29,8 @@ export type PushNotificationReceivedAction = {
   notification: DownloadedNotification,
 }
 
+export const SAVE_NOTIFICATION_OPEN_OPTIONS = 'SAVE_NOTIFICATION_OPEN_OPTIONS'
+
 export const PUSH_NOTIFICATION_UPDATE_TOKEN = 'PUSH_NOTIFICATION_UPDATE_TOKEN'
 export type PushNotificationUpdateTokenAction = {
   type: typeof PUSH_NOTIFICATION_UPDATE_TOKEN,
@@ -78,7 +80,7 @@ export type DownloadedNotification = {
   pushNotifMsgTitle?: ?string,
   remotePairwiseDID: string,
   forDID: string,
-  notificationOpenOptions: ?NotificationOpenOptions,
+  notificationOpenOptions?: ?NotificationOpenOptions,
 }
 
 export type PushNotificationStore = {
@@ -95,6 +97,7 @@ export type PushNotificationStore = {
     routeName: string,
     params: GenericObject,
   },
+  notificationOpenOptions?: Object | null,
 }
 
 export type AdditionalDataResponse = {
@@ -279,4 +282,5 @@ export type GetClaimVcxResult = {
 
 export type NotificationOpenOptions = {
   openMessageDirectly: boolean,
+  uid: string,
 }

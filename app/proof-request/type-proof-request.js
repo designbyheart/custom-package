@@ -13,7 +13,8 @@ import type {
 } from '../common/type-common'
 import type {
   Attribute,
-  NotificationPayloadInfo, SelectedAttribute,
+  NotificationPayloadInfo,
+  SelectedAttribute,
 } from '../push-notification/type-push-notification'
 import type { ClaimMap } from '../claim/type-claim'
 import { updateAttributeClaim } from '../proof/proof-store'
@@ -130,9 +131,7 @@ export type ProofRequestAttributeListProp = {
   list: Array<Attribute>,
   claimMap?: ?ClaimMap,
   missingAttributes: MissingAttributes | {},
-  canEnablePrimaryAction: (
-    canEnable: boolean,
-  ) => void,
+  canEnablePrimaryAction: (canEnable: boolean) => void,
   disableUserInputs: boolean,
   userAvatarSource: ?ImageSource,
   updateAttributesFilledFromCredentials: (item: SelectedAttribute) => void,
@@ -222,7 +221,7 @@ export type ProofRequestProps = {
   applyAttributesForPresentationRequest: (
     uid: string,
     requestedAttrsJson: RequestedAttrsJson,
-    selfAttestedAttributes: SelfAttestedAttributes,
+    selfAttestedAttributes: SelfAttestedAttributes
   ) => void,
   deleteOutofbandPresentationRequest: (uid: string) => void,
   invitation?: any,

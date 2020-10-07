@@ -46,10 +46,7 @@ import {
   deleteOutofbandPresentationRequest,
 } from '../../proof-request/proof-request-store'
 import { newConnectionSeen } from '../../connection-history/connection-history-store'
-import {
-  updateAttributeClaim,
-  getProof,
-} from '../../proof/proof-store'
+import { updateAttributeClaim, getProof } from '../../proof/proof-store'
 import type { Store } from '../../store/type-store'
 import { acceptOutOfBandInvitation } from '../../invitation/invitation-store'
 
@@ -62,10 +59,7 @@ import ProofRequestAttributeList from './proof-request-attribute-list'
 import { colors } from '../../common/styles/constant'
 
 // utils
-import {
-  enablePrimaryAction,
-  hasMissingAttributes,
-} from '../utils'
+import { enablePrimaryAction, hasMissingAttributes } from '../utils'
 
 class ModalContentProof extends Component<
   ProofRequestAndHeaderProps,
@@ -214,7 +208,10 @@ class ModalContentProof extends Component<
 
     // attribute is not self attested anymore
     if (this.state.attributesFilledByUser[item.key] !== undefined) {
-      const {[item.key]: deleted, ...attributesFilledByUser} = this.state.attributesFilledByUser
+      const {
+        [item.key]: deleted,
+        ...attributesFilledByUser
+      } = this.state.attributesFilledByUser
       this.setState({ attributesFilledByUser })
     }
   }
@@ -228,14 +225,15 @@ class ModalContentProof extends Component<
 
     // attribute is not filled from credential anymore
     if (this.state.attributesFilledFromCredential[item.key] !== undefined) {
-      const {[item.key]: deleted, ...attributesFilledFromCredential} = this.state.attributesFilledFromCredential
+      const {
+        [item.key]: deleted,
+        ...attributesFilledFromCredential
+      } = this.state.attributesFilledFromCredential
       this.setState({ attributesFilledFromCredential })
     }
   }
 
-  canEnablePrimaryAction = (
-    canEnable: boolean,
-  ) => {
+  canEnablePrimaryAction = (canEnable: boolean) => {
     this.setState({
       allMissingAttributesFilled: canEnable,
       disableSendButton: false,
@@ -282,7 +280,7 @@ class ModalContentProof extends Component<
       this.props.uid,
       this.props.remotePairwiseDID,
       this.state.attributesFilledFromCredential,
-      this.state.attributesFilledByUser,
+      this.state.attributesFilledByUser
     )
   }
 
@@ -315,14 +313,14 @@ class ModalContentProof extends Component<
       this.props.applyAttributesForPresentationRequest(
         this.props.uid,
         this.state.attributesFilledFromCredential,
-        this.state.attributesFilledByUser,
+        this.state.attributesFilledByUser
       )
     } else {
       this.props.updateAttributeClaim(
         this.props.uid,
         this.props.remotePairwiseDID,
         this.state.attributesFilledFromCredential,
-        this.state.attributesFilledByUser,
+        this.state.attributesFilledByUser
       )
     }
 
@@ -359,7 +357,7 @@ class ModalContentProof extends Component<
     const {
       canEnablePrimaryAction,
       updateAttributesFilledFromCredentials,
-      updateAttributesFilledByUser
+      updateAttributesFilledByUser,
     } = this
     const { disableUserInputs } = this.state
 
@@ -383,7 +381,8 @@ class ModalContentProof extends Component<
               colorBackground,
               navigation,
               route,
-              attributesFilledFromCredential: this.state.attributesFilledFromCredential,
+              attributesFilledFromCredential: this.state
+                .attributesFilledFromCredential,
               attributesFilledByUser: this.state.attributesFilledByUser,
             }}
           />
