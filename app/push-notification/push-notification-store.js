@@ -12,8 +12,6 @@ import {
 import { MESSAGE_TYPE } from '../api/api-constants'
 import { captureError } from '../services/error/error-handler'
 import {
-  getRemotePairwiseDidAndName,
-  getPendingFetchAdditionalDataKey,
   getIsAppLocked,
   getCurrentScreen,
   getBackupWalletHandle,
@@ -29,6 +27,7 @@ import {
   FETCH_ADDITIONAL_DATA_PENDING_KEYS,
   UPDATE_RELEVANT_PUSH_PAYLOAD_STORE_AND_REDIRECT,
   UPDATE_RELEVANT_PUSH_PAYLOAD_STORE,
+  SAVE_NOTIFICATION_OPEN_OPTIONS,
 } from './type-push-notification'
 
 import type {
@@ -52,8 +51,6 @@ import type {
 } from './type-push-notification'
 import {
   updatePushTokenVcx,
-  getHandleBySerializedConnection,
-  downloadMessages,
   vcxGetAgentMessages,
   updateWalletBackupStateWithMessage,
   backupWalletBackup,
@@ -61,41 +58,25 @@ import {
 import {
   VCX_INIT_SUCCESS,
   MESSAGE_RESPONSE_CODE,
-  GET_UN_ACKNOWLEDGED_MESSAGES,
-} from '../store/type-config-store'
-import type {
-  DownloadedConnectionsWithMessages,
-  DownloadedMessage,
 } from '../store/type-config-store'
 import uniqueId from 'react-native-unique-id'
 import { RESET } from '../common/type-common'
-import {
-  ensureVcxInitAndPoolConnectSuccess,
-  ensureVcxInitSuccess,
-} from '../store/route-store'
-import type { Connection } from '../store/type-connection-store'
+import { ensureVcxInitSuccess } from '../store/route-store'
 import type {
   ProofRequestPushPayload,
   AdditionalProofDataPayload,
 } from '../proof-request/type-proof-request'
-import type { ClaimPushPayloadVcx } from '../claim/type-claim'
 import type { Claim } from '../claim/type-claim'
-import type { QuestionPayload } from './../question/type-question'
 import { safeGet, safeSet, walletSet } from '../services/storage'
 import { PUSH_COM_METHOD, LAST_SUCCESSFUL_CLOUD_BACKUP } from '../common'
 import type { NavigationParams, GenericObject } from '../common/type-common'
 
 import { addPendingRedirection } from '../lock/lock-store'
-import { UNLOCK_APP } from '../lock/type-lock'
 import { claimOfferReceived } from '../claim-offer/claim-offer-store'
 import { proofRequestReceived } from '../proof-request/proof-request-store'
 import {
   updateMessageStatus,
-  traverseAndGetAllMessages,
-  convertDecryptedPayloadToQuestion,
-  getMessagesLoading,
-  getMessagesSuccess,
-  getMessagesFail,
+  getUnacknowledgedMessages,
 } from '../store/config-store'
 import {
   claimOfferRoute,
@@ -129,10 +110,6 @@ import { connectionHistoryBackedUp } from '../connection-history/connection-hist
 import RNFetchBlob from 'rn-fetch-blob'
 import { showInAppNotification } from '../in-app-notification/in-app-notification-actions'
 
-async function delay(ms): Promise<number> {
-  return new Promise((res) => setTimeout(res, ms))
-}
-
 const blackListedRoute = {
   [proofRequestRoute]: proofRequestRoute,
   [claimOfferRoute]: claimOfferRoute,
@@ -154,6 +131,7 @@ const initialState = {
   error: null,
   pendingFetchAdditionalDataKey: null,
   navigateRoute: null,
+  notificationOpenOptions: null,
 }
 
 export const pushNotificationPermissionAction = (isAllowed: boolean) => ({
@@ -352,64 +330,18 @@ export const setFetchAdditionalDataPendingKeys = (
   forDID,
 })
 
+export const saveNotificationOpenOptions = (
+  notificationOpenOptions: NotificationOpenOptions
+) => ({
+  type: SAVE_NOTIFICATION_OPEN_OPTIONS,
+  payload: notificationOpenOptions,
+})
+
 export function* fetchAdditionalDataSaga(
   action: FetchAdditionalDataAction
 ): Generator<*, *, *> {
-  const { forDID, uid, type, senderLogoUrl } = action.notificationPayload
+  const { uid, type } = action.notificationPayload
   const { notificationOpenOptions } = action
-
-  if (type === 'unknown') {
-    // if we get type as unknown, that means we are running aries protocol
-    // for aries protocol we just want to run downloadMessages logic
-    // so we are raising this action to run downloadMessagesSaga
-    yield put({
-      type: GET_UN_ACKNOWLEDGED_MESSAGES,
-    })
-    // once we start processing aries message, we don't to run any other logic
-    // so we return from here
-    return
-  }
-
-  if (
-    type === MESSAGE_TYPE.CLAIM_OFFER ||
-    type === MESSAGE_TYPE.PROOF_REQUEST
-  ) {
-    // if we get notification about received `claimOffer` / `proofReuqest` message,
-    // we need to download that message and process
-    // we can download and process that messages same way for `proprietary` and `aries` protocols.
-    // so we are raising this action to run downloadMessagesSaga
-    yield put({
-      type: GET_UN_ACKNOWLEDGED_MESSAGES,
-    })
-    // once we start processing message, we don't to run any other logic
-    // so we return from here
-    return
-  }
-
-  if (forDID && uid) {
-    const fetchDataAlreadyExists = yield select(
-      getPendingFetchAdditionalDataKey
-    )
-    if (fetchDataAlreadyExists && fetchDataAlreadyExists[`${uid}-${forDID}`]) {
-      return
-    }
-    yield put(setFetchAdditionalDataPendingKeys(uid, forDID))
-  }
-
-  const vcxResult = yield* ensureVcxInitAndPoolConnectSuccess()
-  if (vcxResult && vcxResult.fail) {
-    yield take(VCX_INIT_SUCCESS)
-  }
-
-  if (!forDID) {
-    yield put(
-      fetchAdditionalDataError({
-        code: 'OCS-001',
-        message: 'Missing forDID in notification payload',
-      })
-    )
-    return
-  }
 
   // NOTE: CLOUD-BACKUP wait for push notification after createWalletBackup
   if (type === MESSAGE_TYPE.WALLET_BACKUP_READY) {
@@ -520,131 +452,11 @@ export function* fetchAdditionalDataSaga(
     }
   }
 
-  const connection: {
-    remotePairwiseDID: string,
-    remoteName: string,
-  } & Connection = yield select(getRemotePairwiseDidAndName, forDID)
-
-  if (!connection.remotePairwiseDID || !connection.vcxSerializedConnection) {
-    yield put(
-      fetchAdditionalDataError({
-        code: 'OCS-002',
-        message: 'No pairwise connection found',
-      })
-    )
-
-    return
-  }
-
-  const connectionHandle = yield call(
-    getHandleBySerializedConnection,
-    connection.vcxSerializedConnection
-  )
-
-  // update that we are downloading messages
-  yield put(getMessagesLoading())
-
-  try {
-    let additionalData:
-      | ClaimOfferPushPayload
-      | ProofRequestPushPayload
-      | ClaimPushPayload
-      | ClaimPushPayloadVcx
-      | QuestionPayload
-      | null = null
-
-    if (type === MESSAGE_TYPE.CLAIM) {
-      // as per vcx apis we are not downloading claim
-      // we will update state of existing claim offer instance
-      // and vcx will internally download claim and store inside wallet
-      additionalData = {
-        connectionHandle,
-      }
-    }
-
-    // toLowerCase here to handle type 'question' and 'Question'
-    if (type.toLowerCase() === MESSAGE_TYPE.QUESTION.toLowerCase()) {
-      const data = yield call(
-        downloadMessages,
-        MESSAGE_RESPONSE_CODE.MESSAGE_PENDING,
-        uid,
-        forDID
-      )
-      if (data && data.length != 0) {
-        const parsedData: DownloadedConnectionsWithMessages = JSON.parse(data)
-        const messages: Array<DownloadedMessage> = traverseAndGetAllMessages(
-          parsedData
-        )
-        const {
-          pushNotifMsgTitle,
-          pushNotifMsgText,
-        } = action.notificationPayload
-        for (let i = 0; i < messages.length; i++) {
-          additionalData = convertDecryptedPayloadToQuestion(
-            connectionHandle,
-            messages[i].decryptedPayload ? messages[i].decryptedPayload : '',
-            uid,
-            forDID,
-            messages[i].senderDID,
-            pushNotifMsgTitle ? pushNotifMsgTitle : '',
-            pushNotifMsgText ? pushNotifMsgText : ''
-          )
-        }
-      }
-    }
-
-    // do something with data, probably get the message here
-
-    // update that message download was success
-    yield put(getMessagesSuccess())
-
-    if (!additionalData) {
-      // we did not get any data or either push notification type is not supported
-      return
-    }
-
-    const remoteName = connection.remoteName
-    const remotePairwiseDID = connection.remotePairwiseDID
-    const senderImage = connection.logoUrl
-
-    // NOTE: We need to wait for the app to be unlocked before
-    // dispatching the pushNotificationReceived action. Also, we
-    // delay for a few milliseconds after the app is unlocked to
-    // wait for the route updates to the home/dashboard screen
-    const isAppLocked: boolean = yield select(getIsAppLocked)
-    if (isAppLocked) {
-      yield take(UNLOCK_APP)
-    }
-
-    yield call(delay, 600)
-
-    yield put(
-      pushNotificationReceived({
-        type,
-        additionalData: {
-          ...additionalData,
-          remoteName,
-          senderLogoUrl: senderImage,
-        },
-        uid,
-        senderLogoUrl,
-        remotePairwiseDID,
-        forDID,
-        notificationOpenOptions,
-      })
-    )
-  } catch (e) {
-    // update that message download failed
-    yield put(getMessagesFail())
-    customLogger.log(e)
-    captureError(e)
-    yield put(
-      fetchAdditionalDataError({
-        code: 'OCS-000',
-        message: 'Invalid additional data',
-      })
-    )
-  }
+  // Any message type except wallet backup we are using downloadMessagesSaga to download and process messages.
+  // NotificationOpenOptions is used to identify which notification the user clicked on, which is used to open
+  // the exact message.
+  yield put(saveNotificationOpenOptions(notificationOpenOptions))
+  yield put(getUnacknowledgedMessages())
 }
 
 export const updatePayloadToRelevantStoreAndRedirect = (
@@ -966,6 +778,11 @@ export default function pushNotification(
       return {
         ...state,
         navigateRoute: null,
+      }
+    case SAVE_NOTIFICATION_OPEN_OPTIONS:
+      return {
+        ...state,
+        notificationOpenOptions: action.payload,
       }
     default:
       return state

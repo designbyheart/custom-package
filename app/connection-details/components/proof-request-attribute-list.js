@@ -75,7 +75,7 @@ class ProofRequestAttributeList extends Component<
       // that user fills in them, also we need to enable generate proof button
       // once all the missing attributes are filled in by user
       this.setState(
-        generateStateForMissingAttributes(nextProps.missingAttributes),
+        generateStateForMissingAttributes(nextProps.missingAttributes)
       )
     }
   }
@@ -83,7 +83,7 @@ class ProofRequestAttributeList extends Component<
   // this form is needed to fix flow error
   // because methods of a class are by default covariant
   // so we need an invariance to tell method signature
-  canEnableGenerateProof = function() {
+  canEnableGenerateProof = function () {
     const isInvalid = isInvalidValues(this.props.missingAttributes, this.state)
     this.props.canEnablePrimaryAction(!isInvalid)
   }
@@ -105,7 +105,11 @@ class ProofRequestAttributeList extends Component<
 
   keyExtractor = (_: Attribute, index: number) => `${index}`
 
-  handleCustomValuesNavigation = (label: string, adjustedLabel: string, key: string) => {
+  handleCustomValuesNavigation = (
+    label: string,
+    adjustedLabel: string,
+    key: string
+  ) => {
     const {
       navigation: { navigate },
     } = this.props
@@ -120,7 +124,11 @@ class ProofRequestAttributeList extends Component<
     })
   }
 
-  handleAttributeValuesNavigation = (label: string, items: any, attributesFilledFromCredential: RequestedAttrsJson) => {
+  handleAttributeValuesNavigation = (
+    label: string,
+    items: any,
+    attributesFilledFromCredential: RequestedAttrsJson
+  ) => {
     const {
       navigation: { navigate },
     } = this.props
@@ -138,7 +146,8 @@ class ProofRequestAttributeList extends Component<
         items,
         attributesFilledFromCredential,
         claimMap: this.props.claimMap,
-        updateAttributesFilledFromCredentials: this.props.updateAttributesFilledFromCredentials,
+        updateAttributesFilledFromCredentials: this.props
+          .updateAttributesFilledFromCredentials,
         onCustomValueSet: this.onTextChange,
       })
     } else {
@@ -149,12 +158,17 @@ class ProofRequestAttributeList extends Component<
         items,
         attributesFilledFromCredential,
         claimMap: this.props.claimMap,
-        updateAttributesFilledFromCredentials: this.props.updateAttributesFilledFromCredentials,
+        updateAttributesFilledFromCredentials: this.props
+          .updateAttributesFilledFromCredentials,
       })
     }
   }
 
-  renderFilledAttribute = ({ item, index }: any, attributesFilledFromCredential: RequestedAttrsJson, attributesFilledByUser: any) => {
+  renderFilledAttribute = (
+    { item, index }: any,
+    attributesFilledFromCredential: RequestedAttrsJson,
+    attributesFilledByUser: any
+  ) => {
     let logoUrl
 
     const items = item
@@ -162,32 +176,32 @@ class ProofRequestAttributeList extends Component<
 
     let views
 
-    const {
-      handleAttributeValuesNavigation,
-    } = this
+    const { handleAttributeValuesNavigation } = this
 
     if (attributesFilledFromCredential[attribute.key]) {
-      const selectedItem = items.find((item) => isSelected(item, attributesFilledFromCredential))
+      const selectedItem = items.find((item) =>
+        isSelected(item, attributesFilledFromCredential)
+      )
 
       views = Object.keys(selectedItem.values).map((label, keyIndex) => {
         const value = selectedItem.values[label]
         const isDataEmptyString = value === ''
 
-        let claim = selectedItem.claimUuid &&
-          this.props.claimMap &&
-          this.props.claimMap[selectedItem.claimUuid] || {}
+        let claim =
+          (selectedItem.claimUuid &&
+            this.props.claimMap &&
+            this.props.claimMap[selectedItem.claimUuid]) ||
+          {}
 
         if (!logoUrl) {
-          logoUrl =
-            claim.logoUrl
-              ? { uri: claim.logoUrl }
-              : null
+          logoUrl = claim.logoUrl ? { uri: claim.logoUrl } : null
         }
 
         return (
           <View key={`${index}_${keyIndex}`} style={styles.textAvatarWrapper}>
             <View style={styles.textInnerWrapper}>
-              {// If data is empty string, show the BLANK text in gray instead
+              {
+                // If data is empty string, show the BLANK text in gray instead
                 isDataEmptyString ? (
                   <View>
                     <Text style={styles.title}>{label}</Text>
@@ -199,7 +213,11 @@ class ProofRequestAttributeList extends Component<
                   <View>
                     <TouchableOpacity
                       onPress={() =>
-                        handleAttributeValuesNavigation(label, items, attributesFilledFromCredential)
+                        handleAttributeValuesNavigation(
+                          label,
+                          items,
+                          attributesFilledFromCredential
+                        )
                       }
                     >
                       <View style={styles.textAvatarWrapper}>
@@ -208,36 +226,41 @@ class ProofRequestAttributeList extends Component<
                             label,
                             value,
                             selectedItem.claimUuid || '',
-                            selectedItem.claimUuid || '',
+                            selectedItem.claimUuid || ''
                           )}
                         </View>
-                        {
-                          keyIndex === 0 &&
+                        {keyIndex === 0 && (
                           <View style={styles.avatarWrapper}>
-                            {
-                              logoUrl ?
-                                <Icon
-                                  medium
-                                  round
-                                  resizeMode="cover"
-                                  src={logoUrl}
-                                /> :
-                                claim && claim.senderName &&
-                                <DefaultLogo text={claim.senderName} size={30} fontSize={18}/>
-                            }
+                            {logoUrl ? (
+                              <Icon
+                                medium
+                                round
+                                resizeMode="cover"
+                                src={logoUrl}
+                              />
+                            ) : (
+                              claim &&
+                              claim.senderName && (
+                                <DefaultLogo
+                                  text={claim.senderName}
+                                  size={30}
+                                  fontSize={18}
+                                />
+                              )
+                            )}
                           </View>
-                        }
+                        )}
                       </View>
                     </TouchableOpacity>
                   </View>
-                )}
+                )
+              }
             </View>
-            {
-              keyIndex === 0 &&
+            {keyIndex === 0 && (
               <View style={styles.iconWrapper}>
-                <EvaIcon name={ARROW_FORWARD_ICON} fill={colors.cmBlack}/>
+                <EvaIcon name={ARROW_FORWARD_ICON} fill={colors.cmBlack} />
               </View>
-            }
+            )}
           </View>
         )
       })
@@ -249,7 +272,11 @@ class ProofRequestAttributeList extends Component<
             <View>
               <TouchableOpacity
                 onPress={() =>
-                  handleAttributeValuesNavigation(attribute.label, items, attributesFilledFromCredential)
+                  handleAttributeValuesNavigation(
+                    attribute.label,
+                    items,
+                    attributesFilledFromCredential
+                  )
                 }
               >
                 <View style={styles.textAvatarWrapper}>
@@ -258,7 +285,7 @@ class ProofRequestAttributeList extends Component<
                       attribute.label,
                       value,
                       attribute.claimUuid || '',
-                      attribute.claimUuid || '',
+                      attribute.claimUuid || ''
                     )}
                   </View>
                 </View>
@@ -266,7 +293,7 @@ class ProofRequestAttributeList extends Component<
             </View>
           </View>
           <View style={styles.iconWrapper}>
-            <EvaIcon name={ARROW_FORWARD_ICON} fill={colors.cmBlack}/>
+            <EvaIcon name={ARROW_FORWARD_ICON} fill={colors.cmBlack} />
           </View>
         </View>
       )
@@ -293,7 +320,11 @@ class ProofRequestAttributeList extends Component<
               <Text style={styles.title}>{label}</Text>
               <TouchableOpacity
                 onPress={() =>
-                  handleCustomValuesNavigation(label, adjustedLabel, attribute.key)
+                  handleCustomValuesNavigation(
+                    label,
+                    adjustedLabel,
+                    attribute.key
+                  )
                 }
               >
                 <TextInput
@@ -370,7 +401,11 @@ class ProofRequestAttributeList extends Component<
   // once we are going to render multiple values
   // then we have to render view for each pair in values and
   // collect them into one wrapping view
-  renderValues = ({ item, index }: any, attributesFilledFromCredential: RequestedAttrsJson, attributesFilledByUser: any) => {
+  renderValues = (
+    { item, index }: any,
+    attributesFilledFromCredential: RequestedAttrsJson,
+    attributesFilledByUser: any
+  ) => {
     const items = item
 
     if (!items[0]) {
@@ -380,13 +415,17 @@ class ProofRequestAttributeList extends Component<
     const attribute = items[0]
 
     if (attribute.type === REQUESTED_ATTRIBUTE_TYPE.FILLED) {
-      return this.renderFilledAttribute({ item, index }, attributesFilledFromCredential, attributesFilledByUser)
+      return this.renderFilledAttribute(
+        { item, index },
+        attributesFilledFromCredential,
+        attributesFilledByUser
+      )
     } else if (attribute.type === REQUESTED_ATTRIBUTE_TYPE.SELF_ATTESTED) {
       return this.renderSelfAttestedAttribute({ attribute, index })
     } else if (attribute.type === REQUESTED_ATTRIBUTE_TYPE.DISSATISFIED) {
       return this.renderDissatisfiedAttribute({ attribute, index })
     } else {
-      return <View/>
+      return <View />
     }
   }
 
@@ -411,7 +450,13 @@ class ProofRequestAttributeList extends Component<
         style={styles.keyboardFlatList}
         data={attributes}
         keyExtractor={this.keyExtractor}
-        renderItem={(item) => this.renderValues(item, attributesFilledFromCredential, attributesFilledByUser)}
+        renderItem={(item) =>
+          this.renderValues(
+            item,
+            attributesFilledFromCredential,
+            attributesFilledByUser
+          )
+        }
         extraData={this.props}
         extraScrollHeight={Platform.OS === 'ios' ? 170 : null}
         ListHeaderComponent={() => (

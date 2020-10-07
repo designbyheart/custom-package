@@ -8,6 +8,7 @@ Object {
   "isPristine": true,
   "navigateRoute": null,
   "notification": null,
+  "notificationOpenOptions": null,
   "pendingFetchAdditionalDataKey": null,
   "pushToken": null,
 }

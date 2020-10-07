@@ -22,7 +22,8 @@ import type {
   AcceptOutofbandPresentationRequestAction,
   DeleteOutofbandPresentationRequestAction,
   OutOfBandConnectionForPresentationEstablishedAction,
-  ApplyAttributesForPresentationRequestAction, SelfAttestedAttributes,
+  ApplyAttributesForPresentationRequestAction,
+  SelfAttestedAttributes,
 } from './type-proof-request'
 import {
   getUserPairwiseDid,
@@ -440,7 +441,7 @@ export const proofRequestShowStart = (uid: string) => ({
 export const applyAttributesForPresentationRequest = (
   uid: string,
   requestedAttrsJson: RequestedAttrsJson,
-  selfAttestedAttributes: SelfAttestedAttributes,
+  selfAttestedAttributes: SelfAttestedAttributes
 ): ApplyAttributesForPresentationRequestAction => ({
   type: APPLY_ATTRIBUTES_FOR_PRESENTATION_REQUEST,
   uid,
@@ -450,7 +451,7 @@ export const applyAttributesForPresentationRequest = (
 
 export const acceptOutofbandPresentationRequest = (
   uid: string,
-  senderDID: string,
+  senderDID: string
 ): AcceptOutofbandPresentationRequestAction => ({
   type: ACCEPT_OUTOFBAND_PRESENTATION_REQUEST,
   uid,
@@ -492,7 +493,7 @@ function* outOfBandConnectionForPresentationEstablishedSaga(
       proofRequestPayload.uid,
       proofRequestPayload.remotePairwiseDID,
       proofRequestPayload.requestedAttrsJson,
-      proofRequestPayload.selfAttestedAttributes,
+      proofRequestPayload.selfAttestedAttributes
     )
   )
 }
