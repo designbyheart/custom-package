@@ -212,7 +212,6 @@ exports[`<LockSetupSuccess /> should display Loading while fetching the invitati
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -485,7 +484,6 @@ exports[`<LockSetupSuccess /> should render Lock setup success Screen 1`] = `
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}

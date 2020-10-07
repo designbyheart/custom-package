@@ -43,7 +43,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
       <View
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -226,7 +225,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
         accessibilityLabel="three-dots"
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -385,7 +383,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
     initialNumToRender={10}
     keyExtractor={[Function]}
     maxToRenderPerBatch={10}
-    numColumns={1}
     onContentSizeChange={[Function]}
     onEndReachedThreshold={2}
     onLayout={[Function]}
@@ -485,7 +482,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CLAIM OFFER RECEI
             <View
               accessible={true}
               focusable={true}
-              isTVSelectable={true}
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -578,7 +574,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
       <View
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -761,7 +756,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
         accessibilityLabel="three-dots"
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -911,7 +905,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
     initialNumToRender={10}
     keyExtractor={[Function]}
     maxToRenderPerBatch={10}
-    numColumns={1}
     onContentSizeChange={[Function]}
     onEndReachedThreshold={2}
     onLayout={[Function]}
@@ -1011,7 +1004,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render CONNECTED properl
             <View
               accessible={true}
               focusable={true}
-              isTVSelectable={true}
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -1104,7 +1096,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
       <View
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1287,7 +1278,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
         accessibilityLabel="three-dots"
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1437,7 +1427,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PENDING properly 
     initialNumToRender={10}
     keyExtractor={[Function]}
     maxToRenderPerBatch={10}
-    numColumns={1}
     onContentSizeChange={[Function]}
     onEndReachedThreshold={2}
     onLayout={[Function]}
@@ -1624,7 +1613,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
       <View
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1807,7 +1795,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
         accessibilityLabel="three-dots"
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1966,7 +1953,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
     initialNumToRender={10}
     keyExtractor={[Function]}
     maxToRenderPerBatch={10}
-    numColumns={1}
     onContentSizeChange={[Function]}
     onEndReachedThreshold={2}
     onLayout={[Function]}
@@ -2066,7 +2052,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render PROOF RECEIVED pr
             <View
               accessible={true}
               focusable={true}
-              isTVSelectable={true}
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -2159,7 +2144,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
       <View
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2342,7 +2326,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
         accessibilityLabel="three-dots"
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2501,7 +2484,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
     initialNumToRender={10}
     keyExtractor={[Function]}
     maxToRenderPerBatch={10}
-    numColumns={1}
     onContentSizeChange={[Function]}
     onEndReachedThreshold={2}
     onLayout={[Function]}
@@ -2779,7 +2761,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render RECEIVED properly
                   <View
                     accessible={true}
                     focusable={true}
-                    isTVSelectable={true}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -2874,7 +2855,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
       <View
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -3057,7 +3037,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
         accessibilityLabel="three-dots"
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -3207,7 +3186,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
     initialNumToRender={10}
     keyExtractor={[Function]}
     maxToRenderPerBatch={10}
-    numColumns={1}
     onContentSizeChange={[Function]}
     onEndReachedThreshold={2}
     onLayout={[Function]}
@@ -3485,7 +3463,6 @@ exports[`<ConnectionDetails /> should ConnectionDetails render SHARED properly 1
                   <View
                     accessible={true}
                     focusable={true}
-                    isTVSelectable={true}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}

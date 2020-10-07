@@ -14,7 +14,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -71,7 +70,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -128,7 +126,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -185,7 +182,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -242,7 +238,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -299,7 +294,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -356,7 +350,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -413,7 +406,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -470,7 +462,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -527,7 +518,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -584,7 +574,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -641,7 +630,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -698,7 +686,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -755,7 +742,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -812,7 +798,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -869,7 +854,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -926,7 +910,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -983,7 +966,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -1040,7 +1022,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -1097,7 +1078,6 @@ exports[`<QuestionExternalLinks /> should render MAX_EXTERNAL_LINKS_TO_SHOW link
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -1161,7 +1141,6 @@ exports[`<QuestionExternalLinks /> should render links if links are passed 1`] =
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -1218,7 +1197,6 @@ exports[`<QuestionExternalLinks /> should render links if links are passed 1`] =
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}

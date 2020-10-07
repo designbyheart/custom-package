@@ -85,7 +85,6 @@ exports[`<WalletSendAmount /> should render properly and match the snapshot 1`] 
           }
           accessible={true}
           focusable={true}
-          isTVSelectable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}

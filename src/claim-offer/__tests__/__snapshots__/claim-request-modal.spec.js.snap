@@ -108,7 +108,6 @@ exports[`<ClaimRequestStatusModal /> should hideModal if continue is clicked 1`]
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -266,7 +265,6 @@ exports[`<ClaimRequestStatusModal /> should match paid credential success, if se
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -561,7 +559,6 @@ exports[`<ClaimRequestStatusModal /> should show arrow right and accepting text,
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -856,7 +853,6 @@ exports[`<ClaimRequestStatusModal /> should show check mark, token amount, if pa
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1014,7 +1010,6 @@ exports[`<ClaimRequestStatusModal /> should show check mark, you accepted text, 
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}

@@ -34,7 +34,6 @@ exports[`<LockAuthorization /> should match snapshot 1`] = `
       <View
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}

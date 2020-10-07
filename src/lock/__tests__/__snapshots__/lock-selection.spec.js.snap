@@ -36,7 +36,6 @@ exports[`app lock selection page should render properly 1`] = `
           <View
             accessible={true}
             focusable={true}
-            isTVSelectable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -335,7 +334,6 @@ exports[`app lock selection page should render properly 1`] = `
         <View
           accessible={true}
           focusable={true}
-          isTVSelectable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -546,7 +544,7 @@ exports[`app lock selection page should render properly 1`] = `
               tertiary={true}
             >
               <RCTSwitch
-                accessibilityRole="button"
+                accessibilityRole="switch"
                 onChange={[Function]}
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}

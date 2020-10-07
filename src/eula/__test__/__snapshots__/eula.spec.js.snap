@@ -66,7 +66,6 @@ exports[`Eula screen should render properly and snapshot should match 1`] = `
               }
               accessible={true}
               focusable={true}
-              isTVSelectable={true}
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -143,7 +142,6 @@ exports[`Eula screen should render properly and snapshot should match 1`] = `
               }
               accessible={true}
               focusable={true}
-              isTVSelectable={true}
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}

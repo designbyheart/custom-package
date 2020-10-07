@@ -163,7 +163,6 @@ exports[`<LedgerFeesModalComponent /> show error if fetching fees failed, show r
           }
           accessible={true}
           focusable={true}
-          isTVSelectable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -239,7 +238,6 @@ exports[`<LedgerFeesModalComponent /> show error if fetching fees failed, show r
           }
           accessible={true}
           focusable={true}
-          isTVSelectable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -642,7 +640,6 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
           }
           accessible={true}
           focusable={true}
-          isTVSelectable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -718,7 +715,6 @@ exports[`<LedgerFeesModalComponent /> show text passed by consumer of component,
           }
           accessible={true}
           focusable={true}
-          isTVSelectable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -1062,7 +1058,6 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
           }
           accessible={true}
           focusable={true}
-          isTVSelectable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -1138,7 +1133,6 @@ exports[`<LedgerFeesModalComponent /> show transfer fees, Yes & No buttons, if f
           }
           accessible={true}
           focusable={true}
-          isTVSelectable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}

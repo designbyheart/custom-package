@@ -57,7 +57,6 @@ exports[`<FooterActions /> match snapshot when hidePrimary is true 1`] = `
             }
             accessible={true}
             focusable={true}
-            isTVSelectable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -168,7 +167,6 @@ exports[`<FooterActions /> should match snapshot 1`] = `
             }
             accessible={true}
             focusable={true}
-            isTVSelectable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -245,7 +243,6 @@ exports[`<FooterActions /> should match snapshot 1`] = `
             }
             accessible={true}
             focusable={true}
-            isTVSelectable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
