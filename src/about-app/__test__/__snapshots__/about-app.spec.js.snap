@@ -44,7 +44,6 @@ exports[`user about app screen should render properly and snapshot should match 
       <View
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -402,7 +401,6 @@ exports[`user about app screen should render properly and snapshot should match 
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -410,7 +408,6 @@ exports[`user about app screen should render properly and snapshot should match 
       onResponderTerminate={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
-      style={null}
     >
       <View
         style={
@@ -599,7 +596,6 @@ exports[`user about app screen should render properly and snapshot should match 
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -607,7 +603,6 @@ exports[`user about app screen should render properly and snapshot should match 
       onResponderTerminate={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
-      style={null}
     >
       <View
         style={

@@ -41,7 +41,6 @@ exports[`<QuestionActions /> when more than two responses are present match snap
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -139,7 +138,6 @@ exports[`<QuestionActions /> when more than two responses are present match snap
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -237,7 +235,6 @@ exports[`<QuestionActions /> when more than two responses are present render Ign
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -336,7 +333,6 @@ exports[`<QuestionActions /> when one response is present match snapshot if in e
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -434,7 +430,6 @@ exports[`<QuestionActions /> when one response is present match snapshot if in s
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -547,7 +542,6 @@ exports[`<QuestionActions /> when one response is present render Ignore and resp
             }
             accessible={true}
             focusable={true}
-            isTVSelectable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -647,7 +641,6 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -745,7 +738,6 @@ exports[`<QuestionActions /> when two responses are present match snapshot if in
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -857,7 +849,6 @@ exports[`<QuestionActions /> when two responses are present render both response
             }
             accessible={true}
             focusable={true}
-            isTVSelectable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -944,7 +935,6 @@ exports[`<QuestionActions /> when two responses are present render both response
             }
             accessible={true}
             focusable={true}
-            isTVSelectable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}

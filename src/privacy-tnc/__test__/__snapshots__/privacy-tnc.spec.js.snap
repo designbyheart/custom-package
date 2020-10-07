@@ -42,7 +42,6 @@ exports[`Privacy and TNC screen should render properly and snapshot should match
       <View
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}

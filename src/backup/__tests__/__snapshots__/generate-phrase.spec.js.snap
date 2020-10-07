@@ -337,7 +337,6 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot 1`] = `
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -745,7 +744,6 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for error state 1`] = 
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1115,7 +1113,6 @@ exports[`<GenerateRecoveryPhrase /> should match snapshot for loading state 1`] 
         }
         accessible={true}
         focusable={true}
-        isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}

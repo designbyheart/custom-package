@@ -313,7 +313,6 @@ exports[`<LockPinCodeSetup /> should render pin code box 1`] = `
                             <View
                               accessible={true}
                               focusable={true}
-                              isTVSelectable={true}
                               onClick={[Function]}
                               onResponderGrant={[Function]}
                               onResponderMove={[Function]}
@@ -1271,7 +1270,6 @@ exports[`<LockPinCodeSetup /> should set pinSetupState and pinReEnterSuccessPin 
                             <View
                               accessible={true}
                               focusable={true}
-                              isTVSelectable={true}
                               onClick={[Function]}
                               onResponderGrant={[Function]}
                               onResponderMove={[Function]}
@@ -2229,7 +2227,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
                             <View
                               accessible={true}
                               focusable={true}
-                              isTVSelectable={true}
                               onClick={[Function]}
                               onResponderGrant={[Function]}
                               onResponderMove={[Function]}
@@ -3189,7 +3186,6 @@ exports[`<LockPinCodeSetup /> should show "pass code mismatch ..." message and r
                             <View
                               accessible={true}
                               focusable={true}
-                              isTVSelectable={true}
                               onClick={[Function]}
                               onResponderGrant={[Function]}
                               onResponderMove={[Function]}
@@ -4147,7 +4143,6 @@ exports[`<LockPinCodeSetup /> should show re enter pass code after first entry 1
                             <View
                               accessible={true}
                               focusable={true}
-                              isTVSelectable={true}
                               onClick={[Function]}
                               onResponderGrant={[Function]}
                               onResponderMove={[Function]}

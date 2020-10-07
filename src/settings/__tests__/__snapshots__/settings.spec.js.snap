@@ -538,7 +538,6 @@ exports[`user settings screen should render properly and snapshot should match i
                               <View
                                 accessible={true}
                                 focusable={true}
-                                isTVSelectable={true}
                                 onClick={[Function]}
                                 onResponderGrant={[Function]}
                                 onResponderMove={[Function]}
@@ -693,7 +692,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                 <View
                                   accessible={true}
                                   focusable={true}
-                                  isTVSelectable={true}
                                   onClick={[Function]}
                                   onResponderGrant={[Function]}
                                   onResponderMove={[Function]}
@@ -701,7 +699,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  style={null}
                                 >
                                   <View
                                     style={
@@ -858,7 +855,7 @@ exports[`user settings screen should render properly and snapshot should match i
                                       }
                                     />
                                     <RCTSwitch
-                                      accessibilityRole="button"
+                                      accessibilityRole="switch"
                                       disabled={false}
                                       onChange={[Function]}
                                       onResponderTerminationRequest={[Function]}
@@ -877,7 +874,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                 <View
                                   accessible={true}
                                   focusable={true}
-                                  isTVSelectable={true}
                                   onClick={[Function]}
                                   onResponderGrant={[Function]}
                                   onResponderMove={[Function]}
@@ -885,7 +881,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  style={null}
                                 >
                                   <View
                                     style={
@@ -1130,7 +1125,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                 <View
                                   accessible={true}
                                   focusable={true}
-                                  isTVSelectable={true}
                                   onClick={[Function]}
                                   onResponderGrant={[Function]}
                                   onResponderMove={[Function]}
@@ -1138,7 +1132,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  style={null}
                                 >
                                   <View
                                     style={
@@ -1420,7 +1413,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                 <View
                                   accessible={true}
                                   focusable={true}
-                                  isTVSelectable={true}
                                   onClick={[Function]}
                                   onResponderGrant={[Function]}
                                   onResponderMove={[Function]}
@@ -1428,7 +1420,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  style={null}
                                 >
                                   <View
                                     style={
@@ -1713,7 +1704,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                 <View
                                   accessible={true}
                                   focusable={true}
-                                  isTVSelectable={true}
                                   onClick={[Function]}
                                   onResponderGrant={[Function]}
                                   onResponderMove={[Function]}
@@ -1721,7 +1711,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  style={null}
                                 >
                                   <View
                                     style={
@@ -1938,7 +1927,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                 <View
                                   accessible={true}
                                   focusable={true}
-                                  isTVSelectable={true}
                                   onClick={[Function]}
                                   onResponderGrant={[Function]}
                                   onResponderMove={[Function]}
@@ -1946,7 +1934,6 @@ exports[`user settings screen should render properly and snapshot should match i
                                   onResponderTerminate={[Function]}
                                   onResponderTerminationRequest={[Function]}
                                   onStartShouldSetResponder={[Function]}
-                                  style={null}
                                 >
                                   <View
                                     style={
@@ -2235,7 +2222,6 @@ exports[`user settings screen should render properly and snapshot should match i
                         <View
                           accessible={true}
                           focusable={true}
-                          isTVSelectable={true}
                           onClick={[Function]}
                           onResponderGrant={[Function]}
                           onResponderMove={[Function]}
