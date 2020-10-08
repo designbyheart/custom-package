@@ -202,9 +202,9 @@ const styles = StyleSheet.create({
   },
   image: {
     position: 'absolute',
-    bottom: -verticalScale(100),
-    width: moderateScale(320, 0.1),
-    height: moderateScale(640, 0.1),
+    top: moderateScale(5, 0.1),
+    width: moderateScale(300, 0.1),
+    height: moderateScale(600, 0.1),
   },
   headline: {
     fontFamily: fontFamily,
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     height: '40%',
-    bottom: -30,
+    bottom: -15,
     paddingLeft: 15,
     paddingRight: 15,
     backgroundColor: colors.cmWhite,
