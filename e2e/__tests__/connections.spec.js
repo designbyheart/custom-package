@@ -36,6 +36,9 @@ import {
   CONNECTION_SUBMENU_BUTTON,
   CONNECTION_DELETE_BUTTON,
   MY_CREDENTIALS_DELETE,
+  SCREENSHOT_CLAIM_OFFER_PROFILE_INFO,
+  SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
+  SCREENSHOT_ALLOW_NOTIFICATIONS,
 } from '../utils/test-constants'
 import {
   VAS,
@@ -54,7 +57,7 @@ const TIMEOUT = 30000
 const instance = new VAS(VASconfig)
 
 describe('My connections screen', () => {
-  it('Case 1.1: create new connection, credential and proof', async () => {
+  it('Case 1: create new connection, schemas and cred defs', async () => {
     // Configure ngrok
     let url = await instance.setupNgrok()
 
@@ -102,6 +105,8 @@ describe('My connections screen', () => {
     server.close()
     console.log(chalk.redBright('Invitation server has been stopped.'))
 
+    // await matchScreenshot(SCREENSHOT_ALLOW_NOTIFICATIONS) // screenshot
+
     try {
       await waitForElementAndTap('text', ALLOW_BUTTON, TIMEOUT)
     } catch (e) {
@@ -126,7 +131,52 @@ describe('My connections screen', () => {
         global.CLAIM_OFFER_PROFILE_INFO_SCHEMA_ID
       )
       .then((res) => res[0])
+  })
 
+  it('Case 2.1: create and reject profile credential', async () => {
+    await instance.sendCredentialOffer(
+      global.DID,
+      global.CLAIM_OFFER_PROFILE_INFO_CRED_DEF_ID,
+      {
+        name: 'Bob',
+        gender: 'male',
+        height: '190',
+      },
+      CLAIM_OFFER_PROFILE_INFO
+    )
+
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      await element(by.text('No new notifications.')).swipe('down')
+      try {
+        await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+      } catch (e) {
+        await instance.sendCredentialOffer(
+          global.DID,
+          global.CLAIM_OFFER_PROFILE_INFO_CRED_DEF_ID,
+          {
+            name: 'Bob',
+            gender: 'male',
+            height: '190',
+          },
+          CLAIM_OFFER_PROFILE_INFO
+        )
+        try {
+          await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+        } catch (e) {
+          console.warn(e)
+          await element(by.text('No new notifications.')).swipe('down')
+          await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+        }
+      }
+    }
+
+    await waitForElementAndTap('text', CLAIM_OFFER_REJECT, TIMEOUT)
+  })
+
+  it('Case 2.2: create and accept profile credential', async () => {
     await instance.sendCredentialOffer(
       global.DID,
       global.CLAIM_OFFER_PROFILE_INFO_CRED_DEF_ID,
@@ -166,10 +216,14 @@ describe('My connections screen', () => {
       }
     }
 
+    await matchScreenshot(SCREENSHOT_CLAIM_OFFER_PROFILE_INFO) // screenshot profile info
+
     await waitForElementAndTap('text', CLAIM_OFFER_ACCEPT, TIMEOUT)
 
     await instance.issueCredential(global.DID)
+  })
 
+  it('Case 3.1: create and reject proof request', async () => {
     await instance.presentProof(
       global.DID,
       PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
@@ -177,6 +231,7 @@ describe('My connections screen', () => {
       true
     )
 
+    // catch intermittent failure with new message absence
     try {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     } catch (e) {
@@ -185,14 +240,32 @@ describe('My connections screen', () => {
       await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
     }
 
-    await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
-
-    await instance.endpointServer.close()
-    console.log(chalk.redBright('VAS server has been stopped.'))
-    await instance.shutdownNgrok()
+    await waitForElementAndTap('text', PROOF_REQUEST_REJECT, TIMEOUT)
   })
 
-  it('Case 1.2: go to my connections, find all necessary elements', async () => {
+  it('Case 3.2: create and send proof request', async () => {
+    await instance.presentProof(
+      global.DID,
+      PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED,
+      ['name', 'gender'],
+      true
+    )
+
+    // catch intermittent failure with new message absence
+    try {
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    } catch (e) {
+      console.warn(e)
+      await element(by.text('No new notifications.')).swipe('down')
+      await waitForElementAndTap('text', HOME_NEW_MESSAGE, TIMEOUT)
+    }
+
+    await matchScreenshot(SCREENSHOT_PROOF_TEMPLATE_SINGLE_CLAIM_FULFILLED) // screenshot first proof
+
+    await waitForElementAndTap('text', PROOF_REQUEST_SEND, TIMEOUT)
+  })
+
+  it('Case 4: go to my connections, find all necessary elements', async () => {
     await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
     await waitForElementAndTap('text', MENU_MY_CONNECTIONS, TIMEOUT)
@@ -220,7 +293,7 @@ describe('My connections screen', () => {
     await matchScreenshot(SCREENSHOT_TEST_CONNECTION) // screenshot
   })
 
-  it('Case 2: drill down to connection and check its elements', async () => {
+  it('Case 5: drill down to connection and check its elements', async () => {
     await waitForElementAndTap('text', MY_CONNECTIONS_CONNECTION, TIMEOUT)
 
     await element(by.type(GENERAL_SCROLL_VIEW))
@@ -256,7 +329,7 @@ describe('My connections screen', () => {
     await element(by.id(BACK_ARROW)).tap()
   })
 
-  it('Case 3: delete existing connection and credential', async () => {
+  it('Case 6: delete connection and credential', async () => {
     await waitForElementAndTap('id', BURGER_MENU, TIMEOUT)
 
     await waitForElementAndTap('text', MENU_MY_CREDENTIALS, TIMEOUT)
@@ -282,5 +355,9 @@ describe('My connections screen', () => {
     await waitForElementAndTap('id', CONNECTION_DELETE_BUTTON, TIMEOUT) // delete connection
 
     await expect(element(by.text(MY_CONNECTIONS_CONNECTION))).toNotExist()
+
+    await instance.endpointServer.close()
+    console.log(chalk.redBright('VAS server has been stopped.'))
+    await instance.shutdownNgrok()
   })
 })

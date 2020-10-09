@@ -151,6 +151,7 @@ export const SCREENSHOT_MY_CREDENTIALS_LIST = 'my_credentials_list.png'
 export const SCREENSHOT_MY_CREDENTIALS_ENTRY = 'my_credentials_entry.png'
 export const SCREENSHOT_MY_CREDENTIALS_LIST_ONE_DELETED =
   'my_credentials_list_one_deleted.png'
+export const SCREENSHOT_ALLOW_NOTIFICATIONS = 'allow_notifications.png'
 
 // menu
 export const MENU_CONTAINER = 'menu-container'
