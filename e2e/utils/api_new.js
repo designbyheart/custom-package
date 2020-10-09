@@ -54,6 +54,7 @@ export class VAS {
   responseTimeout: number
 
   constructor(verityConfig: any) {
+    global.responses = {}
     this.verityConfig = verityConfig
     this.httpsConfig = {
       timeout: 180000,
@@ -78,13 +79,18 @@ export class VAS {
             body += chunk.toString()
           })
           .on('end', () => {
-            global.lastResponse = JSON.parse(body)
+            body = JSON.parse(body)
+            global.lastResponse = body
+            if (body['@type']) {
+              global.responses[`${body['@type']}`] = body
+            }
             console.log(
               '----------------\n',
               `Headers: ${JSON.stringify(headers)}\n`,
               `Method: ${method}\n`,
               `URL: ${url}\n`,
-              `Body: ${JSON.stringify(global.lastResponse)}\n`,
+              `Body: ${JSON.stringify(global.lastResponse, null, 2)}\n`,
+              // `All Responses: ${JSON.stringify(global.responses, null, 2)}\n`, // DEBUG
               '----------------\n'
             )
           })
@@ -153,9 +159,17 @@ export class VAS {
 
     await new Promise((r) => setTimeout(r, this.responseTimeout))
 
-    const relationshipThreadID = global.lastResponse['~thread']['thid']
+    // const relationshipThreadID = global.lastResponse['~thread']['thid']
+    const relationshipThreadID =
+      global.responses[
+        'did:sov:123456789abcdefghi1234;spec/relationship/1.0/created'
+      ]['~thread']['thid'] // new approach
     console.log(chalk.magentaBright(`THREAD ID: ${relationshipThreadID}`))
-    const DID = global.lastResponse['did']
+    // const DID = global.lastResponse['did']
+    const DID =
+      global.responses[
+        'did:sov:123456789abcdefghi1234;spec/relationship/1.0/created'
+      ]['did'] // new approach
     console.log(chalk.magentaBright(`RELATIONSHIP DID: ${DID}`))
 
     //$FlowFixMe
@@ -182,7 +196,11 @@ export class VAS {
 
     await new Promise((r) => setTimeout(r, this.responseTimeout))
 
-    let link = global.lastResponse['inviteURL']
+    // let link = global.lastResponse['inviteURL']
+    let link =
+      global.responses[
+        'did:sov:123456789abcdefghi1234;spec/relationship/1.0/invitation'
+      ]['inviteURL'] // new approach
     console.log(chalk.cyanBright(link))
     link = link.substr(45) // this depends on verity environment used
     console.log(chalk.cyanBright(link))
@@ -219,7 +237,20 @@ export class VAS {
 
     await new Promise((r) => setTimeout(r, this.responseTimeout * 2))
 
-    const schemaID = global.lastResponse['schemaId']
+    // const schemaID = global.lastResponse['schemaId']
+    let schemaID
+    try {
+      schemaID =
+        global.responses[
+          'did:sov:123456789abcdefghi1234;spec/write-schema/0.6/status-report'
+        ]['schemaId'] // new approach
+    } catch (e) {
+      await new Promise((r) => setTimeout(r, this.responseTimeout))
+      schemaID =
+        global.responses[
+          'did:sov:123456789abcdefghi1234;spec/write-schema/0.6/status-report'
+        ]['schemaId']
+    }
     console.log(chalk.magentaBright(`SCHEMA ID: ${schemaID}`))
 
     //$FlowFixMe
@@ -248,7 +279,20 @@ export class VAS {
 
     await new Promise((r) => setTimeout(r, this.responseTimeout * 2))
 
-    const credDefID = global.lastResponse['credDefId']
+    // const credDefID = global.lastResponse['credDefId']
+    let credDefID
+    try {
+      credDefID =
+        global.responses[
+          'did:sov:123456789abcdefghi1234;spec/write-cred-def/0.6/status-report'
+        ]['credDefId'] // new approach
+    } catch (e) {
+      await new Promise((r) => setTimeout(r, this.responseTimeout))
+      credDefID =
+        global.responses[
+          'did:sov:123456789abcdefghi1234;spec/write-cred-def/0.6/status-report'
+        ]['credDefId']
+    }
     console.log(chalk.magentaBright(`CRED DEF ID: ${credDefID}`))
 
     //$FlowFixMe
@@ -285,9 +329,13 @@ export class VAS {
   }
 
   async issueCredential(DID: string): string {
-    await new Promise((r) => setTimeout(r, this.responseTimeout)) // sync
+    // await new Promise((r) => setTimeout(r, this.responseTimeout)) // sync
 
-    const credThreadID = global.lastResponse['~thread']['thid']
+    // const credThreadID = global.lastResponse['~thread']['thid']
+    const credThreadID =
+      global.responses[
+        'did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/issue-credential/1.0/sent'
+      ]['~thread']['thid']
     console.log(`CRED THREAD ID: ${credThreadID}`)
 
     const result = await post(
