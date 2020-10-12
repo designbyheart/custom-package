@@ -113,6 +113,7 @@ import {
   fetchAdditionalDataError,
   updatePayloadToRelevantStoreSaga,
   pushNotificationReceived,
+  setFetchAdditionalDataPendingKeys,
 } from '../push-notification/push-notification-store'
 import type { CxsPoolConfig } from '../bridge/react-native-cxs/type-cxs'
 import type { UserOneTimeInfo } from './user/type-user-store'
@@ -901,6 +902,7 @@ export function* processMessages(
           msgTypes.indexOf(messages[i].type) > -1
         )
       ) {
+        yield put(setFetchAdditionalDataPendingKeys(messages[i].uid, pairwiseDID))
         if (isAries) {
           yield fork(
             handleAriesMessage,

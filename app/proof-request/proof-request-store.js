@@ -511,9 +511,6 @@ export default function proofRequestReducer(
 ) {
   switch (action.type) {
     case PROOF_REQUEST_RECEIVED: {
-      if (state[action.payloadInfo.uid]) {
-        return state
-      }
       return {
         ...state,
         [action.payloadInfo.uid]: {
