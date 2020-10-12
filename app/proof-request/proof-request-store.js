@@ -510,7 +510,10 @@ export default function proofRequestReducer(
   action: ProofRequestAction
 ) {
   switch (action.type) {
-    case PROOF_REQUEST_RECEIVED:
+    case PROOF_REQUEST_RECEIVED: {
+      if (state[action.payloadInfo.uid]) {
+        return state
+      }
       return {
         ...state,
         [action.payloadInfo.uid]: {
@@ -520,6 +523,7 @@ export default function proofRequestReducer(
           proofStatus: PROOF_STATUS.NONE,
         },
       }
+    }
 
     case PROOF_REQUEST_SHOW_START: {
       const data = state[action.uid].data
