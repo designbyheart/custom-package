@@ -155,6 +155,7 @@ function isDissatisfiedAttribute(attribute: RequestedAttribute): boolean {
   // 1. self_attest_allowed: false
   // 2. restrictions != {}
   // 3. restrictions != [] and != [{}] and != [{},{},....]
+  // 4. specified group of attributes `names`
 
   return (
     (typeof attribute.self_attest_allowed === 'boolean' &&
@@ -164,7 +165,8 @@ function isDissatisfiedAttribute(attribute: RequestedAttribute): boolean {
     (Array.isArray(attribute.restrictions) &&
       attribute.restrictions.filter(
         (restriction) => Object.keys(restriction).length > 0
-      ).length > 0)
+      ).length > 0) ||
+    (attribute.names ? attribute.names.length > 0 : false)
   )
 }
 
