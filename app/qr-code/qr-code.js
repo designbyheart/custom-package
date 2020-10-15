@@ -66,7 +66,7 @@ import type {
   CredentialOffer,
 } from '../claim-offer/type-claim-offer'
 import { changeEnvironmentUrl } from '../store/config-store'
-import { getAllPublicDid, getClaimOffers } from '../store/store-selector'
+import { getAllDid, getAllPublicDid, getClaimOffers } from '../store/store-selector'
 import { withStatusBar } from '../components/status-bar/status-bar'
 import {
   openIdConnectUpdateStatus,
@@ -182,21 +182,40 @@ export class QRCodeScannerScreen extends Component<
     payload: InvitationPayload,
   }) => {
     const { navigation } = this.props
-    // check if we got public DID in invitation
-    // if we have public DID, then check if connection already exist
-    // if connection exist, then redirect to connection history
+    // check if connection already exists
+    // possible cases:
+    // 1. we scanned the same QR containing invitation without a public DID -
+    // check senderDID over all stored connections
+    // 2. we scanned a different QR containing invitation with public DID -
+    // check publicDID iver all stored connections with set publicDID
+    //
+    // if connection exist, then redirect to the home view
     // and show Snack bar stating that connection already exist
     // otherwise redirect to invitation screen
-    const { publicDID = '' } = invitation.payload.senderDetail
-    const connectionAlreadyExist = publicDID in this.props.publicDIDs
+    const { publicDID, DID } = invitation.payload.senderDetail
 
-    if (connectionAlreadyExist) {
+    const existingConnection =
+      (publicDID ? this.props.getAllPublicDid[publicDID] : undefined) ||
+      this.props.getAllDid[DID]
+
+    if (existingConnection) {
       const {
         senderDID,
         senderName,
         identifier,
         logoUrl: image,
-      } = this.props.publicDIDs[publicDID]
+      } = existingConnection
+
+      // for Out-of-Band invitation we should send reuse message even if we scanned the same invitation
+      // else send redirect only if we scanned invitation we same publicDID but different senderDID
+      const sendRedirectMessage =
+        existingConnection.isCompleted &&
+          invitation.payload.type === CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND ?
+            true :
+            publicDID ?
+              existingConnection.publicDID === publicDID && existingConnection.senderDID !== DID :
+              false
+
       const params = {
         senderDID,
         senderName,
@@ -205,6 +224,8 @@ export class QRCodeScannerScreen extends Component<
         backRedirectRoute: homeRoute,
         showExistingConnectionSnack: true,
         qrCodeInvitationPayload: invitation.payload,
+        // do not send redirect message if we scanned the same invitation twice
+        sendRedirectMessage: sendRedirectMessage,
       }
       navigation.navigate(homeRoute, {
         screen: homeDrawerRoute,
@@ -526,7 +547,8 @@ export class QRCodeScannerScreen extends Component<
 
 const mapStateToProps = (state: Store) => ({
   currentScreen: state.route.currentScreen,
-  publicDIDs: getAllPublicDid(state.connections),
+  getAllDid: getAllDid(state.connections),
+  getAllPublicDid: getAllPublicDid(state.connections),
   historyData: state.history && state.history.data,
   claimOffers: getClaimOffers(state),
 })
