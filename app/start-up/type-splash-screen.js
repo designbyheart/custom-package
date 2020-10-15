@@ -13,7 +13,8 @@ export type SplashScreenProps = {
   deepLink: DeepLinkStore,
   smsPendingInvitation: SMSPendingInvitationStore,
   lock: LockStore,
-  publicDIDs: { [publicDID: string]: Connection },
+  getAllDid: { [publicDID: string]: Connection },
+  getAllPublicDid: { [publicDID: string]: Connection },
   getSmsPendingInvitation: (token: string) => void,
   addPendingRedirection: (
     pendingRedirection: Array<?PendingRedirection>

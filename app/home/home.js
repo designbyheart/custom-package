@@ -124,8 +124,10 @@ export class HomeScreen extends Component<HomeProps, void> {
           this.props.route.params.qrCodeInvitationPayload
 
         if (
-          invite.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR ||
-          invite.type === undefined
+          (
+            invite.type === CONNECTION_INVITE_TYPES.ARIES_V1_QR ||
+            invite.type === undefined
+          ) && this.props.route.params.sendRedirectMessage
         ) {
           this.props.sendConnectionRedirect(invite, {
             senderDID:
@@ -137,7 +139,10 @@ export class HomeScreen extends Component<HomeProps, void> {
               this.props.route.params &&
               this.props.route.params.identifier,
           })
-        } else if (invite.type === CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND) {
+        } else if (
+          invite.type === CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND &&
+          this.props.route.params.sendRedirectMessage
+        ) {
           if (!invite.originalObject) {
             return
           }
