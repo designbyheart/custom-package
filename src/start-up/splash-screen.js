@@ -40,11 +40,12 @@ import type {
 } from '../sms-pending-invitation/type-sms-pending-invitation'
 import { deepLinkProcessed } from '../deep-link/deep-link-store'
 import { DEEP_LINK_STATUS } from '../deep-link/type-deep-link'
-import { getAllPublicDid } from '../store/store-selector'
+import { getAllDid, getAllPublicDid } from '../store/store-selector'
 import {
   isValidAriesOutOfBandInviteData,
   isValidAriesV1InviteData,
 } from '../invitation/invitation'
+import { CONNECTION_INVITE_TYPES } from '../invitation/type-invitation'
 
 const isReceived = ({ payload, status }) => {
   return (
@@ -185,24 +186,40 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
             const publicDID = qrCodeInvitationPayload.senderDetail.publicDID
             const senderDID = qrCodeInvitationPayload.senderDID
 
-            // check if invitation has public did
-            // if we have public did then we have to check for duplicate connection
-            // and if we already have same public did in one of our existing connection
-            // then we need to redirect to that connection screen
-            // instead of invitation screen
-            const connectionAlreadyExist =
-              publicDID && publicDID in this.props.publicDIDs
+            // check if connection already exists
+            // possible cases:
+            // 1. we scanned the same QR containing invitation without a public DID -
+            // check senderDID over all stored connections
+            // 2. we scanned a different QR containing invitation with public DID -
+            // check publicDID iver all stored connections with set publicDID
+            //
+            // if connection exist, then redirect to the home view
+            // and show Snack bar stating that connection already exist
+            // otherwise redirect to invitation screen
+            const existingConnection =
+              (publicDID ? this.props.getAllPublicDid[publicDID] : undefined) ||
+              this.props.getAllDid[senderDID]
 
             let routeName = invitationRoute
             let params = { senderDID, token: invitationToken }
-            if (connectionAlreadyExist && publicDID) {
+            if (existingConnection && publicDID) {
               routeName = homeRoute // --> This needs to be homeRoute, because that is the name of the DrawerNavigator
+              // for Out-of-Band invitation we should send reuse message even if we scanned the same invitation
+              // else send redirect only if we scanned invitation we same publicDID but different senderDID
+              const sendRedirectMessage =
+                existingConnection.isCompleted &&
+                qrCodeInvitationPayload.type === CONNECTION_INVITE_TYPES.ARIES_OUT_OF_BAND ?
+                  true :
+                  publicDID ?
+                    existingConnection.publicDID === publicDID && existingConnection.senderDID !== senderDID :
+                    false
+
               const {
                 senderName,
                 identifier,
                 logoUrl: image,
                 senderDID: existingConnectionSenderDID,
-              } = this.props.publicDIDs[publicDID]
+              } = existingConnection
               params = {
                 // if we already have a connection, then we need to use
                 // existing connection senderDID and not the senderDID
@@ -217,6 +234,8 @@ export class SplashScreenView extends PureComponent<SplashScreenProps, void> {
                 backRedirectRoute: homeRoute,
                 showExistingConnectionSnack: true,
                 qrCodeInvitationPayload,
+                // do not send redirect message if we scanned the same invitation twice
+                sendRedirectMessage: sendRedirectMessage,
               }
             }
 
@@ -347,7 +366,8 @@ const mapStateToProps = ({
   smsPendingInvitation,
   // only need isEulaAccept
   eula,
-  publicDIDs: getAllPublicDid(connections),
+  getAllDid: getAllDid(connections),
+  getAllPublicDid: getAllPublicDid(connections),
 })
 
 const mapDispatchToProps = (dispatch) =>

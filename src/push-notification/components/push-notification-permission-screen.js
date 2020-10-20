@@ -105,7 +105,7 @@ class PushNotificationPermission extends Component<
           You have disabled push notifications.
         </Text>
       )
-    } else return <Text style={styles.warningText}></Text>
+    } else return <Text style={styles.emptyWarningText}></Text>
   }
 
   renderCorrectButton = () => {
@@ -188,27 +188,28 @@ const styles = StyleSheet.create({
   },
   textSection: {
     width: '100%',
-    height: '35%',
+    height: '30%',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: moderateScale(20),
-    paddingRight: moderateScale(20),
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   imageSection: {
     width: '100%',
-    height: '65%',
+    height: '70%',
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
   image: {
     position: 'absolute',
-    bottom: -verticalScale(100),
-    width: moderateScale(320, 0.1),
-    height: moderateScale(640, 0.1),
+    top: -moderateScale(10, 0.1),
+    width: moderateScale(300, 0.1),
+    height: moderateScale(600, 0.1),
   },
   headline: {
     fontFamily: fontFamily,
     fontSize: moderateScale(fontSizes.size2),
+    marginTop: moderateScale(5),
     color: colors.cmGray2,
     fontWeight: '700',
   },
@@ -217,16 +218,19 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(fontSizes.size3),
     color: colors.cmGray1,
     fontWeight: '700',
-    marginBottom: -moderateScale(50),
     flexWrap: 'wrap',
+  },
+  emptyWarningText: {
+    marginBottom: moderateScale(12),
+    marginTop: moderateScale(12),
   },
   warningText: {
     fontFamily: fontFamily,
     fontSize: moderateScale(fontSizes.size3),
     color: colors.cmRed,
     fontWeight: '700',
-    marginBottom: moderateScale(10),
-    marginTop: moderateScale(10),
+    marginTop: moderateScale(12),
+    marginBottom: moderateScale(12),
   },
   greenButton: {
     backgroundColor: colors.cmGreen1,
@@ -235,7 +239,6 @@ const styles = StyleSheet.create({
     height: moderateScale(56),
     borderRadius: 5,
     width: '100%',
-    marginBottom: 15,
   },
   buttonsSection: {
     position: 'absolute',
@@ -243,9 +246,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     height: '40%',
-    bottom: -30,
+    bottom: -15,
     paddingLeft: 15,
     paddingRight: 15,
+    paddingTop: 10,
+    paddingBottom: 10,
     backgroundColor: colors.cmWhite,
   },
   greenButtonText: {
@@ -284,7 +289,7 @@ export const pushNotificationPermissionScreen = {
 pushNotificationPermissionScreen.screen.navigationOptions = ({
   navigation: { goBack },
 }) => ({
-  safeAreaInsets: { top: 85 },
+  safeAreaInsets: { top: verticalScale(65) },
   cardStyle: {
     marginLeft: '2.5%',
     marginRight: '2.5%',

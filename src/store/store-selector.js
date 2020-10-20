@@ -280,6 +280,9 @@ export const getClaimMap = (state: Store) => state.claim.claimMap
 
 export const getCurrentScreen = (state: Store) => state.route.currentScreen
 
+export const getNotificationOpenOptions = (state: Store) =>
+  state.pushNotification.notificationOpenOptions
+
 export const getWalletBalance = (state: Store) =>
   state.wallet.walletBalance.data
 
@@ -517,8 +520,8 @@ export const getProofData = (state: Store, proofRequestId: string) =>
 export const getPrepareBackupStatus = (state: Store) =>
   state.backup.prepareBackupStatus
 
-export const getConnectionExists = (state: Store, publicDid: string) => {
-  return publicDid in getAllPublicDid(state.connections)
+export const getConnectionExists = (state: Store, did: string) => {
+  return did in getAllDid(state.connections) || did in getAllPublicDid(state.connections)
 }
 
 // get data from connections store for public DIDs
@@ -527,7 +530,7 @@ export const getAllPublicDid = (connections: ConnectionStore) => {
   const pairwiseConnections = connections.data || {}
   return Object.keys(pairwiseConnections).reduce((acc, senderDID) => {
     const connection = pairwiseConnections[senderDID]
-    if (connection.publicDID && connection.isCompleted) {
+    if (connection.publicDID) {
       return {
         ...acc,
         [connection.publicDID]: connection,
@@ -537,6 +540,20 @@ export const getAllPublicDid = (connections: ConnectionStore) => {
     return acc
   }, {})
 }
+
+// get data from connections store for all DIDs
+// data is returned in format {"senderDID": ConnectionData}
+export const getAllDid = (connections: ConnectionStore) => {
+  const pairwiseConnections = connections.data || {}
+  return Object.keys(pairwiseConnections).reduce((acc, senderDID) => {
+    const connection = pairwiseConnections[senderDID]
+    return {
+      ...acc,
+      [connection.senderDID]: connection,
+    }
+  }, {})
+}
+
 export const getAllTxnAuthorAgreement = (state: Store) =>
   state.txnAuthorAgreement
 

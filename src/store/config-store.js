@@ -27,6 +27,7 @@ import {
   getConnection,
   getAgencyUrl,
   getConnectionByProp,
+  getNotificationOpenOptions,
 } from '../store/store-selector'
 import {
   SERVER_ENVIRONMENT,
@@ -111,6 +112,8 @@ import {
   updatePushToken,
   fetchAdditionalDataError,
   updatePayloadToRelevantStoreSaga,
+  pushNotificationReceived,
+  setFetchAdditionalDataPendingKeys,
 } from '../push-notification/push-notification-store'
 import type { CxsPoolConfig } from '../bridge/react-native-cxs/type-cxs'
 import type { UserOneTimeInfo } from './user/type-user-store'
@@ -121,6 +124,7 @@ import { GENESIS_FILE_NAME } from '../api/api-constants'
 import type {
   ClaimOfferMessagePayload,
   ClaimPushPayload,
+  NotificationOpenOptions,
 } from './../push-notification/type-push-notification'
 import type { ProofRequestPushPayload } from '../proof-request/type-proof-request'
 import type { ClaimPushPayloadVcx } from './../claim/type-claim'
@@ -813,6 +817,7 @@ export function* getMessagesSaga(): Generator<*, *, *> {
           PushNotificationIOS.removeAllDeliveredNotifications()
         }
         const parsedData: DownloadedConnectionsWithMessages = JSON.parse(data)
+
         yield* processMessages(parsedData)
         yield* acknowledgeServer(parsedData)
       } catch (e) {
@@ -862,6 +867,9 @@ export function* processMessages(
   // additional data will be fetched and passed to relevant( claim, claimOffer, proofRequest,etc )store.
   const messages: Array<DownloadedMessage> = traverseAndGetAllMessages(data)
   const dataAlreadyExists = yield select(getPendingFetchAdditionalDataKey)
+  const notificationOpenOptionsFromStore = yield select(
+    getNotificationOpenOptions
+  )
 
   for (let i = 0; i < messages.length; i++) {
     try {
@@ -894,10 +902,22 @@ export function* processMessages(
           msgTypes.indexOf(messages[i].type) > -1
         )
       ) {
+        yield put(setFetchAdditionalDataPendingKeys(messages[i].uid, pairwiseDID))
         if (isAries) {
-          yield fork(handleAriesMessage, { ...messages[i], senderDID })
+          yield fork(
+            handleAriesMessage,
+            {
+              ...messages[i],
+              senderDID,
+            },
+            notificationOpenOptionsFromStore
+          )
         } else {
-          yield fork(handleProprietaryMessage, messages[i])
+          yield fork(
+            handleProprietaryMessage,
+            messages[i],
+            notificationOpenOptionsFromStore
+          )
         }
       }
     } catch (e) {
@@ -976,7 +996,8 @@ export const convertDecryptedPayloadToAriesQuestion = (
 }
 
 function* handleProprietaryMessage(
-  message: DownloadedMessage
+  message: DownloadedMessage,
+  notificationOpenOptions: NotificationOpenOptions
 ): Generator<*, *, *> {
   const { senderDID, uid, type, decryptedPayload } = message
   const remotePairwiseDID = senderDID
@@ -1080,6 +1101,28 @@ function* handleProprietaryMessage(
       return
     }
 
+    if (
+      notificationOpenOptions &&
+      notificationOpenOptions.uid === uid &&
+      notificationOpenOptions.openMessageDirectly
+    ) {
+      yield put(
+        pushNotificationReceived({
+          type: messageType || type,
+          additionalData: {
+            remoteName: senderName,
+            ...additionalData,
+          },
+          uid,
+          senderLogoUrl,
+          remotePairwiseDID,
+          forDID,
+          notificationOpenOptions,
+        })
+      )
+      return
+    }
+
     yield* updatePayloadToRelevantStoreSaga({
       type: messageType || type,
       additionalData: {
@@ -1090,7 +1133,6 @@ function* handleProprietaryMessage(
       senderLogoUrl,
       remotePairwiseDID,
       forDID,
-      notificationOpenOptions: null,
     })
   } catch (e) {
     captureError(e)
@@ -1103,7 +1145,10 @@ function* handleProprietaryMessage(
   }
 }
 
-function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
+function* handleAriesMessage(
+  message: DownloadedMessage,
+  notificationOpenOptions: NotificationOpenOptions
+): Generator<*, *, *> {
   const { senderDID, uid, type, decryptedPayload } = message
   const remotePairwiseDID = senderDID
   const connection: Connection[] = yield select(getConnection, senderDID)
@@ -1265,6 +1310,28 @@ function* handleAriesMessage(message: DownloadedMessage): Generator<*, *, *> {
 
     if (!additionalData) {
       // we did not get any data or either push notification type is not supported
+      return
+    }
+
+    if (
+      notificationOpenOptions &&
+      notificationOpenOptions.uid === uid &&
+      notificationOpenOptions.openMessageDirectly
+    ) {
+      yield put(
+        pushNotificationReceived({
+          type: messageType || type,
+          additionalData: {
+            remoteName: senderName,
+            ...additionalData,
+          },
+          uid,
+          senderLogoUrl,
+          remotePairwiseDID,
+          forDID,
+          notificationOpenOptions,
+        })
+      )
       return
     }
 

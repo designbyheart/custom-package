@@ -61,9 +61,6 @@ export class PushNotification extends Component<PushNotificationProps, void> {
 
   componentDidMount = async () => {
     if (Platform.OS === 'ios') {
-      // Removes all delivered notifications from notification center
-      PushNotificationIOS.removeAllDeliveredNotifications()
-
       // Sets the current badge number on the app icon to zero. iOS only for now.
       PushNotificationIOS.setApplicationIconBadgeNumber(0)
       // Removes all delivered notifications from notification center
@@ -73,8 +70,10 @@ export class PushNotification extends Component<PushNotificationProps, void> {
     // When a notification is opened, the listener is invoked with the notification and the action that was invoked when it was clicked on.
     this.onNotificationOpenedListener = messaging().onNotificationOpenedApp(
       (notification: NotificationOpen) => {
-        this.onPushNotificationReceived(remoteMessageParser(notification), {
+        const payload = remoteMessageParser(notification)
+        this.onPushNotificationReceived(payload, {
           openMessageDirectly: true,
+          uid: payload.uid,
         })
       }
     )
@@ -88,8 +87,10 @@ export class PushNotification extends Component<PushNotificationProps, void> {
       const notification: NotificationOpen = await messaging().getInitialNotification()
       // App was opened by a notification
       if (notification) {
-        this.onPushNotificationReceived(remoteMessageParser(notification), {
+        const payload = remoteMessageParser(notification)
+        this.onPushNotificationReceived(payload, {
           openMessageDirectly: true,
+          uid: payload.uid,
         })
       }
     } catch (e) {
@@ -112,6 +113,8 @@ export class PushNotification extends Component<PushNotificationProps, void> {
       this.props.fetchAdditionalData(
         notificationPayload,
         notificationOpenOptions
+          ? { ...notificationOpenOptions, uid: notificationPayload.uid }
+          : null
       )
     }
   }

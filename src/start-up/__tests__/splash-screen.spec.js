@@ -50,7 +50,8 @@ describe('<SplashScreen />', () => {
       getSmsPendingInvitation: jest.fn(),
       safeToDownloadSmsInvitation: jest.fn(),
       deepLinkProcessed: jest.fn(),
-      publicDIDs: {},
+      getAllPublicDid: {},
+      getAllDid: {},
       ...overrideProps,
     }
 

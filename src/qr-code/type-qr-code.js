@@ -19,7 +19,8 @@ export type QRCodeScannerScreenState = {
 export type QRCodeScannerScreenProps = {
   historyData: Object,
   currentScreen: string,
-  publicDIDs: { [publicDID: string]: Connection },
+  getAllDid: { [publicDID: string]: Connection },
+  getAllPublicDid: { [publicDID: string]: Connection },
   claimOffers: { [uid: string]: ClaimOfferPayload },
   invitationReceived: (
     data: InvitationReceivedActionData
